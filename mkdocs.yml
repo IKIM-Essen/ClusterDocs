@@ -1,0 +1,23 @@
+site_name: IKIM Cluster
+theme:
+  name: material
+  features:
+    - navigation.sections
+
+markdown_extensions:
+  - footnotes
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.magiclink
+
+
+nav:
+  - Home: index.md
+  - Getting Started:
+     - For Researchers: researchers.md
+     - For Students: students.md
+  - User Guide:
+     - Conda and Mamba: conda.md
+     - Jupyter Notebooks: jupyter.md
