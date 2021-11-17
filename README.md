@@ -1,5 +1,3 @@
-# IKIM Cluster Documentation
-
 Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website:
 
 ## Introduction
