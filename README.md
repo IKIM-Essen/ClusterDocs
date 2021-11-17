@@ -25,7 +25,7 @@ mkdocs serve
 
 You can run markdownlint and fix basic errors as follows:
 
-```sh
+```
 npm install -g markdownlint-cli
 
 markdownlint docs/
