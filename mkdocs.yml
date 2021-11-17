@@ -1,4 +1,6 @@
 site_name: IKIM Cluster
+copyright: Copyright &copy; 2021 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
+
 theme:
   name: material
   features:
@@ -10,7 +12,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
-
 
 nav:
   - Home: index.md

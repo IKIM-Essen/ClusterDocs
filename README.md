@@ -1,12 +1,11 @@
 # IKIM Cluster Documentation
 
-Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website:
+Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website: <https://ikim-essen.github.io/ClusterDocs/>
 
 ## Introduction
 
 - All documentation is written in markdown which makes it easy to contribute to the docs (see below)
-- Website is rendered with [mkdocs](https://www.mkdocs.org) and the [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme
-- The website is hosted on GitHub pages
+- Website is rendered with [mkdocs](https://www.mkdocs.org) and the [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme and is hosted on GitHub pages
 - New commits to `main` are automatically built and deployed to the `gh-pages` branch
 - For consistent formatting of markdown sources we use [markdownlint](https://github.com/DavidAnson/markdownlint)
 
