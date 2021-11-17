@@ -14,10 +14,11 @@ markdown_extensions:
   - pymdownx.snippets
 
 nav:
-  - Home: index.md
+  - Introduction: index.md
   - Getting Started:
      - For Researchers: researchers.md
      - For Students: students.md
   - User Guide:
      - Conda and Mamba: conda.md
      - Jupyter Notebooks: jupyter.md
+     - FAQs: faq.md
