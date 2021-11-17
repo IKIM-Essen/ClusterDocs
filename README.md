@@ -1,3 +1,5 @@
+# IKIM Cluster Documentation
+
 Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website:
 
 ## Introduction
@@ -23,7 +25,7 @@ mkdocs serve
 
 You can run markdownlint and fix basic errors as follows:
 
-```
+```sh
 npm install -g markdownlint-cli
 
 markdownlint docs/
