@@ -10,7 +10,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
-  - pymdownx.magiclink
 
 
 nav:

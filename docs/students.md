@@ -1,4 +1,4 @@
-# Welcome, Students!
+# Getting Started for Students
 
 Welcome the IKIM cluster documentation. The goal of this document is to give you enough background to work on the IKIM cluster. It is not meant as a general introduction to remote computing services. We will refer to external sources where necessary.
 
@@ -28,7 +28,7 @@ Afterwards, an account will be created for you in the central user management. W
 <summary>Example: output of SSH-keypair generation. </summary>
 When executing the command above, you should should see output similar to this:
 
-```
+```text
 $ ssh-keygen -t rsa -b 4096
 Generating public/private rsa key pair.
 Enter file in which to save the key (/Users/<user>/.ssh/id_ikim):
@@ -70,7 +70,6 @@ ssh-rsa [very long random string]== <user>@<host>
 ```
 
 </details>
-
 
 ### Setting up your SSH configuration
 

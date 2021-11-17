@@ -2,7 +2,6 @@
 
 The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more. Visit [Jupyter.org](https://jupyter.org) for more information.
 
-
 ## Starting Jupyter on the Server
 
 To work with Jupyter notebooks on the cluster, a typical workflow is as follows:
@@ -14,6 +13,7 @@ ssh g1-7
 ```
 
 Then, create a conda environment with your project dependencies and Jupyter.
+
 ```sh
 conda create -n myproject -c conda-forge python=3.8 pandas notebook
 conda activate myproject
@@ -21,7 +21,7 @@ conda activate myproject
 
 Start Jupyter instance on the cluster that listens on the networking interface at port 8888. If you have used Jupyter before, the output of this command should look similar to what you see on your local machine.
 
-```
+```text
 $ jupyter notebook --ip 0.0.0.0 --port 8888 --no-browser
 
 [I 06:30:19.290 NotebookApp] Serving notebooks from local directory: /homes/jan
@@ -60,10 +60,9 @@ You can verify that this notebook is running on the remote host and within the c
 
 If you have not used Jupyter on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
 
-[^1]: This section is based on https://docs.hpc.sussex.ac.uk/apollo2/jupyter.html#first-time-setup-and-nfs-issue
+[^1]: This section is based on <https://docs.hpc.sussex.ac.uk/apollo2/jupyter.html#first-time-setup-and-nfs-issue>
 
-
-```
+```sh
 jupyter notebook --generate-config
 ipython profile create
 ```

@@ -1,1 +1,1 @@
-# Welcome, Researchers!
+# Getting Started for Researchers
