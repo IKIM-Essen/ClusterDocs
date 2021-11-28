@@ -156,9 +156,10 @@ We assume basic familiarity with the tools above. If you want to learn more, you
 
 There are several locations where you can store data on the cluster:
 
-- **Your Home Directory** (`/homes/<username>/`): This directory is only for personal data such as configuration files. Anything related to work or that should be visible to other people should not reside here.
-- **Project Directory** (`/projects/<project_name>/`): This location should be used for data related to your project. Your project coordinator creates this directory and shares the path with you. Note that you cannot simply list all project directories via `ls /projects`. You need to specify the project name like: `ls /projects/dso_mp_ws2021/`
-- **Group Directory** (`/groups/<group_name>`): This is the appropriate place for any data that should be shared _within an IKIM research group_. In student projects you will most likely not need group directories.
+- **Your home directory** (`/homes/<username>/`): This directory is only for personal data such as configuration files. Anything related to work or that should be visible to other people should not reside here.
+- **Project pirectory** (`/projects/<project_name>/`): This location should be used for data related to your project. Your project coordinator creates this directory and shares the path with you. Note that you cannot simply list all project directories via `ls /projects`. You need to specify the project name like: `ls /projects/dso_mp_ws2021/`
+- **Public dataset directory** (`/projects/datashare`): A world-readable location for datasets for which no special access rights are required. To lower the risk of data loss, each user can write only in a subdirectory corresponding to their research group. For example, a user which belongs to group `tio` must add new datasets in `/projects/datashare/tio` but can browse and read throughout `/projects/datashare`.
+- **Group directory** (`/groups/<group_name>`): This is the appropriate place for any data that should be shared _within an IKIM research group_. In student projects you will most likely not need group directories.
 
 All of the above directories (homes, projects, groups) are shared with other hosts on the cluster through the network file system (NFS). This is convenient: sharing data between hosts becomes effortless and your data is stored redundantly on the file server.
 
