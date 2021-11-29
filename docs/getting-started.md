@@ -131,10 +131,11 @@ ssh -v $USERNAME@login.ikim.uk-essen.de
 We recommend two options for installing and using an SSH client on Windows:
 
 - [Windows Subsystem for Linux (WSL2)](https://docs.microsoft.com/en-us/windows/wsl/about) provides Linux distributions running in a lightweight virtual machine on Windows. With WSL, the instructions above can be followed without changes and the default shell environment is identical to the one found on IKIM hosts.
-- [OpenSSH](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) is the same software suite that comes preinstalled on other operating systems. To install it, go to the *Apps & Features* settings page and select *Optional Features*, then add the *OpenSSH Client* feature. The instructions above should work simply by adapting paths to Windows-style. Older clients might produce an error message that starts with ["Bad stdio forwarding specification"](https://github.com/PowerShell/Win32-OpenSSH/issues/1172), which can be fixed by replacing the `ProxyJump` directive with
-```
-ProxyCommand ssh.exe -W %h:%p ikim
-```
+- [OpenSSH](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) is the same software suite that comes preinstalled on other operating systems. To install it, go to the *Apps & Features* settings page and select *Optional Features*, then add the *OpenSSH Client* feature. The instructions above should work simply by adapting paths to Windows-style. Older clients might produce an error message that starts with ["Bad stdio forwarding specification"](https://github.com/PowerShell/Win32-OpenSSH/issues/1172), which can be fixed by replacing the `ProxyJump` directive with:
+
+  ```text
+  ProxyCommand ssh.exe -W %h:%p ikim
+  ```
 
 ## What hardware is available on the IKIM cluster?
 
