@@ -181,7 +181,7 @@ Here are tips on writing programs, scripts, containers, etc. that make good use 
 
 ### NFS caching
 
-Read operations on remote files (homes, projects, groups) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be limited by network bandwidth, but any subsequent access will be made from local storage to should be substantially faster.
+Read operations on network storage (projects, groups) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be limited by network bandwidth, but any subsequent access will be made from local storage to should be substantially faster. Read operations on your home directory are **not** cached, i.e., make sure to store datasets at the aforementioned locations.
 
 ## Tips on Working with remote computing services
 
