@@ -17,7 +17,6 @@ nav:
   - Introduction: index.md
   - Getting Started: getting-started.md
   - User Guide:
-     - Conda and Mamba: conda.md
      - Docker: docker.md
      - Jupyter Notebooks: jupyter.md
      - FAQs: faq.md
