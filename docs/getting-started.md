@@ -87,12 +87,12 @@ For convenience, you can configure your SSH client to automatically use the jump
 ```ssh
 Host *
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ikim
   CanonicalizeHostname yes
 
 Host ikim
   HostName login.ikim.uk-essen.de
   User $USERNAME
+  IdentityFile ~/.ssh/id_ikim
   ForwardAgent yes
 
 Host g1-? c? c??
@@ -101,6 +101,7 @@ Host g1-? c? c??
 
 Host g1-*.ikim.uk-essen.de c*.ikim.uk-essen.de
   User $USERNAME
+  IdentityFile ~/.ssh/id_ikim
   ProxyJump ikim
   ForwardAgent yes
 ```
