@@ -11,7 +11,7 @@ _Note: we assume that you are using a Linux or MacOS operating system. If you ar
 To get access to the IKIM computing infrastructure you need an SSH key. Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
 
 ```sh
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_ikim
+ssh-keygen -t ed25519 -f ~/.ssh/id_ikim
 ```
 
 Please send the public key along with following contact details to your project coordinator:
@@ -29,26 +29,24 @@ Afterwards, an account will be created for you in the central user management. W
 When executing the command above, you should should see output similar to this:
 
 ```text
-$ ssh-keygen -t rsa -b 4096
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/<user>/.ssh/id_ikim):
+Generating public/private ed25519 key pair.
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
-Your identification has been saved in /Users/<user>/.ssh/id_ikim.
-Your public key has been saved in /Users/<user>/.ssh/id_ikim.pub.
+Your identification has been saved in /Users/<user>/.ssh/id_ikim
+Your public key has been saved in /Users/<user>/.ssh/id_ikim.pub
 The key fingerprint is:
-SHA256:Fq6OklSiCUQ3G1UsnDu8dFb+VwBfMakRGROe+A2D78Y user@<host>
+SHA256:PQyNrogYs001Y0IlsG75teDBFVlDmd7xSJPNI1lrQr4 user@<host>
 The key's randomart image is:
-+---[RSA 4096]----+
-|.. +o.+.   ..==+o|
-| .. ++ . .  =++..|
-|.  .. o +  o *+  |
-|. . .= + o  o.+. |
-|.o o. = S .  o.. |
-|o .  . o   .o.   |
-| . .  .     .E   |
-|  o  o      .    |
-|   .. .          |
++--[ED25519 256]--+
+|..o...++o.*.     |
+| o . ..o+X +.    |
+|. . =.. =oBo.    |
+|. o+.o o *+.     |
+|o+.+ .  SE+      |
+|.Bo.+...   .     |
+|o oo...          |
+|                 |
+|                 |
 +----[SHA256]-----+
 ```
 
@@ -66,7 +64,7 @@ The contents of `~/.ssh/id_ikim.pub` look similar to this:
 
 ```sh
 $ cat ~/.ssh/id_ikim.pub
-ssh-rsa [very long random string]== <user>@<host>
+ssh-ed25519 [long random string] <user>@<host>
 ```
 
 </details>
