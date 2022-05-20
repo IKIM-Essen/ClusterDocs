@@ -71,16 +71,7 @@ ssh-ed25519 [long random string] <user>@<host>
 
 ### Setting up your SSH configuration
 
-There is only a single gateway into the IKIM cluster which is called the jumphost. This host should only be used to connect to other servers on the cluster and should _not_ be used for computational work. Use the command below to login to any host, replacing `$USERNAME` and `$HOSTNAME` appropriately.
-
-```sh
-ssh -J $USERNAME@login.ikim.uk-essen.de $USERNAME@$HOSTNAME
-
-# Example
-ssh -J john.doe@login.ikim.uk-essen.de john.doe@c52
-```
-
-For convenience, you can configure your SSH client to automatically use the jumphost. Place the snippet below into your `~/.ssh/config` file, replacing `$USERNAME` appropriately.
+To provide the appropriate parameters for the connection, place the snippet below into your `~/.ssh/config` file, replacing `$USERNAME` appropriately.
 
 ```ssh
 Host *
@@ -104,18 +95,26 @@ Host g1-*.ikim.uk-essen.de c*.ikim.uk-essen.de
   ForwardAgent yes
 ```
 
+With `~/.ssh/config` in place, you can use the following command to log into any host, replacing `$HOSTNAME` appropriately.
+
+```sh
+ssh $HOSTNAME
+```
+
+The connection will transparently jump through the host labeled `ikim` and proceed to the target `$HOSTNAME`. The `ikim` host itself must _not_ be used for computational work.
+
 ### Test your SSH login
 
 Try some of the examples below to test that your SSH client is properly configured:
 
 ```sh
-# Login to CPU-node c52
+# Log into CPU-node c52
 ssh c52.ikim.uk-essen.de
 
 # Shorthand for above command
 ssh c52
 
-# Login to GPU-node
+# Log into GPU-node g1-7
 ssh g1-7
 ```
 

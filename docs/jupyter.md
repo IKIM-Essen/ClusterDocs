@@ -5,7 +5,7 @@ The Jupyter Notebook is an open-source web application that allows you to create
 ## Starting Jupyter on the Server
 
 To work with Jupyter notebooks on the cluster, a typical workflow is as follows:
-First, login to a node of the cluster where you'd like to run Jupyter on.
+First, log into a node of the cluster where you'd like to run Jupyter on.
 
 ```sh
 # For example:
