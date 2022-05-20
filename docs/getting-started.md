@@ -71,7 +71,7 @@ ssh-ed25519 [long random string] <user>@<host>
 
 ### Setting up your SSH configuration
 
-To provide the appropriate parameters for the connection, place the snippet below into your `~/.ssh/config` file, replacing `$USERNAME` appropriately.
+To provide the appropriate parameters for the connection, create a file at `~/.ssh/config` and copy the snippet below, replacing `$USERNAME` appropriately.
 
 ```ssh
 Host *
