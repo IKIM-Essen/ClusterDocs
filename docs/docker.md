@@ -46,25 +46,25 @@ echo "DOCKER_UID=$(id -u)" >> .env
 echo "DOCKER_GID=$(id -g)" >> .env
 ```
 
-### Configuring bind propagation
+### Mounting project or group directories
 
-Automounted NFS locations have a parent which is permanently mounted and several subdirectories which are automounted. For example, `/projects/datashare` consists of a permanently mounted path `/projects` and an automounted subdirectory `datashare`. In order to access an automounted location, Docker needs to mount the parent in a way that allows exposing any sub-paths that might spawn on the host to containers. This is done by adding the bind propagation setting `shared`:
+Automounted NFS locations have a parent which is permanently mounted and several subdirectories which are automounted. For example, `/projects/datashare` consists of a permanently mounted path `/projects` and an automounted subdirectory `datashare`. In order to access any level below the automounted directory, Docker needs to mount the top level so that it spawns on the host:
 
 ```sh
-docker run --rm --user="$(id -u):$(id -g)" -v /projects:/projects:shared alpine ls /projects/datashare
+docker run --rm --user="$(id -u):$(id -g)" -v /projects/datashare:/datashare alpine ls /datashare
 ```
 
-The above is not enough to access NFS shares which requires the user to be a member of a specific group. For example, `/projects/haystack` is acessible by members of the group `haystack`, therefore the Docker container needs to be launched with a user who belongs to the appropriate group. First, obtain the correct group ID by inspecting the target directory:
+The example above is not enough to access NFS shares which require the user to be a member of a specific group. For example, `/projects/myproject` would be acessible by members of the group `myproject`, therefore the Docker container needs to be launched with a user who belongs to the appropriate group. First, obtain the correct group ID by inspecting the target directory:
 
 ```sh
-$ ls -nd /projects/haystack
-drwxrws--- 3 0 477800070 3 Dec  2 12:21 /projects/haystack
+$ ls -nd /projects/myproject
+drwxrws--- 3 0 54321 3 Dec  2 12:21 /projects/myproject
 ```
 
-The output of `ls -nd` shows that the gid is `477800070`. The container can now be launched by passing the gid to the `--group-add` option:
+The output of `ls -nd` in the example shows that the gid is `54321`. The container can now be launched by passing the gid to the `--group-add` option:
 
 ```sh
-docker run --rm --user="$(id -u):$(id -g)" --group-add=477800070 -v /projects:/projects:shared alpine ls /projects/haystack
+docker run --rm -it --user="$(id -u):$(id -g)" --group-add=54321 -v /projects/myproject:/myproject alpine
 ```
 
 ## Adding account information to containers
