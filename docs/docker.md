@@ -111,7 +111,3 @@ FAKE_PASSWDFILE=$HOME/fakepasswd
 FAKE_GROUPFILE=$HOME/fakegroup
 EOF
 ```
-
-## Reusable templates
-
-The above and other Docker patterns are illustrated at [github.com/enasca/helper-containers](https://github.com/enasca/helper-containers).
