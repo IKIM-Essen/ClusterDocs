@@ -71,19 +71,30 @@ docker run --rm -it --user="$(id -u):$(id -g)" --group-add=54321 -v /projects/my
 
 Launching a container with `--user="$(id -u):$(id -g)"` simply sets the uid and gid but does not create an account in the container. This option is insufficient for containerized applications which require unix accounts to exist in the image.
 
-A possible solution involves modifying the image by adding a local account to it, for example by adding `RUN groupadd mygroup && useradd --no-log-init -g mygroup myuser` to `Dockerfile`, although that might be inconvenient.
+A possible solution involves modifying the image by adding a local account to it, for example by adding `RUN groupadd mygroup && useradd --no-log-init -g mygroup myuser` to `Dockerfile`.
 
 An alternative approach is to list all required groups and accounts in local files using the `/etc/group` and `/etc/passwd` formats, then mount these files in the container. The following example generates local `group` and `passwd` files containing the current account:
 
 ```sh
-echo "$(id -un):x:$(id -u):$(id -g)::/home/$USER:/bin/sh" > "$HOME/fakepasswd"
-echo "$(id -gn):x:$(id -g):" > "$HOME/fakegroup"
+mkdir "/local/work/$USER-docker"
+echo "$(id -un):x:$(id -u):$(id -g)::/home/$USER:/bin/sh" > "/local/work/$USER-docker/fakepasswd"
+echo "$(id -gn):x:$(id -g):" > "/local/work/$USER-docker/fakegroup"
 ```
 
-The container is then launched by mounting the files (possibly in read-only mode if desired):
+The container is then launched by mounting the files (optionally in read-only mode):
 
 ```sh
-docker run --rm --user="$(id -u):$(id -g)" -v "$HOME/fakegroup:/etc/group:ro" -v "$HOME/fakepasswd:/etc/passwd:ro" <image> <command>
+docker run --rm --user="$(id -u):$(id -g)" -v "/local/work/$USER-docker/fakegroup:/etc/group:ro" -v "/local/work/$USER-docker/fakepasswd:/etc/passwd:ro" <image> <command>
+```
+
+It's also possible to save these files in the home directory, but docker won't be able to bind-mount them directly on hosts with NFS homes.
+As a workaround, the path on local storage can be a symbolic link:
+
+```sh
+echo "$(id -un):x:$(id -u):$(id -g)::/home/$USER:/bin/sh" > "$HOME/fakepasswd"
+echo "$(id -gn):x:$(id -g):" > "$HOME/fakegroup"
+mkdir "/local/work/$USER-docker"
+ln -s "$HOME/fakepasswd" "$HOME/fakegroup" "/local/work/$USER-docker/"
 ```
 
 With Docker Compose, it's recommended to generate a `.env` file to provide the necessary values for `docker-compose.yml`:
@@ -101,13 +112,10 @@ services:
 ```
 
 ```sh
-echo "$(id -un):x:$(id -u):$(id -g)::/home/$USER:/bin/sh" > "$HOME/fakepasswd"
-echo "$(id -gn):x:$(id -g):" > "$HOME/fakegroup"
-
 cat > .env <<EOF
 DOCKER_UID=$(id -u)
 DOCKER_GID=$(id -g)
-FAKE_PASSWDFILE=$HOME/fakepasswd
-FAKE_GROUPFILE=$HOME/fakegroup
+FAKE_PASSWDFILE=/local/work/$USER-docker/fakepasswd
+FAKE_GROUPFILE=/local/work/$USER-docker/fakegroup
 EOF
 ```
