@@ -4,7 +4,9 @@ Features of the cluster hosts such as centralized identity management, NFS share
 
 ## Accessing NFS shares
 
-For security and performance reasons, [NFS shares](getting-started.md#where-to-store-your-data) on IKIM hosts are configured in a way that makes them incompatible with Docker's defaults. They aren't available to the root user, although containers are usually launched as root. Additionally, NFS locations are only mounted on access, but by default Docker doesn't see mount paths that spawn on the host.
+For security and performance reasons, [NFS shares](getting-started.md#where-to-store-your-data) on IKIM hosts are configured in a way that makes them at odds with Docker's defaults.
+
+One of the consequences is that while containers are executed as root by default, the NFS server transparently downgrades the root user to `nobody`. The root user in a conainer has no elevated privileges over files on NFS: its access depends on the permissions for all users (the last 3 _file mode bits_).
 
 ### Executing containers as a regular user
 
@@ -87,14 +89,12 @@ The container is then launched by mounting the files (optionally in read-only mo
 docker run --rm --user="$(id -u):$(id -g)" -v "/local/work/$USER-docker/fakegroup:/etc/group:ro" -v "/local/work/$USER-docker/fakepasswd:/etc/passwd:ro" <image> <command>
 ```
 
-It's also possible to save these files in the home directory, but docker won't be able to bind-mount them directly on hosts with NFS homes.
-As a workaround, the path on local storage can be a symbolic link:
+To avoid having to create these files on each host, they can be stored in the home directory on NFS with the caveat that all components of the path must be world-readable and browseable (see [Accessing NFS shares](docker.md#accessing-nfs-shares)).
 
 ```sh
-echo "$(id -un):x:$(id -u):$(id -g)::/home/$USER:/bin/sh" > "$HOME/fakepasswd"
-echo "$(id -gn):x:$(id -g):" > "$HOME/fakegroup"
-mkdir "/local/work/$USER-docker"
-ln -s "$HOME/fakepasswd" "$HOME/fakegroup" "/local/work/$USER-docker/"
+chmod a+rx "$HOME"
+chmod a+r "$HOME/fakegroup" "$HOME/fakepasswd"
+docker run --rm --user="$(id -u):$(id -g)" -v "$HOME/fakegroup:/etc/group:ro" -v "$HOME/fakepasswd:/etc/passwd:ro" <image> <command>
 ```
 
 With Docker Compose, it's recommended to generate a `.env` file to provide the necessary values for `docker-compose.yml`:
