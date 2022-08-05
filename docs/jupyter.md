@@ -98,3 +98,27 @@ vi ~/.ipython/profile_default/ipython_config.py
 c.HistoryManager.hist_file=':memory:'
 c.HistoryAccessor.hist_file=':memory:'
 ```
+**For Jupyter lab (similar to jupyter notebook)** 
+```sh
+jupyter lab --generate-config
+ipython profile create
+```
+```sh
+# Edit Jupyter configuration
+vi ~/.jupyter/jupyter_lab_config.py
+# Add following line
+c.NotebookNotary.db_file = ':memory:'
+```
+
+```sh
+# Edit IPython configuration
+vi ~/.ipython/profile_default/ipython_config.py
+
+# Change following two lines
+# c.HistoryManager.hist_file=''
+# c.HistoryAccessor.hist_file=''
+
+# To:
+c.HistoryManager.hist_file=':memory:'
+c.HistoryAccessor.hist_file=':memory:'
+```
