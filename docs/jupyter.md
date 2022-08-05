@@ -58,12 +58,13 @@ You can verify that this notebook is running on the remote host and within the c
 
 ## First Time Setup
 
-If you have not used Jupyter on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
+If you have not used Jupyter (or JupyterLab) on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
 
 [^1]: This section is based on <https://docs.hpc.sussex.ac.uk/apollo2/jupyter.html#first-time-setup-and-nfs-issue>
 
 ```sh
 jupyter notebook --generate-config
+jupyter lab --generate-config # if you use jupyterlab
 ipython profile create
 ```
 
@@ -97,4 +98,12 @@ vi ~/.ipython/profile_default/ipython_config.py
 # To:
 c.HistoryManager.hist_file=':memory:'
 c.HistoryAccessor.hist_file=':memory:'
+```
+
+```sh
+# Edit JupyterLab configuration
+vi ~/.jupyter/jupyter_lab_config.py
+
+# Add the following line
+c.NotebookNotary.db_file = ':memory:'
 ```
