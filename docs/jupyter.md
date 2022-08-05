@@ -58,12 +58,13 @@ You can verify that this notebook is running on the remote host and within the c
 
 ## First Time Setup
 
-If you have not used Jupyter on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
+If you have not used Jupyter (or JupyterLab) on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
 
 [^1]: This section is based on <https://docs.hpc.sussex.ac.uk/apollo2/jupyter.html#first-time-setup-and-nfs-issue>
 
 ```sh
 jupyter notebook --generate-config
+jupyter lab --generate-config # if you use jupyterlab
 ipython profile create
 ```
 
@@ -98,27 +99,11 @@ vi ~/.ipython/profile_default/ipython_config.py
 c.HistoryManager.hist_file=':memory:'
 c.HistoryAccessor.hist_file=':memory:'
 ```
-**For Jupyter lab (similar to jupyter notebook)** 
+
 ```sh
-jupyter lab --generate-config
-ipython profile create
-```
-```sh
-# Edit Jupyter configuration
+# Edit JupyterLab configuration
 vi ~/.jupyter/jupyter_lab_config.py
-# Add following line
+
+# Add the following line
 c.NotebookNotary.db_file = ':memory:'
-```
-
-```sh
-# Edit IPython configuration
-vi ~/.ipython/profile_default/ipython_config.py
-
-# Change following two lines
-# c.HistoryManager.hist_file=''
-# c.HistoryAccessor.hist_file=''
-
-# To:
-c.HistoryManager.hist_file=':memory:'
-c.HistoryAccessor.hist_file=':memory:'
 ```
