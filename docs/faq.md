@@ -1,9 +1,5 @@
 # Frequently Asked Questions
 
-## VSCode fails set itself up on a remote host
-
-If Visual Studio Code is unable to complete the "Acquiring lock" step while trying connecting to a host with NFS home directories, enable the setting `remote.SSH.lockfilesInTmp`.
-
 ## A program fails with the message `too many open files`
 
 This limit can be changed for the current user session with `ulimit -Sn` followed by the desired number. For example:
