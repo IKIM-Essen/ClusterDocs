@@ -181,6 +181,15 @@ Here are tips on writing programs, scripts, containers, etc. that make good use 
 
 Read operations on network storage (projects, groups) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be slower than usual due to the overhead of creating the cache, but any subsequent access will be made from local storage.
 
+## GitHub Authentication through SSH
+
+To clone GitHub repositories on the cluster over the `git+ssh` protocol, you need to (1) configure your local ssh client as per the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh), and (2) enable agent forwarding (if you use the ssh config above, this should already be done). You can verify your setup with following command:
+
+```sh
+USER@g1-9:~$ ssh -T git@github.com
+Hi USER! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
 ## Tips on Working with remote computing services
 
 - [Unix Crash Course](https://tildesites.bowdoin.edu/~sbarker/unix/)
