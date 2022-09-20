@@ -28,3 +28,26 @@ chmod -R g+w <path to directory>
 # Extend the execution and directory browsing permissions that the owner has in a directory to everyone.
 find <path to directory> -executable -exec chmod a+x {} \;
 ```
+
+## GPU memory is held by zombie or orphan processes
+
+If a process allocates GPU memory and later terminates abnormally, it might die without releasing the GPU memory.
+Since the process cannot be killed again, it can't be targeted directly in order to reclaim the memory.
+In such a case, `fuser` can be used to identify and kill the parent or children of the dead process.
+
+For example, if `nvidia-smi` reports memory allocated in GPU 0, `fuser -v /dev/nvidia0` can display which processes are accessing it.
+```
+                     USER        PID ACCESS COMMAND
+/dev/nvidia0:        root       1383 F.... nvidia-persiste
+                     <user1>  2934164 F...m python3
+                     <user2>   3279314 F... python3
+                     <user2>   3279314 F...m python3
+```
+
+To learn more about the output format and how to kill processes using `fuser`, see `man fuser`.
+
+Note:
+
+- Processes belonging to a different user can only be killed by an administrator.
+- Avoid killing `nvidia-persistenced` if possible.
+  If necessary, use `systemctl` to interact with the `nvidia-persistenced` service.
