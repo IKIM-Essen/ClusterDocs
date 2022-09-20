@@ -187,7 +187,8 @@ To clone GitHub repositories on the cluster over the `git+ssh` protocol, followi
 
 1. Configure your local ssh client as per the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 2. Enable agent forwarding (if you use the ssh config above, this should already be done)
-3. Add following configuration to your ssh-config *on the cluster*. This will make sure that communication goes through the https proxy.
+3. Add following configuration to your ssh-config _on the cluster_. This will make sure that communication goes through the https proxy.
+
    ```sh
    $ cat ~/.ssh/config
    host github.com
@@ -199,7 +200,7 @@ To clone GitHub repositories on the cluster over the `git+ssh` protocol, followi
 
 To verify your setup, run following command:
 
-```
+```sh
 USER@g1-9:~$ ssh -T git@github.com
 Hi USER! You've successfully authenticated, but GitHub does not provide shell access.
 ```
