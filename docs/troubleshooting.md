@@ -1,4 +1,4 @@
-# Frequently Asked Questions
+# Troubleshooting
 
 ## A program fails with the message `too many open files`
 

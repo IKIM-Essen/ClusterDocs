@@ -19,4 +19,4 @@ nav:
   - User Guide:
      - Docker: docker.md
      - Jupyter Notebooks: jupyter.md
-     - FAQs: faq.md
+     - Troubleshooting: troubleshooting.md
