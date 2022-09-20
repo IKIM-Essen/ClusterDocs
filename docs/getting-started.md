@@ -183,22 +183,7 @@ Read operations on network storage (projects, groups) are cached transparently o
 
 ## GitHub Authentication through SSH
 
-To clone GitHub repositories on the cluster over the `git+ssh` protocol, following steps are needed:
-
-1. Configure your local ssh client as per the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
-2. Enable agent forwarding (if you use the ssh config above, this should already be done)
-3. Add following configuration to your ssh-config _on the cluster_. This will make sure that communication goes through the https proxy.
-
-   ```sh
-   $ cat ~/.ssh/config
-   host github.com
-     user git
-     hostname ssh.github.com
-     port 443
-     proxycommand socat - PROXY:proxy.ikim.uk-essen.de:%h:%p,proxyport=3128
-   ```
-
-To verify your setup, run following command:
+To clone GitHub repositories on the cluster over the `git+ssh` protocol, you need to (1) configure your local ssh client as per the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh), and (2) enable agent forwarding (if you use the ssh config above, this should already be done). You can verify your setup with following command:
 
 ```sh
 USER@g1-9:~$ ssh -T git@github.com
