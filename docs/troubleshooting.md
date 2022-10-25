@@ -29,26 +29,33 @@ chmod -R g+w <path to directory>
 find <path to directory> -executable -exec chmod a+x {} \;
 ```
 
-## GPU memory is held by zombie or orphan processes
+## GPU memory is held by orphan processes
 
-If a process allocates GPU memory and later terminates abnormally, it might die without releasing the GPU memory.
-Since the process cannot be killed again, it can't be targeted directly in order to reclaim the memory.
-In such a case, `fuser` can be used to identify and kill the parent or children of the dead process.
+If processes are holding GPU memory while their parent terminates abnormally, they could be left with claimed memory and no work to do.
+In such a case, `nvidia-smi` will display occupied memory with no associated processes.
+The `fuser` command can help perform cleanup and reclaim GPU memory.
 
 For example, if `nvidia-smi` reports memory allocated in GPU 0, `fuser -v /dev/nvidia0` can display which processes are accessing it.
 
 ```text
-                USER        PID ACCESS COMMAND
-/dev/nvidia0:   root       1383 F.... nvidia-persiste
-                <user1>  2934164 F...m python3
-                <user2>   3279314 F... python3
-                <user2>   3279314 F...m python3
+                USER    PID ACCESS COMMAND
+/dev/nvidia0:   bob  869108 F...m python
+                bob  1236874 F...m python
+                bob  1236922 F...m python
 ```
 
-To learn more about the output format and how to kill processes using `fuser`, see `man fuser`.
+Users can only see processes owned by themselves.
+Administrators can run `fuser` as root to see all processes.
 
-Note:
+`fuser -k` sends a termination signal to the listed processes.
+It can be convenient as a last resort if certain processes are difficult to terminate cleanly.
 
-- Processes belonging to a different user can only be killed by an administrator.
-- Avoid killing `nvidia-persistenced` if possible.
-  If necessary, use `systemctl` to interact with the `nvidia-persistenced` service.
+A typical troubleshooting sessions against leftover GPU memory might be as follows:
+
+1. Examine the output of `nvidia-smi` and look for GPUs with allocated memory but no processes attached.
+1. Execute `fuser -v /dev/nvidiaN` to list processes owned by you accessing the device (replace `N` with a GPU index).
+1. Save all important work, then try closing open programs cleanly.
+1. Execute `fuser -v /dev/nvidiaN` again.
+  If any processes show up and you don't have a way to terminate them cleanly, you can use `fuser -k /dev/nvidiaN` to kill them bluntly.
+1. Examine the output of `nvidia-smi` again.
+   If GPU memory is still occupied, ask an administrator to look into processes owned by other users.
