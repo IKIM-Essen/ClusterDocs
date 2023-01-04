@@ -16,7 +16,6 @@ ssh-keygen -t ed25519 -f ~/.ssh/id_ikim
 
 Please send the public key along with following contact details to your project coordinator:
 
-- Desired username (e.g., `firstname.lastname`)
 - First name
 - Last name
 - UK/UDE email
