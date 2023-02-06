@@ -83,11 +83,11 @@ Host ikim
   IdentityFile ~/.ssh/id_ikim
   ForwardAgent yes
 
-Host g1-? c? c??
+Host g1-? c? c?? slurmq
   Hostname %h.ikim.uk-essen.de
   ForwardAgent yes
 
-Host g1-*.ikim.uk-essen.de c*.ikim.uk-essen.de
+Host g1-*.ikim.uk-essen.de c*.ikim.uk-essen.de slurmq.ikim.uk-essen.de
   User $USERNAME
   IdentityFile ~/.ssh/id_ikim
   ProxyJump ikim
