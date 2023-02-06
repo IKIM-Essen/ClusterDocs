@@ -104,17 +104,14 @@ The connection will transparently jump through the host labeled `ikim` and proce
 
 ### Test your SSH login
 
-Try some of the examples below to test that your SSH client is properly configured:
+Try the examples below to test that your SSH client is properly configured:
 
 ```sh
-# Log into CPU-node c52
-ssh c52.ikim.uk-essen.de
+# Log into the slurm submission node
+ssh slurmq.ikim.uk-essen.de
 
 # Shorthand for above command
-ssh c52
-
-# Log into GPU-node g1-7
-ssh g1-7
+ssh slurmq
 ```
 
 If any of the above is not working, please run the command below and send the debug message to your project coordinator for help.
