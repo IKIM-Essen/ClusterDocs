@@ -144,14 +144,15 @@ Your project coordinator can give you recommendations on where to run your jobs.
 
 We aim to keep the computing environments on the cluster as clean as possible. Therefore, only commonly used software packages are pre-installed and configured. At this moment this includes:
 
+- Slurm
 - Python 3
-- Conda
-- Docker (for applications with dependencies not available in the default set of software).
+- Mamba/Conda
+- Apptainer
 
-We assume basic familiarity with the tools above. If you want to learn more, you can take a look at following resources:
+We assume basic familiarity with the tools above. If you want to learn more, you can take a look at the following resources:
 
-- [Docker Curriculum](https://docker-curriculum.com)
 - [Conda Getting Started](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-conda)
+- [Apptainer User Guide](https://apptainer.org/docs/user/main/index.html)
 
 ## Where to store your data?
 
