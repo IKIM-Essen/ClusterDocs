@@ -101,20 +101,21 @@ The connection will transparently jump through the host labeled `ikim` and proce
 
 ### Test your SSH login
 
-Try the examples below to test that your SSH client is properly configured:
+Try the example below to test that your SSH client is properly configured:
 
 ```sh
 # Log into the slurm submission node
-ssh slurmq.ikim.uk-essen.de
-
-# Shorthand for above command
 ssh slurmq
 ```
 
-If any of the above is not working, please run the command below and send the debug message to your project coordinator for help.
+If the above is not working, please run the commands below and send the debug messages to your project coordinator for help.
 
 ```sh
-ssh -v $USERNAME@login.ikim.uk-essen.de
+ssh -v slurmq
+```
+
+```sh
+ssh -v ikim
 ```
 
 ### SSH clients on Windows
