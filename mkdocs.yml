@@ -19,5 +19,6 @@ nav:
   - User Guide:
      - Conda: conda.md
      - Docker: docker.md
+     - Storage: storage.md
      - Jupyter Notebooks: jupyter.md
      - Troubleshooting: troubleshooting.md
