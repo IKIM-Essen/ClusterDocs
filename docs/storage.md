@@ -4,22 +4,21 @@ The cluster has a number of options for retrieving and storing data. They have v
 
 ## Classes of storage
 
-### Local storage
-Each node has local drives (typically a system drive and a data drive). The system drive is used for the operating system, the configuration, [swap files] (https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
+Not all storage locations are alike and it is worth your while to understand their specific properties.
 
+### Local storage
+
+Each node has local drives (typically a system drive and a data drive). The system drive is used for the operating system, the configuration, [swap files] (https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
 
 | location | purpose | user read-write status | comment |
 | ---  | --- |  -- | ---|
-| /etc/    | configuration | read-only |  | 
+| /etc/    | configuration | read-only |  |
 | /var/    | temporary files | read-only |  |
 | /var/tmp | user generated temporary files | read-write | local-disk |
-| /tmn/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM 
-
-
-
-
+| /tmn/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
 
 ### NFS storage
+
 The file server has a 10Gib (10Gbs, 10 gigabit per second connection to the entire cluster. As a consequence each node can access a fraction of 10Gib, in the worst case a tiny fraction. However we note that a 250MB (megabyte) file will need a fraction of a second to transfer from the server to the client. This rather brilliant performance stats drastically change if and when random IO (as in not streaming large files, write-locking files, etc.) enter the equation. Those complex operations are best left to local disk.
 
 As a consequence, using local files or cached files is a good idea to ensure good runtime performance. 
@@ -38,8 +37,8 @@ The projects directory provides a means to generate project specific storage, ty
 
 The `/groups` directory is identical to `/projects` in technology. However every group on the organization has their own subdirectory.
 
-
 ## Special circumstances
+
 We note that when using Linux containers (aka [docker)[./docker)) special attention is needed to ensure storage locations are in place and behave as expected.
 
 ## Best practice use of storage locations
