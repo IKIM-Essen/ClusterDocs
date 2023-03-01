@@ -27,13 +27,13 @@ Three different storage locations exist on the file server:
 
 | location | purpose | user read-write status | comment |
 | ---  | --- |  -- | ---|
-| /projects/    | configuration | read-only |  not listable | 
-| /groups/    | temporary files | read-only |  not listable |
+| /projects/    | project data | read-write |  not listable | 
+| /groups/    | group files | read-write  |  not listable |
 | /homes  | user home directory | read-write | not cached |
 
 Each user has a private home-directory. The contents of which are private to the userm typically no data relevant to any other user, project or your PI should be stored here.
 
-The projects directory provides a means to generate project specific storage, typically associated with a linux group shared by all members of the project. Thus `/projects/abc` is shared only by members of the project `abc`. We note that by using the `id` command users can identify all the groups they belong to. The contents of /projects are cached on the local disk, read access against data in /projects will typically no place too much of burden on the file server. The contents of the `/projects` folder will not be completely listed when e.g. executing `ls /projects/` as contents are mounted on demand by [automounter](https://help.ubuntu.com/community/Autofs).
+The projects directory provides a means to generate project specific storage, typically associated with a linux group shared by all members of the project. Thus `/projects/abc` is shared only by members of the project `abc`. We note that by using the `id` command users can identify all the groups they belong to. The contents of /projects are cached on the local disk, read access against data in /projects will typically no place too much of burden on the file server. The contents of the `/projects` folder will not be completely listed when e.g. executing `ls /projects/` as contents are mounted on demand by [automounter](https://help.ubuntu.com/community/Autofs). You can request a `/project` directory by talking to us on Mattermost or have your PI request one.
 
 The `/groups` directory is identical to `/projects` in technology. However every group on the organization has their own subdirectory.
 
