@@ -8,7 +8,7 @@ Not all storage locations are alike and it is worth your while to understand the
 
 ### Local storage
 
-Each node has local drives (typically a system drive and a data drive). The system drive is used for the operating system, the configuration, [swap files] (https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
+Each node has local drives (typically a system drive and a data drive). The system drive is used for the operating system, the configuration, [swap files](https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
 
 | location | purpose | user read-write status | comment |
 | ---  | --- |  -- | ---|
