@@ -15,7 +15,7 @@ Each node has local drives (typically a system drive and a data drive). The syst
 | /etc/    | configuration | read-only |  |
 | /var/    | temporary files | read-only |  |
 | /var/tmp | user generated temporary files | read-write | local-disk |
-| /tmn/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
+| /tmp/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
 
 ### NFS storage
 
