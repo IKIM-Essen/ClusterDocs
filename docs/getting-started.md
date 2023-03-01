@@ -154,6 +154,7 @@ We assume basic familiarity with the tools above. If you want to learn more, you
 
 ## Where to store your data?
 
+
 There are several locations where you can store data on the cluster:
 
 - **Your home directory** (`/homes/<username>/`): This directory is only for personal data such as configuration files. Anything related to work or that should be visible to other people should not reside here.
@@ -163,18 +164,9 @@ There are several locations where you can store data on the cluster:
 
 All of the above directories (homes, projects, groups) are shared with other hosts on the cluster through the network file system (NFS). This is convenient: sharing data between hosts becomes effortless and your data is stored redundantly on the file server.
 
-### Local-only files
+Also see the [storage](./storage.md) for details and also info on performance.
 
-For some operations the NFS comes with unnecessary overhead. Therefore, the path `/local/work` is available for creating files and directories that reside on the storage drive of the current host. This location should only be used for quick testing, preliminary experimentation and intermediate output. As soon as you need your files saved, move them to `/projects` or `/groups`. Local-only files are not backed up and **can be deleted without notice**.
 
-Here are tips on writing programs, scripts, containers, etc. that make good use of network resources:
-
-- Read inputs from and write the final results to `/projects` or `/groups`.
-- Write intermediate output to `/local/work`.
-
-### NFS caching
-
-Read operations on network storage (projects, groups) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be slower than usual due to the overhead of creating the cache, but any subsequent access will be made from local storage.
 
 ## GitHub Authentication through SSH
 

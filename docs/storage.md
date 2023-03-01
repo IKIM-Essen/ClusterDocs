@@ -17,7 +17,21 @@ Each node has local drives (typically a system drive and a data drive). The syst
 | /var/tmp | user generated temporary files | read-write | local-disk |
 | /tmp/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
 
+
+
+
+### Local-only files
+
+For some operations the NFS comes with unnecessary overhead. Therefore, the path `/local/work` is available for creating files and directories that reside on the storage drive of the current host. This location should only be used for quick testing, preliminary experimentation and intermediate output. As soon as you need your files saved, move them to `/projects` or `/groups`. Local-only files are not backed up and **can be deleted without notice**.
+
+Here are tips on writing programs, scripts, containers, etc. that make good use of network resources:
+
+- Read inputs from and write the final results to `/projects` or `/groups`.
+- Write intermediate output to `/local/work`.
+
 ### NFS storage
+
+Read operations on network storage (`/projects`, `/groups`) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be slightly slower than usual due, but any subsequent access will be made from local storage.
 
 The file server has a 10Gib (10Gbs, 10 gigabit per second connection to the entire cluster. As a consequence each node can access a fraction of 10Gib, in the worst case a tiny fraction. However we note that a 250MB (megabyte) file will need a fraction of a second to transfer from the server to the client. This rather brilliant performance stats drastically change if and when random IO (as in not streaming large files, write-locking files, etc.) enter the equation. Those complex operations are best left to local disk.
 
