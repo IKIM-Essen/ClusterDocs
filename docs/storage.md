@@ -17,9 +17,6 @@ Each node has local drives (typically a system drive and a data drive). The syst
 | /var/tmp | user generated temporary files | read-write | local-disk |
 | /tmp/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
 
-
-
-
 ### Local-only files
 
 For some operations the NFS comes with unnecessary overhead. Therefore, the path `/local/work` is available for creating files and directories that reside on the storage drive of the current host. This location should only be used for quick testing, preliminary experimentation and intermediate output. As soon as you need your files saved, move them to `/projects` or `/groups`. Local-only files are not backed up and **can be deleted without notice**.
@@ -41,7 +38,7 @@ Three different storage locations exist on the file server:
 
 | location | purpose | user read-write status | comment |
 | ---  | --- |  -- | ---|
-| /projects/    | project data | read-write |  not listable | 
+| /projects/    | project data | read-write |  not listable |
 | /groups/    | group files | read-write  |  not listable |
 | /homes  | user home directory | read-write | not cached |
 
@@ -58,5 +55,4 @@ We note that when using Linux containers (aka [docker)[./docker)) special attent
 ## Best practice use of storage locations
 
 Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there. We note that due to `/tmp` residing in main memory, it is advisable under some circumstances to use `/var/tmp` as that location is on disk.
-
 
