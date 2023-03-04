@@ -32,7 +32,7 @@ Read operations on network storage (`/projects`, `/groups`) are cached transpare
 
 The file server has a 10Gib (10Gbs, 10 gigabit per second connection to the entire cluster. As a consequence each node can access a fraction of 10Gib, in the worst case a tiny fraction. However we note that a 250MB (megabyte) file will need a fraction of a second to transfer from the server to the client. This rather brilliant performance stats drastically change if and when random IO (as in not streaming large files, write-locking files, etc.) enter the equation. Those complex operations are best left to local disk.
 
-As a consequence, using local files or cached files is a good idea to ensure good runtime performance. 
+As a consequence, using local files or cached files is a good idea to ensure good runtime performance.
 
 Three different storage locations exist on the file server:
 
@@ -55,4 +55,3 @@ We note that when using Linux containers (aka [docker)[./docker)) special attent
 ## Best practice use of storage locations
 
 Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there. We note that due to `/tmp` residing in main memory, it is advisable under some circumstances to use `/var/tmp` as that location is on disk.
-
