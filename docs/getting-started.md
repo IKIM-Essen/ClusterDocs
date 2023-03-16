@@ -18,7 +18,7 @@ Please send the public key along with following contact details to your project 
 
 - First name
 - Last name
-- UK/UDE email
+- Email address (domain _uk-essen.de_ or _uni-due.de_ if available)
 - Public SSH key (`~/.ssh/id_ikim.pub`)
 
 Afterwards, an account will be created for you in the central user management. When this is done, you should be able to SSH into the cluster.
