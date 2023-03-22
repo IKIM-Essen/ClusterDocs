@@ -133,10 +133,11 @@ We recommend two options for installing and using an SSH client on Windows:
 
 The cluster has two sets of servers: 120 nodes for CPU-bound tasks and 10 nodes for GPU-bound tasks. At this moment, not all of these nodes are available for general computation tasks. However, more will be added in future. The following hardware is installed in the servers:
 
-- CPU nodes (`c_nodes`): Each with 192GB RAM, 2 CPU Intel, 1 SSD for system and 1 SSD for data (2TB).
-- GPU nodes (`g_nodes`): Each with 6 NVIDIA RTX 6000 GPUs, 1024GB RAM, 2 CPU AMD, 1 SSD for system (1TB) and 2 NVMe for data (12TB configured as RAID-0).
+- CPU nodes (`c1` - `c120`): Each with 192GB RAM, 2 CPU Intel, 1 SSD for system and 1 SSD for data (2TB).
+- GPU nodes (`g1-1` - `g1-10`): Each with 6 NVIDIA RTX 6000 GPUs, 1024GB RAM, 2 CPU AMD, 1 SSD for system (1TB) and 2 NVMe for data (12TB configured as RAID-0).
+- GPU node (`g2-1`): One node with 8 NVIDIA A100 80G GPUs, 2TB RAM, 2 AMD EPYC CPUs (256 logical processors), 1 SSD for system (1TB) and 2 NVMe for data (30TB configured as RAID-0).
 
-Your project coordinator can give you recommendations on where to run your jobs.
+A subset of these nodes are deployed as a Slurm cluster. Unless instructed otherwise, you should interact with worker nodes using Slurm.
 
 ## What software is available on the IKIM cluster?
 
@@ -147,9 +148,10 @@ We aim to keep the computing environments on the cluster as clean as possible. T
 - Mamba/Conda
 - Apptainer
 
-We assume basic familiarity with the tools above. If you want to learn more, you can take a look at the following resources:
+Comprehensive guides on these tools are outside the scope of this document. To learn more, see the following resources:
 
-- [Conda Getting Started](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-conda)
+- [Slurm](./slurm.md)
+- [Conda Getting Started](./conda.md)
 - [Apptainer User Guide](https://apptainer.org/docs/user/main/index.html)
 
 ## Where to store your data?
