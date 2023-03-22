@@ -50,7 +50,7 @@ When targeting GPU nodes, always request a specific amount of GPUs using `--gpus
 
 The following example requests 2 GPUs and executes a script in batch mode with a deadline of 1 day and 12 hours:
 
-```
+```sh
 sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
 ```
 
