@@ -17,6 +17,7 @@ nav:
   - Introduction: index.md
   - Getting Started: getting-started.md
   - User Guide:
+     - Slurm: slurm.md
      - Conda: conda.md
      - Docker: docker.md
      - Storage: storage.md
