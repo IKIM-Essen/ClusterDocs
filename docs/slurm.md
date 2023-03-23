@@ -38,7 +38,7 @@ Use `srun` to submit a job interactively. The output of the job is displayed on 
 
 Use `sbatch` to submit a script. The output is written to a file in the current directory. All `srun` options apply to `sbatch` as well and can be included in the script itself with the special comment syntax `#SBATCH`.
 
-When you submit a job, the environment variables of your current shell are inherited to the job. Slurm also sets [several](https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES) environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`.
+When you submit a job, the environment variables of your current shell are inherited to the job. Slurm also sets [several][sbatch-env] environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`.
 
 ### scontrol
 
@@ -65,9 +65,6 @@ sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
 ```
 
 Acceptable time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
-
-[slurm-homepage]: https://slurm.schedmd.com
-[slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
 
 ## Basic Example
 
@@ -111,3 +108,7 @@ srun --partition GPUampere -w g2-1 --time=01:00:00 --pty bash -i
 
 # Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
 ```
+
+[slurm-homepage]: https://slurm.schedmd.com
+[slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
+[sbatch-env]: https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES
