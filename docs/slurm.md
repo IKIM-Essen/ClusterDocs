@@ -38,7 +38,7 @@ Use `sbatch` to submit a script. The output is written to a file in the current 
 
 When you submit a job, the environment variables of your current shell are inherited to the job. Slurm also sets [several][sbatch-env] environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`.
 
-#### Example
+#### Example: submit a job with sbatch
 
 To illustrate basic usage, let's create a script called `job.sh`. The output will be written to a file `slurm-[job_id].out`.
 
@@ -67,6 +67,22 @@ job id = 300451
 c120.ikim.uk-essen.de
 ```
 
+#### Example: obtain a shell on a node
+
+You may want to monitor a running job, for instance to check how well it makes use of CPU/GPU resources. To do that, you can start an interactive shell on the node your job is running on. This needs at least one free cpu core to work.
+
+```sh
+# Step 1: discover your allocated node with squeue.
+squeue -l
+
+# Step 2: start an interactive shell on that node.
+# In this example, the job runs on node c120.
+# A deadline is specified to avoid leaving a hanging session in case of an abrupt loss of connection.
+srun -w c120 --time=01:00:00 --pty bash -i
+
+# Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
+```
+
 ### scontrol
 
 Use `scontrol` to display detailed information about a job such as the allocated resources and the times of submission/start.
@@ -79,24 +95,11 @@ scontrol show jobid -dd [job_id]
 
 Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
 
-## Monitor a running job
-
-You may want to monitor a running job, for instance to check how well it makes use of GPU/CPU resources. To do that, you can start an interactive shell on the node your job is running on. This needs at least one free cpu core to work.
-
-```sh
-# Step 1: discover your allocated node with squeue.
-squeue -l
-
-# Step 2: start an interactive shell on that node.
-# In this example, the job runs on node g2-1 in partition `GPUampere`
-srun --partition GPUampere -w g2-1 --time=01:00:00 --pty bash -i
-
-# Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
-```
-
 ## Job submission etiquette
 
 If the job is expected to run continuously for more than a work day, specify a deadline using `--time`, even if just an overestimation. This information becomes especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled.
+
+It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
 
 When targeting GPU nodes, always request a specific amount of GPUs using `--gpus N` so that slurm can automatically assign different GPUs to concurrent jobs. More specifically, Slurm automatically selects a worker node with the specified amount of unassigned GPUs and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
 
@@ -106,7 +109,7 @@ The following example requests 2 GPUs and executes a script in batch mode with a
 sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
 ```
 
-Acceptable time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
+Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
 
 [slurm-homepage]: https://slurm.schedmd.com
 [slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
