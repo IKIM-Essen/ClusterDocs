@@ -16,8 +16,6 @@ See [Slurm quickstart][slurm-quickstart] for an introduction.
 
 This is a brief overview of the main commands available on the submission node. They can also be invoked from worker nodes as part of a submitted job.
 
-See the Slurm website for the complete manual with additional examples.
-
 ### sinfo
 
 Use `sinfo` to display a summary of the worker nodes.
