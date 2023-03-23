@@ -96,3 +96,18 @@ FOO=bar
 job id = 300451
 c120.ikim.uk-essen.de
 ```
+
+## Monitor a running job
+
+You may want to monitor a running job, for instance to check how well it makes use of GPU/CPU resources. To do that, you can start an interactive shell on the node your job is running on. This needs at least one free cpu core to work.
+
+```sh
+# Step 1: discover your allocated node with squeue.
+squeue -l
+
+# Step 2: start an interactive shell on that node.
+# In this example, the job runs on node g2-1 in partition `GPUampere`
+srun --partition GPUampere -w g2-1 --time=01:00:00 --pty bash -i
+
+# Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
+```
