@@ -38,23 +38,12 @@ Use `sbatch` to submit a script. The output is written to a file in the current 
 
 When you submit a job, the environment variables of your current shell are inherited to the job. Slurm also sets [several][sbatch-env] environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`.
 
-### scontrol
+#### Example
 
-Use `scontrol` to display detailed information about a job such as the allocated resources and the times of submission/start.
-
-```sh
-scontrol show jobid -dd [job_id]
-```
-
-### scancel
-
-Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
-
-## Basic Example
-
-To illustrate basic usage, we create below `job.sh`. The output will be written to a file `slurm-[job_id].out`.
+To illustrate basic usage, let's create a script called `job.sh`. The output will be written to a file `slurm-[job_id].out`.
 
 ```sh
+$ cat job.sh
 #!/bin/bash
 echo "my job ran at $(date)"
 echo "working directory = $(pwd)"
@@ -77,6 +66,18 @@ FOO=bar
 job id = 300451
 c120.ikim.uk-essen.de
 ```
+
+### scontrol
+
+Use `scontrol` to display detailed information about a job such as the allocated resources and the times of submission/start.
+
+```sh
+scontrol show jobid -dd [job_id]
+```
+
+### scancel
+
+Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
 
 ## Monitor a running job
 
