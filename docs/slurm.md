@@ -50,20 +50,6 @@ scontrol show jobid -dd [job_id]
 
 Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
 
-## Job submission etiquette
-
-If the job is expected to run continuously for more than a work day, specify a deadline using `--time`, even if just an overestimation. This information becomes especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled.
-
-When targeting GPU nodes, always request a specific amount of GPUs using `--gpus N` so that slurm can automatically assign different GPUs to concurrent jobs. More specifically, Slurm automatically selects a worker node with the specified amount of unassigned GPUs and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
-
-The following example requests 2 GPUs and executes a script in batch mode with a deadline of 1 day and 12 hours:
-
-```sh
-sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
-```
-
-Acceptable time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
-
 ## Basic Example
 
 To illustrate basic usage, we create below `job.sh`. The output will be written to a file `slurm-[job_id].out`.
@@ -106,6 +92,20 @@ srun --partition GPUampere -w g2-1 --time=01:00:00 --pty bash -i
 
 # Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
 ```
+
+## Job submission etiquette
+
+If the job is expected to run continuously for more than a work day, specify a deadline using `--time`, even if just an overestimation. This information becomes especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled.
+
+When targeting GPU nodes, always request a specific amount of GPUs using `--gpus N` so that slurm can automatically assign different GPUs to concurrent jobs. More specifically, Slurm automatically selects a worker node with the specified amount of unassigned GPUs and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
+
+The following example requests 2 GPUs and executes a script in batch mode with a deadline of 1 day and 12 hours:
+
+```sh
+sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
+```
+
+Acceptable time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
 
 [slurm-homepage]: https://slurm.schedmd.com
 [slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
