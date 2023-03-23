@@ -38,9 +38,19 @@ Use `srun` to submit a job interactively. The output of the job is displayed on 
 
 Use `sbatch` to submit a script. The output is written to a file in the current directory. All `srun` options apply to `sbatch` as well and can be included in the script itself with the special comment syntax `#SBATCH`.
 
+When you submit a job, the environment variables of your current shell are inherited to the job. Slurm also sets [several](https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES) environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`.
+
+### scontrol
+
+Use `scontrol` to display detailed information about a job such as the allocated resources and the times of submission/start.
+
+```sh
+scontrol show jobid -dd [job_id]
+```
+
 ### scancel
 
-Use `scancel` to cancel or terminate a job. To target a specific job, the job ID is required. Use `squeue` to display job IDs.
+Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
 
 ## Job submission etiquette
 
@@ -54,5 +64,35 @@ The following example requests 2 GPUs and executes a script in batch mode with a
 sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
 ```
 
+Acceptable time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
+
 [slurm-homepage]: https://slurm.schedmd.com
 [slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
+
+## Basic Example
+
+To illustrate basic usage, we create below `job.sh`. The output will be written to a file `slurm-[job_id].out`.
+
+```sh
+#!/bin/bash
+echo "my job ran at $(date)"
+echo "working directory = $(pwd)"
+echo "FOO=$FOO"
+echo "job id = $SLURM_JOB_ID"
+echo $(hostname)
+```
+
+```sh
+# Submit the job
+$ export FOO=bar
+$ sbatch job.sh
+Submitted batch job 300451
+
+# Show output file
+$ cat slurm-300451.out
+my job ran at Thu Mar 23 09:39:13 AM UTC 2023
+working directory = /homes/jan/tmp
+FOO=bar
+job id = 300451
+c120.ikim.uk-essen.de
+```
