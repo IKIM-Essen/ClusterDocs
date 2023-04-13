@@ -26,8 +26,8 @@ The default execution model of Apptainer is different from Docker's. The contain
 ```sh
 # When creating a file in the container, it is owned by the current user both in the container and on the host.
 alice@c1:~$ apptainer exec \
-	docker://alpine \
-	sh -c 'touch hello && ls -l hello'
+    docker://alpine \
+    sh -c 'touch hello && ls -l hello'
 -rw-rw-r--    1 alice   alice           0 Apr 13 10:07 hello
 alice@c1:~$ ls -l hello
 -rw-rw-r-- 1 alice alice 0 Apr 13 10:07 hello
@@ -36,8 +36,8 @@ alice@c1:~$ ls -l hello
 ```sh
 # Non-mounted paths are read-only.
 alice@c1:~$ apptainer exec \
-	docker://alpine \
-	apk add busybox-extras
+    docker://alpine \
+    apk add busybox-extras
 ERROR: Unable to lock database: Read-only file system
 ERROR: Failed to open apk database: Read-only file system
 ```
@@ -51,10 +51,10 @@ If a Docker image expects to be able to write in specific locations, they can si
 ```sh
 alice@c1:~$ mkdir ~/pgrun ~/pgdata
 alice@c1:~$ apptainer run \
-	--bind ~/pgdata:/var/lib/postgresql/data \
-	--bind ~/pgrun:/var/run/postgresql \
-	--env POSTGRES_PASSWORD=secret \
-	docker://postgres
+    --bind ~/pgdata:/var/lib/postgresql/data \
+    --bind ~/pgrun:/var/run/postgresql \
+    --env POSTGRES_PASSWORD=secret \
+    docker://postgres
 ```
 
 ### Writable tmpfs
@@ -64,10 +64,10 @@ The option `--writable-tmpfs` creates a writable area that allows making changes
 ```sh
 alice@c1:~$ mkdir ~/pgdata
 alice@c1:~$ apptainer run \
-	--bind ~/pgdata:/var/lib/postgresql/data \
-	--writable-tmpfs \
-	--env POSTGRES_PASSWORD=secret \
-	docker://postgres
+    --bind ~/pgdata:/var/lib/postgresql/data \
+    --writable-tmpfs \
+    --env POSTGRES_PASSWORD=secret \
+    docker://postgres
 ```
 
 ### Sandbox
@@ -82,10 +82,10 @@ bin  dev  environment  etc  home  lib  media  mnt  opt  proc  root  run  sbin  s
 
 # Install a package in the sandbox.
 alice@c1:~$ apptainer exec \
-	--writable \
-	--fakeroot \
-	mysandbox \
-	apk add busybox-extras
+    --writable \
+    --fakeroot \
+    mysandbox \
+    apk add busybox-extras
 ```
 
 The `--fakeroot` option makes the user appears as root in the container and mounts its home directory at `/root`.
