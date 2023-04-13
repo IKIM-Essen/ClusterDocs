@@ -48,10 +48,6 @@ The projects directory provides a means to generate project specific storage, ty
 
 The `/groups` directory is identical to `/projects` in technology. However every group on the organization has their own subdirectory.
 
-## Special circumstances
-
-We note that when using Linux containers (aka [docker)[./docker)) special attention is needed to ensure storage locations are in place and behave as expected.
-
 ## Best practice use of storage locations
 
 Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there. We note that due to `/tmp` residing in main memory, it is advisable under some circumstances to use `/var/tmp` as that location is on disk.
