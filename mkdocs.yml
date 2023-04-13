@@ -19,7 +19,7 @@ nav:
   - User Guide:
      - Slurm: slurm.md
      - Conda: conda.md
-     - Docker: docker.md
+     - Apptainer: apptainer.md
      - Storage: storage.md
      - Jupyter Notebooks: jupyter.md
      - Troubleshooting: troubleshooting.md
