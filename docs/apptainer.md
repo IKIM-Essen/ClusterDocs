@@ -18,7 +18,7 @@ The above commands support mostly the same set of options.
 When using the prefix `docker://`, Apptainer pulls the image from Docker Hub.
 
 ```sh
-$ apptainer run docker://alpine
+apptainer run docker://alpine
 ```
 
 The default execution model of Apptainer is different from Docker's. The container filesystem in Apptainer is read-only, although a number of paths such as `/tmp`, the user's home and the current directory are mounted read-write from the host into the container. Additionally, the default container user is the host user rather than root. The following examples demonstrate the effects of this behavior.
