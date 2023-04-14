@@ -49,8 +49,8 @@ The immutability of non-mounted paths, in combination with executing as the host
 If a Docker image expects to be able to write in specific locations, they can simply be mounted in the container while preserving the read-only mode for the rest of the filesystem. For example:
 
 ```sh
-alice@c1:~$ mkdir ~/pgrun ~/pgdata
-alice@c1:~$ apptainer run \
+mkdir ~/pgrun ~/pgdata
+apptainer run \
     --bind ~/pgdata:/var/lib/postgresql/data \
     --bind ~/pgrun:/var/run/postgresql \
     --env POSTGRES_PASSWORD=secret \
@@ -62,8 +62,8 @@ alice@c1:~$ apptainer run \
 The option `--writable-tmpfs` creates a writable area that allows making changes to the container filesystem. The default size is 16 MiB, therefore it is only suitable for small writes such as PID or state-tracking files. Any changes are lost when the container exits.
 
 ```sh
-alice@c1:~$ mkdir ~/pgdata
-alice@c1:~$ apptainer run \
+mkdir ~/pgdata
+apptainer run \
     --bind ~/pgdata:/var/lib/postgresql/data \
     --writable-tmpfs \
     --env POSTGRES_PASSWORD=secret \
@@ -72,23 +72,33 @@ alice@c1:~$ apptainer run \
 
 ### Sandbox
 
-To switch to a full read-write model, Apptainer allows executing the container filesystem from a directory on the host. Such a directory is called _sandbox_ in Apptainer terminology. After creating a sandbox, it can be passed to `apptainer` commands as any other image and made writable with `--writable --fakeroot`.
+Apptainer can switch to a full read-write model by combining [sandbox directories][sandbox-directories] with [fakeroot] mode. A sandbox is a filesystem tree in a directory on the host. When executing a container from a sandbox, the filesystem can be made writable. Fakeroot mode makes the user appear as root in the container, thereby allowing complete access to the container filesystem.
 
 ```sh
 # Create a sandbox.
-alice@c1:~$ apptainer build --sandbox mysandbox docker://alpine
-alice@c1:~$ ls mysandbox
+alice@c1:~$ apptainer build --sandbox /local/work/mysandbox docker://alpine
+alice@c1:~$ ls /local/work/mysandbox
 bin  dev  environment  etc  home  lib  media  mnt  opt  proc  root  run  sbin  singularity  srv  sys  tmp  usr  var
 
 # Install a package in the sandbox.
 alice@c1:~$ apptainer exec \
     --writable \
     --fakeroot \
-    mysandbox \
+    /local/work/mysandbox \
     apk add busybox-extras
 ```
 
-The `--fakeroot` option makes the user appears as root in the container and mounts its home directory at `/root`.
+Fakeroot mode cannot work properly if the sandbox directory is on NFS. For best results, sandboxes should be placed on local storage as shown in the example above.
+
+Depending on the changes made to a sandbox, it might not be possible to delete it from the host as a regular user, although it can always be deleted from a fakeroot container:
+
+```sh
+# Remove the contents of the sandbox.
+apptainer exec --fakeroot --bind /local/work/mysandbox docker://alpine rm -R /local/work/mysandbox
+
+# Remove the leftover empty directory.
+rmdir /local/work/mysandbox
+```
 
 ## Using GPUs
 
@@ -101,3 +111,5 @@ apptainer exec --nv docker://nvcr.io/nvidia/cuda:12.1.0-base-ubuntu22.04 /usr/bi
 Apptainer doesn't have an equivalent of the `--gpus` option from the NVIDIA Docker runtime. The environment variable `CUDA_VISIBLE_DEVICES` should be used to control GPU visibility inside the container. See [Targeting GPU nodes with Slurm](./slurm.md).
 
 [apptainer]: https://apptainer.org
+[sandbox-directories]: https://apptainer.org/docs/user/main/quick_start.html#sandbox-directories
+[fakeroot]: https://apptainer.org/docs/user/main/fakeroot.html
