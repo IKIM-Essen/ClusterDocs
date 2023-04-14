@@ -75,7 +75,7 @@ apptainer run \
 Apptainer can switch to a full read-write model by combining [sandbox directories][sandbox-directories] with [fakeroot] mode. A sandbox is a filesystem tree in a directory on the host. When executing a container from a sandbox, the filesystem can be made writable. Fakeroot mode makes the user appear as root in the container, thereby allowing complete access to the container filesystem.
 
 ```sh
-# Create a sandbox.
+# Create a sandbox on local storage.
 alice@c1:~$ apptainer build --sandbox /local/work/mysandbox docker://alpine
 alice@c1:~$ ls /local/work/mysandbox
 bin  dev  environment  etc  home  lib  media  mnt  opt  proc  root  run  sbin  singularity  srv  sys  tmp  usr  var
