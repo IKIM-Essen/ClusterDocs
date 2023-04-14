@@ -90,4 +90,14 @@ alice@c1:~$ apptainer exec \
 
 The `--fakeroot` option makes the user appears as root in the container and mounts its home directory at `/root`.
 
+## Using GPUs
+
+The `--nv` option instructs Apptainer to add GPU support to the container.
+
+```sh
+apptainer exec --nv docker://nvcr.io/nvidia/cuda:12.1.0-base-ubuntu22.04 /usr/bin/nvidia-smi
+```
+
+Apptainer doesn't have an equivalent of the `--gpus` option from the NVIDIA Docker runtime. The environment variable `CUDA_VISIBLE_DEVICES` should be used to control GPU visibility inside the container. See [Targeting GPU nodes with Slurm](./slurm.md).
+
 [apptainer]: https://apptainer.org
