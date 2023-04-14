@@ -8,7 +8,7 @@ ssh slurmq
 
 From the submission node, jobs (inline commands or scripts) can be submitted to worker nodes.
 
-Worker nodes are divided in groups called _partitions_ in Slurm terminology. The default partition is made up of CPU nodes. GPU nodes are available in a non-default partition named after the corresponding NVIDIA GPU architecture.
+Worker nodes are divided in groups called _partitions_ in Slurm terminology. The default partition is made up of general-purpose CPU nodes.
 
 See [Slurm quickstart][slurm-quickstart] for an introduction.
 
@@ -77,7 +77,7 @@ squeue -l
 
 # Step 2: start an interactive shell on that node.
 # In this example, the job runs on node c120.
-# A deadline is specified to avoid leaving a hanging session in case of an abrupt loss of connection.
+# A deadline of 1 hour is specified to avoid leaving a hanging session in case of an abrupt loss of connection.
 srun -w c120 --time=01:00:00 --pty bash -i
 
 # Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
@@ -95,21 +95,29 @@ scontrol show jobid -dd [job_id]
 
 Use `scancel [job_id]` to cancel or terminate a job. Use `squeue` to display job IDs.
 
-## Job submission etiquette
+## Targeting GPU nodes
 
-If the job is expected to run continuously for more than a work day, specify a deadline using `--time`, even if just an overestimation. This information becomes especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled.
+GPU nodes are available in a non-default partition named after the corresponding NVIDIA GPU architecture. The `--partition` option must be specified to target them.
 
-It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
-
-When targeting GPU nodes, always request a specific amount of GPUs using `--gpus N` so that slurm can automatically assign different GPUs to concurrent jobs. More specifically, Slurm automatically selects a worker node with the specified amount of unassigned GPUs and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
-
-The following example requests 2 GPUs and executes a script in batch mode with a deadline of 1 day and 12 hours:
+When executing GPU workloads, the `--gpus N` option should always be specified to let slurm assign `N` GPUS automatically. More specifically, Slurm automatically selects a suitable worker node, picks the specified number of GPUs randomly among the unassigned ones and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
 
 ```sh
-sbatch --partition GPUampere --gpus 2 --time=1-12 job.sh
+# In this example, 2 GPUs from a node in the GPUampere partition are exposed via CUDA_VISIBLE_DEVICES.
+# A deadline of 1 day and 12 hours is specified to let other users know when the GPUs will be available again.
+srun --partition GPUampere --gpus 2 --time=1-12 train.py
 ```
 
-Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
+By specifying `--gpus 0` or omitting the option, slurm does not set the `CUDA_VISIBLE_DEVICES` variable, but it does **not** mean that GPUs are hidden. The job will have access to all GPUs on the node, even the ones assigned to other slurm jobs. This is useful when monitoring the usage of resources on specific nodes:
+
+```sh
+srun --partition GPUampere --nodelist=g2-1 nvidia-smi
+```
+
+## Job submission etiquette
+
+If a job is expected to run continuously for many hours, a deadline should be specified with the option `--time`, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
+
+It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
 
 [slurm-homepage]: https://slurm.schedmd.com
 [slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
