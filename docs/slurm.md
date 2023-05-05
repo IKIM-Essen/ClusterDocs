@@ -32,9 +32,7 @@ to display additional information such as the time limit.
 
 ### srun
 
-Use `srun` to submit a job interactively. The output is displayed on the terminal. Resources such as CPU cores or GPUs on one or more nodes can be requested via command-line options.
-
-When Slurm executes a job, it inherits the caller's environment and current directory. Slurm also sets [several][sbatch-env] environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`. The same applies to the other submission commands `sbatch` and `salloc`.
+Use `srun` to submit a job interactively. The output is displayed on the terminal.
 
 #### Example: obtaining a shell on a node
 
@@ -45,9 +43,19 @@ The following example opens a shell on a worker node. The node is selected autom
 srun --time=01:00:00 --pty bash -i
 ```
 
+#### Example: requesting resources
+
+A simple `srun` command is executed by default on a single worker node, using a single CPU core. Several options are available for configuring the allocated resources. In the following example, Slurm allocates 32 CPU cores by picking a worker node with enough free cores.
+
+```sh
+srun --cpus-per-task=32 python3 script.py
+```
+
 #### Example: environment inheritance
 
-Let's create a script called `job.sh` and execute it via `srun`.
+When Slurm executes a job, it inherits the caller's environment and current directory. Slurm also sets [several][sbatch-env] environment variables such as `SLURM_JOB_ID` and `SLURM_JOB_NAME`. The same applies to the other submission commands `sbatch` and `salloc`.
+
+To illustrate, let's create a script called `job.sh` and execute it via `srun`.
 
 ```sh
 $ pwd
