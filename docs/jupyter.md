@@ -78,57 +78,5 @@ Connect to the Slurm submission node as described in [Connect to a remote host][
 
 From the submission node, connect to the Jupyter server as described in [Connect to a remote Jupyter server][vscode-docs-remote-jupyter]. When prompted for the URL, simply copy and paste the URL displayed in the output from `jupyter notebook`. As opposed to the browser method, in this case the connection originates from inside the cluster and there's no need to set up port forwarding.
 
-## First Time Setup
-
-If you have not used Jupyter (or JupyterLab) on the cluster before, you will need to initialize your config files and profile.[^1] This will generate new configuration files in `~/.jupyter` and `~/.ipython` for you.
-
-[^1]: This section is based on <https://docs.hpc.sussex.ac.uk/apollo2/jupyter.html#first-time-setup-and-nfs-issue>
-
-```sh
-jupyter notebook --generate-config
-jupyter lab --generate-config # if you use jupyterlab
-ipython profile create
-```
-
-There is an issue that affects all Jupyter sessions where Jupyter and Ipython data directories reside on NFS mounts (specifically any of your research volumes or your HPC home directory). By default, Jupyter uses your home directory to store a couple of SQLite databases. However, due to an issue with file locking, SQLite is known to misbehave on some NFS mounts (see [here](https://www.sqlite.org/faq.html#q5)).
-
-**How the problem presents itself:**
-Your Jupyter sessions will simply hang and become unresponsive, as it will be stuck waiting for the SQLite databases’ files to be locked, which is not supported over NFS home directories.
-
-**How to resolve the issue**
-You will need to tell Jupyter and Ipython to use memory to store the database information instead of creating a file in your home directory. This can be done by editing the configuration files for Jupyter and Ipython. (Which you may have just created by following the instructions above).
-
-```sh
-# Edit Jupyter configuration
-vi ~/.jupyter/jupyter_notebook_config.py
-
-# Change following line
-# c.NotebookNotary.db_file = ''
-
-# To:
-c.NotebookNotary.db_file = ':memory:'
-```
-
-```sh
-# Edit IPython configuration
-vi ~/.ipython/profile_default/ipython_config.py
-
-# Change following two lines
-# c.HistoryManager.hist_file=''
-# c.HistoryAccessor.hist_file=''
-
-# To:
-c.HistoryManager.hist_file=':memory:'
-c.HistoryAccessor.hist_file=':memory:'
-```
-
-```sh
-# Edit JupyterLab configuration
-vi ~/.jupyter/jupyter_lab_config.py
-
-# Add the following line
-c.NotebookNotary.db_file = ':memory:'
-```
-
 [vscode-docs-connect-ssh-host]: https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host
 [vscode-docs-remote-jupyter]: https://code.visualstudio.com/docs/datascience/jupyter-notebooks#_connect-to-a-remote-jupyter-server
