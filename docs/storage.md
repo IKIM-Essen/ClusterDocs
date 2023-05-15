@@ -47,7 +47,3 @@ Each user has a private home-directory. The contents of which are private to the
 The projects directory provides a means to generate project specific storage, typically associated with a linux group shared by all members of the project. Thus `/projects/abc` is shared only by members of the project `abc`. We note that by using the `id` command users can identify all the groups they belong to. The contents of /projects are cached on the local disk, read access against data in /projects will typically no place too much of burden on the file server. The contents of the `/projects` folder will not be completely listed when e.g. executing `ls /projects/` as contents are mounted on demand by [automounter](https://help.ubuntu.com/community/Autofs). You can request a `/project` directory by talking to us on Mattermost or have your PI request one.
 
 The `/groups` directory is identical to `/projects` in technology. However every group on the organization has their own subdirectory.
-
-## Best practice use of storage locations
-
-Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there.
