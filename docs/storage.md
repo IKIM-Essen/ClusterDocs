@@ -6,20 +6,20 @@ The cluster has a number of options for retrieving and storing data. They have v
 
 Not all storage locations are alike and it is worth your while to understand their specific properties.
 
-### Local storage
+### Local storage on the system partition
 
-Each node has local drives (typically a system drive and a data drive). The system drive is used for the operating system, the configuration, [swap files](https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
+The local storage on each node typically consists of a system partition and a data partition. The system partition is used for the operating system, the configuration, [swap files](https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
 
 | location | purpose | user read-write status | comment |
 | ---  | --- |  -- | ---|
 | /etc/    | configuration | read-only |  |
 | /var/    | temporary files | read-only |  |
-| /var/tmp | user generated temporary files | read-write | local-disk |
-| /tmp/    | user generated temporary files | read-write | [tempfs](https://en.wikipedia.org/wiki/Tmpfs); local RAM |
+| /var/tmp | user-generated temporary files | read-write | local disk |
+| /tmp/    | user-generated temporary files, deleted on reboot | read-write | local disk |
 
-### Local-only files
+### Local storage on the data partition
 
-For some operations the NFS comes with unnecessary overhead. Therefore, the path `/local/work` is available for creating files and directories that reside on the storage drive of the current host. This location should only be used for quick testing, preliminary experimentation and intermediate output. As soon as you need your files saved, move them to `/projects` or `/groups`. Local-only files are not backed up and **can be deleted without notice**.
+For some operations the NFS comes with unnecessary overhead. Therefore, the path `/local/work` is available for creating files and directories that reside on the data partition of the current host. This location should only be used for quick testing, preliminary experimentation and intermediate output. As soon as you need your files saved, move them to `/projects` or `/groups`. Local-only files are not backed up and **can be deleted without notice**.
 
 Here are tips on writing programs, scripts, containers, etc. that make good use of network resources:
 
@@ -28,7 +28,7 @@ Here are tips on writing programs, scripts, containers, etc. that make good use 
 
 ### NFS storage
 
-Read operations on network storage (`/projects`, `/groups`) are cached transparently on the local storage drive. Generally speaking, your first access to a dataset will be slightly slower than usual due, but any subsequent access will be made from local storage.
+Read operations on network storage (`/projects`, `/groups`) are cached transparently on local storage in the data partition. Generally speaking, your first access to a dataset will be slightly slower than usual due, but any subsequent access will be made from local storage.
 
 The file server has a 10Gib (10Gbs, 10 gigabit per second connection to the entire cluster. As a consequence each node can access a fraction of 10Gib, in the worst case a tiny fraction. However we note that a 250MB (megabyte) file will need a fraction of a second to transfer from the server to the client. This rather brilliant performance stats drastically change if and when random IO (as in not streaming large files, write-locking files, etc.) enter the equation. Those complex operations are best left to local disk.
 
@@ -50,4 +50,4 @@ The `/groups` directory is identical to `/projects` in technology. However every
 
 ## Best practice use of storage locations
 
-Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there. We note that due to `/tmp` residing in main memory, it is advisable under some circumstances to use `/var/tmp` as that location is on disk.
+Using `/tmp` or `/var/tmp` for temporary data (and cleaning up after the run automatically) is a good idea. A lot of software environments are configured to honor the `$TMP` environment variable and store any temporary files there.
