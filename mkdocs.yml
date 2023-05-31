@@ -1,6 +1,6 @@
 site_name: IKIM Cluster
 site_url: https://ikim-essen.github.io/ClusterDocs/
-copyright: Copyright &copy; 2022 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
+copyright: Copyright &copy; 2023 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
 
 theme:
   name: material
