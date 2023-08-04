@@ -19,7 +19,8 @@ nav:
   - Getting Started: getting-started.md
   - User Guide:
      - Slurm: slurm.md
-     - Conda: conda.md
+     - Mamba/Conda: conda.md
+     - Snakemake: snakemake.md
      - Apptainer: apptainer.md
      - Storage: storage.md
      - Jupyter Notebooks: jupyter.md
