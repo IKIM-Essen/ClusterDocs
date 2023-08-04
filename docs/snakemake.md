@@ -19,7 +19,7 @@ It is recommended to execute your analyses via Slurm, for maintenance and perfor
 To do this by default set the default Snakemake profile (i.e. Snakemake's default options) to be the slurm profile in your `.bashrc`:
 
 ```sh
-echo "export SNAKEMAKE_PROFILE=slurm
+echo "export SNAKEMAKE_PROFILE=slurm" >> .bashrc
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ Given that you are inside of a working directory that contains a Snakemake workf
 nice snakemake --jobs N
 ```
 
-and it will automatically submit the jobs to the slurm cluster.
+with `N` being the number of jobs you want to run in parallel at most, and it will automatically submit the jobs to the slurm cluster.
 In order to perform a dry-run (i.e. just see the plan, which is highly recommended before actually executing, run
 
 ```sh
