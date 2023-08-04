@@ -42,4 +42,4 @@ For a full tutorial on Snakemake, please check out [the official Snakemake tutor
 ## Further hints
 
 * Make sure to follow the [best-practices](https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html).
-* If you and your colleagues have common tasks that often reoccur in workflows, you can safe a lot of time by activating Snakemake's [between workflow caching](https://snakemake.readthedocs.io/en/stable/executing/caching.html).
+* If you and your colleagues have common tasks that often reoccur in workflows, you can save a lot of time by activating Snakemake's [between workflow caching](https://snakemake.readthedocs.io/en/stable/executing/caching.html).
