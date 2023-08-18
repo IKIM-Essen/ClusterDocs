@@ -3,7 +3,8 @@
 The entry point to the [Slurm][slurm-homepage] cluster is a set of nodes under the name `shellhost`. Before connecting, acquire the list of ssh host keys by executing:
 
 ```sh
-ssh ikim resolvectl query shellhost.ikim.uk-essen.de | \
+ssh-keygen -R shellhost.ikim.uk-essen.de && \
+    ssh ikim resolvectl query shellhost.ikim.uk-essen.de | \
     grep -E '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' --only-matching | \
     sed -E 's/(.*)/\1 shellhost.ikim.uk-essen.de/' | \
     ssh ikim ssh-keyscan -t ed25519 -f - >> ~/.ssh/known_hosts
