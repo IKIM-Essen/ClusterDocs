@@ -83,7 +83,7 @@ Host ikim
   IdentityFile ~/.ssh/id_ikim
   ForwardAgent yes
 
-Host g1-? c? c?? slurmq
+Host g1-? c? c?? shellhost
   Hostname %h.ikim.uk-essen.de
   User $USERNAME
   IdentityFile ~/.ssh/id_ikim
@@ -91,28 +91,19 @@ Host g1-? c? c?? slurmq
   ForwardAgent yes
 ```
 
-With `~/.ssh/config` in place, you can use the following command to log into any host, replacing `$HOSTNAME` appropriately.
-
-```sh
-ssh $HOSTNAME
-```
-
-The connection will transparently jump through the host labeled `ikim` and proceed to the target `$HOSTNAME`. The `ikim` host itself must _not_ be used for computational work.
-
 ### Test your SSH login
 
 Try the example below to test that your SSH client is properly configured:
 
 ```sh
-# Log into the slurm submission node
-ssh slurmq
+ssh ikim
 ```
 
-If the above is not working, please run the commands below and send the debug messages to your project coordinator for help.
+If it succeeds, type `exit` to log out. The `ikim` host must be used only for ssh authentication and _not_ for computational work; in fact, users should not log into it directly. Using the provided configuration file, ssh will automatically "jump through" the `ikim` host to reach the compute nodes.
 
-```sh
-ssh -v slurmq
-```
+For instructions on using the compute nodes, see the section [What software is available on the IKIM cluster?](#what-software-is-available-on-the-ikim-cluster)
+
+If the login test fails, please run the command below and send the output to your project coordinator for help.
 
 ```sh
 ssh -v ikim
@@ -141,18 +132,13 @@ A subset of these nodes are deployed as a Slurm cluster. Unless instructed other
 
 ## What software is available on the IKIM cluster?
 
-We aim to keep the computing environments on the cluster as clean as possible. Therefore, only commonly used software packages are pre-installed and configured. At this moment this includes:
+The main entrypoint to the cluster is Slurm. On compute nodes, we aim to keep the environment as clean as possible, therefore only commonly used software packages are pre-installed and configured. At this moment the list includes:
 
-- Slurm
 - Python 3
 - Mamba/Conda
 - Apptainer
 
-Comprehensive guides on these tools are outside the scope of this document. To learn more, see the following resources:
-
-- [Slurm](./slurm.md)
-- [Conda Getting Started](./conda.md)
-- [Apptainer User Guide](https://apptainer.org/docs/user/main/index.html)
+Introductory guides can be reached from the navigation pane.
 
 ## Where to store your data?
 

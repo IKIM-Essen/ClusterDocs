@@ -3,7 +3,7 @@
 [Mambaforge][mambaforge] provides `mamba` and `conda` on the cluster.
 Users who prefer to manage their own installation can install a Conda distribution in their home directory.
 
-See [Getting started with conda][conda-getting-started] for an introduction.
+This document is not a comprehensive guide on Conda. To learn more, see the official manual.
 
 ## Using Conda with Slurm
 
@@ -23,7 +23,7 @@ This happens because `conda activate` is made available as a shell function whic
 The suggestion of executing `conda init` **does not apply to Slurm**.
 Instead, an environment can be activated with one of the following methods:
 
-- Execute `conda activate` while logged into the submission node, then submit the job:
+- Execute `conda activate` while logged into a submission node, then submit the job:
 
   ```sh
   $ conda activate myenv
@@ -47,5 +47,4 @@ Instead, an environment can be activated with one of the following methods:
   CONDA_PREFIX=/homes/user/.conda/envs/myenv
   ```
 
-[conda-getting-started]: https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-conda
 [mambaforge]: https://github.com/conda-forge/miniforge#mambaforge
