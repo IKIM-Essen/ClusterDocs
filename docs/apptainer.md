@@ -2,6 +2,8 @@
 
 [Apptainer][apptainer] is the container system installed on the Slurm cluster. In contrast to Docker, it does not grant the user elevated privileges and is well-suited to multi-user environments. Nonetheless, it can run containers from Docker images as long as they do not depend on intrinsic root privileges such as binding to host ports below 1024.
 
+This document is not a comprehensive guide on Apptainer. To learn more, see the official manual.
+
 ## Basic commands
 
 Apptainer provides the following commands for launching containers:

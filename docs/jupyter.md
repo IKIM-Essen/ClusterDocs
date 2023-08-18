@@ -4,10 +4,10 @@ The Jupyter Notebook is an open-source web application that allows creating and 
 
 ## Starting a Jupyter server instance
 
-To launch a Jupyter instance on the [Slurm](./slurm.md) cluster, first log into the Slurm submission node:
+To launch a Jupyter instance on the [Slurm](./slurm.md) cluster, first log into a Slurm submission node:
 
 ```sh
-ssh slurmq
+ssh shellhost
 ```
 
 Next, either create a conda environment with the package `notebook` from the channel `conda-forge` or install the package in an existing environment.
@@ -74,9 +74,7 @@ To verify that the notebook is running on the remote host and within the conda e
 
 ### From Visual Studio Code
 
-Connect to the Slurm submission node as described in [Connect to a remote host][vscode-docs-connect-ssh-host]. When prompted for the target host, type `slurmq`.
-
-From the submission node, connect to the Jupyter server as described in [Connect to a remote Jupyter server][vscode-docs-remote-jupyter]. When prompted for the URL, simply copy and paste the URL displayed in the output from `jupyter notebook`. As opposed to the browser method, in this case the connection originates from inside the cluster and there's no need to set up port forwarding.
+Connect to a Slurm submission node as described in [Connect to a remote host][vscode-docs-connect-ssh-host]. When prompted for the target host, type `shellhost`. From there, connect to the Jupyter server as described in [Connect to a remote Jupyter server][vscode-docs-remote-jupyter]. When prompted for the URL, simply copy and paste the URL displayed in the output from `jupyter notebook`. As opposed to the browser method, in this case the connection originates from inside the cluster and there's no need to set up port forwarding.
 
 [vscode-docs-connect-ssh-host]: https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host
 [vscode-docs-remote-jupyter]: https://code.visualstudio.com/docs/datascience/jupyter-notebooks#_connect-to-a-remote-jupyter-server

@@ -1,20 +1,29 @@
 # Slurm
 
-The entry point to the [Slurm][slurm-homepage] cluster is the job submission node:
+The entry point to the [Slurm][slurm-homepage] cluster is a set of nodes under the name `shellhost`. Before connecting, acquire the list of ssh host keys by executing:
 
 ```sh
-ssh slurmq
+ssh ikim resolvectl query shellhost.ikim.uk-essen.de | \
+    grep -E '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' --only-matching | \
+    sed -E 's/(.*)/\1 shellhost.ikim.uk-essen.de/' | \
+    ssh ikim ssh-keyscan -t ed25519 -f - >> ~/.ssh/known_hosts
 ```
 
-From the submission node, jobs (inline commands or scripts) can be submitted to worker nodes.
+Then connect to a submission node:
+
+```sh
+ssh shellhost
+```
+
+Jobs (inline commands or scripts) can be submitted to worker nodes from any of the submission nodes.
 
 Worker nodes are divided in groups called _partitions_ in Slurm terminology. The default partition is made up of general-purpose CPU nodes.
 
-See [Slurm quickstart][slurm-quickstart] for an introduction.
+This document is not a comprehensive guide on Slurm. To learn more, see the official manual.
 
 ## Client tools
 
-This is a brief overview of the main commands available on the submission node. They can also be invoked from worker nodes as part of a submitted job.
+This is a brief overview of the main commands available on the submission nodes. They can also be invoked from worker nodes as part of a submitted job.
 
 ### sinfo
 
@@ -208,5 +217,4 @@ If a job is expected to run continuously for many hours, a deadline should be sp
 It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
 
 [slurm-homepage]: https://slurm.schedmd.com
-[slurm-quickstart]: https://slurm.schedmd.com/quickstart.html
 [sbatch-env]: https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES
