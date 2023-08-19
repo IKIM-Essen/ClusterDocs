@@ -37,7 +37,7 @@ Assumptions:
 * You are inside of a working directory that contains a Snakemake workflow (either a file `Snakefile` or `workflow/Snakefile` in the same dir)
 * You have completed above installation steps.
 
-Since your Snakemake workflow might run for a longer time, you usually want it to be independent of the current shell session (otherwise, the Snakemake process would be killed when the session is closed or disconnected).
+Since your Snakemake workflow might run for a longer time, you usually want it to be independent of the current ssh session (otherwise, the Snakemake process would be killed when the session is closed or disconnected).
 Therefore, we recommend to first generate a so-called tmux session via
 
 ```sh
