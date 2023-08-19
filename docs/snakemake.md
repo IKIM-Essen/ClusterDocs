@@ -46,7 +46,8 @@ tmux new -s SESSIONNAME
 
 with `SESSIONNAME` being a reasonable name under which you can remember your intended Snakemake run.
 For a full summary of all tmux functionality, see [here](https://tmuxcheatsheet.com/).
-In addition, note for youself the name of the host (`hostname -a`), so that you can later come back to the same in case you log youself out or are disconnected.
+In addition, note for youself the name of the host (`hostname -a`), so that you can later come back to the same in case you close the ssh session youself out or are disconnected.
+This is necessary because `shellhost` is a DNS name that is associated with multiple physical machines and you can never know to which machine you care connected when doing `ssh shellhost` (this happens because we want to distribute the load of many active users across several machines).
 In such a case, you can come back to the same host (say, `HOSTNAME`) and open the tmux session via
 
 ```sh
