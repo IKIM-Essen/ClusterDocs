@@ -236,4 +236,4 @@ It's good practice to always specify a deadline when opening a shell (`srun --pt
 
 [slurm-homepage]: https://slurm.schedmd.com
 [sbatch-env]: https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES
-[targeting-gpu-nodes]: [#targeting-gpu-nodes]
+[targeting-gpu-nodes]: #targeting-gpu-nodes
