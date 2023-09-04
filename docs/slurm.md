@@ -163,6 +163,8 @@ Since any job requires at least one CPU core, this method doesn't work if all CP
 
 `salloc` allocates resources that can be used by subsequent invocations of `srun` or `sbatch`. By default, after allocating the resources `salloc` opens a shell **on the current node**: any `srun` or `sbatch` commands issued in this shell will use the allocated resources. When the user terminates the shell, the allocation is relinquished.
 
+The following example requests allocates a certain number of nodes for a limited amount of time. Note that the assigned nodes are not allocated exclusively unless specified, for example by requesting all available CPU cores.
+
 ```sh
 $ salloc --nodes=3 --time=01:00:00
 salloc: Granted job allocation 340227
@@ -179,7 +181,22 @@ salloc: Job allocation 340227 has been revoked.
 
 If a command is supplied to `salloc`, it is executed instead of opening a shell. The command runs on the current node, therefore it should include `srun` or `sbatch`.
 
-The assigned nodes are not allocated exclusively unless specified, for example by requesting all available CPU cores.
+To request only an allocation without executing a specific command right away, execute `salloc` with `--no-shell`. As soon as the allocation is granted, a job ID is displayed in the output. The allocation can then be used by invoking `srun` or `sbatch` and passing the job ID to the `--jobid` option. The allocation stays active until either the `--time` runs out or it gets terminated via `scancel`.
+
+#### Example: allocate resources for future use
+
+The following example allocates 3 GPUs on the same node for 8 hours. At any point within this time frame, jobs can be executed on the allocation.
+
+```sh
+$ salloc --no-shell --time=08:00:00 --partition GPUampere --nodes=1 --gpus 3
+salloc: Granted job allocation 486835
+
+# A shell or any other job can now be submitted on allocation 486835.
+# This can be done as many time as desired until the allocated time runs out.
+$ srun --jobid=486835 --pty bash -i
+```
+
+See [Targeting GPU nodes][targeting-gpu-nodes] to learn more about requesting GPUs.
 
 ### scontrol
 
@@ -219,3 +236,4 @@ It's good practice to always specify a deadline when opening a shell (`srun --pt
 
 [slurm-homepage]: https://slurm.schedmd.com
 [sbatch-env]: https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES
+[targeting-gpu-nodes]: [#targeting-gpu-nodes]
