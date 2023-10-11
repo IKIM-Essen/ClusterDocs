@@ -165,7 +165,9 @@ ssh c11
 
 The ssh session is incorporated into one of the running jobs on the target node: when the job terminates, the ssh session terminates as well.
 
-Alternatively, interactive shells can be launched on any worker node using `srun`, regardless of running jobs. See [Example: obtaining a shell on a node](#example-obtaining-a-shell-on-a-node). The `srun` method allocates one CPU core on the target node, therefore it doesn't work if the node is already fully allocated.
+This feature is meant for monitoring and debugging. **Do not** use it for work that could be submitted via slurm instead.
+
+Interactive shells can also be launched on any worker node using `srun`, regardless of running jobs. See [Example: obtaining a shell on a node](#example-obtaining-a-shell-on-a-node). The `srun` method allocates one CPU core on the target node, therefore it doesn't work if the node is already fully allocated.
 
 ### salloc
 
