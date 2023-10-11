@@ -83,7 +83,7 @@ Host ikim
   IdentityFile ~/.ssh/id_ikim
   ForwardAgent yes
 
-Host g1-? c? c?? shellhost
+Host g?-? c? c?? c??? shellhost
   Hostname %h.ikim.uk-essen.de
   User $USERNAME
   IdentityFile ~/.ssh/id_ikim
