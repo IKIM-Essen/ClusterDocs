@@ -53,6 +53,8 @@ The following example opens a shell on a worker node. The node is selected autom
 srun --time=01:00:00 --pty bash -i
 ```
 
+It's also possible to connect to worker nodes directly via ssh. See [Example: connect to a worker node](#example-connect-to-a-worker-node).
+
 #### Example: requesting resources
 
 A simple `srun` command is executed by default on a single worker node, using a single CPU core. Several options are available for configuring the allocated resources. In the following example, Slurm allocates 32 CPU cores by picking a worker node with enough free cores.
@@ -142,22 +144,30 @@ c7.ikim.uk-essen.de
 hello
 ```
 
-#### Example: monitor a job
+#### Example: connect to a worker node
 
-It can be useful to request a shell on a specific node, for example to monitor the resource usage of a running job.
+Users can connect via ssh to worker nodes on which they have at least one running job. This is typically useful for launching monitoring (`htop`, `nvidia-smi`, etc.) or debugging tools.
+
+After launching a job, the allocated node can be quickly discovered by passing `-u username` to `squeue`. For example:
 
 ```sh
-# Step 1: discover your allocated node with squeue.
-squeue -l
-
-# Step 2: start an interactive shell on that node.
-# In this example, the job runs on node c120.
-srun --nodelist=c120 --time=01:00:00 --pty bash -i
-
-# Step 3: run your diagnosis tools (e.g, htop, nvidia-smi, etc.)
+$ squeue -u alice
+JOBID PARTITION   NAME    USER ST   TIME  NODES NODELIST(REASON)
+ 1234      IKIM   job1   alice  R   10:30      1 c11
+ 1245      IKIM   job2   alice  R    3:05      1 c23
 ```
 
-Since any job requires at least one CPU core, this method doesn't work if all CPU cores on the target node have already been requested.
+To connect to one of the listed nodes, open a new shell on the local workstation (not on the submission node) and execute:
+
+```sh
+ssh c11
+```
+
+The ssh session is incorporated into one of the running jobs on the target node: when the job terminates, the ssh session terminates as well.
+
+This feature is meant for monitoring and debugging. **Do not** use it for work that could be submitted via slurm instead.
+
+Interactive shells can also be launched on any worker node using `srun`, regardless of running jobs. See [Example: obtaining a shell on a node](#example-obtaining-a-shell-on-a-node). The `srun` method allocates one CPU core on the target node, therefore it doesn't work if the node is already fully allocated.
 
 ### salloc
 
@@ -222,11 +232,7 @@ When executing GPU workloads, the `--gpus N` option should always be specified t
 srun --partition GPUampere --gpus 2 --time=1-12 train.py
 ```
 
-By specifying `--gpus 0` or omitting the option, slurm does not set the `CUDA_VISIBLE_DEVICES` variable, but it does **not** mean that GPUs are hidden. The job will have access to all GPUs on the node, even the ones assigned to other slurm jobs. This is useful when monitoring the usage of resources on specific nodes:
-
-```sh
-srun --partition GPUampere --nodelist=g2-1 nvidia-smi
-```
+If the option is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES` variable. This does **not** mean that GPUs are hidden: the job will have access to all GPUs on the node, even the ones assigned to slurm jobs from other users.
 
 ## Job submission etiquette
 
