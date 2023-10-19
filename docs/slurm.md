@@ -234,6 +234,9 @@ srun --partition GPUampere --gpus 2 --time=1-12 train.py
 
 If the option is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES` variable. This does **not** mean that GPUs are hidden: the job will have access to all GPUs on the node, even the ones assigned to slurm jobs from other users.
 
+### Python
+Do not set the `CUDA_VISIBLE_DEVICES` environment variable in your Python script, as this should be handled by Slurm through the `--gpus N` option above. When passed, the assigned CUDA devices can be accessed through CUDA device indices `0` to `N-1` (e.g. `cuda:0`, `cuda:1`, ...) in Pytorch if needed.
+
 ## Job submission etiquette
 
 If a job is expected to run continuously for many hours, a deadline should be specified with the option `--time`, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
