@@ -227,12 +227,15 @@ GPU nodes are available in a non-default partition named after the corresponding
 When executing GPU workloads, the `--gpus N` option should always be specified to let slurm assign `N` GPUS automatically. More specifically, Slurm automatically selects a suitable worker node, picks the specified number of GPUs randomly among the unassigned ones and sets the environment variable `CUDA_VISIBLE_DEVICES` accordingly.
 
 ```sh
-# In this example, 2 GPUs from a node in the GPUampere partition are exposed via CUDA_VISIBLE_DEVICES.
+# In this example, Slurm exposes 2 GPUs from a node in the GPUampere partition via CUDA_VISIBLE_DEVICES.
+# The script must not override CUDA_VISIBLE_DEVICES!
 # A deadline of 1 day and 12 hours is specified to let other users know when the GPUs will be available again.
 srun --partition GPUampere --gpus 2 --time=1-12 train.py
 ```
 
-If the option is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES` variable. This does **not** mean that GPUs are hidden: the job will have access to all GPUs on the node, even the ones assigned to slurm jobs from other users.
+The end-user script can then refer to specific devices by using library-specific mechanisms. For example, after passing `--gpus N` to Slurm, Pytorch maps the assigned CUDA devices to indices `0` through `N-1`: `cuda:0`, `cuda:1`, etc. Since CUDA_VISIBLE_DEVICES is managed by Slurm, end-user scripts must not modify it.
+
+If the option `--gpus` is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES` variable. This does **not** mean that GPUs are hidden: the job will have access to all GPUs on the node, even the ones assigned to slurm jobs from other users.
 
 ## Job submission etiquette
 
