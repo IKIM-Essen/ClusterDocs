@@ -202,9 +202,11 @@ $ salloc --no-shell --time=08:00:00 --partition GPUampere --nodes=1 --gpus 3
 salloc: Granted job allocation 486835
 
 # A shell or any other job can now be submitted on allocation 486835.
-# This can be done as many time as desired until the allocated time runs out.
+# This can be done as many times as desired until the session is canceled or times out.
 $ srun --jobid=486835 --pty bash -i
 ```
+
+This approach is helpful for executing jobs in bursts over a period of time without losing the claim on certain resources. For instance, a user planning a bug-fixing session (short runs interspersed with code changes) on a GPU-equipped node can allocate a GPU for a few hours instead of submitting each job to the queue individually.
 
 See [Targeting GPU nodes][targeting-gpu-nodes] to learn more about requesting GPUs.
 
