@@ -169,6 +169,43 @@ This feature is meant for monitoring and debugging. **Do not** use it for work t
 
 Interactive shells can also be launched on any worker node using `srun`, regardless of running jobs. See [Example: obtaining a shell on a node](#example-obtaining-a-shell-on-a-node). The `srun` method allocates one CPU core on the target node, therefore it doesn't work if the node is already fully allocated.
 
+#### Example: create a pipeline of jobs
+
+The `--dependency` option allows creating a tree of interdependent jobs such that downstream jobs start only after upstream jobs terminate with a certain outcome.
+
+```sh
+# This example submits a job, then two parallel downstream jobs which depend on
+# on successful completion of the upstream job:
+#
+#      Job 10
+#     /      \
+# Job 11    Job 12
+#
+# Submit the upstream job.
+$ sbatch preprocess.sh
+Submitted batch job 10
+
+# Submit a downstream job configured to wait in the queue until job 10
+# terminates successfully.
+$ sbatch --dependency afterok:10 train1.sh
+Submitted batch job 11
+
+# Submit another downstream job.
+$ sbatch --dependency afterok:10 train2.sh
+Submitted batch job 12
+
+# Check the queue.
+$ squeue
+    JOBID PARTITION           NAME    USER ST    TIME  NODES NODELIST(REASON)
+       12      IKIM      train2.sh   alice PD    0:00      1 (Dependency)
+       11      IKIM      train1.sh   alice PD    0:00      1 (Dependency)
+       10      IKIM  preprocess.sh   alice  R    0:15      1 c20
+```
+
+From a resource allocation standpoint, the individual jobs are separate: they can request different resources and might be scheduled on different nodes unless specified otherwise.
+
+For the full dependency syntax, see the [--dependency][dependencies] section in the official manual.
+
 ### salloc
 
 `salloc` allocates resources that can be used by subsequent invocations of `srun` or `sbatch`. By default, after allocating the resources `salloc` opens a shell **on the current node**: any `srun` or `sbatch` commands issued in this shell will use the allocated resources. When the user terminates the shell, the allocation is relinquished.
@@ -241,10 +278,18 @@ If the option `--gpus` is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES`
 
 ## Job submission etiquette
 
+### Setting a deadline
+
 If a job is expected to run continuously for many hours, a deadline should be specified with the option `--time`, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
 
 It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
 
+### Breaking up jobs at checkpoints
+
+A large workflow that runs for multiple days occupying several CPU cores or GPUs typically has a checkpoint system that saves its state at regular intervals. Instead of implementing such a workflow as a single job, it can be broken up into a sequence of jobs that end by saving a checkpoint and start by loading the previous checkpoint. This increases the fairness of the queue by allowing other jobs to be scheduled in between. See the [pipeline][pipelines] example for details.
+
 [slurm-homepage]: https://slurm.schedmd.com
 [sbatch-env]: https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES
+[dependencies]: [https://slurm.schedmd.com/sbatch.html#OPT_dependency]
 [targeting-gpu-nodes]: #targeting-gpu-nodes
+[pipelines]: #example-create-a-pipeline-of-jobs
