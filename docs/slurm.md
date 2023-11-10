@@ -1,22 +1,12 @@
 # Slurm
 
-The entry point to the [Slurm][slurm-homepage] cluster is a set of nodes under the name `shellhost`. Before connecting, acquire the list of ssh host keys by executing:
+The entry point to the [Slurm][slurm-homepage] cluster is a set of _submission_ nodes under the name `shellhost`. Submission nodes must be used exclusively to log in and submit jobs (inline commands or scripts) to _worker_ nodes.
 
-```sh
-ssh-keygen -R shellhost.ikim.uk-essen.de && \
-    ssh ikim resolvectl query shellhost.ikim.uk-essen.de | \
-    grep -E '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' --only-matching | \
-    sed -E 's/(.*)/\1 shellhost.ikim.uk-essen.de/' | \
-    ssh ikim ssh-keyscan -t ed25519 -f - >> ~/.ssh/known_hosts
-```
-
-Then connect to a submission node:
+To connect to a submission node:
 
 ```sh
 ssh shellhost
 ```
-
-Jobs (inline commands or scripts) can be submitted to worker nodes from any of the submission nodes.
 
 Worker nodes are divided in groups called _partitions_ in Slurm terminology. The default partition is made up of general-purpose CPU nodes.
 
