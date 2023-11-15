@@ -8,6 +8,8 @@ If you have any questions, please reach out to your project coordinator for help
 
 _Note: we assume that you are using a Linux or MacOS operating system. If you are using Windows, please see below for recommendations._
 
+### Generate SSH key on Linux and MacOS
+
 To get access to the IKIM computing infrastructure you need an SSH key. Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
 
 ```sh
@@ -68,9 +70,15 @@ ssh-ed25519 [long random string] <user>@<host>
 
 </details>
 
+### Generate SSH key on Windows
+
+Windows requires the OpenSSH client, which has been permanently integrated into the system since the October 2018 Windows 10 update. If this is not available (so you can't use the command `ssh-keygen`), simply follow the instructions at the following link: [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui#install-openssh-using-windows-settings)
+
+Open Powershell and execute the command `ssh-keygen`. When prompted, make sure to choose a strong passphrase and save the passphrase in your password manager. The key pair (public and private) will appear by default at C:\Users\<username>\.ssh\ (Note that the name of this directory begins with a dot and is therefore invisible by default) inside your user directory. When done, send the contents of the public key with the file name id_rsa.pub with contact details (name and email adress) to your project coordinator.
+
 ### Setting up your SSH configuration
 
-To provide the appropriate parameters for the connection, create a file at `~/.ssh/config` and copy the snippet below, replacing `$USERNAME` appropriately.
+To provide the appropriate parameters for the connection, create a file at `~/.ssh/config` (Windows: `\Users\<username>\.ssh\config`) and copy the snippet below, replacing `$USERNAME` appropriately.
 
 ```ssh
 Host *
@@ -109,16 +117,6 @@ If the login test fails, please run the command below and send the output to you
 ssh -v ikim
 ```
 
-### SSH clients on Windows
-
-We recommend two options for installing and using an SSH client on Windows:
-
-- [Windows Subsystem for Linux (WSL2)](https://docs.microsoft.com/en-us/windows/wsl/about) provides Linux distributions running in a lightweight virtual machine on Windows. With WSL, the instructions above can be followed without changes and the default shell environment is identical to the one found on IKIM hosts.
-- [OpenSSH](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) is the same software suite that comes preinstalled on other operating systems. To install it, go to the _Apps & Features_ settings page and select _Optional Features_, then add the _OpenSSH Client_ feature. The instructions above should work simply by adapting paths to Windows-style. Older clients might produce an error message that starts with ["Bad stdio forwarding specification"](https://github.com/PowerShell/Win32-OpenSSH/issues/1172), which can be fixed by replacing the `ProxyJump` directive with:
-
-  ```text
-  ProxyCommand ssh.exe -W %h:%p ikim
-  ```
 
 ## What hardware is available on the IKIM cluster?
 
