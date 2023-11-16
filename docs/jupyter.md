@@ -1,10 +1,10 @@
 # Jupyter Notebook Workflow
 
-The Jupyter Notebook is an open-source web application that allows creating and sharing documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more. Visit [Jupyter.org](https://jupyter.org) for more information.
+The Jupyter Notebook is an open-source web application that allows creating and sharing documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more. Visit [Jupyter.org][jupyter-website] for more information.
 
 ## Starting a Jupyter server instance
 
-To launch a Jupyter instance on the [Slurm](./slurm.md) cluster, first log into a Slurm submission node:
+To launch a Jupyter instance on the [Slurm][slurm-guide] cluster, first log into a Slurm submission node:
 
 ```sh
 ssh shellhost
@@ -17,10 +17,24 @@ conda create -n myproject -c conda-forge notebook
 conda activate myproject
 ```
 
-The Jupyter startup command must be submitted to Slurm using `srun` or `sbatch`. Here is a minimal example which launches the server on a worker node with 32 allocated CPU cores and an 8-hour deadline:
+The Jupyter startup command can now be submitted to Slurm. Here is a minimal example of an [sbatch][slurm-sbatch] script called `jupyter.sh` which launches Jupyter on a worker node with 8 allocated CPU cores and an 8-hour deadline:
 
 ```sh
-srun --time 08:00:00 --cpus-per-task=32 jupyter notebook --ip 0.0.0.0 --no-browser
+$ cat jupyter.sh
+#!/usr/bin/env bash
+
+#SBATCH --time 08:00:00
+#SBATCH --cpus-per-task=8
+
+jupyter notebook --ip 0.0.0.0 --no-browser
+```
+
+Submit the job and follow the output:
+
+```sh
+$ sbatch jupyter.sh
+Submitted batch job 1234
+$ tail -F slurm-1234.out
 ```
 
 The hostname, port number and authorization token are displayed upon startup. For example:
@@ -76,5 +90,8 @@ To verify that the notebook is running on the remote host and within the conda e
 
 Connect to a Slurm submission node as described in [Connect to a remote host][vscode-docs-connect-ssh-host]. When prompted for the target host, type `shellhost`. From there, connect to the Jupyter server as described in [Connect to a remote Jupyter server][vscode-docs-remote-jupyter]. When prompted for the URL, simply copy and paste the URL displayed in the output from `jupyter notebook`. As opposed to the browser method, in this case the connection originates from inside the cluster and there's no need to set up port forwarding.
 
+[jupyter-website]: https://jupyter.org
 [vscode-docs-connect-ssh-host]: https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host
 [vscode-docs-remote-jupyter]: https://code.visualstudio.com/docs/datascience/jupyter-notebooks#_connect-to-a-remote-jupyter-server
+[slurm-guide]: slurm.md
+[slurm-sbatch]: slurm.md#sbatch
