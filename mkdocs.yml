@@ -19,6 +19,7 @@ nav:
   - Getting Started: getting-started.md
   - User Guide:
      - Slurm: slurm.md
+     - Slurm (Cheat Sheet): slurm_cheat.md
      - Mamba/Conda: conda.md
      - Snakemake: snakemake.md
      - Apptainer: apptainer.md
