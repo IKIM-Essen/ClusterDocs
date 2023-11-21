@@ -1,6 +1,6 @@
 # Slurm
 
-This document gives an overview of Slurm to get you started. To learn more, see the guide below and the [official manual][slurm-homepage].
+This document gives an overview of Slurm to get you started. To learn more, also see the [official manual][slurm-homepage].
 
 ## Summary
 
