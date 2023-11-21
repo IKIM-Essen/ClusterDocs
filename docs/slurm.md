@@ -1,5 +1,26 @@
 # Slurm
 
+This document gives an overview of Slurm to get you started. To learn more, see the guide below and the [official manual][slurm-homepage].
+
+## Summary
+
+| What | Command |
+|------|---------|
+| Connect to submission nodes. **Only use for submission.** | `ssh shellhost` |
+| Show workers | `sinfo` |
+| Show schedule | `squeue -l` |
+| My jobs | `squeue -u $(whoami)` |
+| Submit interactive job | `srun --time=01:00:00 --cpus-per-task=1 --pty bash -i` |
+| Submit batch job | `sbatch job.sh` |
+| Submit batch job w/o shell script | `sbatch --wrap="python -m ..."` |
+| Target GPU nodes | `sbatch --partition=GPUampere,GPUhopper --gpus=1 --time=01:00:00 job.sh` |
+| Allocate resources for later | `salloc [ARGS] --time=01:00:00` |
+| Show job info | `scontrol show jobid -dd [JOB_ID]` |
+| Show assigned GPUs | `scontrol show jobid -dd [JOB_ID] | grep IDX` |
+| Cancel job | `scancel [JOB_ID]` |
+
+## Entrypoint
+
 The entry point to the [Slurm][slurm-homepage] cluster is a set of _submission_ nodes under the name `shellhost`. Submission nodes must be used exclusively to log in and submit jobs (inline commands or scripts) to _worker_ nodes.
 
 To connect to a submission node:
@@ -9,8 +30,6 @@ ssh shellhost
 ```
 
 Worker nodes are divided in groups called _partitions_ in Slurm terminology. The default partition is made up of general-purpose CPU nodes.
-
-This document is not a comprehensive guide on Slurm. To learn more, see the official manual.
 
 ## Client tools
 
