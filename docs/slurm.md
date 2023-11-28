@@ -13,7 +13,7 @@ This document gives an overview of Slurm to get you started. To learn more, also
 | Submit interactive job | `srun --time=01:00:00 --cpus-per-task=1 --pty bash -i` |
 | Submit batch job | `sbatch job.sh` |
 | Submit batch job w/o shell script | `sbatch --wrap="python -m ..."` |
-| Target GPU nodes | `sbatch --partition=GPUampere,GPUhopper --gpus=1 --time=01:00:00 job.sh` |
+| Target GPU nodes | `sbatch --partition=GPUampere,GPUhopper --gpus=1 --cpus-per-gpu=4 --time=01:00:00 job.sh` |
 | Allocate resources for later | `salloc [ARGS] --time=01:00:00` |
 | Show job info | `scontrol show jobid -dd [JOB_ID]` |
 | Show assigned GPUs | `scontrol show jobid -dd [JOB_ID] | grep IDX` |
@@ -277,8 +277,9 @@ When executing GPU workloads, the `--gpus N` option should always be specified t
 ```sh
 # In this example, Slurm exposes 2 GPUs from a node in the GPUampere partition via CUDA_VISIBLE_DEVICES.
 # The script must not override CUDA_VISIBLE_DEVICES!
+# The number of requested CPU cores should be proportional to the number of GPUs.
 # A deadline of 1 day and 12 hours is specified to let other users know when the GPUs will be available again.
-srun --partition GPUampere --gpus 2 --time=1-12 train.py
+srun --partition GPUampere --gpus 2 --cpus-per-gpu=4 --time=1-12 train.py
 ```
 
 The end-user script can then refer to specific devices by using library-specific mechanisms. For example, after passing `--gpus N` to Slurm, Pytorch maps the assigned CUDA devices to indices `0` through `N-1`: `cuda:0`, `cuda:1`, etc. Since CUDA_VISIBLE_DEVICES is managed by Slurm, end-user scripts must not modify it.
@@ -292,6 +293,12 @@ If the option `--gpus` is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES`
 If a job is expected to run continuously for many hours, a deadline should be specified with the option `--time`, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
 
 It's good practice to always specify a deadline when opening a shell (`srun --pty bash`). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.
+
+### Balance between CPU cores and GPUs
+
+When requesting GPUs with `--gpus`, attention should be paid to the ratio of CPU cores to GPUs by passing an appropriate value to `--cpus-per-gpu`. For example, if a node has 6 GPUs and 48 CPU cores in total, it's advisable to request no more than `--cpus-per-gpu=8`.
+
+The amount of CPU cores and GPUs on a node can be determined with `scontrol show node`.
 
 ### Breaking up jobs at checkpoints
 
