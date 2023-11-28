@@ -18,10 +18,15 @@ nav:
   - Introduction: index.md
   - Getting Started: getting-started.md
   - User Guide:
-     - Slurm: slurm.md
+     - configuring your environment
      - Mamba/Conda: conda.md
-     - Snakemake: snakemake.md
-     - Apptainer: apptainer.md
-     - Storage: storage.md
+     - Containers: apptainer.md
      - Jupyter Notebooks: jupyter.md
+     - working with data
+     - Storage: storage.md
+     - Data Transfer: transfer.md
+     - organizing compute
+     - Snakemake: snakemake.md
+     - Slurm: slurm.md
+     - everything else 
      - Troubleshooting: troubleshooting.md
