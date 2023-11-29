@@ -26,4 +26,5 @@ nav:
      - Computing -- Snakemake: snakemake.md
      - Computing -- Slurm: slurm.md
      - Misc -- Troubleshooting: troubleshooting.md
+     - Misc -- Patterns: patterns.md
      - Misc -- Antipatterns: antipatterns.md
