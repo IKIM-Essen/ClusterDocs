@@ -6,7 +6,7 @@ If you have any questions, please reach out to your project coordinator for help
 
 ## Getting cluster access
 
-### Generate SSH key on Linux and MacOS
+### Generating the SSH key on Linux and MacOS
 
 To get access to the IKIM computing infrastructure you need an SSH key. Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
 
@@ -68,7 +68,7 @@ ssh-ed25519 [long random string] <user>@<host>
 
 </details>
 
-### Generate SSH key on Windows
+### Generating the SSH key on Windows
 
 Windows requires the OpenSSH client, which has been permanently integrated into the system since the October 2018 Windows 10 update. If this is not available (so you can't use the command `ssh-keygen`), simply follow the instructions at the following link: [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui#install-openssh-using-windows-settings)
 
@@ -78,7 +78,7 @@ Open Powershell and Use the command below to create your SSH key. When prompted,
 ssh-keygen -t ed25519
 ```
 
-You can accept the default settings for the path, but name the key `id_ikim` when prompted. The key pair (public and private) will appear by default at C:\Users\<username>\.ssh\ (Note that the name of this directory begins with a dot and is therefore invisible by default) inside your user directory. When done, send the contents of the public key with the file name id_ikim.pub with contact details (name and email adress) to your project coordinator.
+You can accept the default settings for the path, but name the key `id_ikim` when prompted. The key pair (public and private) will appear by default at `C:\Users\<username>\.ssh\` (note that the name of this directory begins with a dot and is therefore invisible by default) inside your user directory. When done, send the contents of the public key with the file name id_ikim.pub with contact details (name and email adress) to your project coordinator.
 
 ### Setting up your SSH configuration
 
