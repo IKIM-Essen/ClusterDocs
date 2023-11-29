@@ -135,14 +135,14 @@ A subset of these nodes are deployed as a Slurm cluster. Unless instructed other
 Short answer: Everything under the sun. You can install software yourself using either a [package manager](conda.pm) or build or run a [container](apptainer.md). Containers can be used e.g. to run a different operating system if you absolutely need to.
 To avoid resource contention we recommend using our [resource manager](slurm.md).
 
-Example: To install [scikit-learn](https://scikit-learn.org/stable/install.html) all you need to do is 
+Example: To install [scikit-learn](https://scikit-learn.org/stable/install.html) all you need to do is
 
-```
+```sh
 conda create -n sklearn-env -c conda-forge scikit-learn
 conda activate sklearn-env
 ```
 
-Conda and its siblings (anaconda and mamba) provide access to [thousands of software packages](https://conda-forge.org/feedstock-outputs/), you can 
+Conda and its siblings (anaconda and mamba) provide access to [thousands of software packages](https://conda-forge.org/feedstock-outputs/), you can
 set up your required software by yourself and even have multiple environments. The [conda intro](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) provides a good starting point.
 
 ## Where to store your data?
@@ -157,7 +157,6 @@ There are several locations where you can store data on the cluster:
 All of the above directories (homes, projects, groups) are shared with other hosts on the cluster through the network file system (NFS). This is convenient: sharing data between hosts becomes effortless and your data is stored redundantly on the file server.
 
 Also see the [storage](storage.md) for details and also info on performance. If you need to transfer data, reading [transfer](transfer.md)
-
 
 ## GitHub Authentication through SSH
 
