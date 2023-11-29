@@ -82,7 +82,7 @@ You can accept the default settings for the path, but name the key `id_ikim` whe
 
 ### Setting up your SSH configuration
 
-To provide the appropriate parameters for the connection, create a file at `~/.ssh/config` (Windows: `\Users\<username>\.ssh\config`) and copy the snippet below, replacing `$USERNAME` appropriately.
+To provide the appropriate parameters for the connection, create a file at `~/.ssh/config` (on Windows: `C:\Users\<username>\.ssh\config`) and copy the snippet below, replacing `$USERNAME` appropriately.
 
 ```ssh
 Host *
