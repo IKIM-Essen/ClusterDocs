@@ -14,6 +14,7 @@ Larger scale data transfer requires some degree of familiarity with the technolo
 We provide three different means for data transfer. We note that for larger transfers, the speed of the device the data is stored on remotely makes a difference.
 
 ### Using a web browser to move data into the cluster
+
 Use your web browser to upload data to a facility we yet have to build.
 
 Details: (TBA)
@@ -23,12 +24,14 @@ Disadvantages: not suitable for many files
 Intended data scope: up to 500GB works
 
 ### Using ssh / scp to move data into the cluster
+
 In short on the remote system execute
 `tar -cpf - | ssh -J login.ikim.uk-essen.de shellhost.ikim.uk-essen.de "tar -xpf -" `
 
 Read [this](https://www.cyberciti.biz/faq/howto-use-tar-command-through-network-over-ssh-session/) for more details.
 
 ### Using NC to move data into the cluster
+
 In short: 
 - ensure NC is installed on the remote system
 - you need to execute commands on both sending and receiving system
@@ -58,4 +61,5 @@ Depending on your needs and the systems involved, your technology choices may va
 | nc       | unlimiteed  | complicated, use zip or tar to group files | 
 
 ### Miscellaneous comments
+
 The local storage on each node typically consists of a system partition and a data partition. 
