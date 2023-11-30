@@ -1,3 +1,5 @@
+# Setting up your ssh client
+
 ## Configuring the ssh client on your system
 
 On your laptop do these steps.
@@ -23,7 +25,7 @@ Host g?-? c? c?? c??? shellhost
   ForwardAgent yes
 ```
 
-# Test your SSH login
+## Test your SSH login
 
 Try the example below to test that your SSH client is properly configured:
 
@@ -33,15 +35,13 @@ ssh ikim
 
 If it succeeds, type `exit` to log out. The `ikim` host must be used only for ssh authentication and _not_ for computational work; in fact, users should not log into it directly. Using the provided configuration file, ssh will automatically "jump through" the `ikim` host to reach the compute nodes.
 
-For instructions on using the compute nodes, see the section [What software is available on the IKIM cluster?](#what-software-is-available-on-the-ikim-cluster)
-
 If the login test fails, please run the command below and send the output to your project coordinator for help.
 
 ```sh
 ssh -v ikim
 ```
 
-# SSH clients on Windows
+## SSH clients on Windows
 
 We recommend two options for installing and using an SSH client on Windows:
 
@@ -51,4 +51,3 @@ We recommend two options for installing and using an SSH client on Windows:
   ```text
   ProxyCommand ssh.exe -W %h:%p ikim
   ```
-

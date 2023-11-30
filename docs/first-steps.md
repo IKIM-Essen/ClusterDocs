@@ -2,7 +2,7 @@
 
 You now have connected successfully the cluster.  You can now use [Mamba](conda.md) to configure your environment or [Apptainer](apptainer.md) to execute a binary object.
 
-You should be connected to one of the computers we have designated 
+You should be connected to one of the computers we have designated
 
 ## How to find a computing device
 
@@ -20,6 +20,3 @@ There are several locations where you can store data on the cluster:
 All of the above directories (homes, projects, groups) are shared with other hosts on the cluster through the network file system (NFS). This is convenient: sharing data between hosts becomes effortless and your data is stored redundantly on the file server.
 
 Also see the [storage](storage.md) for details and also info on performance. If you need to transfer data, reading [transfer](transfer.md)
-
-
-

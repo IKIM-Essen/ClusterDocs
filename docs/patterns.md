@@ -2,7 +2,6 @@
 
 This document contains a list of "do this" type of things. The intent is to add lessons learned on how TO DO things.
 
-
 ## Tips on Working with remote computing services
 
 - [Unix Crash Course](https://tildesites.bowdoin.edu/~sbarker/unix/)
@@ -11,8 +10,6 @@ This document contains a list of "do this" type of things. The intent is to add 
 - [How To Use Linux Screen](https://linuxize.com/post/how-to-use-linux-screen/)
 - [Git Book](https://git-scm.com/book/en/v2)
 - [Conda](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-conda)
-
-
 
 ## Configuring VSCODE to not run rg
 

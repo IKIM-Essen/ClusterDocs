@@ -1,4 +1,4 @@
-## Requesting access
+# Requesting access
 
 To get access to the IKIM computing infrastructure you need an SSH key. Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
 

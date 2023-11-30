@@ -2,7 +2,6 @@
 
 This document gives an overview of Slurm to get you started. To learn more, also see the [official manual][slurm-homepage].
 
-
 ## Entrypoint
 
 The entry point to the [Slurm][slurm-homepage] cluster is a set of _submission_ nodes under the name `shellhost`. Submission nodes must be used exclusively to log in and submit jobs (inline commands or scripts) to _worker_ nodes.
@@ -286,7 +285,6 @@ A large workflow that runs for multiple days occupying several CPU cores or GPUs
 [dependencies]: [https://slurm.schedmd.com/sbatch.html#OPT_dependency]
 [targeting-gpu-nodes]: #targeting-gpu-nodes
 [pipelines]: #example-create-a-pipeline-of-jobs
-
 
 ## Cheat Sheet
 

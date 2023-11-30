@@ -1,3 +1,5 @@
+# Resources
+
 ## Available hardware
 
 The cluster has two sets of servers: 120 nodes for CPU-bound tasks and 10+ nodes for GPU-bound tasks. At this moment, not all of these nodes are available for general computation tasks. However, more will be added in future. The following hardware is installed in the servers:
@@ -22,5 +24,5 @@ conda activate sklearn-env
 ```
 
 Conda and its siblings (anaconda and mamba) provide access to [thousands of software packages](https://conda-forge.org/feedstock-outputs/), you can
-set up your required software by yourself and even have multiple environments. 
+set up your required software by yourself and even have multiple environments.
 The [conda intro](conda.md) provides a good starting point.
