@@ -16,15 +16,22 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
-  - Getting Started: getting-started.md
-  - User Guide:
-     - Setup -- Mamba/Conda: conda.md
-     - Setup -- Containers: apptainer.md
-     - Setup -- Jupyter Notebooks: jupyter.md
-     - Data -- Storage: storage.md
-     - Data -- Transfer: transfer.md
-     - Computing -- Snakemake: snakemake.md
-     - Computing -- Slurm: slurm.md
-     - Misc -- Troubleshooting: troubleshooting.md
-     - Misc -- Patterns: patterns.md
-     - Misc -- Antipatterns: antipatterns.md
+  - Available Resources: resources.md
+  - Requesting Access: access.md
+  - Connecting:
+     - Setting up SSH: ssh-setup.md
+     - First steps: first-steps.md
+  - Setup:
+     - Mamba/Conda: conda.md
+     - Containers: apptainer.md
+     - Jupyter Notebooks: jupyter.md
+  - Data:
+     - Storage: storage.md
+     - Transfer: transfer.md
+  - Computing: 
+     - Snakemake: snakemake.md
+     - Slurm: slurm.md
+  - Misc:
+     - Troubleshooting: troubleshooting.md
+     - Patterns: patterns.md
+     - Antipatterns: antipatterns.md
