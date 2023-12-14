@@ -28,6 +28,7 @@ chmod -R g+w <path to directory>
 # Extend the execution and directory browsing permissions that the owner has in a directory to everyone.
 find <path to directory> -executable -exec chmod a+x {} \;
 ```
+
 ### Are GPU drivers installed everywhere?
 
 Yes, but you might need to install CUDA in your environment:
@@ -72,3 +73,5 @@ A typical troubleshooting sessions against leftover GPU memory might be as follo
   If any processes show up and you don't have a way to terminate them cleanly, you can use `fuser -k /dev/nvidiaN` to kill them bluntly.
 1. Examine the output of `nvidia-smi` again.
    If GPU memory is still occupied, ask an administrator to look into processes owned by other users.
+
+
