@@ -1,6 +1,6 @@
 # Efficient cluster Computing patterns
 
-`Nota bene`: The cluster can accomodate so much IO at any one point. IO is where computing breaks. At the node level and certainly at the cluster level.
+`Nota bene`: The cluster can accomodate a finite amount of IO at any one point. IO is where computing breaks. At the node level and certainly at the cluster level.
 
 The cluster provices a number of storage facilities described
 [here](./storage.md). Make sure you are familiar with them _and_ you understand the nature of local vs. remote file systems.

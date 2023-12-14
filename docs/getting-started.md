@@ -133,8 +133,7 @@ A subset of these nodes are deployed as a Slurm cluster. Unless instructed other
 
 ## What software is available on the IKIM cluster?
 
-Short answer: Everything under the sun. You can install software yourself using either a [package manager](conda.pm) or build or run a [container](apptainer.md). Containers can be used e.g. to run a different operating system if you absolutely need to.
-To avoid resource contention we recommend using our [resource manager](slurm.md).
+Short answer: Everything under the sun. Familiarize yourself with our [job scheduler](slurm.md), then install software using either a [package manager](conda.md) or build a [container](apptainer.md). Compared to package managers like Conda, containers provide greater isolation from the host operating system and are recommended for producing repeatable workflows.
 
 Example: To install [scikit-learn](https://scikit-learn.org/stable/install.html) all you need to do is
 
