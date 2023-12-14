@@ -30,6 +30,8 @@ find <path to directory> -executable -exec chmod a+x {} \;
 ```
 ### Are GPU drivers installed everywhere?
 
+Yes, but you might need to install CUDA in your environment:
+
 Enrico writes that 
 
 ```text
