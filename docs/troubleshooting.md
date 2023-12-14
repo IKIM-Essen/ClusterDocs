@@ -74,4 +74,3 @@ A typical troubleshooting sessions against leftover GPU memory might be as follo
 1. Examine the output of `nvidia-smi` again.
    If GPU memory is still occupied, ask an administrator to look into processes owned by other users.
 
-
