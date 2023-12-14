@@ -13,16 +13,6 @@ Larger scale data transfer requires some degree of familiarity with the technolo
 
 We provide three different means for data transfer. We note that for larger transfers, the speed of the device the data is stored on remotely makes a difference.
 
-### Using a web browser to move data into the cluster
-
-Use your web browser to upload data to a facility we yet have to build.
-
-Details: (TBA)
-
-Advantages: UI driven
-Disadvantages: not suitable for many files
-Intended data scope: up to 500GB works
-
 ### Using ssh / scp to move data into the cluster
 
 In short on the remote system execute
