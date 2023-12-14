@@ -21,4 +21,4 @@ If you pay attention to a few details in organizing your compute things will go 
 
 We note that typically compute resources are available but the lack of good computing practices leads to contention for IO resources, which in turn slow everyone down.
 
-We are adding things to the documentation to aid our users, please familiarize yourself with it. Also check out the [lessons learned](antipatterns.md).
+We are adding things to the documentation to aid our users, please familiarize yourself with it. Also check out the [lessons learned](patterns.md).
