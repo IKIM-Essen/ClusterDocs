@@ -309,4 +309,3 @@ A large workflow that runs for multiple days occupying several CPU cores or GPUs
 | Show job info | `scontrol show jobid -dd [JOB_ID]` |
 | Show assigned GPUs | `scontrol show jobid -dd [JOB_ID] | grep IDX` |
 | Cancel job | `scancel [JOB_ID]` |
-
