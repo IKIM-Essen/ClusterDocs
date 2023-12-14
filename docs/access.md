@@ -1,19 +1,16 @@
 # Requesting access
 
-To get access to the IKIM computing infrastructure you need an SSH key. Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
+## Generating the SSH key
+
+To get access to the IKIM computing infrastructure you need an SSH key.
+
+### Linux and MacOS
+
+Use the command below to create your SSH key. When prompted, make sure to choose a **strong passphrase** and save the passphrase in your password manager.
 
 ```sh
 ssh-keygen -t ed25519 -f ~/.ssh/id_ikim
 ```
-
-Please send the public key along with following contact details to your project coordinator:
-
-- First name
-- Last name
-- Email address (domain _uk-essen.de_ or _uni-due.de_ if available)
-- Public SSH key (`~/.ssh/id_ikim.pub`)
-
-Afterwards, an account will be created for you in the central user management. When this is done, you should be able to SSH into the cluster.
 
 <details>
 <summary>Example: output of SSH-keypair generation. </summary>
@@ -59,3 +56,26 @@ ssh-ed25519 [long random string] <user>@<host>
 ```
 
 </details>
+
+### Windows
+
+Windows requires the OpenSSH client, which has been permanently integrated into the system since the October 2018 Windows 10 update. If this is not available (so you can't use the command `ssh-keygen`), simply follow the instructions at the following link: [OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui#install-openssh-using-windows-settings)
+
+Open Powershell and Use the command below to create your SSH key. When prompted, make sure to choose a strong passphrase and save the passphrase in your password manager.
+
+```sh
+ssh-keygen -t ed25519
+```
+
+You can accept the default settings for the path, but name the key `id_ikim` when prompted. The private and public key will appear by default at `C:\Users\<username>\.ssh\` (note that the name of this directory begins with a dot and is therefore invisible by default) as `id_ikim` and `id_ikim.pub` respectively.
+
+## Sending the request
+
+Please send the public key along with following contact details to your project coordinator:
+
+- First name
+- Last name
+- Email address (domain _uk-essen.de_ or _uni-due.de_ if available)
+- Public SSH key (`~/.ssh/id_ikim.pub`)
+
+Afterwards, an account will be created for you in the central user management. When this is done, you should be able to SSH into the cluster.
