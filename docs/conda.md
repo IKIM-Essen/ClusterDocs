@@ -4,6 +4,7 @@
 Users who prefer to manage their own installation can install a Conda distribution in their home directory.
 
 This document is not a comprehensive guide on Conda. To learn more, see the official manual.
+The [conda intro](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) provides a good starting point.
 
 ## Using Conda with Slurm
 

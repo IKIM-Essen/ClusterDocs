@@ -29,6 +29,20 @@ chmod -R g+w <path to directory>
 find <path to directory> -executable -exec chmod a+x {} \;
 ```
 
+### Are GPU drivers installed everywhere?
+
+Yes, but you might need to install CUDA in your environment:
+
+Enrico writes that
+
+```text
+the cuda version output from nvidia-smi doesn't mean necessarily that cuda is installed. It simply tells you which cuda release matches the installed drivers```
+
+on slurm nodes, cuda is not preinstalled because I encourage people to install it in their own conda environments so that they can keep it stable
+
+On non-slurm nodes, i.e. g1-7 and g1-9 currently, cuda is still preinstalled
+```
+
 ## GPU memory is held by orphan processes
 
 If processes are holding GPU memory while their parent terminates abnormally, they could be left with claimed memory and no work to do.

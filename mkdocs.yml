@@ -16,12 +16,21 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
-  - Getting Started: getting-started.md
-  - User Guide:
-     - Slurm: slurm.md
+  - Available Resources: resources.md
+  - Requesting Access: access.md
+  - Connecting:
+     - Setting up SSH: ssh-setup.md
+     - First steps: first-steps.md
+  - Setup:
      - Mamba/Conda: conda.md
-     - Snakemake: snakemake.md
-     - Apptainer: apptainer.md
-     - Storage: storage.md
+     - Containers: apptainer.md
      - Jupyter Notebooks: jupyter.md
+  - Data:
+     - Storage: storage.md
+     - Transfer: transfer.md
+  - Computing: 
+     - Snakemake: snakemake.md
+     - Slurm: slurm.md
+  - Misc:
      - Troubleshooting: troubleshooting.md
+     - Patterns: patterns.md

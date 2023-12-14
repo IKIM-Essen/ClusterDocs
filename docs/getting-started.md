@@ -123,7 +123,7 @@ ssh -v ikim
 
 ## What hardware is available on the IKIM cluster?
 
-The cluster has two sets of servers: 120 nodes for CPU-bound tasks and 10 nodes for GPU-bound tasks. At this moment, not all of these nodes are available for general computation tasks. However, more will be added in future. The following hardware is installed in the servers:
+The cluster has two sets of servers: 120 nodes for CPU-bound tasks and 10+ nodes for GPU-bound tasks. At this moment, not all of these nodes are available for general computation tasks. However, more will be added in future. The following hardware is installed in the servers:
 
 - CPU nodes (`c1` - `c120`): Each with 192GB RAM, 2 CPU Intel, 1 SSD for system and 1 SSD for data (2TB).
 - GPU nodes (`g1-1` - `g1-10`): Each with 6 NVIDIA RTX 6000 GPUs, 1024GB RAM, 2 CPU AMD, 1 SSD for system (1TB) and 2 NVMe for data (12TB configured as RAID-0).
@@ -133,13 +133,17 @@ A subset of these nodes are deployed as a Slurm cluster. Unless instructed other
 
 ## What software is available on the IKIM cluster?
 
-The main entrypoint to the cluster is Slurm. On compute nodes, we aim to keep the environment as clean as possible, therefore only commonly used software packages are pre-installed and configured. At this moment the list includes:
+Short answer: Everything under the sun. Familiarize yourself with our [job scheduler](slurm.md), then install software using either a [package manager](conda.md) or build a [container](apptainer.md). Compared to package managers like Conda, containers provide greater isolation from the host operating system and are recommended for producing repeatable workflows.
 
-- Python 3
-- Mamba/Conda
-- Apptainer
+Example: To install [scikit-learn](https://scikit-learn.org/stable/install.html) all you need to do is
 
-Introductory guides can be reached from the navigation pane.
+```sh
+conda create -n sklearn-env -c conda-forge scikit-learn
+conda activate sklearn-env
+```
+
+Conda and its siblings (anaconda and mamba) provide access to [thousands of software packages](https://conda-forge.org/feedstock-outputs/), you can
+set up your required software by yourself and even have multiple environments. The [conda intro](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) provides a good starting point.
 
 ## Where to store your data?
 
@@ -147,21 +151,12 @@ There are several locations where you can store data on the cluster:
 
 - **Your home directory** (`/homes/<username>/`): This directory is only for personal data such as configuration files. Anything related to work or that should be visible to other people should not reside here.
 - **Project directory** (`/projects/<project_name>/`): This location should be used for data related to your project. If you are starting a project, ask your project coordinator to create a directory and provide a list of participating users. Note that you cannot simply list all project directories via `ls /projects`; instead, you need to specify the full path, such as: `ls /projects/dso_mp_ws2021/`
-- **Public dataset directory** (`/projects/datashare`): A world-readable location for datasets for which no special access rights are required. To lower the risk of data loss, each user can write only in a subdirectory corresponding to their research group. For example, a user which belongs to group `tio` must add new datasets in `/projects/datashare/tio` but can browse and read throughout `/projects/datashare`.
+- **Public dataset directory** (`/projects/datashare`): A world-readable location for datasets for which no special access rights are required. To lower the risk of data loss, each user can write only in a subdirectory corresponding to their research group. For example, a user which belongs to group `tio` should add new datasets in `/projects/datashare/tio` but can browse and read throughout `/projects/datashare`.
 - **Group directory** (`/groups/<group_name>`): This is the appropriate place for any data that should be shared _within an IKIM research group_. In student projects you will most likely not need group directories.
 
 All of the above directories (homes, projects, groups) are shared with other hosts on the cluster through the network file system (NFS). This is convenient: sharing data between hosts becomes effortless and your data is stored redundantly on the file server.
 
-Also see the [storage](./storage.md) for details and also info on performance.
-
-## GitHub Authentication through SSH
-
-To clone GitHub repositories on the cluster over the `git+ssh` protocol, you need to (1) configure your local ssh client as per the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh), and (2) enable agent forwarding (if you use the ssh config above, this should already be done). You can verify your setup with following command:
-
-```sh
-USER@g1-9:~$ ssh -T git@github.com
-Hi USER! You've successfully authenticated, but GitHub does not provide shell access.
-```
+Also see the [storage](storage.md) for details and also info on performance. If you need to transfer data, reading [transfer](transfer.md)
 
 ## Tips on Working with remote computing services
 
