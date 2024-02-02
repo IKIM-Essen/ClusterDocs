@@ -1,11 +1,14 @@
 # Snakemake
 
-The Snakemake workflow management system is a tool to create transparent reproducible and scalable data analyses.
+The [Snakemake workflow management system](https://snakemake.github.io/) is a tool to create transparent reproducible and scalable data analyses.
 
 * Workflows are described via a human readable, Python based language.
 * They can be seamlessly scaled to server, cluster, grid and cloud environments, without the need to modify the workflow definition.
 * Snakemake workflows can entail a description of required software (via Mamba/Conda or container images), which will be automatically deployed to any execution environment.
 * Snakemake can automatically create portable, server-less interactive HTML reports that contain all requested results and connect them to data provenance information like code and parameters.
+* On our cluster, Snakemake is configured to automatically **avoid malicious IO patterns**. No need to manually copy to the local workdir for avoiding NFS stress, Snakemake takes care of these things automatically.
+* The Snakemake homepage gives a high-level overview on the most important features: [https://snakemake.github.io](https://snakemake.github.io)
+* In case of any issues or questions, reach out for Prof. Johannes Köster (IKIM 4th floor).
 
 ## Installation
 
@@ -19,15 +22,11 @@ ssh shellhost
 Then create a snakemake environment via the preinstalled mamba package manager:
 
 ```sh
-mamba create -c conda-forge -c bioconda --name snakemake snakemake
+mamba create -c conda-forge -c bioconda --name snakemake snakemake snakemake-storage-plugin-fs snakemake-executor-plugin-slurm
 ```
 
 It is recommended to execute your analyses via Slurm, for maintenance and performance reasons (while Snakemake would also work without it).
-To do this by default set the default Snakemake profile (i.e. Snakemake's default options) to be the slurm profile in your `.bashrc`:
-
-```sh
-echo "export SNAKEMAKE_PROFILE=slurm" >> .bashrc
-```
+Via a dedicated [Snakekemake profile](https://github.com/IKIM-Essen/EMCP-config/blob/main/ansible/roles/snakemake/templates/profile.v8%2B.yaml.j2) we have ensured that Snakemake transparently uses Slurm when you execute it from a `shellhost` node, and runs locally if on a non-shellhost node.
 
 ## Usage
 
