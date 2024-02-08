@@ -51,7 +51,7 @@ Depending on your needs and the systems involved, your technology choices may va
 | ---  | --- |  -- | ---|
 | browser  | 500 GB | <100 | easy to use |
 | ssh/scp  | 5TB | unlimited | use tar to group files |
-| nc       | unlimiteed  | complicated, use zip or tar to group files |
+| nc       | unlimited | unlimited | complicated, use zip or tar to group files |
 
 ### Miscellaneous comments
 

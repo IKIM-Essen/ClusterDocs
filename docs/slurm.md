@@ -307,5 +307,5 @@ A large workflow that runs for multiple days occupying several CPU cores or GPUs
 | Target GPU nodes | `sbatch --partition=GPUampere,GPUhopper --gpus=1 --cpus-per-gpu=4 --time=01:00:00 job.sh` |
 | Allocate resources for later | `salloc [ARGS] --time=01:00:00` |
 | Show job info | `scontrol show jobid -dd [JOB_ID]` |
-| Show assigned GPUs | `scontrol show jobid -dd [JOB_ID] | grep IDX` |
+| Show assigned GPUs | `scontrol show jobid -dd [JOB_ID] \| grep IDX` |
 | Cancel job | `scancel [JOB_ID]` |
