@@ -8,16 +8,11 @@ The place where your data is stored during computation is a major factor in perf
 
 Also make sure that results are written to local storage and later moved or copied to a shared filesystem.
 
-## Configuring VSCode to not run rg
+## VSCode: Prevent Expensive Full Text Searches
 
-We notice some users running processes taking a lot of CPU and IO with rg (short for ripgrep). This code is executed by Visual Studio Code and is probably not adding any value to the user.
+We notice some users running processes taking a lot of CPU and network IO with `rg` (short for ripgrep). This code is executed by Visual Studio Code when running full text searches (e.g., <kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>f</kbd>). Be aware that such searches may be _very_ expensive when you have many files in your project, especially when your code is on an NFS location (e.g., `/homes` or `/groups`)
 
-Jan Trienes commented:
+Therefore, you should limit the search space. Two options:
 
-``` { .sh }
-a good thing to know here is that VSCode recursive search 
-excludes patterns given in .gitignore and .  ignore. 
-So best practice is to have a language-specific gitignore 
-in the project to avoid searches over common directories with 
-tens of thousands of small files (like venv/node_modules etc.)
-```
+1. (recommended) VSCode by default excludes files from search that match patterns in `.gitignore` and `.ignore`.  So best practice is to have a language-specific gitignore in the project to avoid searches over directories which have tens of thousands of small files (like venv, node_modules, dist, etc.). Most likely you also want to exclude `data/`.
+2. Disable search. Open vscode settings, search for `search.exclude`, add pattern (`**` and `*`). This will exclude all files from search.
