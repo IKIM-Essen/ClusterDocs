@@ -10,6 +10,10 @@ The [Snakemake workflow management system](https://snakemake.github.io/) is a to
 * The Snakemake homepage gives a high-level overview on the most important features: [https://snakemake.github.io](https://snakemake.github.io)
 * In case of any issues or questions, reach out for Prof. Johannes Köster (IKIM 4th floor).
 
+## News
+
+* 2024/03/12: We upgraded the cluster-wide Snakemake profile `ikim` to requre Snakemake 8.6.0. Please update your Snakemake installation as shown [below](#update).
+
 ## Installation
 
 Currently, our cluster setup requires Snakemake >= 8.6.0.
