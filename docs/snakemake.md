@@ -12,6 +12,7 @@ The [Snakemake workflow management system](https://snakemake.github.io/) is a to
 
 ## Installation
 
+Currently, our cluster setup requires Snakemake >= 8.6.0.
 Snakemake can be easily installed using the mamba package manager that is preinstalled on the cluster.
 First, ssh into a shellhost machine
 
@@ -27,6 +28,15 @@ mamba create -c conda-forge -c bioconda --name snakemake snakemake snakemake-sto
 
 It is recommended to execute your analyses via Slurm, for maintenance and performance reasons (while Snakemake would also work without it).
 Via a dedicated [Snakekemake profile](https://github.com/IKIM-Essen/EMCP-config/blob/main/ansible/roles/snakemake/templates/profile.v8%2B.yaml.j2) we have ensured that Snakemake transparently uses Slurm when you execute it from a `shellhost` node, and runs locally if on a non-shellhost node.
+
+## Update
+
+It is a good idea to keep the `snakemake` environment up to date in order to receive bug fixes and feature updates.
+For updating to the latest versions, run
+
+```sh
+mamba update --name snakemake snakemake snakemake-storage-plugin-fs snakemake-executor-plugin-slurm
+```
 
 ## Usage
 
