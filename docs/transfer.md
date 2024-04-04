@@ -57,9 +57,9 @@ Depending on your needs and the systems involved, your technology choices may va
 
 The local storage on each node typically consists of a system partition and a data partition.
 
-# Uploading data to EGA
+# Uploading data to the European Genome-phenome Archive (EGA)
 
-There are different paths to upload data to different EGA server locations, and each can be used from different interfaces to then provide the project and sample metadata.
+There are different paths to upload data to different European Genome-phenome Archive (EGA) server locations, and each can be used from different interfaces to then provide the project and sample metadata.
 Please refer to the [EGA submission documentation](https://ega-archive.org/) for up to date details on the different pathways.
 Here, we only document working ways of doing the data upload:
 
