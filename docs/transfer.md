@@ -59,6 +59,11 @@ The local storage on each node typically consists of a system partition and a da
 
 # Uploading data to the European Genome-phenome Archive (EGA)
 
+> The [European Genome-phenome Archive (EGA)](https://ega-archive.org/) is a service for permanent archiving and sharing of personally identifiable genetic, phenotypic, and clinical data generated for the purposes of biomedical research projects or in the context of research-focused healthcare systems.
+
+Thus, you can archive patient-related research data that you use in publications, and provide it to other scientists.
+Importantly, you can controll access and bind other users of the data to any conditions necessary to conform to the patient consent you originally obtained.
+
 There are different paths to upload data to different European Genome-phenome Archive (EGA) server locations, and each can be used from different interfaces to then provide the project and sample metadata.
 Please refer to the [EGA submission documentation](https://ega-archive.org/) for up to date details on the different pathways.
 Here, we only document working ways of doing the data upload:
