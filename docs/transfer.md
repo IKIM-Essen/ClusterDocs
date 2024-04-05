@@ -56,3 +56,36 @@ Depending on your needs and the systems involved, your technology choices may va
 ### Miscellaneous comments
 
 The local storage on each node typically consists of a system partition and a data partition.
+
+# Uploading data to the European Genome-phenome Archive (EGA)
+
+> The [European Genome-phenome Archive (EGA)](https://ega-archive.org/) is a service for permanent archiving and sharing of personally identifiable genetic, phenotypic, and clinical data generated for the purposes of biomedical research projects or in the context of research-focused healthcare systems.
+
+Thus, you can archive patient-related research data that you use in publications, and provide it to other scientists.
+Importantly, you can controll access and bind other users of the data to any conditions necessary to conform to the patient consent you originally obtained.
+
+There are different paths to upload data to different European Genome-phenome Archive (EGA) server locations, and each can be used from different interfaces to then provide the project and sample metadata.
+Please refer to the [EGA submission documentation](https://ega-archive.org/) for up to date details on the different pathways.
+Here, we only document working ways of doing the data upload:
+
+## SFTP upload to the EGA Inbox
+
+The SFTP upload to the EGA Inbox should work as described in the [EGA submission documentation](https://ega-archive.org/submission/data/uploading-files/inbox/).
+However, this restricts Metadata submission to the Submitter Portal, which is not documented beyond the obvious features.
+So if anything doesn't work there, you cannot finish your submission and might have to wait weeks for the HelpDesk to respond.
+
+## FTP upload to EGA
+
+For this pathway, make sure to first encrypt your data with [EGACryptor, as described in the EGA docs](https://ega-archive.org/submission/data/uploading-files/ftp/).
+The only tool we got working for FTP upload is `LFTP`, however [**not** as described in the EGA docs](https://ega-archive.org/submission/data/uploading-files/ftp/#FTPTLS).
+Instead, the following set of commands should get a working FTP connection established:
+
+``` {.sh }
+lftp # this just starts the tool and sends you to an lftp prompt, all the following commands are within lftp
+set ftp:ssl-allow 0
+open ftp.ega.ebi.ac.uk
+USER <ega_user_name>
+```
+
+This should ask for your password and after successful login you should be able to use all the [standard `lftp` commands](https://linux.die.net/man/1/lftp), for example `ls` to query the remote directory or `mput` to upload multiple files.
+With this upload route, you should then be able to use the [programmatic metadata submission via Webin](https://ega-archive.org/submission/metadata/submission/programmatic-submission-xml/).
