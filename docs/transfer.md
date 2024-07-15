@@ -57,7 +57,7 @@ Depending on your needs and the systems involved, your technology choices may va
 
 The local storage on each node typically consists of a system partition and a data partition.
 
-# Uploading data to the European Genome-phenome Archive (EGA)
+#### Uploading data to the European Genome-phenome Archive (EGA)
 
 > The [European Genome-phenome Archive (EGA)](https://ega-archive.org/) is a service for permanent archiving and sharing of personally identifiable genetic, phenotypic, and clinical data generated for the purposes of biomedical research projects or in the context of research-focused healthcare systems.
 
@@ -68,13 +68,13 @@ There are different paths to upload data to different European Genome-phenome Ar
 Please refer to the [EGA submission documentation](https://ega-archive.org/) for up to date details on the different pathways.
 Here, we only document working ways of doing the data upload:
 
-## SFTP upload to the EGA Inbox
+#### SFTP upload to the EGA Inbox
 
 The SFTP upload to the EGA Inbox should work as described in the [EGA submission documentation](https://ega-archive.org/submission/data/uploading-files/inbox/).
 However, this restricts Metadata submission to the Submitter Portal, which is not documented beyond the obvious features.
 So if anything doesn't work there, you cannot finish your submission and might have to wait weeks for the HelpDesk to respond.
 
-## FTP upload to EGA
+#### FTP upload to EGA
 
 For this pathway, make sure to first encrypt your data with [EGACryptor, as described in the EGA docs](https://ega-archive.org/submission/data/uploading-files/ftp/).
 The only tool we got working for FTP upload is `LFTP`, however [**not** as described in the EGA docs](https://ega-archive.org/submission/data/uploading-files/ftp/#FTPTLS).
