@@ -1,13 +1,6 @@
 # Accessing cluster storage on Windows and Mac clients
 
-## Windows Clients
-
-Following these [instructions](https://github.com/winfsp/sshfs-win) set up sshFS for Windows.
-
-
-https://www.petergirnus.com/blog/how-to-sshfs-on-windows
-
-## Mac Clients
+You can access storage on the cluster directly from your laptop (or if need be from a desktop computer). This is not intended for transferring large amounts of data, but rather for editing a spreadsheet needed for the next experiment that is stored on a server in the IKIM network and is mounted to the lab instrument.
 
 Secure access to file server storage in the cluster is available via sshFS. It is not intended for large file transfer. See [XXXX](http://some.where) for options for large file transfer.
 
@@ -26,7 +19,41 @@ Below is a resonable configuration for a home directory, a group directory and o
 
 Please insert your username, groupname and project name respectively. You can add more directories if you so desire.
 
-### HowTo 
+## HowTo for Windows Clients
+
+We have tested this on Windows 11, setup requires approx 5-10 minutes assuming ssh connectivity was available up front.
+
+For Windows clients the procedure is bascially a four step procedure:
+
+1. install [Winget](https://github.com/microsoft/winget-cli) ideally from the Microsoft [App Store](https://www.microsoft.com/p/app-installer/9nblggh4nns1)
+
+2. install [WinFSP](https://github.com/billziss-gh/winfsp/releases/latest)
+
+On the Windows command line:
+```
+winget install -h -e --id "WinFsp.WinFsp" 
+```
+
+3. install [SSHFS-Win](https://github.com/billziss-gh/sshfs-win/releases)
+On the Windows command line:
+
+```
+winget install -h -e --id "SSHFS-Win.SSHFS-Win"
+```
+
+4. map the network drive 
+
+In `Windows Explorer` select `This PC` > `Map Network Drive` and enter the desired drive letter and SSHFS path using the following UNC syntax:
+
+```
+\\sshfs\juser@shellhost.ikim.uk-essen.de[\homes\juser]
+```
+
+Where you replace juser with your cluster login name. 
+
+We acknowledge that this is following the instructions [here](https://github.com/winfsp/sshfs-win) and [here](https://www.petergirnus.com/blog/how-to-sshfs-on-windows).
+
+## HowTo for Mac Clients
 
 We provide a step-by-step guide for setting up secure remote storage access.
 
