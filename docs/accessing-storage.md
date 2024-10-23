@@ -56,7 +56,7 @@ We acknowledge that this is following the instructions [here](https://github.com
 
 We provide a step-by-step guide for setting up secure remote storage access.
 
-1. Install MacFuse
+1. Install MacFuse and SSHFS:
  Follow the instructions at [MacFuse](https://osxfuse.github.io). Please note that this will require at least one reboot and some level of  attention to details. It should take about 3-5 minutes to complete.
 
 2. Ensure sure that your `~/.ssh/config` file is set up correctly
@@ -83,8 +83,8 @@ something wrong with your ssh setup.
 
 In your Terminal execute the command below to mount, after replacing "juser" with your own username for the cluster.
 
-   ```sshfs juser@shellhost.ikim.uk-essen.de:/homes/juser $HOME/remote/
-    odefer_permissions,volname=HOMES-DIR```
+   ```sshfs juser@shellhost:/homes/juser $HOME/remote/
+    -odefer_permissions,volname=HOMES-DIR```
 
 We supply a volume name (`volname`) to describe the directory, you can modify the name to your liking.
 
