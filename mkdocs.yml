@@ -28,6 +28,7 @@ nav:
   - Data:
      - Storage: storage.md
      - Transfer: transfer.md
+     - Accessing Cluster storage: accessing-storage.md
   - Computing: 
      - Snakemake: snakemake.md
      - Slurm: slurm.md
