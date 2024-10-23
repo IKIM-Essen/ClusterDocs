@@ -2,7 +2,7 @@
 
 You can access storage on the cluster directly from your laptop (or if need be from a desktop computer). This is not intended for transferring large amounts of data, but rather for editing a spreadsheet needed for the next experiment that is stored on a server in the IKIM network and is mounted to the lab instrument.
 
-Secure access to file server storage in the cluster is available via sshFS. It is not intended for large file transfer. See [XXXX](http://some.where) for options for large file transfer.
+Secure access to file server storage in the cluster is available via sshFS. It is not intended for large file transfer. See [transer](transfer.md) for options for large file transfer.
 
 We will first ensure all the bits are in place, test the setup and finally set your system up to automatically connect to directories on the file servers.
 
@@ -123,7 +123,7 @@ Or you can type:
 
         ![Share-setup](./assets/ConnectMeNow-share-setup.png)
         * select SSHFS as ShareType
-        * set Server Address: `shellhost.ikim.uk-essen.de`
+        * set Server Address: `shellhost`
         * set the Path to your homes-directory e.g. `/homes/juser`
 
     2. Ensure you set the following parameters are set for Advanced Options
