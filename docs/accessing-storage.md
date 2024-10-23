@@ -20,37 +20,7 @@ Below is a resonable configuration for a home directory, a group directory and o
 Please insert your username, groupname and project name respectively. You can add more directories if you so desire.
 
 ## HowTo for Windows Clients
-
-We have tested this on Windows 11, setup requires approx 5-10 minutes assuming ssh connectivity was available up front.
-
-For Windows clients the procedure is bascially a four step procedure:
-
-1. install [Winget](https://github.com/microsoft/winget-cli) ideally from the Microsoft [App Store](https://www.microsoft.com/p/app-installer/9nblggh4nns1)
-
-2. install [WinFSP](https://github.com/billziss-gh/winfsp/releases/latest)
-On the Windows command line:
-
-   ```bash
-   winget install -h -e --id "WinFsp.WinFsp" 
-   ```
-  
-3. install [SSHFS-Win](https://github.com/billziss-gh/sshfs-win/releases)
-  On the Windows command line:
-
-   ```bash
-   winget install -h -e --id "SSHFS-Win.SSHFS-Win"
-   ```
-
-4. map the network drive
-  In `Windows Explorer` select `This PC` > `Map Network Drive` and enter the desired drive letter and SSHFS path using the following UNC syntax:
-
-  ```bash
-  \\sshfs\juser@shellhost.ikim.uk-essen.de[\homes\juser]
-  ```
-
-  Where you replace juser with your cluster login name.
-
-We acknowledge that this is following the instructions [here](https://github.com/winfsp/sshfs-win) and [here](https://www.petergirnus.com/blog/how-to-sshfs-on-windows).
+TBD
 
 ## HowTo for Mac Clients
 
