@@ -20,6 +20,7 @@ Below is a resonable configuration for a home directory, a group directory and o
 Please insert your username, groupname and project name respectively. You can add more directories if you so desire.
 
 ## HowTo for Windows Clients
+
 TBD
 
 ## HowTo for Mac Clients
