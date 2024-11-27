@@ -9,7 +9,11 @@ The performance of your computation in nearly all cases depends on:
 
 in that order.
 
-As of late 2024 the cluster has approx. 10000 CPU cores, approx. 100000 GPU cores , over 35 Terabytes of RAM, over 3 Petabytes of storage etc. None of these numbers mean anything to your compute.
+## Some stats for your proposals
+
+As of late 2024 the cluster has approx. 10000 CPU cores, approx. 100000 GPU cores , over 35 Terabytes of RAM, over 3 Petabytes of storage etc. None of these numbers mean anything for your computation unless you use the appropriate tooling.
+
+The machines are connected via 10 Gbit/sec Ethernet to a series of dedicated file servers, each connected with multiple 100 Gbit/sec connections.
 
 The fact that data can be moved from the file servers with approx. 1 gigabyte per second is important, as is the amount of available RAM on your computing device.
 
