@@ -75,5 +75,3 @@ Understanding and managing these factors will help you maximize the efficiency o
 - _Don't run_ computations that will access a lot of files in /projects or /groups (and of course /homes), at least don't act surprised if they are really slow and other users complain about the systems IO performance going down dramatically.
 
 - _Don't run_ computations that require 10 MB (10 megabytes) of RAM blocking a 1 Terabyte (1000000 Megabytes) node
-
-
