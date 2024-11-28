@@ -46,7 +46,7 @@ something wrong with your ssh setup.
 
    Open a  Terminal window and type
 
-     ```mkdir ~/remote```
+   ```mkdir ~/remote```
 
    Or use the Finder to create this directories. (Please note this guide assumes there is not already a file or directory by this name.)
 
