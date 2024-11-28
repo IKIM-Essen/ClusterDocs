@@ -1,49 +1,79 @@
-# Performance -- The DOs and DON'Ts
+# Resources and Performance -- The status, the DOs and DON'Ts
 
-The performance of your computation in nearly all cases depends on:
+The performance of your computation depends primarily on:
 
-- IO
-- RAM
-- choice of technology
-- hardware
+ 1. I/O (Input/Output)
+ 2. RAM
+ 3. Choice of technology stack
+ 4. Hardware
 
-in that order.
+— in that order of importance.
 
-## Some stats for your proposals
+## Cluster Overview
 
-As of late 2024 the cluster has approx. 10000 CPU cores, approx. 100000 GPU cores , over 35 Terabytes of RAM, over 3 Petabytes of storage etc. None of these numbers mean anything for your computation unless you use the appropriate tooling.
+As of late 2024, the cluster offers:
+ • ~10,000 CPU cores
+ • ~100,000 GPU cores
+ • 35+ Terabytes of RAM
+ • 3+ Petabytes of storage
 
-The machines are connected via 10 Gbit/sec Ethernet to a series of dedicated file servers, each connected with multiple 100 Gbit/sec connections.
+However, these impressive numbers are meaningless unless you optimize your computation with the appropriate tools and strategies. The machines are interconnected via 10 Gbit/sec Ethernet, while dedicated file servers utilize multiple 100 Gbit/sec connections. Data can move from file servers at ~1 GB/sec, making data transfer speed and local RAM availability critical.
 
-The fact that data can be moved from the file servers with approx. 1 gigabyte per second is important, as is the amount of available RAM on your computing device.
+## Key Factors in Optimizing Performance
 
-## IO
+### 1. Input/Output (I/O)
 
-While performance measures and even top performer charts exist, your computation is far less impacted by the available hardware that e.g. by your choice of [IO pattern](./patterns.md). In short: make sure your data is moved onto local fast storage before you start computing.
+Your computation’s performance is far more dependent on I/O patterns than on raw hardware capabilities. Here are critical considerations:
+ • Local storage over remote access:
+Always move your data to fast, local storage before starting computation. Running computations on remotely mounted data (e.g., directly from a file server) can be up to 100× slower than using local storage.
+ • Data transfer rates:
+While nodes have 10 Gbit/sec Ethernet connections (~1 GB/sec), file servers must service hundreds of nodes. As such, they cannot guarantee high-performance, storage-agnostic I/O.
+ • Streaming computation:
+Streaming data directly to a node and computing on-the-fly is an advanced approach that requires detailed knowledge of I/O bandwidth and the computational throughput of your device. Use this method only when confident in its feasibility.
 
-Running a computation using remote date mounted off a file server will be up to 100 times slower than using a local storage device. Our nodes use 10 gigabit (10Gb) a second ethernet connections (allowing 1 Gigabyte (1GB) per second transfers). Howeverm there are hundreds of nodes, file servers cannot enable storage location agnostic IO, so copy your data in one stream to a local device before you start randomly accessing it aka computing on your data.
+### 2. RAM (Memory)
 
-There is the notion of streaming your data to a node and computing on it _on the fly_, however this requires a precise understanding of the IO bandwidth and the throughput of your computational device.
+Efficient use of RAM is vital for performance. Key considerations include:
+ • Avoid paging and swapping:
+When your computation exceeds available RAM, the system will “page” data to local disk storage, which can slow performance by up to 1,000×. Estimating your RAM requirements is critical.
+ • Divide data into subsets:
+If your computation requires more RAM than available, consider splitting your dataset into manageable subsets to avoid paging.
+ • Node RAM capacities:
+Nodes vary in RAM availability, with many offering 200 GB and fewer providing 1 TB. Overestimating your requirements and queuing for high-RAM nodes may increase wait times without guaranteeing success.
 
-## RAM or available memory
+### 3. Technology Stack
 
-Our nodes come with a finite amount of [RAM](https://en.wikipedia.org/wiki/Random-access_memory). While computers have the ability to relocate data to hard local hard drives to free up space (see [Paging or Swapping](https://en.wikipedia.org/wiki/Memory_paging)), we note that Paging will make your computation up to 1,000 times slower. While there is no general strategy to avoid overtaxing the available RAM on a node and more RAM is always better, estimating the RAM requirements of any computational step is always a good idea. Typically software instructions mention RAM requirements and frequently simply dividing the data into subsets will solve slowdowns caused by paging.
+When computations exceed a single CPU core’s capacity, ensure your software stack supports parallel processing technologies like OpenMP or MPI. Here’s how:
+ • Conda-installed software:
+Most software distributed via Conda is pre-configured to leverage multi-core processing through OpenMP.
+ • Manually installed software:
+If installing software manually, verify that multi-core or parallel processing support is enabled during installation.
 
-## Technology stack
+### 4. Hardware Selection
 
-If your computation exceeds the capacity of a single [CPU](https://en.wikipedia.org/wiki/Central_processing_unit) core you need to make sure your software choice includes either [OpenMP](https://www.openmp.org) or [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface) or uses another technology to [scale-out](https://portworx.com/blog/scale-up-vs-scale-out/).
+Your choice of hardware should align with your software’s capabilities and your computational needs:
+ • CPU vs. GPU:
+While GPUs can be significantly faster, their effectiveness depends on your software stack’s compatibility. Not all code is GPU-optimized.
+ • RAM requirements:
+Select nodes based on your RAM needs:
+ • Overuse of high-RAM nodes (e.g., 1 TB) can lead to longer wait times.
+ • Understanding and optimizing your RAM usage often reduces bottlenecks.
+ • Divide datasets where possible to mitigate excessive RAM demands.
 
-Fortunately most software distributed via Conda already inludes the ability to use more than a single CPU core as it was built with OpenMP support. If you install software yourself (not using conda) make sure to enable multi-core usage.
+## Summary
 
-## Hardware
+To achieve optimal performance:
+ • Prioritize local storage for I/O-intensive tasks.
+ • Plan RAM usage to avoid paging.
+ • Ensure your software stack supports multi-core processing or GPU acceleration.
+ • Choose hardware configurations tailored to your workload’s requirements.
 
-The most important choices you face are:
+Understanding and managing these factors will help you maximize the efficiency of your computations on the cluster.
 
-### GPU or CPU
+## Don't do this
 
-This comes down to what does your software stack support. Yes GPUs are faster, but not every bit of code works on GPUs.
+- _Don't run_ computations that will access a lot of files in /projects or /groups (and of course /homes), at least don't act surprised if they are really slow and other users complain about the systems IO performance going down dramatically.
 
-### RAM how much RAM do I need
+- _Don't run_ computations that require 10 MB (10 megabytes) of RAM blocking a 1 Terabyte (1000000 Megabytes) node
 
-There are more nodes with approx. 200 gigabytes (200GB) of RAM and fewer nodes with 1,000 gigabytes (1TB) RAM.
-If you always compute on 1TB nodes, you will spend more time waiting for nodes to become available and you might need more than 1TB moving you back to square one. A minimal understanding of your computations RAM requirements will help make good choices here. Frequently data sets can be subdivided and bottlenecks thus avoided.
+
