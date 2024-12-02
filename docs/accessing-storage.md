@@ -61,11 +61,11 @@ and save it as a .ps1 file
 
 7.1 In the General Tab – give a name to the action and select Run with highest privileges
 
-![Setup SSHFS Win Details](./assets/sshfs_win_manager_Details1.png)
+![Setup SSHFS Win Details](./assets/sshfs_win_manager_details1.png)
 
 7.2 Under the Trigger tab – click new at the bottom left and select the option in the figure
 
-![Setup SSHFS Win Details](./assets/sshfs_win_manager_Details2.png)
+![Setup SSHFS Win Details](./assets/sshfs_win_manager_details2.png)
 
 7.3 Under the Action tab, click new at the bottom left
 
