@@ -47,9 +47,9 @@ that it is running the latest fully patched version of Windows.
 4. Open a txt file in the .ssh folder (located in the user folder), enter the following,
 and save it as a .ps1 file
 
-```text
-Start-Process ssh -WindowStyle Hidden -ArgumentList "-fN", "-L", "6666:shellhost.ikim.uk-essen.de:22", "shellhost"
-```
+    ```text
+    Start-Process ssh -WindowStyle Hidden -ArgumentList "-fN", "-L", "6666:shellhost.ikim.uk-essen.de:22", "shellhost"
+    ```
 
 5. Open SSHFS-win Manager – click on the Add connection button, enter the following, and save
 
@@ -69,13 +69,13 @@ Start-Process ssh -WindowStyle Hidden -ArgumentList "-fN", "-L", "6666:shellhost
 
 7.3 Under the Action tab, click new at the bottom left
 
-    - Action - Start a Program
-    - In Program/script: option enter powershell.exe
-    - In Add Arguments: option enter the following
+* Action - Start a Program
+* In Program/script: option enter powershell.exe
+* In Add Arguments: option enter the following
 
-```text
--ExecutionPolicy Bypass -File "indicate the location of the ps1 file here" 
-```
+    ```text
+    -ExecutionPolicy Bypass -File "indicate the location of the ps1 file here" 
+    ```
 
 7.4 Under Conditions tab
 
