@@ -283,6 +283,7 @@ sinfo
 ```
 
 An example output could be:
+
 ```sh
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 IKIM*        up   infinite      2  drain c[78,107]
