@@ -271,6 +271,36 @@ If the option `--gpus` is omitted, slurm does not set the `CUDA_VISIBLE_DEVICES`
 
 ## Job submission etiquette
 
+### Cleaning up /local/work/$USER
+
+When storing files under `/local/work/$USER` while computing on a node (which is highly recommended in order to avoid malicious IO patterns on the shared network filesystem), it is recommended to clean up eventual remainders from time to time.
+This can be done using sinfo and srun.
+
+First get the lists of nodes in the cluster via:
+
+```sh
+sinfo
+```
+
+An example output could be:
+```sh
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+IKIM*        up   infinite      2  drain c[78,107]
+IKIM*        up   infinite      4    mix c[23,76-77,99]
+IKIM*        up   infinite      8  alloc c[20,24-29,57]
+IKIM*        up   infinite     24   idle c[11,56,60,80-81,89,91-94,98,101,106,108-112,114-117,119-120]
+GPUampere    up   infinite      2    mix g1-[1,6]
+GPUampere    up   infinite      5  alloc g1-[2,4,7-8,10]
+```
+
+Then, choose a subset of the nodes on which you expect data of yours on `/local/work/$USER` and run the following command (while replacing the node list with the nodes you think should be cleaned up):
+
+```sh
+srun --wait 0 --nodelist "c[11,56,60,80-81,89,91-94,98,101,106,108-112,114-117,119-120]" bash -c "rm -rf /local/work/$USER"
+```
+
+Make sure to do this in a tmux session, because the command could take a while to complete.
+
 ### Setting a deadline
 
 If a job is expected to run continuously for many hours, a deadline should be specified with the option `--time`, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include `minutes`, `minutes:seconds`, `hours:minutes:seconds`, `days-hours`, `days-hours:minutes` and `days-hours:minutes:seconds`.
