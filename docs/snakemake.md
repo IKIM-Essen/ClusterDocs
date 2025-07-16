@@ -47,7 +47,7 @@ mamba update --name snakemake snakemake snakemake-storage-plugin-fs snakemake-ex
 Assumptions:
 
 * You are on one of the `shellhost` machines (`ssh shellhost`).
-* You are inside of a working directory that contains a Snakemake workflow (either a file `Snakefile` or `workflow/Snakefile` in the same dir)
+* You are inside of a working directory that contains a Snakemake workflow (either a file `Snakefile` or `workflow/Snakefile` in the same dir). It is **very important** that this directory is an NFS directory that is shared between all cluster nodes (it may thus not start with `/local`, but instead with e.g. `/projects`).
 * You have completed above installation steps.
 
 Since your Snakemake workflow might run for a longer time, you usually want it to be independent of the current ssh session (otherwise, the Snakemake process would be killed when the session is closed or disconnected).
