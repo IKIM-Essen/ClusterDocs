@@ -12,6 +12,7 @@ The [Snakemake workflow management system](https://snakemake.github.io/) is a to
 
 ## News
 
+* 2025/09/01: Snakemake 9.10.1 includes an important performance improvement for gluster (our storage). This should lead to much less small file operations (in particular no mv-after-create, which is an issue on gluster). It should dramatically reduce I/O errors when using Snakemake.
 * 2024/03/12: We upgraded the cluster-wide Snakemake profile `ikim` to requre Snakemake 8.6.0. Please update your Snakemake installation as shown [below](#update).
 
 ## Installation
