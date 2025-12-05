@@ -65,7 +65,7 @@ and save it as a .ps1 file
 
 7.2 Under the Trigger tab – click new at the bottom left and select the option in the figure
 
-![Setup SSHFS Win Details](./assets/sshfs-win-manager-details2.png)
+![Setup SSHFS Win Details](./assets/sshfs_win_manager_details2.png)
 
 7.3 Under the Action tab, click new at the bottom left
 
