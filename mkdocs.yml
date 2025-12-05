@@ -25,6 +25,7 @@ nav:
      - Mamba/Conda: conda.md
      - Containers: apptainer.md
      - Jupyter Notebooks: jupyter.md
+     - VS Code: vs-code-setup.md
   - Data:
      - Storage: storage.md
      - Transfer: transfer.md
