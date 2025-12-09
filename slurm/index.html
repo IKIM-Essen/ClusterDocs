@@ -1,0 +1,1883 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ikim-essen.github.io/ClusterDocs/slurm/">
+      
+      
+        <link rel="prev" href="../snakemake/">
+      
+      
+        <link rel="next" href="../troubleshooting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Slurm - IKIM Cluster</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slurm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="IKIM Cluster" class="md-header__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IKIM Cluster
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Slurm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IKIM Cluster" class="md-nav__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    IKIM Cluster
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Available Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requesting Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connecting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mamba/Conda
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apptainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter Notebooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vs-code-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accessing Cluster storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Computing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snakemake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Snakemake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slurm
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slurm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrypoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sinfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sinfo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squeue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        squeue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        srun
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="srun">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-obtaining-a-shell-on-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: obtaining a shell on a node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-requesting-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: requesting resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-environment-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: environment inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sbatch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="sbatch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-submitting-a-job-with-sbatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: submitting a job with sbatch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-connect-to-a-worker-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: connect to a worker node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-create-a-pipeline-of-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: create a pipeline of jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#salloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        salloc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="salloc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-allocate-resources-for-future-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: allocate resources for future use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scontrol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scontrol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scancel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scancel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-gpu-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targeting GPU nodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-submission-etiquette" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job submission etiquette
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job submission etiquette">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-a-deadline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting a deadline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#balance-between-cpu-cores-and-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Balance between CPU cores and GPUs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-up-jobs-at-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breaking up jobs at checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat Sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Misc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entrypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrypoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sinfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sinfo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squeue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        squeue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        srun
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="srun">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-obtaining-a-shell-on-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: obtaining a shell on a node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-requesting-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: requesting resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-environment-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: environment inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sbatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sbatch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="sbatch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-submitting-a-job-with-sbatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: submitting a job with sbatch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-connect-to-a-worker-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: connect to a worker node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-create-a-pipeline-of-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: create a pipeline of jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#salloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        salloc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="salloc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-allocate-resources-for-future-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: allocate resources for future use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scontrol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scontrol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scancel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scancel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#targeting-gpu-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targeting GPU nodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-submission-etiquette" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job submission etiquette
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job submission etiquette">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-a-deadline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting a deadline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#balance-between-cpu-cores-and-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Balance between CPU cores and GPUs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-up-jobs-at-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breaking up jobs at checkpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat Sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="slurm">Slurm</h1>
+<p>This document gives an overview of Slurm to get you started. To learn more, also see the <a href="https://slurm.schedmd.com">official manual</a>.</p>
+<h2 id="entrypoint">Entrypoint</h2>
+<p>The entry point to the <a href="https://slurm.schedmd.com">Slurm</a> cluster is a set of <em>submission</em> nodes under the name <code>shellhost</code>. Submission nodes must be used exclusively to log in and submit jobs (inline commands or scripts) to <em>worker</em> nodes.</p>
+<p>To connect to a submission node:</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>shellhost
+</code></pre></div>
+<p>Worker nodes are divided in groups called <em>partitions</em> in Slurm terminology. The default partition is made up of general-purpose CPU nodes.</p>
+<h2 id="client-tools">Client tools</h2>
+<p>This is a brief overview of the main commands available on the submission nodes. They can also be invoked from worker nodes as part of a submitted job.</p>
+<h3 id="sinfo">sinfo</h3>
+<p>Use <code>sinfo</code> to display a summary of the worker nodes.</p>
+<h3 id="squeue">squeue</h3>
+<p>Use <code>squeue</code> to display a list of scheduled jobs. It's generally useful to execute</p>
+<div class="highlight"><pre><span></span><code>squeue<span class="w"> </span>-l
+</code></pre></div>
+<p>to display additional information such as the time limit.</p>
+<h3 id="srun">srun</h3>
+<p>Use <code>srun</code> to submit a job interactively. The output is displayed on the terminal.</p>
+<h4 id="example-obtaining-a-shell-on-a-node">Example: obtaining a shell on a node</h4>
+<p>The following example opens a shell on a worker node. The node is selected automatically by Slurm.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># A deadline is specified to avoid leaving a hanging session if the user doesn&#39;t terminate it.</span>
+srun<span class="w"> </span>--time<span class="o">=</span><span class="m">01</span>:00:00<span class="w"> </span>--pty<span class="w"> </span>bash<span class="w"> </span>-i
+</code></pre></div>
+<p>It's also possible to connect to worker nodes directly via ssh. See <a href="#example-connect-to-a-worker-node">Example: connect to a worker node</a>.</p>
+<h4 id="example-requesting-resources">Example: requesting resources</h4>
+<p>A simple <code>srun</code> command is executed by default on a single worker node, using a single CPU core. Several options are available for configuring the allocated resources. In the following example, Slurm allocates 32 CPU cores by picking a worker node with enough free cores.</p>
+<div class="highlight"><pre><span></span><code>srun<span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">32</span><span class="w"> </span>python3<span class="w"> </span>script.py
+</code></pre></div>
+<h4 id="example-environment-inheritance">Example: environment inheritance</h4>
+<p>When Slurm executes a job, it inherits the caller's environment and current directory. Slurm also sets <a href="https://slurm.schedmd.com/sbatch.html#SECTION_OUTPUT-ENVIRONMENT-VARIABLES">several</a> environment variables such as <code>SLURM_JOB_ID</code> and <code>SLURM_JOB_NAME</code>. The same applies to the other submission commands <code>sbatch</code> and <code>salloc</code>.</p>
+<p>To illustrate, let's create a script called <code>job.sh</code> and execute it via <code>srun</code>.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">pwd</span>
+/homes/alice/workdir
+
+$<span class="w"> </span>cat<span class="w"> </span>job.sh
+<span class="c1">#!/usr/bin/env sh</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;my job ran on </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;working directory: </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FOO=</span><span class="nv">$FOO</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># this variable is not defined in the script</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;job id: </span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># this variable is defined by Slurm</span>
+<span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>hostname<span class="k">)</span>
+
+<span class="c1"># Define an environment variable and execute the job.</span>
+$<span class="w"> </span><span class="nv">FOO</span><span class="o">=</span>bar<span class="w"> </span>srun<span class="w"> </span>sh<span class="w"> </span>job.sh
+my<span class="w"> </span>job<span class="w"> </span>ran<span class="w"> </span>on<span class="w"> </span>Thu<span class="w"> </span>May<span class="w">  </span><span class="m">4</span><span class="w"> </span><span class="m">15</span>:25:10<span class="w"> </span>UTC<span class="w"> </span><span class="m">2023</span>
+working<span class="w"> </span>directory:<span class="w"> </span>/homes/alice/workdir
+<span class="nv">FOO</span><span class="o">=</span>bar
+job<span class="w"> </span>id:<span class="w"> </span><span class="m">340273</span>
+c5.ikim.uk-essen.de
+</code></pre></div>
+<h3 id="sbatch">sbatch</h3>
+<p>Use <code>sbatch</code> to submit a script. The output is written to a file in the current directory. All <code>srun</code> options apply to <code>sbatch</code> as well and can be included in the script itself with the special comment syntax <code>#SBATCH</code>.</p>
+<p><code>sbatch</code> allocates the requested resources, then executes the script <strong>on the first of the allocated nodes</strong>. To use the allocated resources effectively, <code>srun</code> must be invoked within the script, otherwise only one node is used.</p>
+<h4 id="example-submitting-a-job-with-sbatch">Example: submitting a job with sbatch</h4>
+<p>Let's create a script called <code>job.sh</code> with a couple of <code>srun</code> calls and execute it via <code>sbatch</code>. Slurm redirects standard output to the text file <code>slurm-[job_id].out</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a script which allocates 3 nodes and submits two job steps using srun.</span>
+$<span class="w"> </span>cat<span class="w"> </span>job.sh
+<span class="c1">#!/usr/bin/env sh</span>
+<span class="c1">#SBATCH --nodes 3</span>
+<span class="c1">#SBATCH --time 01:00:00</span>
+srun<span class="w"> </span>hostname
+srun<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>hello
+
+<span class="c1"># Execute the script.</span>
+$<span class="w"> </span>sbatch<span class="w"> </span>./job.sh
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">340264</span>
+
+<span class="c1"># Display the output. The jobs steps were executed simultaneously on all 3 nodes.</span>
+$<span class="w"> </span>cat<span class="w"> </span>slurm-340264.out
+c7.ikim.uk-essen.de
+c23.ikim.uk-essen.de
+c20.ikim.uk-essen.de
+hello
+hello
+hello
+</code></pre></div>
+<p>The following example shows the effect of an equivalent script without <code>srun</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a script which allocates 3 nodes, then executes two commands without srun.</span>
+$<span class="w"> </span>cat<span class="w"> </span>job.sh
+<span class="c1">#!/usr/bin/env sh</span>
+<span class="c1">#SBATCH --nodes 3</span>
+<span class="c1">#SBATCH --time 01:00:00</span>
+hostname
+<span class="nb">echo</span><span class="w"> </span>hello
+
+<span class="c1"># Execute the script.</span>
+$<span class="w"> </span>sbatch<span class="w"> </span>./job.sh
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">340266</span>
+
+<span class="c1"># Display the output. The commands were simply executed on the first assigned node.</span>
+$<span class="w"> </span>cat<span class="w"> </span>slurm-340266.out
+c7.ikim.uk-essen.de
+hello
+</code></pre></div>
+<h4 id="example-connect-to-a-worker-node">Example: connect to a worker node</h4>
+<p>Users can connect via ssh to worker nodes on which they have at least one running job. This is typically useful for launching monitoring (<code>htop</code>, <code>nvidia-smi</code>, etc.) or debugging tools.</p>
+<p>After launching a job, the allocated node can be quickly discovered by passing <code>-u username</code> to <code>squeue</code>. For example:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>squeue<span class="w"> </span>-u<span class="w"> </span>alice
+JOBID<span class="w"> </span>PARTITION<span class="w">   </span>NAME<span class="w">    </span>USER<span class="w"> </span>ST<span class="w">   </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="w"> </span><span class="m">1234</span><span class="w">      </span>IKIM<span class="w">   </span>job1<span class="w">   </span>alice<span class="w">  </span>R<span class="w">   </span><span class="m">10</span>:30<span class="w">      </span><span class="m">1</span><span class="w"> </span>c11
+<span class="w"> </span><span class="m">1245</span><span class="w">      </span>IKIM<span class="w">   </span>job2<span class="w">   </span>alice<span class="w">  </span>R<span class="w">    </span><span class="m">3</span>:05<span class="w">      </span><span class="m">1</span><span class="w"> </span>c23
+</code></pre></div>
+<p>To connect to one of the listed nodes, open a new shell on the local workstation (not on the submission node) and execute:</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>c11
+</code></pre></div>
+<p>The ssh session is incorporated into one of the running jobs on the target node: when the job terminates, the ssh session terminates as well.</p>
+<p>This feature is meant for monitoring and debugging. <strong>Do not</strong> use it for work that could be submitted via slurm instead.</p>
+<p>Interactive shells can also be launched on any worker node using <code>srun</code>, regardless of running jobs. See <a href="#example-obtaining-a-shell-on-a-node">Example: obtaining a shell on a node</a>. The <code>srun</code> method allocates one CPU core on the target node, therefore it doesn't work if the node is already fully allocated.</p>
+<h4 id="example-create-a-pipeline-of-jobs">Example: create a pipeline of jobs</h4>
+<p>The <code>--dependency</code> option allows creating a tree of interdependent jobs such that downstream jobs start only after upstream jobs terminate with a certain outcome.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This example submits a job, then two parallel downstream jobs which depend on</span>
+<span class="c1"># on successful completion of the upstream job:</span>
+<span class="c1">#</span>
+<span class="c1">#      Job 10</span>
+<span class="c1">#     /      \</span>
+<span class="c1"># Job 11    Job 12</span>
+<span class="c1">#</span>
+<span class="c1"># Submit the upstream job.</span>
+$<span class="w"> </span>sbatch<span class="w"> </span>preprocess.sh
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># Submit a downstream job configured to wait in the queue until job 10</span>
+<span class="c1"># terminates successfully.</span>
+$<span class="w"> </span>sbatch<span class="w"> </span>--dependency<span class="w"> </span>afterok:10<span class="w"> </span>train1.sh
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">11</span>
+
+<span class="c1"># Submit another downstream job.</span>
+$<span class="w"> </span>sbatch<span class="w"> </span>--dependency<span class="w"> </span>afterok:10<span class="w"> </span>train2.sh
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">12</span>
+
+<span class="c1"># Check the queue.</span>
+$<span class="w"> </span>squeue
+<span class="w">    </span>JOBID<span class="w"> </span>PARTITION<span class="w">           </span>NAME<span class="w">    </span>USER<span class="w"> </span>ST<span class="w">    </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="w">       </span><span class="m">12</span><span class="w">      </span>IKIM<span class="w">      </span>train2.sh<span class="w">   </span>alice<span class="w"> </span>PD<span class="w">    </span><span class="m">0</span>:00<span class="w">      </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>Dependency<span class="o">)</span>
+<span class="w">       </span><span class="m">11</span><span class="w">      </span>IKIM<span class="w">      </span>train1.sh<span class="w">   </span>alice<span class="w"> </span>PD<span class="w">    </span><span class="m">0</span>:00<span class="w">      </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>Dependency<span class="o">)</span>
+<span class="w">       </span><span class="m">10</span><span class="w">      </span>IKIM<span class="w">  </span>preprocess.sh<span class="w">   </span>alice<span class="w">  </span>R<span class="w">    </span><span class="m">0</span>:15<span class="w">      </span><span class="m">1</span><span class="w"> </span>c20
+</code></pre></div>
+<p>From a resource allocation standpoint, the individual jobs are separate: they can request different resources and might be scheduled on different nodes unless specified otherwise.</p>
+<p>For the full dependency syntax, see the <a href="[https://slurm.schedmd.com/sbatch.html#OPT_dependency]">--dependency</a> section in the official manual.</p>
+<h3 id="salloc">salloc</h3>
+<p><code>salloc</code> allocates resources that can be used by subsequent invocations of <code>srun</code> or <code>sbatch</code>. By default, after allocating the resources <code>salloc</code> opens a shell <strong>on the current node</strong>: any <code>srun</code> or <code>sbatch</code> commands issued in this shell will use the allocated resources. When the user terminates the shell, the allocation is relinquished.</p>
+<p>The following example requests allocates a certain number of nodes for a limited amount of time. Note that the assigned nodes are not allocated exclusively unless specified, for example by requesting all available CPU cores.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>salloc<span class="w"> </span>--nodes<span class="o">=</span><span class="m">3</span><span class="w"> </span>--time<span class="o">=</span><span class="m">01</span>:00:00
+salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">340227</span>
+
+$<span class="w"> </span>srun<span class="w"> </span>hostname
+c5.ikim.uk-essen.de
+c6.ikim.uk-essen.de
+c7.ikim.uk-essen.de
+
+$<span class="w"> </span><span class="nb">exit</span>
+salloc:<span class="w"> </span>Relinquishing<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">340227</span>
+salloc:<span class="w"> </span>Job<span class="w"> </span>allocation<span class="w"> </span><span class="m">340227</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>revoked.
+</code></pre></div>
+<p>If a command is supplied to <code>salloc</code>, it is executed instead of opening a shell. The command runs on the current node, therefore it should include <code>srun</code> or <code>sbatch</code>.</p>
+<p>To request only an allocation without executing a specific command right away, execute <code>salloc</code> with <code>--no-shell</code>. As soon as the allocation is granted, a job ID is displayed in the output. The allocation can then be used by invoking <code>srun</code> or <code>sbatch</code> and passing the job ID to the <code>--jobid</code> option. The allocation stays active until either the <code>--time</code> runs out or it gets terminated via <code>scancel</code>.</p>
+<h4 id="example-allocate-resources-for-future-use">Example: allocate resources for future use</h4>
+<p>The following example allocates 3 GPUs on the same node for 8 hours. At any point within this time frame, jobs can be executed on the allocation.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>salloc<span class="w"> </span>--no-shell<span class="w"> </span>--time<span class="o">=</span><span class="m">08</span>:00:00<span class="w"> </span>--partition<span class="w"> </span>GPUampere<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--gpus<span class="w"> </span><span class="m">3</span>
+salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">486835</span>
+
+<span class="c1"># A shell or any other job can now be submitted on allocation 486835.</span>
+<span class="c1"># This can be done as many times as desired until the session is canceled or times out.</span>
+$<span class="w"> </span>srun<span class="w"> </span>--jobid<span class="o">=</span><span class="m">486835</span><span class="w"> </span>--pty<span class="w"> </span>bash<span class="w"> </span>-i
+</code></pre></div>
+<p>This approach is helpful for executing jobs in bursts over a period of time without losing the claim on certain resources. For instance, a user planning a bug-fixing session (short runs interspersed with code changes) on a GPU-equipped node can allocate a GPU for a few hours instead of submitting each job to the queue individually.</p>
+<p>See <a href="#targeting-gpu-nodes">Targeting GPU nodes</a> to learn more about requesting GPUs.</p>
+<h3 id="scontrol">scontrol</h3>
+<p>Use <code>scontrol</code> to display detailed information about a job such as the allocated resources and the times of submission/start.</p>
+<div class="highlight"><pre><span></span><code>scontrol<span class="w"> </span>show<span class="w"> </span>jobid<span class="w"> </span>-dd<span class="w"> </span><span class="o">[</span>job_id<span class="o">]</span>
+</code></pre></div>
+<h3 id="scancel">scancel</h3>
+<p>Use <code>scancel [job_id]</code> to cancel or terminate a job. Use <code>squeue</code> to display job IDs.</p>
+<h2 id="targeting-gpu-nodes">Targeting GPU nodes</h2>
+<p>GPU nodes are available in a non-default partition named after the corresponding NVIDIA GPU architecture. The <code>--partition</code> option must be specified to target them.</p>
+<p>When executing GPU workloads, the <code>--gpus N</code> option should always be specified to let slurm assign <code>N</code> GPUS automatically. More specifically, Slurm automatically selects a suitable worker node, picks the specified number of GPUs randomly among the unassigned ones and sets the environment variable <code>CUDA_VISIBLE_DEVICES</code> accordingly.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># In this example, Slurm exposes 2 GPUs from a node in the GPUampere partition via CUDA_VISIBLE_DEVICES.</span>
+<span class="c1"># The script must not override CUDA_VISIBLE_DEVICES!</span>
+<span class="c1"># The number of requested CPU cores should be proportional to the number of GPUs.</span>
+<span class="c1"># A deadline of 1 day and 12 hours is specified to let other users know when the GPUs will be available again.</span>
+srun<span class="w"> </span>--partition<span class="w"> </span>GPUampere<span class="w"> </span>--gpus<span class="w"> </span><span class="m">2</span><span class="w"> </span>--cpus-per-gpu<span class="o">=</span><span class="m">4</span><span class="w"> </span>--time<span class="o">=</span><span class="m">1</span>-12<span class="w"> </span>train.py
+</code></pre></div>
+<p>The end-user script can then refer to specific devices by using library-specific mechanisms. For example, after passing <code>--gpus N</code> to Slurm, Pytorch maps the assigned CUDA devices to indices <code>0</code> through <code>N-1</code>: <code>cuda:0</code>, <code>cuda:1</code>, etc. Since CUDA_VISIBLE_DEVICES is managed by Slurm, end-user scripts must not modify it.</p>
+<p>If the option <code>--gpus</code> is omitted, slurm does not set the <code>CUDA_VISIBLE_DEVICES</code> variable. This does <strong>not</strong> mean that GPUs are hidden: the job will have access to all GPUs on the node, even the ones assigned to slurm jobs from other users.</p>
+<h2 id="job-submission-etiquette">Job submission etiquette</h2>
+<h3 id="setting-a-deadline">Setting a deadline</h3>
+<p>If a job is expected to run continuously for many hours, a deadline should be specified with the option <code>--time</code>, even if just an overestimation. This information is especially valuable when all worker nodes are occupied as it allows other users to predict when their job will be scheduled. Accepted time formats include <code>minutes</code>, <code>minutes:seconds</code>, <code>hours:minutes:seconds</code>, <code>days-hours</code>, <code>days-hours:minutes</code> and <code>days-hours:minutes:seconds</code>.</p>
+<p>It's good practice to always specify a deadline when opening a shell (<code>srun --pty bash</code>). This avoids the "hanging session" issue that occurs if the user forgets to log out or loses the connection abruptly.</p>
+<h3 id="balance-between-cpu-cores-and-gpus">Balance between CPU cores and GPUs</h3>
+<p>When requesting GPUs with <code>--gpus</code>, attention should be paid to the ratio of CPU cores to GPUs by passing an appropriate value to <code>--cpus-per-gpu</code>. For example, if a node has 6 GPUs and 48 CPU cores in total, it's advisable to request no more than <code>--cpus-per-gpu=8</code>.</p>
+<p>The amount of CPU cores and GPUs on a node can be determined with <code>scontrol show node</code>.</p>
+<h3 id="breaking-up-jobs-at-checkpoints">Breaking up jobs at checkpoints</h3>
+<p>A large workflow that runs for multiple days occupying several CPU cores or GPUs typically has a checkpoint system that saves its state at regular intervals. Instead of implementing such a workflow as a single job, it can be broken up into a sequence of jobs that end by saving a checkpoint and start by loading the previous checkpoint. This increases the fairness of the queue by allowing other jobs to be scheduled in between. See the <a href="#example-create-a-pipeline-of-jobs">pipeline</a> example for details.</p>
+<h2 id="cheat-sheet">Cheat Sheet</h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connect to submission nodes. <strong>Only use for submission.</strong></td>
+<td><code>ssh shellhost</code></td>
+</tr>
+<tr>
+<td>Show workers</td>
+<td><code>sinfo</code></td>
+</tr>
+<tr>
+<td>Show schedule</td>
+<td><code>squeue -l</code></td>
+</tr>
+<tr>
+<td>My jobs</td>
+<td><code>squeue -u $(whoami)</code></td>
+</tr>
+<tr>
+<td>Submit interactive job</td>
+<td><code>srun --time=01:00:00 --cpus-per-task=1 --pty bash -i</code></td>
+</tr>
+<tr>
+<td>Submit batch job</td>
+<td><code>sbatch job.sh</code></td>
+</tr>
+<tr>
+<td>Submit batch job w/o shell script</td>
+<td><code>sbatch --wrap="python -m ..."</code></td>
+</tr>
+<tr>
+<td>Target GPU nodes</td>
+<td><code>sbatch --partition=GPUampere,GPUhopper --gpus=1 --cpus-per-gpu=4 --time=01:00:00 job.sh</code></td>
+</tr>
+<tr>
+<td>Allocate resources for later</td>
+<td><code>salloc [ARGS] --time=01:00:00</code></td>
+</tr>
+<tr>
+<td>Show job info</td>
+<td><code>scontrol show jobid -dd [JOB_ID]</code></td>
+</tr>
+<tr>
+<td>Show assigned GPUs</td>
+<td><code>scontrol show jobid -dd [JOB_ID] \| grep IDX</code></td>
+</tr>
+<tr>
+<td>Cancel job</td>
+<td><code>scancel [JOB_ID]</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
