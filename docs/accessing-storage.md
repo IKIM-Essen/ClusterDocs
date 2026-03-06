@@ -48,7 +48,7 @@ that it is running the latest fully patched version of Windows.
 and save it as a .ps1 file
 
     ```text
-    Start-Process ssh -WindowStyle Hidden -ArgumentList "-fN", "-L", "6666:shellhost.ikim.uk-essen.de:22", "shellhost"
+    Start-Process ssh -WindowStyle Hidden -ArgumentList "-fN", "-L", "6666:shellhost:22", "shellhost"
     ```
 
 5. Open SSHFS-win Manager – click on the Add connection button, enter the following, and save
