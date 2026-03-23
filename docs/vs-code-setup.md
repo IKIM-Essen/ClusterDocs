@@ -1,5 +1,7 @@
 ## Connecting via SSH
 
+**Important**: Make sure that your VS Code does not hamper filesystem performance by following our list of [dos and don'ts][patterns].
+
 1. Download VS Code https://code.visualstudio.com/
 2. Download the extension "Remote - SSH" from Microsoft.
 
@@ -12,3 +14,6 @@
 4. Use the folder symbol to explore a specific folder on the connected node.
 
     ![Remote Folder](./assets/vs_code_ssh_remote_folder.png)
+
+
+[patterns]: patterns.md
