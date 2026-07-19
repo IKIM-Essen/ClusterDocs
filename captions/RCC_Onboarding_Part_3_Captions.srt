@@ -1,0 +1,468 @@
+1
+00:00:00,000 --> 00:00:03,237
+Part Three explains performance engineering for biomedical research.
+
+2
+00:00:03,237 --> 00:00:09,306
+The most important message is that faster hardware does not rescue a poorly structured workflow.
+
+3
+00:00:09,306 --> 00:00:16,994
+A computation that should finish in hours can extend to weeks or months when it repeatedly scans network storage,
+
+4
+00:00:16,994 --> 00:00:24,277
+opens millions of small files, requests the wrong number of threads, or runs out of memory and restarts.
+
+5
+00:00:24,277 --> 00:00:28,728
+We will separate CPU, GPU, RAM, disk capacity, and input-output behavior.
+
+6
+00:00:28,728 --> 00:00:36,416
+We will also explain streaming versus random access, large versus small files, compression, node-local scratch, and the tools used
+
+7
+00:00:36,416 --> 00:00:38,035
+to find a bottleneck.
+
+8
+00:00:38,035 --> 00:00:41,676
+The goal is not maximum speed at any cost.
+
+9
+00:00:41,676 --> 00:00:45,318
+The goal is predictable, fair, and scientifically correct performance.
+
+10
+00:00:45,318 --> 00:00:47,684
+Performance is not a single number.
+
+11
+00:00:47,684 --> 00:00:53,994
+An analysis may be limited by CPU instructions, GPU kernels, memory capacity, memory bandwidth, network transfer,
+
+12
+00:00:53,994 --> 00:00:56,755
+storage throughput, storage latency, or metadata operations.
+
+13
+00:00:56,755 --> 00:01:00,698
+Improving a resource that is not limiting usually changes little.
+
+14
+00:01:00,698 --> 00:01:08,191
+For example, adding CPU cores to a job that waits for thousands of small files can increase contention without
+
+15
+00:01:08,191 --> 00:01:08,980
+shortening runtime.
+
+16
+00:01:08,980 --> 00:01:14,107
+Start by describing the data path and measuring where elapsed time is spent.
+
+17
+00:01:14,107 --> 00:01:16,867
+Then change one variable at a time.
+
+18
+00:01:16,867 --> 00:01:24,360
+This approach is more reliable than guessing from the reputation of a tool or copying a resource request from
+
+19
+00:01:24,360 --> 00:01:25,149
+another project.
+
+20
+00:01:25,149 --> 00:01:27,989
+Consider a workflow with five thousand samples.
+
+21
+00:01:27,989 --> 00:01:35,699
+If a step spends one second on useful computation and twenty seconds opening, seeking, and closing small files on
+
+22
+00:01:35,699 --> 00:01:37,728
+shared storage, the overhead dominates.
+
+23
+00:01:37,728 --> 00:01:45,438
+Repeat that pattern across many rules and retries, and a nominally short analysis can occupy the system for weeks.
+
+24
+00:01:45,438 --> 00:01:53,148
+Another common pattern is decompressing the same source repeatedly, copying entire directories for each rule, or requesting one core
+
+25
+00:01:53,148 --> 00:01:55,583
+for software configured to use sixteen.
+
+26
+00:01:55,583 --> 00:02:00,453
+Performance mistakes multiply by the number of samples, files, and workflow stages.
+
+27
+00:02:00,453 --> 00:02:08,163
+Estimate scale before launch: number of jobs, files per job, bytes read and written, and expected runtime per unit.
+
+28
+00:02:08,163 --> 00:02:11,688
+A CPU node contains cores that execute instruction streams.
+
+29
+00:02:11,688 --> 00:02:14,038
+Some tools expose a threads option.
+
+30
+00:02:14,038 --> 00:02:21,481
+Slurm must allocate at least that many CPUs per task, and the command must be told to use them.
+
+31
+00:02:21,481 --> 00:02:28,531
+Parallel efficiency usually declines as thread count increases because threads coordinate, share memory bandwidth, and wait for input.
+
+32
+00:02:28,531 --> 00:02:34,799
+Two independent samples may run faster as two smaller jobs than as one very wide job.
+
+33
+00:02:34,799 --> 00:02:39,891
+Measure elapsed time and CPU utilization at several thread counts using representative data.
+
+34
+00:02:39,891 --> 00:02:47,333
+Never start many background processes outside the allocation, and do not assume that a tool called multithreaded scales linearly.
+
+35
+00:02:47,333 --> 00:02:52,635
+GPUs contain many execution units optimized for highly parallel numerical work.
+
+36
+00:02:52,635 --> 00:02:58,901
+They can accelerate deep learning, image analysis, molecular simulation, and selected sequence-analysis tools.
+
+37
+00:02:58,901 --> 00:03:05,167
+A CPU program does not become GPU-enabled merely because a GPU is allocated.
+
+38
+00:03:05,167 --> 00:03:14,326
+Request the correct GPU resource, use software built for the available driver and libraries, and monitor utilization with nvidia-smi.
+
+39
+00:03:14,326 --> 00:03:22,520
+Low utilization may indicate tiny batches, CPU preprocessing, slow data loading, insufficient parallelism, or frequent host-to-device transfers.
+
+40
+00:03:22,520 --> 00:03:31,678
+GPUs are scarce shared resources, so release them when the GPU portion is complete rather than reserving one during
+
+41
+00:03:31,678 --> 00:03:33,124
+long CPU-only stages.
+
+42
+00:03:33,124 --> 00:03:38,329
+RAM holds the active working set: data structures, indices, buffers, and program state.
+
+43
+00:03:38,329 --> 00:03:43,535
+If a job exceeds its Slurm memory allocation, the job may be terminated.
+
+44
+00:03:43,535 --> 00:03:49,942
+If the operating system begins swapping, performance can collapse because disk is far slower than RAM.
+
+45
+00:03:49,942 --> 00:03:55,548
+Requesting far more memory than needed can delay scheduling and reduce capacity for everyone.
+
+46
+00:03:55,548 --> 00:03:59,953
+Use Slurm accounting to inspect maximum resident memory after representative jobs.
+
+47
+00:03:59,953 --> 00:04:05,159
+Some tools scale memory with threads or input size, so record the relationship.
+
+48
+00:04:05,159 --> 00:04:11,165
+A memory leak shows steadily rising use; a normal workload often rises to a plateau.
+
+49
+00:04:11,165 --> 00:04:12,976
+Disk space is capacity.
+
+50
+00:04:12,976 --> 00:04:15,691
+Input-output performance describes how data moves.
+
+51
+00:04:15,691 --> 00:04:21,575
+Four useful dimensions are throughput, latency, input-output operations per second, and metadata rate.
+
+52
+00:04:21,575 --> 00:04:27,006
+Throughput matters for large sequential reads such as scanning a compressed FASTQ.
+
+53
+00:04:27,006 --> 00:04:31,079
+Latency matters when a program waits for individual operations.
+
+54
+00:04:31,079 --> 00:04:34,700
+IOPS matters for many small reads and writes.
+
+55
+00:04:34,700 --> 00:04:41,941
+Metadata rate matters when listing directories, checking file existence, opening files, or creating thousands of paths.
+
+56
+00:04:41,941 --> 00:04:50,088
+Network storage is designed for shared durable data, but it cannot provide local-disk behavior to every job simultaneously.
+
+57
+00:04:50,088 --> 00:04:53,708
+Match the access pattern to the storage tier.
+
+58
+00:04:53,708 --> 00:04:57,308
+Streaming input-output reads or writes long contiguous sequences.
+
+59
+00:04:57,308 --> 00:05:02,707
+This lets storage, operating-system caches, compression libraries, and network protocols work efficiently.
+
+60
+00:05:02,707 --> 00:05:09,907
+Random input-output jumps among many positions or files and repeatedly pays seek, latency, and metadata costs.
+
+61
+00:05:09,907 --> 00:05:18,456
+Indexed BAM and VCF access can be appropriate when querying a small genomic interval, but repeatedly issuing tiny queries
+
+62
+00:05:18,456 --> 00:05:23,405
+across the entire genome can be slower than one sequential pass.
+
+63
+00:05:23,405 --> 00:05:29,704
+Against network storage, avoid database-like random write patterns and large collections of temporary shards.
+
+64
+00:05:29,704 --> 00:05:36,454
+Stage active files to node-local disk, process them there, and return only the required outputs.
+
+65
+00:05:36,454 --> 00:05:43,381
+A directory with hundreds of thousands of files can make listing, tab completion, backups, workflow discovery,
+
+66
+00:05:43,381 --> 00:05:45,113
+and deletion painfully slow.
+
+67
+00:05:45,113 --> 00:05:49,442
+Small files also waste storage blocks and require metadata operations.
+
+68
+00:05:49,442 --> 00:05:54,638
+Many bioinformatics tools create temporary fragments, per-read outputs, or tiny environment files.
+
+69
+00:05:54,638 --> 00:06:02,431
+Prefer a reasonable directory hierarchy, one result bundle per sample or batch, and archive cold collections when appropriate.
+
+70
+00:06:02,431 --> 00:06:10,657
+Do not use tar archives as a substitute for formats that need random indexed access, but do use structured
+
+71
+00:06:10,657 --> 00:06:15,419
+containers or archives for collections that are transferred and consumed together.
+
+72
+00:06:15,419 --> 00:06:20,182
+Clean temporary files through workflow rules instead of leaving them indefinitely.
+
+73
+00:06:20,182 --> 00:06:22,297
+Biomedical data is often compressible.
+
+74
+00:06:22,297 --> 00:06:25,258
+FASTQ is commonly stored as gzip-compressed FASTQ.
+
+75
+00:06:25,258 --> 00:06:28,642
+VCF can use block gzip with an index.
+
+76
+00:06:28,642 --> 00:06:32,026
+BAM and CRAM are compressed binary alignment formats.
+
+77
+00:06:32,026 --> 00:06:38,795
+Keeping files compressed reduces bytes transferred and stored, which often saves more time than decompression costs.
+
+78
+00:06:38,795 --> 00:06:45,140
+Avoid repeatedly expanding a file to network storage merely because one command expects a path.
+
+79
+00:06:45,140 --> 00:06:51,909
+Many tools read compressed input directly, and Unix pipes can stream decompressed data between compatible tools.
+
+80
+00:06:51,909 --> 00:06:57,831
+Confirm that the chosen compression is splittable or indexable when parallel access is required.
+
+81
+00:06:57,831 --> 00:07:03,331
+Keep the original compressed source and generate only formats needed for downstream analysis.
+
+82
+00:07:03,331 --> 00:07:07,232
+Node-local scratch is temporary storage attached to the compute node.
+
+83
+00:07:07,232 --> 00:07:13,083
+It provides lower latency and avoids making shared storage handle every temporary read and write.
+
+84
+00:07:13,083 --> 00:07:17,765
+Snakemake can expose the job temporary directory through the standard tmpdir resource.
+
+85
+00:07:17,765 --> 00:07:24,396
+Shadow rules can execute in an isolated directory, with modes that link or copy the required inputs.
+
+86
+00:07:24,396 --> 00:07:31,809
+For tools that perform random access or create many temporary files, use an RCC-tested pattern: copy the required inputs
+
+87
+00:07:31,809 --> 00:07:38,050
+to local scratch, run the command there, validate the output, and copy only final results back.
+
+88
+00:07:38,050 --> 00:07:43,122
+Scratch is temporary, so the workflow must not treat it as durable storage.
+
+89
+00:07:43,122 --> 00:07:44,842
+Use Slurm accounting first.
+
+90
+00:07:44,842 --> 00:07:51,721
+S acct shows job state, elapsed time, allocated CPUs, and fields such as maximum resident memory.
+
+91
+00:07:51,721 --> 00:07:55,161
+S stat reports live statistics for running jobs.
+
+92
+00:07:55,161 --> 00:08:03,330
+Inside an allocation, time measures elapsed and CPU time, top or h top shows processes, and tools such as
+
+93
+00:08:03,330 --> 00:08:10,210
+pidstat, vmstat, iostat, or dstat can reveal CPU wait, memory pressure, and storage activity when available.
+
+94
+00:08:10,210 --> 00:08:16,230
+N v i d i a s m i reports GPU utilization and memory.
+
+95
+00:08:16,230 --> 00:08:19,669
+Snakemake benchmark files connect measurements to specific rules.
+
+96
+00:08:19,669 --> 00:08:27,409
+Interpret metrics together: low CPU plus high I/O wait suggests storage; full memory and rising swap suggests RAM;
+
+97
+00:08:27,409 --> 00:08:32,139
+low GPU utilization with busy CPUs suggests preprocessing or data loading.
+
+98
+00:08:32,139 --> 00:08:34,623
+A symptom is not a diagnosis.
+
+99
+00:08:34,623 --> 00:08:41,247
+Low CPU efficiency may be caused by input-output wait, serial code, thread oversubscription, or frequent synchronization.
+
+100
+00:08:41,247 --> 00:08:48,699
+A job killed for memory needs either a larger allocation or a method that reduces the working set.
+
+101
+00:08:48,699 --> 00:08:54,909
+A GPU at ten percent utilization may be waiting on CPU preprocessing or tiny batches.
+
+102
+00:08:54,909 --> 00:08:59,877
+A workflow that pauses while discovering files may have a metadata problem.
+
+103
+00:08:59,877 --> 00:09:06,087
+Build a small representative benchmark, change one factor, and compare elapsed time and resource efficiency.
+
+104
+00:09:06,087 --> 00:09:13,125
+Stop when performance is adequate and fair; optimization also has engineering cost and can introduce scientific errors.
+
+105
+00:09:13,125 --> 00:09:15,412
+The operating rules are straightforward.
+
+106
+00:09:15,412 --> 00:09:16,785
+Measure before scaling.
+
+107
+00:09:16,785 --> 00:09:19,988
+Match Slurm requests to the software configuration.
+
+108
+00:09:19,988 --> 00:09:22,733
+Keep source data compressed where possible.
+
+109
+00:09:22,733 --> 00:09:24,563
+Prefer sequential streaming access.
+
+110
+00:09:24,563 --> 00:09:27,765
+Avoid random temporary input-output on network storage.
+
+111
+00:09:27,765 --> 00:09:32,798
+Stage active files to node-local scratch through a tested Snakemake pattern.
+
+112
+00:09:32,798 --> 00:09:35,086
+Reduce small-file and directory counts.
+
+113
+00:09:35,086 --> 00:09:38,746
+Preserve only necessary outputs and clean temporary files.
+
+114
+00:09:38,746 --> 00:09:44,694
+Use Slurm accounting, Snakemake benchmarks, and operating-system tools to identify the actual bottleneck.
+
+115
+00:09:44,694 --> 00:09:48,354
+Above all, perform a pilot at realistic scale.
+
+116
+00:09:48,354 --> 00:09:57,047
+An inefficient workflow multiplied across thousands of samples can turn hours into months and degrade the shared service for
+
+117
+00:09:57,047 --> 00:09:57,505
+colleagues.
+

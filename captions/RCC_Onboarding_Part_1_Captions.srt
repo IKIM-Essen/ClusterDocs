@@ -1,0 +1,416 @@
+1
+00:00:00,000 --> 00:00:03,229
+Welcome to Part One of the RCC onboarding curriculum.
+
+2
+00:00:03,229 --> 00:00:10,046
+This lesson is designed for biomedical researchers who may be very experienced in their scientific domain but new to
+
+3
+00:00:10,046 --> 00:00:10,763
+Linux clusters.
+
+4
+00:00:10,763 --> 00:00:14,351
+We will build a mental model before using any commands.
+
+5
+00:00:14,351 --> 00:00:21,168
+You will see what runs on your own computer, what runs on the cluster, why secure shell is used,
+
+6
+00:00:21,168 --> 00:00:27,626
+how Visual Studio Code connects, how data transfer differs from interactive login, and why Slurm controls compute jobs.
+
+7
+00:00:27,626 --> 00:00:34,083
+By the end, you should be able to connect, move a small test file, submit a batch job,
+
+8
+00:00:34,083 --> 00:00:35,877
+and verify where it ran.
+
+9
+00:00:35,877 --> 00:00:39,824
+The examples are intentionally small and contain no sensitive research data.
+
+10
+00:00:39,824 --> 00:00:45,266
+Think of the RCC as a shared scientific instrument rather than a faster desktop computer.
+
+11
+00:00:45,266 --> 00:00:47,805
+The login host is the reception desk.
+
+12
+00:00:47,805 --> 00:00:53,610
+It authenticates you and lets you prepare work, but it is not intended for heavy analysis.
+
+13
+00:00:53,610 --> 00:00:58,326
+Compute nodes are the instruments that run CPU, memory, or GPU intensive jobs.
+
+14
+00:00:58,326 --> 00:01:00,865
+Shared storage holds project data and results.
+
+15
+00:01:00,865 --> 00:01:06,670
+Slurm is the booking and scheduling system that decides when and where a job can run.
+
+16
+00:01:06,670 --> 00:01:10,298
+This separation protects other users and makes large analyses repeatable.
+
+17
+00:01:10,298 --> 00:01:17,190
+A command typed in the wrong place can affect many people, so every tutorial will tell you where a
+
+18
+00:01:17,190 --> 00:01:19,730
+command runs and what success looks like.
+
+19
+00:01:19,730 --> 00:01:24,078
+A major source of confusion is the local and remote split.
+
+20
+00:01:24,078 --> 00:01:28,030
+Your keyboard, web browser, and normal desktop applications are local.
+
+21
+00:01:28,030 --> 00:01:34,354
+When secure shell is connected, the terminal prompt is remote and commands execute on the RCC.
+
+22
+00:01:34,354 --> 00:01:41,864
+Visual Studio Code also has two sides: the graphical application remains on your laptop, while its remote extension starts
+
+23
+00:01:41,864 --> 00:01:45,422
+helper processes on the cluster and opens remote files.
+
+24
+00:01:45,422 --> 00:01:50,560
+Always inspect the hostname, current directory, and prompt before deleting or moving files.
+
+25
+00:01:50,560 --> 00:01:56,489
+A file in Downloads on Windows or macOS is not automatically visible on RCC storage.
+
+26
+00:01:56,489 --> 00:02:00,046
+It must be transferred through an approved transfer mechanism.
+
+27
+00:02:00,046 --> 00:02:06,162
+Secure Shell, usually called S S H, provides an encrypted channel between your computer and the cluster.
+
+28
+00:02:06,162 --> 00:02:09,760
+Encryption protects credentials and commands while they travel across networks.
+
+29
+00:02:09,760 --> 00:02:14,077
+An SSH key pair has a private key and a public key.
+
+30
+00:02:14,077 --> 00:02:16,955
+The private key stays on your own computer.
+
+31
+00:02:16,955 --> 00:02:19,833
+The public key can be registered with RCC.
+
+32
+00:02:19,833 --> 00:02:26,669
+During login, the two sides prove that the correct private key is present without sending that private key to
+
+33
+00:02:26,669 --> 00:02:27,388
+the server.
+
+34
+00:02:27,388 --> 00:02:31,346
+A passphrase protects the private key if the laptop is lost.
+
+35
+00:02:31,346 --> 00:02:36,383
+Store that passphrase in an approved password manager before you finish creating the key.
+
+36
+00:02:36,383 --> 00:02:38,901
+Never email or upload the private key.
+
+37
+00:02:38,901 --> 00:02:43,923
+On Windows, use a current supported version with the built-in OpenSSH client.
+
+38
+00:02:43,923 --> 00:02:47,690
+PowerShell is the simplest terminal for the first test.
+
+39
+00:02:47,690 --> 00:02:51,876
+On macOS, the Terminal application already includes an SSH client.
+
+40
+00:02:51,876 --> 00:02:58,991
+Install the desktop version of Visual Studio Code and then install the Microsoft Remote - SSH extension.
+
+41
+00:02:58,991 --> 00:03:00,246
+The sequence matters.
+
+42
+00:03:00,246 --> 00:03:03,595
+First prove that the command line connection works.
+
+43
+00:03:03,595 --> 00:03:09,454
+Only then configure VS Code, because the editor uses the same SSH configuration underneath.
+
+44
+00:03:09,454 --> 00:03:11,965
+This makes errors easier to diagnose.
+
+45
+00:03:11,965 --> 00:03:18,662
+Keep your operating system updated and do not install keys or configuration files from untrusted sources.
+
+46
+00:03:18,662 --> 00:03:23,286
+The RCC connection may use a gateway before reaching the submission host.
+
+47
+00:03:23,286 --> 00:03:28,295
+ProxyJump tells SSH to authenticate through the gateway while preserving end-to-end SSH behavior.
+
+48
+00:03:28,295 --> 00:03:34,076
+A small configuration file gives the route a memorable alias such as R C C.
+
+49
+00:03:34,076 --> 00:03:38,700
+The exact hostnames and official host-key fingerprints must come from RCC administrators.
+
+50
+00:03:38,700 --> 00:03:42,938
+Do not accept a changed fingerprint merely because a dialog appears.
+
+51
+00:03:42,938 --> 00:03:48,333
+A changed key can indicate a rebuilt host, a configuration issue, or an attack.
+
+52
+00:03:48,333 --> 00:03:54,499
+Test the route in a normal terminal and record the exact error message if it fails.
+
+53
+00:03:54,499 --> 00:03:57,614
+Visual Studio Code is not itself the cluster.
+
+54
+00:03:57,614 --> 00:04:04,622
+The window runs locally, but the Remote - SSH extension opens a workspace on the RCC submission host.
+
+55
+00:04:04,622 --> 00:04:07,737
+A colored remote indicator shows the active connection.
+
+56
+00:04:07,737 --> 00:04:12,409
+The Explorer then lists remote files, and the integrated terminal starts remotely.
+
+57
+00:04:12,409 --> 00:04:17,471
+Extensions may need a remote installation because some code runs near the files.
+
+58
+00:04:17,471 --> 00:04:24,868
+Before editing, verify the remote indicator, run hostname in the terminal, and open the intended project directory rather than
+
+59
+00:04:24,868 --> 00:04:26,426
+your entire home directory.
+
+60
+00:04:26,426 --> 00:04:29,930
+Do not launch long analyses in the integrated terminal.
+
+61
+00:04:29,930 --> 00:04:35,770
+Use Slurm, and use tmux only to protect the lightweight workflow controller or monitoring session.
+
+62
+00:04:35,770 --> 00:04:40,815
+Interactive SSH is optimized for commands, not for moving large biomedical datasets.
+
+63
+00:04:40,815 --> 00:04:46,280
+The approved browser transfer service provides a managed path for uploads and downloads.
+
+64
+00:04:46,280 --> 00:04:53,006
+Use a project directory agreed with your group, not a random folder in your home directory.
+
+65
+00:04:53,006 --> 00:04:57,210
+Transfer only data permitted by the project and institutional policy.
+
+66
+00:04:57,210 --> 00:05:05,197
+For a small training file, calculate a SHA two fifty-six checksum locally, upload the file, calculate the checksum on
+
+67
+00:05:05,197 --> 00:05:07,299
+RCC, and compare the values.
+
+68
+00:05:07,299 --> 00:05:10,662
+Matching checksums show that the bytes are identical.
+
+69
+00:05:10,662 --> 00:05:18,650
+For clinical or identifiable data, follow the approved data-protection process rather than improvising with personal cloud storage or email.
+
+70
+00:05:18,650 --> 00:05:20,550
+Slurm is the resource manager.
+
+71
+00:05:20,550 --> 00:05:26,631
+Instead of choosing a compute node yourself, you describe the resources required by a job: time,
+
+72
+00:05:26,631 --> 00:05:28,912
+CPUs, memory, and sometimes a GPU.
+
+73
+00:05:28,912 --> 00:05:35,753
+Slurm queues the job, finds a suitable node, starts the job, records its state, and releases resources afterwards.
+
+74
+00:05:35,753 --> 00:05:37,654
+The request should be realistic.
+
+75
+00:05:37,654 --> 00:05:43,735
+Too little memory can kill the job; too much memory can delay scheduling and waste capacity.
+
+76
+00:05:43,735 --> 00:05:49,056
+A batch script is a plain text record of the command and requested resources.
+
+77
+00:05:49,056 --> 00:05:54,377
+That makes it easier to repeat, audit, and share than an undocumented interactive session.
+
+78
+00:05:54,377 --> 00:05:56,861
+The first job should be deliberately simple.
+
+79
+00:05:56,861 --> 00:06:02,893
+Create a working directory and a batch script that requests one CPU, a small amount of memory,
+
+80
+00:06:02,893 --> 00:06:04,312
+and a few minutes.
+
+81
+00:06:04,312 --> 00:06:09,989
+The script prints the hostname, creates a few numbers, and calculates a mean using standard tools.
+
+82
+00:06:09,989 --> 00:06:11,763
+Submit it with s batch.
+
+83
+00:06:11,763 --> 00:06:13,537
+Slurm returns a job identifier.
+
+84
+00:06:13,537 --> 00:06:20,278
+Use s queue to see whether it is pending or running, and s acct after completion to inspect the
+
+85
+00:06:20,278 --> 00:06:20,988
+final state.
+
+86
+00:06:20,988 --> 00:06:25,955
+Open the output log and confirm that the hostname belongs to a compute node.
+
+87
+00:06:25,955 --> 00:06:29,503
+The important lesson is the job lifecycle, not the arithmetic.
+
+88
+00:06:29,503 --> 00:06:35,428
+A normal SSH connection ends when the laptop sleeps, the network changes, or the terminal closes.
+
+89
+00:06:35,428 --> 00:06:39,501
+T mux creates a persistent terminal session on the remote host.
+
+90
+00:06:39,501 --> 00:06:42,464
+You can detach, disconnect, reconnect later, and reattach.
+
+91
+00:06:42,464 --> 00:06:48,388
+This is useful for editing, monitoring, or running a Snakemake controller that submits jobs to Slurm.
+
+92
+00:06:48,388 --> 00:06:55,424
+It does not grant more compute resources and it does not make it acceptable to run heavy analysis on
+
+93
+00:06:55,424 --> 00:06:56,535
+the login host.
+
+94
+00:06:56,535 --> 00:07:02,459
+A good mental model is that tmux preserves the steering wheel, while Slurm provides the engine.
+
+95
+00:07:02,459 --> 00:07:06,533
+Name sessions clearly and close them when the work is complete.
+
+96
+00:07:06,533 --> 00:07:13,199
+You are ready to continue when you can demonstrate each outcome rather than merely following the steps once.
+
+97
+00:07:13,199 --> 00:07:16,903
+You can identify whether a terminal is local or remote.
+
+98
+00:07:16,903 --> 00:07:20,977
+You can explain the difference between your private and public keys.
+
+99
+00:07:20,977 --> 00:07:23,569
+You have verified the official server fingerprint.
+
+100
+00:07:23,569 --> 00:07:26,162
+Command-line SSH works before Visual Studio Code.
+
+101
+00:07:26,162 --> 00:07:29,124
+You can open the correct remote project directory.
+
+102
+00:07:29,124 --> 00:07:33,198
+You can transfer a small non-sensitive file and match its checksum.
+
+103
+00:07:33,198 --> 00:07:40,235
+You can submit a batch script, observe its job identifier, and confirm that it completed on a compute node.
+
+104
+00:07:40,235 --> 00:07:45,050
+Keep the commands and logs; they are useful evidence when asking for support.
+

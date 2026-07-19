@@ -1,0 +1,10 @@
+site/
+__pycache__/
+*.pyc
+.course-progress.json
+videos-enhanced/*.mp4
+videos-enhanced/*.m4a
+.env
+.venv/
+exercises/vhost/protected-app/demo.sqlite3
+videos/*.mp4

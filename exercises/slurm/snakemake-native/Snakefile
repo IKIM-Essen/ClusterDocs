@@ -1,0 +1,9 @@
+rule all:
+    input:
+        "result.txt"
+
+rule create_result:
+    output:
+        "result.txt"
+    shell:
+        "printf 'RCC_CLASS5_SNAKEMAKE_OK\\n' > {output}"

@@ -1,32 +1,57 @@
-# IKIM Cluster Documentation
+# RCC onboarding curriculum for biomedical researchers
 
-Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website: <https://ikim-essen.github.io/ClusterDocs/>
+This staging package contains an eleven-class English-language onboarding curriculum for researchers who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, and governed project web applications.
 
-## Introduction
+## Curriculum
 
-- All documentation is written in markdown which makes it easy to contribute to the docs (see below)
-- Website is rendered with [mkdocs](https://www.mkdocs.org) and the [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme and is hosted on GitHub pages
-- New commits to `main` are automatically built and deployed to the `gh-pages` branch
-- For consistent formatting of markdown sources we use [markdownlint](https://github.com/DavidAnson/markdownlint)
+### Part 1 - Your first day on the RCC cluster
 
-## Contributing
+Mental model of a shared cluster, local versus remote work, SSH and key handling, Windows and macOS preparation, VS Code Remote SSH, managed data transfer, checksums, the Slurm job lifecycle, and appropriate use of tmux.
 
-You are welcome to open a pull request for changes to the documentation. If you want to make larger changes and you would like to see how they would appear on the rendered site, you can run mkdocs locally.
+### Part 2 - Reproducible scientific workflows
 
-```sh
-# Install dependencies
-conda create -n cluster-docs -c conda-forge python=3.8 mkdocs mkdocs-material
-conda activate cluster-docs
+Project structure, Miniforge, Mamba, Bioconda, software environments, Snakemake dependency graphs, Slurm execution, a minimal statistical workflow, a synthetic DNA sequence workflow, logging, benchmarking, and Git.
 
-# Build and serve documentation
-mkdocs serve
-```
+### Part 3 - Performance and efficient I/O
 
-You can run markdownlint and fix basic errors as follows:
+CPU, threads, GPU, RAM, storage capacity, throughput, latency, IOPS, metadata operations, streaming versus random access, large versus small files, crowded directories, compression, node-local scratch, Snakemake staging patterns, and bottleneck diagnosis. It explicitly warns that poor workflow structure can turn an analysis expected to take hours into one that takes weeks or months.
 
-```sh
-npm install -g markdownlint-cli
+### Part 4 - Containers with Apptainer
 
-markdownlint docs/
-markdownlint --fix docs/
-```
+Why containerized software is useful on a shared cluster; why active Conda environments on network storage can create a small-file and metadata workload; immutable SIF images; cache, temporary space, bind mounts, read-only inputs, GPU use, Snakemake container directives, image trust, and production image lifecycle.
+
+## Deliverable types
+
+The original four classes include:
+
+- a long-form PDF;
+- an editable DOCX source;
+- an editable PowerPoint slide deck with speaker notes;
+- a 5-10 minute MP4 training video with processed synthetic narration;
+- an SRT caption file; and
+- a Markdown narration script.
+
+The canonical source for the original four classes is the Markdown document in `source/`. Classes 5-11 are maintained directly in the course, exercise and narration trees until their additional media assets are recorded. The DOCX, PDF, PPTX, and MP4 files are rendered review artifacts.
+
+## Video format
+
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Narration uses a synthetic British-English voice with slower pacing, acronym pronunciation handling, equalization, dynamic-range compression, normalization, and captions. They do not connect to production RCC services and contain no credentials or biomedical data.
+
+## Production status
+
+This is a publication candidate, not a claim that every local command has already been validated against the production RCC configuration. Before publication, administrators must complete the local values and run the tests in `ADMIN_CHECKLIST.md`.
+
+The statistical and DNA examples are educational. They are not validated clinical pipelines and do not replace study-design, statistical, bioinformatics, data-protection, or clinical review.
+
+## Repository integration
+
+`meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.
+
+
+## v0.1.2 additions
+
+This staging version adds Classes 7-10 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
+
+## v0.1.3 additions
+
+This version adds Class 11 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.

@@ -1,38 +1,38 @@
-site_name: IKIM Cluster
-site_url: https://ikim-essen.github.io/ClusterDocs/
-copyright: Copyright &copy; 2023 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
-
+site_name: RCC ClusterDocs NG
+site_description: Safe, practical RCC training for biomedical researchers
+site_url: https://STAGING-URL.invalid/
+docs_dir: docs
 theme:
   name: material
   features:
     - navigation.sections
-
-markdown_extensions:
-  - footnotes
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
-  - pymdownx.snippets
-
+    - navigation.indexes
+    - content.code.copy
 nav:
-  - Introduction: index.md
-  - Available Resources: resources.md
-  - Requesting Access: access.md
-  - Connecting:
-     - Setting up SSH: ssh-setup.md
-     - First steps: first-steps.md
-  - Setup:
-     - Mamba/Conda: conda.md
-     - Containers: apptainer.md
-     - Jupyter Notebooks: jupyter.md
-     - VS Code: vs-code-setup.md
-  - Data:
-     - Storage: storage.md
-     - Transfer: transfer.md
-     - Accessing Cluster storage: accessing-storage.md
-  - Computing: 
-     - Snakemake: snakemake.md
-     - Slurm: slurm.md
-  - Misc:
-     - Troubleshooting: troubleshooting.md
-     - Patterns: patterns.md
+  - Home: index.md
+  - Course:
+      - Course overview: course/index.md
+      - Class 1 - Safe access: course/class-01-safe-access.md
+      - Class 2 - Reproducible workflows: course/class-02-workflows.md
+      - Class 3 - Performance and I/O: course/class-03-performance.md
+      - Class 4 - Apptainer containers: course/class-04-containers.md
+      - Class 5 - Slurm acceptance patterns: course/class-05-slurm.md
+      - Class 6 - Protected project websites: course/class-06-vhosts.md
+      - Class 7 - Python notebooks: course/class-07-python-notebooks.md
+      - Class 8 - R analysis: course/class-08-r-analysis.md
+      - Class 9 - Shiny apps: course/class-09-shiny.md
+      - Class 10 - Notebook to service: course/class-10-notebook-to-service.md
+      - Class 11 - Biomedical data privacy: course/class-11-biomedical-data-privacy.md
+      - Interactive examples: examples/interactive-workflows.md
+  - Rollout:
+      - What is changing: rollout/index.md
+      - Email and Mattermost: rollout/messages.md
+  - Security:
+      - Safe everyday practice: security/safe-use.md
+      - Biomedical data admission: security/rcc-biomedical-data-admission.md
+      - Public documentation boundary: security/publication-boundary.md
+  - Media: media/index.md
+  - Instructors:
+      - Operator checklist: instructors/operator-checklist.md
+      - Repository strategy: instructors/repository-strategy.md
+      - Imported workflow material: instructors/imported-rcc-user-workflows.md

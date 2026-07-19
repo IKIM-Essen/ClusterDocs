@@ -1,0 +1,412 @@
+1
+00:00:00,000 --> 00:00:03,477
+Part Two moves from access to reproducible analysis.
+
+2
+00:00:03,477 --> 00:00:08,259
+Biomedical projects combine data, software, parameters, compute resources, and scientific interpretation.
+
+3
+00:00:08,259 --> 00:00:12,171
+Reproducibility requires us to describe all of those layers.
+
+4
+00:00:12,171 --> 00:00:19,126
+We will explain why environments exist, why Miniforge and Bioconda are useful, why Snakemake models dependencies,
+
+5
+00:00:19,126 --> 00:00:22,169
+and how Slurm executes the expensive work.
+
+6
+00:00:22,169 --> 00:00:30,427
+We will use two intentionally small examples: a statistical analysis of tabular data and a DNA sequence workflow using
+
+7
+00:00:30,427 --> 00:00:31,297
+synthetic reads.
+
+8
+00:00:31,297 --> 00:00:34,774
+The goal is not to teach every method.
+
+9
+00:00:34,774 --> 00:00:40,860
+The goal is to establish a structure that remains understandable when a project grows.
+
+10
+00:00:40,860 --> 00:00:45,008
+A scientific result depends on more than the code file.
+
+11
+00:00:45,008 --> 00:00:52,889
+It also depends on input data, software versions, parameters, reference data, the order of operations, and the compute environment.
+
+12
+00:00:52,889 --> 00:01:00,770
+If any of those are implicit, a colleague may be unable to reproduce the result even when the script
+
+13
+00:01:00,770 --> 00:01:01,599
+is available.
+
+14
+00:01:01,599 --> 00:01:09,065
+A good workflow separates immutable source data from generated output, records software dependencies, and makes each transformation explicit.
+
+15
+00:01:09,065 --> 00:01:14,458
+In regulated or clinically adjacent work, this structure also supports review and provenance.
+
+16
+00:01:14,458 --> 00:01:19,850
+The cluster does not automatically make work reproducible; it only provides shared resources.
+
+17
+00:01:19,850 --> 00:01:23,363
+A project directory is a small information architecture.
+
+18
+00:01:23,363 --> 00:01:26,437
+Raw data should be treated as read-only.
+
+19
+00:01:26,437 --> 00:01:29,511
+Workflow files describe how outputs are created.
+
+20
+00:01:29,511 --> 00:01:31,706
+Scripts contain substantial analysis code.
+
+21
+00:01:31,706 --> 00:01:33,463
+Environment files declare software.
+
+22
+00:01:33,463 --> 00:01:35,659
+Logs and benchmarks describe execution.
+
+23
+00:01:35,659 --> 00:01:38,732
+Results are generated and can be recreated.
+
+24
+00:01:38,732 --> 00:01:45,759
+This separation prevents common mistakes such as editing a raw file, overwriting a result by hand,
+
+25
+00:01:45,759 --> 00:01:49,711
+or losing track of which parameters produced a figure.
+
+26
+00:01:49,711 --> 00:01:56,298
+Use meaningful sample identifiers and a metadata table rather than encoding all information in filenames.
+
+27
+00:01:56,298 --> 00:02:01,128
+Keep secrets and patient identifiers out of Git repositories and logs.
+
+28
+00:02:01,128 --> 00:02:02,881
+Scientific software has dependencies.
+
+29
+00:02:02,881 --> 00:02:10,768
+One tool may need a specific Python version, another a compiled library, and a third a command-line executable.
+
+30
+00:02:10,768 --> 00:02:14,712
+Installing everything globally creates conflicts and makes projects fragile.
+
+31
+00:02:14,712 --> 00:02:18,656
+An environment is an isolated collection of compatible packages.
+
+32
+00:02:18,656 --> 00:02:24,353
+Miniforge provides the conda and mamba tools without a large preselected package set.
+
+33
+00:02:24,353 --> 00:02:26,982
+Mamba resolves and installs packages efficiently.
+
+34
+00:02:26,982 --> 00:02:30,926
+Bioconda is a community channel containing many bioinformatics packages.
+
+35
+00:02:30,926 --> 00:02:35,746
+An environment file records the package names and, where appropriate, versions.
+
+36
+00:02:35,746 --> 00:02:39,690
+It is a recipe, not a substitute for validation.
+
+37
+00:02:39,690 --> 00:02:45,825
+Part Four will explain why large active environments should not live on network storage.
+
+38
+00:02:45,825 --> 00:02:48,824
+Conda is the environment and package model.
+
+39
+00:02:48,824 --> 00:02:52,252
+Mamba is a compatible, faster resolver and installer.
+
+40
+00:02:52,252 --> 00:02:56,109
+Miniforge is a compact distribution that provides these tools.
+
+41
+00:02:56,109 --> 00:03:00,393
+Channels are package repositories, and Bioconda specializes in bioinformatics software.
+
+42
+00:03:00,393 --> 00:03:06,392
+Channel order matters because packages from different repositories may be built against different libraries.
+
+43
+00:03:06,392 --> 00:03:11,963
+Follow the RCC-supported configuration rather than copying arbitrary commands from an old tutorial.
+
+44
+00:03:11,963 --> 00:03:20,104
+Keep the environment definition in the project, test it on synthetic data, and avoid continuously changing a shared environment
+
+45
+00:03:20,104 --> 00:03:21,818
+underneath an active analysis.
+
+46
+00:03:21,818 --> 00:03:28,245
+For production, a pinned container image is often more robust, as covered in Part Four.
+
+47
+00:03:28,245 --> 00:03:30,664
+Snakemake is a workflow management system.
+
+48
+00:03:30,664 --> 00:03:36,307
+Each rule declares input files, output files, software, resources, and a command or script.
+
+49
+00:03:36,307 --> 00:03:41,547
+Snakemake builds a directed acyclic graph showing which outputs depend on which inputs.
+
+50
+00:03:41,547 --> 00:03:45,981
+It runs only the steps needed to create the requested target.
+
+51
+00:03:45,981 --> 00:03:50,818
+If an upstream input changes, the affected downstream steps can be recomputed.
+
+52
+00:03:50,818 --> 00:03:56,461
+This is safer than a long shell script that assumes every previous command succeeded.
+
+53
+00:03:56,461 --> 00:04:00,491
+The workflow graph also helps colleagues review the scientific logic.
+
+54
+00:04:00,491 --> 00:04:04,522
+A dry run shows what would happen without executing commands.
+
+55
+00:04:04,522 --> 00:04:06,992
+Snakemake and Slurm solve different problems.
+
+56
+00:04:06,992 --> 00:04:11,109
+Snakemake understands scientific dependencies and decides which rule is ready.
+
+57
+00:04:11,109 --> 00:04:18,931
+The Slurm executor translates each ready rule into a cluster job with requested CPUs, memory, runtime, and other resources.
+
+58
+00:04:18,931 --> 00:04:24,694
+The lightweight Snakemake controller can run in a tmux session on the submission host.
+
+59
+00:04:24,694 --> 00:04:27,576
+The expensive commands run on compute nodes.
+
+60
+00:04:27,576 --> 00:04:34,575
+This separation lets a workflow execute many independent samples in parallel without manually submitting hundreds of jobs.
+
+61
+00:04:34,575 --> 00:04:40,750
+Resource values should be declared per rule and refined using measurements rather than copied blindly.
+
+62
+00:04:40,750 --> 00:04:43,964
+A statistical workflow starts with input validation.
+
+63
+00:04:43,964 --> 00:04:51,312
+Check column names, data types, missing values, group labels, and expected sample identifiers before calculating anything.
+
+64
+00:04:51,312 --> 00:04:55,446
+The demonstration dataset contains synthetic measurements from two groups.
+
+65
+00:04:55,446 --> 00:04:58,660
+One rule validates and cleans the table.
+
+66
+00:04:58,660 --> 00:05:01,875
+Another calculates group counts, means, and variability.
+
+67
+00:05:01,875 --> 00:05:10,601
+A third performs a Welch t test and records the effect estimate and uncertainty rather than reporting only a
+
+68
+00:05:10,601 --> 00:05:11,519
+p value.
+
+69
+00:05:11,519 --> 00:05:14,275
+A final rule creates a figure.
+
+70
+00:05:14,275 --> 00:05:21,623
+The workflow is pedagogical; the correct statistical model for a real biomedical study depends on design,
+
+71
+00:05:21,623 --> 00:05:25,756
+pairing, repeated measures, batch effects, confounders, and pre-specified hypotheses.
+
+72
+00:05:25,756 --> 00:05:30,088
+DNA sequence analysis introduces file formats with different purposes.
+
+73
+00:05:30,088 --> 00:05:35,383
+FASTQ stores reads and quality values and is normally kept compressed.
+
+74
+00:05:35,383 --> 00:05:37,789
+A reference FASTA stores sequences.
+
+75
+00:05:37,789 --> 00:05:43,084
+BAM or CRAM stores aligned reads in a binary, indexable format.
+
+76
+00:05:43,084 --> 00:05:48,860
+VCF stores sequence variants and may use block compression with an index.
+
+77
+00:05:48,860 --> 00:05:54,636
+Quality reports summarize technical characteristics but do not automatically establish biological validity.
+
+78
+00:05:54,636 --> 00:06:02,818
+A typical small workflow validates read files, performs quality control, aligns or classifies reads, creates indexed outputs,
+
+79
+00:06:02,818 --> 00:06:04,262
+and summarizes results.
+
+80
+00:06:04,262 --> 00:06:11,963
+Real clinical or research pipelines require validated references, contamination controls, sample identity checks, and documented versions.
+
+81
+00:06:11,963 --> 00:06:18,183
+Before a substantial run, request a specific target and perform a Snakemake dry run.
+
+82
+00:06:18,183 --> 00:06:21,737
+Inspect the planned rules, inputs, and job count.
+
+83
+00:06:21,737 --> 00:06:24,846
+Then execute through the RCC-supported Slurm profile.
+
+84
+00:06:24,846 --> 00:06:31,510
+Each rule should have a useful log, and performance-sensitive rules should have a benchmark file.
+
+85
+00:06:31,510 --> 00:06:35,508
+A completed workflow is not automatically a correct workflow.
+
+86
+00:06:35,508 --> 00:06:40,395
+Review exit states, expected file counts, quality metrics, and biological plausibility.
+
+87
+00:06:40,395 --> 00:06:43,948
+Avoid redirecting all commands into one giant log.
+
+88
+00:06:43,948 --> 00:06:48,835
+Per-rule and per-sample logs make failures diagnosable and support audit trails.
+
+89
+00:06:48,835 --> 00:06:55,234
+Git records changes to text files and supports review through branches and pull requests.
+
+90
+00:06:55,234 --> 00:06:59,805
+Commit the Snakefile, scripts, environment definitions, configuration templates, and documentation.
+
+91
+00:06:59,805 --> 00:07:07,119
+Do not commit raw sequencing data, patient identifiers, credentials, private keys, large binary outputs, or secrets.
+
+92
+00:07:07,119 --> 00:07:12,147
+Use a gitignore file to exclude generated directories and local configuration.
+
+93
+00:07:12,147 --> 00:07:17,632
+Small, descriptive commits make it possible to understand how a method evolved.
+
+94
+00:07:17,632 --> 00:07:22,660
+Tag or record the exact workflow version used for an analysis.
+
+95
+00:07:22,660 --> 00:07:31,345
+For collaborative projects, a pull request allows a colleague to review scientific logic and operational safety before changes reach
+
+96
+00:07:31,345 --> 00:07:32,716
+the main branch.
+
+97
+00:07:32,716 --> 00:07:40,072
+You are ready for larger examples when the project has a clear directory structure and read-only source data;
+
+98
+00:07:40,072 --> 00:07:47,836
+the software environment is declared; Snakemake can perform a dry run; the workflow submits rules through the approved Slurm
+
+99
+00:07:47,836 --> 00:07:55,191
+profile; statistical inputs are validated; sequence files use appropriate compressed and indexed formats; logs and benchmarks are generated;
+
+100
+00:07:55,191 --> 00:07:59,277
+and workflow changes are recorded in Git without sensitive data.
+
+101
+00:07:59,277 --> 00:08:01,729
+The next lesson focuses on performance.
+
+102
+00:08:01,729 --> 00:08:09,493
+It explains why an analysis with correct code can still take months when CPU, memory, and especially input-output behavior
+
+103
+00:08:09,493 --> 00:08:10,719
+are structured poorly.
+

@@ -1,0 +1,2 @@
+RCC_CLASS5_BASH_OK
+job_id=

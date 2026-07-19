@@ -1,0 +1,7 @@
+name: rcc-r-example
+channels:
+  - conda-forge
+dependencies:
+  - r-base=4.4
+  - r-data.table
+  - r-ggplot2

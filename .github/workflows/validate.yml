@@ -1,0 +1,23 @@
+name: validate-clusterdocs-ng
+on:
+  pull_request:
+  push:
+    branches: [main, clusterdocs-ng]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils ffmpeg
+      - run: pip install PyYAML mistune Jinja2
+      - run: python tools/validate_repo.py
+      - run: python tools/build_site.py --output site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clusterdocs-ng-preview
+          path: site
