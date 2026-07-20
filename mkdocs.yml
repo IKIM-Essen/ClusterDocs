@@ -10,6 +10,9 @@ theme:
     - content.code.copy
 nav:
   - Home: index.md
+  - Choose a path:
+      - Data analysis: paths/data-analysis.md
+      - Software development: paths/software-development.md
   - Course:
       - Course overview: course/index.md
       - Class 1 - Safe access: course/class-01-safe-access.md
@@ -24,15 +27,22 @@ nav:
       - Class 10 - Notebook to service: course/class-10-notebook-to-service.md
       - Class 11 - Biomedical data privacy: course/class-11-biomedical-data-privacy.md
       - Interactive examples: examples/interactive-workflows.md
+  - Reference:
+      - Reference overview: reference/index.md
+      - Account starter setups: reference/account-starter-setups.md
+      - Access, SSH, and VS Code: reference/access-ssh-vscode.md
+      - Storage and transfer: reference/storage-transfer.md
+      - Conda, Snakemake, and Apptainer: reference/software-workflows.md
+      - Slurm commands: reference/slurm.md
+      - Troubleshooting: reference/troubleshooting.md
+      - Resources and discovery: reference/resources.md
+      - AI and data science: reference/ai-data-science.md
   - Rollout:
       - What is changing: rollout/index.md
-      - Email and Mattermost: rollout/messages.md
   - Security:
       - Safe everyday practice: security/safe-use.md
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
-      - Public documentation boundary: security/publication-boundary.md
-  - Media: media/index.md
-  - Instructors:
-      - Operator checklist: instructors/operator-checklist.md
-      - Repository strategy: instructors/repository-strategy.md
-      - Imported workflow material: instructors/imported-rcc-user-workflows.md
+  - Resources:
+      - Who we are: team.md
+      - How it all works: resources/how-it-all-works.md
+      - Media and downloads: media/index.md

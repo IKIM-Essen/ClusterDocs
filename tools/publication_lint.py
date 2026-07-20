@@ -15,12 +15,10 @@ patterns={
  'unbounded retry example': re.compile(r'\bwhile\s+true\b|\bfor\s*\(\s*;\s*;\s*\)',re.I),
  'network scan command': re.compile(r'\b(?:nmap|masscan|zmap)\b',re.I),
 }
-allow_labels={'docs/security/publication-boundary.md'}
 errors=[]
 
 def scan(label,text):
  for name,pat in patterns.items():
-  if label in allow_labels and name in {'hardware control-plane detail','network scan command'}: continue
   for m in pat.finditer(text): errors.append(f'{label}:{text.count(chr(10),0,m.start())+1}: {name}: {m.group(0)}')
 
 for item in TEXT_ROOTS:

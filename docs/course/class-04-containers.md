@@ -16,6 +16,23 @@ A container is not automatically trustworthy. Use approved registries, immutable
 apptainer exec --cleanenv /path/to/pinned-image.sif tool --version
 ```
 
+Choose the command for the task:
+
+| Command | Use |
+|---|---|
+| `apptainer run IMAGE.sif` | Run the image's declared default action |
+| `apptainer exec IMAGE.sif COMMAND` | Run one explicit command |
+| `apptainer shell IMAGE.sif` | Inspect interactively inside a bounded allocation |
+
+Bind only what the tool needs and make input read-only where possible:
+
+```bash
+apptainer exec --cleanenv \
+  --bind /projects/<project>/input:/input:ro \
+  --bind "$SLURM_TMPDIR:/work" \
+  image.sif tool --input /input/data.tsv --output /work/result.tsv
+```
+
 For a GPU job, Slurm allocates the GPU and Apptainer exposes the host driver using the approved RCC pattern. Do not attempt to install or replace host GPU drivers.
 
 ## Good storage pattern
@@ -25,6 +42,10 @@ For a GPU job, Slurm allocates the GPU and Apptainer exposes the host driver usi
 - Bind only the data directories required by the tool.
 - Use read-only binds for input where possible.
 - Record the image digest with the analysis.
+
+> **Reference companion:** [Conda, Snakemake, and Apptainer](../reference/software-workflows.md)
+> covers cache placement, GPU exposure, writable temporary layers, sandbox
+> limits, and the reproducibility record for an important run.
 
 ## Completion gate
 

@@ -4,16 +4,38 @@ Welcome to the staged RCC learning site for medical professionals, biomedical re
 
 The course is designed so that a new user can progress without needing an administrator beside them. Each class has a small practical exercise and a gate that checks readiness without exposing credentials or generating significant cluster load.
 
-## Start here
+RCC supports statistics, visualization, Python and R data science, machine
+learning, GPU-accelerated AI, and distributed data processing. These techniques
+remain part of a reproducible research workflow: computation runs through
+Slurm, data stays within its project governance, and model evaluation includes
+validation, uncertainty, bias, and scientific limitations.
 
-- New to RCC: begin with [Class 1: safe access](course/class-01-safe-access.md).
-- Already connected: use the [course overview](course/index.md) to select the next class.
+## Choose your path
+
+<section class="path-grid" aria-label="Choose an RCC learning path">
+  <article class="path-card analysis-path">
+    <span class="path-number">01</span>
+    <p class="path-label">Data analysis</p>
+    <h3>Move from research data to a reproducible result</h3>
+    <p>Learn Python, R, notebooks, statistics, AI and machine learning, efficient I/O, GPUs, validation, and governed result sharing.</p>
+    <a class="path-action" href="paths/data-analysis.md">Follow the data analysis path →</a>
+  </article>
+  <article class="path-card development-path">
+    <span class="path-number">02</span>
+    <p class="path-label">Software development</p>
+    <h3>Build reviewable workflows and protected services</h3>
+    <p>Learn Git, Snakemake, Slurm, Conda, Apptainer, Python and R applications, Shiny, APIs, and governed deployment.</p>
+    <a class="path-action" href="paths/software-development.md">Follow the software development path →</a>
+  </article>
+</section>
+
+## Shared foundation
+
+- Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
+- Use the [course overview](course/index.md) when you want the complete eleven-class sequence.
 - Preparing for the service transition: read [what is changing](rollout/index.md).
-- Considering a project web interface: use [Class 6](course/class-06-vhosts.md) to determine scope before development.
 - Working with human biomedical data: complete [Class 11](course/class-11-biomedical-data-privacy.md) before transfer or analysis.
-
-## What this public site does not publish
-
-This site does not contain internal addresses, physical server names, node inventories, out-of-band hardware-management details, administrator credentials, firewall layouts, or security-control implementation details. It provides only the information a normal user or project developer needs.
-
-Operational configuration and incident procedures remain in the private RCC infrastructure repository.
+- Looking up a command after training: use the [day-to-day reference](reference/index.md).
+- Connecting a laboratory instrument or acquisition workstation: see
+  [how the lab network and RCC fit together](resources/how-it-all-works.md).
+- Questions or feedback: [meet the RCC team and find the best contact route](team.md).

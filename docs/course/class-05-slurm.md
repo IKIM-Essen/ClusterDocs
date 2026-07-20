@@ -2,6 +2,31 @@
 
 This class adapts the same three patterns used by RCC software acceptance testing, but scales them down for one learner and one tiny job at a time.
 
+## Everyday Slurm commands
+
+| Task | Command |
+|---|---|
+| See partition summaries | `sinfo` |
+| See your jobs | `squeue --me` |
+| Open a bounded worker shell | `srun --pty --cpus-per-task=1 --mem=1G --time=00:15:00 bash -i` |
+| Submit a script | `sbatch job.sbatch` |
+| Inspect a job | `scontrol show job <jobid>` |
+| Measure a completed job | `sacct -j <jobid> --format=JobID,State,Elapsed,MaxRSS,ExitCode` |
+| Stop a job | `scancel <jobid>` |
+
+A minimal batch script is:
+
+```bash
+#!/usr/bin/env bash
+#SBATCH --job-name=small-test
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH --time=00:10:00
+
+set -euo pipefail
+srun python analysis.py
+```
+
 ## Pattern 1: Bash hello
 
 The first job verifies scheduling, environment capture, output handling and exact comparison.
@@ -43,6 +68,10 @@ The gate:
 ## What the examples prove
 
 A passing class gate shows that your account can execute the pattern. It is not a cluster-wide health test and must not be expanded into host-by-host probing.
+
+> **Reference companion:** After completing the bounded gates, use the
+> [Slurm command reference](../reference/slurm.md) for dependencies, reusable
+> allocations, GPU requests, accounting, cancellation, and checkpointing.
 
 ## Knowledge check
 

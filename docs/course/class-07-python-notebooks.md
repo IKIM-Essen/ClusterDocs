@@ -10,6 +10,7 @@ After this class, you can:
 - tunnel the notebook to your workstation without exposing it to the network;
 - inspect a large dataset by sampling and summarising instead of loading everything blindly;
 - choose between pandas, Polars, DuckDB, Arrow, NumPy, SciPy, and Matplotlib;
+- distinguish descriptive analysis, statistical modeling, machine-learning training, validation, and inference;
 - measure memory and runtime;
 - move expensive work from a notebook into a Slurm batch script.
 
@@ -28,6 +29,18 @@ sbatch jupyter.sbatch
 ```
 
 Read the job output file. It shows the worker, the selected loopback port, and the tunnel command. Open only the local address shown by the tunnel. Do not bind a notebook to a public interface and do not disable the token.
+
+The connection sequence is always:
+
+1. submit the Jupyter job;
+2. wait for the job to report its worker, loopback port, token, and tunnel;
+3. run that tunnel command on your workstation;
+4. open the local `127.0.0.1` address;
+5. stop the Slurm job with `scancel <jobid>` when finished.
+
+> **Reference companions:** [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
+> contains connection diagnostics. [Slurm commands](../reference/slurm.md)
+> explains how to inspect and stop the notebook allocation.
 
 ## Large-data pattern
 
@@ -64,6 +77,40 @@ The notebook uses synthetic data so that you can practice safely. The batch scri
 | Statistics | SciPy, statsmodels | Record versions and assumptions. |
 | Static plots | Matplotlib | Reliable for publication-oriented figures. |
 | Interactive exploration | Notebook widgets sparingly | Avoid building long-running web apps in a notebook. |
+
+## AI and data science techniques
+
+Use notebooks to inspect data, establish baselines, compare techniques, and
+explain results. Move full training, large hyperparameter searches, embedding
+generation, and production inference into bounded batch workflows.
+
+A reviewable machine-learning workflow includes:
+
+- data-quality and missingness checks;
+- a subject-safe or time-safe split into training, validation, and test data;
+- preprocessing and feature engineering inside the versioned pipeline;
+- a simple statistical or machine-learning baseline;
+- an evaluation measure chosen before tuning;
+- calibration, uncertainty, subgroup behavior, and leakage checks;
+- fixed seeds where deterministic behavior is possible; and
+- versioned code, environment, parameters, metrics, and model artifacts.
+
+Tree models and regularized regression are often strong tabular baselines.
+Neural networks and transformers are appropriate when the data type, sample
+size, and research question justify their complexity. Unsupervised techniques
+such as clustering, dimensionality reduction, and representation learning need
+stability checks and scientific interpretation; visual separation alone is not
+validation.
+
+Use GPUs only when measurement shows that the framework and workload benefit.
+For larger-than-memory tables, try column selection, Parquet, Arrow, DuckDB,
+Polars, and chunked processing before introducing distributed computation.
+Spark-style processing is useful only when its parallelism outweighs network,
+serialization, scheduling, and operational overhead.
+
+> **Reference companion:** [AI and data science on RCC](../reference/ai-data-science.md)
+> covers technique selection, model development, training versus inference,
+> distributed processing, reproducibility, and responsible-use boundaries.
 
 ## Good security and reproducibility habits
 

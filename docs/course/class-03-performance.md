@@ -17,6 +17,25 @@ Poor I/O structure can turn work expected to take hours into work that takes wee
 - too many threads competing for the same storage path;
 - requests for far more memory or CPU than the program can use.
 
+## Storage at a glance
+
+| Data | Place during computation | Place after computation |
+|---|---|---|
+| Project input | Copy or stream the required subset to job-local scratch | Approved project storage |
+| High-I/O intermediate files | Job-local scratch | Delete or retain only when scientifically required |
+| Final results | Produce locally | Copy to approved project storage before the job exits |
+| Source, notebooks, small configuration | Project or home storage | Version control where appropriate |
+| Conda and Apptainer caches | Approved node-local cache | Recreate from declarations or immutable images |
+
+A simple measurement loop is:
+
+```bash
+sacct -j <jobid> --format=JobID,State,Elapsed,AllocCPUS,ReqMem,MaxRSS,ExitCode
+```
+
+Compare the request with actual memory, elapsed time, application benchmarks,
+and I/O behavior before asking for more resources.
+
 ## Good habits
 
 - Keep sequence files compressed when tools can stream them.
@@ -24,6 +43,11 @@ Poor I/O structure can turn work expected to take hours into work that takes wee
 - Measure with Slurm accounting and application benchmarks.
 - Increase resources only when evidence shows the current resource is limiting performance.
 - Never run synthetic load generators or broad benchmarks on shared services without approval.
+
+> **Reference companions:** [Storage and transfer](../reference/storage-transfer.md)
+> maps durable, shared, object, and local storage to their intended uses.
+> [Troubleshooting](../reference/troubleshooting.md) covers failed jobs,
+> permissions, file limits, and expensive VS Code searches.
 
 ## Security moment
 

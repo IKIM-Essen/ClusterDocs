@@ -30,6 +30,24 @@ snakemake --dry-run --printshellcmds
 
 Then use the RCC-supported execution profile described on the production site.
 
+## Software environments inside jobs
+
+Keep the environment declaration in Git and create it inside an allocated
+worker. In a non-interactive Slurm script, load the shell hook before activation:
+
+```bash
+eval "$(conda shell.bash hook)"
+conda activate analysis
+srun python analysis.py
+```
+
+Do not run `conda init` in every job. Confirm environment and package caches use
+the approved node-local paths rather than metadata-sensitive shared storage.
+
+> **Reference companion:** [Conda, Snakemake, and Apptainer](../reference/software-workflows.md)
+> covers batch activation, Snakemake sessions, explicit container binds, cache
+> placement, GPU exposure, and reproducibility records.
+
 ## Security moment
 
 A reproducible workflow is also a security control: changes can be reviewed, inputs and outputs are explicit, and unexpected code is easier to identify. Pin software versions, review contributed scripts, and never run downloaded code merely because it is in a shared project directory.

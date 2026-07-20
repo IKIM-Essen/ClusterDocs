@@ -1,5 +1,9 @@
 # Class 10: From notebooks to governed project services
 
+This includes model-backed research services. A trained model, embedding index,
+or AI inference endpoint inherits the governance of its source data and requires
+the same reviewable service boundary as any other protected project application.
+
 This class helps you decide when a notebook should remain a notebook, when a Shiny or Python web app is appropriate, and when computation should move into a Slurm workflow.
 
 ## Learning goals
