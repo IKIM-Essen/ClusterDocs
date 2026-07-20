@@ -1,0 +1,7 @@
+name: rcc-shiny-starter
+channels:
+  - conda-forge
+dependencies:
+  - r-base=4.4
+  - r-shiny
+  - r-httpuv

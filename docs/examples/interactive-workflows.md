@@ -1,6 +1,8 @@
 # Interactive Python, R, Jupyter and Shiny examples
 
-These examples were derived from the RCC user-workflow material and adapted for ClusterDocs. They are meant for teaching and bounded self-learning, not for exposing service internals.
+Use these copy-ready examples to run bounded Python, R, Jupyter, and Shiny
+workflows through Slurm. Each example includes its environment and uses
+synthetic data so it can be explored safely before adapting it to a project.
 
 ## Included examples
 

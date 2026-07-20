@@ -1,4 +1,5 @@
 site/
+site-test/
 __pycache__/
 *.pyc
 .course-progress.json

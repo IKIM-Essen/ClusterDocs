@@ -18,6 +18,43 @@ Your **private key stays on your computer**. RCC receives only the public key. T
 
 Do not email private keys, copy a colleague's key, register one key for several human accounts, or share a browser session. When a colleague needs access, add their own account to the project.
 
+## First-time client setup
+
+Create a dedicated Ed25519 key protected by a strong passphrase.
+
+On macOS or Linux:
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/id_rcc
+```
+
+On Windows PowerShell:
+
+```powershell
+ssh-keygen -t ed25519 -f "$HOME\.ssh\id_rcc"
+```
+
+Register only `id_rcc.pub` through the approved RCC account workflow. The file
+without `.pub` is the private key and stays on your computer.
+
+Use the SSH configuration supplied through the RCC rollout page. Its safe shape
+is:
+
+```sshconfig
+Host {{ ssh_alias }}
+  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ForwardAgent no
+```
+
+Inspect the effective configuration without connecting:
+
+```bash
+ssh -G {{ ssh_alias }}
+```
+
 ## Gate 1A: local readiness
 
 ### macOS or Linux
@@ -53,6 +90,11 @@ The same readiness script checks whether VS Code and the Microsoft Remote - SSH 
 Inside the hospital network, use your individual RCC username and normal sign-in flow. External access may require an additional factor. Do not solve access problems by using a shared project account.
 
 The transfer portal exposes project data, not arbitrary server filesystems. Confirm the selected project and destination before uploading.
+
+> **Reference companion:** Use [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
+> for account-request details, diagnostics, Remote SSH, and light SSHFS mounts.
+> Use [Storage and transfer](../reference/storage-transfer.md) for larger data
+> movement, archives, checksums, and object-storage boundaries.
 
 ## Knowledge check
 

@@ -10,8 +10,8 @@ The classes are sequential for new users, but experienced users can take the rea
 | 4 | Run a pinned Apptainer image | 45-60 min | Immutable image and clean environment |
 | 5 | Submit three small Slurm acceptance jobs | 45-60 min | Byte-for-byte expected output |
 | 6 | Select, build and request an appropriately scoped protected project website | 75-100 min | Local tests, scope decision and vhost checklist |
-| 7 | Use Python notebooks for large-data inspection, statistics and figures | 75-100 min | Loopback-only Jupyter job and example validation |
-| 8 | Use R notebooks and batch scripts for larger tabular analysis | 75-100 min | R example job and reproducibility explanation |
+| 7 | Use Python notebooks for large-data inspection, data science, and responsible AI exploration | 75-100 min | Loopback-only Jupyter job and example validation |
+| 8 | Use R notebooks and batch scripts for statistical and larger tabular analysis | 75-100 min | R example job and reproducibility explanation |
 | 9 | Develop Shiny apps safely before governed deployment | 60-90 min | Tunnelled development session and vhost readiness decision |
 | 10 | Convert notebooks into governed services or Slurm workflows | 60-90 min | Architecture statement and review checklist |
 | 11 | Use biomedical data lawfully and safely in the RCC research enclave | 60-75 min | Scenario-based knowledge check and project-governance confirmation |

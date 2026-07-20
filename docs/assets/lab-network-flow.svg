@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title description">
+  <title id="title">From lab instrument to research result</title>
+  <desc id="description">Mass spectrometers, DNA sequencers, and microscopes send data through Samba or ADRIA into the Research Compute Cluster. Researchers then analyse the data and share approved results.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0a8fb2"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="420" rx="28" fill="#f7fafb"/>
+  <text x="54" y="58" fill="#062a46" font-family="system-ui,sans-serif" font-size="27" font-weight="700">From instrument to insight</text>
+  <text x="54" y="88" fill="#5b6874" font-family="system-ui,sans-serif" font-size="16">A simple, supported path for laboratory research data</text>
+
+  <rect x="45" y="132" width="260" height="220" rx="22" fill="#e9f8fb" stroke="#0a8fb2" stroke-width="2"/>
+  <circle cx="92" cy="181" r="24" fill="#0a8fb2" opacity=".16"/>
+  <path d="M75 193h34M81 174h22M86 165h12" fill="none" stroke="#0a8fb2" stroke-width="5" stroke-linecap="round"/>
+  <text x="130" y="181" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Lab devices</text>
+  <text x="75" y="235" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Mass spectrometers</text>
+  <text x="75" y="269" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">DNA sequencers</text>
+  <text x="75" y="303" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Microscopes</text>
+  <text x="75" y="330" fill="#5b6874" font-family="system-ui,sans-serif" font-size="14">and acquisition PCs</text>
+
+  <path d="M305 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="374" y="160" width="218" height="164" rx="22" fill="#ffffff" stroke="#0a8fb2" stroke-width="2"/>
+  <text x="483" y="207" text-anchor="middle" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Upload data</text>
+  <text x="483" y="248" text-anchor="middle" fill="#0b456e" font-family="system-ui,sans-serif" font-size="18">Samba</text>
+  <text x="483" y="278" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">or ADRIA</text>
+
+  <path d="M592 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="661" y="160" width="218" height="164" rx="22" fill="#062a46"/>
+  <text x="770" y="203" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif" font-size="19" font-weight="700">Research Compute</text>
+  <text x="770" y="229" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif" font-size="19" font-weight="700">Cluster</text>
+  <text x="770" y="264" text-anchor="middle" fill="#d8f3f8" font-family="system-ui,sans-serif" font-size="16">Stored research data</text>
+  <text x="770" y="291" text-anchor="middle" fill="#d8f3f8" font-family="system-ui,sans-serif" font-size="15">Access by project membership</text>
+
+  <path d="M879 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="948" y="160" width="207" height="164" rx="22" fill="#ffffff" stroke="#0a8fb2" stroke-width="2"/>
+  <text x="1052" y="207" text-anchor="middle" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Analyze</text>
+  <text x="1052" y="246" text-anchor="middle" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Python · R · AI</text>
+  <text x="1052" y="277" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">Share approved</text>
+  <text x="1052" y="299" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">results</text>
+</svg>
