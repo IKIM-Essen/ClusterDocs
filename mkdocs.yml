@@ -37,6 +37,8 @@ nav:
       - Troubleshooting: reference/troubleshooting.md
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
+  - Policies:
+      - How shared compute works: policies/slurm-resource-sharing.md
   - Rollout:
       - What is changing: rollout/index.md
   - Security:

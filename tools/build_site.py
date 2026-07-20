@@ -33,6 +33,7 @@ NAV=[
  ('Reference','Troubleshooting','reference/troubleshooting.md'),
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
+ ('Policies','How shared compute works','policies/slurm-resource-sharing.md'),
  ('Governance','What is changing','rollout/index.md'),
  ('Governance','Safe everyday practice','security/safe-use.md'),
  ('Governance','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
