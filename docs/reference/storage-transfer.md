@@ -28,6 +28,7 @@ The supported pattern is durable input, local computation, durable result:
 
 ```bash
 #!/usr/bin/env bash
+#SBATCH --partition=cpu_short
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=4G
 #SBATCH --time=00:30:00

@@ -36,6 +36,7 @@ batch shell. Initialize the shell hook explicitly:
 
 ```bash
 #!/usr/bin/env bash
+#SBATCH --partition=cpu_short
 #SBATCH --time=00:10:00
 #SBATCH --cpus-per-task=1
 

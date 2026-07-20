@@ -21,6 +21,12 @@ These commands answer:
 - the CPU and memory shape visible to Slurm;
 - whether GPU resources are advertised.
 
+The current execution model uses `cpu_short` for jobs up to two hours,
+`interactive` for bounded human-in-the-loop sessions, and `cpu_nodes` for
+regular CPU batch work including long runners. GPU jobs use the currently
+advertised GPU partition. Verify live limits rather than assuming that a
+partition name grants a whole node or unlimited runtime.
+
 Use `scontrol show node <allocated-node>` only when detailed information about
 a node assigned to your job is necessary. Do not probe or publish the full
 physical inventory.

@@ -25,7 +25,9 @@ The classes are sequential for new users, but experienced users can take the rea
 5. Treat generated output as reproducible, not as a reason to bypass version control and provenance.
 6. Ask for project membership rather than sharing another person's account.
 7. Keep notebooks and web apps small enough that another person can review what they do.
-8. Move long-running analysis from notebooks or web requests into Slurm jobs.
+8. Use `cpu_short` for jobs up to two hours, keep interactive work attended,
+   and move long runners into bounded, restartable Slurm batch jobs on regular
+   compute.
 9. Keep direct identifiers and re-identification keys outside RCC; process genomic, imaging, and other biomedical research data only under the project governance that covers RCC.
 
 ## Progress bookkeeping
