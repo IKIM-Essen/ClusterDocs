@@ -2,6 +2,11 @@
 
 This guide provides supported patterns for interactive exploration and scheduled analysis on the RCC. The central rule is that **computation runs through Slurm**. Login and interactive nodes are for editing, submitting, monitoring, and forwarding connections—not for sustained computation.
 
+Short Python and R batch examples use `cpu_short` and must request no more than
+two hours. The `interactive` partition is for attended exploration and bounded
+Jupyter or Shiny development, not detached or overnight runners. Submit
+long-running analysis with `sbatch` on regular compute and make it restartable.
+
 ## Storage and environment rules
 
 Use these locations consistently:

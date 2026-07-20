@@ -2,13 +2,24 @@
 
 This class adapts the same three patterns used by RCC software acceptance testing, but scales them down for one learner and one tiny job at a time.
 
+## Three execution modes
+
+| Mode | Use it for | Do not use it for |
+|---|---|---|
+| Short queue (`cpu_short`) | Tests and batch jobs that finish within two hours | Long runners or work that needs a longer limit |
+| Interactive (`interactive`) | Attended shells, debugging, notebooks, and Shiny development | Overnight, detached, or unattended computation |
+| Regular compute (`cpu_nodes`) | Bounded long-running CPU batch jobs | Interactive sessions kept open while nobody is working |
+
+GPU work follows the same principle: request the current GPU partition in a
+batch job and keep interactive GPU exploration attended and bounded.
+
 ## Everyday Slurm commands
 
 | Task | Command |
 |---|---|
 | See partition summaries | `sinfo` |
 | See your jobs | `squeue --me` |
-| Open a bounded worker shell | `srun --pty --cpus-per-task=1 --mem=1G --time=00:15:00 bash -i` |
+| Open a bounded worker shell | `srun --partition=interactive --pty --cpus-per-task=1 --mem=1G --time=00:15:00 bash -i` |
 | Submit a script | `sbatch job.sbatch` |
 | Inspect a job | `scontrol show job <jobid>` |
 | Measure a completed job | `sacct -j <jobid> --format=JobID,State,Elapsed,MaxRSS,ExitCode` |
@@ -19,6 +30,7 @@ A minimal batch script is:
 ```bash
 #!/usr/bin/env bash
 #SBATCH --job-name=small-test
+#SBATCH --partition=cpu_short
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
 #SBATCH --time=00:10:00
@@ -26,6 +38,11 @@ A minimal batch script is:
 set -euo pipefail
 srun python analysis.py
 ```
+
+Slurm normally allocates the requested CPU, memory, GPU, and time on a suitable
+node. It does not give the job an exclusive whole node. Ordinary jobs should
+not add `--nodes` or `--exclusive`; request whole or multiple nodes only for a
+measured application designed to use them.
 
 ## Pattern 1: Bash hello
 
