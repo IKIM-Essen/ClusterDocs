@@ -1,0 +1,1474 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ikim-essen.github.io/ClusterDocs/upcoming-rcc-changes/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../resources/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Upcoming RCC changes - IKIM Cluster</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#upcoming-rcc-changes-slurm-first-computing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="IKIM Cluster" class="md-header__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IKIM Cluster
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Upcoming RCC changes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IKIM Cluster" class="md-nav__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    IKIM Cluster
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upcoming RCC changes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upcoming RCC changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-cluster-is-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the cluster is changing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-will-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What will change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What will change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slurm-becomes-the-normal-execution-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slurm becomes the normal execution path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-access-will-be-scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU access will be scheduled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct-server-use-and-idle-allocations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct server use and idle allocations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-and-improved-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New and improved capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-users-should-do-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What users should do now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollout-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollout expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#friday-computing-club-discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Friday Computing Club discussion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-and-migration-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions and migration help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Available Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requesting Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connecting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up SSH
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mamba/Conda
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apptainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter Notebooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vs-code-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accessing Cluster storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Computing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snakemake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Snakemake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../slurm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slurm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Misc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-cluster-is-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the cluster is changing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-will-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What will change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What will change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slurm-becomes-the-normal-execution-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slurm becomes the normal execution path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-access-will-be-scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU access will be scheduled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct-server-use-and-idle-allocations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct server use and idle allocations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-and-improved-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New and improved capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-users-should-do-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What users should do now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollout-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollout expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#friday-computing-club-discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Friday Computing Club discussion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-and-migration-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions and migration help
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="upcoming-rcc-changes-slurm-first-computing">Upcoming RCC changes: Slurm-first computing</h1>
+<div class="admonition important">
+<p class="admonition-title">What users need to know</p>
+<p>The RCC cluster is moving to a <strong>Slurm-first operating model</strong>. Long-running or resource-intensive work must be submitted through Slurm rather than started directly on shared login, submission, CPU, or GPU nodes.</p>
+<p>The rollout will happen incrementally. Some features described below may not be available on the first day, but the required usage pattern is changing now: <strong>request resources through Slurm, set realistic limits, and release resources when work is idle.</strong></p>
+</div>
+<h2 id="why-the-cluster-is-changing">Why the cluster is changing</h2>
+<p>RCC is a shared scientific computing environment. Directly occupying a server, keeping an interactive session alive for long periods, or reserving GPUs while they are mostly idle prevents other researchers from using the same hardware.</p>
+<p>This is particularly important for GPU systems. Current usage patterns leave allocated or user-controlled GPU nodes underutilized for substantial periods while the nodes remain unavailable to others. Moving GPU work into Slurm makes resource use visible, schedulable, auditable, and fair.</p>
+<p>The change is not intended to reduce legitimate access. It is intended to make more of the existing CPU, RAM, GPU, and storage performance available to everyone.</p>
+<h2 id="what-will-change">What will change</h2>
+<h3 id="slurm-becomes-the-normal-execution-path">Slurm becomes the normal execution path</h3>
+<p>Use submission nodes to:</p>
+<ul>
+<li>log in;</li>
+<li>edit code and configuration;</li>
+<li>prepare environments and workflows;</li>
+<li>submit jobs;</li>
+<li>inspect logs and results; and</li>
+<li>perform short, lightweight diagnostics.</li>
+</ul>
+<p>Use Slurm allocations, including bounded interactive allocations, for:</p>
+<ul>
+<li>CPU-intensive analysis;</li>
+<li>high-memory jobs;</li>
+<li>GPU workloads;</li>
+<li>long-running scripts;</li>
+<li>Jupyter, RStudio, Shiny, or similar compute sessions;</li>
+<li>workflow execution; and</li>
+<li>interactive debugging that requires compute resources.</li>
+</ul>
+<p>Do not start substantial work directly on a shared server and leave it running outside Slurm.</p>
+<h3 id="gpu-access-will-be-scheduled">GPU access will be scheduled</h3>
+<p>GPU jobs must explicitly request GPU resources. Confirm the currently available GPU partition with <code>sinfo</code> and replace <code>&lt;approved-gpu-partition&gt;</code> below with its name:</p>
+<div class="highlight"><pre><span></span><code>srun<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--partition<span class="o">=</span>&lt;approved-gpu-partition&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--gpus<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cpus-per-gpu<span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mem<span class="o">=</span>32G<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--time<span class="o">=</span><span class="m">04</span>:00:00<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--pty<span class="w"> </span>bash<span class="w"> </span>-i
+</code></pre></div>
+<p>For batch work, use <code>sbatch</code> and include the resource request in the script:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#SBATCH --job-name=gpu-test</span>
+<span class="c1">#SBATCH --partition=&lt;approved-gpu-partition&gt;</span>
+<span class="c1">#SBATCH --gpus=1</span>
+<span class="c1">#SBATCH --cpus-per-gpu=4</span>
+<span class="c1">#SBATCH --mem=32G</span>
+<span class="c1">#SBATCH --time=04:00:00</span>
+<span class="c1">#SBATCH --output=logs/%x-%j.out</span>
+
+srun<span class="w"> </span>python<span class="w"> </span>train.py
+</code></pre></div>
+<p>Create the output directory before submitting the job:</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>logs
+sbatch<span class="w"> </span>gpu-test.sbatch
+</code></pre></div>
+<p>Do not override <code>CUDA_VISIBLE_DEVICES</code>; Slurm uses it to expose only the GPU resources assigned to the job.</p>
+<h3 id="direct-server-use-and-idle-allocations">Direct server use and idle allocations</h3>
+<p>The following patterns interfere with fair access and must be replaced:</p>
+<ul>
+<li>logging into a compute or GPU server and running work directly;</li>
+<li>keeping a GPU allocated while code is being edited, data is being prepared, or no process is using it;</li>
+<li>requesting all CPUs, RAM, or GPUs "just in case";</li>
+<li>leaving detached <code>tmux</code>, Jupyter, Python, R, or shell sessions running indefinitely;</li>
+<li>running long jobs on submission nodes or in interactive allocations; and</li>
+<li>using one very long allocation when checkpointed or staged jobs would release resources between steps.</li>
+</ul>
+<p><code>tmux</code> remains useful for protecting a lightweight controller, monitoring session, or submission workflow. It is not a substitute for Slurm resource allocation.</p>
+<h2 id="new-and-improved-capabilities">New and improved capabilities</h2>
+<p>The RCC update is expected to provide a more consistent environment across the cluster. Planned or staged improvements include:</p>
+<ul>
+<li>a larger and more uniform Slurm-managed CPU fleet;</li>
+<li>scheduled access to GPU nodes;</li>
+<li>clearer CPU, GPU, RAM, and runtime requests;</li>
+<li>improved interactive jobs and node access tied to active allocations;</li>
+<li>better job accounting and visibility into resource use;</li>
+<li>standard Snakemake execution through Slurm;</li>
+<li>Apptainer support for reproducible containerized software;</li>
+<li>Miniforge/Mamba-based environment management;</li>
+<li>improved node-local temporary storage for I/O-intensive work;</li>
+<li>updated storage and data-transfer services;</li>
+<li>more consistent user identity and access across nodes; and</li>
+<li>improved documentation, examples, and acceptance testing.</li>
+</ul>
+<p>Not every item will necessarily be complete at the initial rollout. The documentation will be updated as individual services become production-ready.</p>
+<h2 id="what-users-should-do-now">What users should do now</h2>
+<ol>
+<li>Read the existing <a href="../slurm/">Slurm guide</a>.</li>
+<li>Convert recurring commands and long-running analyses into <code>sbatch</code> scripts.</li>
+<li>Add realistic <code>--time</code>, CPU, RAM, and GPU requests.</li>
+<li>Check whether a GPU job is actually using the assigned GPU with <code>nvidia-smi</code>.</li>
+<li>Add checkpoints to long workflows where supported.</li>
+<li>Use Snakemake or another workflow system for multi-step analyses rather than holding one server for the entire project.</li>
+<li>Stop or migrate long-lived direct sessions before enforcement begins.</li>
+</ol>
+<p>A useful first check is:</p>
+<div class="highlight"><pre><span></span><code>squeue<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>For completed jobs, inspect actual use with:</p>
+<div class="highlight"><pre><span></span><code>sacct<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span><span class="w"> </span>--starttime<span class="w"> </span>today<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="o">=</span>JobID,JobName,Partition,State,Elapsed,AllocCPUS,ReqMem,MaxRSS
+</code></pre></div>
+<p>GPU utilization should also be observed during representative runs:</p>
+<div class="highlight"><pre><span></span><code>watch<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span>nvidia-smi
+</code></pre></div>
+<h2 id="rollout-expectations">Rollout expectations</h2>
+<p>The transition will be phased. During the rollout:</p>
+<ul>
+<li>some nodes or services may move at different times;</li>
+<li>documentation may describe features that are still being validated;</li>
+<li>temporary interruptions or changed host availability may occur;</li>
+<li>legacy access patterns may continue briefly but should not be treated as permanent; and</li>
+<li>users should report workflows that cannot yet be expressed reasonably through Slurm.</li>
+</ul>
+<p>The target state is clear even if individual components arrive incrementally: shared compute resources will be managed through Slurm rather than through informal ownership of servers.</p>
+<h2 id="friday-computing-club-discussion">Friday Computing Club discussion</h2>
+<p>We will hold a <strong>Friday Computing Club meeting at the end of July</strong> to explain the transition, demonstrate the intended Slurm workflow, and discuss concerns in person.</p>
+<p>Please bring examples of workloads that are difficult to schedule, especially:</p>
+<ul>
+<li>interactive GPU development;</li>
+<li>long model-training runs;</li>
+<li>Jupyter or RStudio sessions;</li>
+<li>workflows with large temporary data;</li>
+<li>jobs requiring several GPUs or unusually large memory; and</li>
+<li>analyses currently tied to a specific server.</li>
+</ul>
+<p>The meeting date, time, and room will be announced separately.</p>
+<h2 id="questions-and-migration-help">Questions and migration help</h2>
+<p>Please raise concerns early. The goal is to move valid scientific workloads into a fair and reproducible execution model, not to block them. Concrete examples—commands, expected runtime, CPU/GPU/RAM needs, and data-access patterns—will help us provide appropriate Slurm templates and identify missing functionality.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
