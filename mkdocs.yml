@@ -8,6 +8,7 @@ theme:
     - navigation.sections
 
 markdown_extensions:
+  - admonition
   - footnotes
   - pymdownx.highlight
   - pymdownx.inlinehilite
@@ -16,6 +17,7 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
+  - Upcoming RCC changes: upcoming-rcc-changes.md
   - Available Resources: resources.md
   - Requesting Access: access.md
   - Connecting:

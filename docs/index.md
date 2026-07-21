@@ -1,5 +1,12 @@
 # IKIM Scientific Computing
 
+!!! warning "Upcoming RCC change: Slurm-first computing"
+    RCC is moving to a **Slurm-first operating model**. Long-running, CPU-intensive, high-memory, and GPU work must be submitted through Slurm instead of being run directly on shared servers.
+
+    **TL;DR:** Convert direct server sessions into Slurm jobs, request only the CPU, RAM, GPU, and time you need, and release resources when work is idle. This is especially urgent for GPU nodes, which are currently underused for substantial periods while unavailable to other users.
+
+    The rollout will be incremental, so not every new feature will be present on day one. Read the [detailed transition notice](upcoming-rcc-changes.md). We will also discuss concerns at a Friday Computing Club meeting at the end of July; the exact date, time, and room will be announced separately.
+
 This website contains documentation for the scientific computing infrastructure at the Institute for AI in Medicine (IKIM) in Essen. The documentation is geared towards researchers and students that aim to run scientific experiments on the cluster. See [Getting Started](getting-started.md) for general instructions.
 
 The image below shows members of IKIM assembling the cluster
