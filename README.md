@@ -43,6 +43,21 @@ This is a publication candidate, not a claim that every local command has alread
 
 The statistical and DNA examples are educational. They are not validated clinical pipelines and do not replace study-design, statistical, bioinformatics, data-protection, or clinical review.
 
+## Local website preview
+
+The custom RCC-styled site produced by `tools/build_site.py` is the canonical
+ClusterDocs NG website. The `mkdocs.yml` file remains useful for content and
+navigation checks, but `mkdocs serve` does not reproduce the published design.
+
+Build and browse the same site used by the validation and deployment workflow:
+
+```bash
+python tools/build_site.py --output site-preview
+python -m http.server 8765 --bind 127.0.0.1 --directory site-preview
+```
+
+Then open <http://127.0.0.1:8765/>.
+
 ## Repository integration
 
 `meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.

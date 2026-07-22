@@ -5,7 +5,7 @@ production_url: https://CLUSTERDOCS-URL.invalid/
 rollout_date: TO_BE_CONFIRMED
 support_contact: TO_BE_CONFIRMED
 ssh_alias: rcc-login
-ssh_host_key_fingerprint: TO_BE_PUBLISHED_THROUGH_TRUSTED_CHANNEL
+ssh_host_ca_fingerprint: TO_BE_PUBLISHED_THROUGH_TRUSTED_CHANNEL
 transfer_service_name: RCC web transfer
 transfer_service_url: https://TRANSFER-URL.invalid/
 media_base_url: https://MEDIA-URL.invalid/rcc-onboarding

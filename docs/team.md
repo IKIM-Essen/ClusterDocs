@@ -7,6 +7,12 @@ version of the RCC service and ClusterDocs is:
 - Ryan Aydelott
 - Folker Meyer
 
+Past members of the team include:
+
+- Jörg Schlotterer
+- Enrico Nasca
+- Hendrik Schmidt
+
 The work combines research-computing experience, infrastructure engineering,
 security, reproducible workflows, training, and day-to-day support for RCC
 users.
