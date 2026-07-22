@@ -39,6 +39,7 @@ nav:
       - AI and data science: reference/ai-data-science.md
   - Policies:
       - How shared compute works: policies/slurm-resource-sharing.md
+      - SSH host identity: policies/ssh-host-identity.md
   - Rollout:
       - What is changing: rollout/index.md
   - Security:

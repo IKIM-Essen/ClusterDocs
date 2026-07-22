@@ -21,6 +21,14 @@ shared accounts and shared credentials.
 
 ## Create an SSH key
 
+Where a compatible FIDO2 authenticator is available, prefer a hardware-backed key. Its private material remains on the authenticator and normally requires user presence:
+
+```bash
+ssh-keygen -t ed25519-sk -f ~/.ssh/id_rcc
+```
+
+Otherwise, create the dedicated software-backed Ed25519 key described below. Do not copy either type of private credential between computers.
+
 ### macOS and Linux
 
 Create a dedicated Ed25519 key and protect it with a strong passphrase:
@@ -57,9 +65,9 @@ normally stored under `C:\Users\<username>\.ssh\`.
 
 ## Configure the approved RCC target
 
-Use the host block supplied through the RCC rollout page or another trusted
-institutional channel. The public alias used in this course is
-`{{ ssh_alias }}`. A safe client block has this shape:
+Use the host block supplied through the RCC rollout page or another trusted institutional channel. During the host-identity migration, RCC will distribute **RCC Connect**: a portable kit with a dedicated RCC configuration, host-CA trust file and connection test. It does not modify or delete entries for unrelated services in the ordinary `known_hosts` file.
+
+Until the rollout page says RCC Connect is active, continue using the currently approved configuration. The public alias used in this course is `{{ ssh_alias }}`. A safe client block has this shape:
 
 ```sshconfig
 Host {{ ssh_alias }}
@@ -70,9 +78,7 @@ Host {{ ssh_alias }}
   ForwardAgent no
 ```
 
-Do not copy an old hostname from a colleague, disable host-key checking, or
-enable agent forwarding merely to make a connection work. Verify the published
-host-key fingerprint before the first connection.
+Do not copy an old hostname from a colleague, disable host-key checking or enable agent forwarding merely to make a connection work. Verify the published RCC host-CA fingerprint through an independent institutional channel before migration.
 
 Inspect the effective configuration without connecting:
 
@@ -90,14 +96,19 @@ ssh -v {{ ssh_alias }}
 Remove key material, usernames, local paths, and tokens before sharing a debug
 log with support.
 
+During or after migration, do not approve an unexpected SSH identity warning and do not delete host records merely to make the warning disappear. Close the client, run the RCC connection test and use its repair action. Report the generated support code if repair fails.
+
 ## Use VS Code Remote SSH
 
 1. Install Visual Studio Code and Microsoft's **Remote - SSH** extension.
 2. Confirm terminal SSH works first.
-3. Open **Remote Explorer** and select `{{ ssh_alias }}` from the SSH targets.
-4. Open only the project or source directory you need.
-5. Keep data, environment, cache, and generated-result directories out of
+3. If RCC Connect is active, run its test and repair action before opening VS Code. The kit selects its dedicated SSH configuration and, where necessary, its maintained SSH executable.
+4. Open **Remote Explorer** and select the approved RCC alias from the SSH targets.
+5. Open only the project or source directory you need.
+6. Keep data, environment, cache, and generated-result directories out of
    workspace-wide search.
+
+Do not manually accept an unexpected identity warning in VS Code. Close it and run the RCC connection test instead. See the [SSH host-identity policy](../policies/ssh-host-identity.md) for the architecture and rollout controls.
 
 VS Code uses `rg` for full-text search. A recursive search over large shared
 storage or an environment containing thousands of files can create substantial
