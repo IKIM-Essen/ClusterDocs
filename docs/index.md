@@ -32,7 +32,7 @@ validation, uncertainty, bias, and scientific limitations.
 ## Shared foundation
 
 - Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
-- Use the [course overview](course/index.md) when you want the complete eleven-class sequence.
+- Use the [course overview](course/index.md) when you want the complete thirteen-class sequence.
 - Preparing for the service transition: read [what is changing](rollout/index.md).
 - Working with human biomedical data: complete [Class 11](course/class-11-biomedical-data-privacy.md) before transfer or analysis.
 - Looking up a command after training: use the [day-to-day reference](reference/index.md).

@@ -12,6 +12,7 @@ result pipeline.
 | [Class 3](../course/class-03-performance.md) | CPU, RAM, GPU, and efficient I/O | Avoid slow or disruptive analysis patterns |
 | [Class 5](../course/class-05-slurm.md) | Slurm jobs and resource requests | Run computation on managed workers |
 | [Class 11](../course/class-11-biomedical-data-privacy.md) | Biomedical-data governance | Confirm the project and data are suitable for RCC |
+| [Class 12](../course/class-12-efficient-io.md) | Local staging and safe publication | Keep active I/O off shared storage when measurement supports it |
 
 ## 2. Choose your analysis environment
 
@@ -37,6 +38,9 @@ small files.
 Keep durable inputs and final outputs in approved project storage. Stage
 high-I/O intermediates into job-local scratch and retain code, environments,
 parameters, checksums, logs, benchmarks, and Slurm job IDs.
+
+Use [Class 13](../course/class-13-storage-architecture.md) when you need to
+diagnose metadata, object-storage, network, or cache behavior in more detail.
 
 ## 4. Share an approved result
 
