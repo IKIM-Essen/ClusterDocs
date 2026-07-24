@@ -1,4 +1,4 @@
-# Efficient I/O: copy locally, compute locally, return results
+# Class 12: efficient I/O—copy locally, compute locally, return results
 
 > **The pattern:** Keep durable inputs and final results on approved shared
 > storage. For I/O-intensive computation, copy only the required inputs to the
@@ -21,10 +21,10 @@ primary identifying fields.
 
 Companion material:
 
-- [create a synthetic FASTQ file](examples/make-synthetic-fastq.sh);
-- [run the direct shared-storage comparison](examples/direct-io-demo.sh);
-- [run the local-staging job](examples/local-io-demo.sh); and
-- read the optional [RCC storage architecture class](storage-architecture.md).
+- [create a synthetic FASTQ file](../classes/examples/make-synthetic-fastq.sh);
+- [run the direct shared-storage comparison](../classes/examples/direct-io-demo.sh);
+- [run the local-staging job](../classes/examples/local-io-demo.sh); and
+- continue with [Class 13: RCC storage architecture](class-13-storage-architecture.md).
 
 ## Learning objectives
 
@@ -552,3 +552,10 @@ Keep direct shared-storage streaming when:
 > Shared storage is for durable data. Node-local scratch is for active
 > temporary computation. Stream when possible; stage locally when random or
 > small-file I/O would otherwise dominate.
+
+## Completion gate
+
+Using only synthetic data, run the direct and local-staging examples with the
+same Slurm resources. Record elapsed time, CPU time, output checksums, and the
+access pattern. Explain which version you would choose for a larger workload
+and why.

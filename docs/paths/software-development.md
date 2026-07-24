@@ -27,6 +27,8 @@ Shiny project. Each component can be previewed and installed independently.
 | Shiny application | [Class 9: Shiny](../course/class-09-shiny.md) |
 | Protected project website or API | [Class 6: project websites](../course/class-06-vhosts.md) |
 | Notebook or model promoted to a service | [Class 10: notebook to service](../course/class-10-notebook-to-service.md) |
+| I/O-intensive workflow or temporary database | [Class 12: efficient local I/O](../course/class-12-efficient-io.md) |
+| Storage-path or cache diagnosis | [Class 13: storage architecture](../course/class-13-storage-architecture.md) |
 
 ## 3. Design for review and operation
 

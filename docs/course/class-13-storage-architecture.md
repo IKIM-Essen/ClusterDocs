@@ -1,4 +1,4 @@
-# Optional class: RCC storage architecture
+# Class 13: RCC storage architecture
 
 This optional class explains the RCC data path:
 
@@ -258,3 +258,10 @@ result. Do not include patient identifiers.
 > contents as S3 objects. The network connects the layers. Good performance
 > comes from streaming large data, minimizing metadata storms, reusing immutable
 > caches, and moving temporary random I/O to node-local storage.
+
+## Completion gate
+
+Given one streaming workload and one small-file or random-I/O workload, trace
+the likely metadata, object-storage, network, and cache paths. State which data
+should remain durable, which work should use job-local scratch, and what you
+would measure before changing resources.

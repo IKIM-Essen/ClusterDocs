@@ -1,4 +1,4 @@
-# Eleven-class RCC learning path
+# Thirteen-class RCC learning path
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
@@ -15,6 +15,8 @@ The classes are sequential for new users, but experienced users can take the rea
 | 9 | Develop Shiny apps safely before governed deployment | 60-90 min | Tunnelled development session and vhost readiness decision |
 | 10 | Convert notebooks into governed services or Slurm workflows | 60-90 min | Architecture statement and review checklist |
 | 11 | Use biomedical data lawfully and safely in the RCC research enclave | 60-75 min | Scenario-based knowledge check and project-governance confirmation |
+| 12 | Stage I/O-intensive work to job-local scratch and publish results safely | 60-90 min | Direct-versus-local synthetic comparison and justified storage choice |
+| 13 | Trace RCC metadata, object-storage, network, and cache behavior | 45-60 min | Storage-path diagnosis and measurement plan |
 
 ## Course rules
 
