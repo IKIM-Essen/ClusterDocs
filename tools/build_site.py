@@ -22,6 +22,8 @@ NAV=[
  ('Course','Class 9 · Shiny apps','course/class-09-shiny.md'),
  ('Course','Class 10 · Notebook to service','course/class-10-notebook-to-service.md'),
  ('Course','Class 11 · Data privacy','course/class-11-biomedical-data-privacy.md'),
+ ('Advanced classes','Efficient local I/O','classes/efficient-io.md'),
+ ('Advanced classes','RCC storage architecture','classes/storage-architecture.md'),
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
  ('Reference','Reference overview','reference/index.md'),
@@ -305,6 +307,9 @@ def main():
             page_group=group_for_path.get(str(rel),'Documentation'),
             is_home=str(rel)=='index.md',
         ))
+    class_examples=DOCS/'classes/examples'
+    if class_examples.exists():
+        shutil.copytree(class_examples,out/'classes/examples',dirs_exist_ok=True)
     # Copy learner exercises and reviewable text assets, never credentials.
     shutil.copytree(ROOT/'exercises',out/'downloads/exercises')
     if (ROOT/'examples').exists():
