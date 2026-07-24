@@ -33,6 +33,13 @@ class EfficientLocalIOClassTests(unittest.TestCase):
         self.assertIn("class_examples=DOCS/'classes/examples'", builder)
         self.assertIn("out/'classes/examples'", builder)
 
+    def test_new_pages_are_part_of_course_navigation(self):
+        mkdocs = (ROOT / "mkdocs.yml").read_text()
+        builder = (ROOT / "tools/build_site.py").read_text()
+        self.assertNotIn("Advanced classes:", mkdocs)
+        self.assertIn("('Course','Efficient local I/O'", builder)
+        self.assertIn("('Course','RCC storage architecture'", builder)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -27,7 +27,6 @@ nav:
       - Class 10 - Notebook to service: course/class-10-notebook-to-service.md
       - Class 11 - Biomedical data privacy: course/class-11-biomedical-data-privacy.md
       - Interactive examples: examples/interactive-workflows.md
-  - Advanced classes:
       - Efficient local I/O: classes/efficient-io.md
       - RCC storage architecture: classes/storage-architecture.md
   - Reference:
