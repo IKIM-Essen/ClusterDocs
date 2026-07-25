@@ -12,6 +12,7 @@ class ReferenceGuideTests(unittest.TestCase):
             "account-starter-setups.md",
             "access-ssh-vscode.md",
             "storage-transfer.md",
+            "data-sharing.md",
             "software-workflows.md",
             "slurm.md",
             "how-shared-compute-works.md",

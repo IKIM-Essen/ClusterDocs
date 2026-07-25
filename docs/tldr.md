@@ -93,6 +93,12 @@ owner, approved purpose, membership, retention, legal context, and continuity
 when a team member leaves. Home capacity and filesystem behavior are also not
 intended for large recurring instrument ingestion.
 
+For collaboration, request a project whose Unix group contains every approved
+member. A setgid project directory keeps new files associated with that group;
+it does not authorize disclosure or make files group-writable by itself. Use
+the [data-sharing guide](reference/data-sharing.md) for colleagues in your
+project, other RCC groups, and external recipients.
+
 Read [Class 12: efficient local I/O](course/class-12-efficient-io.md),
 [Class 13: storage architecture](course/class-13-storage-architecture.md), and
 the [storage and transfer reference](reference/storage-transfer.md).

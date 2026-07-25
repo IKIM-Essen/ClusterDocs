@@ -7,6 +7,10 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 > staging, and [Class 11](../course/class-11-biomedical-data-privacy.md) covers
 > the biomedical-data admission decision.
 
+> **Need to give someone access?** Use [How to share data safely](data-sharing.md)
+> to choose project-group access, a bounded handoff, or an approved external
+> sharing route before selecting a transfer command.
+
 ## Storage decision table
 
 | Purpose | Location or service | Rule |
