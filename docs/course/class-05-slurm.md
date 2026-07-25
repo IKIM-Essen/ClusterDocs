@@ -1,5 +1,18 @@
 # Class 5: Slurm acceptance patterns
 
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 3 min video</p>
+  <h2>Watch the class first</h2>
+  <p>Slurm execution modes, everyday commands, bounded acceptance patterns, and safe scheduler use. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class5.png" src="{{ media_base_url }}/RCC_Onboarding_Class_5_Video_Enhanced.mp4?v=eba83875">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Class_5_Captions.srt">Captions</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Class_5_Video_Narration.md">Read transcript</a>
+  </div>
+</section>
+
 This class adapts the same three patterns used by RCC software acceptance testing, but scales them down for one learner and one tiny job at a time.
 
 ## Three execution modes

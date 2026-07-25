@@ -1,0 +1,124 @@
+1
+00:00:00,000 --> 00:00:04,218
+Welcome to Class 8: R notebooks and large-data analysis.
+
+2
+00:00:04,218 --> 00:00:08,436
+This video introduces the core decisions and working patterns.
+
+3
+00:00:08,436 --> 00:00:14,997
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14,997 --> 00:00:17,340
+exercises, and detailed reference material.
+
+5
+00:00:17,340 --> 00:00:22,538
+After this class, you can: run R in a controlled Conda environment;
+
+6
+00:00:22,538 --> 00:00:28,168
+use an R kernel in JupyterLab when needed; analyse larger tables with data.table,
+
+7
+00:00:28,168 --> 00:00:34,665
+DuckDB, Arrow, and dplyr patterns; build figures with ggplot2; separate exploratory notebooks from batch analysis;
+
+8
+00:00:34,665 --> 00:00:38,996
+prepare R code that can be rerun by a colleague.
+
+9
+00:00:38,996 --> 00:00:45,648
+Start from the provided example: For an interactive R notebook, use the Jupyter example from Class
+
+10
+00:00:45,648 --> 00:00:46,064
+7.
+
+11
+00:00:46,064 --> 00:00:48,974
+The environment already includes an R kernel.
+
+12
+00:00:48,974 --> 00:00:53,056
+Do not begin by loading every file into memory.
+
+13
+00:00:53,056 --> 00:00:59,859
+First check: file size; number of columns; expected row count; whether the file is compressed;
+
+14
+00:00:59,859 --> 00:01:06,208
+whether the analysis needs all columns; whether the operation is streaming, grouped, or random-access.
+
+15
+00:01:06,208 --> 00:01:07,568
+Good starting points:
+
+16
+00:01:07,568 --> 00:01:13,751
+For teaching and small examples, the course uses Conda environments because they are easy to reproduce
+
+17
+00:01:13,751 --> 00:01:14,911
+in Slurm jobs.
+
+18
+00:01:14,911 --> 00:01:21,094
+For larger R projects, you may also use renv, but do not keep active package libraries
+
+19
+00:01:21,094 --> 00:01:24,572
+with many small files on shared storage while computing.
+
+20
+00:01:24,572 --> 00:01:28,823
+Restore packages into local job storage or use a reviewed container.
+
+21
+00:01:28,823 --> 00:01:42,836
+The course includes: examples/interactive-workflows/notebooks/r-large-data.ipynb examples/interactive-workflows/r/analysis.R examples/interactive-workflows/r/r.sbatch examples/interactive-workflows/r/environment.yml The notebook demonstrates group summaries and a sampled figure.
+
+22
+00:01:42,836 --> 00:01:51,594
+The batch example writes reproducible output into a results directory.
+
+23
+00:01:51,594 --> 00:01:55,821
+Request only the CPU and memory your script can use.
+
+24
+00:01:55,821 --> 00:01:59,203
+Keep raw data compressed where tools support it.
+
+25
+00:01:59,203 --> 00:02:03,007
+Avoid thousands of tiny temporary files on shared storage.
+
+26
+00:02:03,007 --> 00:02:05,543
+Use node-local scratch for intermediate output.
+
+27
+00:02:05,543 --> 00:02:09,770
+Save final tables and figures back to the project area.
+
+28
+00:02:09,770 --> 00:02:13,997
+Use sacct after completion to compare requested and observed memory.
+
+29
+00:02:13,997 --> 00:02:19,172
+Run: Then submit the R batch job once and verify that the result file was written.
+
+30
+00:02:19,172 --> 00:02:24,347
+The gate is complete when you can explain how the same code could be moved from
+
+31
+00:02:24,347 --> 00:02:26,288
+notebook exploration into the batch script.
+

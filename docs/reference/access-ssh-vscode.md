@@ -146,7 +146,9 @@ needed for the task:
 
 ![VS Code remote window showing the Open Folder action and integrated terminal](../assets/vs_code_ssh_remote_folder.png)
 
-Do not manually accept an unexpected identity warning in VS Code. Close it and run the RCC connection test instead. See the [SSH host-identity policy](../policies/ssh-host-identity.md) for the architecture and rollout controls.
+Do not manually accept an unexpected identity warning in VS Code. Close it,
+run the current RCC connection test, and contact RCC support if the warning
+remains.
 
 ## Customize VS Code without creating performance problems
 

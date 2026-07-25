@@ -87,6 +87,29 @@ Apptainer runs containers as the calling user and does not grant Docker-style
 root privileges. Production images should be immutable SIF files identified by
 a digest.
 
+### Rootless execution
+
+“Rootless” describes the privilege boundary during normal container
+execution. Apptainer does not depend on a privileged Docker-style daemon, and
+the container process keeps the calling user's effective access to host files.
+An apparent `root` identity inside an image is not unrestricted root on the RCC
+host: it cannot override host permissions, administer the kernel, select
+unallocated devices, or escape the resources assigned by Slurm.
+
+RCC uses this model because many unrelated projects share the same compute
+nodes. Keeping container work at the submitter's privilege level reduces the
+attack surface and prevents a container from becoming a shortcut around
+project membership, filesystem permissions, device allocation, or central
+driver management.
+
+Rootless execution is not a sandbox for data the user can already access. A
+container can modify any writable visible or bound path with the user's normal
+permissions. Use explicit least-privilege binds, read-only inputs, immutable
+images, clean environments, and reviewed sources. Image *building* is a
+separate operation: use the RCC-supported rootless/fakeroot or approved remote
+builder where available, and never assume that a production job may acquire
+host-root privileges.
+
 Common commands are:
 
 - `apptainer run IMAGE.sif` for the image's default action;

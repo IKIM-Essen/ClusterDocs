@@ -9,7 +9,7 @@ computation runs as a Slurm job.
 
 > **Resource-sharing policy:** Groups that contribute hardware retain a
 > reclaimable compute entitlement while restartable work may use idle capacity.
-> See [How shared compute works](../policies/slurm-resource-sharing.md).
+> See [How shared compute works](how-shared-compute-works.md).
 
 ## Discover the scheduler
 

@@ -1,140 +1,355 @@
 #!/usr/bin/env python3
-import json, os, re, subprocess, math, wave, glob, shutil, textwrap
+"""Build narrated RCC class videos from committed slide frames and Markdown.
+
+The default speech backend is the macOS ``say`` synthesizer with the British
+English Daniel voice.  Audio is mastered with ffmpeg and captions are generated
+from the unmodified narration text.  No production RCC service is contacted.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import shutil
+import subprocess
+import tempfile
 from pathlib import Path
 
-ROOT=Path('/mnt/data/rcc-curriculum-v2')
-VIDEOS=ROOT/'videos'; AUDIO=ROOT/'audio'; CAP=ROOT/'captions'; WORK=ROOT/'video_work'
-for d in [VIDEOS,AUDIO,CAP,WORK]: d.mkdir(parents=True,exist_ok=True)
 
-ACCENTS={1:'007C83',2:'2C6EAF',3:'D15B47',4:'7057A3'}
+ROOT = Path(__file__).resolve().parents[1]
+FRAMES = ROOT / "slides" / "frames"
+NARRATION = ROOT / "narration"
+CAPTIONS = ROOT / "captions"
+OUTPUT = ROOT / "videos-enhanced"
+REPORT = ROOT / "meta" / "video-build-report.json"
 
-REPL=[
- (r'\bRCC\b','R C C'), (r'\bSSH\b','S S H'), (r'\bVS Code\b','V S Code'),
- (r'\bSlurm\b','slurm'), (r'\bSnakemake\b','snake make'), (r'\btmux\b','tee mux'),
- (r'\bMiniforge\b','mini forge'), (r'\bBioconda\b','bio conda'), (r'\bApptainer\b','app tainer'),
- (r'\bSIF\b','S I F'), (r'\bI/O\b','I O'), (r'\bIOPS\b','I O operations per second'),
- (r'\bCPU\b','C P U'), (r'\bCPUs\b','C P Us'), (r'\bGPU\b','G P U'), (r'\bGPUs\b','G P Us'),
- (r'\bRAM\b','ram'), (r'\bFASTQ\.gz\b','fast Q dot G Z'), (r'\bFASTQ\b','fast Q'),
- (r'\bFASTA\b','fast A'), (r'\bBAM\b','bam'), (r'\bCRAM\b','C ram'), (r'\bVCF\.gz\b','V C F dot G Z'),
- (r'\bVCF\b','V C F'), (r'\bSHA-256\b','S H A two fifty six'), (r'\bMaxRSS\b','max R S S'),
- (r'\bsacct\b','S acct'), (r'\bsstat\b','S stat'), (r'\bsbatch\b','S batch'), (r'\bsqueue\b','S queue'),
- (r'\bnvidia-smi\b','N V I D I A S M I'), (r'\bTMPDIR\b','temp directory'),
- (r'\bDAG\b','D A G'), (r'\bGit\b','git'), (r'\bHPC\b','H P C'),
- (r'--nv','dash dash N V'), (r'--cleanenv','dash dash clean env'), (r'\bconda\b','conda'),
+VOICE = "Daniel"
+RATE = 172
+
+PRONUNCIATION = [
+    (r"\bRCC\b", "R C C"),
+    (r"\bSSH\b", "S S H"),
+    (r"\bVS Code\b", "Visual Studio Code"),
+    (r"\bSlurm\b", "slurm"),
+    (r"\bSnakemake\b", "snake make"),
+    (r"\btmux\b", "tee mux"),
+    (r"\bMiniforge\b", "mini forge"),
+    (r"\bBioconda\b", "bio conda"),
+    (r"\bApptainer\b", "app tainer"),
+    (r"\bSIF\b", "S I F"),
+    (r"\bI/O\b", "I O"),
+    (r"\bIOPS\b", "I O operations per second"),
+    (r"\bCPU\b", "C P U"),
+    (r"\bCPUs\b", "C P Us"),
+    (r"\bGPU\b", "G P U"),
+    (r"\bGPUs\b", "G P Us"),
+    (r"\bRAM\b", "ram"),
+    (r"\bFASTQ\.gz\b", "fast Q dot G Z"),
+    (r"\bFASTQ\b", "fast Q"),
+    (r"\bFASTA\b", "fast A"),
+    (r"\bBAM\b", "bam"),
+    (r"\bCRAM\b", "C ram"),
+    (r"\bVCF\.gz\b", "V C F dot G Z"),
+    (r"\bVCF\b", "V C F"),
+    (r"\bSHA-256\b", "S H A two fifty six"),
+    (r"\bMaxRSS\b", "max R S S"),
+    (r"\bsacct\b", "S acct"),
+    (r"\bsstat\b", "S stat"),
+    (r"\bsbatch\b", "S batch"),
+    (r"\bsqueue\b", "S queue"),
+    (r"\bnvidia-smi\b", "N V I D I A S M I"),
+    (r"\bTMPDIR\b", "temp directory"),
+    (r"\bDAG\b", "D A G"),
+    (r"--nv", "dash dash N V"),
+    (r"--cleanenv", "dash dash clean env"),
 ]
 
-def speech_text(text):
-    t=text.replace('→',' leads to ').replace('·',', ').replace('–','-').replace('—',' - ')
-    t=t.replace('`','').replace('“','').replace('”','').replace('’',"'")
-    for p,r in REPL: t=re.sub(p,r,t,flags=re.I if p in [r'\bSlurm\b',r'\bSnakemake\b',r'\btmux\b',r'\bMiniforge\b',r'\bBioconda\b',r'\bApptainer\b'] else 0)
-    t=re.sub(r'\s+',' ',t).strip()
-    return t
 
-def run(cmd, **kw):
-    subprocess.run(cmd,check=True,stdout=kw.pop('stdout',subprocess.DEVNULL),stderr=kw.pop('stderr',subprocess.DEVNULL),**kw)
-
-def duration(path):
-    out=subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=nw=1:nk=1',str(path)],text=True)
-    return float(out.strip())
-
-def srt_time(sec):
-    ms=int(round(sec*1000)); h=ms//3600000; ms%=3600000; m=ms//60000; ms%=60000; s=ms//1000; ms%=1000
-    return f'{h:02d}:{m:02d}:{s:02d},{ms:03d}'
-
-def caption_chunks(text,max_words=19):
-    sentences=re.split(r'(?<=[.!?])\s+',text.strip())
-    chunks=[]
-    for sent in sentences:
-        words=sent.split()
-        while len(words)>max_words:
-            cut=max_words
-            # Prefer a punctuation boundary near the end.
-            for j in range(max_words-3,max_words+1):
-                if j<len(words) and words[j-1].endswith((',',':',';')): cut=j; break
-            chunks.append(' '.join(words[:cut])); words=words[cut:]
-        if words: chunks.append(' '.join(words))
-    return chunks or [text]
-
-def make_audio(part, slide, text, outdir):
-    raw=outdir/f'slide_{slide:02d}_raw.wav'; final=outdir/f'slide_{slide:02d}.wav'; txt=outdir/f'slide_{slide:02d}.txt'
-    if final.exists(): return final
-    txt.write_text(speech_text(text),encoding='utf-8')
-    # Clear British synthetic voice with conservative pacing. Sentence punctuation
-    # remains in the source, while SoX adds EQ, compression, normalization, and pauses.
-    run(['espeak','-v','en-uk-rp','-s','170','-p','43','-a','170','-f',str(txt),'-w',str(raw)])
-    run(['sox',str(raw),'-r','48000','-c','1',str(final),
-         'vol','0.58','highpass','75','lowpass','10500',
-         'equalizer','180','0.8q','-2','equalizer','2600','1.1q','2.2',
-         'compand','0.02,0.20','-60,-60,-20,-13,-8,-6','0','-90','0.1',
-         'norm','-2.0','pad','0.32','0.65'])
-    raw.unlink(missing_ok=True)
-    return final
-
-def make_segment(img,audio,out,accent,dur):
-    # Slide-based training video. A low frame rate is sufficient for static instructional material.
-    vf=(
-      "scale=1280:720,"
-      f"drawbox=x=0:y=714:w='min(1280,1280*t/{dur:.3f})':h=6:color=0x{accent}@0.88:t=fill,"
-      "format=yuv420p"
+def run(command: list[str], *, capture: bool = False) -> str:
+    result = subprocess.run(
+        command,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
+        stderr=subprocess.PIPE if capture else subprocess.DEVNULL,
     )
-    run(['ffmpeg','-y','-loop','1','-framerate','2','-i',str(img),'-i',str(audio),
-         '-vf',vf,'-t',f'{dur:.3f}','-r','2','-c:v','libx264','-preset','ultrafast','-tune','stillimage','-crf','23',
-         '-c:a','aac','-aac_coder','fast','-b:a','144k','-ar','48000','-shortest',str(out)])
+    return result.stdout
 
-def build_part(part):
-    narr=json.load(open(ROOT/'narration'/f'RCC_Onboarding_Part_{part}_Narration.json'))
-    slide_dir=ROOT/'qa_slides'/f'part{part}'
-    work=WORK/f'part{part}'; shutil.rmtree(work,ignore_errors=True); work.mkdir(parents=True)
-    audiodir=AUDIO/f'part{part}'; audiodir.mkdir(parents=True,exist_ok=True)
-    entries=[]; timeline=0.0; audio_files=[]; slide_specs=[]
-    for item in narr:
-        idx=item['slide']; audio=make_audio(part,idx,item['text'],audiodir); dur=duration(audio)
+
+def require(command: str) -> None:
+    if not shutil.which(command):
+        raise SystemExit(f"Required command not found: {command}")
+
+
+def parse_narration(path: Path) -> list[dict[str, object]]:
+    text = path.read_text(encoding="utf-8")
+    matches = list(re.finditer(r"^## Slide (\d+):\s*(.+)$", text, re.MULTILINE))
+    slides: list[dict[str, object]] = []
+    for index, match in enumerate(matches):
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        body = text[match.end() : end].strip()
+        body = re.sub(r"\s+", " ", body)
+        slides.append({"slide": int(match.group(1)), "title": match.group(2), "text": body})
+    if not slides:
+        raise ValueError(f"No slide narration found in {path}")
+    return slides
+
+
+def speech_text(text: str) -> str:
+    value = (
+        text.replace("→", " leads to ")
+        .replace("·", ", ")
+        .replace("–", "-")
+        .replace("—", " - ")
+        .replace("`", "")
+        .replace("“", "")
+        .replace("”", "")
+        .replace("’", "'")
+    )
+    for pattern, replacement in PRONUNCIATION:
+        value = re.sub(pattern, replacement, value, flags=re.IGNORECASE)
+    # A short, explicit pause between sentences avoids the rushed cadence common
+    # to unedited text-to-speech while retaining natural within-sentence rhythm.
+    value = re.sub(r"(?<=[.!?])\s+", " [[slnc 190]] ", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def duration(path: Path) -> float:
+    value = run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=nw=1:nk=1",
+            str(path),
+        ],
+        capture=True,
+    )
+    return float(value.strip())
+
+
+def srt_time(seconds: float) -> str:
+    milliseconds = int(round(seconds * 1000))
+    hours, milliseconds = divmod(milliseconds, 3_600_000)
+    minutes, milliseconds = divmod(milliseconds, 60_000)
+    secs, milliseconds = divmod(milliseconds, 1000)
+    return f"{hours:02d}:{minutes:02d}:{secs:02d},{milliseconds:03d}"
+
+
+def caption_chunks(text: str, max_words: int = 16) -> list[str]:
+    chunks: list[str] = []
+    for sentence in re.split(r"(?<=[.!?])\s+", text.strip()):
+        words = sentence.split()
+        while len(words) > max_words:
+            cut = max_words
+            for candidate in range(max_words - 4, max_words + 1):
+                if words[candidate - 1].endswith((",", ":", ";")):
+                    cut = candidate
+                    break
+            chunks.append(" ".join(words[:cut]))
+            words = words[cut:]
+        if words:
+            chunks.append(" ".join(words))
+    return chunks
+
+
+def synthesize(text: str, output: Path, voice: str, rate: int) -> None:
+    raw = output.with_suffix(".aiff")
+    run(["say", "-v", voice, "-r", str(rate), "-o", str(raw), speech_text(text)])
+    if raw.stat().st_size < 8192:
+        raw.unlink(missing_ok=True)
+        raise RuntimeError(
+            "macOS speech synthesis returned no audio. Run this build in a "
+            "normal Terminal session (not a restricted sandbox) and try again."
+        )
+    # Speech-focused cleanup followed by broadcast-style loudness normalization.
+    filters = (
+        "highpass=f=75,lowpass=f=10500,"
+        "deesser=i=0.22:m=0.45:f=0.5,"
+        "acompressor=threshold=0.10:ratio=2.2:attack=18:release=180:makeup=1.5,"
+        "loudnorm=I=-16:LRA=7:TP=-1.5,"
+        "apad=pad_dur=0.55"
+    )
+    run(
+        [
+            "ffmpeg",
+            "-y",
+            "-i",
+            str(raw),
+            "-af",
+            filters,
+            "-ar",
+            "48000",
+            "-ac",
+            "1",
+            "-c:a",
+            "pcm_s24le",
+            str(output),
+        ]
+    )
+    raw.unlink()
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def build_part(part: int, voice: str, rate: int, keep_work: bool) -> dict[str, object]:
+    slides = parse_narration(NARRATION / f"RCC_Onboarding_Part_{part}_Narration.md")
+    frame_dir = FRAMES / f"part{part}"
+    expected = [frame_dir / f"slide-{int(item['slide']):02d}.png" for item in slides]
+    missing = [str(path) for path in expected if not path.exists()]
+    if missing:
+        raise SystemExit("Missing committed video frame(s): " + ", ".join(missing))
+
+    work_parent = ROOT / "video-work" if keep_work else None
+    if work_parent:
+        work_parent.mkdir(exist_ok=True)
+        work = work_parent / f"part{part}"
+        shutil.rmtree(work, ignore_errors=True)
+        work.mkdir()
+        cleanup = None
+    else:
+        cleanup = tempfile.TemporaryDirectory(prefix=f"rcc-video-part{part}-")
+        work = Path(cleanup.name)
+
+    audio_files: list[Path] = []
+    slide_durations: list[float] = []
+    caption_entries: list[tuple[float, float, str]] = []
+    timeline = 0.0
+    for item in slides:
+        number = int(item["slide"])
+        audio = work / f"slide-{number:02d}.wav"
+        synthesize(str(item["text"]), audio, voice, rate)
+        seconds = duration(audio)
         audio_files.append(audio)
-        slide_specs.append((slide_dir/f'slide-{idx}.png',dur))
-        chunks=caption_chunks(item['text']); counts=[max(1,len(c.split())) for c in chunks]; total=sum(counts)
-        local=0.0
-        for c,n in zip(chunks,counts):
-            cdur=dur*n/total
-            entries.append((timeline+local,timeline+local+cdur,c))
-            local+=cdur
-        timeline+=dur
-    # Concatenate identical PCM WAV files without re-encoding.
-    alist=work/'audio_concat.txt'
-    alist.write_text('\n'.join(f"file '{a}'" for a in audio_files)+'\n')
-    full_audio=work/f'part{part}_narration.wav'
-    run(['ffmpeg','-y','-f','concat','-safe','0','-i',str(alist),'-c','copy',str(full_audio)])
-    # Build a variable-frame-rate slideshow. Each PNG is one video frame held for
-    # the exact duration of its corresponding narration segment.
-    ilist=work/'images_concat.txt'
-    lines=[]
-    for img,dur in slide_specs:
-        lines.append(f"file '{img}'")
-        lines.append(f'duration {dur:.6f}')
-    lines.append(f"file '{slide_specs[-1][0]}'")
-    ilist.write_text('\n'.join(lines)+'\n')
-    out=VIDEOS/f'RCC_Onboarding_Part_{part}_Video.mp4'
-    lastdur=slide_specs[-1][1]
-    vf=f'fps=1,scale=1280:720:flags=lanczos,tpad=stop_mode=clone:stop_duration={lastdur:.6f},format=yuv420p'
-    run(['ffmpeg','-y','-f','concat','-safe','0','-i',str(ilist),'-i',str(full_audio),
-         '-vf',vf,'-fps_mode','vfr','-c:v','libx264','-preset','veryfast','-tune','stillimage','-crf','20',
-         '-c:a','aac','-aac_coder','fast','-b:a','144k','-ar','48000','-t',f'{timeline:.3f}','-movflags','+faststart',str(out)])
-    srt=CAP/f'RCC_Onboarding_Part_{part}_Captions.srt'
-    with open(srt,'w',encoding='utf-8') as f:
-        for i,(st,en,tx) in enumerate(entries,1):
-            f.write(f'{i}\n{srt_time(st)} --> {srt_time(en)}\n{tx}\n\n')
-    return out,timeline,srt
+        slide_durations.append(seconds)
+        chunks = caption_chunks(str(item["text"]))
+        weights = [max(1, len(chunk.split())) for chunk in chunks]
+        local = 0.0
+        for chunk, weight in zip(chunks, weights):
+            chunk_duration = seconds * weight / sum(weights)
+            caption_entries.append((timeline + local, timeline + local + chunk_duration, chunk))
+            local += chunk_duration
+        timeline += seconds
 
-import sys
-parts=[int(x) for x in sys.argv[1:]] if len(sys.argv)>1 else [1,2,3,4]
-summary=[]
-for p in parts:
-    out,dur,srt=build_part(p); summary.append((p,out,dur,srt)); print(f'Part {p}: {dur/60:.2f} min -> {out}', flush=True)
-# Merge current summaries with any existing entries.
-sp=ROOT/'meta'/'video_summary.json'
-existing=[]
-if sp.exists():
-    try: existing=json.loads(sp.read_text())
-    except Exception: existing=[]
-by={int(x['part']):x for x in existing}
-for p,o,d,srt in summary: by[p]={'part':p,'video':str(o),'duration_seconds':d,'captions':str(srt)}
-sp.write_text(json.dumps([by[k] for k in sorted(by)],indent=2))
+    audio_list = work / "audio.txt"
+    audio_list.write_text("\n".join(f"file '{path}'" for path in audio_files) + "\n")
+    full_audio = work / "narration.wav"
+    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(audio_list), "-c", "copy", str(full_audio)])
+
+    image_list = work / "frames.txt"
+    lines: list[str] = []
+    for frame, seconds in zip(expected, slide_durations):
+        lines.extend((f"file '{frame}'", f"duration {seconds:.6f}"))
+    lines.append(f"file '{expected[-1]}'")
+    image_list.write_text("\n".join(lines) + "\n")
+
+    OUTPUT.mkdir(exist_ok=True)
+    video = OUTPUT / f"RCC_Onboarding_Part_{part}_Video_Enhanced.mp4"
+    run(
+        [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            str(image_list),
+            "-i",
+            str(full_audio),
+            "-vf",
+            "fps=2,scale=1280:720:flags=lanczos,format=yuv420p",
+            "-c:v",
+            "libx264",
+            "-preset",
+            "medium",
+            "-tune",
+            "stillimage",
+            "-crf",
+            "20",
+            "-c:a",
+            "aac",
+            "-af",
+            "pan=stereo|c0=c0|c1=c0",
+            "-ac",
+            "2",
+            "-b:a",
+            "160k",
+            "-ar",
+            "48000",
+            "-disposition:a:0",
+            "default",
+            "-metadata:s:a:0",
+            "language=eng",
+            "-metadata:s:a:0",
+            "title=English narration",
+            "-t",
+            f"{timeline:.3f}",
+            "-movflags",
+            "+faststart",
+            str(video),
+        ]
+    )
+
+    CAPTIONS.mkdir(exist_ok=True)
+    captions = CAPTIONS / f"RCC_Onboarding_Part_{part}_Captions.srt"
+    with captions.open("w", encoding="utf-8") as handle:
+        for index, (start, end, text) in enumerate(caption_entries, 1):
+            handle.write(f"{index}\n{srt_time(start)} --> {srt_time(end)}\n{text}\n\n")
+
+    result = {
+        "part": part,
+        "voice": voice,
+        "locale": "en_GB",
+        "rate_words_per_minute": rate,
+        "slide_count": len(slides),
+        "duration_seconds": round(timeline, 3),
+        "video": str(video.relative_to(ROOT)),
+        "video_sha256": sha256(video),
+        "captions": str(captions.relative_to(ROOT)),
+        "caption_entries": len(caption_entries),
+        "audio_target_lufs": -16,
+        "audio_true_peak_limit_db": -1.5,
+        "audio_channels": 2,
+    }
+    if cleanup:
+        cleanup.cleanup()
+    return result
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("parts", nargs="*", type=int, default=[1, 2, 3, 4])
+    parser.add_argument("--voice", default=VOICE)
+    parser.add_argument("--rate", type=int, default=RATE)
+    parser.add_argument("--keep-work", action="store_true")
+    args = parser.parse_args()
+    require("say")
+    require("ffmpeg")
+    require("ffprobe")
+    if not all(part in {1, 2, 3, 4} for part in args.parts):
+        raise SystemExit("Parts must be selected from 1, 2, 3, and 4")
+
+    existing: dict[int, dict[str, object]] = {}
+    if REPORT.exists():
+        existing = {int(item["part"]): item for item in json.loads(REPORT.read_text())}
+    for part in args.parts:
+        report = build_part(part, args.voice, args.rate, args.keep_work)
+        existing[part] = report
+        print(f"Part {part}: {report['duration_seconds'] / 60:.1f} min -> {report['video']}")
+    REPORT.write_text(json.dumps([existing[key] for key in sorted(existing)], indent=2) + "\n")
+
+
+if __name__ == "__main__":
+    main()

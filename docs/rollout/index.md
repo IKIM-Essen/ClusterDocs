@@ -20,7 +20,10 @@ Access from inside the hospital remains intentionally simple. Informational site
 
 ## For technical users
 
-The site provides bounded terminal checks, VS Code guidance, Slurm acceptance examples, Apptainer guidance and a protected web-application pattern. The [SSH host-identity policy](../policies/ssh-host-identity.md) documents the host-CA architecture, dedicated trust file, endpoint policy and phased migration without publishing private infrastructure credentials.
+The site provides bounded terminal checks, VS Code guidance, Slurm acceptance
+examples, Apptainer guidance and a protected web-application pattern. Current
+RCC connection settings and identity-verification instructions are published
+through the rollout page and trusted institutional channels.
 
 ## Current staging values
 

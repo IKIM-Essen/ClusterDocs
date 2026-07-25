@@ -2,7 +2,7 @@
 
 Most users do not need to choose a special resource-sharing option. Submit work
 to the normal CPU, GPU, short, or interactive partition described in the
-[Slurm reference](../reference/slurm.md), and Slurm will find suitable capacity.
+[Slurm reference](slurm.md), and Slurm will find suitable capacity.
 
 Some compute resources were contributed by individual research groups. RCC
 protects those groups' access while allowing other researchers to use spare

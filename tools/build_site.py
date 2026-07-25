@@ -40,13 +40,11 @@ NAV=[
  ('Reference','Storage and transfer','reference/storage-transfer.md'),
  ('Reference','Software workflows','reference/software-workflows.md'),
  ('Reference','Slurm commands','reference/slurm.md'),
+ ('Reference','How shared compute works','reference/how-shared-compute-works.md'),
  ('Reference','Troubleshooting','reference/troubleshooting.md'),
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
  ('Reference','RCC connection name','connecting/stable-endpoints.md'),
- ('Policies','How shared compute works','policies/slurm-resource-sharing.md'),
- ('Policies','SSH host identity','policies/ssh-host-identity.md'),
- ('Governance','What is changing','rollout/index.md'),
  ('Governance','Safe everyday practice','security/safe-use.md'),
  ('Governance','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Resources','Who we are','team.md'),
@@ -187,6 +185,20 @@ a:hover { color:var(--cyan); }
 .content-card p,.content-card li { max-width:76ch; }
 .content-card li + li { margin-top:.34rem; }
 .content-card img,.content-card video { display:block; max-width:100%; height:auto; border-radius:14px; }
+.course-video-hero { margin:1.25rem 0 3rem; padding:clamp(1.15rem,3vw,2rem); overflow:hidden; border-radius:20px; background:linear-gradient(145deg,var(--navy) 0,var(--navy-2) 72%,#096d86 100%); color:#fff; box-shadow:var(--shadow); }
+.content-card .course-video-hero h2 { margin:.15rem 0 .45rem; padding:0; color:#fff; font-size:clamp(1.7rem,4vw,2.5rem); }
+.content-card .course-video-hero > p { max-width:68ch; margin:.35rem 0 1.25rem; color:rgba(255,255,255,.88); font-size:1rem; line-height:1.55; }
+.content-card .course-video-hero .course-video-kicker { margin:0; color:#8ee7f2; font-size:.76rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
+.content-card .course-video-hero video { width:100%; aspect-ratio:16/9; border:1px solid rgba(255,255,255,.28); border-radius:14px; background:#02131f; box-shadow:0 18px 38px rgba(0,0,0,.28); }
+.course-video-links { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1rem; }
+.content-card .course-video-links a { padding:.5rem .78rem; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:rgba(255,255,255,.1); color:#fff; font-size:.86rem; text-decoration:none; }
+.content-card .course-video-links a:hover { background:#fff; color:var(--navy); }
+.video-course-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1rem 0 2.5rem; }
+.content-card .video-course-card { overflow:hidden; border:1px solid rgba(6,42,70,.12); border-radius:16px; background:#fff; color:var(--navy); box-shadow:0 8px 20px rgba(6,42,70,.08); text-decoration:none; transition:transform .16s ease,box-shadow .16s ease; }
+.content-card .video-course-card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(6,42,70,.14); }
+.content-card .video-course-card img { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:0; }
+.video-course-card span { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.8rem .9rem; }
+.video-course-card small { flex:0 0 auto; color:var(--cyan); font-weight:800; }
 .people-figure { float:right; width:min(42%,340px); margin:0 0 1.5rem 2rem; overflow:hidden; border:1px solid rgba(6,42,70,.1); border-radius:18px; background:#fff; box-shadow:var(--shadow); }
 .people-figure img { width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 58%; border-radius:0; }
 .people-figure figcaption,.research-figure figcaption { padding:.75rem .9rem; color:var(--muted); font-size:.8rem; line-height:1.45; }
@@ -237,6 +249,7 @@ footer p { margin:0; }
   .people-figure { float:none; width:100%; max-width:430px; margin:0 auto 1.5rem; }
   .people-figure img { aspect-ratio:5/4; object-position:center 57%; }
   .path-grid { grid-template-columns:1fr; }
+  .video-course-grid { grid-template-columns:1fr; }
   .path-card { min-height:260px; }
 }
 @media (max-width:480px) {
@@ -274,7 +287,7 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); ap.add_argument('--include-media',action='store_true'); a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
     if a.include_media:
-        cfg=dict(cfg); cfg['media_base_url']='.'
+        cfg=dict(cfg); cfg['media_base_url']='__LOCAL_MEDIA_BASE__'
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
         if bad: raise SystemExit('Production build blocked by unresolved config: '+', '.join(bad))
@@ -282,6 +295,13 @@ def main():
     shutil.rmtree(out,ignore_errors=True); (out/'assets').mkdir(parents=True)
     (out/'assets/site.css').write_text(CSS)
     if (DOCS/'assets').exists(): shutil.copytree(DOCS/'assets',out/'assets',dirs_exist_ok=True)
+    poster_out=out/'assets/video-posters'; poster_out.mkdir(parents=True,exist_ok=True)
+    for part in range(1,5):
+        poster=ROOT/'slides/frames'/f'part{part}'/'slide-01.png'
+        if poster.exists(): shutil.copy2(poster,poster_out/f'part{part}.png')
+    for class_number in range(5,16):
+        poster=ROOT/'slides/frames'/f'class{class_number}'/'slide-01.png'
+        if poster.exists(): shutil.copy2(poster,poster_out/f'class{class_number}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])
     nav_groups=[]
     for group,label,path in NAV:
@@ -292,6 +312,9 @@ def main():
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
         text=substitute(src.read_text(),cfg); content=md(text)
+        if a.include_media:
+            local_media=Path(os.path.relpath(out/'media',target.parent)).as_posix()
+            content=content.replace('__LOCAL_MEDIA_BASE__',local_media)
         def rewrite_local(match):
             attribute=match.group(1); value=match.group(2)
             path,separator,fragment=value.partition('#')

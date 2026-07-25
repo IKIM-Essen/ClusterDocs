@@ -1,4 +1,8 @@
-# RCC SSH host-identity policy
+# Archived draft: RCC SSH host-identity policy
+
+> **Archive status:** Retired from the public ClusterDocs navigation on
+> 25 July 2026 and retained here for possible future planning. This draft is
+> not current user guidance and must be reviewed before reuse or publication.
 
 > **Status:** This page documents the planned SSH host-identity architecture and migration. Until the rollout page says RCC Connect is active, use the currently published RCC SSH configuration. Do not build a CA entry from examples on this page.
 

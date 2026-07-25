@@ -1,5 +1,18 @@
 # Class 11: European and German data protection for biomedical research
 
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 8 min video</p>
+  <h2>Watch the class first</h2>
+  <p>Practical governance for biomedical data, including genomic and imaging research, minimisation, and project responsibilities. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class11.png" src="{{ media_base_url }}/RCC_Onboarding_Class_11_Video_Enhanced.mp4?v=908394e7">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Class_11_Captions.srt">Captions</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Class_11_Video_Narration.md">Read transcript</a>
+  </div>
+</section>
+
 ## Learning outcome
 
 After this class, you should be able to distinguish direct identifiers from sensitive biomedical research data, understand why pseudonymised data remain personal data, and recognise when RCC is an appropriate controlled research environment.
