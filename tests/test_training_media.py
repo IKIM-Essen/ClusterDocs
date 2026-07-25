@@ -44,9 +44,19 @@ class TrainingMediaTests(unittest.TestCase):
             self.assertIn(
                 f"RCC_Onboarding_Part_{part}_Video_Enhanced.mp4", text
             )
+            self.assertIn('class="course-video-hero"', text)
+            self.assertIn('id="watch-first"', text)
+            self.assertIn(f"video-posters/part{part}.png", text)
             self.assertIn(f"RCC_Onboarding_Part_{part}_Captions.srt", text)
             self.assertIn(f"RCC_Onboarding_Part_{part}_Narration.md", text)
             self.assertIn(f"RCC_Onboarding_Part_{part}.pptx", text)
+
+    def test_course_overview_promotes_video_first(self):
+        text = (ROOT / "docs/course/index.md").read_text()
+        self.assertIn("Prefer to learn by video?", text)
+        self.assertEqual(4, text.count('class="video-course-card"'))
+        for part in range(1, 5):
+            self.assertIn(f"video-posters/part{part}.png", text)
 
     def test_build_report_records_natural_voice_and_complete_outputs(self):
         report = json.loads((ROOT / "meta/video-build-report.json").read_text())

@@ -187,6 +187,20 @@ a:hover { color:var(--cyan); }
 .content-card p,.content-card li { max-width:76ch; }
 .content-card li + li { margin-top:.34rem; }
 .content-card img,.content-card video { display:block; max-width:100%; height:auto; border-radius:14px; }
+.course-video-hero { margin:1.25rem 0 3rem; padding:clamp(1.15rem,3vw,2rem); overflow:hidden; border-radius:20px; background:linear-gradient(145deg,var(--navy) 0,var(--navy-2) 72%,#096d86 100%); color:#fff; box-shadow:var(--shadow); }
+.content-card .course-video-hero h2 { margin:.15rem 0 .45rem; padding:0; color:#fff; font-size:clamp(1.7rem,4vw,2.5rem); }
+.content-card .course-video-hero > p { max-width:68ch; margin:.35rem 0 1.25rem; color:rgba(255,255,255,.88); font-size:1rem; line-height:1.55; }
+.content-card .course-video-hero .course-video-kicker { margin:0; color:#8ee7f2; font-size:.76rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
+.content-card .course-video-hero video { width:100%; aspect-ratio:16/9; border:1px solid rgba(255,255,255,.28); border-radius:14px; background:#02131f; box-shadow:0 18px 38px rgba(0,0,0,.28); }
+.course-video-links { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1rem; }
+.content-card .course-video-links a { padding:.5rem .78rem; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:rgba(255,255,255,.1); color:#fff; font-size:.86rem; text-decoration:none; }
+.content-card .course-video-links a:hover { background:#fff; color:var(--navy); }
+.video-course-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1rem 0 2.5rem; }
+.content-card .video-course-card { overflow:hidden; border:1px solid rgba(6,42,70,.12); border-radius:16px; background:#fff; color:var(--navy); box-shadow:0 8px 20px rgba(6,42,70,.08); text-decoration:none; transition:transform .16s ease,box-shadow .16s ease; }
+.content-card .video-course-card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(6,42,70,.14); }
+.content-card .video-course-card img { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:0; }
+.video-course-card span { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.8rem .9rem; }
+.video-course-card small { flex:0 0 auto; color:var(--cyan); font-weight:800; }
 .people-figure { float:right; width:min(42%,340px); margin:0 0 1.5rem 2rem; overflow:hidden; border:1px solid rgba(6,42,70,.1); border-radius:18px; background:#fff; box-shadow:var(--shadow); }
 .people-figure img { width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 58%; border-radius:0; }
 .people-figure figcaption,.research-figure figcaption { padding:.75rem .9rem; color:var(--muted); font-size:.8rem; line-height:1.45; }
@@ -237,6 +251,7 @@ footer p { margin:0; }
   .people-figure { float:none; width:100%; max-width:430px; margin:0 auto 1.5rem; }
   .people-figure img { aspect-ratio:5/4; object-position:center 57%; }
   .path-grid { grid-template-columns:1fr; }
+  .video-course-grid { grid-template-columns:1fr; }
   .path-card { min-height:260px; }
 }
 @media (max-width:480px) {
@@ -282,6 +297,10 @@ def main():
     shutil.rmtree(out,ignore_errors=True); (out/'assets').mkdir(parents=True)
     (out/'assets/site.css').write_text(CSS)
     if (DOCS/'assets').exists(): shutil.copytree(DOCS/'assets',out/'assets',dirs_exist_ok=True)
+    poster_out=out/'assets/video-posters'; poster_out.mkdir(parents=True,exist_ok=True)
+    for part in range(1,5):
+        poster=ROOT/'slides/frames'/f'part{part}'/'slide-01.png'
+        if poster.exists(): shutil.copy2(poster,poster_out/f'part{part}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])
     nav_groups=[]
     for group,label,path in NAV:

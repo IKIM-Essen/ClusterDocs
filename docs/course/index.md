@@ -2,6 +2,19 @@
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
+## Prefer to learn by video?
+
+Start with one of the complete video lessons below. Each class page opens with
+the player; the written material remains underneath for commands, exercises,
+and detailed reference.
+
+<div class="video-course-grid">
+  <a class="video-course-card" href="class-01-safe-access.md#watch-first"><img src="../assets/video-posters/part1.png" alt="Class 1 video title: Your first day on the RCC cluster"><span><strong>Class 1 · Safe access</strong><small>8 min video</small></span></a>
+  <a class="video-course-card" href="class-02-workflows.md#watch-first"><img src="../assets/video-posters/part2.png" alt="Class 2 video title: Reproducible scientific workflows"><span><strong>Class 2 · Workflows</strong><small>9 min video</small></span></a>
+  <a class="video-course-card" href="class-03-performance.md#watch-first"><img src="../assets/video-posters/part3.png" alt="Class 3 video title: Performance and efficient I/O"><span><strong>Class 3 · Performance</strong><small>11 min video</small></span></a>
+  <a class="video-course-card" href="class-04-containers.md#watch-first"><img src="../assets/video-posters/part4.png" alt="Class 4 video title: Containers with Apptainer"><span><strong>Class 4 · Containers</strong><small>9 min video</small></span></a>
+</div>
+
 | Class | Main outcome | Typical time | Gate |
 |---|---|---:|---|
 | 1 | Connect safely using SSH and VS Code | 45-60 min | Local tools and one bounded SSH test |

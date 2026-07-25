@@ -1,14 +1,18 @@
 # Class 3: performance and efficient I/O
 
-## Watch this class
-
-<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4">
-  Your browser does not support embedded video.
-</video>
-
-[Captions](../../downloads/captions/RCC_Onboarding_Part_3_Captions.srt) ·
-[slides](../../downloads/slides/RCC_Onboarding_Part_3.pptx) ·
-[narration transcript](../../downloads/narration/RCC_Onboarding_Part_3_Narration.md)
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 11 min video</p>
+  <h2>Watch the class first</h2>
+  <p>CPU, GPU, memory, storage, and efficient I/O. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part3.png" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Part_3_Captions.srt">Captions</a>
+    <a href="../../downloads/slides/RCC_Onboarding_Part_3.pptx">Download slides</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Part_3_Narration.md">Read transcript</a>
+  </div>
+</section>
 
 ## Learning objectives
 
