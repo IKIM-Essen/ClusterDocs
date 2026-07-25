@@ -52,7 +52,9 @@ RCC services and contain no credentials or biomedical data.
 
 This is a publication candidate, not a claim that every local command has already been validated against the production RCC configuration. Before publication, administrators must complete the local values and run the tests in `ADMIN_CHECKLIST.md`.
 
-Run `python tools/rollout_readiness.py` for a machine-readable exit status and
+Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
+and novice review can begin. Run `python3 tools/rollout_readiness.py` for the
+stricter production exit status and
 an itemized list of known launch blockers. A normal content validation pass is
 necessary but does not mean the site is production-ready.
 

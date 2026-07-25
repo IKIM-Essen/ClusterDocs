@@ -91,5 +91,5 @@ Complete and test these items before publishing the curriculum.
 - [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.
 - [ ] Review every caption file against the final audio and test in-player captions in supported browsers.
 - [ ] Regenerate and compare the Part 1–4 PDF, DOCX, PPTX, frames, narration, and captions after final canonical-source edits.
-- [ ] Decide whether the unlisted rollout page and RCC Connect wording describe the service users will actually receive; revise or archive them before launch.
+- [x] Archive the speculative rollout page and RCC Connect wording until an operationally approved user journey exists.
 - [ ] Run `python tools/rollout_readiness.py` and resolve every reported blocker.

@@ -1,7 +1,7 @@
 # Which RCC connection name should I use?
 
-> Use the RCC connection settings supplied through the rollout page or another
-> trusted institutional channel. In these instructions, the connection name is
+> Use the current RCC connection settings supplied through a trusted
+> institutional channel. In these instructions, the connection name is
 > `{{ ssh_alias }}`. Do not copy a server address from an old screenshot or a
 > colleague's saved configuration.
 

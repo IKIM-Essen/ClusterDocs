@@ -78,8 +78,8 @@ tmux attach -t workflow
 ```
 
 Do not rely on a historic Snakemake version or profile name from a copied guide.
-Check the rollout page for the supported version and profile before updating a
-production workflow.
+Check the current RCC software guidance or ask support for the supported
+version and profile before updating a production workflow.
 
 ## Apptainer execution model
 

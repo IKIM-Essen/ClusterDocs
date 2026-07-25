@@ -71,9 +71,9 @@ normally stored under `C:\Users\<username>\.ssh\`.
 
 ## Configure the approved RCC target
 
-Use the host block supplied through the RCC rollout page or another trusted institutional channel. During the host-identity migration, RCC will distribute **RCC Connect**: a portable kit with a dedicated RCC configuration, host-CA trust file and connection test. It does not modify or delete entries for unrelated services in the ordinary `known_hosts` file.
-
-Until the rollout page says RCC Connect is active, continue using the currently approved configuration. The public alias used in this course is `{{ ssh_alias }}`. A safe client block has this shape:
+Use the current host block supplied through a trusted institutional channel.
+The public alias used in this course is `{{ ssh_alias }}`. A safe client block
+has this shape:
 
 ```sshconfig
 Host {{ ssh_alias }}
@@ -84,7 +84,9 @@ Host {{ ssh_alias }}
   ForwardAgent no
 ```
 
-Do not copy an old hostname from a colleague, disable host-key checking or enable agent forwarding merely to make a connection work. Verify the published RCC host-CA fingerprint through an independent institutional channel before migration.
+Do not copy an old hostname from a colleague, disable host-key checking or
+enable agent forwarding merely to make a connection work. Verify the published
+RCC host identity through an independent institutional channel.
 
 Inspect the effective configuration without connecting:
 
@@ -102,16 +104,18 @@ ssh -v {{ ssh_alias }}
 Remove key material, usernames, local paths, and tokens before sharing a debug
 log with support.
 
-During or after migration, do not approve an unexpected SSH identity warning and do not delete host records merely to make the warning disappear. Close the client, run the RCC connection test and use its repair action. Report the generated support code if repair fails.
+Do not approve an unexpected SSH identity warning and do not delete host
+records merely to make the warning disappear. Close the client, compare the
+configuration and host identity with the current RCC instructions, and contact
+RCC support if they do not match.
 
 ## Use VS Code Remote SSH as the main working interface
 
 1. Install Visual Studio Code and Microsoft's **Remote - SSH** extension.
 2. Confirm terminal SSH works first.
-3. If RCC Connect is active, run its test and repair action before opening VS Code. The kit selects its dedicated SSH configuration and, where necessary, its maintained SSH executable.
-4. Open **Remote Explorer** and select the approved RCC alias from the SSH targets.
-5. Open only the project or source directory you need.
-6. Keep data, environment, cache, and generated-result directories out of
+3. Open **Remote Explorer** and select the approved RCC alias from the SSH targets.
+4. Open only the project or source directory you need.
+5. Keep data, environment, cache, and generated-result directories out of
    workspace-wide search.
 
 Use VS Code for the work it does well:

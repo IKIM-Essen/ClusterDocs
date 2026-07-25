@@ -286,12 +286,30 @@ def relroot(out):
 
 def srt_to_vtt(text):
     """Convert committed SRT captions to browser-native WebVTT."""
+    text=normalize_caption_text(text)
     timestamps=re.sub(
         r'(?m)(\d{2}:\d{2}:\d{2}),(\d{3})',
         r'\1.\2',
         text,
     )
     return 'WEBVTT\n\n'+timestamps.lstrip()
+
+def normalize_caption_text(text):
+    """Turn speech-oriented spellings into readable technical captions."""
+    replacements=(
+        (r'\bS S H\b', 'SSH'),
+        (r'\bS I F\b', 'SIF'),
+        (r'\bN V\b', '--nv'),
+        (r'\bN v i d i a s m i\b', 'nvidia-smi'),
+        (r'\binput-output\b', 'I/O'),
+        (r'\bInput-output\b', 'I/O'),
+        (r'\bslash data\b', '/data'),
+        (r'\bslash results\b', '/results'),
+        (r'\bslash tmp\b', '/tmp'),
+    )
+    for pattern,replacement in replacements:
+        text=re.sub(pattern,replacement,text)
+    return text
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); ap.add_argument('--include-media',action='store_true'); a=ap.parse_args()
@@ -364,12 +382,21 @@ def main():
                 root_dir=ROOT/'examples',
                 base_dir='account-setup',
             )
-    for name in ['captions','narration','pdf','slides']:
+    for name in ['captions','narration']:
         if (ROOT/name).exists(): shutil.copytree(ROOT/name,out/'downloads'/name)
+    slide_out=out/'downloads/slides'; slide_out.mkdir(parents=True,exist_ok=True)
+    for filename in (
+        'RCC_Class_7_Interactive_Large_Data.pptx',
+        'RCC_Class_9_Shiny_Jupyter_Project_Apps.pptx',
+    ):
+        source=ROOT/'slides'/filename
+        if source.exists(): shutil.copy2(source,slide_out/filename)
     caption_out=out/'downloads/captions'
     if caption_out.exists():
         for srt in caption_out.glob('*.srt'):
-            srt.with_suffix('.vtt').write_text(srt_to_vtt(srt.read_text()))
+            normalized=normalize_caption_text(srt.read_text())
+            srt.write_text(normalized)
+            srt.with_suffix('.vtt').write_text(srt_to_vtt(normalized))
     if a.include_media and (ROOT/'videos-enhanced').exists():
         shutil.copytree(ROOT/'videos-enhanced',out/'media',dirs_exist_ok=True)
     print(out)

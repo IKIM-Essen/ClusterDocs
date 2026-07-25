@@ -21,9 +21,9 @@ Security should support research rather than make ordinary work impossible. The 
 ## Endpoint trust
 
 - A personally controlled endpoint is suitable for normal RCC SSH, VS Code and file-transfer workflows.
-- A restricted institutionally managed endpoint should use the portable RCC Connect kit and may need repair after local policy changes.
+- A restricted institutionally managed endpoint must use the current RCC-approved connection method and may need support after local policy changes.
 - An endpoint administered by an untrusted or actively hostile party is not suitable for sensitive RCC work, even when SSH encryption succeeds. Use an RCC-controlled workstation, virtual desktop, terminal or another trusted endpoint.
-- Never approve an unexpected RCC server-identity warning. Run RCC Connect or contact RCC support.
+- Never approve an unexpected RCC server-identity warning. Stop and contact RCC support.
 
 ## Cluster availability
 

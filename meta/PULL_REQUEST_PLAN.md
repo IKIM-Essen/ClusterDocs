@@ -4,11 +4,16 @@
 
 Develop the new curriculum in a separate `clusterdocs-ng` staging repository. Do not put public training material into the RCC infrastructure repository. The RCC repository remains authoritative for operational policy and tested examples; ClusterDocs NG imports reviewed, learner-safe copies with a source release reference.
 
-After novice testing and rollout approval, merge the Markdown, exercises, tests and build workflow into the existing ClusterDocs repository. Publish large videos as institutional media or release assets. Archive the NG repository read-only after promotion.
+After expert and novice testing plus production approval, merge the Markdown,
+exercises, tests, and build workflow into the existing ClusterDocs repository.
+Publish large videos as institutional media or release assets. Archive the NG
+repository read-only after promotion.
 
 ## Pull request sequence
 
-1. **Course shell and publication boundary**: eleven-class navigation, staging build, public-information linter and rollout page.
+1. **Course shell and publication boundary**: fifteen-class navigation,
+   staging build, public-information linter, and current institutional
+   connection guidance.
 2. **Class 1**: Windows/macOS SSH and VS Code gates, one bounded credential test, web-transfer guidance.
 3. **Classes 2-4**: reproducible workflows, performance/I/O and Apptainer.
 4. **Class 5**: learner-safe Slurm Bash, Snakemake and Apptainer acceptance patterns.

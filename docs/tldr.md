@@ -241,5 +241,5 @@ entire unrestricted logs.
 - Analysing data: [follow the data-analysis path](paths/data-analysis.md).
 - Building software or services: [follow the development path](paths/software-development.md).
 - Looking up commands: [open the day-to-day reference](reference/index.md).
-- Preparing for the transition: [read what is changing](rollout/index.md).
+- Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
 - Need a person: [meet the RCC team and find the contact route](team.md).

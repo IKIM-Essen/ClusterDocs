@@ -1,4 +1,4 @@
-# Training videos, slides, and narration
+# Training videos, captions, and narration
 
 All fifteen numbered classes include slide-based videos with natural
 British-English narration. Speech is paced for technical learning, mastered to
@@ -11,7 +11,6 @@ class so learners can watch them in context.
 <video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_1_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_1_Captions.srt) ·
-[slides](../downloads/slides/RCC_Onboarding_Part_1.pptx) ·
 [narration transcript](../downloads/narration/RCC_Onboarding_Part_1_Narration.md)
 
 ## Class 2: reproducible scientific workflows
@@ -19,7 +18,6 @@ class so learners can watch them in context.
 <video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_2_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_2_Captions.srt) ·
-[slides](../downloads/slides/RCC_Onboarding_Part_2.pptx) ·
 [narration transcript](../downloads/narration/RCC_Onboarding_Part_2_Narration.md)
 
 ## Class 3: performance and efficient I/O
@@ -27,7 +25,6 @@ class so learners can watch them in context.
 <video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_3_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_3_Captions.srt) ·
-[slides](../downloads/slides/RCC_Onboarding_Part_3.pptx) ·
 [narration transcript](../downloads/narration/RCC_Onboarding_Part_3_Narration.md)
 
 ## Class 4: containers with Apptainer
@@ -35,7 +32,6 @@ class so learners can watch them in context.
 <video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_4_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_4_Captions.srt) ·
-[slides](../downloads/slides/RCC_Onboarding_Part_4.pptx) ·
 [narration transcript](../downloads/narration/RCC_Onboarding_Part_4_Narration.md)
 
 ## Classes 5–15
@@ -58,6 +54,11 @@ captions and transcripts immediately below each player:
 The original [Class 7 large-data slide deck](../downloads/slides/RCC_Class_7_Interactive_Large_Data.pptx)
 and [Class 9 Shiny slide deck](../downloads/slides/RCC_Class_9_Shiny_Jupyter_Project_Apps.pptx)
 remain available as instructor resources.
+
+The older Part 1–4 DOCX, PDF, and PowerPoint exports are withheld from this
+review candidate because they are not synchronized with the current web
+lessons. Review the class pages, videos, captions, and transcripts as the
+candidate learning materials.
 
 ## Rebuilding the videos
 

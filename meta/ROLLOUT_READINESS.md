@@ -1,95 +1,67 @@
-# ClusterDocs NG rollout-readiness review
+# ClusterDocs NG production-candidate status
 
-Review date: 25 July 2026  
-Reviewed branch baseline: `clusterdocs-ng` at `9d6724b`
+Review date: 25 July 2026
 
-## Executive assessment
+## Current decision
 
-The documentation is structurally mature and suitable for a controlled pilot,
-but it is **not ready for public production rollout**. The content, examples,
-navigation, safety boundaries, and internal link validation are largely
-complete. The remaining blockers are mostly institutional decisions,
-production delivery, and human acceptance—not missing course chapters.
+ClusterDocs NG is **ready to begin structured expert and novice review**. It is
+not yet approved for public production. The automated candidate gate now keeps
+those two decisions separate: human review can start without weakening the
+fail-closed production gate.
 
-In practical terms, the project is one formal administrator/novice acceptance
-cycle plus media publication and deployment setup away from rollout. If the
-production endpoints and owners are already decided, a pilot can follow soon
-after those checks. If those decisions are still open, they—not documentation
-writing—control the schedule.
+## Completed in this round
 
-## Launch blockers
+- Archived the speculative rollout page and removed “RCC Connect” and rollout
+  language from public instructions. Users are directed to the current
+  institutional RCC configuration and support route.
+- Added expert, novice, and all-15-video review guides with task-based checks,
+  severity definitions, and media approval criteria.
+- Added a `--manual-review` readiness gate. It verifies that review guides are
+  present, speculative rollout wording is absent, rootless Apptainer is in the
+  canonical source, and unsynchronized office exports are not public.
+- Normalized speech-oriented caption spellings into readable technical text in
+  built SRT and WebVTT files, including `SSH`, `SIF`, `--nv`, `/data`, and `I/O`.
+- Withheld stale Part 1–4 DOCX, PDF, and PowerPoint derivatives from generated
+  downloads. Their source files are preserved, but reviewers will assess the
+  current class pages, videos, captions, and transcripts.
+- Removed unused rollout-only production placeholders, reducing the unresolved
+  configuration to values the published site actually needs.
 
-1. **Production configuration is unresolved.** `config/public.yml` still marks
-   the site as staging and contains placeholders for the site URLs, rollout
-   date, support contact, host-CA fingerprint, transfer service, and media URL.
-   The production builder correctly refuses to publish it.
-2. **The videos are not published.** The 15 rendered MP4s are deliberately
-   excluded from Git; the configured media URL is a placeholder. A production
-   HTTPS media origin must host the exact manifest versions and support browser
-   byte-range playback.
-3. **Video approval is automated only.** Audio, codec, captions, hashes, and
-   frames have automated QA, but the manifest records no final human approval.
-   Every video still needs an accuracy, pronunciation, pacing, visual, and
-   sensitive-content review—especially the generated Classes 5–15.
-4. **Operational instructions are not signed off.** The administrator checklist
-   is incomplete for SSH, VS Code, transfer, storage, Slurm, software,
-   node-local scratch, GPU, Apptainer, lab workflows, and supported versions.
-5. **Privacy and domain review are outstanding.** Biomedical-data guidance,
-   sharing rules, genomic/imaging scenarios, statistics, and example disclaimers
-   need the named institutional and domain-owner approvals listed in the
-   checklist.
-6. **There is no production deployment workflow.** CI validates and uploads a
-   preview artifact, but does not deploy to a reviewed production target with
-   TLS, ownership, monitoring, or rollback.
-7. **Rollout messaging needs one decision.** The rollout page is unlisted but
-   still linked contextually, and several pages mention RCC Connect. Confirm
-   that this is the user journey being launched; otherwise revise or archive
-   that wording before publication.
-8. **Rendered Part 1–4 artifacts need a final synchronization pass.** The
-   canonical Part 4 source now includes the rootless execution model, but its
-   PDF, DOCX, and PPTX derivatives must be regenerated and compared before
-   release. Treat the same source-to-artifact check as required for Parts 1–3.
+## Production blockers that remain
 
-## Important issues fixed by this review
+1. Set the production site URL, support contact, transfer-service URL, and
+   media origin, then change `site_status` only after the other gates pass.
+2. Publish the 15 exact video assets at the configured HTTPS origin and test
+   playback, byte-range requests, captions, and a clean client.
+3. Complete and record human video approval for all 15 classes.
+4. Complete the institutional administrator checklist: operational endpoints,
+   supported versions, storage and Slurm behavior, privacy/domain approval,
+   accessibility, ownership, monitoring, and rollback.
+5. Add and review a production deployment workflow. Current CI validates and
+   uploads a preview artifact but does not deploy.
 
-- Added browser-native WebVTT caption tracks to every class video; downloadable
-  SRT captions remain available.
-- Made `site_status: staging` a production-build blocker rather than a cosmetic
-  banner value.
-- Added `tools/rollout_readiness.py`, which fails closed while known launch
-  blockers remain.
-- Expanded the administrator checklist with media hosting, human review,
-  browser caption testing, deployment, and rollout-message decisions.
-- Corrected stale README statements about which classes have media sources.
+## Start manual review
 
-## Non-blocking follow-up
-
-- Run an online external-link check immediately before launch; CI currently
-  validates internal links only. During this review, the UME privacy, Coscine,
-  remote-console, and secure-tunnel links returned HTTP 200. EUR-Lex, EDPB, and the German
-  federal-law pages timed out from the review environment and still require a
-  clean-client check; they were not shown to be broken.
-- Test current Chrome, Firefox, Safari, Edge, mobile layout, keyboard navigation,
-  and a screen reader.
-- Complete a novice biomedical-researcher walkthrough and edit any remaining
-  operational language that assumes cluster expertise.
-- Decide whether the externally hosted UME logo should be copied into the site
-  to avoid a runtime dependency on another web origin.
-- Replace the hard-coded historical output path in
-  `build/build_new_slides.js` if that legacy regeneration helper is retained.
-- Publish an update date, documentation owner, supported-version matrix, and
-  review cadence.
-
-## Release gate
-
-Run:
+Use `meta/EXPERT_REVIEW_GUIDE.md`, `meta/NOVICE_REVIEW_GUIDE.md`, and
+`meta/VIDEO_REVIEW_GUIDE.md`. Build the exact candidate and verify the gate:
 
 ```bash
-python tools/validate_repo.py
-python tools/build_site.py --production --output site-production
-python tools/rollout_readiness.py
+python3 tools/validate_repo.py
+python3 tools/build_site.py --output site-review --include-media
+python3 tools/rollout_readiness.py --manual-review
 ```
 
-Roll out only when all three commands pass, the production media URLs have been
-tested from a clean client, and the responsible owners have signed the
-administrator checklist.
+The final command must report `READY_FOR_EXPERT_AND_NOVICE_REVIEW`.
+
+## Production release gate
+
+After review findings and institutional values are resolved, run:
+
+```bash
+python3 tools/validate_repo.py
+python3 tools/build_site.py --production --output site-production
+python3 tools/rollout_readiness.py
+```
+
+All three commands must pass. A production build is expected to fail while the
+candidate remains explicitly configured as staging.
