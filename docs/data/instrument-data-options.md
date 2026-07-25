@@ -11,10 +11,26 @@ and the current [storage and transfer reference](../reference/storage-transfer.m
 3. Is the source Windows, macOS, Linux, Ardia, or a vendor appliance?
 4. Is the transfer one-time or recurring?
 5. Does the data contain primary identifying fields?
-6. Is RCC the approved destination?
+6. Which approved RCC project is the destination?
 
 RCC accepts only data covered by the applicable project approval and RCC data
 policy. Primary identifying fields are not permitted.
+
+The destination must be the named project area—not `/home/<user>` or another
+personal directory. Project storage keeps ownership, membership, retention,
+and eventual Coscine archiving connected to the project. Home storage is not a
+governed instrument-data landing area and is not designed for large recurring
+datasets or many-small-file ingestion.
+
+The lifecycle continues after ingestion:
+
+```text
+instrument -> RCC project -> job-local analysis -> RCC project results
+           -> verified Coscine archive -> recorded RCC disposition
+```
+
+See [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md)
+and the [planned RCC project to Coscine flow](rcc-project-to-coscine.md).
 
 ## Browser or managed portal
 

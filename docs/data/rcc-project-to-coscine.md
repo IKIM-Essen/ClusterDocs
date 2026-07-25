@@ -11,7 +11,11 @@ rules, and operational ownership are available.
 ## Intended flow
 
 ```text
-RCC project owner proposes archive set
+instrument or facility produces authoritative data
+  -> approved RCC project receives and verifies the data
+  -> job-local workspace supports active analysis
+  -> validated results return to the RCC project
+  -> RCC project owner proposes a frozen archive set
   -> governance and destination eligibility reviewed
   -> files frozen; metadata, manifest, and checksums prepared
   -> Coscine project and suitable resource confirmed
@@ -34,6 +38,10 @@ The project owner supplies:
 - proposed Coscine project and resource type;
 - required metadata profile and intended users; and
 - any publication, funder, consent, contract, or repository obligations.
+
+The source must be the approved RCC project area. Do not use a user's home
+directory as an ingestion target, archive staging area, or substitute project
+boundary.
 
 Do not include credentials, direct identifiers, re-identification keys, or
 research data in the request.

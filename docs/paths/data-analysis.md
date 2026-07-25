@@ -14,7 +14,7 @@ result pipeline.
 | [Class 11](../course/class-11-biomedical-data-privacy.md) | Biomedical-data governance | Confirm the project and data are suitable for RCC |
 | [Class 12](../course/class-12-efficient-io.md) | Local staging and safe publication | Keep active I/O off shared storage when measurement supports it |
 | [Class 14](../course/class-14-wet-lab-data-workflows.md) | Wet-lab instrument handoff | Preserve authoritative acquisition data and verify transfer before analysis |
-| [Class 15](../course/class-15-data-lifecycle.md) | Research data lifecycle | Plan retention, archiving, reuse, and defensible cleanup |
+| [Class 15](../course/class-15-data-lifecycle.md) | Instrument-to-Coscine data lifecycle | Keep data in governed projects, stage analysis correctly, and archive an approved set |
 
 ## 2. Choose your analysis environment
 

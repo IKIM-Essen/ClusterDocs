@@ -27,6 +27,8 @@ After this course, you should be able to:
 - verify a transfer before deleting the source;
 - explain why analysis should not run on an instrument-control computer;
 - identify which data may be placed on RCC;
+- place instrument data in an approved RCC project rather than a user's home
+  directory;
 - recognize and migrate documented legacy Windows and macOS storage paths; and
 - prepare a clean handoff to bioinformatics or image-analysis staff.
 
@@ -66,15 +68,70 @@ plan experiment
     -> acquire data
     -> close and complete the run
     -> preserve the authoritative original
-    -> transfer to approved durable storage
+    -> transfer to an approved RCC project
     -> verify file count, size, and checksums
     -> register run and sample metadata
     -> analyse through Slurm or a supported service
-    -> publish validated results
-    -> remove temporary copies according to policy
+    -> return validated results to the RCC project
+    -> select and document the retained archive set
+    -> transfer the approved archive set to Coscine
+    -> verify archive acceptance
+    -> remove temporary or superseded RCC copies according to policy
 ```
 
 At every transition, somebody must know who owns the next step.
+
+This is the target lifecycle for data using the planned RCC-to-Coscine archive
+service. Coscine eligibility and the transfer route must still be confirmed for
+the specific project before real data moves.
+
+### The RCC landing point is a project, not a home directory
+
+Instrument data must land in the approved RCC project area. A user's home
+directory is for personal configuration, small source files, and individual
+working material—not authoritative research data or shared instrument output.
+
+This separation matters for governance and legal compliance:
+
+- a project connects the data to an approved purpose, accountable owner, and
+  project-specific governance;
+- project membership provides a managed, attributable access boundary instead
+  of making one person's account the de facto owner;
+- team members can continue the work when a user changes role or leaves;
+- retention, access review, archival, legal hold, and deletion decisions can be
+  applied to the project record; and
+- it reduces uncontrolled personal copies whose purpose, access, and deletion
+  status cannot be demonstrated reliably.
+
+It also matters operationally and for performance:
+
+- home capacity and service behavior are intended for personal working files,
+  not large or recurring instrument datasets;
+- large transfers and many-small-file trees can consume home quota and create
+  metadata load that affects unrelated interactive work;
+- scheduled workflows need a stable team-owned input and output location; and
+- temporary high-I/O analysis belongs on job-local storage, with validated
+  results copied back to the project—not written intensively to either home or
+  shared project storage.
+
+Use this pattern:
+
+```text
+instrument or facility storage
+    -> approved RCC project/incoming
+    -> job-local analysis workspace
+    -> approved RCC project/results
+    -> verified Coscine archive set
+```
+
+Do not use:
+
+```text
+instrument -> /home/<user> -> analysis -> forgotten personal copy
+```
+
+Continue with [Class 15: manage the research data lifecycle](class-15-data-lifecycle.md)
+for selection, retention, Coscine archival, and RCC cleanup.
 
 ## 3. Before starting a run
 

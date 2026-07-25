@@ -1,8 +1,10 @@
 # Class 15: manage the research data lifecycle
 
-Research data needs a plan before it needs an archive. This class connects the
-decisions made during acquisition and analysis with retention, reuse,
-publication, archiving, and defensible deletion.
+Research data needs a plan before an instrument creates the first file. This
+class follows data from instrument acquisition into an approved RCC project,
+through analysis and validation, and into a verified Coscine archive set. It
+connects every technical copy to ownership, access, retention, reuse, and
+defensible deletion decisions.
 
 It is for researchers, project owners, data stewards, laboratory staff, and
 technical staff who need to decide what happens to data when active RCC work
@@ -13,6 +15,8 @@ slows down or a project ends.
 After this class, you should be able to:
 
 - identify the lifecycle stage of a dataset;
+- explain why instrument and research data belongs to an approved project and
+  not a user's home directory;
 - distinguish authoritative data, reproducible intermediates, durable results,
   records, and disposable temporary files;
 - assign an owner, retention basis, access model, and review date;
@@ -26,12 +30,13 @@ After this class, you should be able to:
 
 ```text
 plan
-  -> create or acquire
-  -> organise and document
-  -> analyse and validate
-  -> share or publish
-  -> retain, archive, or dispose
-  -> review
+  -> instrument creates or acquires data
+  -> approved RCC project receives and verifies it
+  -> job-local workspace supports active analysis
+  -> RCC project receives validated results and records
+  -> project owner selects a documented archive set
+  -> Coscine receives and verifies the approved archive set
+  -> RCC copies are retained or removed by recorded decision
 ```
 
 The arrows are not a one-way conveyor belt. Published data may be reused and
@@ -48,6 +53,11 @@ At every stage, record:
 - the metadata and provenance needed to interpret it;
 - the retention period or review date; and
 - the event that permits archival or deletion.
+
+For this course, Coscine is the planned endpoint for an eligible retained
+archive set. It is not the destination for every temporary file, failed run, or
+unreviewed project directory, and it is not available until the project and
+transfer route have been approved.
 
 ## 2. Classify before moving
 
@@ -71,6 +81,51 @@ RCC project storage supports active, governed computation and durable project
 results. Job-local storage supports temporary high-I/O work. A publication
 repository supports a released dataset. An archive supports retained data that
 is no longer actively changing.
+
+### Why project data must not live in a user's home directory
+
+A home directory is attached to an individual account. It is suitable for
+personal configuration, small source files, and limited working material. It
+must not become the authoritative landing area for instrument output, shared
+research input, or durable results.
+
+From a governance and legal-compliance perspective, approved project storage:
+
+- ties processing to the project's documented purpose, responsible owner, and
+  applicable approvals;
+- applies project membership as the access boundary;
+- supports reviewable stewardship when staff, students, or collaborators
+  change;
+- gives retention, archival, legal-hold, and deletion decisions a project
+  context; and
+- avoids relying on an individual's account to demonstrate who controls the
+  data and why it is retained.
+
+This does not make every project directory legally suitable for every dataset.
+Consent, data-protection classification, contracts, funder rules, and other
+project-specific requirements still decide whether RCC and Coscine are
+permitted destinations.
+
+From a performance and operational perspective:
+
+- large instrument datasets and recurring ingestion can exhaust personal
+  quotas and create excessive filesystem metadata work;
+- team workflows need stable paths that do not depend on one user account;
+- durable shared storage should hold inputs and validated outputs, not the
+  random I/O of an active computation; and
+- high-I/O intermediates should be staged to job-local storage and removed
+  after required results return to the project.
+
+The intended placement is therefore:
+
+| Lifecycle point | Storage role |
+|---|---|
+| Instrument acquisition | Instrument or approved facility storage until the run is complete |
+| RCC ingestion | Named approved project area, with manifest and transfer verification |
+| Active computation | Job-local storage for temporary high-I/O work |
+| Durable analysis record | RCC project inputs, validated outputs, code, metadata, and provenance |
+| Retained end state | Verified, approved Coscine archive set |
+| Personal setup | Home directory only for configuration, small source files, and non-authoritative working material |
 
 An archive is not:
 
@@ -118,7 +173,8 @@ data and metadata, while others represent or retain metadata about data held
 elsewhere. Confirm the selected resource type, allocation, protection level,
 retention period, and institutional approval before transfer.
 
-Coscine may be an option when a completed or stable research dataset needs:
+Coscine is the planned final lifecycle point for an eligible completed or
+stable research dataset that needs:
 
 - an accountable project and membership model;
 - descriptive metadata for discovery and reuse;
@@ -131,7 +187,8 @@ rules, export controls, and repository requirements still apply. Complete
 [Class 11: biomedical data privacy](class-11-biomedical-data-privacy.md) and
 obtain the project-specific approvals before moving governed data.
 
-The RCC integration is **planned, not yet a live self-service service**. Follow
+The RCC integration is **planned, not yet a live self-service service**. Do not
+stage the archive through a home directory. Follow
 the [planned RCC project to Coscine archive flow](../data/rcc-project-to-coscine.md)
 and wait for the RCC team to confirm the supported transfer route.
 
@@ -177,25 +234,26 @@ Using synthetic or non-sensitive files, prepare a lifecycle decision for one
 small dataset:
 
 1. classify raw data, curated inputs, intermediates, results, and records;
-2. name the authoritative copy and accountable owner;
-3. state the governance basis and retention or review date;
-4. select the files for an archive set;
-5. create a manifest and checksums;
-6. decide whether Coscine, another repository, continued RCC retention, or
-   deletion is appropriate;
-7. if choosing Coscine, walk through the planned flow without transferring
-   real data; and
-8. write the acceptance evidence required before any RCC cleanup.
+2. trace the dataset from an instrument into its named RCC project;
+3. explain why the home directory is not an acceptable landing point;
+4. name the authoritative copy and accountable owner;
+5. state the governance basis and retention or review date;
+6. separate job-local intermediates from durable project records;
+7. create a manifest and checksums for the Coscine archive set;
+8. walk through the planned Coscine flow without transferring real data; and
+9. write the acceptance evidence required before any RCC cleanup.
 
 ## Take-home rule
 
-> Archive a deliberate, documented dataset—not an unexplained directory.
-> Verify the destination and record acceptance before deleting any source.
+> Move instrument data into a governed project, not a personal home directory.
+> Archive a deliberate, documented set in Coscine, verify acceptance, and only
+> then apply the recorded RCC retention or deletion decision.
 
 ## Completion gate
 
 Produce a synthetic lifecycle and archive plan that identifies the data
 classes, authoritative copy, owner, governance basis, retention decision,
 metadata, verification evidence, destination acceptance, and permitted RCC
-cleanup action. If Coscine is selected, the plan must state that the RCC flow is
-planned and requires service confirmation.
+cleanup action. The plan must trace instrument data through project storage and
+job-local analysis to Coscine, explain why home storage is excluded, and state
+that the RCC-to-Coscine flow is planned and requires service confirmation.

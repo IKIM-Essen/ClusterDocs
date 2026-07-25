@@ -24,6 +24,8 @@ class WetLabCourseTests(unittest.TestCase):
             "verify before deleting",
             "primary identifying",
             "completion gate",
+            "project, not a home directory",
+            "verified coscine archive set",
         ]:
             self.assertIn(phrase, page)
 

@@ -21,7 +21,10 @@ class DataLifecycleCourseTests(unittest.TestCase):
             "planned, not yet a live self-service service",
             "authoritative copy",
             "completion gate",
-            "before deleting any source",
+            "before removing an rcc copy",
+            "why project data must not live in a user's home directory",
+            "instrument acquisition",
+            "verified, approved coscine archive set",
         ]:
             self.assertIn(phrase, page)
 
@@ -33,6 +36,8 @@ class DataLifecycleCourseTests(unittest.TestCase):
             "freeze and describe",
             "verify and accept",
             "keep the rcc source",
+            "instrument or facility produces authoritative data",
+            "do not use a user's home",
         ]:
             self.assertIn(phrase, page)
 
