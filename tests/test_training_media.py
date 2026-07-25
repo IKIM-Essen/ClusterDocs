@@ -55,6 +55,8 @@ class TrainingMediaTests(unittest.TestCase):
             poster = f"part{part}" if part <= 4 else f"class{part}"
             self.assertIn(f"video-posters/{poster}.png", text)
             self.assertIn(f"RCC_Onboarding_{prefix}_{part}_Captions.srt", text)
+            self.assertIn(f"RCC_Onboarding_{prefix}_{part}_Captions.vtt", text)
+            self.assertIn('kind="captions"', text)
             narration_suffix = "Narration.md" if part <= 4 else "Video_Narration.md"
             self.assertIn(f"RCC_Onboarding_{prefix}_{part}_{narration_suffix}", text)
             if part <= 4:

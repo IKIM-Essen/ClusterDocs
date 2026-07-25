@@ -5,6 +5,7 @@
   <h2>Watch the class first</h2>
   <p>Safe access, VS Code, file transfer, and your first Slurm job. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/part1.png" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4?v=952a6dae">
+    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Part_1_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">

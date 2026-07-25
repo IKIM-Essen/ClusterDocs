@@ -31,7 +31,11 @@ The original four classes include:
 - an SRT caption file; and
 - a Markdown narration script.
 
-The canonical source for the original four classes is the Markdown document in `source/`. Classes 5-11 are maintained directly in the course, exercise and narration trees until their additional media assets are recorded. The DOCX, PDF, PPTX, and MP4 files are rendered review artifacts.
+The canonical source for the original four classes is the Markdown document in
+`source/`. Classes 5–15 are maintained directly in the course, exercise,
+narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
+files are rendered review artifacts; MP4 files are published separately from
+ordinary Git history.
 
 ## Video format
 
@@ -47,6 +51,10 @@ RCC services and contain no credentials or biomedical data.
 ## Production status
 
 This is a publication candidate, not a claim that every local command has already been validated against the production RCC configuration. Before publication, administrators must complete the local values and run the tests in `ADMIN_CHECKLIST.md`.
+
+Run `python tools/rollout_readiness.py` for a machine-readable exit status and
+an itemized list of known launch blockers. A normal content validation pass is
+necessary but does not mean the site is production-ready.
 
 The statistical and DNA examples are educational. They are not validated clinical pipelines and do not replace study-design, statistical, bioinformatics, data-protection, or clinical review.
 

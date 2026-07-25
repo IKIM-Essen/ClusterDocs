@@ -91,6 +91,21 @@ A container image can include:
 
 The running container uses the host Linux kernel. It is not a complete virtual machine and does not emulate arbitrary hardware.
 
+## Rootless execution on a shared cluster
+
+For normal execution, Apptainer is rootless: the process keeps the submitting
+user's RCC user and group access instead of gaining unrestricted `root` access
+on the host, and it does not require a privileged Docker-style daemon. The host
+kernel, drivers, devices, filesystem permissions, and Slurm allocation remain
+under RCC control. This reduces the attack surface on compute nodes shared by
+unrelated projects and prevents a container from becoming a shortcut around
+project membership or scheduler allocation.
+
+Rootless is not a data sandbox. A container process can read, change, or delete
+visible host files wherever the submitting user already has permission. Bind
+only the required paths, make input binds read-only where possible, keep
+credentials outside images, and use reviewed immutable images.
+
 ## A container is not the research project
 
 Do not place raw patient-derived data, final results, credentials, or the only copy of scripts inside an image. The image should contain software. Project data remains in approved host directories and becomes visible inside the container through bind mounts.
@@ -415,6 +430,10 @@ This can help migrate a tested Conda-based workflow into a deployed image. The g
 ## Building is different from running
 
 Running a reviewed SIF is a routine user activity. Building an image changes the software supply chain and may require network access, substantial temporary disk, elevated build mechanisms, or a controlled remote builder.
+
+Use the RCC-approved rootless, fakeroot, or remote-builder workflow. Rootless
+execution of a production image does not imply that users may obtain host-root
+privileges while building it.
 
 Production pattern:
 
