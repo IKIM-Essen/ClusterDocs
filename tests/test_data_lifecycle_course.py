@@ -68,6 +68,8 @@ class DataLifecycleCourseTests(unittest.TestCase):
         self.assertIn("TL;DR · Instrument to Coscine", builder)
         self.assertIn("data/data-lifecycle-tldr.md", mkdocs)
         self.assertIn("data/data-lifecycle-tldr.md", builder)
+        self.assertNotIn("  - Instrument data:", mkdocs)
+        self.assertNotIn("('Instrument data',", builder)
 
     def test_coursectl_accepts_class_fifteen(self):
         coursectl = (ROOT / "tools/coursectl.py").read_text()
