@@ -29,6 +29,7 @@ NAV=[
  ('Instrument data','Choosing a transfer path','data/instrument-data-options.md'),
  ('Instrument data','Legacy Windows storage access','data/legacy-storage-windows.md'),
  ('Instrument data','Legacy macOS storage access','data/legacy-storage-macos.md'),
+ ('Data lifecycle','TL;DR · Instrument to Coscine','data/data-lifecycle-tldr.md'),
  ('Data lifecycle','Planned RCC to Coscine archive flow','data/rcc-project-to-coscine.md'),
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),

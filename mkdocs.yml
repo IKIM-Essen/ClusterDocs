@@ -36,6 +36,7 @@ nav:
       - Legacy Windows storage access: data/legacy-storage-windows.md
       - Legacy macOS storage access: data/legacy-storage-macos.md
   - Data lifecycle:
+      - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md

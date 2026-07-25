@@ -10,6 +10,9 @@ It is for researchers, project owners, data stewards, laboratory staff, and
 technical staff who need to decide what happens to data when active RCC work
 slows down or a project ends.
 
+Need the two-page version first? Read the
+[data lifecycle TL;DR](../data/data-lifecycle-tldr.md).
+
 ## Learning objectives
 
 After this class, you should be able to:
