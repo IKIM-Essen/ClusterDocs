@@ -1,11 +1,11 @@
-# RCC endpoint compatibility and legacy names
+# Which RCC connection name should I use?
 
-> **Current configuration wins:** Use the RCC alias and host configuration
-> published through the rollout page or another trusted institutional channel.
-> In this documentation the configured alias is `{{ ssh_alias }}`. Do not infer
-> a current endpoint from a historical example.
+> Use the RCC connection settings supplied through the rollout page or another
+> trusted institutional channel. In these instructions, the connection name is
+> `{{ ssh_alias }}`. Do not copy a server address from an old screenshot or a
+> colleague's saved configuration.
 
-## Stable names and replaceable backends
+## Why the name stays the same
 
 RCC aims to give users stable service aliases even when the physical or virtual
 systems behind them change. Operations may replace backends, storage gateways,
@@ -16,7 +16,7 @@ infrastructure hostnames. The current host-identity policy also requires users
 to verify the approved RCC host identity rather than accepting a changed key or
 copying an old configuration from a colleague.
 
-## Current SSH pattern
+## Setup to use now
 
 Use only values supplied by the approved RCC configuration:
 
@@ -33,15 +33,14 @@ See [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and
 the [SSH host-identity policy](../policies/ssh-host-identity.md) before changing
 an existing workstation configuration.
 
-## Historical names
+## Names you may see in a saved configuration
 
-Older ClusterDocs and workstation setups may contain names such as
-`login.ikim.uk-essen.de`, `shellhost`, or `shellhost.ikim.uk-essen.de`. The
-legacy Windows and macOS pages retain those strings only so an existing setup
-can be identified and migrated. These historical names are not a statement
-that they are the current production route.
+Some saved workstation configurations contain `login.ikim.uk-essen.de`,
+`shellhost`, or `shellhost.ikim.uk-essen.de`. If you see one of these names,
+do not reuse it for a new connection. Get the RCC connection settings you
+should use now, test them, and only then remove the saved entry.
 
-When reviewing a historical configuration:
+When reviewing a saved configuration:
 
 1. identify which entries belong to RCC;
 2. obtain the current RCC configuration through a trusted channel;

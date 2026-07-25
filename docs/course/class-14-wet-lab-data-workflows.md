@@ -38,7 +38,7 @@ After this course, you should be able to:
 - identify which data may be placed on RCC;
 - place instrument data in an approved RCC project rather than a user's home
   directory;
-- recognize and migrate documented legacy Windows and macOS storage paths; and
+- recognize and replace a saved Windows or macOS SSHFS configuration; and
 - prepare a clean handoff to bioinformatics or image-analysis staff.
 
 ## 1. Four different roles
@@ -185,7 +185,7 @@ filenames.
 | Large directory with many files | archive or manifest, then managed transfer |
 | Recurring multi-terabyte output | automated facility ingestion |
 | Data already on a facility server | server-to-server transfer |
-| Editing one small file in place | legacy SSHFS may be acceptable |
+| Editing one small file in place | an existing, RCC-approved SSHFS mount may be acceptable |
 | Compute-intensive analysis | transfer first, then use Slurm |
 
 Mounted storage is convenient but is not the preferred path for instrument
@@ -344,15 +344,16 @@ Only then should deletion be considered under the facility retention policy.
 Start with a browser portal, approved SFTP client, facility-managed ingestion,
 or automated server-to-server transfer.
 
-Historical ClusterDocs mounted selected RCC directories using SSHFS. These
-paths remain documented so existing setups can be recognized and migrated:
+Some workstations already mount RCC directories using SSHFS. These pages help
+you identify and replace such a setup; they are not setup instructions for a
+new connection:
 
-- [Legacy Windows storage access](../data/legacy-storage-windows.md)
-- [Legacy macOS storage access](../data/legacy-storage-macos.md)
+- [Recognize an existing Windows SSHFS setup](../data/legacy-storage-windows.md)
+- [Recognize an existing macOS SSHFS setup](../data/legacy-storage-macos.md)
 
-Do not reuse their endpoint values unchanged. After migration to the approved
-RCC alias, use SSHFS only for small files and occasional editing—not bulk
-instrument transfer or computation.
+Do not copy their server names or port numbers. After RCC has supplied and
+tested the connection settings to use now, use SSHFS only for small files and
+occasional editing—not bulk instrument transfer or computation.
 
 ## 14. Practical exercise
 

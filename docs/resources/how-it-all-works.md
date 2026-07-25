@@ -1,4 +1,4 @@
-# How RCC and the lab network work together
+# Lab network: properties, limits, and remote access
 
 Research data often begins on an instrument rather than on the cluster. The
 **Lab network** provides a controlled way to connect suitable devices and move
@@ -53,6 +53,75 @@ vendor cloud access, remote support, licensing, update URLs, and direct server
 dependencies before connection; some products may not be compatible with the
 Lab-network model.
 
+## Why the network works this way
+
+Instrument-control computers are unusually difficult to secure. A vendor may
+require an old operating system, a fixed driver, an unsupported browser, or a
+software version that cannot be changed without invalidating the instrument's
+support or validation. Replacing that computer may also be far more disruptive
+than replacing an ordinary office workstation.
+
+The Lab network is a compensating control for that reality. It reduces the
+number of systems that can contact the device and the number of places the
+device can contact. In particular, **there is no direct incoming access from
+the Internet**. This removes an entire class of scanning, password guessing,
+remote-service exploitation, and accidental publication problems. Limited
+outbound access can still be provided for an approved update or licensing flow.
+
+```text
+Internet -------------------------X----------------> instrument
+approved update site -> HTTP proxy -> outbound request and reply
+approved RCC service <-----------> explicitly allowed data path
+approved operator -> private tunnel -> PiKVM -> keyboard/video/power console
+```
+
+Isolation does not repair an old operating system or make vulnerable software
+safe. Owners still need inventory, physical protection, unique credentials,
+backups, vendor coordination, incident contacts, and a replacement plan.
+
+## Properties and limitations at a glance
+
+| Property | What it means for a device owner |
+|---|---|
+| Registered devices only | RCC records the device, owner, interface identifier, purpose, and target project before connection. |
+| DHCP configuration | Use the network settings supplied automatically unless RCC has documented an exception. Do not invent a static address, router, or DNS server. |
+| No general default route | Ordinary Internet, hospital-network, and arbitrary RCC destinations are not reachable directly. |
+| Explicit service paths | Samba, ADRIA, a project ingestion service, or another server is reachable only when RCC has approved that exact flow. |
+| Explicit HTTP proxy | Approved outbound web requests can use the proxy settings shown on the Lab-network information page. Software that cannot use the proxy may not be able to update or license itself. |
+| No direct incoming connection | Internet port forwarding, public remote desktop, and direct vendor callbacks are not available. |
+| Project-scoped data access | Reaching one share or ingestion service does not grant access to other projects. |
+| Broadcast discovery may stop at the enclave | Consumer-style discovery, arbitrary multicast, and services that assume a flat routed network may not work. |
+
+These limitations are intentional. If a vendor requires unrestricted inbound
+remote support, a broad destination list, a public cloud relay, or a VPN agent,
+RCC must review the requirement before the device is connected. Do not work
+around a failed connection by adding a router, hotspot, second network cable,
+personal tunnel, or unregistered wireless adapter.
+
+## Configure a device from the Lab-network information page
+
+When a registered device is connected, the Lab-network information page is the
+source for the values to use now. It may appear automatically as a captive
+page. If it does not, open an ordinary HTTP page so the browser can display the
+network notice, or contact RCC. Do not copy a proxy address, share name, or
+server value from a screenshot or another instrument.
+
+Use the page and the onboarding record to confirm:
+
+1. the device is registered and the recorded owner is correct;
+2. address configuration is set to DHCP unless an exception is documented;
+3. the current HTTP proxy address and port, if proxy access is approved;
+4. the exact approved RCC service, share, or ingestion destination;
+5. whether the vendor's update and licensing URLs have been approved;
+6. the support contact and change window; and
+7. a small connectivity and transfer test before routine acquisition begins.
+
+The public ClusterDocs page deliberately does not reproduce internal proxy,
+address, share, or server values. Keeping those values on the live information
+page avoids teaching users a configuration that becomes wrong after a service
+change. A support screenshot must remove device identifiers, addresses,
+credentials, license information, and project names.
+
 ## The simple data journey
 
 1. A registered instrument or acquisition workstation connects to the Lab
@@ -100,6 +169,68 @@ Contact the team in the **Mattermost IKIM Cluster channel** with:
 The team will confirm whether Samba, ADRIA, or another supported pattern is the
 best fit. Do not connect an unmanaged switch, wireless access point, router, or
 unregistered device, and do not guess network or proxy settings.
+
+## Remote console option: Raspberry Pi and PiKVM
+
+A Raspberry Pi running **PiKVM** can provide keyboard, video, mouse, and—when
+the hardware is wired for it—power-button control for an instrument workstation.
+Unlike ordinary remote desktop, it can remain useful while the workstation is
+booting, showing firmware messages, or unable to start its operating system.
+That makes it a practical option for supported remote recovery and vendor
+sessions without enabling direct incoming access to the instrument computer.
+
+PiKVM is a privileged management device, not a harmless accessory. Anyone who
+controls it may be able to view the screen, type commands, attach virtual media,
+or power-cycle the target. Onboarding therefore requires:
+
+- a separate registered device record, owner, physical location, and purpose;
+- approval for the console and any power-control wiring;
+- both factory passwords changed before connection;
+- only required services enabled, with the web terminal disabled when it is
+  not needed;
+- named access, short sessions, logout after use, and 2FA where appropriate;
+- maintained PiKVM software and a physical recovery path before remote updates;
+- no public port forwarding, public DNS exposure, or direct Internet listener;
+  and
+- an incident and access-removal process when ownership or vendor support
+  changes.
+
+The [PiKVM authentication guide](https://docs.pikvm.org/auth/) documents the
+separate Linux and web-interface credentials, 2FA, and session controls.
+
+### Private tunnelling with Tailscale
+
+Tailscale is one possible private-overlay tunnel for PiKVM **when RCC and
+information security approve it**. It can connect authorized tailnet devices
+without publishing the PiKVM web interface to the public Internet. Direct
+peer-to-peer connections use WireGuard; when direct connectivity is impossible,
+Tailscale can use encrypted DERP relays. This does not require a direct incoming
+Internet connection to the Lab network, but it does require approved outbound
+access to Tailscale's coordination and relay services.
+
+Use the pattern only as an RCC-managed design:
+
+- use an institution-owned tailnet and identity, not a personal account;
+- grant access only to named administrators through reviewed tailnet policy;
+- expose only the PiKVM service within the tailnet; do not advertise the Lab
+  network as a subnet and do not configure an exit node;
+- do not use Tailscale Funnel or another public-publishing feature;
+- keep PiKVM authentication enabled even inside the tunnel;
+- review device-key expiry, offboarding, audit logs, updates, and recovery; and
+- test whether the Lab network's outbound policy supports the required control
+  and relay connections before relying on it.
+
+The Tailscale **Personal** plan is free, but Tailscale describes it as suitable
+for personal/non-commercial use. That makes it useful for a private home-lab
+evaluation, not an automatic licensing answer for an institutional instrument.
+An RCC deployment needs an approved organizational plan or other confirmed
+terms; Tailscale publishes an educational-institution discount.
+
+Implementation details and current caveats are maintained in the
+[PiKVM Tailscale guide](https://docs.pikvm.org/tailscale/). Also read Tailscale's
+[connection-types explanation](https://tailscale.com/docs/reference/connection-types),
+[firewall guidance](https://tailscale.com/docs/reference/faq/firewall-ports),
+and [free-plan terms](https://tailscale.com/kb/1154/free-plans-discounts).
 
 ## Technical details
 

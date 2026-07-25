@@ -10,6 +10,12 @@ account, keep governed data in an approved project, and run computation through
 Slurm. Interactive tools such as Jupyter and Shiny also run inside bounded
 allocations and are reached through protected local connections.
 
+For most users, **VS Code with Remote - SSH is the suggested everyday route**
+for coding and preparing data analysis. It combines the editor, remote file
+view, Git tools, and terminal in one window. VS Code is the interface; Slurm is
+still where computation runs, and the RCC transfer service is still the route
+for large data movement.
+
 ```text
 workstation
     -> approved RCC SSH or files entry point
@@ -67,9 +73,9 @@ The basic sequence is:
 6. make one bounded connection test; and
 7. use the approved alias `{{ ssh_alias }}` in current instructions.
 
-The access reference includes the preserved visual walkthrough for VS Code
-Remote SSH. Its screenshots are historical UI orientation; visible old aliases
-must not be copied.
+The access reference includes a visual VS Code walkthrough plus recommended
+search, file-watcher, extension, and Workspace Trust settings. Do not copy a
+server name from a screenshot.
 
 ## Where files belong
 

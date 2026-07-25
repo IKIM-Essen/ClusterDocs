@@ -1,16 +1,18 @@
-# Legacy macOS access to RCC storage
+# macOS: recognize an existing SSHFS setup
 
-> **Legacy convenience path:** This preserves the historical ClusterDocs macOS
-> SSHFS workflow. Use it only to understand or migrate an existing
-> setup—not as current endpoint guidance or for bulk instrument transfer.
+> **Setting up access now? Skip this page.** Follow
+> [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and use
+> the RCC connection settings you were given. This page is only for people who
+> already have an SSHFS setup on their Mac and need to identify or replace it.
 
-The historical setup used macFUSE, SSHFS, a jump-host SSH configuration, a
-local mount directory, and optionally ConnectMeNow.
+This type of setup used macFUSE, SSHFS, a jump-host SSH configuration, a local
+mount directory, and optionally ConnectMeNow.
 
-The old documentation referred to `login.ikim.uk-essen.de` and `shellhost`.
-These may not represent the current RCC production path.
+If you see `login.ikim.uk-essen.de` or `shellhost` in a saved configuration, do
+not copy those values into a new setup. Ask RCC for the connection settings to
+use now.
 
-## Historical SSH configuration
+## SSH settings you may find on an existing Mac
 
 ```sshconfig
 Host ikim
@@ -28,7 +30,7 @@ Host shellhost
 Use [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) for
 the current RCC configuration and key policy.
 
-## Historical manual mount
+## Mount command you may find
 
 Test SSH:
 
@@ -42,7 +44,7 @@ Create a mount point:
 mkdir -p "$HOME/remote"
 ```
 
-Mount the historical home path:
+Mount the home path shown in the saved setup:
 
 ```bash
 sshfs <RCC-USERNAME>@shellhost:/homes/<RCC-USERNAME> \
@@ -60,7 +62,7 @@ rmdir "$HOME/remote"
 Current macFUSE and SSHFS versions may use different security and unmount
 procedures.
 
-## Historical ConnectMeNow settings
+## ConnectMeNow settings you may find
 
 - share type: SSHFS;
 - server: `shellhost`;
@@ -74,12 +76,11 @@ procedures.
 
 This is retained so existing Mac configurations can be understood and migrated.
 
-### Historical ConnectMeNow screenshots
+### Recognize the ConnectMeNow setup
 
-> **Use these to recognize an old setup, not to create a current one.** The
-> screenshots preserve the earlier ClusterDocs walkthrough at its original
-> resolution. The visible `shellhost` alias, home-directory target, mount path,
-> and automatic network-change behavior are historical.
+> **Do not copy values from these screenshots.** They help you recognize an
+> existing installation. For a new connection, use the server name, project
+> path, and mount settings supplied by RCC.
 
 The share screen selected SSHFS and pointed ConnectMeNow at the former server
 alias:

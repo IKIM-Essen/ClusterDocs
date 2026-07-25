@@ -57,8 +57,8 @@ occasional transfer, and audited or resumable workflows where supported.
 ## SFTP
 
 Suitable for Windows and macOS workstations and routine transfers. Use the
-current RCC SFTP endpoint and current access instructions. Do not infer an
-endpoint from the legacy pages.
+RCC SFTP address and access instructions you were given. Do not copy a server
+address from the Windows or macOS pages for existing SSHFS setups.
 
 ## Server-to-server transfer
 
@@ -118,8 +118,8 @@ data.
 - the transfer crosses a security boundary;
 - the correct data classification is uncertain.
 
-Legacy workstation mounts are documented only for recognizing and migrating
-existing setups:
+If a workstation already has an SSHFS mount, use these pages to identify it.
+Do not use them to create a new connection:
 
-- [Legacy Windows storage access](legacy-storage-windows.md)
-- [Legacy macOS storage access](legacy-storage-macos.md)
+- [Recognize an existing Windows SSHFS setup](legacy-storage-windows.md)
+- [Recognize an existing macOS SSHFS setup](legacy-storage-macos.md)

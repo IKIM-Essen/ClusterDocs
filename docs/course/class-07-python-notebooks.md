@@ -2,6 +2,10 @@
 
 This class teaches a safe pattern for interactive Python analysis on RCC. A notebook is useful for inspection, statistics, and figures. It is **not** the place to run an overnight computation or keep many gigabytes in memory without limits.
 
+Use VS Code with Remote - SSH as the suggested front end for editing Python,
+notebooks, environment files, and Slurm scripts. A notebook kernel is separate
+from the editor: it still runs inside a bounded Slurm allocation.
+
 ## Learning goals
 
 After this class, you can:
@@ -81,7 +85,12 @@ The course includes:
 - `examples/interactive-workflows/python/python.sbatch`
 - `examples/interactive-workflows/python/environment.yml`
 
-The notebook uses synthetic data so that you can practice safely. The batch script shows the same idea as a scheduled Slurm job.
+The notebooks use synthetic data so that you can practice safely. Their
+RiboSnake-inspired section builds a Bray--Curtis PCoA and a ranked waterfall
+plot in both Python and R. Run the cells to render the figures; committed
+notebook outputs stay empty so that results or restricted data cannot be
+published accidentally. The batch script shows the same idea as a scheduled
+Slurm job.
 
 ## Python tool choices
 

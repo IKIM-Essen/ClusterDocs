@@ -2,6 +2,11 @@
 
 This class teaches the same RCC pattern for R: use interactive sessions to inspect, visualise, and explain; use Slurm jobs for expensive computation.
 
+For most users, VS Code with Remote - SSH is the suggested front end for R
+scripts, notebooks, environment files, and Slurm submissions. Install only the
+R extensions you need in the remote window, and keep data, package libraries,
+and generated results out of workspace-wide search and file watching.
+
 ## Learning goals
 
 After this class, you can:

@@ -1,17 +1,19 @@
-# Legacy Windows access to RCC storage
+# Windows: recognize an existing SSHFS setup
 
-> **Legacy convenience path:** This preserves the historical ClusterDocs
-> Windows SSHFS workflow. Use it only to understand or migrate an existing
-> setup—not as current endpoint guidance or for bulk instrument transfer.
+> **Setting up access now? Skip this page.** Follow
+> [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and use
+> the RCC connection settings you were given. This page is only for people who
+> already have an SSHFS setup on their Windows computer and need to identify or
+> replace it.
 
-The historical setup used WinFsp, SSHFS-Win, SSHFS-Win Manager, an SSH tunnel,
+This type of setup used WinFsp, SSHFS-Win, SSHFS-Win Manager, an SSH tunnel,
 and optionally Windows Task Scheduler.
 
-The old documentation used `login.ikim.uk-essen.de`, `shellhost`, and local port
-`6666`. These describe the former environment and may not be current RCC
-production endpoints.
+If you see `login.ikim.uk-essen.de`, `shellhost`, or local port `6666` in a
+saved configuration, do not copy those values into a new setup. Ask RCC for
+the connection settings to use now.
 
-## Historical SSH configuration
+## SSH settings you may find on an existing computer
 
 Location:
 
@@ -37,7 +39,7 @@ Host shellhost
 Do not reuse this unchanged. Obtain the current RCC configuration and key
 instructions from [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md).
 
-## Historical tunnel
+## Tunnel command you may find
 
 ```powershell
 Start-Process ssh -WindowStyle Hidden `
@@ -47,7 +49,7 @@ Start-Process ssh -WindowStyle Hidden `
 
 The SSHFS-Win Manager connection used the forwarded local port.
 
-## Historical installation sequence
+## How this setup was installed
 
 1. Install a supported WinFsp release.
 2. Install a compatible SSHFS-Win release.
@@ -57,27 +59,26 @@ The SSHFS-Win Manager connection used the forwarded local port.
 6. Optionally use Task Scheduler to start the tunnel.
 7. Test with a small non-sensitive file.
 
-Historical remote path patterns were `/homes/<username>/`, `/groups/<group>/`,
-and `/project/<project>/`. Current RCC paths may differ.
+The setup may refer to `/homes/<username>/`, `/groups/<group>/`, or
+`/project/<project>/`. Confirm your project path with RCC before transferring
+data.
 
-### Historical visual walkthrough
+### Recognize the installed software
 
-> **Read the current text before using these images.** The screenshots are
-> retained from the earlier ClusterDocs site because they help identify an
-> existing installation. Product versions, aliases, paths, port `6666`, and
-> automation choices shown below are historical and are not current RCC
-> configuration values.
+> **Do not copy values from these screenshots.** They help you recognize an
+> existing installation. For a new connection, use the software versions,
+> server name, path, and port supplied by RCC.
 
 The WinFsp installer selected the core filesystem component rather than the
 developer components:
 
-![Historical WinFsp installer with the Core component selected and developer components disabled](../assets/WinFSP_download.png)
+![WinFsp installer with the Core component selected and developer components disabled](../assets/WinFSP_download.png)
 
 The SSHFS-Win Manager example used a local forwarded connection and a group
 path. Do not copy its localhost port, key path, remote path, or automatic-start
 choice into a new setup:
 
-![Historical SSHFS-Win Manager basic and advanced connection screens showing a localhost tunnel and example group path](../assets/sshfs_win_manager.png)
+![SSHFS-Win Manager basic and advanced connection screens from an existing setup](../assets/sshfs_win_manager.png)
 
 The former optional automation used Windows Task Scheduler. These screenshots
 are retained so an existing task can be recognized and removed or migrated:
@@ -91,8 +92,9 @@ are retained so an existing task can be recognized and removed or migrated:
 ![Historical Windows Task Scheduler Settings tab for the background SSH task](../assets/sshfs_win_manager_settings.png)
 
 Do not create an unattended background tunnel merely because it appears in the
-old walkthrough. First confirm the current endpoint, host identity, credential
-handling, need for automatic mounting, and safe stop behavior with RCC.
+walkthrough. Before changing or recreating it, ask RCC to confirm the server
+name, host identity, credential handling, need for automatic mounting, and safe
+stop behavior.
 
 ## Appropriate use
 

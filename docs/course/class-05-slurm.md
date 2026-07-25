@@ -25,6 +25,12 @@ batch job and keep interactive GPU exploration attended and bounded.
 | Measure a completed job | `sacct -j <jobid> --format=JobID,State,Elapsed,MaxRSS,ExitCode` |
 | Stop a job | `scancel <jobid>` |
 
+The following screenshot was captured from the RCC scheduler on 25 July 2026.
+It shows what `sinfo` looks like, but the available nodes and partitions can
+change. Run `sinfo` yourself before choosing a partition.
+
+![Terminal showing the RCC Slurm version and a partition summary](../assets/rcc-slurm-overview.png)
+
 A minimal batch script is:
 
 ```bash

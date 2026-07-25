@@ -29,13 +29,7 @@ class LegacyContentMigrationTests(unittest.TestCase):
             self.assertGreater(path.stat().st_size, 1_000, path)
 
     def test_restored_images_are_referenced_by_public_guides(self):
-        pages = [
-            ROOT / "docs/data/legacy-storage-windows.md",
-            ROOT / "docs/data/legacy-storage-macos.md",
-            ROOT / "docs/reference/access-ssh-vscode.md",
-            ROOT / "docs/course/class-07-python-notebooks.md",
-        ]
-        text = "\n".join(path.read_text() for path in pages)
+        text = "\n".join(path.read_text() for path in (ROOT / "docs").rglob("*.md"))
         for image in (ROOT / "docs/assets").glob("*.png"):
             self.assertIn(image.name, text, image)
 
@@ -44,9 +38,10 @@ class LegacyContentMigrationTests(unittest.TestCase):
         macos = (ROOT / "docs/data/legacy-storage-macos.md").read_text().lower()
         vscode = (ROOT / "docs/reference/access-ssh-vscode.md").read_text().lower()
         jupyter = (ROOT / "docs/course/class-07-python-notebooks.md").read_text().lower()
-        for text in (windows, macos, vscode, jupyter):
-            self.assertIn("historical", text)
-            self.assertIn("do not", text)
+        self.assertIn("setting up access now? skip this page", windows)
+        self.assertIn("setting up access now? skip this page", macos)
+        self.assertIn("do not copy target names", vscode)
+        self.assertIn("do not reuse those values", jupyter)
 
     def test_audit_maps_every_legacy_document_and_exclusion(self):
         audit_path = ROOT / "meta/LEGACY_CONTENT_AUDIT.md"

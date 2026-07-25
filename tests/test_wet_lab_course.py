@@ -45,12 +45,13 @@ class WetLabCourseTests(unittest.TestCase):
         self.assertNotIn("is2-2", page)
         self.assertNotIn("is2-5", page)
 
-    def test_legacy_mount_guides_are_clearly_historical(self):
+    def test_existing_mount_guides_give_direct_user_instructions(self):
         for name in ["legacy-storage-windows.md", "legacy-storage-macos.md"]:
             page = (ROOT / "docs/data" / name).read_text().lower()
-            self.assertIn("historical", page)
-            self.assertIn("bulk instrument transfer", page)
-            self.assertIn("current rcc", page)
+            self.assertIn("setting up access now? skip this page", page)
+            self.assertIn("do not copy", page)
+            self.assertIn("connection settings you were given", page)
+            self.assertIn("do not use it for", page)
 
 
 if __name__ == "__main__":
