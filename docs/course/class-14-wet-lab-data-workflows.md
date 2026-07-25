@@ -16,11 +16,20 @@ You do not need to become a system administrator. You do need to understand
 where instrument data are written, which copy is authoritative, how to transfer
 data safely, and when RCC compute or storage is useful.
 
+For suitable registered devices, the **Lab network** is an additional
+protection option. It removes general direct Internet connectivity while
+retaining access to explicitly approved server endpoints and services. Limited
+outbound web access can be provided through an explicit HTTP proxy, for example
+for approved updates, without making the device reachable from the Internet.
+See [how RCC and the Lab network work together](../resources/how-it-all-works.md).
+
 ## Learning objectives
 
 After this course, you should be able to:
 
 - distinguish an instrument-control computer from storage and compute systems;
+- explain how the Lab network limits Internet exposure while preserving
+  approved server and proxy-based update access;
 - choose among browser upload, SFTP, mounted storage, server-to-server transfer,
   and automated ingestion;
 - estimate whether a dataset is difficult because of size, file count, or both;
@@ -42,6 +51,17 @@ current run, and minimal software change.
 
 Do not use it as a general-purpose analysis workstation unless the instrument
 facility explicitly supports that use.
+
+Where suitable, ask RCC whether the device can join the Lab network. Do not
+connect it yourself or guess network, server, or proxy settings. RCC must first
+review the owner, software and update requirements, required direct server
+endpoints, vendor remote-support needs, data flow, and destination project.
+
+The Lab network is not an Internet connection with extra firewall rules. It is
+an unrouted enclave with explicit service paths. Direct access is limited to
+approved servers or services such as a project share or managed acquisition
+tool. Proxy access is limited outbound web access for approved purposes such as
+updates; it does not make the device reachable from the Internet.
 
 ### Facility or acquisition storage
 

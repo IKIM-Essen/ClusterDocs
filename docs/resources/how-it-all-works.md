@@ -23,6 +23,36 @@ workstations. Examples include:
 These are examples, not an automatic approval list. The RCC team checks each
 device, data flow, ownership model, and support requirement before connection.
 
+## Protection without general Internet exposure
+
+Connecting an approved device to the Lab network is an option when an
+instrument or acquisition workstation needs RCC data services but should not
+remain directly connected to the Internet.
+
+The Lab network reduces exposure by removing general direct Internet
+connectivity. A registered device does not receive an ordinary routed path to
+the Internet, RCC, or the hospital network. Instead, it receives only the
+connections approved for its role:
+
+- **Direct access to explicit server endpoints or services**, such as an
+  approved Samba project share, ADRIA, or another registered acquisition
+  service. Access to one approved endpoint does not grant access to other RCC
+  projects or servers.
+- **Limited outbound web access through the Lab-network HTTP proxy** when the
+  device supports an explicit proxy and the use has been approved. This can
+  support needs such as retrieving vendor or operating-system updates without
+  giving the device unrestricted direct Internet routing.
+- **No unsolicited inbound Internet access.** Using the proxy does not publish
+  the instrument to the Internet or make it reachable from outside the
+  enclave.
+
+This is exposure reduction, not automatic trust. The device still needs a
+named owner, supported software, timely updates, approved credentials, a
+documented data flow, and a response plan. The RCC team must review required
+vendor cloud access, remote support, licensing, update URLs, and direct server
+dependencies before connection; some products may not be compatible with the
+Lab-network model.
+
 ## The simple data journey
 
 1. A registered instrument or acquisition workstation connects to the Lab
@@ -87,6 +117,10 @@ The enclave provides only explicit services:
   outside the enclave.
 - **Samba** and shared tooling such as **ADRIA** provide approved data-transfer
   paths. They are service bridges, not general network routes.
+- Other **explicitly approved direct server endpoints** may be made reachable
+  where a documented instrument workflow requires them. This exception is
+  scoped to those endpoints and does not create general RCC, hospital-network,
+  or Internet access.
 
 Layer 2 connectivity does not make a device trusted. Every instrument still
 needs an owner, an approved use, appropriate configuration, and a supported

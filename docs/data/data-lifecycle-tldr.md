@@ -37,6 +37,23 @@ Before moving instrument data, identify:
 Instrument data must land in the named project area. Do **not** put it in
 `/home/<user>`, even temporarily as the routine transfer path.
 
+### Consider the Lab network for the device
+
+A suitable registered instrument or acquisition workstation can be connected
+to the **Lab network**. This removes general direct Internet connectivity and
+reduces exposure while preserving:
+
+- direct access to explicitly approved server endpoints and services, such as
+  an approved project share or managed acquisition service; and
+- limited outbound web access through an explicit HTTP proxy, for example for
+  approved software or vendor updates.
+
+The proxy does not make the device reachable from the Internet, and access to
+one server does not grant general RCC access. RCC must review the device owner,
+updates, licensing, vendor support, server dependencies, credentials, and data
+flow before connection. Do not plug in an unregistered device or guess proxy
+settings. See [how RCC and the Lab network work together](../resources/how-it-all-works.md).
+
 Project storage matters for governance and legal compliance because it connects
 the data to an approved purpose, an accountable owner, managed membership, and
 project-specific retention and deletion decisions. A personal directory makes

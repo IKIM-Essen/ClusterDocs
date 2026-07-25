@@ -32,6 +32,23 @@ instrument -> RCC project -> job-local analysis -> RCC project results
 See [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md)
 and the [planned RCC project to Coscine flow](rcc-project-to-coscine.md).
 
+## Lab network option
+
+For a suitable registered instrument or acquisition workstation, ask whether
+it can join the **Lab network**. The device then has no general direct Internet
+route. It can retain direct access to explicitly approved server endpoints or
+services needed for acquisition and transfer, plus limited outbound web access
+through an explicit HTTP proxy for approved purposes such as updates.
+
+This design reduces exposure without making the device trusted. Proxy access
+does not allow unsolicited inbound Internet connections, and one approved
+server path does not provide general RCC or hospital-network access. RCC must
+review the device, owner, vendor support, licensing, update requirements,
+credentials, server dependencies, and target project before connection.
+
+Read [how RCC and the Lab network work together](../resources/how-it-all-works.md)
+before requesting onboarding.
+
 ## Browser or managed portal
 
 Suitable for users who do not need command-line tools, modest file counts,

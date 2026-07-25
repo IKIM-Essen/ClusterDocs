@@ -59,6 +59,8 @@ class DataLifecycleCourseTests(unittest.TestCase):
             "verified coscine archive",
             "planned and not yet a live self-service",
             "five checks before you finish",
+            "consider the lab network",
+            "limited outbound web access",
         ]:
             self.assertIn(phrase, page)
 

@@ -25,6 +25,17 @@ class LabNetworkGuideTests(unittest.TestCase):
         self.assertTrue(FIGURE.is_file())
         self.assertIn("lab-network-flow.svg", GUIDE.read_text())
 
+    def test_security_model_explains_direct_and_proxy_access(self):
+        text = GUIDE.read_text().lower()
+        for phrase in (
+            "removing general direct internet",
+            "direct access to explicit server endpoints",
+            "limited outbound web access",
+            "no unsolicited inbound internet access",
+            "exposure reduction, not automatic trust",
+        ):
+            self.assertIn(phrase, text)
+
     def test_public_guide_avoids_internal_topology(self):
         text = GUIDE.read_text()
         self.assertNotRegex(text, r"\b10\.\d+\.\d+\.\d+\b")

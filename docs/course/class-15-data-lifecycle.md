@@ -123,7 +123,7 @@ The intended placement is therefore:
 
 | Lifecycle point | Storage role |
 |---|---|
-| Instrument acquisition | Instrument or approved facility storage until the run is complete |
+| Instrument acquisition | Instrument or approved facility storage until the run is complete; suitable registered devices may use the protected Lab network |
 | RCC ingestion | Named approved project area, with manifest and transfer verification |
 | Active computation | Job-local storage for temporary high-I/O work |
 | Durable analysis record | RCC project inputs, validated outputs, code, metadata, and provenance |

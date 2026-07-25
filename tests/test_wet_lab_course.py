@@ -26,6 +26,10 @@ class WetLabCourseTests(unittest.TestCase):
             "completion gate",
             "project, not a home directory",
             "verified coscine archive set",
+            "lab network",
+            "general direct internet connectivity",
+            "explicitly approved server endpoints",
+            "http proxy",
         ]:
             self.assertIn(phrase, page)
 
