@@ -113,7 +113,7 @@ allocation details, and `scancel` to stop work you no longer need.
 
 Start with [Class 5: Slurm](course/class-05-slurm.md), then keep the
 [Slurm command reference](reference/slurm.md) nearby. The
-[shared-compute policy](policies/slurm-resource-sharing.md) explains owner,
+[shared-compute reference](reference/how-shared-compute-works.md) explains owner,
 shared, borrowed, and requeue behavior.
 
 ## Reproducible software and workflows

@@ -16,6 +16,7 @@ decision table, or diagnostic sequence.
 | Create an SSH key, configure a client, connect with VS Code, or mount a small remote folder | [Account access, SSH, and VS Code](access-ssh-vscode.md) |
 | Choose durable or temporary storage and transfer project data | [Storage and transfer](storage-transfer.md) |
 | Submit, inspect, connect to, and cancel jobs | [Slurm commands](slurm.md) |
+| Understand shared, owner, borrowed, and interactive compute capacity | [How shared compute works](how-shared-compute-works.md) |
 | Use Conda, Snakemake, or Apptainer | [Software workflows](software-workflows.md) |
 | Diagnose permissions, file limits, GPU processes, searches, and failed jobs | [Troubleshooting](troubleshooting.md) |
 | Discover available CPUs, memory, GPUs, partitions, and supported software | [Resources and discovery](resources.md) |

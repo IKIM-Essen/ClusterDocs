@@ -14,6 +14,7 @@ class ReferenceGuideTests(unittest.TestCase):
             "storage-transfer.md",
             "software-workflows.md",
             "slurm.md",
+            "how-shared-compute-works.md",
             "troubleshooting.md",
             "resources.md",
             "ai-data-science.md",

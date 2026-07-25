@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-DOC = ROOT / "docs/policies/slurm-resource-sharing.md"
+DOC = ROOT / "docs/reference/how-shared-compute-works.md"
 
 
 class SlurmResourcePolicyTests(unittest.TestCase):
@@ -46,8 +46,8 @@ class SlurmResourcePolicyTests(unittest.TestCase):
     def test_navigation_exposes_the_policy(self):
         nav = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
         custom_nav = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
-        self.assertIn("policies/slurm-resource-sharing.md", nav)
-        self.assertIn("policies/slurm-resource-sharing.md", custom_nav)
+        self.assertIn("reference/how-shared-compute-works.md", nav)
+        self.assertIn("reference/how-shared-compute-works.md", custom_nav)
 
 
 if __name__ == "__main__":
