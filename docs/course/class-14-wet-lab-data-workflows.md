@@ -5,6 +5,7 @@
   <h2>Watch the class first</h2>
   <p>A secure, verifiable handoff from wet-lab instruments into governed RCC project workflows. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class14.png" src="{{ media_base_url }}/RCC_Onboarding_Class_14_Video_Enhanced.mp4?v=611d0aa6">
+    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_14_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">

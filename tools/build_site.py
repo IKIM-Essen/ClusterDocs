@@ -284,6 +284,15 @@ def relroot(out):
     depth=len(Path(out).parts)-1
     return '../'*depth
 
+def srt_to_vtt(text):
+    """Convert committed SRT captions to browser-native WebVTT."""
+    timestamps=re.sub(
+        r'(?m)(\d{2}:\d{2}:\d{2}),(\d{3})',
+        r'\1.\2',
+        text,
+    )
+    return 'WEBVTT\n\n'+timestamps.lstrip()
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); ap.add_argument('--include-media',action='store_true'); a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
@@ -291,6 +300,7 @@ def main():
         cfg=dict(cfg); cfg['media_base_url']='__LOCAL_MEDIA_BASE__'
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
+        if cfg.get('site_status') != 'production': bad.insert(0,'site_status')
         if bad: raise SystemExit('Production build blocked by unresolved config: '+', '.join(bad))
     out=(ROOT/a.output).resolve() if not Path(a.output).is_absolute() else Path(a.output)
     shutil.rmtree(out,ignore_errors=True); (out/'assets').mkdir(parents=True)
@@ -356,6 +366,10 @@ def main():
             )
     for name in ['captions','narration','pdf','slides']:
         if (ROOT/name).exists(): shutil.copytree(ROOT/name,out/'downloads'/name)
+    caption_out=out/'downloads/captions'
+    if caption_out.exists():
+        for srt in caption_out.glob('*.srt'):
+            srt.with_suffix('.vtt').write_text(srt_to_vtt(srt.read_text()))
     if a.include_media and (ROOT/'videos-enhanced').exists():
         shutil.copytree(ROOT/'videos-enhanced',out/'media',dirs_exist_ok=True)
     print(out)

@@ -5,6 +5,7 @@
   <h2>Watch the class first</h2>
   <p>CPU, GPU, memory, storage, and efficient I/O. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/part3.png" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4?v=0c74af89">
+    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Part_3_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">

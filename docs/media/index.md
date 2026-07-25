@@ -8,7 +8,7 @@ class so learners can watch them in context.
 
 ## Class 1: safe access to RCC
 
-<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4"></video>
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_1_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_1_Captions.srt) ·
 [slides](../downloads/slides/RCC_Onboarding_Part_1.pptx) ·
@@ -16,7 +16,7 @@ class so learners can watch them in context.
 
 ## Class 2: reproducible scientific workflows
 
-<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4"></video>
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_2_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_2_Captions.srt) ·
 [slides](../downloads/slides/RCC_Onboarding_Part_2.pptx) ·
@@ -24,7 +24,7 @@ class so learners can watch them in context.
 
 ## Class 3: performance and efficient I/O
 
-<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4"></video>
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_3_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_3_Captions.srt) ·
 [slides](../downloads/slides/RCC_Onboarding_Part_3.pptx) ·
@@ -32,7 +32,7 @@ class so learners can watch them in context.
 
 ## Class 4: containers with Apptainer
 
-<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4"></video>
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4"><track kind="captions" srclang="en" label="English captions" src="../downloads/captions/RCC_Onboarding_Part_4_Captions.vtt" default></video>
 
 [Captions](../downloads/captions/RCC_Onboarding_Part_4_Captions.srt) ·
 [slides](../downloads/slides/RCC_Onboarding_Part_4.pptx) ·

@@ -80,3 +80,16 @@ Complete and test these items before publishing the curriculum.
 - [ ] Check PDF and slide rendering on Windows and macOS.
 - [ ] Review captions against the final narration.
 - [ ] Publish an update date and tested-version matrix.
+
+## Website deployment and media
+
+- [ ] Set `site_status: production` and replace every unresolved value in `config/public.yml`.
+- [ ] Build successfully with `python tools/build_site.py --production`.
+- [ ] Configure a reviewed deployment target, TLS, rollback procedure, and named owner for updates.
+- [ ] Publish all 15 MP4 files at the configured media URL and verify their SHA-256 values against `config/media-manifest.yml`.
+- [ ] Confirm the media service supports HTTPS, byte-range requests, and the cross-origin behavior required by the documentation site.
+- [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.
+- [ ] Review every caption file against the final audio and test in-player captions in supported browsers.
+- [ ] Regenerate and compare the Part 1–4 PDF, DOCX, PPTX, frames, narration, and captions after final canonical-source edits.
+- [ ] Decide whether the unlisted rollout page and RCC Connect wording describe the service users will actually receive; revise or archive them before launch.
+- [ ] Run `python tools/rollout_readiness.py` and resolve every reported blocker.

@@ -5,6 +5,7 @@
   <h2>Watch the class first</h2>
   <p>Safe Shiny development, production readiness, governed data access, and common mistakes. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class9.png" src="{{ media_base_url }}/RCC_Onboarding_Class_9_Video_Enhanced.mp4?v=a6180576">
+    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_9_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">
