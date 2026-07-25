@@ -60,6 +60,40 @@ The SSHFS-Win Manager connection used the forwarded local port.
 Historical remote path patterns were `/homes/<username>/`, `/groups/<group>/`,
 and `/project/<project>/`. Current RCC paths may differ.
 
+### Historical visual walkthrough
+
+> **Read the current text before using these images.** The screenshots are
+> retained from the earlier ClusterDocs site because they help identify an
+> existing installation. Product versions, aliases, paths, port `6666`, and
+> automation choices shown below are historical and are not current RCC
+> configuration values.
+
+The WinFsp installer selected the core filesystem component rather than the
+developer components:
+
+![Historical WinFsp installer with the Core component selected and developer components disabled](../assets/WinFSP_download.png)
+
+The SSHFS-Win Manager example used a local forwarded connection and a group
+path. Do not copy its localhost port, key path, remote path, or automatic-start
+choice into a new setup:
+
+![Historical SSHFS-Win Manager basic and advanced connection screens showing a localhost tunnel and example group path](../assets/sshfs_win_manager.png)
+
+The former optional automation used Windows Task Scheduler. These screenshots
+are retained so an existing task can be recognized and removed or migrated:
+
+![Historical Windows Task Scheduler General tab for the background SSH task](../assets/sshfs_win_manager_details1.png)
+
+![Historical Windows Task Scheduler network-event trigger for the background SSH task](../assets/sshfs_win_manager_details2.png)
+
+![Historical Windows Task Scheduler Conditions tab limiting the task to an available network connection](../assets/sshfs_win_manager_conditions.png)
+
+![Historical Windows Task Scheduler Settings tab for the background SSH task](../assets/sshfs_win_manager_settings.png)
+
+Do not create an unattended background tunnel merely because it appears in the
+old walkthrough. First confirm the current endpoint, host identity, credential
+handling, need for automatic mounting, and safe stop behavior with RCC.
+
 ## Appropriate use
 
 Use the mount to inspect a report, edit a small text file, copy a sample sheet,

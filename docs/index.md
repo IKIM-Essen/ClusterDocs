@@ -31,6 +31,8 @@ validation, uncertainty, bias, and scientific limitations.
 
 ## Shared foundation
 
+- Need the complete short version first? Read the
+  [ClusterDocs NG TL;DR](tldr.md).
 - Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
 - Use the [course overview](course/index.md) when you want the complete fifteen-class sequence.
 - Preparing for the service transition: read [what is changing](rollout/index.md).

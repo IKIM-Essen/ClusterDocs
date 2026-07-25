@@ -108,6 +108,28 @@ During or after migration, do not approve an unexpected SSH identity warning and
 6. Keep data, environment, cache, and generated-result directories out of
    workspace-wide search.
 
+### Visual orientation from the earlier ClusterDocs site
+
+The screenshots below are retained because the main VS Code controls remain
+recognizable even when the interface changes. They are historical: extension
+versions, target names, usernames, and remote host labels visible in them are
+not current RCC configuration. Always select the approved RCC alias described
+above.
+
+Install Microsoft's Remote - SSH extension from the Extensions view:
+
+![Historical VS Code Extensions view with Microsoft's Remote - SSH extension highlighted](../assets/vs_code_ssh_remote_plugin.png)
+
+Open Remote Explorer and select the approved target. The historical screenshot
+contains several old and personal aliases; do not copy them:
+
+![Historical VS Code Remote Explorer showing multiple SSH targets and the Remote Explorer icon](../assets/vs_code_ssh_remote_explorer.png)
+
+After connecting, use **Open Folder** to choose only the project or source tree
+needed for the task:
+
+![Historical VS Code remote window showing the Open Folder action and integrated terminal](../assets/vs_code_ssh_remote_folder.png)
+
 Do not manually accept an unexpected identity warning in VS Code. Close it and run the RCC connection test instead. See the [SSH host-identity policy](../policies/ssh-host-identity.md) for the architecture and rollout controls.
 
 VS Code uses `rg` for full-text search. A recursive search over large shared

@@ -10,6 +10,7 @@ theme:
     - content.code.copy
 nav:
   - Home: index.md
+  - ClusterDocs NG TL;DR: tldr.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md

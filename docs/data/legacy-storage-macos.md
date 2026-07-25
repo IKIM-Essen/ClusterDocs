@@ -74,6 +74,32 @@ procedures.
 
 This is retained so existing Mac configurations can be understood and migrated.
 
+### Historical ConnectMeNow screenshots
+
+> **Use these to recognize an old setup, not to create a current one.** The
+> screenshots preserve the earlier ClusterDocs walkthrough at its original
+> resolution. The visible `shellhost` alias, home-directory target, mount path,
+> and automatic network-change behavior are historical.
+
+The share screen selected SSHFS and pointed ConnectMeNow at the former server
+alias:
+
+![Historical ConnectMeNow share details showing SSHFS and the former shellhost alias](../assets/ConnectMeNow-share-setup.png)
+
+The advanced screen configured command-line mount options and disabled ping
+before mount:
+
+![Historical ConnectMeNow advanced options showing network-change mounting and SSHFS mount options](../assets/ConnectMeNow-advanced-setup.png)
+
+After configuration, ConnectMeNow appeared as a small network-drive icon in the
+macOS menu bar:
+
+![Historical ConnectMeNow menu-bar network-drive icon](../assets/ConnectMeNow-icon.png)
+
+For a new setup, use the current RCC alias, a project directory rather than an
+authoritative research dataset in home storage, and manual mount/unmount tests
+before considering automation.
+
 ## Appropriate use
 
 Use the mount to inspect a report, edit a small sample sheet, copy a small

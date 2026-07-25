@@ -38,6 +38,22 @@ The connection sequence is always:
 4. open the local `127.0.0.1` address;
 5. stop the Slurm job with `scancel <jobid>` when finished.
 
+### What the local notebook view looks like
+
+These screenshots come from the earlier ClusterDocs Jupyter walkthrough. They
+show the classic Notebook interface rather than the current JupyterLab example,
+but they preserve two useful visual checks: the browser address is local
+`127.0.0.1`, and code executes in the remote allocated environment.
+
+![Historical classic Jupyter file view reached through a local 127.0.0.1 tunnel](../assets/jupyter-home.png)
+
+![Historical Jupyter notebook showing remote-host and Python-environment checks](../assets/jupyter-notebook.png)
+
+The second screenshot contains a former worker hostname, home path, Python
+version, and example username. Do not reuse those values. Use the worker, port,
+token, project path, and tunnel printed by your current bounded Slurm job. Never
+publish the token or include it in a support screenshot.
+
 > **Reference companions:** [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
 > contains connection diagnostics. [Slurm commands](../reference/slurm.md)
 > explains how to inspect and stop the notebook allocation.

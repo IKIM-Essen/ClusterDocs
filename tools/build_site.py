@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
+ ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Course','Course overview','course/index.md'),
