@@ -112,3 +112,6 @@ eligibility, see [Biomedical data admission](../security/rcc-biomedical-data-adm
 For a complete acquisition-to-analysis exercise, continue with
 [Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
 and [choose an instrument-data transfer path](../data/instrument-data-options.md).
+When active analysis ends, continue with
+[Class 15: research data lifecycle](../course/class-15-data-lifecycle.md) and the
+[planned RCC project to Coscine archive flow](../data/rcc-project-to-coscine.md).

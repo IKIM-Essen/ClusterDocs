@@ -30,10 +30,13 @@ nav:
       - Class 12 - Efficient local I/O: course/class-12-efficient-io.md
       - Class 13 - RCC storage architecture: course/class-13-storage-architecture.md
       - Class 14 - Wet-lab instrument data: course/class-14-wet-lab-data-workflows.md
+      - Class 15 - Research data lifecycle: course/class-15-data-lifecycle.md
   - Instrument data:
       - Choosing a transfer path: data/instrument-data-options.md
       - Legacy Windows storage access: data/legacy-storage-windows.md
       - Legacy macOS storage access: data/legacy-storage-macos.md
+  - Data lifecycle:
+      - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md
       - Account starter setups: reference/account-starter-setups.md

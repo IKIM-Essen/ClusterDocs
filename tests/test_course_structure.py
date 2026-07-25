@@ -2,8 +2,8 @@ import re, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class CourseTests(unittest.TestCase):
- def test_fourteen_classes_exist(self):
-  pages=sorted((ROOT/'docs/course').glob('class-*.md')); self.assertEqual(len(pages),14)
+ def test_fifteen_classes_exist(self):
+  pages=sorted((ROOT/'docs/course').glob('class-*.md')); self.assertEqual(len(pages),15)
  def test_each_class_has_gate_or_completion(self):
   for p in (ROOT/'docs/course').glob('class-*.md'):
    t=p.read_text().lower(); self.assertRegex(t,r'gate|completion')
