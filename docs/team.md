@@ -25,7 +25,7 @@ Use the channel for:
 - questions about getting started or choosing the right workflow;
 - help interpreting an RCC or Slurm error;
 - feedback and corrections for ClusterDocs;
-- questions about the service transition; and
+- questions about current access and supported services; and
 - requests that need discussion with the RCC team or other experienced users.
 
 Do not post passwords, private SSH keys, access tokens, patient identifiers,

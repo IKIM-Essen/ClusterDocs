@@ -42,7 +42,7 @@ current path.
 | `docs/apptainer.md` | Class 4 and software-workflow reference | Execution, binds, writable modes, caches, and GPU behavior retained with safer defaults |
 | `docs/jupyter.md` | Class 7 and interactive-workflow examples | Slurm and tunnel workflow updated; both screenshots retained with historical-value warnings |
 | `docs/troubleshooting.md` | `docs/reference/troubleshooting.md` | Open files, permissions, GPU, VS Code, SSH, Slurm, and interactive diagnostics retained with bounded fixes |
-| `docs/upcoming-rcc-changes.md` | `docs/rollout/index.md`, Class 5, Slurm reference and policies | Announcement and Slurm-first outcomes retained in current staged rollout material |
+| `docs/upcoming-rcc-changes.md` | `source/future-use/rollout.md`, Class 5, Slurm reference and policies | Slurm-first outcomes retained; speculative announcement archived outside the public site |
 | `README.md` | `README.md`, course overview, and repository metadata | Purpose and build/test orientation retained for maintainers |
 
 ## Image inventory

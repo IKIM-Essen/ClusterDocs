@@ -39,6 +39,41 @@ def has_deployment_workflow() -> bool:
     return any(signal in text for signal in signals)
 
 
+def manual_review_audit() -> tuple[list[str], list[str]]:
+    """Check whether the candidate is coherent enough to start human review."""
+    blockers: list[str] = []
+    ready: list[str] = []
+    required_guides = (
+        ROOT / "meta/EXPERT_REVIEW_GUIDE.md",
+        ROOT / "meta/NOVICE_REVIEW_GUIDE.md",
+        ROOT / "meta/VIDEO_REVIEW_GUIDE.md",
+    )
+    missing_guides = [path.name for path in required_guides if not path.is_file()]
+    if missing_guides:
+        blockers.append("manual-review guides are missing: " + ", ".join(missing_guides))
+    else:
+        ready.append("expert, novice, and video review guides are present")
+
+    public_text = "\n".join(path.read_text(errors="replace") for path in (ROOT / "docs").rglob("*.md"))
+    stale_terms = [term for term in ("RCC Connect", "rollout/index.md", "rollout page") if term in public_text]
+    if stale_terms:
+        blockers.append("speculative rollout wording remains public: " + ", ".join(stale_terms))
+    else:
+        ready.append("public guidance uses the current institutional connection route")
+
+    if re.search(r"RCC_Onboarding_Part_[1-4]\.pptx", public_text):
+        blockers.append("public pages still link unsynchronized Part 1–4 slide exports")
+    else:
+        ready.append("unsynchronized Part 1–4 office exports are withheld")
+
+    source_part4 = (ROOT / "source/part4.md").read_text().lower()
+    if "rootless execution on a shared cluster" not in source_part4:
+        blockers.append("canonical Part 4 source lacks the rootless execution update")
+    else:
+        ready.append("canonical Part 4 explains rootless Apptainer")
+    return blockers, ready
+
+
 def audit() -> tuple[list[str], list[str], list[str]]:
     blockers: list[str] = []
     warnings: list[str] = []
@@ -86,14 +121,14 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     if not has_deployment_workflow():
         blockers.append("no reviewed production deployment workflow is present")
 
-    source_part4 = (ROOT / "source/part4.md").read_text().lower()
-    if "rootless execution on a shared cluster" not in source_part4:
-        blockers.append("canonical Part 4 source lacks the rootless execution update")
+    review_blockers, review_ready = manual_review_audit()
+    blockers.extend(review_blockers)
+    ready.extend(review_ready)
 
     warnings.extend(
         (
             "external links require a final online link check",
-            "the unlisted rollout page and RCC Connect wording require an owner decision",
+            "the archived transition announcement needs a new operational review before reuse",
             "browser, mobile, screen-reader, and novice-user acceptance remain manual checks",
         )
     )
@@ -107,7 +142,26 @@ def main() -> None:
         action="store_true",
         help="print the audit without returning a failing status",
     )
+    parser.add_argument(
+        "--manual-review",
+        action="store_true",
+        help="check whether expert and novice manual review can begin",
+    )
     args = parser.parse_args()
+    if args.manual_review:
+        blockers, ready = manual_review_audit()
+        print("ClusterDocs NG manual-review readiness")
+        for item in ready:
+            print(f"READY: {item}")
+        for item in blockers:
+            print(f"BLOCKER: {item}")
+        if blockers:
+            print(f"RESULT: BLOCKED ({len(blockers)} blocker groups)")
+            if not args.allow_blocked:
+                raise SystemExit(1)
+        else:
+            print("RESULT: READY_FOR_EXPERT_AND_NOVICE_REVIEW")
+        return
     blockers, warnings, ready = audit()
     print("ClusterDocs NG rollout readiness")
     for item in ready:

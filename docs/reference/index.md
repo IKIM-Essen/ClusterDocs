@@ -27,5 +27,5 @@ decision table, or diagnostic sequence.
 
 Examples use public aliases and replaceable values. The site deliberately does
 not publish physical host inventories, internal addresses, firewall rules, or
-administrator commands. Use the current rollout page and institutional support
-channel for values that are still being introduced.
+administrator commands. Use the current institutional RCC instructions and
+support channel for operational values.

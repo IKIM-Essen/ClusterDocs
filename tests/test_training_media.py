@@ -60,7 +60,7 @@ class TrainingMediaTests(unittest.TestCase):
             narration_suffix = "Narration.md" if part <= 4 else "Video_Narration.md"
             self.assertIn(f"RCC_Onboarding_{prefix}_{part}_{narration_suffix}", text)
             if part <= 4:
-                self.assertIn(f"RCC_Onboarding_Part_{part}.pptx", text)
+                self.assertNotIn(f"RCC_Onboarding_Part_{part}.pptx", text)
 
     def test_additional_class_assets_match_report(self):
         report = json.loads((ROOT / "meta/course-video-build-report.json").read_text())

@@ -10,7 +10,6 @@
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">
     <a href="../../downloads/captions/RCC_Onboarding_Part_4_Captions.srt">Captions</a>
-    <a href="../../downloads/slides/RCC_Onboarding_Part_4.pptx">Download slides</a>
     <a href="../../downloads/narration/RCC_Onboarding_Part_4_Narration.md">Read transcript</a>
   </div>
 </section>
