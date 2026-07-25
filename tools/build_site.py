@@ -301,6 +301,9 @@ def main():
     for part in range(1,5):
         poster=ROOT/'slides/frames'/f'part{part}'/'slide-01.png'
         if poster.exists(): shutil.copy2(poster,poster_out/f'part{part}.png')
+    for class_number in range(5,16):
+        poster=ROOT/'slides/frames'/f'class{class_number}'/'slide-01.png'
+        if poster.exists(): shutil.copy2(poster,poster_out/f'class{class_number}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])
     nav_groups=[]
     for group,label,path in NAV:

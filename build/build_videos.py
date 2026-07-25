@@ -280,10 +280,20 @@ def build_part(part: int, voice: str, rate: int, keep_work: bool) -> dict[str, o
             "20",
             "-c:a",
             "aac",
+            "-af",
+            "pan=stereo|c0=c0|c1=c0",
+            "-ac",
+            "2",
             "-b:a",
             "160k",
             "-ar",
             "48000",
+            "-disposition:a:0",
+            "default",
+            "-metadata:s:a:0",
+            "language=eng",
+            "-metadata:s:a:0",
+            "title=English narration",
             "-t",
             f"{timeline:.3f}",
             "-movflags",
@@ -311,6 +321,7 @@ def build_part(part: int, voice: str, rate: int, keep_work: bool) -> dict[str, o
         "caption_entries": len(caption_entries),
         "audio_target_lufs": -16,
         "audio_true_peak_limit_db": -1.5,
+        "audio_channels": 2,
     }
     if cleanup:
         cleanup.cleanup()

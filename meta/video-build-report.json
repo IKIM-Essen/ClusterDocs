@@ -7,11 +7,12 @@
     "slide_count": 12,
     "duration_seconds": 486.225,
     "video": "videos-enhanced/RCC_Onboarding_Part_1_Video_Enhanced.mp4",
-    "video_sha256": "e7be9d0e98c5451dd381768a5c1687730f481ae7e5c8181dff801d61c5ba7c65",
+    "video_sha256": "952a6dae9f6d07b330a60b828839e1474b6d8f7172c4f79228419915f15c0b26",
     "captions": "captions/RCC_Onboarding_Part_1_Captions.srt",
     "caption_entries": 112,
     "audio_target_lufs": -16,
-    "audio_true_peak_limit_db": -1.5
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
   },
   {
     "part": 2,
@@ -21,11 +22,12 @@
     "slide_count": 12,
     "duration_seconds": 517.3,
     "video": "videos-enhanced/RCC_Onboarding_Part_2_Video_Enhanced.mp4",
-    "video_sha256": "8c2732222484bef0e0bef3aec01916c361a453652a445d324090ce520dbe486b",
+    "video_sha256": "84dafd82ba965c1b0370d6d73026c42909fdbeae08fe12d2378cc7cf19f89f24",
     "captions": "captions/RCC_Onboarding_Part_2_Captions.srt",
     "caption_entries": 109,
     "audio_target_lufs": -16,
-    "audio_true_peak_limit_db": -1.5
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
   },
   {
     "part": 3,
@@ -35,11 +37,12 @@
     "slide_count": 14,
     "duration_seconds": 635.441,
     "video": "videos-enhanced/RCC_Onboarding_Part_3_Video_Enhanced.mp4",
-    "video_sha256": "89c429f3ecdf04f0382814b4fc6b4266d39faf7813ffbf875a22e8eadd24af28",
+    "video_sha256": "0c74af895bcc591aecfb86381df229f9c04c2c8112e164ae3da2f7fffeb16053",
     "captions": "captions/RCC_Onboarding_Part_3_Captions.srt",
     "caption_entries": 132,
     "audio_target_lufs": -16,
-    "audio_true_peak_limit_db": -1.5
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
   },
   {
     "part": 4,
@@ -49,10 +52,11 @@
     "slide_count": 13,
     "duration_seconds": 542.272,
     "video": "videos-enhanced/RCC_Onboarding_Part_4_Video_Enhanced.mp4",
-    "video_sha256": "3d12bfaaab28de47804958027d8fcc1dec84423368c44afa89d45a3f1c22a041",
+    "video_sha256": "4263d9cb2259867327210f4e3ad8293729b1d047c1002336835bdaa2c233acff",
     "captions": "captions/RCC_Onboarding_Part_4_Captions.srt",
     "caption_entries": 114,
     "audio_target_lufs": -16,
-    "audio_true_peak_limit_db": -1.5
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
   }
 ]

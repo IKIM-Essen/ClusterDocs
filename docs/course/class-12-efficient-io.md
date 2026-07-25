@@ -1,5 +1,18 @@
 # Class 12: efficient I/O—copy locally, compute locally, return results
 
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 6 min video</p>
+  <h2>Watch the class first</h2>
+  <p>Why local scratch matters, safe staging, workflow integration, caching, diagnosis, and storage decisions. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class12.png" src="{{ media_base_url }}/RCC_Onboarding_Class_12_Video_Enhanced.mp4?v=a6cfc6b2">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Class_12_Captions.srt">Captions</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Class_12_Video_Narration.md">Read transcript</a>
+  </div>
+</section>
+
 > **The pattern:** Keep durable inputs and final results on approved shared
 > storage. For I/O-intensive computation, copy only the required inputs to the
 > compute node's local scratch space, run the computation there, validate the

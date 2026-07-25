@@ -1,5 +1,18 @@
 # Class 10: From notebooks to governed project services
 
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 2 min video</p>
+  <h2>Watch the class first</h2>
+  <p>Choosing between notebooks, workflows, and services, with clear boundaries and review preparation. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class10.png" src="{{ media_base_url }}/RCC_Onboarding_Class_10_Video_Enhanced.mp4?v=99f7d388">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Class_10_Captions.srt">Captions</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Class_10_Video_Narration.md">Read transcript</a>
+  </div>
+</section>
+
 This includes model-backed research services. A trained model, embedding index,
 or AI inference endpoint inherits the governance of its source data and requires
 the same reviewable service boundary as any other protected project application.

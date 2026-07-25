@@ -35,11 +35,12 @@ The canonical source for the original four classes is the Markdown document in `
 
 ## Video format
 
-The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–4
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–15
 use the macOS Daniel British-English voice with sentence-aware pacing,
 technical-term pronunciation handling, de-essing, gentle compression, EBU R128
 loudness normalization, and captions. Rebuild them with
-`python3 build/build_videos.py`. The build records its settings, durations, and
+`python3 build/build_videos.py` for Classes 1–4 and
+`python3 build/build_course_videos.py` for Classes 5–15. The builds record settings, durations, and
 hashes in `meta/video-build-report.json`. Videos do not connect to production
 RCC services and contain no credentials or biomedical data.
 

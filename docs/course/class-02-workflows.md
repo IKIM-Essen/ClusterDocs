@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 9 min video</p>
   <h2>Watch the class first</h2>
   <p>Projects, environments, Snakemake, Slurm, and reproducibility. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part2.png" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part2.png" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4?v=84dafd82">
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">

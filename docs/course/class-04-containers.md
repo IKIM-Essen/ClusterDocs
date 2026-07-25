@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 9 min video</p>
   <h2>Watch the class first</h2>
   <p>Reproducible containers, trusted images, binds, and scratch. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part4.png" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part4.png" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4?v=4263d9cb">
     Your browser does not support embedded video.
   </video>
   <div class="course-video-links" aria-label="Video alternatives and downloads">

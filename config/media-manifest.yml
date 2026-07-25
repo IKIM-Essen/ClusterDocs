@@ -1,6 +1,7 @@
 publication: release_assets_or_institutional_media
 video_build:
   command: python3 build/build_videos.py
+  additional_classes_command: python3 build/build_course_videos.py
   visual_source: committed_reviewed_frames
   resolution: 1280x720
   video_codec: h264
@@ -13,42 +14,125 @@ video_build:
 assets:
   - class: 1
     video: RCC_Onboarding_Part_1_Video_Enhanced.mp4
+    audio_channels: 2
     duration_seconds: 486.225
-    sha256: e7be9d0e98c5451dd381768a5c1687730f481ae7e5c8181dff801d61c5ba7c65
+    sha256: 952a6dae9f6d07b330a60b828839e1474b6d8f7172c4f79228419915f15c0b26
     captions: RCC_Onboarding_Part_1_Captions.srt
     slides: RCC_Onboarding_Part_1.pptx
     narration: RCC_Onboarding_Part_1_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 2
     video: RCC_Onboarding_Part_2_Video_Enhanced.mp4
+    audio_channels: 2
     duration_seconds: 517.300
-    sha256: 8c2732222484bef0e0bef3aec01916c361a453652a445d324090ce520dbe486b
+    sha256: 84dafd82ba965c1b0370d6d73026c42909fdbeae08fe12d2378cc7cf19f89f24
     captions: RCC_Onboarding_Part_2_Captions.srt
     slides: RCC_Onboarding_Part_2.pptx
     narration: RCC_Onboarding_Part_2_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 3
     video: RCC_Onboarding_Part_3_Video_Enhanced.mp4
+    audio_channels: 2
     duration_seconds: 635.441
-    sha256: 89c429f3ecdf04f0382814b4fc6b4266d39faf7813ffbf875a22e8eadd24af28
+    sha256: 0c74af895bcc591aecfb86381df229f9c04c2c8112e164ae3da2f7fffeb16053
     captions: RCC_Onboarding_Part_3_Captions.srt
     slides: RCC_Onboarding_Part_3.pptx
     narration: RCC_Onboarding_Part_3_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 4
     video: RCC_Onboarding_Part_4_Video_Enhanced.mp4
+    audio_channels: 2
     duration_seconds: 542.272
-    sha256: 3d12bfaaab28de47804958027d8fcc1dec84423368c44afa89d45a3f1c22a041
+    sha256: 4263d9cb2259867327210f4e3ad8293729b1d047c1002336835bdaa2c233acff
     captions: RCC_Onboarding_Part_4_Captions.srt
     slides: RCC_Onboarding_Part_4.pptx
     narration: RCC_Onboarding_Part_4_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 5
-    narration: RCC_Onboarding_Class_5_Narration.md
-    video_status: narration_review
-    publication_target: youtube_or_institutional_media_at_rollout
+    video: RCC_Onboarding_Class_5_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 130.289
+    sha256: eba83875df6b57aa8cd0c7399944bf8e7679029e61cc0097780096a0808a39e6
+    captions: RCC_Onboarding_Class_5_Captions.srt
+    narration: RCC_Onboarding_Class_5_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
   - class: 6
-    narration: RCC_Onboarding_Class_6_Narration.md
-    recording_brief: RCC_Onboarding_Class_6_Recording_Brief.md
-    video_status: expanded_narration_ready_for_novice_review
-    publication_target: youtube_or_institutional_media_at_rollout
+    video: RCC_Onboarding_Class_6_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 263.582
+    sha256: 1d436766fd1ebe5fed422a9fba144e63267948bda215436a36ff577fa15339a4
+    captions: RCC_Onboarding_Class_6_Captions.srt
+    narration: RCC_Onboarding_Class_6_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 7
+    video: RCC_Onboarding_Class_7_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 219.692
+    sha256: 2fd16b24e1487fd5eeed636b0a5dc4e0229c06fb622dff10079c17085db735c8
+    captions: RCC_Onboarding_Class_7_Captions.srt
+    narration: RCC_Onboarding_Class_7_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 8
+    video: RCC_Onboarding_Class_8_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 146.288
+    sha256: d07cccc5b0aa7935e0015101d56cdeef53bf4971a4d7b94d70f5f05b9a8e7ddf
+    captions: RCC_Onboarding_Class_8_Captions.srt
+    narration: RCC_Onboarding_Class_8_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 9
+    video: RCC_Onboarding_Class_9_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 132.318
+    sha256: a6180576d11963126099291835bf82dcf59b8eda9078fa8cc80afa4db6cf337f
+    captions: RCC_Onboarding_Class_9_Captions.srt
+    narration: RCC_Onboarding_Class_9_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 10
+    video: RCC_Onboarding_Class_10_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 113.287
+    sha256: 99f7d38863c3df7ea7df46d448c6bacc636828aa069a24bc23f949c648097c9f
+    captions: RCC_Onboarding_Class_10_Captions.srt
+    narration: RCC_Onboarding_Class_10_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 11
+    video: RCC_Onboarding_Class_11_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 440.935
+    sha256: 908394e70acc14c8288e9108761a18c5a306b65aa591a2484ecae8da5cf9103c
+    captions: RCC_Onboarding_Class_11_Captions.srt
+    narration: RCC_Onboarding_Class_11_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 12
+    video: RCC_Onboarding_Class_12_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 332.166
+    sha256: a6cfc6b2d2d387382df9dd40b21461165d5a9a70272fafad0c9d46fe044ffd01
+    captions: RCC_Onboarding_Class_12_Captions.srt
+    narration: RCC_Onboarding_Class_12_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 13
+    video: RCC_Onboarding_Class_13_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 307.027
+    sha256: f963ffcd688734c84d3da464b864cc3204c1b789b16e3fcc6e78144f773219d9
+    captions: RCC_Onboarding_Class_13_Captions.srt
+    narration: RCC_Onboarding_Class_13_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 14
+    video: RCC_Onboarding_Class_14_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 288.554
+    sha256: 611d0aa6fee05f36dca5a4f42e1484e678719b3ae076d1efd6dfba42a0b6b5c4
+    captions: RCC_Onboarding_Class_14_Captions.srt
+    narration: RCC_Onboarding_Class_14_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 15
+    video: RCC_Onboarding_Class_15_Video_Enhanced.mp4
+    audio_channels: 2
+    duration_seconds: 363.166
+    sha256: 69afde4f907ed57ee4bf43558b32bb48c63f9bf0976fdd64b495f8ba6b139dfa
+    captions: RCC_Onboarding_Class_15_Captions.srt
+    narration: RCC_Onboarding_Class_15_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete

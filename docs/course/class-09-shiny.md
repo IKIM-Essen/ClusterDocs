@@ -1,5 +1,18 @@
 # Class 9: Shiny applications on RCC
 
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 3 min video</p>
+  <h2>Watch the class first</h2>
+  <p>Safe Shiny development, production readiness, governed data access, and common mistakes. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class9.png" src="{{ media_base_url }}/RCC_Onboarding_Class_9_Video_Enhanced.mp4?v=a6180576">
+    Your browser does not support embedded video.
+  </video>
+  <div class="course-video-links" aria-label="Video alternatives and downloads">
+    <a href="../../downloads/captions/RCC_Onboarding_Class_9_Captions.srt">Captions</a>
+    <a href="../../downloads/narration/RCC_Onboarding_Class_9_Video_Narration.md">Read transcript</a>
+  </div>
+</section>
+
 Shiny is useful when a project needs an interactive browser view for plots, parameters, and curated results. On RCC there are two separate modes:
 
 1. **Development or demonstration:** Shiny runs in a Slurm allocation and you connect through an SSH tunnel.

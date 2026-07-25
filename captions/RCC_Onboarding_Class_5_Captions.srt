@@ -1,0 +1,108 @@
+1
+00:00:00,000 --> 00:00:03,410
+Welcome to Class 5: Slurm acceptance patterns.
+
+2
+00:00:03,410 --> 00:00:07,794
+This video introduces the core decisions and working patterns.
+
+3
+00:00:07,794 --> 00:00:14,614
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14,614 --> 00:00:17,050
+exercises, and detailed reference material.
+
+5
+00:00:17,050 --> 00:00:23,993
+GPU work follows the same principle: request the current GPU partition in a batch job and
+
+6
+00:00:23,993 --> 00:00:27,031
+keep interactive GPU exploration attended and bounded.
+
+7
+00:00:27,031 --> 00:00:32,553
+The following screenshot was captured from the RCC scheduler on 25 July 2026.
+
+8
+00:00:32,553 --> 00:00:38,500
+It shows what sinfo looks like, but the available nodes and partitions can change.
+
+9
+00:00:38,500 --> 00:00:41,474
+Run sinfo yourself before choosing a partition.
+
+10
+00:00:41,474 --> 00:00:46,572
+A minimal batch script is: Slurm normally allocates the requested CPU, memory,
+
+11
+00:00:46,572 --> 00:00:49,546
+GPU, and time on a suitable node.
+
+12
+00:00:49,546 --> 00:00:53,794
+It does not give the job an exclusive whole node.
+
+13
+00:00:53,794 --> 00:01:00,591
+Ordinary jobs should not add --nodes or --exclusive; request whole or multiple nodes only for a
+
+14
+00:01:00,591 --> 00:01:03,140
+measured application designed to use them.
+
+15
+00:01:03,140 --> 00:01:09,736
+The first job verifies scheduling, environment capture, output handling and exact comparison.
+
+16
+00:01:09,736 --> 00:01:13,742
+The second job runs a minimal local Snakemake workflow.
+
+17
+00:01:13,742 --> 00:01:17,749
+It does not download packages or contact external services.
+
+18
+00:01:17,749 --> 00:01:22,386
+The third job uses an instructor-provided, immutable training image:
+
+19
+00:01:22,386 --> 00:01:27,492
+The gate: submits only one job at a time; uses one CPU,
+
+20
+00:01:27,492 --> 00:01:34,302
+128 MiB RAM and a two-minute limit; refuses job arrays; refuses to run when another learner
+
+21
+00:01:34,302 --> 00:01:39,409
+gate is active for the same user; waits for a bounded period;
+
+22
+00:01:39,409 --> 00:01:46,218
+compares output byte-for-byte; cleans only its own temporary directory; does not enumerate nodes or expose scheduler
+
+23
+00:01:46,218 --> 00:01:46,643
+configuration.
+
+24
+00:01:46,643 --> 00:01:52,434
+A passing class gate shows that your account can execute the pattern.
+
+25
+00:01:52,434 --> 00:01:59,672
+It is not a cluster-wide health test and must not be expanded into host-by-host probing.
+
+26
+00:01:59,672 --> 00:02:06,428
+Reference companion: After completing the bounded gates, use the Slurm command reference for dependencies,
+
+27
+00:02:06,428 --> 00:02:10,289
+reusable allocations, GPU requests, accounting, cancellation, and checkpointing.
+
