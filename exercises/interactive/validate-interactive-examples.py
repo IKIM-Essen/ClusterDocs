@@ -53,6 +53,9 @@ for notebook in [EX / "notebooks" / "python-large-data.ipynb", EX / "notebooks" 
     cell_text = "\n".join("".join(c.get("source", [])) for c in nb.get("cells", []))
     if "100_000" not in cell_text and "100000" not in cell_text:
         errors.append(f"{notebook.relative_to(ROOT)} does not show a bounded synthetic larger dataset")
+    for visual in ("PCoA", "waterfall", "Bray-Curtis"):
+        if visual not in cell_text:
+            errors.append(f"{notebook.relative_to(ROOT)} does not include the {visual} visual example")
     if re.search(r"/projects|10\.240\.|132\.252\.|password\s*=|token\s*=", cell_text, re.I):
         errors.append(f"{notebook.relative_to(ROOT)} contains forbidden infrastructure or credential-like content")
 

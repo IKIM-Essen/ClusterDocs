@@ -12,7 +12,7 @@ synthetic data so it can be explored safely before adapting it to a project.
 | `examples/interactive-workflows/r` | R batch analysis with a pinned Conda environment. |
 | `examples/interactive-workflows/jupyter` | JupyterLab inside a Slurm allocation, bound to loopback. |
 | `examples/interactive-workflows/shiny` | Shiny development session inside a Slurm allocation, bound to loopback. |
-| `examples/interactive-workflows/notebooks` | Small synthetic Python and R notebooks for classroom use. |
+| `examples/interactive-workflows/notebooks` | Synthetic Python and R notebooks with sampled distributions, Bray--Curtis PCoA, and waterfall visuals. |
 
 The Python and R batch examples use `cpu_short` because they finish quickly.
 Jupyter and Shiny use bounded `interactive` allocations and must be stopped when

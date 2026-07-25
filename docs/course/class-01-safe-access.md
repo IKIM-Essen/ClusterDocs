@@ -9,7 +9,9 @@ By the end of this class you can:
 - identify a suitable RCC public key without displaying the private key;
 - validate the RCC SSH configuration before connecting;
 - make one controlled login test;
-- install VS Code and the Remote - SSH extension;
+- install VS Code and the Remote - SSH extension as the recommended interface
+  for most coding and analysis preparation;
+- open a narrowly scoped remote project and configure safe search exclusions;
 - use the browser transfer service without sharing an account.
 
 ## Security model in plain language
@@ -85,6 +87,18 @@ The test uses strict host-key checking, disables password prompts, permits one c
 ## Gate 1C: VS Code
 
 The same readiness script checks whether VS Code and the Microsoft Remote - SSH extension are present. Terminal SSH must work before VS Code is tested. When RCC Connect becomes active, its repair action selects the dedicated RCC SSH configuration for VS Code.
+
+For most users, this is the normal day-to-day interface after the connection
+test passes. Open the code repository or smallest useful project subdirectory,
+not an entire home, group, or project-storage tree. VS Code does not create a
+Slurm allocation: use its terminal to submit and inspect jobs, not to run a
+sustained analysis directly.
+
+Before searching, exclude data, results, environments, package trees, and
+workflow caches. Review extensions and Workspace Trust because remote
+extensions and repository tasks can run with your RCC account's permissions.
+The [VS Code reference](../reference/access-ssh-vscode.md#customize-vs-code-without-creating-performance-problems)
+contains copyable settings and the restored ClusterDocs performance advice.
 
 ## Web data transfer
 

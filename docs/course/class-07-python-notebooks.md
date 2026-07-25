@@ -2,6 +2,10 @@
 
 This class teaches a safe pattern for interactive Python analysis on RCC. A notebook is useful for inspection, statistics, and figures. It is **not** the place to run an overnight computation or keep many gigabytes in memory without limits.
 
+Use VS Code with Remote - SSH as the suggested front end for editing Python,
+notebooks, environment files, and Slurm scripts. A notebook kernel is separate
+from the editor: it still runs inside a bounded Slurm allocation.
+
 ## Learning goals
 
 After this class, you can:
@@ -38,6 +42,22 @@ The connection sequence is always:
 4. open the local `127.0.0.1` address;
 5. stop the Slurm job with `scancel <jobid>` when finished.
 
+### What the local notebook view looks like
+
+These screenshots come from the earlier ClusterDocs Jupyter walkthrough. They
+show the classic Notebook interface rather than the current JupyterLab example,
+but they preserve two useful visual checks: the browser address is local
+`127.0.0.1`, and code executes in the remote allocated environment.
+
+![Historical classic Jupyter file view reached through a local 127.0.0.1 tunnel](../assets/jupyter-home.png)
+
+![Historical Jupyter notebook showing remote-host and Python-environment checks](../assets/jupyter-notebook.png)
+
+The second screenshot contains a former worker hostname, home path, Python
+version, and example username. Do not reuse those values. Use the worker, port,
+token, project path, and tunnel printed by your current bounded Slurm job. Never
+publish the token or include it in a support screenshot.
+
 > **Reference companions:** [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
 > contains connection diagnostics. [Slurm commands](../reference/slurm.md)
 > explains how to inspect and stop the notebook allocation.
@@ -65,7 +85,12 @@ The course includes:
 - `examples/interactive-workflows/python/python.sbatch`
 - `examples/interactive-workflows/python/environment.yml`
 
-The notebook uses synthetic data so that you can practice safely. The batch script shows the same idea as a scheduled Slurm job.
+The notebooks use synthetic data so that you can practice safely. Their
+RiboSnake-inspired section builds a Bray--Curtis PCoA and a ranked waterfall
+plot in both Python and R. Run the cells to render the figures; committed
+notebook outputs stay empty so that results or restricted data cannot be
+published accidentally. The batch script shows the same idea as a scheduled
+Slurm job.
 
 ## Python tool choices
 

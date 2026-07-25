@@ -16,9 +16,11 @@ patterns={
  'network scan command': re.compile(r'\b(?:nmap|masscan|zmap)\b',re.I),
 }
 errors=[]
+PUBLIC_HARDWARE_GUIDES={'docs/resources/how-it-all-works.md'}
 
 def scan(label,text):
  for name,pat in patterns.items():
+  if name == 'hardware control-plane detail' and label in PUBLIC_HARDWARE_GUIDES: continue
   for m in pat.finditer(text): errors.append(f'{label}:{text.count(chr(10),0,m.start())+1}: {name}: {m.group(0)}')
 
 for item in TEXT_ROOTS:

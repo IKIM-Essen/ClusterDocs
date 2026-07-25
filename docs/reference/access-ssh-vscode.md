@@ -4,6 +4,12 @@ This guide collects the practical setup details from the earlier ClusterDocs
 site. Complete [Class 1](../course/class-01-safe-access.md) first so that the
 credential and host-verification rules are clear.
 
+> **Recommended for most users:** use **VS Code with Remote - SSH** as your
+> everyday interface for writing code, editing configuration, using Git,
+> reading logs, and preparing analyses. Use the RCC transfer service for large
+> data movement, and submit computation through Slurm. Opening a remote VS Code
+> window does not create a compute allocation.
+
 ## Request an RCC account
 
 Use the RCC Admin request flow when it is available. If your project still
@@ -98,7 +104,7 @@ log with support.
 
 During or after migration, do not approve an unexpected SSH identity warning and do not delete host records merely to make the warning disappear. Close the client, run the RCC connection test and use its repair action. Report the generated support code if repair fails.
 
-## Use VS Code Remote SSH
+## Use VS Code Remote SSH as the main working interface
 
 1. Install Visual Studio Code and Microsoft's **Remote - SSH** extension.
 2. Confirm terminal SSH works first.
@@ -108,11 +114,51 @@ During or after migration, do not approve an unexpected SSH identity warning and
 6. Keep data, environment, cache, and generated-result directories out of
    workspace-wide search.
 
+Use VS Code for the work it does well:
+
+- edit Python, R, shell, Snakemake, configuration, and documentation files;
+- review Git changes before committing them;
+- use the integrated terminal for navigation, small checks, and Slurm commands;
+- inspect job logs and small result summaries; and
+- work with a narrowly scoped project folder.
+
+Do not use the editor terminal for sustained analysis on the submission host.
+Do not drag large datasets through the file explorer, and do not open a home,
+group, or whole project storage root merely to browse it.
+
+### Find the controls shown in ClusterDocs
+
+The screenshots below show where the main VS Code controls are. Interface
+details can move between versions. Do not copy target names, usernames, or
+server labels from a screenshot; select the RCC connection you were given.
+
+Install Microsoft's Remote - SSH extension from the Extensions view:
+
+![VS Code Extensions view with Microsoft's Remote - SSH extension highlighted](../assets/vs_code_ssh_remote_plugin.png)
+
+Open Remote Explorer and select the approved target. The screenshot contains
+example personal entries; do not copy them:
+
+![VS Code Remote Explorer showing multiple SSH targets and the Remote Explorer icon](../assets/vs_code_ssh_remote_explorer.png)
+
+After connecting, use **Open Folder** to choose only the project or source tree
+needed for the task:
+
+![VS Code remote window showing the Open Folder action and integrated terminal](../assets/vs_code_ssh_remote_folder.png)
+
 Do not manually accept an unexpected identity warning in VS Code. Close it and run the RCC connection test instead. See the [SSH host-identity policy](../policies/ssh-host-identity.md) for the architecture and rollout controls.
 
-VS Code uses `rg` for full-text search. A recursive search over large shared
-storage or an environment containing thousands of files can create substantial
-metadata load. Add generated trees to `.gitignore` or `.ignore`, for example:
+## Customize VS Code without creating performance problems
+
+VS Code uses `rg` for full-text search and watches workspace files for changes.
+A recursive search or watcher over shared data, Conda environments, package
+trees, workflow caches, or generated results can create substantial CPU,
+network, and filesystem metadata load. This was one of the most important
+practical warnings in the earlier ClusterDocs.
+
+Start by opening the smallest useful folder, usually the repository containing
+your code. Put directories that should never be searched in `.gitignore` or
+`.ignore`, for example:
 
 ```gitignore
 .venv/
@@ -121,6 +167,71 @@ data/
 results/
 node_modules/
 ```
+
+For a large project, open **Preferences: Open Workspace Settings (JSON)** and
+add reviewed workspace settings such as:
+
+```json
+{
+  "search.followSymlinks": false,
+  "search.useIgnoreFiles": true,
+  "search.exclude": {
+    "**/.venv/**": true,
+    "**/.snakemake/**": true,
+    "**/node_modules/**": true,
+    "**/data/**": true,
+    "**/results/**": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.venv/**": true,
+    "**/.snakemake/**": true,
+    "**/node_modules/**": true,
+    "**/data/**": true,
+    "**/results/**": true
+  }
+}
+```
+
+Adapt the names to your repository. Excluding a directory from search or file
+watching does not change its permissions and does not make its contents safe to
+publish. The old “exclude everything” setting is useful only as an emergency
+diagnostic; a small workspace plus precise exclusions is a better default.
+
+Use **Files: Exclude** only to reduce visual clutter. It hides matching paths
+from the Explorer but does not prevent code, terminals, extensions, or other
+tools from reading them.
+
+### Extensions, workspace trust, and settings
+
+- Install only extensions you need, check the publisher, and keep them updated.
+- Notice whether an extension is installed **locally** or **in the SSH remote**.
+  A remote extension can execute code and read files with your RCC account's
+  permissions.
+- Review an unfamiliar repository before granting Workspace Trust. Repository
+  tasks, debug configurations, notebooks, and workspace settings may execute
+  commands or influence tools.
+- Keep passwords, tokens, private keys, patient identifiers, and internal
+  service details out of `settings.json`, `.vscode/`, tasks, launch files, and
+  extension configuration.
+- Commit useful team settings only after review. Prefer a short
+  `.vscode/extensions.json` recommendation list over automatic installation of
+  a large extension collection.
+- Do not enable SSH agent forwarding or bypass a host-identity warning to make
+  Remote - SSH connect.
+
+### Analysis and notebooks
+
+VS Code is still the suggested front end for most Python and R users: edit the
+analysis, environment file, batch script, and notebook there. The execution
+rule does not change. Long or data-intensive Python and R programs run through
+Slurm. A Jupyter kernel also runs inside a bounded Slurm allocation and is
+reached through the documented loopback tunnel; do not let a notebook or an
+interactive editor kernel run sustained work on the submission host.
+
+For debugging, reproduce the issue with a tiny input in a short allocation.
+Do not attach a debugger to another user's process or expose a debug port on a
+public interface.
 
 ## End a session cleanly
 

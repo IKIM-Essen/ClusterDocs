@@ -10,6 +10,7 @@ theme:
     - content.code.copy
 nav:
   - Home: index.md
+  - ClusterDocs NG TL;DR: tldr.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
@@ -29,6 +30,14 @@ nav:
       - Interactive examples: examples/interactive-workflows.md
       - Class 12 - Efficient local I/O: course/class-12-efficient-io.md
       - Class 13 - RCC storage architecture: course/class-13-storage-architecture.md
+      - Class 14 - Wet-lab instrument data: course/class-14-wet-lab-data-workflows.md
+      - Class 15 - Research data lifecycle: course/class-15-data-lifecycle.md
+  - Data lifecycle:
+      - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
+      - Choosing a transfer path: data/instrument-data-options.md
+      - Existing Windows SSHFS setup: data/legacy-storage-windows.md
+      - Existing macOS SSHFS setup: data/legacy-storage-macos.md
+      - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md
       - Account starter setups: reference/account-starter-setups.md
@@ -39,6 +48,7 @@ nav:
       - Troubleshooting: reference/troubleshooting.md
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
+      - RCC connection name: connecting/stable-endpoints.md
   - Policies:
       - How shared compute works: policies/slurm-resource-sharing.md
       - SSH host identity: policies/ssh-host-identity.md
@@ -49,5 +59,5 @@ nav:
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
   - Resources:
       - Who we are: team.md
-      - How it all works: resources/how-it-all-works.md
+      - Lab network properties and remote access: resources/how-it-all-works.md
       - Media and downloads: media/index.md

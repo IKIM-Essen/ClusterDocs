@@ -4,6 +4,11 @@ Use this path when your main goal is to build reproducible research software,
 workflow automation, containers, protected applications, Shiny interfaces, or
 model-backed services.
 
+Use VS Code with Remote - SSH as the default editor and project interface unless
+your team has a reviewed alternative. Open the smallest useful repository,
+exclude data and generated trees from search and file watching, and submit
+sustained work from the integrated terminal through Slurm.
+
 ## 1. Build the shared foundation
 
 | Step | Learn | Why it matters |

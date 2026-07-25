@@ -20,6 +20,11 @@ project/
 
 Git should contain workflow logic, text configuration and documentation. It should not contain credentials, private keys, patient identifiers, raw research data or large generated outputs.
 
+VS Code with Remote - SSH is the suggested project interface for most users.
+Open this repository directory rather than the project-storage root, review Git
+changes before committing, and exclude `data/`, `results/`, environments, and
+workflow caches from search and file watching.
+
 ## Good cluster pattern
 
 Use Snakemake to describe dependencies and submit work through Slurm. Do not keep a large workflow running as ordinary processes on the login host. Use a dry run before submission:

@@ -18,6 +18,23 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
 | Browser upload and download | RCC files portal | Confirm project and destination before transfer |
 
+## Research data belongs to a project, not a home directory
+
+Never use a user's home directory as the authoritative destination for
+instrument output, shared research inputs, or durable results. The approved
+project area connects data to project ownership, membership, governance,
+retention, and archival decisions. A personal account cannot substitute for
+that project context, particularly when a user changes role or leaves.
+
+Home storage is also the wrong performance boundary for large or recurring
+ingestion. Large datasets and many-small-file trees can consume personal quota
+and create filesystem metadata load. Put durable data in the project, stage
+active high-I/O computation to job-local storage, and copy validated results
+back to the project.
+
+For the complete path from instrument acquisition to a retained Coscine
+archive, follow [Class 15](../course/class-15-data-lifecycle.md).
+
 Project and group directories may be mounted on demand and may not be globally
 listable. Use the full path supplied for your project rather than probing for
 other names.

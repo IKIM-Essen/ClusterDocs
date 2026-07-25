@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
+ ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Course','Course overview','course/index.md'),
@@ -24,6 +25,13 @@ NAV=[
  ('Course','Class 11 · Data privacy','course/class-11-biomedical-data-privacy.md'),
  ('Course','Class 12 · Efficient local I/O','course/class-12-efficient-io.md'),
  ('Course','Class 13 · Storage architecture','course/class-13-storage-architecture.md'),
+ ('Course','Class 14 · Wet-lab instrument data','course/class-14-wet-lab-data-workflows.md'),
+ ('Course','Class 15 · Research data lifecycle','course/class-15-data-lifecycle.md'),
+ ('Data lifecycle','TL;DR · Instrument to Coscine','data/data-lifecycle-tldr.md'),
+ ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
+ ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),
+ ('Data lifecycle','Existing macOS SSHFS setup','data/legacy-storage-macos.md'),
+ ('Data lifecycle','Planned RCC to Coscine archive flow','data/rcc-project-to-coscine.md'),
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
  ('Reference','Reference overview','reference/index.md'),
@@ -35,13 +43,14 @@ NAV=[
  ('Reference','Troubleshooting','reference/troubleshooting.md'),
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
+ ('Reference','RCC connection name','connecting/stable-endpoints.md'),
  ('Policies','How shared compute works','policies/slurm-resource-sharing.md'),
  ('Policies','SSH host identity','policies/ssh-host-identity.md'),
  ('Governance','What is changing','rollout/index.md'),
  ('Governance','Safe everyday practice','security/safe-use.md'),
  ('Governance','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Resources','Who we are','team.md'),
- ('Resources','How it all works','resources/how-it-all-works.md'),
+ ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),
  ('Resources','Media and downloads','media/index.md'),
 ]
 PAGE='''<!doctype html>
