@@ -123,7 +123,10 @@ shared, borrowed, and requeue behavior.
 - Use Snakemake or another workflow system for repeated dependent steps.
 - Activate Conda environments inside the job rather than relying on a login
   shell state.
-- Use Apptainer for immutable runtimes when it is the better fit.
+- Use rootless Apptainer for immutable runtimes when it is the better fit. The
+  container runs with your RCC permissions—not host-root privileges—so it
+  cannot bypass project access or Slurm; it can still change files your user
+  can write, so bind only what the job needs.
 - Keep large caches, environments with many small files, and temporary
   container writes off inappropriate shared paths.
 

@@ -42,8 +42,8 @@ assets:
   - class: 4
     video: RCC_Onboarding_Part_4_Video_Enhanced.mp4
     audio_channels: 2
-    duration_seconds: 542.272
-    sha256: 4263d9cb2259867327210f4e3ad8293729b1d047c1002336835bdaa2c233acff
+    duration_seconds: 581.839
+    sha256: 1f481c6207a572afaa22ef50dbe25c0e86a275f2de1ea3a71cb73360ee7e7902
     captions: RCC_Onboarding_Part_4_Captions.srt
     slides: RCC_Onboarding_Part_4.pptx
     narration: RCC_Onboarding_Part_4_Narration.md
