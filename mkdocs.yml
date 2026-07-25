@@ -43,6 +43,7 @@ nav:
       - Account starter setups: reference/account-starter-setups.md
       - Access, SSH, and VS Code: reference/access-ssh-vscode.md
       - Storage and transfer: reference/storage-transfer.md
+      - Sharing data: reference/data-sharing.md
       - Conda, Snakemake, and Apptainer: reference/software-workflows.md
       - Slurm commands: reference/slurm.md
       - How shared compute works: reference/how-shared-compute-works.md

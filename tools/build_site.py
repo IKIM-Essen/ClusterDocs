@@ -38,6 +38,7 @@ NAV=[
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
  ('Reference','Storage and transfer','reference/storage-transfer.md'),
+ ('Reference','Sharing data','reference/data-sharing.md'),
  ('Reference','Software workflows','reference/software-workflows.md'),
  ('Reference','Slurm commands','reference/slurm.md'),
  ('Reference','How shared compute works','reference/how-shared-compute-works.md'),

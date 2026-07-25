@@ -15,6 +15,7 @@ decision table, or diagnostic sequence.
 | Import optional shell, prompt, Conda, or Shiny account defaults | [Account starter setups](account-starter-setups.md) |
 | Create an SSH key, configure a client, connect with VS Code, or mount a small remote folder | [Account access, SSH, and VS Code](access-ssh-vscode.md) |
 | Choose durable or temporary storage and transfer project data | [Storage and transfer](storage-transfer.md) |
+| Share data within a project, across RCC groups, or outside RCC | [How to share data safely](data-sharing.md) |
 | Submit, inspect, connect to, and cancel jobs | [Slurm commands](slurm.md) |
 | Understand shared, owner, borrowed, and interactive compute capacity | [How shared compute works](how-shared-compute-works.md) |
 | Use Conda, Snakemake, or Apptainer | [Software workflows](software-workflows.md) |
