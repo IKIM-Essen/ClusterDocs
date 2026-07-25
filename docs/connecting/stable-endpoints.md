@@ -12,9 +12,9 @@ systems behind them change. Operations may replace backends, storage gateways,
 jump hosts, or proxies while preserving an approved user-facing alias.
 
 Stable service names must never be replaced in user documentation with physical
-infrastructure hostnames. The current host-identity policy also requires users
-to verify the approved RCC host identity rather than accepting a changed key or
-copying an old configuration from a colleague.
+infrastructure hostnames. Verify the approved RCC host identity through the
+current institutional connection instructions rather than accepting a changed
+key or copying an old configuration from a colleague.
 
 ## Setup to use now
 
@@ -30,8 +30,8 @@ Host {{ ssh_alias }}
 ```
 
 See [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and
-the [SSH host-identity policy](../policies/ssh-host-identity.md) before changing
-an existing workstation configuration.
+the current institutional RCC connection instructions before changing an
+existing workstation configuration.
 
 ## Names you may see in a saved configuration
 

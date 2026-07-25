@@ -45,7 +45,6 @@ NAV=[
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
  ('Reference','RCC connection name','connecting/stable-endpoints.md'),
- ('Policies','SSH host identity','policies/ssh-host-identity.md'),
  ('Governance','What is changing','rollout/index.md'),
  ('Governance','Safe everyday practice','security/safe-use.md'),
  ('Governance','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
