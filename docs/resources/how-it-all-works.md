@@ -109,3 +109,6 @@ maintained acquisition workstation using an individually attributable account.
 For storage choices and verification commands, continue with
 [Storage and transfer](../reference/storage-transfer.md). For project and data
 eligibility, see [Biomedical data admission](../security/rcc-biomedical-data-admission.md).
+For a complete acquisition-to-analysis exercise, continue with
+[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
+and [choose an instrument-data transfer path](../data/instrument-data-options.md).

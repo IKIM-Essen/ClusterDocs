@@ -1,4 +1,4 @@
-# Thirteen-class RCC learning path
+# Fourteen-class RCC learning path
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
@@ -17,6 +17,7 @@ The classes are sequential for new users, but experienced users can take the rea
 | 11 | Use biomedical data lawfully and safely in the RCC research enclave | 60-75 min | Scenario-based knowledge check and project-governance confirmation |
 | 12 | Stage I/O-intensive work to job-local scratch and publish results safely | 60-90 min | Direct-versus-local synthetic comparison and justified storage choice |
 | 13 | Trace RCC metadata, object-storage, network, and cache behavior | 45-60 min | Storage-path diagnosis and measurement plan |
+| 14 | Move wet-lab instrument data into an approved RCC workflow | 60-90 min | Verified synthetic handoff plan with ownership and retention |
 
 ## Course rules
 

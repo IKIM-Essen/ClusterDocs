@@ -29,6 +29,11 @@ nav:
       - Interactive examples: examples/interactive-workflows.md
       - Class 12 - Efficient local I/O: course/class-12-efficient-io.md
       - Class 13 - RCC storage architecture: course/class-13-storage-architecture.md
+      - Class 14 - Wet-lab instrument data: course/class-14-wet-lab-data-workflows.md
+  - Instrument data:
+      - Choosing a transfer path: data/instrument-data-options.md
+      - Legacy Windows storage access: data/legacy-storage-windows.md
+      - Legacy macOS storage access: data/legacy-storage-macos.md
   - Reference:
       - Reference overview: reference/index.md
       - Account starter setups: reference/account-starter-setups.md
@@ -39,6 +44,7 @@ nav:
       - Troubleshooting: reference/troubleshooting.md
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
+      - Endpoint compatibility: connecting/stable-endpoints.md
   - Policies:
       - How shared compute works: policies/slurm-resource-sharing.md
       - SSH host identity: policies/ssh-host-identity.md

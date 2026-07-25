@@ -13,6 +13,7 @@ result pipeline.
 | [Class 5](../course/class-05-slurm.md) | Slurm jobs and resource requests | Run computation on managed workers |
 | [Class 11](../course/class-11-biomedical-data-privacy.md) | Biomedical-data governance | Confirm the project and data are suitable for RCC |
 | [Class 12](../course/class-12-efficient-io.md) | Local staging and safe publication | Keep active I/O off shared storage when measurement supports it |
+| [Class 14](../course/class-14-wet-lab-data-workflows.md) | Wet-lab instrument handoff | Preserve authoritative acquisition data and verify transfer before analysis |
 
 ## 2. Choose your analysis environment
 
