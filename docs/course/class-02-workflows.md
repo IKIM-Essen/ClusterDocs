@@ -1,5 +1,15 @@
 # Class 2: reproducible scientific workflows
 
+## Watch this class
+
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4">
+  Your browser does not support embedded video.
+</video>
+
+[Captions](../../downloads/captions/RCC_Onboarding_Part_2_Captions.srt) ·
+[slides](../../downloads/slides/RCC_Onboarding_Part_2.pptx) ·
+[narration transcript](../../downloads/narration/RCC_Onboarding_Part_2_Narration.md)
+
 ## Learning objectives
 
 You will create a project that separates raw data, workflow definitions, software declarations, logs, benchmarks and generated results.

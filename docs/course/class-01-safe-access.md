@@ -1,5 +1,15 @@
 # Class 1: safe access to RCC
 
+## Watch this class
+
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4">
+  Your browser does not support embedded video.
+</video>
+
+[Captions](../../downloads/captions/RCC_Onboarding_Part_1_Captions.srt) ·
+[slides](../../downloads/slides/RCC_Onboarding_Part_1.pptx) ·
+[narration transcript](../../downloads/narration/RCC_Onboarding_Part_1_Narration.md)
+
 ## Learning objectives
 
 By the end of this class you can:

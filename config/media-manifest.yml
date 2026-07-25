@@ -1,39 +1,54 @@
 publication: release_assets_or_institutional_media
+video_build:
+  command: python3 build/build_videos.py
+  visual_source: committed_reviewed_frames
+  resolution: 1280x720
+  video_codec: h264
+  audio_codec: aac
+  voice: Daniel
+  locale: en_GB
+  rate_words_per_minute: 172
+  audio_target_lufs: -16
+  audio_true_peak_limit_db: -1.5
 assets:
-- class: 1
-  original: RCC_Onboarding_Part_1_Video.mp4
-  enhanced: RCC_Onboarding_Part_1_Video_Enhanced.mp4
-  enhanced_sha256: d66e7d71bf0f800551be6ed1728b4a2a637aff779dfb2a897545c0c2de97c9d8
-  video_stream_md5_original: 967a13c6a70c132f66c84e2fb71325d3
-  video_stream_md5_enhanced: 967a13c6a70c132f66c84e2fb71325d3
-  review_status: pending_human_av_review
-- class: 2
-  original: RCC_Onboarding_Part_2_Video.mp4
-  enhanced: RCC_Onboarding_Part_2_Video_Enhanced.mp4
-  enhanced_sha256: 723917f63c23607d6bd67e253f7f2d7c528e1011846828f4ec56eff510faa7c2
-  video_stream_md5_original: ed0eb87a6ecef3bbda0e89597714b430
-  video_stream_md5_enhanced: ed0eb87a6ecef3bbda0e89597714b430
-  review_status: pending_human_av_review
-- class: 3
-  original: RCC_Onboarding_Part_3_Video.mp4
-  enhanced: RCC_Onboarding_Part_3_Video_Enhanced.mp4
-  enhanced_sha256: 81f0af76d3286a686a28292547edcfbe20ea4c4bfaeaecde3ff63a6c69f74db6
-  video_stream_md5_original: 4113b1de2a5b0588a5c0ee22bf0f0627
-  video_stream_md5_enhanced: 4113b1de2a5b0588a5c0ee22bf0f0627
-  review_status: pending_human_av_review
-- class: 4
-  original: RCC_Onboarding_Part_4_Video.mp4
-  enhanced: RCC_Onboarding_Part_4_Video_Enhanced.mp4
-  enhanced_sha256: 23694bb926d74ed7088b296195f48f15d005f5ecf59a71d157b0e969d0489a26
-  video_stream_md5_original: d572250e19cbe964a7911d422c68b994
-  video_stream_md5_enhanced: d572250e19cbe964a7911d422c68b994
-  review_status: pending_human_av_review
-- class: 5
-  narration: RCC_Onboarding_Class_5_Narration.md
-  video_status: narration_review
-  publication_target: youtube_or_institutional_media_at_rollout
-- class: 6
-  narration: RCC_Onboarding_Class_6_Narration.md
-  recording_brief: RCC_Onboarding_Class_6_Recording_Brief.md
-  video_status: expanded_narration_ready_for_novice_review
-  publication_target: youtube_or_institutional_media_at_rollout
+  - class: 1
+    video: RCC_Onboarding_Part_1_Video_Enhanced.mp4
+    duration_seconds: 486.225
+    sha256: e7be9d0e98c5451dd381768a5c1687730f481ae7e5c8181dff801d61c5ba7c65
+    captions: RCC_Onboarding_Part_1_Captions.srt
+    slides: RCC_Onboarding_Part_1.pptx
+    narration: RCC_Onboarding_Part_1_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 2
+    video: RCC_Onboarding_Part_2_Video_Enhanced.mp4
+    duration_seconds: 517.300
+    sha256: 8c2732222484bef0e0bef3aec01916c361a453652a445d324090ce520dbe486b
+    captions: RCC_Onboarding_Part_2_Captions.srt
+    slides: RCC_Onboarding_Part_2.pptx
+    narration: RCC_Onboarding_Part_2_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 3
+    video: RCC_Onboarding_Part_3_Video_Enhanced.mp4
+    duration_seconds: 635.441
+    sha256: 89c429f3ecdf04f0382814b4fc6b4266d39faf7813ffbf875a22e8eadd24af28
+    captions: RCC_Onboarding_Part_3_Captions.srt
+    slides: RCC_Onboarding_Part_3.pptx
+    narration: RCC_Onboarding_Part_3_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 4
+    video: RCC_Onboarding_Part_4_Video_Enhanced.mp4
+    duration_seconds: 542.272
+    sha256: 3d12bfaaab28de47804958027d8fcc1dec84423368c44afa89d45a3f1c22a041
+    captions: RCC_Onboarding_Part_4_Captions.srt
+    slides: RCC_Onboarding_Part_4.pptx
+    narration: RCC_Onboarding_Part_4_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 5
+    narration: RCC_Onboarding_Class_5_Narration.md
+    video_status: narration_review
+    publication_target: youtube_or_institutional_media_at_rollout
+  - class: 6
+    narration: RCC_Onboarding_Class_6_Narration.md
+    recording_brief: RCC_Onboarding_Class_6_Recording_Brief.md
+    video_status: expanded_narration_ready_for_novice_review
+    publication_target: youtube_or_institutional_media_at_rollout

@@ -1,5 +1,15 @@
 # Class 4: containers with Apptainer
 
+## Watch this class
+
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_4_Video_Enhanced.mp4">
+  Your browser does not support embedded video.
+</video>
+
+[Captions](../../downloads/captions/RCC_Onboarding_Part_4_Captions.srt) ·
+[slides](../../downloads/slides/RCC_Onboarding_Part_4.pptx) ·
+[narration transcript](../../downloads/narration/RCC_Onboarding_Part_4_Narration.md)
+
 ## Learning objectives
 
 You will run a pinned, read-only Apptainer image through Slurm and understand how images, caches, temporary directories and bind mounts interact with shared storage.

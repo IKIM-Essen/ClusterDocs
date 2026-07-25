@@ -274,7 +274,7 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); ap.add_argument('--include-media',action='store_true'); a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
     if a.include_media:
-        cfg=dict(cfg); cfg['media_base_url']='.'
+        cfg=dict(cfg); cfg['media_base_url']='__LOCAL_MEDIA_BASE__'
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
         if bad: raise SystemExit('Production build blocked by unresolved config: '+', '.join(bad))
@@ -292,6 +292,9 @@ def main():
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
         text=substitute(src.read_text(),cfg); content=md(text)
+        if a.include_media:
+            local_media=Path(os.path.relpath(out/'media',target.parent)).as_posix()
+            content=content.replace('__LOCAL_MEDIA_BASE__',local_media)
         def rewrite_local(match):
             attribute=match.group(1); value=match.group(2)
             path,separator,fragment=value.partition('#')

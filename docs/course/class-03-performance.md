@@ -1,5 +1,15 @@
 # Class 3: performance and efficient I/O
 
+## Watch this class
+
+<video controls preload="metadata" width="100%" src="{{ media_base_url }}/RCC_Onboarding_Part_3_Video_Enhanced.mp4">
+  Your browser does not support embedded video.
+</video>
+
+[Captions](../../downloads/captions/RCC_Onboarding_Part_3_Captions.srt) ·
+[slides](../../downloads/slides/RCC_Onboarding_Part_3.pptx) ·
+[narration transcript](../../downloads/narration/RCC_Onboarding_Part_3_Narration.md)
+
 ## Learning objectives
 
 You will distinguish CPU, GPU, memory, storage capacity, throughput, latency, IOPS and metadata operations, then select a resource request based on measurement rather than guesswork.

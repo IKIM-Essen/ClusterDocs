@@ -27,7 +27,7 @@ The original four classes include:
 - a long-form PDF;
 - an editable DOCX source;
 - an editable PowerPoint slide deck with speaker notes;
-- a 5-10 minute MP4 training video with processed synthetic narration;
+- a slide-based MP4 training video with natural British-English narration;
 - an SRT caption file; and
 - a Markdown narration script.
 
@@ -35,7 +35,13 @@ The canonical source for the original four classes is the Markdown document in `
 
 ## Video format
 
-The videos are 1280 x 720 H.264/AAC slide-based training videos. Narration uses a synthetic British-English voice with slower pacing, acronym pronunciation handling, equalization, dynamic-range compression, normalization, and captions. They do not connect to production RCC services and contain no credentials or biomedical data.
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–4
+use the macOS Daniel British-English voice with sentence-aware pacing,
+technical-term pronunciation handling, de-essing, gentle compression, EBU R128
+loudness normalization, and captions. Rebuild them with
+`python3 build/build_videos.py`. The build records its settings, durations, and
+hashes in `meta/video-build-report.json`. Videos do not connect to production
+RCC services and contain no credentials or biomedical data.
 
 ## Production status
 
