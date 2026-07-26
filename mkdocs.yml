@@ -40,6 +40,7 @@ nav:
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md
+      - Users, groups, and projects: reference/users-groups-projects.md
       - Account starter setups: reference/account-starter-setups.md
       - Access, SSH, and VS Code: reference/access-ssh-vscode.md
       - Storage and transfer: reference/storage-transfer.md

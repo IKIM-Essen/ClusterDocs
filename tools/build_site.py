@@ -35,6 +35,7 @@ NAV=[
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
  ('Reference','Reference overview','reference/index.md'),
+ ('Reference','Users, groups, and projects','reference/users-groups-projects.md'),
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
  ('Reference','Storage and transfer','reference/storage-transfer.md'),

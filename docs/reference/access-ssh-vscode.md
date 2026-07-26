@@ -25,6 +25,13 @@ project coordinator through the approved institutional channel:
 Every researcher receives an individual account. Project membership replaces
 shared accounts and shared credentials.
 
+Every user also has exactly one primary group. Internal users are assigned to
+their organizational group; external users are assigned to `collab`. The
+primary group records affiliation, while explicit project memberships grant
+access to the shared spaces where users from different groups exchange data.
+See [Users, groups, and projects](users-groups-projects.md) for the complete
+model.
+
 ## Create an SSH key
 
 Where a compatible FIDO2 authenticator is available, prefer a hardware-backed key. Its private material remains on the authenticator and normally requires user presence:

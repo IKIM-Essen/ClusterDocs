@@ -12,6 +12,7 @@ decision table, or diagnostic sequence.
 
 | Task | Reference |
 |---|---|
+| Understand individual accounts, primary groups, external collaborators, and project membership | [Users, groups, and projects](users-groups-projects.md) |
 | Import optional shell, prompt, Conda, or Shiny account defaults | [Account starter setups](account-starter-setups.md) |
 | Create an SSH key, configure a client, connect with VS Code, or mount a small remote folder | [Account access, SSH, and VS Code](access-ssh-vscode.md) |
 | Choose durable or temporary storage and transfer project data | [Storage and transfer](storage-transfer.md) |
