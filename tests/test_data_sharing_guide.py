@@ -26,6 +26,9 @@ class DataSharingGuideTests(unittest.TestCase):
     def test_unix_groups_setgid_and_multiple_memberships_are_explained(self):
         text = guide_text()
         for phrase in (
+            "every rcc user has exactly one primary group",
+            "external user's primary group is `collab`",
+            "explicit project membership",
             "supplementary groups",
             "belonging to multiple groups is normal",
             "one owner and one owning group",

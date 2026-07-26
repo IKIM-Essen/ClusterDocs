@@ -11,13 +11,16 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 > to choose project-group access, a bounded handoff, or an approved external
 > sharing route before selecting a transfer command.
 
+For the distinction between primary-group storage and cross-group project
+storage, see [Users, groups, and projects](users-groups-projects.md).
+
 ## Storage decision table
 
 | Purpose | Location or service | Rule |
 |---|---|---|
 | Personal configuration and small source files | home storage | Not a shared project-data area |
-| Durable project input and final results | approved project storage | Shared according to project membership |
-| Group material outside a specific project | approved group storage | Use only when group governance applies |
+| Durable project input and final results | approved project storage | Shared among approved project members, including members from different primary groups |
+| Material shared only within a user's primary group | approved group storage | Not a substitute for a cross-group project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
 | Browser upload and download | RCC files portal | Confirm project and destination before transfer |

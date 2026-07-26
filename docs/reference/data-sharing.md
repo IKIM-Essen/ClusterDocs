@@ -36,10 +36,12 @@ individual account and grant access through project membership.
 
 ## How Unix group membership works
 
-Every RCC process has a user identity, one primary group, and may have several
-**supplementary groups**. Belonging to multiple groups is normal: for example,
-one person may be a member of a laboratory group and several project groups at
-the same time.
+Every RCC user has exactly one primary group and may have several
+**supplementary groups**. An external user's primary group is `collab`; access
+to a collaboration's data still comes from explicit project membership, not
+from `collab` itself. Belonging to multiple groups is normal: alongside the
+primary group, one person may be a member of several supplementary project
+groups at the same time.
 
 Check the groups in the current session with:
 
