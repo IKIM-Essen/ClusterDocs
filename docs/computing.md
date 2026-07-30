@@ -2,8 +2,8 @@
 
 `Nota bene`: The cluster can accomodate a finite amount of IO at any one point. IO is where computing breaks. At the node level and certainly at the cluster level.
 
-The cluster provices a number of storage facilities described
-[here](./storage.md). Make sure you are familiar with them _and_ you understand the nature of local vs. remote file systems.
+The cluster provices a number of storage facilities described in the
+[storage guide](./storage.md). Make sure you are familiar with them _and_ you understand the nature of local vs. remote file systems.
 
 ## Local file systems
 
@@ -11,7 +11,7 @@ Every Linux machine has at least one local filesystem. Ours typically have a min
 
 The local file systems are limited in size, but provide more IO bandwidth than network or remote drives.
 
-Note: Anything that is `/homes`, `/groups` or `projects` is a remote file system. See [here](./storage.md) for some details.
+Note: Anything that is `/homes`, `/groups` or `projects` is a remote file system. See the [storage guide](./storage.md) for details.
 
 ## Remote file systems and what not to do
 

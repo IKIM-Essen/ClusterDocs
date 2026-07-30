@@ -1,6 +1,6 @@
 # Containers
 
-Linux containers (LXC) provide a means to create a binary file that contains an execution environment (all software required to execute some code). Rather than installing those so called dependencies and then installing the software itself, the entire software system is contained in a single file. A container can be generated from a single file. Find a discussion of container flavors [here](https://www.lambdatest.com/blog/podman-vs-docker/).
+Linux containers (LXC) provide a means to create a binary file that contains an execution environment (all software required to execute some code). Rather than installing those so called dependencies and then installing the software itself, the entire software system is contained in a single file. A container can be generated from a single file. Find a [discussion of container flavors](https://www.lambdatest.com/blog/podman-vs-docker/) at LambdaTest.
 
 ## Working with containers (with Apptainer)
 
