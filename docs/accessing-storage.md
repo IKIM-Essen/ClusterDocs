@@ -18,11 +18,11 @@ need to replace user, group and project names with your own.
 Below is a resonable configuration for a home directory, a group directory
 and one project directory.
 
-| name | remote directory | local directory  |  Parameters|
-| ---  | --- |  -- | ---|
-| Home directory    | /homes/juser/ | /Users/joe/remote/ |`-odefer_permissions,volname=HOMES-DIR`|
-| Group directory    | /groups/experts/ | /Users/joe/group/ |`-defer_permissions,volname=GROUPDIR`|
-| Project directory | /project/workwithme/ | /Users/joe/project/|`-odefer_permissions,volname=PROJECTDIR`|
+| name              | remote directory     | local directory     | Parameters                               |
+| ----------------- | -------------------- | ------------------- | ---------------------------------------- |
+| Home directory    | /homes/juser/        | /Users/joe/remote/  | `-odefer_permissions,volname=HOMES-DIR`  |
+| Group directory   | /groups/experts/     | /Users/joe/group/   | `-defer_permissions,volname=GROUPDIR`    |
+| Project directory | /project/workwithme/ | /Users/joe/project/ | `-odefer_permissions,volname=PROJECTDIR` |
 
 Please insert your username, groupname and project name respectively. You can
 add more directories if you so desire.
