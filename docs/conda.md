@@ -3,6 +3,14 @@
 [Mambaforge][mambaforge] provides `mamba` and `conda` on the cluster.
 Users who prefer to manage their own installation can install a Conda distribution in their home directory.
 
+## No module system
+
+RCC does not use Environment Modules or Lmod. Commands such as
+`module load` do not exist here, and the web portal intentionally has no
+Module Browser. The equivalent workflow is Conda: activate an existing
+environment from the shared Miniforge installation at `/opt/miniforge3`,
+or create your own environment with `mamba create`.
+
 This document is not a comprehensive guide on Conda. To learn more, see the official manual.
 The [conda intro](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) provides a good starting point.
 
