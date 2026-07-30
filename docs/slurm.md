@@ -296,7 +296,7 @@ A large workflow that runs for multiple days occupying several CPU cores or GPUs
 ## Cheat Sheet
 
 | What | Command |
-|------|---------|
+| --- | --- |
 | Connect to submission nodes. **Only use for submission.** | `ssh shellhost` |
 | Show workers | `sinfo` |
 | Show schedule | `squeue -l` |

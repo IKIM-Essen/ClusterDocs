@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD046 -- mkdocs admonition indentation is intentional -->
 # Upcoming RCC changes: Slurm-first computing
 
 !!! important "What users need to know"

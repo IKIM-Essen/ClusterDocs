@@ -2,8 +2,8 @@
 
 `Nota bene`: The cluster can accomodate only de-identified data,  no directly patient related data can be uploaded. All PII personal identifying information has to be removed prior to upload.
 
-The cluster provices a number of storage facilities described
-[here](./storage.md).
+The cluster provices a number of storage facilities described in the
+[storage guide](./storage.md).
 
 ## Introduction to data transfer
 
@@ -47,11 +47,11 @@ Read this [this](https://www.maketecheasier.com/netcat-transfer-files-between-li
 
 Depending on your needs and the systems involved, your technology choices may vary. The table below might help pick the right path.
 
-| approach | size limit | number of files | comment |
-| ---  | --- |  -- | ---|
-| browser  | 500 GB | <100 | easy to use |
-| ssh/scp  | 5TB | unlimited | use tar to group files |
-| nc       | unlimited | unlimited | complicated, use zip or tar to group files |
+| approach | size limit | number of files | comment                                    |
+| -------- | ---------- | --------------- | ------------------------------------------ |
+| browser  | 500 GB     | <100            | easy to use                                |
+| ssh/scp  | 5TB        | unlimited       | use tar to group files                     |
+| nc       | unlimited  | unlimited       | complicated, use zip or tar to group files |
 
 ### Miscellaneous comments
 

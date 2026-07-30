@@ -11,11 +11,11 @@ Not all storage locations are alike and it is worth your while to understand the
 The local storage on each node typically consists of a system partition and a data partition. The system partition is used for the operating system, the configuration, [swap files](https://www.unix.com/man-page/linux/1m/swap/), pre-installed software. Most directories on the node are read-only to users.
 
 | location | purpose | user read-write status | comment |
-| ---  | --- |  -- | ---|
-| /etc/    | configuration | read-only |  |
-| /var/    | temporary files | read-only |  |
+| --- | --- | --- | --- |
+| /etc/ | configuration | read-only | |
+| /var/ | temporary files | read-only | |
 | /var/tmp | user-generated temporary files | read-write | local disk |
-| /tmp/    | user-generated temporary files, deleted on reboot | read-write | local disk |
+| /tmp/ | user-generated temporary files, deleted on reboot | read-write | local disk |
 
 ### Local storage on the data partition
 
@@ -37,10 +37,10 @@ As a consequence, using local files or cached files is a good idea to ensure goo
 Three different storage locations exist on the file server:
 
 | location | purpose | user read-write status | comment |
-| ---  | --- |  -- | ---|
-| /projects/    | project data | read-write |  not listable |
-| /groups/    | group files | read-write  |  not listable |
-| /homes  | user home directory | read-write | not cached |
+| --- | --- | --- | --- |
+| /projects/ | project data | read-write | not listable |
+| /groups/ | group files | read-write | not listable |
+| /homes | user home directory | read-write | not cached |
 
 Each user has a private home-directory. The contents of which are private to the userm typically no data relevant to any other user, project or your PI should be stored here.
 

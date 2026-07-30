@@ -1,6 +1,6 @@
-## Connecting via SSH
+# Connecting via SSH
 
-1. Download VS Code https://code.visualstudio.com/
+1. [Download VS Code](https://code.visualstudio.com/)
 2. Download the extension "Remote - SSH" from Microsoft.
 
     ![Install Remote Plugin](./assets/vs_code_ssh_remote_plugin.png)
