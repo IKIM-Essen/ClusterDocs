@@ -11,3 +11,4 @@ videos-enhanced/*.m4a
 .venv/
 exercises/vhost/protected-app/demo.sqlite3
 videos/*.mp4
+/new-videos/
