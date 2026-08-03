@@ -3,6 +3,8 @@ import json
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -85,6 +87,19 @@ class TrainingMediaTests(unittest.TestCase):
             self.assertIn(f"video-posters/part{part}.png", text)
         for number in range(5, 16):
             self.assertIn(f"video-posters/class{number}.png", text)
+
+    def test_publication_evidence_covers_the_online_media_gate(self):
+        manifest = yaml.safe_load((ROOT / "config/media-manifest.yml").read_text())
+        publication = manifest["publication"]
+        self.assertEqual("github_pages_same_origin", publication["method"])
+        self.assertTrue(publication["base_url"].startswith("https://"))
+        self.assertRegex(publication["gh_pages_commit"], r"^[0-9a-f]{7,40}$")
+        self.assertEqual(
+            {"https": "passed", "byte_ranges": "passed", "full_download_sha256": "passed", "exact_sizes": "passed"},
+            publication["verification"],
+        )
+        for asset in manifest["assets"]:
+            self.assertGreater(asset["size_bytes"], 0)
 
     def test_build_report_records_natural_voice_and_complete_outputs(self):
         report = json.loads((ROOT / "meta/video-build-report.json").read_text())

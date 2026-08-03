@@ -5,6 +5,10 @@ earlier ClusterDocs site.
 
 ## Conda and Mamba environments
 
+RCC does not use Environment Modules or Lmod. Commands such as `module load`
+are therefore not part of the RCC workflow. Use the managed Miniforge
+installation or a project-specific Conda environment instead.
+
 Keep an environment declaration with the project and pin important versions:
 
 ```yaml

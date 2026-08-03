@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 2 min video</p>
   <h2>Watch the class first</h2>
   <p>Choosing between notebooks, workflows, and services, with clear boundaries and review preparation. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class10.png" src="{{ media_base_url }}/RCC_Onboarding_Class_10_Video_Enhanced.mp4?v=99f7d388">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class10.png" src="{{ media_base_url }}/RCC_Onboarding_Class_10_Video_Enhanced.mp4?v=a5df048c">
     <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_10_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>

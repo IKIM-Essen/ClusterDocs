@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 8 min video</p>
   <h2>Watch the class first</h2>
   <p>Practical governance for biomedical data, including genomic and imaging research, minimisation, and project responsibilities. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class11.png" src="{{ media_base_url }}/RCC_Onboarding_Class_11_Video_Enhanced.mp4?v=908394e7">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class11.png" src="{{ media_base_url }}/RCC_Onboarding_Class_11_Video_Enhanced.mp4?v=627f85fc">
     <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_11_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>

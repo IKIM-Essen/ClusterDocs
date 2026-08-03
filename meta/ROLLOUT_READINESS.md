@@ -11,6 +11,15 @@ fail-closed production gate.
 
 ## Completed in this round
 
+- Published all 15 exact MP4 assets at the same-origin GitHub Pages media path.
+  Full online downloads match the manifest sizes and SHA-256 values, and every
+  asset returned a valid HTTPS byte-range response. The legacy site content was
+  not changed by the media-only commit.
+- Created the immutable `pages-legacy-20260803` rollback tag before changing the
+  Pages branch.
+- Replaced the public site, transfer-service, support, and media placeholders
+  with reviewed endpoints. `site_status` remains `staging` until the remaining
+  human and institutional gates close.
 - Archived the speculative rollout page and removed “RCC Connect” and rollout
   language from public instructions. Users are directed to the current
   institutional RCC configuration and support route.
@@ -29,16 +38,14 @@ fail-closed production gate.
 
 ## Production blockers that remain
 
-1. Set the production site URL, support contact, transfer-service URL, and
-   media origin, then change `site_status` only after the other gates pass.
-2. Publish the 15 exact video assets at the configured HTTPS origin and test
-   playback, byte-range requests, captions, and a clean client.
-3. Complete and record human video approval for all 15 classes.
-4. Complete the institutional administrator checklist: operational endpoints,
+1. Complete browser playback and clean-client visual checks, then record human
+   video approval for all 15 classes.
+2. Complete the institutional administrator checklist: operational endpoints,
    supported versions, storage and Slurm behavior, privacy/domain approval,
    accessibility, ownership, monitoring, and rollback.
-5. Add and review a production deployment workflow. Current CI validates and
+3. Add and review a production deployment workflow. Current CI validates and
    uploads a preview artifact but does not deploy.
+4. Change `site_status` to `production` only after the preceding gates pass.
 
 ## Start manual review
 

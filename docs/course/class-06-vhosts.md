@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 5 min video</p>
   <h2>Watch the class first</h2>
   <p>Protected project websites, responsibilities, safe data access, and the approval path. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class6.png" src="{{ media_base_url }}/RCC_Onboarding_Class_6_Video_Enhanced.mp4?v=1d436766">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class6.png" src="{{ media_base_url }}/RCC_Onboarding_Class_6_Video_Enhanced.mp4?v=ecf422b9">
     <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_6_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>

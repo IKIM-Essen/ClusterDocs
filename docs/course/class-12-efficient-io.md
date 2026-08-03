@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 6 min video</p>
   <h2>Watch the class first</h2>
   <p>Why local scratch matters, safe staging, workflow integration, caching, diagnosis, and storage decisions. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class12.png" src="{{ media_base_url }}/RCC_Onboarding_Class_12_Video_Enhanced.mp4?v=a6cfc6b2">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class12.png" src="{{ media_base_url }}/RCC_Onboarding_Class_12_Video_Enhanced.mp4?v=0ea17760">
     <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_12_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>

@@ -1,6 +1,6 @@
 site_name: RCC ClusterDocs NG
 site_description: Safe, practical RCC training for biomedical researchers
-site_url: https://STAGING-URL.invalid/
+site_url: https://ikim-essen.github.io/ClusterDocs/
 docs_dir: docs
 theme:
   name: material
