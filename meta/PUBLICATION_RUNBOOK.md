@@ -11,8 +11,8 @@ steps. A failure leaves the generated site without dead video links.
 - Media web root: `/srv/www/docs/media/rcc-onboarding`
 - Reviewed local MP4 source: `new-videos/`
 - Manifest: `config/media-manifest.yml`
-- Media set: 15 MP4 files, 107,968,919 bytes total
-- Media-set checksum receipt: `550cade9505dfb44b36978e134934b70384b186806cdae2fb5afcc3f6fb58c79`
+- Media set: 17 MP4 files, 122,653,131 bytes total
+- Media-set checksum receipt: `abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0`
 
 The site publishes no local MP4 copies, GitHub media URLs, downloads tree,
 source captions, narration downloads, or office-document downloads. WebVTT
@@ -35,7 +35,7 @@ Do not deploy an extra file or substitute a same-named file with another hash.
 ## 2. Deploy the vhost and the fixed media directory
 
 Deploy the reviewed RCC `docs.ikim.uk-essen.de` static-vhost configuration with
-document root `/srv/www/docs`. Copy exactly the 15 files from `new-videos/` into
+document root `/srv/www/docs`. Copy exactly the 17 files from `new-videos/` into
 `/srv/www/docs/media/rcc-onboarding`; directories must be readable/executable
 by the web service and MP4 files must be read-only to it. Do not publish the
 temporary upload directory or point the vhost into a user or project tree.
@@ -81,7 +81,7 @@ python tools/build_site.py --output site-preview
 python tools/check_site_links.py site-preview
 ```
 
-Review the course overview, Classes 1, 6, 14, and 15, one caption track, seeking
+Review the course overview, Classes 1, 6, 7, 16, and 17, one caption track, seeking
 within a video, mobile layout, and Firefox playback before production cut-over.
 
 ## 5. Publish the site
