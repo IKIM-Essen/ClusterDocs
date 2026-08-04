@@ -286,6 +286,22 @@ def gate_unreleased_videos(text,publication):
 def title_of(text):
     m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else 'RCC ClusterDocs'
 
+def add_heading_ids(content):
+    """Give rendered Markdown headings stable, unique fragment targets."""
+    used=set(re.findall(r'\bid="([^"]+)"',content))
+    def replace(match):
+        level,body=match.groups()
+        plain=html.unescape(re.sub(r'<[^>]+>','',body)).lower()
+        base=re.sub(r'[^a-z0-9]+','-',plain).strip('-') or 'section'
+        slug=base
+        suffix=2
+        while slug in used:
+            slug=f'{base}-{suffix}'
+            suffix+=1
+        used.add(slug)
+        return f'<h{level} id="{slug}">{body}</h{level}>'
+    return re.sub(r'<h([1-6])>(.*?)</h\1>',replace,content,flags=re.S)
+
 def out_url(md):
     p=Path(md)
     if p.name=='index.md':
@@ -353,7 +369,7 @@ def main():
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
         text=substitute(src.read_text(),cfg)
         text=gate_unreleased_videos(text,media)
-        content=md(text)
+        content=add_heading_ids(md(text))
         def rewrite_local(match):
             attribute=match.group(1); value=match.group(2)
             path,separator,fragment=value.partition('#')
