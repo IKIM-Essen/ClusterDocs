@@ -20,12 +20,12 @@ class RolloutReadinessTests(unittest.TestCase):
         blockers, warnings, ready = load_readiness().audit()
         joined = "\n".join(blockers)
         self.assertIn("site_status as staging", joined)
-        self.assertIn("unresolved production configuration", joined)
+        self.assertNotIn("unresolved production configuration", joined)
         self.assertIn("videos lack recorded human approval", joined)
         self.assertIn("administrator publication checklist", joined)
         self.assertIn("no reviewed production deployment workflow", joined)
         self.assertTrue(warnings)
-        self.assertIn("all 15 course pages declare in-player English captions", ready)
+        self.assertIn("all 17 course pages declare in-player English captions", ready)
 
     def test_candidate_is_ready_to_start_manual_review(self):
         blockers, ready = load_readiness().manual_review_audit()

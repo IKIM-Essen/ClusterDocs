@@ -1,208 +1,264 @@
 1
-00:00:00,000 --> 00:00:05,150
-Welcome to Class 14: from instrument to analysis for wet-lab teams.
+00:00:00,000 --> 00:00:05,759
+Welcome to Class 14: efficient I/O—copy locally, compute locally, return results.
 
 2
-00:00:05,150 --> 00:00:09,363
+00:00:05,759 --> 00:00:10,470
 This video introduces the core decisions and working patterns.
 
 3
-00:00:09,363 --> 00:00:15,917
+00:00:10,470 --> 00:00:17,799
 Watch the complete lesson first, then use the written class page for copyable commands,
 
 4
-00:00:15,917 --> 00:00:18,257
+00:00:17,799 --> 00:00:20,417
 exercises, and detailed reference material.
 
 5
-00:00:18,257 --> 00:00:25,381
-After this course, you should be able to: distinguish an instrument-control computer from storage and compute
+00:00:20,417 --> 00:00:27,628
+After this class, you should be able to: distinguish durable shared storage from temporary node-local scratch;
 
 6
-00:00:25,381 --> 00:00:32,504
-systems; explain how the Lab network limits Internet exposure while preserving approved server and proxy-based update
+00:00:27,628 --> 00:00:34,840
+explain streaming, random, small-file, and metadata I/O; recognize when storage rather than CPU or GPU limits
 
 7
-00:00:32,504 --> 00:00:38,291
-access; choose among browser upload, SFTP, mounted storage, server-to-server transfer, and automated ingestion;
+00:00:34,840 --> 00:00:40,699
+a job; write an sbatch job that stages inputs and returns outputs safely;
 
 8
-00:00:38,291 --> 00:00:44,079
-estimate whether a dataset is difficult because of size, file count, or both;
+00:00:40,699 --> 00:00:47,010
+use rsync, checksums, shell traps, and atomic publication; apply the same pattern in Snakemake;
 
 9
-00:00:44,079 --> 00:00:51,202
-verify a transfer before deleting the source; explain why analysis should not run on an instrument-control
+00:00:47,010 --> 00:00:54,221
+and explain how poor I/O structure can turn hours of computation into weeks or months of
 
 10
-00:00:51,202 --> 00:00:58,325
-computer; identify which data may be placed on RCC; place instrument data in an approved RCC
+00:00:54,221 --> 00:00:55,123
+elapsed time.
 
 11
-00:00:58,325 --> 00:01:05,003
-project rather than a user's home directory; recognize and replace a saved Windows or macOS.
+00:00:55,123 --> 00:00:57,986
+A job does not merely execute instructions.
 
 12
-00:01:05,003 --> 00:01:10,562
-### Instrument-control computer This system operates the sequencer, mass spectrometer, or microscope.
+00:00:57,986 --> 00:01:04,123
+It repeatedly moves data among: shared project storage; the network; the compute node's page cache;
 
 13
-00:01:10,562 --> 00:01:17,047
-Its priorities are stable acquisition, vendor support, enough local space for the current run,
+00:01:04,123 --> 00:01:07,395
+local disk; RAM; and CPU or GPU processes.
 
 14
-00:01:17,047 --> 00:01:18,900
-and minimal software change.
+00:01:07,395 --> 00:01:11,895
+The slowest required part of that path limits the complete job.
 
 15
-00:01:18,900 --> 00:01:26,312
-Do not use it as a general-purpose analysis workstation unless the instrument facility explicitly supports that
+00:01:11,895 --> 00:01:18,441
+Adding CPU cores does not help when those cores spend most of their time waiting for
 
 16
-00:01:26,312 --> 00:01:26,776
-use.
+00:01:18,441 --> 00:01:18,850
+files.
 
 17
-00:01:26,776 --> 00:01:32,335
-Where suitable, ask RCC whether the device can join the Lab network.
+00:01:18,850 --> 00:01:23,759
+Shared storage is designed to make durable data available to many nodes.
 
 18
-00:01:32,335 --> 00:01:37,894
-Do not connect it yourself or guess network, server, or proxy settings.
+00:01:23,759 --> 00:01:29,895
+It is not designed to behave like a private local SSD for every job simultaneously.
 
 19
-00:01:37,894 --> 00:01:44,379
-RCC must first review the owner, software and update requirements, required direct server endpoints,
+00:01:29,895 --> 00:01:34,395
+One badly structured job can also create contention for other researchers.
 
 20
-00:01:44,379 --> 00:01:48,085
-vendor remote-support needs, data flow, and destination project.
+00:01:34,395 --> 00:01:41,062
+### Streaming I/O Streaming I/O reads or writes a long sequence of bytes in order:
 
 21
-00:01:48,085 --> 00:01:53,644
-The Lab network is not an Internet connection with extra firewall rules..
+00:01:41,062 --> 00:01:46,395
+Examples include: reading a compressed FASTQ file once from beginning to end;
 
 22
-00:01:53,644 --> 00:01:58,224
-At every transition, somebody must know who owns the next step.
+00:01:46,395 --> 00:01:53,061
+writing one BAM, CRAM, archive, or report; piping decompressed data directly into the next program;
 
 23
-00:01:58,224 --> 00:02:03,637
-This is the target lifecycle for data using the planned RCC-to-Coscine archive service.
+00:01:53,061 --> 00:01:55,283
+and copying one large file.
 
 24
-00:02:03,637 --> 00:02:10,299
-Coscine eligibility and the transfer route must still be confirmed for the specific project before real
+00:01:55,283 --> 00:02:02,394
+Streaming works well because storage devices, operating-system readahead, compression libraries, and network protocols can transfer large
 
 25
-00:02:10,299 --> 00:02:11,132
-data moves.
+00:02:02,394 --> 00:02:03,283
+blocks efficiently.
 
 26
-00:02:11,132 --> 00:02:17,794
-### The RCC landing point is a project, not a home directory Instrument data must land
+00:02:03,283 --> 00:02:10,394
+The cost of opening the file is paid once and useful throughput can approach the storage
 
 27
-00:02:17,794 --> 00:02:20,292
-in the approved RCC project area.
+00:02:10,394 --> 00:02:11,283
+system's bandwidth.
 
 28
-00:02:20,292 --> 00:02:26,954
-A user's home directory is for personal configuration, small source files, and individual working material—not authoritative
+00:02:11,283 --> 00:02:16,616
+### Random I/O Random I/O repeatedly jumps among unrelated offsets or files:
 
 29
-00:02:26,954 --> 00:02:29,452
-research data or shared instrument output.
+00:02:16,616 --> 00:02:21,061
+Examples include: repeatedly querying tiny genomic regions across a large.
 
 30
-00:02:29,452 --> 00:02:36,114
-This separation matters for governance and legal compliance: a project connects the data to an approved
+00:02:21,061 --> 00:02:28,979
+Suppose one sample requires: 2 seconds of useful CPU work; and 20 seconds waiting for small
 
 31
-00:02:36,114 --> 00:02:37,364
-purpose, accountable owner.
+00:02:28,979 --> 00:02:29,969
+network-storage operations.
 
 32
-00:02:37,364 --> 00:02:45,998
-Record: project and responsible researcher; facility and instrument; run identifier; sample identifiers without direct patient identifiers;
+00:02:29,969 --> 00:02:35,908
+For 5,000 samples and 10 workflow stages: That estimate excludes queueing, retries,
 
 33
-00:02:45,998 --> 00:02:53,014
-expected output size and file count; source directory and destination project; required analysis;
+00:02:35,908 --> 00:02:40,857
+directory scans, environment startup, and contention caused by parallel jobs.
 
 34
-00:02:53,014 --> 00:02:57,332
-retention requirements; person responsible for confirming the transfer.
+00:02:40,857 --> 00:02:47,291
+If several rules repeat the same anti-pattern or failures force stages to restart,
 
 35
-00:02:57,332 --> 00:03:04,348
-Use a directory name such as: Do not place patient names, birth dates,
+00:02:47,291 --> 00:02:54,219
+a workflow expected to finish in hours can remain active for weeks or months.
 
 36
-00:03:04,348 --> 00:03:08,125
-hospital numbers, or similar fields in filenames.
+00:02:54,219 --> 00:03:00,158
+Typical multipliers are: number of samples; files per sample; workflow stages; retries;
 
 37
-00:03:08,125 --> 00:03:13,543
-Mounted storage is convenient but is not the preferred path for instrument datasets.
+00:03:00,158 --> 00:03:03,623
+parallel workers; and repeated decompression or copying.
 
 38
-00:03:13,543 --> 00:03:21,474
-A 500 GB dataset in five files can be easier to move than a 50 GB
+00:03:03,623 --> 00:03:07,087
+Measure one representative sample before launching thousands.
 
 39
-00:03:21,474 --> 00:03:23,457
-dataset in 500,000 files.
+00:03:07,087 --> 00:03:11,023
+The following job uses the scratch directory supplied by Slurm.
 
 40
-00:03:23,457 --> 00:03:31,388
-Record total bytes, file count, largest file, directory depth, and whether files are still being written.
+00:03:11,023 --> 00:03:17,322
+The fallback matches the current RCC job-local layout and is used only when SLURM_TMPDIR is not
 
 41
-00:03:31,388 --> 00:03:39,319
-Microscopy and mass-spectrometry workflows often create preview images, indexes, sidecars, databases, tiles, channels, or time-point files.
+00:03:17,322 --> 00:03:17,715
+set.
 
 42
-00:03:39,319 --> 00:03:46,755
-Do not copy a live acquisition directory unless the facility has a tested ingestion process.
+00:03:17,715 --> 00:03:24,014
+Submit it from a login or submission host: The compute must occur inside the Slurm job,
 
 43
-00:03:46,755 --> 00:03:54,734
-RCC is appropriate for reproducible batch processing, many samples or images, CPU parallelism,
+00:03:24,014 --> 00:03:27,163
+not directly on the login or submission host.
 
 44
-00:03:54,734 --> 00:04:02,099
-GPU acceleration, large memory, containers, automated quality control, and durable project-level results.
+00:03:27,163 --> 00:03:33,412
+The explicit staging pattern is easy to audit: Where available and tested on RCC,
 
 45
-00:04:02,099 --> 00:04:10,692
-RCC is not automatically appropriate for live instrument control, diagnostic workflows, unsupported vendor databases,
+00:03:33,412 --> 00:03:39,216
+Snakemake shadow rules and the tmpdir resource can provide a more declarative implementation.
 
 46
-00:04:10,692 --> 00:04:14,375
-or data with primary identifying fields.
+00:03:39,216 --> 00:03:45,019
+The same invariants remain: active temporary work is local; durable inputs remain unchanged;
 
 47
-00:04:14,375 --> 00:04:22,118
-The manifest should record relative path, size, role, sample ID, format, and creation time.
+00:03:45,019 --> 00:03:52,161
+only required outputs return to shared storage; and failed jobs do not publish apparently complete results.
 
 48
-00:04:22,118 --> 00:04:25,989
-Generate checksums only after acquisition is complete:
+00:03:52,161 --> 00:03:59,359
+Repeatedly transferring or rebuilding the same immutable data wastes both network capacity and wall-clock time.
 
 49
-00:04:25,989 --> 00:04:31,299
-Verify that: the destination exists; file count matches; total size is plausible;
+00:03:59,359 --> 00:04:05,597
+Suitable reusable objects include: Apptainer images; read-only reference genomes; annotation databases; aligner indexes;
 
 50
-00:04:31,299 --> 00:04:37,493
-checksums match where practical; completion markers exist; key files open in the correct software;
+00:04:05,597 --> 00:04:13,274
+model weights; software archives; and decompressed copies of compressed references when repeated local access justifies the
 
 51
-00:04:37,493 --> 00:04:43,687
-permissions allow the project team to read the data; source and destination are recorded.
+00:04:13,274 --> 00:04:13,754
+space.
 
 52
-00:04:43,687 --> 00:04:48,554
-Only then should deletion be considered under the facility retention policy.
+00:04:13,754 --> 00:04:17,593
+A cache is not a substitute for provenance.
+
+53
+00:04:17,593 --> 00:04:23,351
+Every cached object must be tied to an immutable identity such as:
+
+54
+00:04:23,351 --> 00:04:29,109
+a cryptographic checksum; a container digest; an exact version; a versioned path;
+
+55
+00:04:29,109 --> 00:04:31,508
+or a workflow-managed content hash.
+
+56
+00:04:31,508 --> 00:04:37,746
+### Node-local cache pattern Use a stable cache directory separate from job-specific scratch:
+
+57
+00:04:37,746 --> 00:04:42,544
+The temporary file plus atomic rename prevents concurrent jobs from.
+
+58
+00:04:42,544 --> 00:04:48,236
+Start with Slurm accounting: Inside an active allocation, useful tools may include:
+
+59
+00:04:48,236 --> 00:04:53,927
+Interpretation: Use representative pilot data and change one variable at a time.
+
+60
+00:04:53,927 --> 00:05:00,458
+Use local scratch when: the tool creates many temporary files; the tool performs repeated random reads
+
+61
+00:05:00,458 --> 00:05:05,355
+or writes; the input will be reread many times during one job;
+
+62
+00:05:05,355 --> 00:05:11,886
+a temporary database or index is built per job; or local staging measurably reduces elapsed time
+
+63
+00:05:11,886 --> 00:05:13,110
+and shared-storage pressure.
+
+64
+00:05:13,110 --> 00:05:19,641
+Keep direct shared-storage streaming when: the tool performs one sequential pass; input is much larger than
+
+65
+00:05:19,641 --> 00:05:26,171
+local capacity; staging would duplicate most of the job's total I/O; several nodes must concurrently read
+
+66
+00:05:26,171 --> 00:05:32,293
+one durable source; or RCC policy identifies the storage tier as suitable for that pattern.
 

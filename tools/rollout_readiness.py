@@ -89,10 +89,10 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     manifest = yaml.safe_load((ROOT / "config/media-manifest.yml").read_text())
     assets = manifest.get("assets", [])
     classes = [item.get("class") for item in assets]
-    if classes != list(range(1, 16)):
-        blockers.append("media manifest does not contain exactly Classes 1–15 in order")
+    if classes != list(range(1, 18)):
+        blockers.append("media manifest does not contain exactly Classes 1–17 in order")
     else:
-        ready.append("media manifest covers all 15 classes")
+        ready.append("media manifest covers all 17 classes")
 
     not_human_reviewed = [
         str(item.get("class"))
@@ -112,7 +112,7 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     if missing_tracks:
         blockers.append("course videos lack in-player caption tracks: " + ", ".join(missing_tracks))
     else:
-        ready.append("all 15 course pages declare in-player English captions")
+        ready.append("all 17 course pages declare in-player English captions")
 
     unchecked = len(re.findall(r"(?m)^- \[ \] ", (ROOT / "ADMIN_CHECKLIST.md").read_text()))
     if unchecked:

@@ -4,7 +4,11 @@ Research data often begins on an instrument rather than on the cluster. The
 **Lab network** provides a controlled way to connect suitable devices and move
 their output into storage in the **Research Compute Cluster (RCC)**.
 
-![Laboratory instruments upload data through Samba or ADRIA into the Research Compute Cluster, where researchers analyse and share approved results](../assets/lab-network-flow.svg)
+> **Service status:** project Samba shares are **ready now** for approved
+> projects and registered devices. Ardia-to-RCC integration is **not yet
+> released**. RCC-to-Coscine transfer is also **not yet released**.
+
+![Laboratory instruments upload data through ready Samba shares or a future Ardia integration into the Research Compute Cluster, where researchers analyse and share approved results](../assets/lab-network-flow.svg)
 
 ## What can connect?
 
@@ -35,9 +39,9 @@ the Internet, RCC, or the hospital network. Instead, it receives only the
 connections approved for its role:
 
 - **Direct access to explicit server endpoints or services**, such as an
-  approved Samba project share, ADRIA, or another registered acquisition
-  service. Access to one approved endpoint does not grant access to other RCC
-  projects or servers.
+  approved Samba project share or another released acquisition service. Ardia
+  integration is not yet released. Access to one approved endpoint does not
+  grant access to other RCC projects or servers.
 - **Limited outbound web access through the Lab-network HTTP proxy** when the
   device supports an explicit proxy and the use has been approved. This can
   support needs such as retrieving vendor or operating-system updates without
@@ -86,7 +90,7 @@ backups, vendor coordination, incident contacts, and a replacement plan.
 | Registered devices only | RCC records the device, owner, interface identifier, purpose, and target project before connection. |
 | DHCP configuration | Use the network settings supplied automatically unless RCC has documented an exception. Do not invent a static address, router, or DNS server. |
 | No general default route | Ordinary Internet, hospital-network, and arbitrary RCC destinations are not reachable directly. |
-| Explicit service paths | Samba, ADRIA, a project ingestion service, or another server is reachable only when RCC has approved that exact flow. |
+| Explicit service paths | Ready Samba shares, or another released project-ingestion service, are reachable only when RCC has approved that exact flow. Ardia is not yet released. |
 | Explicit HTTP proxy | Approved outbound web requests can use the proxy settings shown on the Lab-network information page. Software that cannot use the proxy may not be able to update or license itself. |
 | No direct incoming connection | Internet port forwarding, public remote desktop, and direct vendor callbacks are not available. |
 | Project-scoped data access | Reaching one share or ingestion service does not grant access to other projects. |
@@ -126,8 +130,8 @@ credentials, license information, and project names.
 
 1. A registered instrument or acquisition workstation connects to the Lab
    network.
-2. It uploads data through an approved **Samba project share** or shared tooling
-   such as **ADRIA**.
+2. It uploads data through an approved, ready **Samba project share**. The
+   alternative **Ardia** integration is not yet released.
 3. The files are stored in the Research Compute Cluster. Access remains limited
    according to RCC project membership.
 4. Researchers analyse the data with Slurm, Python, R, notebooks, AI, or another
@@ -145,11 +149,13 @@ to an SMB network folder. It presents RCC storage as a familiar shared folder
 and keeps access aligned with project membership. Current connection and
 share names are supplied during onboarding.
 
-### ADRIA or another shared tool
+### Future Ardia integration
 
-ADRIA, or another supported shared acquisition tool, may be a better fit when
-it already collects output from the device, adds workflow context, or manages
-delivery into the correct RCC storage location.
+> **Not yet released:** do not configure or rely on an Ardia-to-RCC route yet.
+
+When released, Ardia may be a better fit when it already collects output from
+the device, adds workflow context, or manages delivery into the correct RCC
+storage location.
 
 During onboarding, agree on the target project, file naming, metadata,
 checksums, retention, expected volume, and responsibility for failed or partial
@@ -166,9 +172,10 @@ Contact the team in the **Mattermost IKIM Cluster channel** with:
 - the target RCC project; and
 - the preferred transfer method, if known.
 
-The team will confirm whether Samba, ADRIA, or another supported pattern is the
-best fit. Do not connect an unmanaged switch, wireless access point, router, or
-unregistered device, and do not guess network or proxy settings.
+The team can onboard the ready Samba path or explain whether another released
+pattern fits. Ardia remains future work. Do not connect an unmanaged switch,
+wireless access point, router, or unregistered device, and do not guess network
+or proxy settings.
 
 ## Remote console option: Raspberry Pi and PiKVM
 
@@ -230,7 +237,7 @@ Implementation details and current caveats are maintained in the
 [PiKVM Tailscale guide](https://docs.pikvm.org/tailscale/). Also read Tailscale's
 [connection-types explanation](https://tailscale.com/docs/reference/connection-types),
 [firewall guidance](https://tailscale.com/docs/reference/faq/firewall-ports),
-and [free-plan terms](https://tailscale.com/kb/1154/free-plans-discounts).
+and [free-plan terms](https://tailscale.com/docs/account/manage-plans/free-plans-discounts).
 
 ## Technical details
 
@@ -246,8 +253,9 @@ The enclave provides only explicit services:
   support an explicit proxy, for example to retrieve an approved update. It is
   not a general Internet route and does not make the device reachable from
   outside the enclave.
-- **Samba** and shared tooling such as **ADRIA** provide approved data-transfer
-  paths. They are service bridges, not general network routes.
+- **Samba** provides the ready project data-transfer path. **Ardia integration
+  is not yet released.** Both are service bridges rather than general network
+  routes; only released and approved paths may be used.
 - Other **explicitly approved direct server endpoints** may be made reachable
   where a documented instrument workflow requires them. This exception is
   scoped to those endpoints and does not create general RCC, hospital-network,
@@ -275,8 +283,8 @@ For storage choices and verification commands, continue with
 [Storage and transfer](../reference/storage-transfer.md). For project and data
 eligibility, see [Biomedical data admission](../security/rcc-biomedical-data-admission.md).
 For a complete acquisition-to-analysis exercise, continue with
-[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
+[Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
 and [choose an instrument-data transfer path](../data/instrument-data-options.md).
 When active analysis ends, continue with
-[Class 15: research data lifecycle](../course/class-15-data-lifecycle.md) and the
+[Class 17: research data lifecycle](../course/class-17-data-lifecycle.md) and the
 [planned RCC project to Coscine archive flow](../data/rcc-project-to-coscine.md).

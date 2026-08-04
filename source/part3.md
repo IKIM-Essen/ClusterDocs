@@ -1,14 +1,14 @@
 ---
 title: "RCC Onboarding - Part 3"
 subtitle: "Performance, CPU and GPU resources, memory, storage, and efficient I/O"
-author: "IKIM RCC documentation proposal"
-date: "11 July 2026"
+author: "IKIM RCC documentation"
+date: "4 August 2026"
 ---
 
 # Contents
 
 - Purpose and learning goals
-- Information that administrators must complete
+- RCC performance and storage values
 - 1. Why performance design matters
 - 2. The bottleneck model
 - 3. CPU performance and parallelism
@@ -44,20 +44,40 @@ By the end of Part 3, you should be able to:
 > **Central performance principle**
 > A job is limited by its slowest required resource. Adding CPU cores does not accelerate a job that is waiting for network storage. Adding RAM does not accelerate a single-threaded program. Requesting a GPU does not help software that has no GPU implementation.
 
-# Information that administrators must complete
+# RCC performance and storage values
 
-Replace every value marked **ADMIN** before publication.
-
-- **Node-local scratch path or variable:** **[ADMIN: document `$SLURM_TMPDIR`, `$TMPDIR`, or the RCC-supported equivalent]**
-- **Scratch capacity and cleanup policy:** **[ADMIN: state quotas, lifetime, and automatic deletion behavior]**
-- **CPU partitions and limits:** **[ADMIN: list names, maximum time, and core limits]**
-- **GPU partitions, GPU types, and request syntax:** **[ADMIN: list supported Slurm resources and constraints]**
-- **Memory limits and high-memory partitions:** **[ADMIN: document site policy]**
-- **Shared project-storage guidance:** **[ADMIN: state quotas, snapshots, backup status, and intended use]**
-- **Job-accounting fields available on RCC:** **[ADMIN: verify `sacct`, `sstat`, and whether `seff` is installed]**
-- **I/O monitoring tools available to users:** **[ADMIN: verify `iostat`, `pidstat`, `iotop`, `strace`, and `perf`]**
-- **Recommended maximum files per directory:** **[ADMIN: provide an RCC operational threshold]**
-- **Support contact:** **[ADMIN: insert RCC support address]**
+- **Job-local scratch:** each Slurm job receives
+  `/local/work/$USER/slurm-job-$SLURM_JOB_ID` on its worker. It is private,
+  node-local, not shared, not backed up, and removed by the job epilog. Copy
+  required results back to project storage before the job ends. `/local/tmp`
+  is the managed temporary base; honour `$TMPDIR` when software sets it.
+- **CPU queues:** `cpu_nodes` is the default general queue with no partition
+  time limit. `cpu_short` is for bounded tests and has a two-hour maximum.
+  Request only the CPUs and memory the job needs; inspect current node capacity
+  with `sinfo` rather than copying a historic core or memory maximum.
+- **GPU queues:** request scheduled GPUs with `--partition=gpu_nodes` and
+  `--gres=gpu:1` (or a reviewed typed GRES such as `gpu:a6000:1`). Use
+  `interactive_gpu` only for an explicitly schedulable interactive GPU worker.
+  A GPU must still be requested even when a node physically contains one.
+- **Memory:** RCC has no universal “high-memory” partition contract. Slurm
+  schedules the requested `--mem` or `--mem-per-cpu` against live node capacity;
+  use `sinfo` and measured `sacct` results to choose a justified request.
+- **Shared storage:** `/projects/<project>` holds approved durable project data,
+  while `/groups/<primary-group>` is limited to a user's primary group. Neither
+  path is scratch. Quota, snapshot, backup, and retention requirements are
+  project-specific; do not claim that archive, snapshot, and backup are
+  interchangeable.
+- **Measurement:** `sacct` is the authoritative completed-job starting point
+  and `sstat` may expose live step metrics. Tool and accounting-field
+  availability can vary by worker; check with `command -v` and omit unsupported
+  fields rather than installing monitoring agents. Use `iostat`, `pidstat`,
+  `strace`, or `perf` only for bounded diagnosis when present and permitted.
+- **File-count policy:** there is no published universal numeric limit per
+  directory. Avoid very large flat directories and repeated tree scans; shard
+  active data by meaningful sample/run identifiers and archive inactive
+  small-file trees for transfer.
+- **Support:** use the **IKIM Cluster channel on Mattermost** without posting
+  credentials or sensitive project data.
 
 # 1. Why performance design matters
 
@@ -248,7 +268,8 @@ Large memory requests may wait longer in the queue and reduce cluster utilisatio
 | Node-local scratch | Temporary working files for one job | Deleted after job or node cleanup | Usually low-latency and high-throughput |
 | Archive | Infrequently accessed retained data | Long-term | Optimised for capacity, not active computation |
 
-Confirm actual RCC paths and policies before publication.
+Use the RCC paths and lifecycle rules stated above; confirm project-specific
+quota, backup, and retention requirements with the project owner.
 
 ## Capacity planning
 
@@ -412,7 +433,9 @@ default-resources:
   tmpdir: system_tmpdir
 ```
 
-On RCC, `system_tmpdir` must resolve to the site-supported local scratch through `$TMPDIR`, `$SLURM_TMPDIR`, or equivalent configuration.
+On RCC, `system_tmpdir` must resolve to job-local scratch, normally
+`/local/work/$USER/slurm-job-$SLURM_JOB_ID`, or to the managed `$TMPDIR` for
+short-lived temporary files.
 
 A rule should direct tool-specific temporary files to `$TMPDIR`:
 
@@ -660,4 +683,6 @@ You can complete Part 3 when you can:
 - Slurm, `sbatch`, `sacct`, and `sstat` manuals.
 - NVIDIA, `nvidia-smi` documentation.
 
-The RCC-specific profile, scratch paths, partitions, and accounting fields must be validated on production before publication.
+The values in this guide match the current RCC contract. Before a retained
+production run, use `snakemake --version`, `sinfo`, and a small `sacct` query to
+record the live software, partition, and accounting behavior with the project.

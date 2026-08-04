@@ -8,7 +8,7 @@
 
 set -euo pipefail
 source /etc/profile.d/conda.sh
-scratch="/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}"
+scratch="/local/work/${USER}/slurm-job-${SLURM_JOB_ID}"
 mkdir -p "${scratch}/jupyter-runtime" "${scratch}/notebooks"
 export JUPYTER_RUNTIME_DIR="${scratch}/jupyter-runtime"
 export XDG_RUNTIME_DIR="${scratch}/xdg-runtime"

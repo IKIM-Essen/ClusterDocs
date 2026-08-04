@@ -2,9 +2,13 @@
 
 Choose storage by lifecycle and access pattern, not only by free capacity.
 
+> **Service status:** RCC workers and project Samba shares are **ready now**.
+> RCC-to-Coscine archive transfer is **not yet released**; references to it are
+> lifecycle planning, not an operational transfer command.
+
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
 > the files portal, [Class 3](../course/class-03-performance.md) explains local
-> staging, and [Class 11](../course/class-11-biomedical-data-privacy.md) covers
+> staging, and [Class 13](../course/class-13-biomedical-data-privacy.md) covers
 > the biomedical-data admission decision.
 
 > **Need to give someone access?** Use [How to share data safely](data-sharing.md)
@@ -40,7 +44,7 @@ active high-I/O computation to job-local storage, and copy validated results
 back to the project.
 
 For the complete path from instrument acquisition to a retained Coscine
-archive, follow [Class 15](../course/class-15-data-lifecycle.md).
+archive, follow [Class 17](../course/class-17-data-lifecycle.md).
 
 Project and group directories may be mounted on demand and may not be globally
 listable. Use the full path supplied for your project rather than probing for
@@ -58,7 +62,7 @@ The supported pattern is durable input, local computation, durable result:
 #SBATCH --time=00:30:00
 
 set -euo pipefail
-scratch="${SLURM_TMPDIR:-/local/work/slurm-jobs/$USER/slurm-job-$SLURM_JOB_ID}"
+scratch="${SLURM_TMPDIR:-/local/work/$USER/slurm-job-$SLURM_JOB_ID}"
 mkdir -p "$scratch/input" "$scratch/output"
 cp --reflink=auto --archive "$SLURM_SUBMIT_DIR/data/input.tsv" "$scratch/input/"
 srun my-analysis "$scratch/input/input.tsv" "$scratch/output/result.tsv"

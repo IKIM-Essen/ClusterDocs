@@ -11,8 +11,8 @@ class VSCodeGuidanceTests(unittest.TestCase):
             ROOT / "docs/tldr.md",
             ROOT / "docs/course/class-01-safe-access.md",
             ROOT / "docs/course/class-02-workflows.md",
-            ROOT / "docs/course/class-07-python-notebooks.md",
-            ROOT / "docs/course/class-08-r-analysis.md",
+            ROOT / "docs/course/class-09-python-notebooks.md",
+            ROOT / "docs/course/class-10-r-analysis.md",
             ROOT / "docs/paths/software-development.md",
         ]
         text = "\n".join(path.read_text().lower() for path in pages)

@@ -67,13 +67,14 @@ PRONUNCIATION = [
 ]
 
 
-def run(command: list[str], *, capture: bool = False) -> str:
+def run(command: list[str], *, capture: bool = False, timeout: int | None = None) -> str:
     result = subprocess.run(
         command,
         check=True,
         text=True,
         stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
         stderr=subprocess.PIPE if capture else subprocess.DEVNULL,
+        timeout=timeout,
     )
     return result.stdout
 
@@ -160,7 +161,15 @@ def caption_chunks(text: str, max_words: int = 16) -> list[str]:
 
 def synthesize(text: str, output: Path, voice: str, rate: int) -> None:
     raw = output.with_suffix(".aiff")
-    run(["say", "-v", voice, "-r", str(rate), "-o", str(raw), speech_text(text)])
+    command = ["say", "-v", voice, "-r", str(rate), "-o", str(raw), speech_text(text)]
+    for attempt in range(2):
+        try:
+            run(command, timeout=90)
+            break
+        except subprocess.TimeoutExpired as error:
+            raw.unlink(missing_ok=True)
+            if attempt == 1:
+                raise RuntimeError("macOS speech synthesis stalled twice") from error
     if raw.stat().st_size < 8192:
         raw.unlink(missing_ok=True)
         raise RuntimeError(

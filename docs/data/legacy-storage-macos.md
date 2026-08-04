@@ -1,5 +1,9 @@
 # macOS: recognize an existing SSHFS setup
 
+> **Service status:** project Samba shares are **ready now**. Ardia integration
+> is **not yet released**. This historical SSHFS page is not a setup guide for
+> either service.
+
 > **Setting up access now? Skip this page.** Follow
 > [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and use
 > the RCC connection settings you were given. This page is only for people who

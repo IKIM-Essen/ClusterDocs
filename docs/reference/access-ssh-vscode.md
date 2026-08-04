@@ -12,9 +12,10 @@ credential and host-verification rules are clear.
 
 ## Request an RCC account
 
-Use the RCC Admin request flow when it is available. If your project still
-uses a coordinated onboarding process, send the following to the responsible
-project coordinator through the approved institutional channel:
+**RCC Admin is ready now**, including self-administration and the
+primary-approver workflow. Use RCC Admin for the account or membership request.
+If your project uses a coordinated onboarding process, prepare the following
+for the responsible project coordinator and primary approver:
 
 - first and last name;
 - institutional email address;

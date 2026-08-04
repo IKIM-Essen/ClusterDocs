@@ -5,6 +5,22 @@ research data. A **primary group** says where a user belongs; a **project**
 brings selected users together so they can exchange data across group
 boundaries.
 
+> **Service status:** RCC Admin project and membership workflows are **ready
+> now**. Project Samba shares are **ready now** for approved projects. Project
+> vhosts, Ardia integration, and RCC-to-Coscine transfer are **not yet
+> released**.
+
+## A simple way to remember it
+
+- **Account = your badge.** Every person signs in with their own account.
+- **Primary group = your home department.** Every user has exactly one; an
+  external collaborator's primary group is `collab`.
+- **Project = the shared project room.** Named people can enter even when their
+  primary groups are different. A user may belong to several project rooms.
+
+Changing the label on somebody's badge is not how a collaboration is created.
+Keep the correct primary group and add the person to the approved project.
+
 ## Identity and access model
 
 | Concept | Rule | What it is for |
@@ -47,3 +63,19 @@ When a collaborator joins or leaves, ask the project lead to update project
 membership. Do not change the user's primary group merely to grant access to
 project data. For practical permission and sharing procedures, continue with
 [How to share data safely](data-sharing.md).
+
+## What belongs to the project
+
+A project is more than a folder. It is the common boundary for:
+
+- the named people allowed to work together;
+- shared project storage and data-transfer access;
+- an approved Samba share used by a registered Lab-network instrument or
+  acquisition computer;
+- a future optional protected vhost when the service is released; and
+- the decision to prepare an approved archive set for the future Coscine flow.
+
+Each future vhost will belong to one project and check individual identity plus
+project membership. Do not plan one catch-all vhost for unrelated projects.
+Coscine archival is a later, reviewed lifecycle step; the RCC-to-Coscine route
+is not yet released and is not a live self-service transfer.

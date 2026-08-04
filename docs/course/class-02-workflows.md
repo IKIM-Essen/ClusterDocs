@@ -4,19 +4,18 @@
   <p class="course-video-kicker">Recommended starting point · 9 min video</p>
   <h2>Watch the class first</h2>
   <p>Projects, environments, Snakemake, Slurm, and reproducibility. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part2.png" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4?v=84dafd82">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Part_2_Captions.vtt" default>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/part2.png" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4?v=28494fd2">
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Part_2_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Part_2_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Part_2_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 ## Learning objectives
 
-You will create a project that separates raw data, workflow definitions, software declarations, logs, benchmarks and generated results.
+You will create a project that separates raw data, workflow definitions,
+software declarations, logs, benchmarks and generated results. You will also
+compare a project-authored Snakemake workflow with a versioned community
+pipeline run through Nextflow and nf-core.
 
 ## Recommended layout
 
@@ -41,13 +40,21 @@ workflow caches from search and file watching.
 
 ## Good cluster pattern
 
-Use Snakemake to describe dependencies and submit work through Slurm. Do not keep a large workflow running as ordinary processes on the login host. Use a dry run before submission:
+Use a workflow engine to describe dependencies and submit scientific work
+through Slurm. Do not keep a large workflow running as ordinary processes on
+an SSH gateway. Class 6 teaches the ready-now managed Snakemake path; Class 7
+documents the not-yet-released managed Nextflow path.
+
+The first safe question is always a non-mutating dry run. For Snakemake:
 
 ```bash
 snakemake --dry-run --printshellcmds
 ```
 
-Then use the RCC-supported execution profile described on the production site.
+Then continue with [Class 6: Snakemake on RCC](class-06-snakemake.md). If a
+reviewed project uses Nextflow or nf-core, read [Class 7](class-07-nextflow.md)
+for the planned controller, Slurm, shared-work, scratch, Apptainer, and
+`-resume` boundary. **Managed Nextflow support is not yet released.**
 
 ## Software environments inside jobs
 
@@ -63,9 +70,9 @@ srun python analysis.py
 Do not run `conda init` in every job. Confirm environment and package caches use
 the approved node-local paths rather than metadata-sensitive shared storage.
 
-> **Reference companion:** [Conda, Snakemake, and Apptainer](../reference/software-workflows.md)
-> covers batch activation, Snakemake sessions, explicit container binds, cache
-> placement, GPU exposure, and reproducibility records.
+> **Reference companion:** [Conda, Snakemake, Nextflow, nf-core, and Apptainer](../reference/software-workflows.md)
+> covers batch activation, Snakemake sessions, Nextflow and nf-core, explicit
+> container binds, cache placement, GPU exposure, and reproducibility records.
 
 ## Security moment
 

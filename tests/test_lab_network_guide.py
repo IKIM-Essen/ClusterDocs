@@ -15,7 +15,7 @@ class LabNetworkGuideTests(unittest.TestCase):
             "dhcp",
             "http proxy",
             "samba",
-            "adria",
+            "ardia",
             "research compute cluster",
             "slurm",
         ):

@@ -1,0 +1,32 @@
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        "results/summary.tsv"
+
+
+rule create_synthetic_sample:
+    output:
+        "results/samples/{sample}.txt"
+    threads: 1
+    resources:
+        mem_mb=256,
+        runtime=5,
+        slurm_partition="cpu_short"
+    shell:
+        "mkdir -p results/samples && printf '%s\\tready\\n' {wildcards.sample} > {output}"
+
+
+rule summarize:
+    input:
+        expand("results/samples/{sample}.txt", sample=config["samples"])
+    output:
+        "results/summary.tsv"
+    threads: 1
+    resources:
+        mem_mb=256,
+        runtime=5,
+        slurm_partition="cpu_short"
+    shell:
+        "cat {input} > {output}"

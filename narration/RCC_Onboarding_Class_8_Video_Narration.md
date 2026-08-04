@@ -1,33 +1,29 @@
-# Class 8: R notebooks and large-data analysis — video narration
+# Class 8: protected project websites — video narration
 
-## Slide 1: Class 8: R notebooks and large-data analysis
+## Slide 1: Class 8: protected project websites
 
-Welcome to Class 8: R notebooks and large-data analysis. This video introduces the core decisions and working patterns. Watch the complete lesson first, then use the written class page for copyable commands, exercises, and detailed reference material.
+Welcome to Class 8: protected project websites. This video introduces the core decisions and working patterns. Watch the complete lesson first, then use the written class page for copyable commands, exercises, and detailed reference material.
 
-## Slide 2: Learning goals
+## Slide 2: Learning outcomes
 
-After this class, you can: run R in a controlled Conda environment; use an R kernel in JupyterLab when needed; analyse larger tables with data.table, DuckDB, Arrow, and dplyr patterns; build figures with ggplot2; separate exploratory notebooks from batch analysis; prepare R code that can be rerun by a colleague.
+By the end of this class, you should be able to: decide whether a project idea belongs on the governed vhost platform; distinguish a static information site from an active project application; explain what RCC provides and what the project application must provide; use the copyable example without creating local accounts or exposing storage paths; prepare a complete vhost request for project-lead and administrator review; recognize when computation belongs in Slurm rather than in a web request.
 
-## Slide 3: Recommended R workflow
+## Slide 3: What is in scope
 
-Start from the provided example: For an interactive R notebook, use the Jupyter example from Class 7. The environment already includes an R kernel.
+Good candidates include: project documentation and study information; read-only dashboards and reports; search or query interfaces over an approved internal database; curated collections of reports, images or result files; small project tools used by an identified project group; bounded forms or upload workflows with a defined destination and owner. A vhost is particularly useful when medical professionals or biomedical researchers need a browser-based interface and should not be expected to install command-line tools.
 
-## Slide 4: Handling larger tables
+## Slide 4: Standard architecture
 
-Do not begin by loading every file into memory. First check: file size; number of columns; expected row count; whether the file is compressed; whether the analysis needs all columns; whether the operation is streaming, grouped, or random-access. Good starting points:
+Inside the hospital network, an active project application can use the low-friction RCC username/password or passkey flow. Outside the hospital, the gateway requires stronger authentication. Informational static sites may be available without login inside the hospital, but active applications always require an individual identity. The backend application is not directly reachable by ordinary users. This is important: the trusted identity information is meaningful only when it arrives through the RCC gateway.
 
-## Slide 5: Reproducibility
+## Slide 5: Division of responsibility
 
-For teaching and small examples, the course uses Conda environments because they are easy to reproduce in Slurm jobs. For larger R projects, you may also use renv, but do not keep active package libraries with many small files on shared storage while computing. Restore packages into local job storage or use a reviewed container.
+Junior developers are not expected to administer the authentication gateway, integrity checker or detection systems. They are expected to follow the application contract and keep their software maintainable.
 
-## Slide 6: Copyable example
+## Slide 6: Safe data-access patterns
 
-The course includes: examples/interactive-workflows/notebooks/r-large-data.ipynb examples/interactive-workflows/r/analysis.R examples/interactive-workflows/r/r.sbatch examples/interactive-workflows/r/environment.yml The notebook demonstrates group summaries and a sampled figure. The batch example writes reproducible output into a results directory.
+### Database-backed interface Prefer a dedicated application account with access to approved views or tables. A read-only dashboard should not receive write or administration privileges. ### Curated file collection Store a catalogue that maps an opaque identifier to an approved file. The browser supplies the identifier, not a filesystem path. The application checks project membership again before returning the file. ### Computational result portal The website may collect bounded parameters and display results, but substantial processing should be handled asynchronously through an approved workflow. Do not keep a browser request open while a large scientific analysis runs. ### Upload workflow Use a staging directory, server-generated.
 
-## Slide 7: Good cluster patterns for R users
+## Slide 7: Local copyable example
 
-Request only the CPU and memory your script can use. Keep raw data compressed where tools support it. Avoid thousands of tiny temporary files on shared storage. Use node-local scratch for intermediate output. Save final tables and figures back to the project area. Use sacct after completion to compare requested and observed memory.
-
-## Slide 8: Completion gate
-
-Run: Then submit the R batch job once and verify that the result file was written. The gate is complete when you can explain how the same code could be moved from notebook exploration into the batch script.
+The example demonstrates: trusted identity handling; project-group checks; a read-only database query; curated downloads using opaque identifiers; safe failure for direct clients and invalid requests. Local demonstration mode accepts synthetic headers only from loopback. Production must use the governed RCC gateway and deployment workflow.

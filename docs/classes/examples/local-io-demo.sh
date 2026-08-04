@@ -17,7 +17,7 @@ usage() {
 [[ $# -eq 2 ]] || usage
 readonly INPUT="$1"
 readonly OUTPUT_DIR="$2"
-readonly WORKDIR="${SLURM_TMPDIR:-/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}}"
+readonly WORKDIR="${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}"
 
 cleanup() {
     local status=$?

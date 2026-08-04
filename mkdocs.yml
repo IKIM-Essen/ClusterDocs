@@ -1,6 +1,6 @@
 site_name: RCC ClusterDocs NG
 site_description: Safe, practical RCC training for biomedical researchers
-site_url: https://STAGING-URL.invalid/
+site_url: https://ikim-essen.github.io/ClusterDocs/
 docs_dir: docs
 theme:
   name: material
@@ -21,17 +21,19 @@ nav:
       - Class 3 - Performance and I/O: course/class-03-performance.md
       - Class 4 - Apptainer containers: course/class-04-containers.md
       - Class 5 - Slurm acceptance patterns: course/class-05-slurm.md
-      - Class 6 - Protected project websites: course/class-06-vhosts.md
-      - Class 7 - Python notebooks: course/class-07-python-notebooks.md
-      - Class 8 - R analysis: course/class-08-r-analysis.md
-      - Class 9 - Shiny apps: course/class-09-shiny.md
-      - Class 10 - Notebook to service: course/class-10-notebook-to-service.md
-      - Class 11 - Biomedical data privacy: course/class-11-biomedical-data-privacy.md
+      - Class 6 - Snakemake on RCC: course/class-06-snakemake.md
+      - Class 7 - Nextflow on RCC (not yet released): course/class-07-nextflow.md
+      - Class 8 - Protected project websites: course/class-08-vhosts.md
+      - Class 9 - Python notebooks: course/class-09-python-notebooks.md
+      - Class 10 - R analysis: course/class-10-r-analysis.md
+      - Class 11 - Shiny apps: course/class-11-shiny.md
+      - Class 12 - Notebook to service: course/class-12-notebook-to-service.md
+      - Class 13 - Biomedical data privacy: course/class-13-biomedical-data-privacy.md
       - Interactive examples: examples/interactive-workflows.md
-      - Class 12 - Efficient local I/O: course/class-12-efficient-io.md
-      - Class 13 - RCC storage architecture: course/class-13-storage-architecture.md
-      - Class 14 - Wet-lab instrument data: course/class-14-wet-lab-data-workflows.md
-      - Class 15 - Research data lifecycle: course/class-15-data-lifecycle.md
+      - Class 14 - Efficient local I/O: course/class-14-efficient-io.md
+      - Class 15 - RCC storage architecture: course/class-15-storage-architecture.md
+      - Class 16 - Wet-lab instrument data: course/class-16-wet-lab-data-workflows.md
+      - Class 17 - Research data lifecycle: course/class-17-data-lifecycle.md
   - Data lifecycle:
       - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
       - Choosing a transfer path: data/instrument-data-options.md
@@ -52,10 +54,8 @@ nav:
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
       - RCC connection name: connecting/stable-endpoints.md
-  - Security:
       - Safe everyday practice: security/safe-use.md
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
   - Resources:
       - Who we are: team.md
       - Lab network properties and remote access: resources/how-it-all-works.md
-      - Media and downloads: media/index.md

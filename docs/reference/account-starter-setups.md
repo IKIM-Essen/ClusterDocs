@@ -1,8 +1,8 @@
-# Importable RCC account starter setups
+# RCC account setup patterns
 
-The account starter kit provides optional, reviewable examples for a more useful
-interactive shell, a lightweight prompt, node-local Conda storage, and a bounded
-Shiny development job. Import only the pieces that fit your work.
+These optional patterns can make an interactive shell, prompt, Conda setup, or
+Shiny development job easier to use. Apply only the pieces that fit your work;
+RCC no longer publishes a downloadable account-setup bundle.
 
 ## Choose a component
 
@@ -13,38 +13,19 @@ Shiny development job. Import only the pieces that fit your work.
 | Conda | Opt-in node-local environment and package-cache paths, plus a data-science environment | Python, notebooks, machine learning, and AI |
 | Shiny | A minimal app, reproducible R environment, and bounded Slurm job | R application development |
 
-[Download the complete starter kit as a ZIP](../../downloads/rcc-account-setup.zip),
-or [read its included guide](../../downloads/examples/account-setup/README.md)
-before importing it.
+## Apply patterns deliberately
 
-## Preview before installing
-
-Download and transfer `rcc-account-setup.zip` to your RCC account. Unpack it,
-enter the directory, and preview the proposed setup:
-
-```bash
-unzip rcc-account-setup.zip
-cd account-setup
-bash install.sh
-```
-
-Dry-run is the default. It prints every proposed source and destination without
-changing the account. Then install only the desired pieces:
-
-```bash
-bash install.sh --install --component shell --component prompt
-bash install.sh --install --component conda
-bash install.sh --install --component shiny
-```
-
-The files are placed under `${XDG_CONFIG_HOME:-$HOME/.config}/rcc`. Existing
-files are protected unless `--force` is explicitly supplied.
+Keep optional configuration under `${XDG_CONFIG_HOME:-$HOME/.config}/rcc` and
+review it before sourcing it from a shell startup file. Test one change in one
+interactive shell first, and preserve any existing configuration. If your team
+needs a shared setup, maintain it in the project's reviewed source repository
+rather than copying an unversioned bundle between accounts.
 
 ## Activation remains a user decision
 
-The installer never changes `.bashrc`, `.bash_profile`, or another startup file.
-It prints optional activation lines. Read the installed files, test them in one
-shell, and add only the source lines you want.
+Do not let an account-setup script change `.bashrc`, `.bash_profile`, or another
+startup file without an explicit review. Read the proposed files, test them in
+one shell, and add only the source lines you want.
 
 The prompt deliberately avoids Git checks, recursive searches, Conda activation,
 and network calls each time it is displayed. The Conda helper is also opt-in:
@@ -58,5 +39,5 @@ on the current [access guide](access-ssh-vscode.md). A development tunnel is not
 a published service. Follow the governed publication route before sharing an
 application with other users.
 
-Treat these files as starting points, not centrally enforced configuration.
+Treat these patterns as starting points, not centrally enforced configuration.
 Re-check current storage, partition, and software guidance before adopting them.

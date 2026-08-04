@@ -53,6 +53,9 @@ replace a service alias with a physical node name.
 
 ## Transfer guidance
 
+> **Service status:** project Samba shares are **ready now** for approved
+> projects and registered devices.
+
 An approved SSH alias does not make SSHFS the preferred bulk-transfer method.
 Large instrument datasets should use the RCC files portal, approved SFTP,
 server-to-server transfer, Samba or facility-managed automated ingestion as

@@ -1,6 +1,6 @@
 # RCC onboarding curriculum for biomedical researchers
 
-This staging package contains a fifteen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
+This staging package contains a seventeen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
 
 ## Curriculum
 
@@ -10,7 +10,10 @@ Mental model of a shared cluster, local versus remote work, SSH and key handling
 
 ### Part 2 - Reproducible scientific workflows
 
-Project structure, Miniforge, Mamba, Bioconda, software environments, Snakemake dependency graphs, Slurm execution, a minimal statistical workflow, a synthetic DNA sequence workflow, logging, benchmarking, and Git.
+Project structure, Miniforge, Mamba, Bioconda, software environments,
+Snakemake dependency graphs, a bounded nf-core/Nextflow example, Slurm
+execution, a minimal statistical workflow, a synthetic DNA sequence workflow,
+logging, benchmarking, and Git.
 
 ### Part 3 - Performance and efficient I/O
 
@@ -32,25 +35,36 @@ The original four classes include:
 - a Markdown narration script.
 
 The canonical source for the original four classes is the Markdown document in
-`source/`. Classes 5–15 are maintained directly in the course, exercise,
+`source/`. Classes 5–17 are maintained directly in the course, exercise,
 narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
 files are rendered review artifacts; MP4 files are published separately from
 ordinary Git history.
 
 ## Video format
 
-The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–15
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–17
 use the macOS Daniel British-English voice with sentence-aware pacing,
 technical-term pronunciation handling, de-essing, gentle compression, EBU R128
 loudness normalization, and captions. Rebuild them with
 `python3 build/build_videos.py` for Classes 1–4 and
-`python3 build/build_course_videos.py` for Classes 5–15. The builds record settings, durations, and
+`python3 build/build_course_videos.py` for Classes 5–17. The builds record settings, durations, and
 hashes in `meta/video-build-report.json`. Videos do not connect to production
 RCC services and contain no credentials or biomedical data.
 
 ## Production status
 
-This is a publication candidate, not a claim that every local command has already been validated against the production RCC configuration. Before publication, administrators must complete the local values and run the tests in `ADMIN_CHECKLIST.md`.
+This is a content-complete publication candidate with release-state labels and
+fail-closed media links. Deployment operators must still complete the
+operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
+DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
+asking readers to fill documentation placeholders.
+
+Managed Nextflow-to-Slurm support is documented as **not yet released**. The
+planned contract uses a pinned `rcc-nextflow` launcher on an approved submission
+host, Slurm for every scientific task, shared persistent work state for
+`-resume`, explicit node-local task scratch, and Apptainer on workers. The site
+does not claim this service is live while its infrastructure role remains
+disabled and digest approval and acceptance are outstanding.
 
 Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
 and novice review can begin. Run `python3 tools/rollout_readiness.py` for the
@@ -82,8 +96,8 @@ Then open <http://127.0.0.1:8765/>.
 
 ## v0.1.2 additions
 
-This staging version adds Classes 7-10 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
+This staging version adds Classes 9-12 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
 
 ## v0.1.3 additions
 
-This version adds Class 11 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.
+This version adds Class 13 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.

@@ -4,11 +4,15 @@ Start by deciding **who should receive the data** and **why they are allowed to
 receive it**. The right mechanism differs for members of your project, another
 RCC group, and someone outside RCC.
 
+> **Service status:** RCC Admin and project membership are **ready now**.
+> Project vhosts and RCC-to-Coscine transfer are **not yet released**; do not
+> select either as a current sharing route.
+
 | Audience | Recommended route | Avoid |
 |---|---|---|
 | Members of the same project | Project directory controlled by the project's Unix group | Copies in several personal home directories |
 | RCC users outside the current group | Request a project or project membership that creates one shared group for all approved members | Making files readable or writable by every RCC user |
-| External collaborators or the public | Approved files portal, governed project service, Coscine or an appropriate repository, depending on purpose and data class | Opening a server port, emailing restricted data, or publishing a project directory |
+| External collaborators or the public | Approved files portal or an appropriate repository, depending on purpose and data class. Project vhosts and RCC-to-Coscine transfer are not yet released. | Opening a server port, emailing restricted data, or publishing a project directory |
 
 Before sharing biomedical or otherwise controlled data, confirm that the
 project governance, consent or other legal basis, and recipient authorization
@@ -16,10 +20,11 @@ cover the disclosure. Technical access does not by itself authorize sharing.
 
 ## The recommended model: a project with a shared Unix group
 
-Ask RCC Admin or support for a project that identifies the responsible owner,
-purpose, approved members, storage location, and a **shared Unix group**. RCC
-adds each named member to that group. Members can then work in the supplied
-project path, normally under:
+Use the ready RCC Admin self-administration and primary-approver workflow to
+request a project that identifies the responsible owner, purpose, approved
+members, storage location, and a **shared Unix group**. RCC adds each named
+member to that group. Members can then work in the supplied project path,
+normally under:
 
 ```text
 /projects/<project>/
@@ -168,10 +173,10 @@ the intended recipient and data class:
 
 - use the approved RCC files portal or institutional transfer service for a
   named external recipient when that capability and disclosure are approved;
-- use a governed project website or application for curated, authenticated
-  access—not a direct view of `/projects`;
-- use Coscine for a governed retained package when it fits the project's data
-  management and planned RCC-to-Coscine flow; and
+- plan a governed project website or application for future curated,
+  authenticated access, but do not use it until project vhosts are released;
+- prepare a governed retained package for the planned RCC-to-Coscine flow, but
+  do not transfer it until that service is released; and
 - use an appropriate public or controlled-access repository for publication,
   with the required metadata, licence, review, and persistent identifier.
 
@@ -182,5 +187,5 @@ review the exact package. Public sharing is an irreversible disclosure; a
 world-readable Unix mode is neither a publication workflow nor an approval.
 
 See [Storage and transfer](storage-transfer.md) for transfer commands and
-[Class 15](../course/class-15-data-lifecycle.md) for retention and the planned
+[Class 17](../course/class-17-data-lifecycle.md) for retention and the planned
 Coscine path.

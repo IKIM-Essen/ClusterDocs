@@ -2,8 +2,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CLASS = ROOT / "docs/course/class-11-biomedical-data-privacy.md"
+CLASS = ROOT / "docs/course/class-13-biomedical-data-privacy.md"
 QUICK = ROOT / "docs/security/rcc-biomedical-data-admission.md"
+SAFE_USE = ROOT / "docs/security/safe-use.md"
 
 
 class PrivacyCourseTests(unittest.TestCase):
@@ -46,6 +47,23 @@ class PrivacyCourseTests(unittest.TestCase):
         self.assertIn("may process approved biomedical research data", text)
         self.assertIn("patient, case, insurance", text)
         self.assertIn("defacing", text)
+
+    def test_safe_use_does_not_restore_obsolete_anonymity_only_rule(self):
+        text = SAFE_USE.read_text(encoding="utf-8").lower()
+        self.assertIn("the data do not have to be anonymous", text)
+        self.assertIn("direct identifying fields", text)
+        self.assertNotIn("established as non-identifiable", text)
+        self.assertNotIn("identifiable source data outside rcc", text)
+
+    def test_safety_pages_do_not_restore_a_governance_menu_section(self):
+        builder = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
+        mkdocs = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
+        self.assertNotIn("('Governance',", builder)
+        self.assertNotIn("  - Governance:", mkdocs)
+        self.assertNotIn("  - Security:", mkdocs)
+        for page in ("security/safe-use.md", "security/rcc-biomedical-data-admission.md"):
+            self.assertIn(f"('Reference',", builder.split(page, 1)[0].rsplit("\n", 1)[-1])
+            self.assertIn(page, mkdocs)
 
 
 if __name__ == "__main__":

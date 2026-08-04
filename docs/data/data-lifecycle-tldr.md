@@ -3,15 +3,35 @@
 This is the short version for anyone who creates, transfers, analyses, or
 archives research data on RCC.
 
+> **Service status:** project Samba ingestion and RCC workers are **ready now**.
+> Ardia integration, project vhosts, and RCC-to-Coscine transfer are **not yet
+> released**. This page marks their intended place in the lifecycle; it does
+> not activate them.
+
+## First understand people and projects
+
+Every person uses an individual RCC account and has exactly one **primary
+group**, representing their home department or organisational affiliation. A
+**project** is different: it brings named, approved people from one or more
+primary groups into one shared research workspace.
+
+In plain language, your primary group says where you belong; project membership
+says which collaborative data you may use. Instrument data and shared analysis
+inputs and results belong to the project, not to one person's home directory.
+Future project vhosts and later archive decisions will use the same project
+boundary after those services are released.
+
 ## The whole path
 
 ```text
-instrument or facility storage
+registered Lab-network instrument
+    -> approved project Samba share [ready]
+       or future Ardia integration [not yet released]
     -> approved RCC project/incoming
     -> job-local analysis workspace
     -> approved RCC project/results
     -> reviewed and frozen archive set
-    -> verified Coscine archive
+    -> future verified Coscine archive [not yet released]
     -> recorded RCC retention or deletion
 ```
 
@@ -19,7 +39,8 @@ The most important rule is simple:
 
 > Research data belongs to a governed project, not a user's home directory.
 > Temporary high-I/O work belongs on job-local storage. An approved, documented
-> final set can move to Coscine after verification.
+> final set can move to Coscine after the transfer service is released and the
+> destination is verified.
 
 ## 1. Start with the project
 
@@ -44,7 +65,7 @@ to the **Lab network**. This removes general direct Internet connectivity and
 reduces exposure while preserving:
 
 - direct access to explicitly approved server endpoints and services, such as
-  an approved project share or managed acquisition service; and
+  an approved project Samba share or managed acquisition service; and
 - limited outbound web access through an explicit HTTP proxy, for example for
   approved software or vendor updates.
 
@@ -53,6 +74,15 @@ one server does not grant general RCC access. RCC must review the device owner,
 updates, licensing, vendor support, server dependencies, credentials, and data
 flow before connection. Do not plug in an unregistered device or guess proxy
 settings. See [how RCC and the Lab network work together](../resources/how-it-all-works.md).
+
+For non-technical users, a **Samba share** looks like a normal network folder
+on an instrument or Windows acquisition computer. Behind the scenes it is
+restricted to the approved project. RCC provides the exact connection; do not
+reuse another project's share or put the data in a personal folder. Wait for a
+run or supported export to complete before transfer unless RCC and the facility
+have approved a purpose-built continuous-ingestion workflow. **Ardia
+integration is not yet released**; its future mass-spectrometry flow will use a
+vendor-supported integration or export path.
 
 Project storage matters for governance and legal compliance because it connects
 the data to an approved purpose, an accountable owner, managed membership, and
@@ -122,14 +152,15 @@ Do not archive the entire project tree merely because selection is difficult.
 Create a deliberate, reviewable archive set containing data, documentation,
 metadata, provenance, checksums, and the retention decision.
 
-## 5. End with a verified Coscine archive
+## 5. Prepare for a future verified Coscine archive
 
 Coscine is the planned final lifecycle point for an eligible retained dataset.
-The RCC-to-Coscine integration is **planned and not yet a live self-service
-transfer**. Project approval, Coscine eligibility, a suitable resource type,
-and the supported transfer route must be confirmed before real data moves.
+The RCC-to-Coscine integration is **not yet released; it is planned and not yet
+a live self-service transfer**. Project approval, Coscine eligibility, a
+suitable resource type, and an announced supported transfer route must be
+confirmed before real data moves.
 
-The intended archive handoff is:
+After the service is released, the intended archive handoff is:
 
 1. the project owner proposes a frozen archive set;
 2. governance and destination eligibility are reviewed;
@@ -168,12 +199,12 @@ disposition decision are all recorded.
 - [ ] Temporary high-I/O computation used job-local storage and required results
       returned to the project.
 - [ ] The archive set is intentional, documented, checksummed, and approved.
-- [ ] Coscine contains what the project expects, and an authorised person tested
-      access.
+- [ ] After service release, Coscine contains what the project expects, and an
+      authorised person tested access.
 - [ ] Archive acceptance and the RCC retention or deletion decision are recorded.
 
 For training and the full rationale, read
-[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
-and [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md).
+[Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
+and [Class 17: research data lifecycle](../course/class-17-data-lifecycle.md).
 For operational control points, use the
 [planned RCC project to Coscine flow](rcc-project-to-coscine.md).

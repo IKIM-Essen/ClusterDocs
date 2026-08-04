@@ -25,8 +25,8 @@ Complete and test these items before publishing the curriculum.
 - [ ] Confirm checksum commands and expected behavior.
 - [ ] State which data classes may use the service and which require additional approval.
 - [ ] Confirm the local policy that direct identifiers and re-identification keys remain outside RCC while approved biomedical research data may be processed in the controlled enclave.
-- [ ] Review Class 11 wording, external legal links, and the data-protection contact before publication.
-- [ ] Review the Class 11 scenarios for genomic, imaging, pseudonymised, and directly identifying data with the responsible institutional office.
+- [ ] Review Class 13 wording, external legal links, and the data-protection contact before publication.
+- [ ] Review the Class 13 scenarios for genomic, imaging, pseudonymised, and directly identifying data with the responsible institutional office.
 - [ ] Publish project, home, archive, and scratch storage purposes and quotas.
 - [ ] Confirm retention, deletion, backup, and recovery statements.
 
@@ -86,10 +86,11 @@ Complete and test these items before publishing the curriculum.
 - [ ] Set `site_status: production` and replace every unresolved value in `config/public.yml`.
 - [ ] Build successfully with `python tools/build_site.py --production`.
 - [ ] Configure a reviewed deployment target, TLS, rollback procedure, and named owner for updates.
-- [ ] Publish all 15 MP4 files at the configured media URL and verify their SHA-256 values against `config/media-manifest.yml`.
-- [ ] Confirm the media service supports HTTPS, byte-range requests, and the cross-origin behavior required by the documentation site.
+- [x] Verify all 17 staged MP4 files locally against the hashes, sizes, codecs, dimensions, channels, and durations in `config/media-manifest.yml` after the two-class expansion.
+- [ ] Publish all 17 MP4 files at the RCC documentation vhost URL and verify their SHA-256 values against `config/media-manifest.yml`.
+- [ ] Confirm the RCC media service supports trusted HTTPS, `video/mp4`, and byte-range requests for every file.
 - [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.
 - [ ] Review every caption file against the final audio and test in-player captions in supported browsers.
-- [ ] Regenerate and compare the Part 1–4 PDF, DOCX, PPTX, frames, narration, and captions after final canonical-source edits.
+- [x] Retire the obsolete media/downloads tree and keep only embedded videos, in-player WebVTT captions, and written lessons in the generated site.
 - [x] Archive the speculative rollout page and RCC Connect wording until an operationally approved user journey exists.
 - [ ] Run `python tools/rollout_readiness.py` and resolve every reported blocker.
