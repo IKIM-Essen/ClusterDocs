@@ -38,7 +38,7 @@ and detailed reference.
 | 2 | Build a reproducible Snakemake workflow and understand the planned bounded nf-core/Nextflow path (not yet released) | 60-90 min | Snakemake dry run and reproducible output |
 | 3 | Choose CPU, RAM, GPU and I/O patterns | 45-60 min | Diagnose a synthetic bottleneck |
 | 4 | Run a pinned Apptainer image | 45-60 min | Immutable image and clean environment |
-| 5 | Submit three small Slurm acceptance jobs | 45-60 min | Byte-for-byte expected output |
+| 5 | Submit three small Slurm acceptance jobs and choose an appropriate GPU request | 60-90 min | Byte-for-byte expected output and a justified GPU choice |
 | 6 | Plan an appropriately scoped protected project website (vhosts not yet released) | 75-100 min | Local tests, scope decision and future vhost checklist |
 | 7 | Use Python notebooks for large-data inspection, data science, and responsible AI exploration | 75-100 min | Loopback-only Jupyter job and example validation |
 | 8 | Use R notebooks and batch scripts for statistical and larger tabular analysis | 75-100 min | R example job and reproducibility explanation |
