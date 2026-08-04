@@ -65,7 +65,8 @@ review and verification. **RCC-to-Coscine transfer is not yet released**; it
 remains planned and not yet a live self-service transfer.
 
 **Managed Nextflow-to-Slurm support is not yet released.** The planned service
-will run the Nextflow controller only on an approved submission host and send
+will run the Nextflow controller only on an RCC interactive node (a
+`shellhost`) and send
 each analysis task to a worker through Slurm. Resume-critical work state will
 stay in shared project storage; node-local storage will be used only for
 explicit temporary task work. Until RCC announces the `rcc-nextflow` launcher,

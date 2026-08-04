@@ -6,10 +6,10 @@ publication:
   preview_links: disabled_until_verified_live
   staged_asset_set:
     source_directory: new-videos
-    verified_at: 2026-08-04T11:25:55+02:00
+    verified_at: 2026-08-04T11:52:19+02:00
     video_count: 17
-    total_size_bytes: 122653131
-    sha256s_file_sha256: abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0
+    total_size_bytes: 122808554
+    sha256s_file_sha256: 9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11
     verification:
       manifest_sha256: passed
       exact_sizes: passed
@@ -89,9 +89,9 @@ assets:
   - class: 7
     video: RCC_Onboarding_Class_7_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 8620981
-    duration_seconds: 398.106
-    sha256: 5e355dd7b626ae8dab977b64da194ac0cad7cb2ce54de8ed5005fe2405d11aa1
+    size_bytes: 8776404
+    duration_seconds: 404.875
+    sha256: 818f6aa4fee963aca75820e62cc4fe25b0bef376ec934b8c8c644a9ef7313ec2
     captions: RCC_Onboarding_Class_7_Captions.srt
     narration: RCC_Onboarding_Class_7_Video_Narration.md
     review_status: rendered_and_automated_qa_complete

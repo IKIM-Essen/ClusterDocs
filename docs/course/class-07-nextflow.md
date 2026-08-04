@@ -9,14 +9,15 @@
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 7 min video</p>
   <h2>Watch the class first</h2>
-  <p>The planned RCC controller, Slurm tasks, shared resume state, local scratch, GPU labels, Apptainer, nf-core, and failure recovery. Watch the lesson as preparation; the managed service is not yet released.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class7.png" src="{{ media_base_url }}/RCC_Onboarding_Class_7_Video_Enhanced.mp4?v=5e355dd7">
+  <p>The planned controller on an RCC interactive node (a shellhost), Slurm tasks, shared resume state, local scratch, GPU labels, Apptainer, nf-core, and failure recovery. Watch the lesson as preparation; the managed service is not yet released.</p>
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class7.png" src="{{ media_base_url }}/RCC_Onboarding_Class_7_Video_Enhanced.mp4?v=818f6aa4">
     <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_7_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
 </section>
 
-> **The planned supported pattern:** start Nextflow in `tmux` on **shellhost**.
+> **The planned supported pattern:** start Nextflow in `tmux` on an RCC
+> **interactive node (`shellhost`)**.
 > Nextflow submits each process to Slurm. Keep the Nextflow work directory on
 > shared project storage, use Apptainer for software, and opt into node-local
 > scratch only for processes that benefit from it.
@@ -30,7 +31,7 @@ service design.
 
 After this class, you can:
 
-- explain what will run on shellhost and what runs on compute nodes;
+- explain what runs on the interactive node (`shellhost`) and what runs on compute nodes;
 - start a persistent Nextflow controller in `tmux` after release;
 - use the RCC launcher and a shared project root;
 - request CPU, memory, time, short-queue, scratch, array, and GPU resources;
@@ -43,7 +44,7 @@ After this class, you can:
 ```text
 Your laptop
   -> login.ikim.uk-essen.de
-       -> shellhost
+       -> RCC interactive node (shellhost)
             -> Nextflow JVM
                  -> sbatch
                       -> RCC compute node
@@ -52,7 +53,7 @@ Your laptop
                            -> optional /local scratch
 ```
 
-The Nextflow program remains on shellhost. It reads the pipeline graph, decides
+The Nextflow program remains on the interactive node (`shellhost`). It reads the pipeline graph, decides
 which tasks are ready, and submits them to Slurm. Slurm allocates CPUs, memory,
 time, partitions, and GPUs. Scientific computation occurs only in Slurm jobs.
 Compute workers execute generated task wrappers and do not need their own Java
@@ -82,8 +83,9 @@ a later task may run on another node.
 
 ## 3. Start the controller in tmux
 
-After release, connect to the approved submission host and create a persistent
-terminal session:
+After release, connect to an RCC interactive node (a `shellhost`) and create a
+persistent terminal session. Do not start this controller on the preceding SSH
+gateway or inside a compute-worker allocation:
 
 ```bash
 tmux new -s nextflow
@@ -357,7 +359,7 @@ support request.
 
 After the service is released and before a large run, confirm:
 
-- Nextflow is running on shellhost inside `tmux`;
+- Nextflow is running on an interactive node (`shellhost`) inside `tmux`;
 - the project root and `NXF_WORK` are shared and persistent;
 - the pipeline is pinned to an exact revision;
 - Apptainer images are reviewed or digest-pinned;
@@ -371,22 +373,21 @@ After the service is released and before a large run, confirm:
 
 Before release, you have completed the preparation gate when you can explain:
 
-1. why the controller belongs on shellhost rather than an SSH gateway or
-   ordinary worker allocation;
-2. why every scientific task must pass through Slurm;
-3. why `NXF_WORK` must remain on persistent shared project storage;
-4. when explicit `/local` task scratch helps and how declared outputs return;
-5. why workers use Apptainer but do not require Java or Nextflow; and
-6. which pipeline revision, parameters, trace, report, image digests, checksums,
-   and Slurm identifiers belong in retained provenance.
+1. why the controller runs on an interactive node (`shellhost`), never an SSH
+   gateway or worker allocation;
+2. why every scientific task goes through Slurm;
+3. why `NXF_WORK` stays on persistent shared project storage;
+4. when `/local` task scratch helps and how outputs return;
+5. why workers need Apptainer, but not Java or Nextflow; and
+6. which revisions, parameters, reports, image digests, checksums, and Slurm
+   IDs form retained provenance.
 
-After RCC releases `rcc-nextflow`, complete the live gate with the bounded
-synthetic example and confirm that its second run reuses completed work with
-`-resume`.
+After RCC releases `rcc-nextflow`, run the bounded synthetic example and verify
+that `-resume` reuses completed work.
 
 ## Take-home rule
 
-> Once released, Nextflow orchestrates on shellhost. Slurm computes on workers.
+> Once released, Nextflow orchestrates on an interactive node (`shellhost`). Slurm computes on workers.
 > Shared storage preserves workflow state. `/local` accelerates selected tasks.
 > Apptainer carries the software. Keep the revision and work directory so
 > `-resume` works.

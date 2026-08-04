@@ -6,11 +6,11 @@ Welcome to Class 7: Nextflow on RCC. This video introduces the core decisions an
 
 ## Slide 2: Learning objectives
 
-After this class, you can: explain what will run on shellhost and what runs on compute nodes; start a persistent Nextflow controller in tmux after release; use the RCC launcher and a shared project root; request CPU, memory, time, short-queue, scratch, array, and GPU resources; use Apptainer without placing Conda environments on shared storage; resume an interrupted pipeline safely; and inspect Slurm and Nextflow evidence when something fails.
+After this class, you can: explain what runs on the interactive node (shellhost) and what runs on compute nodes; start a persistent Nextflow controller in tmux after release; use the RCC launcher and a shared project root; request CPU, memory, time, short-queue, scratch, array, and GPU resources; use Apptainer without placing Conda environments on shared storage; resume an interrupted pipeline safely; and inspect Slurm and Nextflow evidence when something fails.
 
 ## Slide 3: How the pieces fit together
 
-The Nextflow program remains on shellhost. It reads the pipeline graph, decides which tasks are ready, and submits them to Slurm. Slurm allocates CPUs, memory, time, partitions, and GPUs. Scientific computation occurs only in Slurm jobs. Compute workers execute generated task wrappers and do not need their own Java or Nextflow installation.
+The Nextflow program remains on the interactive node (shellhost). It reads the pipeline graph, decides which tasks are ready, and submits them to Slurm. Slurm allocates CPUs, memory, time, partitions, and GPUs. Scientific computation occurs only in Slurm jobs. Compute workers execute generated task wrappers and do not need their own Java or Nextflow installation.
 
 ## Slide 4: Prepare a shared project root
 
@@ -18,7 +18,7 @@ After the service is released, choose the project directory that owns the workfl
 
 ## Slide 5: Start the controller in tmux
 
-After release, connect to the approved submission host and create a persistent terminal session: Inside the tmux session: Detach without stopping Nextflow: Return later: A dropped laptop or jump-host connection then does not terminate the workflow controller.
+After release, connect to an RCC interactive node (a shellhost) and create a persistent terminal session. Do not start this controller on the preceding SSH gateway or inside a compute-worker allocation: Inside the tmux session: Detach without stopping Nextflow: Return later: A dropped laptop or jump-host connection then does not terminate the workflow controller.
 
 ## Slide 6: First bounded RCC workflow
 
@@ -46,4 +46,4 @@ After correcting the input, configuration, resource request, or software issue: 
 
 ## Slide 12: Completion gate
 
-Before release, you have completed the preparation gate when you can explain: why the controller belongs on shellhost rather than an SSH gateway or ordinary worker allocation; why every scientific task must pass through Slurm; why NXF_WORK must remain on persistent shared project storage; when explicit /local task scratch helps and how declared outputs return; why workers use Apptainer but do not require Java or Nextflow; and which pipeline revision, parameters, trace, report, image digests, checksums, and Slurm identifiers belong in retained provenance. After RCC releases rcc-nextflow, complete the live gate with the bounded synthetic example and confirm that its second run reuses completed work.
+Before release, you have completed the preparation gate when you can explain: why the controller runs on an interactive node (shellhost), never an SSH gateway or worker allocation; why every scientific task goes through Slurm; why NXF_WORK stays on persistent shared project storage; when /local task scratch helps and how outputs return; why workers need Apptainer, but not Java or Nextflow; and which revisions, parameters, reports, image digests, checksums, and Slurm IDs form retained provenance. After RCC releases rcc-nextflow, run the bounded synthetic example and verify that -resume reuses completed work.

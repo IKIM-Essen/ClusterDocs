@@ -11,8 +11,8 @@ steps. A failure leaves the generated site without dead video links.
 - Media web root: `/srv/www/docs/media/rcc-onboarding`
 - Reviewed local MP4 source: `new-videos/`
 - Manifest: `config/media-manifest.yml`
-- Media set: 17 MP4 files, 122,653,131 bytes total
-- Media-set checksum receipt: `abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0`
+- Media set: 17 MP4 files, 122,808,554 bytes total
+- Media-set checksum receipt: `9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11`
 
 The site publishes no local MP4 copies, GitHub media URLs, downloads tree,
 source captions, narration downloads, or office-document downloads. WebVTT

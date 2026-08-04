@@ -16,10 +16,25 @@ class NextflowDocsTests(unittest.TestCase):
 
     def test_user_contract_keeps_controller_off_gateways(self):
         text = DOC.read_text(encoding="utf-8")
-        self.assertIn("shellhost", text)
+        self.assertIn("interactive node (`shellhost`)", text)
         self.assertIn("Do not run Nextflow on `login.ikim.uk-essen.de`", text)
+        self.assertNotIn("approved submission host", text)
         self.assertIn("tmux", text)
         self.assertIn("not yet released", text.lower())
+
+    def test_all_public_nextflow_summaries_name_the_interactive_shellhost(self):
+        paths = (
+            ROOT / "README.md",
+            ROOT / "docs/index.md",
+            ROOT / "docs/tldr.md",
+            ROOT / "docs/classes/examples/nextflow-rcc/README.md",
+            ROOT / "source/part2.md",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                text = " ".join(path.read_text(encoding="utf-8").lower().split())
+                self.assertIn("interactive node", text)
+                self.assertIn("shellhost", text)
 
     def test_work_state_and_scratch_are_distinct(self):
         text = DOC.read_text(encoding="utf-8")

@@ -169,9 +169,9 @@ class TrainingMediaTests(unittest.TestCase):
         staged = publication["staged_asset_set"]
         self.assertEqual("new-videos", staged["source_directory"])
         self.assertEqual(17, staged["video_count"])
-        self.assertEqual(122653131, staged["total_size_bytes"])
+        self.assertEqual(122808554, staged["total_size_bytes"])
         self.assertEqual(
-            "abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0",
+            "9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11",
             staged["sha256s_file_sha256"],
         )
         self.assertRegex(staged["sha256s_file_sha256"], r"^[0-9a-f]{64}$")

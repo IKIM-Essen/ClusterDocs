@@ -12,7 +12,7 @@ fail-closed production gate.
 ## Completed in this round
 
 - Verified the expanded 17-video RCC handoff locally: the exact filename set,
-  122,653,131 total bytes, SHA-256 values, H.264 1280×720 video, stereo AAC,
+  122,808,554 total bytes, SHA-256 values, H.264 1280×720 video, stereo AAC,
   and durations match `config/media-manifest.yml`.
 - Prepared the RCC documentation-vhost target and a fail-closed activation
   gate. Until DNS, TLS, MIME type, byte ranges, and full downloads pass, the

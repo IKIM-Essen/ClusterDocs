@@ -60,8 +60,8 @@ DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
 asking readers to fill documentation placeholders.
 
 Managed Nextflow-to-Slurm support is documented as **not yet released**. The
-planned contract uses a pinned `rcc-nextflow` launcher on an approved submission
-host, Slurm for every scientific task, shared persistent work state for
+planned contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
+node (a `shellhost`), Slurm for every scientific task, shared persistent work state for
 `-resume`, explicit node-local task scratch, and Apptainer on workers. The site
 does not claim this service is live while its infrastructure role remains
 disabled and digest approval and acceptance are outstanding.

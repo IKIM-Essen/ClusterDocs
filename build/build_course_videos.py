@@ -286,9 +286,11 @@ def build_class(class_number: int, voice: str, rate: int) -> dict[str, object]:
                    "-t", f"{timeline:.3f}", "-movflags", "+faststart", str(video)])
 
         caption_path = CAPTIONS / f"RCC_Onboarding_Class_{class_number}_Captions.srt"
-        with caption_path.open("w", encoding="utf-8") as handle:
-            for index, (start, end, caption) in enumerate(captions, 1):
-                handle.write(f"{index}\n{media.srt_time(start)} --> {media.srt_time(end)}\n{caption}\n\n")
+        caption_blocks = [
+            f"{index}\n{media.srt_time(start)} --> {media.srt_time(end)}\n{caption}"
+            for index, (start, end, caption) in enumerate(captions, 1)
+        ]
+        caption_path.write_text("\n\n".join(caption_blocks) + "\n", encoding="utf-8")
 
     return {"class": class_number, "title": title, "voice": voice, "locale": "en_GB", "rate_words_per_minute": rate,
             "slide_count": len(slides), "duration_seconds": round(timeline, 3), "video": str(video.relative_to(ROOT)),

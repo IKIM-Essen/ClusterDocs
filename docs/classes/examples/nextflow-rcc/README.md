@@ -3,7 +3,8 @@
 > **Service status — not yet released:** keep this example for preparation and
 > review. Do not run it until RCC announces the managed `rcc-nextflow` service.
 
-After release, on the approved submission host:
+After release, on an RCC interactive node (a `shellhost`), not on an SSH
+gateway or a compute worker:
 
 ```bash
 export RCC_PROJECT_ROOT=/projects/MY_PROJECT

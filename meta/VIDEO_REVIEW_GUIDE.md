@@ -12,7 +12,7 @@ reviewer, date, browser, device, and result for each class.
 | 4 | Apptainer containers | 9:42 | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 5 | Slurm and GPU selection | 3:04 | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 6 | Snakemake on RCC | 5:34 | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 7 | Nextflow on RCC (not yet released) | 6:38 | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 7 | Nextflow on RCC (not yet released) | 6:45 | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 8 | Protected project websites | 3:15 | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 9 | Python notebooks | 3:40 | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 10 | R analysis | 2:26 | ☐ | ☐ | ☐ | ☐ | ☐ |
