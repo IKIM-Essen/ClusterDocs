@@ -4,7 +4,7 @@
   <p class="course-video-kicker">Recommended starting point · 3 min video</p>
   <h2>Watch the class first</h2>
   <p>Slurm execution modes, everyday commands, bounded acceptance patterns, GPU selection, and safe scheduler use. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
-  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class5.png" src="{{ media_base_url }}/RCC_Onboarding_Class_5_Video_Enhanced.mp4?v=3eff7f59">
+  <video controls preload="metadata" playsinline poster="../../assets/video-posters/class5.png" src="{{ media_base_url }}/RCC_Onboarding_Class_5_Video_Enhanced.mp4?v=67c02998">
     <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_5_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>

@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DOC = ROOT / "docs/classes/nextflow-on-rcc.md"
+DOC = ROOT / "docs/course/class-07-nextflow.md"
 EXAMPLE = ROOT / "docs/classes/examples/nextflow-rcc/main.nf"
 
 
@@ -11,8 +11,8 @@ class NextflowDocsTests(unittest.TestCase):
     def test_navigation_contains_nextflow_class(self):
         nav = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
         builder = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
-        self.assertIn("Nextflow on RCC (not yet released): classes/nextflow-on-rcc.md", nav)
-        self.assertIn("classes/nextflow-on-rcc.md", builder)
+        self.assertIn("Class 7 - Nextflow on RCC (not yet released): course/class-07-nextflow.md", nav)
+        self.assertIn("('Course','Class 7 · Nextflow · Not yet released','course/class-07-nextflow.md')", builder)
 
     def test_user_contract_keeps_controller_off_gateways(self):
         text = DOC.read_text(encoding="utf-8")

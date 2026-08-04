@@ -6,10 +6,10 @@ publication:
   preview_links: disabled_until_verified_live
   staged_asset_set:
     source_directory: new-videos
-    verified_at: 2026-08-04T09:10:00+02:00
-    video_count: 15
-    total_size_bytes: 107968919
-    sha256s_file_sha256: 550cade9505dfb44b36978e134934b70384b186806cdae2fb5afcc3f6fb58c79
+    verified_at: 2026-08-04T11:25:55+02:00
+    video_count: 17
+    total_size_bytes: 122653131
+    sha256s_file_sha256: abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0
     verification:
       manifest_sha256: passed
       exact_sizes: passed
@@ -71,99 +71,117 @@ assets:
   - class: 5
     video: RCC_Onboarding_Class_5_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 2898655
-    duration_seconds: 130.500
-    sha256: 3eff7f590055b1ab879d38999b82c1cd05a9af1dfd0c46dc9437a0d96f7a71ee
+    size_bytes: 3985398
+    duration_seconds: 183.635
+    sha256: 67c02998754d004cff272f0177bbc97a5d6cb7d994da936a313348bd9980d6c7
     captions: RCC_Onboarding_Class_5_Captions.srt
     narration: RCC_Onboarding_Class_5_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 6
     video: RCC_Onboarding_Class_6_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 5753951
-    duration_seconds: 263.582
-    sha256: ecf422b917a474d92501b42cb52393c426abbd577aee01ea4fa3cc58595c9366
+    size_bytes: 7330271
+    duration_seconds: 334.373
+    sha256: 18bfd7e6ec8bdc33b106c79cfb5528b6127b7811eb535ed95a5eaf7d4de60873
     captions: RCC_Onboarding_Class_6_Captions.srt
     narration: RCC_Onboarding_Class_6_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 7
     video: RCC_Onboarding_Class_7_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 4737764
-    duration_seconds: 219.692
-    sha256: 49fe9ec615af58e0c934801492ec356e2ac183edbde2f564715810181c4910a7
+    size_bytes: 8620981
+    duration_seconds: 398.106
+    sha256: 5e355dd7b626ae8dab977b64da194ac0cad7cb2ce54de8ed5005fe2405d11aa1
     captions: RCC_Onboarding_Class_7_Captions.srt
     narration: RCC_Onboarding_Class_7_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 8
     video: RCC_Onboarding_Class_8_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 3222533
-    duration_seconds: 146.500
-    sha256: 608da687ae85d3b267df607ec2448ba566f3ecbbdf2760e958b35faabde6d571
+    size_bytes: 4260668
+    duration_seconds: 195.475
+    sha256: 2319f71d42a8a95547fe0bc96691ae159c5551c0333c55d1a7d0af4b89c29b51
     captions: RCC_Onboarding_Class_8_Captions.srt
     narration: RCC_Onboarding_Class_8_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 9
     video: RCC_Onboarding_Class_9_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 2910813
-    duration_seconds: 132.500
-    sha256: c58e4ed88d5027fd53053822de80672ae9b444a9203605bf0bff04d9e80681e1
+    size_bytes: 4732288
+    duration_seconds: 219.680
+    sha256: 345e66d3c367706e03595b3aa4e446a79205a596198f64ae2c15a1c10a160512
     captions: RCC_Onboarding_Class_9_Captions.srt
     narration: RCC_Onboarding_Class_9_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 10
     video: RCC_Onboarding_Class_10_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 2456201
-    duration_seconds: 113.500
-    sha256: a5df048c657748c7a7da03b32fc12e776282e21d813199ae438346d6321398ee
+    size_bytes: 3226636
+    duration_seconds: 146.462
+    sha256: ee5ab763cd344b8c73979e1f4f04c7f0c370523a0ed37eb2c98dfb04c0bed02e
     captions: RCC_Onboarding_Class_10_Captions.srt
     narration: RCC_Onboarding_Class_10_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 11
     video: RCC_Onboarding_Class_11_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 9536664
-    duration_seconds: 441.000
-    sha256: 627f85fc7c754f960b839d16cac7d09a9d90bb7587976e40b6e084c67c7c06a8
+    size_bytes: 2480988
+    duration_seconds: 113.258
+    sha256: 43775d957ca54c5c139b55c8663dafc58f70f1a4ee5484b9052511bba346bffc
     captions: RCC_Onboarding_Class_11_Captions.srt
     narration: RCC_Onboarding_Class_11_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 12
     video: RCC_Onboarding_Class_12_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 7183939
-    duration_seconds: 332.165
-    sha256: 0ea17760a53cf68ddf6471eeafa8b473c86ebb5f8d9771b9d7430bed9dc1f514
+    size_bytes: 2016909
+    duration_seconds: 92.161
+    sha256: 157f9f39846edd6a71d531105fd82fe16733be9cbdea98292d5c2da0945cd9d8
     captions: RCC_Onboarding_Class_12_Captions.srt
     narration: RCC_Onboarding_Class_12_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 13
     video: RCC_Onboarding_Class_13_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 6585433
-    duration_seconds: 307.027
-    sha256: 39fcf4f0740f6b0e030123a11d1e763bb4f4f55f4f171c06be86ebab12901225
+    size_bytes: 9578739
+    duration_seconds: 441.028
+    sha256: 001ff371bf90f3c6834b0947bdc318a9ce471200cc7ba4a30ab0c04685db4aa8
     captions: RCC_Onboarding_Class_13_Captions.srt
     narration: RCC_Onboarding_Class_13_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 14
     video: RCC_Onboarding_Class_14_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 6312496
-    duration_seconds: 288.554
-    sha256: aca9964ef0af2f62257c9be6f74ab2a4af68ff1222d22b93ab55dbb2411b54f4
+    size_bytes: 7186498
+    duration_seconds: 332.293
+    sha256: e85798d9cc877aa4e3eaa1db317ce0c4a00c9840f41cef3dc85c614a77caf40b
     captions: RCC_Onboarding_Class_14_Captions.srt
     narration: RCC_Onboarding_Class_14_Video_Narration.md
     review_status: rendered_and_automated_qa_complete
   - class: 15
     video: RCC_Onboarding_Class_15_Video_Enhanced.mp4
     audio_channels: 2
-    size_bytes: 7865964
-    duration_seconds: 363.166
-    sha256: 73650b134e583ee95b910423dea1a5012b2708bcdf258dbb675757281b1ee742
+    size_bytes: 6568565
+    duration_seconds: 307.096
+    sha256: 211336855d8a16098da13b97988a97490c1ebdba7705613cacfb1ad970e6ad05
     captions: RCC_Onboarding_Class_15_Captions.srt
     narration: RCC_Onboarding_Class_15_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 16
+    video: RCC_Onboarding_Class_16_Video_Enhanced.mp4
+    audio_channels: 2
+    size_bytes: 6293310
+    duration_seconds: 288.670
+    sha256: 783708a93c4eefb04825bb08779e472f73d4464712cc08795f14a60089114417
+    captions: RCC_Onboarding_Class_16_Captions.srt
+    narration: RCC_Onboarding_Class_16_Video_Narration.md
+    review_status: rendered_and_automated_qa_complete
+  - class: 17
+    video: RCC_Onboarding_Class_17_Video_Enhanced.mp4
+    audio_channels: 2
+    size_bytes: 7867374
+    duration_seconds: 363.259
+    sha256: 10661da27ce217a63c7b0de16408df0e8a313ad7eaa3d2b174cb99793b31164b
+    captions: RCC_Onboarding_Class_17_Captions.srt
+    narration: RCC_Onboarding_Class_17_Video_Narration.md
     review_status: rendered_and_automated_qa_complete

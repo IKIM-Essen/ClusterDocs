@@ -1,124 +1,152 @@
 1
-00:00:00,000 --> 00:00:04,218
-Welcome to Class 8: R notebooks and large-data analysis.
+00:00:00,000 --> 00:00:03,398
+Welcome to Class 8: protected project websites.
 
 2
-00:00:04,218 --> 00:00:08,436
+00:00:03,398 --> 00:00:07,768
 This video introduces the core decisions and working patterns.
 
 3
-00:00:08,436 --> 00:00:14,997
+00:00:07,768 --> 00:00:14,565
 Watch the complete lesson first, then use the written class page for copyable commands,
 
 4
-00:00:14,997 --> 00:00:17,340
+00:00:14,565 --> 00:00:16,992
 exercises, and detailed reference material.
 
 5
-00:00:17,340 --> 00:00:22,538
-After this class, you can: run R in a controlled Conda environment;
+00:00:16,992 --> 00:00:23,476
+By the end of this class, you should be able to: decide whether a project idea
 
 6
-00:00:22,538 --> 00:00:28,168
-use an R kernel in JupyterLab when needed; analyse larger tables with data.table,
+00:00:23,476 --> 00:00:29,959
+belongs on the governed vhost platform; distinguish a static information site from an active project application;
 
 7
-00:00:28,168 --> 00:00:34,665
-DuckDB, Arrow, and dplyr patterns; build figures with ggplot2; separate exploratory notebooks from batch analysis;
+00:00:29,959 --> 00:00:36,443
+explain what RCC provides and what the project application must provide; use the copyable example without
 
 8
-00:00:34,665 --> 00:00:38,996
-prepare R code that can be rerun by a colleague.
+00:00:36,443 --> 00:00:42,927
+creating local accounts or exposing storage paths; prepare a complete vhost request for project-lead and administrator
 
 9
-00:00:38,996 --> 00:00:45,648
-Start from the provided example: For an interactive R notebook, use the Jupyter example from Class
+00:00:42,927 --> 00:00:48,195
+review; recognize when computation belongs in Slurm rather than in a web request.
 
 10
-00:00:45,648 --> 00:00:46,064
-7.
+00:00:48,195 --> 00:00:53,606
+Good candidates include: project documentation and study information; read-only dashboards and reports;
 
 11
-00:00:46,064 --> 00:00:48,974
-The environment already includes an R kernel.
+00:00:53,606 --> 00:00:59,469
+search or query interfaces over an approved internal database; curated collections of reports,
 
 12
-00:00:48,974 --> 00:00:53,056
-Do not begin by loading every file into memory.
+00:00:59,469 --> 00:01:05,332
+images or result files; small project tools used by an identified project group;
 
 13
-00:00:53,056 --> 00:00:59,859
-First check: file size; number of columns; expected row count; whether the file is compressed;
+00:01:05,332 --> 00:01:10,292
+bounded forms or upload workflows with a defined destination and owner.
 
 14
-00:00:59,859 --> 00:01:06,208
-whether the analysis needs all columns; whether the operation is streaming, grouped, or random-access.
+00:01:10,292 --> 00:01:17,508
+A vhost is particularly useful when medical professionals or biomedical researchers need a browser-based interface and
 
 15
-00:01:06,208 --> 00:01:07,568
-Good starting points:
+00:01:17,508 --> 00:01:21,116
+should not be expected to install command-line tools.
 
 16
-00:01:07,568 --> 00:01:13,751
-For teaching and small examples, the course uses Conda environments because they are easy to reproduce
+00:01:21,116 --> 00:01:28,522
+Inside the hospital network, an active project application can use the low-friction RCC username/password or passkey
 
 17
-00:01:13,751 --> 00:01:14,911
-in Slurm jobs.
+00:01:28,522 --> 00:01:28,984
+flow.
 
 18
-00:01:14,911 --> 00:01:21,094
-For larger R projects, you may also use renv, but do not keep active package libraries
+00:01:28,984 --> 00:01:32,687
+Outside the hospital, the gateway requires stronger authentication.
 
 19
-00:01:21,094 --> 00:01:24,572
-with many small files on shared storage while computing.
+00:01:32,687 --> 00:01:40,093
+Informational static sites may be available without login inside the hospital, but active applications always require
 
 20
-00:01:24,572 --> 00:01:28,823
-Restore packages into local job storage or use a reviewed container.
+00:01:40,093 --> 00:01:41,482
+an individual identity.
 
 21
-00:01:28,823 --> 00:01:42,836
-The course includes: examples/interactive-workflows/notebooks/r-large-data.ipynb examples/interactive-workflows/r/analysis.R examples/interactive-workflows/r/r.sbatch examples/interactive-workflows/r/environment.yml The notebook demonstrates group summaries and a sampled figure.
+00:01:41,482 --> 00:01:46,111
+The backend application is not directly reachable by ordinary users.
 
 22
-00:01:42,836 --> 00:01:51,594
-The batch example writes reproducible output into a results directory.
+00:01:46,111 --> 00:01:53,517
+This is important: the trusted identity information is meaningful only when it arrives through the RCC
 
 23
-00:01:51,594 --> 00:01:55,821
-Request only the CPU and memory your script can use.
+00:01:53,517 --> 00:01:53,979
+gateway.
 
 24
-00:01:55,821 --> 00:01:59,203
-Keep raw data compressed where tools support it.
+00:01:53,979 --> 00:02:00,850
+Junior developers are not expected to administer the authentication gateway, integrity checker or detection systems.
 
 25
-00:01:59,203 --> 00:02:03,007
-Avoid thousands of tiny temporary files on shared storage.
+00:02:00,850 --> 00:02:06,804
+They are expected to follow the application contract and keep their software maintainable.
 
 26
-00:02:03,007 --> 00:02:05,543
-Use node-local scratch for intermediate output.
+00:02:06,804 --> 00:02:13,234
+### Database-backed interface Prefer a dedicated application account with access to approved views or tables.
 
 27
-00:02:05,543 --> 00:02:09,770
-Save final tables and figures back to the project area.
+00:02:13,234 --> 00:02:17,520
+A read-only dashboard should not receive write or administration privileges.
 
 28
-00:02:09,770 --> 00:02:13,997
-Use sacct after completion to compare requested and observed memory.
+00:02:17,520 --> 00:02:24,379
+### Curated file collection Store a catalogue that maps an opaque identifier to an approved file.
 
 29
-00:02:13,997 --> 00:02:19,172
-Run: Then submit the R batch job once and verify that the result file was written.
+00:02:24,379 --> 00:02:28,236
+The browser supplies the identifier, not a filesystem path.
 
 30
-00:02:19,172 --> 00:02:24,347
-The gate is complete when you can explain how the same code could be moved from
+00:02:28,236 --> 00:02:32,523
+The application checks project membership again before returning the file.
 
 31
-00:02:24,347 --> 00:02:26,288
-notebook exploration into the batch script.
+00:02:32,523 --> 00:02:38,095
+### Computational result portal The website may collect bounded parameters and display results,
+
+32
+00:02:38,095 --> 00:02:42,810
+but substantial processing should be handled asynchronously through an approved workflow.
+
+33
+00:02:42,810 --> 00:02:48,382
+Do not keep a browser request open while a large scientific analysis runs.
+
+34
+00:02:48,382 --> 00:02:51,812
+### Upload workflow Use a staging directory, server-generated.
+
+35
+00:02:51,812 --> 00:02:58,265
+The example demonstrates: trusted identity handling; project-group checks; a read-only database query;
+
+36
+00:02:58,265 --> 00:03:05,257
+curated downloads using opaque identifiers; safe failure for direct clients and invalid requests.
+
+37
+00:03:05,257 --> 00:03:10,097
+Local demonstration mode accepts synthetic headers only from loopback.
+
+38
+00:03:10,097 --> 00:03:15,475
+Production must use the governed RCC gateway and deployment workflow.
 

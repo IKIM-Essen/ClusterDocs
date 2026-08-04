@@ -60,7 +60,7 @@ class NewcomerLayOfLandTests(unittest.TestCase):
             self.assertIn(phrase, page)
 
     def test_vhost_and_instrument_pages_keep_project_scope(self):
-        vhost = normalized(DOCS / "course/class-06-vhosts.md")
+        vhost = normalized(DOCS / "course/class-08-vhosts.md")
         instrument = normalized(DOCS / "data/instrument-data-options.md")
         self.assertIn("request a **vhost for that project**", vhost)
         self.assertIn("each vhost will belong to one project", vhost)

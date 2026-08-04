@@ -204,7 +204,7 @@ disposition decision are all recorded.
 - [ ] Archive acceptance and the RCC retention or deletion decision are recorded.
 
 For training and the full rationale, read
-[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
-and [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md).
+[Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
+and [Class 17: research data lifecycle](../course/class-17-data-lifecycle.md).
 For operational control points, use the
 [planned RCC project to Coscine flow](rcc-project-to-coscine.md).

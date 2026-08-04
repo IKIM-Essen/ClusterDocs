@@ -33,12 +33,13 @@ class TrainingMediaTests(unittest.TestCase):
     CLASS_SLUGS = {
         1: "class-01-safe-access.md", 2: "class-02-workflows.md",
         3: "class-03-performance.md", 4: "class-04-containers.md",
-        5: "class-05-slurm.md", 6: "class-06-vhosts.md",
-        7: "class-07-python-notebooks.md", 8: "class-08-r-analysis.md",
-        9: "class-09-shiny.md", 10: "class-10-notebook-to-service.md",
-        11: "class-11-biomedical-data-privacy.md", 12: "class-12-efficient-io.md",
-        13: "class-13-storage-architecture.md", 14: "class-14-wet-lab-data-workflows.md",
-        15: "class-15-data-lifecycle.md",
+        5: "class-05-slurm.md", 6: "class-06-snakemake.md",
+        7: "class-07-nextflow.md", 8: "class-08-vhosts.md",
+        9: "class-09-python-notebooks.md", 10: "class-10-r-analysis.md",
+        11: "class-11-shiny.md", 12: "class-12-notebook-to-service.md",
+        13: "class-13-biomedical-data-privacy.md", 14: "class-14-efficient-io.md",
+        15: "class-15-storage-architecture.md", 16: "class-16-wet-lab-data-workflows.md",
+        17: "class-17-data-lifecycle.md",
     }
 
     def test_narration_and_reviewed_frames_match(self):
@@ -113,12 +114,12 @@ class TrainingMediaTests(unittest.TestCase):
                 stderr=subprocess.PIPE,
             )
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertEqual(15, len(list((output / "assets/captions").glob("*.vtt"))))
+            self.assertEqual(17, len(list((output / "assets/captions").glob("*.vtt"))))
             self.assertFalse((output / "downloads").exists())
             self.assertFalse((output / "media").exists())
             self.assertFalse((output / "media/index.html").exists())
             class_pages = list((output / "course").glob("class-*/index.html"))
-            self.assertEqual(15, len(class_pages))
+            self.assertEqual(17, len(class_pages))
             for page in class_pages:
                 text = page.read_text()
                 self.assertIn("Video not yet released", text)
@@ -128,7 +129,7 @@ class TrainingMediaTests(unittest.TestCase):
 
     def test_additional_class_assets_match_report(self):
         report = json.loads((ROOT / "meta/course-video-build-report.json").read_text())
-        self.assertEqual(list(range(5, 16)), [item["class"] for item in report])
+        self.assertEqual(list(range(5, 18)), [item["class"] for item in report])
         for item in report:
             number = item["class"]
             frames = sorted((ROOT / f"slides/frames/class{number}").glob("slide-*.png"))
@@ -144,10 +145,10 @@ class TrainingMediaTests(unittest.TestCase):
     def test_course_overview_promotes_video_first(self):
         text = (ROOT / "docs/course/index.md").read_text()
         self.assertIn("Prefer to learn by video?", text)
-        self.assertEqual(15, text.count('class="video-course-card"'))
+        self.assertEqual(17, text.count('class="video-course-card"'))
         for part in range(1, 5):
             self.assertIn(f"video-posters/part{part}.png", text)
-        for number in range(5, 16):
+        for number in range(5, 18):
             self.assertIn(f"video-posters/class{number}.png", text)
 
     def test_publication_evidence_covers_the_online_media_gate(self):
@@ -167,8 +168,12 @@ class TrainingMediaTests(unittest.TestCase):
         )
         staged = publication["staged_asset_set"]
         self.assertEqual("new-videos", staged["source_directory"])
-        self.assertEqual(15, staged["video_count"])
-        self.assertEqual(107968919, staged["total_size_bytes"])
+        self.assertEqual(17, staged["video_count"])
+        self.assertEqual(122653131, staged["total_size_bytes"])
+        self.assertEqual(
+            "abf271e7b4c3998abf27a38efa0494e3a01c3c1eb94cd40f7b1af1204045ace0",
+            staged["sha256s_file_sha256"],
+        )
         self.assertRegex(staged["sha256s_file_sha256"], r"^[0-9a-f]{64}$")
         self.assertEqual(
             {

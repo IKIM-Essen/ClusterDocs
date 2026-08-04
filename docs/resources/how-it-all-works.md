@@ -283,8 +283,8 @@ For storage choices and verification commands, continue with
 [Storage and transfer](../reference/storage-transfer.md). For project and data
 eligibility, see [Biomedical data admission](../security/rcc-biomedical-data-admission.md).
 For a complete acquisition-to-analysis exercise, continue with
-[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
+[Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
 and [choose an instrument-data transfer path](../data/instrument-data-options.md).
 When active analysis ends, continue with
-[Class 15: research data lifecycle](../course/class-15-data-lifecycle.md) and the
+[Class 17: research data lifecycle](../course/class-17-data-lifecycle.md) and the
 [planned RCC project to Coscine archive flow](../data/rcc-project-to-coscine.md).

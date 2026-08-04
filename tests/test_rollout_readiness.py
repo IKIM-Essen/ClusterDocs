@@ -25,7 +25,7 @@ class RolloutReadinessTests(unittest.TestCase):
         self.assertIn("administrator publication checklist", joined)
         self.assertIn("no reviewed production deployment workflow", joined)
         self.assertTrue(warnings)
-        self.assertIn("all 15 course pages declare in-player English captions", ready)
+        self.assertIn("all 17 course pages declare in-player English captions", ready)
 
     def test_candidate_is_ready_to_start_manual_review(self):
         blockers, ready = load_readiness().manual_review_audit()

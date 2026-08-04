@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class WetLabCourseTests(unittest.TestCase):
     def test_course_and_instrument_guides_exist(self):
         required = [
-            ROOT / "docs/course/class-14-wet-lab-data-workflows.md",
+            ROOT / "docs/course/class-16-wet-lab-data-workflows.md",
             ROOT / "docs/data/instrument-data-options.md",
             ROOT / "docs/data/legacy-storage-windows.md",
             ROOT / "docs/data/legacy-storage-macos.md",
@@ -18,7 +18,7 @@ class WetLabCourseTests(unittest.TestCase):
             self.assertTrue(path.is_file(), path)
 
     def test_wet_lab_course_has_safe_handoff_and_completion_gate(self):
-        page = (ROOT / "docs/course/class-14-wet-lab-data-workflows.md").read_text().lower()
+        page = (ROOT / "docs/course/class-16-wet-lab-data-workflows.md").read_text().lower()
         for phrase in [
             "authoritative original",
             "verify before deleting",
@@ -36,8 +36,8 @@ class WetLabCourseTests(unittest.TestCase):
     def test_navigation_keeps_class_numbering(self):
         mkdocs = (ROOT / "mkdocs.yml").read_text()
         builder = (ROOT / "tools/build_site.py").read_text()
-        self.assertIn("Class 14 - Wet-lab instrument data", mkdocs)
-        self.assertIn("Class 14 · Wet-lab instrument data", builder)
+        self.assertIn("Class 16 - Wet-lab instrument data", mkdocs)
+        self.assertIn("Class 16 · Wet-lab instrument data", builder)
 
     def test_endpoint_page_uses_configured_alias(self):
         page = (ROOT / "docs/connecting/stable-endpoints.md").read_text()

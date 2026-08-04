@@ -1,292 +1,224 @@
 1
-00:00:00,000 --> 00:00:04,277
-Welcome to Class 15: manage the research data lifecycle.
+00:00:00,000 --> 00:00:03,505
+Welcome to Class 15: RCC storage architecture.
 
 2
-00:00:04,277 --> 00:00:08,554
+00:00:03,505 --> 00:00:08,012
 This video introduces the core decisions and working patterns.
 
 3
-00:00:08,554 --> 00:00:15,208
+00:00:08,012 --> 00:00:15,022
 Watch the complete lesson first, then use the written class page for copyable commands,
 
 4
-00:00:15,208 --> 00:00:17,584
+00:00:15,022 --> 00:00:17,526
 exercises, and detailed reference material.
 
 5
-00:00:17,584 --> 00:00:24,430
-After this class, you should be able to: identify the lifecycle stage of a dataset;
+00:00:17,526 --> 00:00:23,906
+After this class, you should be able to: describe the roles of Redis,
 
 6
-00:00:24,430 --> 00:00:31,733
-explain why instrument and research data belongs to an approved project and not a user's home
+00:00:23,906 --> 00:00:31,757
+MinIO, and the JuiceFS client; distinguish metadata traffic from file-content traffic; explain why small-file workloads differ
 
 7
-00:00:31,733 --> 00:00:37,666
-directory; distinguish authoritative data, reproducible intermediates, durable results, records, and disposable temporary files;
+00:00:31,757 --> 00:00:39,118
+from large streaming workloads; understand the RCC 100 Gb/s server and 10 Gb/s client topology;
 
 8
-00:00:37,666 --> 00:00:44,969
-assign an owner, retention basis, access model, and review date; prepare data and metadata for reuse
+00:00:39,118 --> 00:00:45,498
+explain client and container caching; and choose appropriate I/O patterns for scientific workflows.
 
 9
-00:00:44,969 --> 00:00:52,271
-or archiving; explain when Coscine may be an appropriate archive option; follow the planned RCC-project-to-Coscine flow
+00:00:45,498 --> 00:00:51,508
+Redis stores information such as: paths and directory entries; ownership and permissions;
 
 10
-00:00:52,271 --> 00:00:59,574
-without treating it as a live self-service transfer; and require verification and acceptance before removing an
+00:00:51,508 --> 00:00:59,022
+file sizes and timestamps; inode-like identifiers; object mappings; locks and coordination state; and filesystem bookkeeping.
 
 11
-00:00:59,574 --> 00:01:00,486
-RCC copy.
+00:00:59,022 --> 00:01:07,035
+Operations such as stat, ls, open, rename, mkdir, and unlink may transfer almost no file content
 
 12
-00:01:00,486 --> 00:01:03,779
-The arrows are not a one-way conveyor belt.
+00:01:07,035 --> 00:01:09,540
+while still generating metadata requests.
 
 13
-00:01:03,779 --> 00:01:07,071
-Published data may be reused and analysed again.
+00:01:09,540 --> 00:01:17,554
+This makes workloads with hundreds of thousands of files fundamentally different from workloads containing a few
 
 14
-00:01:07,071 --> 00:01:10,364
-An archived dataset may need a controlled correction.
+00:01:17,554 --> 00:01:18,556
+large files.
 
 15
-00:01:10,364 --> 00:01:16,538
-A retention decision may change when consent, law, contracts, funder rules, or scientific value change.
+00:01:18,556 --> 00:01:23,063
+Increasing S3 bandwidth does not remove a metadata bottleneck.
 
 16
-00:01:16,538 --> 00:01:22,299
-At every stage, record: the accountable project owner; the approved purpose and governance basis;
+00:01:23,063 --> 00:01:28,707
+MinIO provides the S3-compatible object-storage layer used for durable file contents.
 
 17
-00:01:22,299 --> 00:01:28,885
-where the authoritative copy lives; who may access it; the metadata and provenance needed to interpret
+00:01:28,707 --> 00:01:36,916
+Object storage is effective for: large objects; sequential reads and writes; durable replicated or erasure-coded storage;
 
 18
-00:01:28,885 --> 00:01:35,058
-it; the retention period or review date; and the event that permits archival or deletion.
+00:01:36,916 --> 00:01:41,020
+checksummed content; and aggregate access from many clients.
 
 19
-00:01:35,058 --> 00:01:40,820
-For this course, Coscine is the planned endpoint for an eligible retained archive set.
+00:01:41,020 --> 00:01:46,664
+The JuiceFS client translates filesystem reads and writes into object operations.
 
 20
-00:01:40,820 --> 00:01:43,701
-It is not the destination for every.
+00:01:46,664 --> 00:01:49,742
+Large streaming transfers amortize request overhead.
 
 21
-00:01:43,701 --> 00:01:46,746
-File age alone is not a classification.
+00:01:49,742 --> 00:01:56,925
+Tiny, scattered reads and writes can generate many requests for relatively little useful data.
 
 22
-00:01:46,746 --> 00:01:51,967
-A large old raw dataset may still be the authoritative scientific record,
+00:01:56,925 --> 00:02:01,998
+Storage and backend servers have connectivity of up to 100 Gb/s.
 
 23
-00:01:51,967 --> 00:01:55,882
-while yesterday's multi-terabyte scratch directory may already be disposable.
+00:02:01,998 --> 00:02:05,227
+Typical compute clients have 10 Gb/s links.
 
 24
-00:01:55,882 --> 00:02:00,979
-RCC project storage supports active, governed computation and durable project results.
+00:02:05,227 --> 00:02:08,917
+The 100 Gb/s server side is aggregate capacity.
 
 25
-00:02:00,979 --> 00:02:03,760
-Job-local storage supports temporary high-I/O work.
+00:02:08,917 --> 00:02:13,529
+It does not provide 100 Gb/s to one compute node.
 
 26
-00:02:03,760 --> 00:02:07,003
-A publication repository supports a released dataset.
+00:02:13,529 --> 00:02:20,908
+Ten clients each attempting to sustain 10 Gb/s can already approach the nominal capacity of one
 
 27
-00:02:07,003 --> 00:02:12,101
-An archive supports retained data that is no longer actively changing.
+00:02:20,908 --> 00:02:22,753
+100 Gb/s backend link.
 
 28
-00:02:12,101 --> 00:02:19,515
-### Why project data must not live in a user's home directory A home directory is
+00:02:22,753 --> 00:02:28,749
+Actual useful throughput is lower because of: protocol overhead; request latency; metadata operations;
 
 29
-00:02:19,515 --> 00:02:21,832
-attached to an individual account.
+00:02:28,749 --> 00:02:32,899
+contention; checksums and encryption; filesystem translation; and application processing.
 
 30
-00:02:21,832 --> 00:02:27,857
-It is suitable for personal configuration, small source files, and limited working material.
+00:02:32,899 --> 00:02:39,818
+Random and small-file workloads often do not fill a 10 Gb/s link with useful data.
 
 31
-00:02:27,857 --> 00:02:34,344
-It must not become the authoritative landing area for instrument output, shared research input,
+00:02:39,818 --> 00:02:44,891
+They spend their time waiting for network round trips and metadata.
 
 32
-00:02:34,344 --> 00:02:35,734
-or durable results.
+00:02:44,891 --> 00:02:52,485
+Large compressed FASTQ, BAM, CRAM, archives, and model files generally support efficient streaming and readahead.
 
 33
-00:02:35,734 --> 00:02:43,149
-From a governance and legal-compliance perspective, approved project storage: ties processing to the project's documented purpose,
+00:02:52,485 --> 00:02:58,560
+Many small files require repeated: path lookups; permission checks; opens and closes;
 
 34
-00:02:43,149 --> 00:02:44,539
-responsible owner, and.
+00:02:58,560 --> 00:03:03,116
+metadata updates; object requests; directory updates; and cache bookkeeping.
 
 35
-00:02:44,539 --> 00:02:50,776
-Select data intentionally rather than copying an entire project tree by default.
+00:03:03,116 --> 00:03:11,216
+Twenty gigabytes stored in 500,000 files can therefore perform much worse than one 20 GB archive.
 
 36
-00:02:50,776 --> 00:02:58,051
-A reviewable package should include: The manifest should record at least the relative path,
+00:03:11,216 --> 00:03:18,303
+Conda environments are a common example: startup may require opening thousands of small files.
 
 37
-00:02:58,051 --> 00:03:04,807
-byte size, checksum, data class, source, format, responsible owner, access class, retention basis,
+00:03:18,303 --> 00:03:26,404
+This is one reason RCC prefers Apptainer images over Conda environments stored on shared network filesystems.
 
 38
-00:03:04,807 --> 00:03:07,406
-and relationship to other files.
+00:03:26,404 --> 00:03:32,724
+The JuiceFS client may cache active data in memory and on node-local disk.
 
 39
-00:03:07,406 --> 00:03:13,122
-Use meaningful metadata that remains useful after current team members leave.
+00:03:32,724 --> 00:03:39,530
+A cache hit avoids another object download: A cache miss uses the complete path:
 
 40
-00:03:13,122 --> 00:03:19,878
-Do not place secrets, credentials, direct identifiers, or re-identification keys in README files,
+00:03:39,530 --> 00:03:45,850
+Caching helps when stable data is reused, for example: Apptainer images; reference genomes;
 
 41
-00:03:19,878 --> 00:03:22,997
-manifests, filenames, or general metadata fields.
+00:03:45,850 --> 00:03:50,711
+aligner indexes; annotation databases; model weights; and read-only database snapshots.
 
 42
-00:03:22,997 --> 00:03:29,194
-Coscine is a research-data management platform that can associate project data with structured metadata.
+00:03:50,711 --> 00:03:56,059
+Cache entries should be identified by immutable version, digest, or checksum.
 
 43
-00:03:29,194 --> 00:03:36,277
-Its available resource types do not all retain the same thing: some can hold data and
+00:03:56,059 --> 00:04:00,434
+Mutable names such as latest.sif are unsafe cache identities.
 
 44
-00:03:36,277 --> 00:03:41,146
-metadata, while others represent or retain metadata about data held elsewhere.
+00:04:00,434 --> 00:04:07,822
+A parent job that stages data or warms a cache on one node should not submit
 
 45
-00:03:41,146 --> 00:03:47,786
-Confirm the selected resource type, allocation, protection level, retention period, and institutional approval before transfer.
+00:04:07,822 --> 00:04:14,287
+child jobs that may run elsewhere: Nested submission destroys locality and can create repeated:
 
 46
-00:03:47,786 --> 00:03:54,869
-Coscine is the planned final lifecycle point for an eligible completed or stable research dataset that
+00:04:14,287 --> 00:04:20,290
+S3 downloads; Redis metadata traffic; 10 Gb/s client-link use; container transfers; reference-index transfers;
 
 47
-00:03:54,869 --> 00:04:00,624
-needs: an accountable project and membership model; descriptive metadata for discovery and reuse;
+00:04:20,290 --> 00:04:22,137
+and synchronized backend load.
 
 48
-00:04:00,624 --> 00:04:07,707
-a stable retained package rather than active RCC computation; and an archive period supported by the
+00:04:22,137 --> 00:04:29,064
+Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from an approved submission host.
 
 49
-00:04:07,707 --> 00:04:09,035
-selected Coscine resource.
+00:04:29,064 --> 00:04:33,681
+Each compute job should receive a complete unit of work.
 
 50
-00:04:09,035 --> 00:04:09,477
-It.
+00:04:33,681 --> 00:04:40,766
+When reporting a problem, provide the Slurm job ID, node, path, approximate file count,
 
 51
-00:04:09,477 --> 00:04:13,250
-A successful command or upload is not archive acceptance.
+00:04:40,766 --> 00:04:46,332
+total size, read/write pattern, and whether local staging changes the result.
 
 52
-00:04:13,250 --> 00:04:19,956
-Before changing or removing the RCC source, record evidence that: the intended archive set was frozen;
+00:04:46,332 --> 00:04:48,862
+Do not include patient identifiers.
 
 53
-00:04:19,956 --> 00:04:26,662
-file count, total bytes, and checksums match; metadata is complete enough for an independent project member;
+00:04:48,862 --> 00:04:55,408
+Given one streaming workload and one small-file or random-I/O workload, trace the likely metadata,
 
 54
-00:04:26,662 --> 00:04:33,368
-the destination resource contains data as well as metadata when required; access has been tested by
+00:04:55,408 --> 00:04:57,745
+object-storage, network, and cache paths.
 
 55
-00:04:33,368 --> 00:04:40,074
-an authorised person; retention and archive state are recorded; the project owner and archive owner accepted
+00:04:57,745 --> 00:05:03,356
+State which data should remain durable, which work should use job-local scratch,
 
 56
-00:04:40,074 --> 00:04:45,104
-the transfer; and the RCC retention or deletion action was separately approved.
-
-57
-00:04:45,104 --> 00:04:51,810
-When any check fails, preserve the RCC copy, record the failure, and resume from a known
-
-58
-00:04:51,810 --> 00:04:52,229
-state.
-
-59
-00:04:52,229 --> 00:04:53,487
-Do not repeatedly.
-
-60
-00:04:53,487 --> 00:04:59,187
-Set a review date even when the archive has a defined retention period.
-
-61
-00:04:59,187 --> 00:05:04,888
-Review: ownership and contact continuity; access membership; consent, legal, contractual, and funder obligations;
-
-62
-00:05:04,888 --> 00:05:11,904
-whether formats and documentation remain usable; whether a persistent identifier or publication link is still correct;
-
-63
-00:05:11,904 --> 00:05:18,920
-whether the data remains in scope for the selected archive; and what must happen at the
-
-64
-00:05:18,920 --> 00:05:20,235
-end of retention.
-
-65
-00:05:20,235 --> 00:05:23,305
-Record deletion as an accountable lifecycle event.
-
-66
-00:05:23,305 --> 00:05:29,443
-The record should identify what was removed, under whose authority, when, from which locations,
-
-67
-00:05:29,443 --> 00:05:32,513
-and which retained or published copies remain.
-
-68
-00:05:32,513 --> 00:05:38,543
-Produce a synthetic lifecycle and archive plan that identifies the data classes,
-
-69
-00:05:38,543 --> 00:05:44,573
-authoritative copy, owner, governance basis, retention decision, metadata, verification evidence, destination acceptance,
-
-70
-00:05:44,573 --> 00:05:47,086
-and permitted RCC cleanup action.
-
-71
-00:05:47,086 --> 00:05:54,121
-The plan must trace instrument data through project storage and job-local analysis to Coscine,
-
-72
-00:05:54,121 --> 00:06:02,161
-explain why home storage is excluded, and state that the RCC-to-Coscine flow is planned and requires
-
-73
-00:06:02,161 --> 00:06:03,166
-service confirmation.
+00:05:03,356 --> 00:05:07,096
+and what you would measure before changing resources.
 

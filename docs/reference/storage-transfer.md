@@ -8,7 +8,7 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
 > the files portal, [Class 3](../course/class-03-performance.md) explains local
-> staging, and [Class 11](../course/class-11-biomedical-data-privacy.md) covers
+> staging, and [Class 13](../course/class-13-biomedical-data-privacy.md) covers
 > the biomedical-data admission decision.
 
 > **Need to give someone access?** Use [How to share data safely](data-sharing.md)
@@ -44,7 +44,7 @@ active high-I/O computation to job-local storage, and copy validated results
 back to the project.
 
 For the complete path from instrument acquisition to a retained Coscine
-archive, follow [Class 15](../course/class-15-data-lifecycle.md).
+archive, follow [Class 17](../course/class-17-data-lifecycle.md).
 
 Project and group directories may be mounted on demand and may not be globally
 listable. Use the full path supplied for your project rather than probing for

@@ -187,5 +187,5 @@ review the exact package. Public sharing is an irreversible disclosure; a
 world-readable Unix mode is neither a publication workflow nor an approval.
 
 See [Storage and transfer](storage-transfer.md) for transfer commands and
-[Class 15](../course/class-15-data-lifecycle.md) for retention and the planned
+[Class 17](../course/class-17-data-lifecycle.md) for retention and the planned
 Coscine path.

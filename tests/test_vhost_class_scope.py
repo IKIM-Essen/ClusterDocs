@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class VhostClassScopeTests(unittest.TestCase):
     def test_class_explains_supported_patterns_and_boundaries(self):
-        text = (ROOT / "docs/course/class-06-vhosts.md").read_text().lower()
+        text = (ROOT / "docs/course/class-08-vhosts.md").read_text().lower()
         for required in [
             "static information site",
             "active read-only application",
@@ -20,12 +20,12 @@ class VhostClassScopeTests(unittest.TestCase):
             self.assertIn(required, text)
 
     def test_class_separates_web_interaction_from_cluster_compute(self):
-        text = (ROOT / "docs/course/class-06-vhosts.md").read_text().lower()
+        text = (ROOT / "docs/course/class-08-vhosts.md").read_text().lower()
         self.assertIn("computation belongs in slurm", text)
         self.assertNotRegex(text, r"while\s+true|--array")
 
     def test_narration_is_recording_length_and_has_chapters(self):
-        text = (ROOT / "narration/RCC_Onboarding_Class_6_Narration.md").read_text()
+        text = (ROOT / "narration/RCC_Onboarding_Class_8_Narration.md").read_text()
         spoken = re.sub(r"```.*?```", "", text, flags=re.S)
         word_count = len(re.findall(r"\b[\w’'-]+\b", spoken))
         self.assertGreaterEqual(word_count, 1050)
@@ -34,7 +34,7 @@ class VhostClassScopeTests(unittest.TestCase):
             self.assertIn(chapter, text)
 
     def test_recording_material_keeps_rollout_values_replaceable(self):
-        text = (ROOT / "narration/RCC_Onboarding_Class_6_Recording_Brief.md").read_text().lower()
+        text = (ROOT / "narration/RCC_Onboarding_Class_8_Recording_Brief.md").read_text().lower()
         self.assertIn("leave production urls out", text)
         self.assertIn("replaceable segment", text)
 

@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CLASS = ROOT / "docs/course/class-11-biomedical-data-privacy.md"
+CLASS = ROOT / "docs/course/class-13-biomedical-data-privacy.md"
 QUICK = ROOT / "docs/security/rcc-biomedical-data-admission.md"
 SAFE_USE = ROOT / "docs/security/safe-use.md"
 

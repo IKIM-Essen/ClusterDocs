@@ -45,4 +45,4 @@ Security should support research rather than make ordinary work impossible. The 
 - RCC may process biomedical research data when the approved project purpose and safeguards cover RCC; the data do not have to be anonymous.
 - Removing names is not enough when genomic, imaging, free-text, date, rare-disease, or linkage information can still identify a person.
 - Keep direct identifying fields and re-identification keys outside RCC.
-- Complete [Class 11](../course/class-11-biomedical-data-privacy.md); keep direct identifiers and re-identification keys outside RCC, and confirm that the project governance covers the biomedical data and intended use.
+- Complete [Class 13](../course/class-13-biomedical-data-privacy.md); keep direct identifiers and re-identification keys outside RCC, and confirm that the project governance covers the biomedical data and intended use.

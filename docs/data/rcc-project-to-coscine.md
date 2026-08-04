@@ -118,5 +118,5 @@ If eligibility, transfer, verification, access, or acceptance fails, preserve
 the RCC source and stop. Record the failure and resume only through the
 supported flow.
 
-Continue with [Class 15: manage the research data lifecycle](../course/class-15-data-lifecycle.md)
+Continue with [Class 17: manage the research data lifecycle](../course/class-17-data-lifecycle.md)
 for the complete lifecycle exercise.

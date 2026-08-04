@@ -1,13 +1,13 @@
-# RCC Onboarding Class 10 narration: From notebooks to services
+# RCC Onboarding Class 10 narration: R for large datasets
 
-**Estimated duration:** 7-8 minutes
+**Estimated duration:** 8-9 minutes
 
-This class is about choosing the right form for your work. A notebook is excellent for exploration. A Slurm job is better for repeatable computation. A Shiny or Python web app is useful when a team needs an interactive interface. A governed vhost is the production path for project web services.
+R is widely used in biomedical research, statistics, and visualization. On RCC the same principle applies as in Python: use interactive tools to inspect and explain, and use Slurm for computation.
 
-The mistake to avoid is putting everything into the web request. A browser click should not start uncontrolled computation inside the web process. Instead, the app validates the request, records it, and hands heavy work to Slurm. When the workflow finishes, the app displays curated results.
+The example for this class includes an R script, a Slurm batch file, a Conda environment, and an R notebook. The goal is not to teach all of R. The goal is to teach a pattern that is safe, reproducible, and realistic on a shared cluster.
 
-This pattern protects users, developers, and the cluster. Users get a simple interface. Developers get a maintainable service. Operations can enforce authentication, project-group membership, logging, and resource limits.
+Start by checking the input format and size. With larger tabular data, `data.table`, DuckDB, and Arrow can avoid unnecessary memory pressure. Use `ggplot2` for clear figures, but sample when a plot does not need every row.
 
-Before requesting a vhost, prepare the project owner, user group, data source, version, support contact, and review date. If the service needs to run long jobs, say explicitly how those jobs will be scheduled.
+For reproducibility, record package versions. Conda environments are used in these exercises because they can be rebuilt on a worker. `renv` can also be useful, but active package libraries with many small files should not be used on shared storage during computation.
 
-The class is complete when you can write one sentence explaining the service boundary: what the web app does, what Slurm does, and what data the user is allowed to see.
+The class is complete when you can run the R batch example once and explain how the same logic could be explored in a notebook first and then moved into Slurm.

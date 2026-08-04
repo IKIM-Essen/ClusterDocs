@@ -163,8 +163,8 @@ files group-writable by itself. Use the
 identity model and the [data-sharing guide](reference/data-sharing.md) for
 colleagues in your project, other RCC groups, and external recipients.
 
-Read [Class 12: efficient local I/O](course/class-12-efficient-io.md),
-[Class 13: storage architecture](course/class-13-storage-architecture.md), and
+Read [Class 14: efficient local I/O](course/class-14-efficient-io.md),
+[Class 15: storage architecture](course/class-15-storage-architecture.md), and
 the [storage and transfer reference](reference/storage-transfer.md).
 
 ## How to run work
@@ -206,9 +206,9 @@ See [Class 2: workflows](course/class-02-workflows.md),
 
 ## Python, R, notebooks, AI, and Shiny
 
-Use [Class 7](course/class-07-python-notebooks.md) for Python and Jupyter,
-[Class 8](course/class-08-r-analysis.md) for R, and
-[Class 9](course/class-09-shiny.md) for Shiny development.
+Use [Class 9](course/class-09-python-notebooks.md) for Python and Jupyter,
+[Class 10](course/class-10-r-analysis.md) for R, and
+[Class 11](course/class-11-shiny.md) for Shiny development.
 
 Notebook and application processes are real workloads:
 
@@ -227,11 +227,11 @@ framework and measured workload benefit.
 ## Protected project websites and services
 
 A notebook is not a production service. Use
-[Class 10](course/class-10-notebook-to-service.md) to separate request handling
+[Class 12](course/class-12-notebook-to-service.md) to separate request handling
 from expensive Slurm computation, then complete
-[Class 6](course/class-06-vhosts.md) before requesting a governed protected
+[Class 8](course/class-08-vhosts.md) before requesting a governed protected
 project website. When a project needs a browser interface, request a vhost for
-that project **after the vhost service is released**. The current Class 6
+that project **after the vhost service is released**. The current Class 8
 material is for planning and training, not an operational request. Each future
 vhost will have a named project owner, be authorised by project membership, and
 expose only the approved application or curated data—not every file in project
@@ -243,7 +243,7 @@ updates, ownership, and shutdown behavior need review.
 
 ## Biomedical-data boundary
 
-Complete [Class 11: biomedical data privacy](course/class-11-biomedical-data-privacy.md)
+Complete [Class 13: biomedical data privacy](course/class-13-biomedical-data-privacy.md)
 before transferring or analysing biomedical data.
 
 Do not place direct identifiers or re-identification keys in RCC. Genomic,
@@ -278,12 +278,12 @@ review the owner, software and update needs, vendor support, licensing,
 credentials, server dependencies, data flow, and target project before
 connection.
 
-Read [Class 14: instrument data](course/class-14-wet-lab-data-workflows.md) and
+Read [Class 16: instrument data](course/class-16-wet-lab-data-workflows.md) and
 [how RCC and the Lab network work together](resources/how-it-all-works.md).
 
 ## Finish the data lifecycle
 
-[Class 15](course/class-15-data-lifecycle.md) follows data from instrument
+[Class 17](course/class-17-data-lifecycle.md) follows data from instrument
 acquisition through project storage and analysis to a reviewed Coscine archive
 set. The [data-lifecycle TL;DR](data/data-lifecycle-tldr.md) is the two-page
 version.
@@ -313,7 +313,7 @@ entire unrestricted logs.
 
 ## Choose the next page
 
-- New to RCC: [complete the fifteen-class course](course/index.md).
+- New to RCC: [complete the seventeen-class course](course/index.md).
 - Analysing data: [follow the data-analysis path](paths/data-analysis.md).
 - Building software or services: [follow the development path](paths/software-development.md).
 - Looking up commands: [open the day-to-day reference](reference/index.md).

@@ -5,9 +5,9 @@ the project governance covers the data and the computation runs through Slurm.
 AI does not change the normal RCC rules for identity, storage, review, resource
 requests, or biomedical-data protection.
 
-> **Related learning:** Begin with [Class 7](../course/class-07-python-notebooks.md)
-> for Python exploration, [Class 8](../course/class-08-r-analysis.md) for
-> statistical analysis, and [Class 10](../course/class-10-notebook-to-service.md)
+> **Related learning:** Begin with [Class 9](../course/class-09-python-notebooks.md)
+> for Python exploration, [Class 10](../course/class-10-r-analysis.md) for
+> statistical analysis, and [Class 12](../course/class-12-notebook-to-service.md)
 > before turning a model into a shared service.
 
 ## Choose the technique from the question

@@ -28,7 +28,7 @@ python tools/media_gate.py --local-dir new-videos
 python tools/rollout_readiness.py --manual-review
 ```
 
-The media gate must report `PASS (15 videos)`. It checks the manifest filename
+The media gate must report `PASS (17 videos)`. It checks the manifest filename
 set, exact size, SHA-256, H.264 1280×720 video, stereo AAC audio, and duration.
 Do not deploy an extra file or substitute a same-named file with another hash.
 
@@ -55,8 +55,8 @@ python tools/media_gate.py \
   --base-url https://docs.ikim.uk-essen.de/media/rcc-onboarding
 ```
 
-This range-tests and fully downloads all 15 videos. It must report
-`media publication gate: PASS (15 videos)`. Also test one class in Firefox with
+This range-tests and fully downloads all 17 videos. It must report
+`media publication gate: PASS (17 videos)`. Also test one class in Firefox with
 captions enabled. A successful home page or one successful MP4 is insufficient.
 
 ## 4. Activate video links with one reviewed configuration change
@@ -73,7 +73,7 @@ Record the verification time and result in the deployment change. Both values
 are required: changing only one keeps the build fail-closed and emits the
 “Video not yet released” notice instead of an MP4 URL.
 
-Rebuild and prove that all 15 unique RCC URLs—and no local or GitHub media
+Rebuild and prove that all 17 unique RCC URLs—and no local or GitHub media
 URLs—are present:
 
 ```bash

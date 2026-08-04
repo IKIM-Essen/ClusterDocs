@@ -82,14 +82,14 @@ validation, uncertainty, bias, and scientific limitations.
 - Need the complete short version first? Read the
   [ClusterDocs NG TL;DR](tldr.md).
 - Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
-- Use the [course overview](course/index.md) when you want the complete fifteen-class sequence.
+- Use the [course overview](course/index.md) when you want the complete seventeen-class sequence.
 - Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
-- Working with human biomedical data: complete [Class 11](course/class-11-biomedical-data-privacy.md) before transfer or analysis.
+- Working with human biomedical data: complete [Class 13](course/class-13-biomedical-data-privacy.md) before transfer or analysis.
 - Looking up a command after training: use the [day-to-day reference](reference/index.md).
 - Connecting a laboratory instrument or acquisition workstation: see
   [how the lab network and RCC fit together](resources/how-it-all-works.md).
 - Moving data from an instrument into analysis: complete
-  [Class 14](course/class-14-wet-lab-data-workflows.md).
+  [Class 16](course/class-16-wet-lab-data-workflows.md).
 - Planning retention, Coscine archiving, or defensible cleanup: complete
-  [Class 15](course/class-15-data-lifecycle.md).
+  [Class 17](course/class-17-data-lifecycle.md).
 - Questions or feedback: [meet the RCC team and find the best contact route](team.md).

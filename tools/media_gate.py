@@ -167,8 +167,8 @@ def main() -> None:
     args = parser.parse_args()
 
     assets = yaml.safe_load(MANIFEST.read_text()).get("assets", [])
-    if len(assets) != 15:
-        raise SystemExit(f"media manifest must contain 15 assets, found {len(assets)}")
+    if len(assets) != 17:
+        raise SystemExit(f"media manifest must contain 17 assets, found {len(assets)}")
     required = {"video", "sha256", "size_bytes", "duration_seconds"}
     incomplete = [str(item.get("video", "<unnamed>")) for item in assets if required - item.keys()]
     if incomplete:

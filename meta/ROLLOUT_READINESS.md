@@ -11,9 +11,9 @@ fail-closed production gate.
 
 ## Completed in this round
 
-- Verified the final 15-video RCC handoff locally: the exact filename set,
-  107,968,919 total bytes, SHA-256 values, H.264 1280×720 video, stereo AAC
-  audio, and durations match `config/media-manifest.yml`.
+- Verified the expanded 17-video RCC handoff locally: the exact filename set,
+  122,653,131 total bytes, SHA-256 values, H.264 1280×720 video, stereo AAC,
+  and durations match `config/media-manifest.yml`.
 - Prepared the RCC documentation-vhost target and a fail-closed activation
   gate. Until DNS, TLS, MIME type, byte ranges, and full downloads pass, the
   generated site displays a release notice and emits no MP4 URL.
@@ -23,7 +23,7 @@ fail-closed production gate.
 - Archived the speculative rollout page and removed “RCC Connect” and rollout
   language from public instructions. Users are directed to the current
   institutional RCC configuration and support route.
-- Added expert, novice, and all-15-video review guides with task-based checks,
+- Added expert, novice, and all-17-video review guides with task-based checks,
   severity definitions, and media approval criteria.
 - Added a `--manual-review` readiness gate. It verifies that review guides are
   present, speculative rollout wording is absent, rootless Apptainer is in the
@@ -43,7 +43,7 @@ fail-closed production gate.
    the full online media gate for trusted HTTPS, `video/mp4`, byte ranges,
    exact sizes, and SHA-256 values.
 2. Activate the players, complete Firefox playback and clean-client visual
-   checks, then record human video approval for all 15 classes.
+   checks, then record human video approval for all 17 classes.
 3. Complete the institutional administrator checklist: operational endpoints,
    supported versions, storage and Slurm behavior, privacy/domain approval,
    accessibility, ownership, monitoring, and rollback.

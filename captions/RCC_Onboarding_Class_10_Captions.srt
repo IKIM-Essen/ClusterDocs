@@ -1,92 +1,124 @@
 1
-00:00:00,000 --> 00:00:04,667
-Welcome to Class 10: From notebooks to governed project services.
+00:00:00,000 --> 00:00:04,255
+Welcome to Class 10: R notebooks and large-data analysis.
 
 2
-00:00:04,667 --> 00:00:08,868
+00:00:04,255 --> 00:00:08,509
 This video introduces the core decisions and working patterns.
 
 3
-00:00:08,868 --> 00:00:15,401
+00:00:08,509 --> 00:00:15,128
 Watch the complete lesson first, then use the written class page for copyable commands,
 
 4
-00:00:15,401 --> 00:00:17,735
+00:00:15,128 --> 00:00:17,491
 exercises, and detailed reference material.
 
 5
-00:00:17,735 --> 00:00:23,303
-After this class, you can: choose between notebook, batch job, Shiny app,
+00:00:17,491 --> 00:00:22,689
+After this class, you can: run R in a controlled Conda environment;
 
 6
-00:00:23,303 --> 00:00:30,726
-Python web app, and vhost; separate interactive presentation from expensive computation; package a small service for
+00:00:22,689 --> 00:00:28,319
+use an R kernel in JupyterLab when needed; analyse larger tables with data.table,
 
 7
-00:00:30,726 --> 00:00:38,150
-review; write a minimal release note for project users; avoid patterns that leak data or overload
+00:00:28,319 --> 00:00:34,816
+DuckDB, Arrow, and dplyr patterns; build figures with ggplot2; separate exploratory notebooks from batch analysis;
 
 8
-00:00:38,150 --> 00:00:39,078
-shared infrastructure.
+00:00:34,816 --> 00:00:39,147
+prepare R code that can be rerun by a colleague.
 
 9
-00:00:39,078 --> 00:00:43,646
-A governed web app should be a presentation and coordination layer.
+00:00:39,147 --> 00:00:45,815
+Start from the provided example: For an interactive R notebook, use the Jupyter example from Class
 
 10
-00:00:43,646 --> 00:00:49,875
-It may read approved data, collect small forms, start reviewed workflows, or display curated results.
+00:00:45,815 --> 00:00:46,231
+9.
 
 11
-00:00:49,875 --> 00:00:54,027
-It should not perform long-running analysis inside the web request.
+00:00:46,231 --> 00:00:49,148
+The environment already includes an R kernel.
 
 12
-00:00:54,027 --> 00:00:57,765
-A good pattern is: The web app validates input.
+00:00:49,148 --> 00:00:53,230
+Do not begin by loading every file into memory.
 
 13
-00:00:57,765 --> 00:01:00,672
-The app writes a small request record.
+00:00:53,230 --> 00:01:00,033
+First check: file size; number of columns; expected row count; whether the file is compressed;
 
 14
-00:01:00,672 --> 00:01:03,579
-A Slurm workflow performs the heavy computation.
+00:01:00,033 --> 00:01:06,382
+whether the analysis needs all columns; whether the operation is streaming, grouped, or random-access.
 
 15
-00:01:03,579 --> 00:01:05,655
-The app displays completed results.
+00:01:06,382 --> 00:01:07,742
+Good starting points:
 
 16
-00:01:05,655 --> 00:01:10,223
-Logs and receipts keep the action attributable to a named user.
+00:01:07,742 --> 00:01:13,926
+For teaching and small examples, the course uses Conda environments because they are easy to reproduce
 
 17
-00:01:10,223 --> 00:01:17,901
-Before asking for a vhost, prepare: project name and project lead; who may access the application;
+00:01:13,926 --> 00:01:15,085
+in Slurm jobs.
 
 18
-00:01:17,901 --> 00:01:24,139
-whether it is static, read-only, standard, or upload-capable; the deployment source and version;
+00:01:15,085 --> 00:01:21,268
+For larger R projects, you may also use renv, but do not keep active package libraries
 
 19
-00:01:24,139 --> 00:01:31,337
-data sources and whether they contain sensitive content; resource expectations; support contact and review date.
+00:01:21,268 --> 00:01:24,746
+with many small files on shared storage while computing.
 
 20
-00:01:31,337 --> 00:01:37,160
-Use the vhost request checklist from Class 6 and add one architectural sentence:
+00:01:24,746 --> 00:01:28,997
+Restore packages into local job storage or use a reviewed container.
 
 21
-00:01:37,160 --> 00:01:44,328
-Heavy computation for this service will run through Slurm, while the web app only handles authentication,
+00:01:28,997 --> 00:01:43,010
+The course includes: examples/interactive-workflows/notebooks/r-large-data.ipynb examples/interactive-workflows/r/analysis.R examples/interactive-workflows/r/r.sbatch examples/interactive-workflows/r/environment.yml The notebook demonstrates group summaries and a sampled figure.
 
 22
-00:01:44,328 --> 00:01:47,911
-parameter collection, status display, and curated result access.
+00:01:43,010 --> 00:01:51,769
+The batch example writes reproducible output into a results directory.
 
 23
-00:01:47,911 --> 00:01:53,287
-If that sentence is false, redesign the application before requesting a vhost.
+00:01:51,769 --> 00:01:55,995
+Request only the CPU and memory your script can use.
+
+24
+00:01:55,995 --> 00:01:59,377
+Keep raw data compressed where tools support it.
+
+25
+00:01:59,377 --> 00:02:03,181
+Avoid thousands of tiny temporary files on shared storage.
+
+26
+00:02:03,181 --> 00:02:05,717
+Use node-local scratch for intermediate output.
+
+27
+00:02:05,717 --> 00:02:09,944
+Save final tables and figures back to the project area.
+
+28
+00:02:09,944 --> 00:02:14,171
+Use sacct after completion to compare requested and observed memory.
+
+29
+00:02:14,171 --> 00:02:19,346
+Run: Then submit the R batch job once and verify that the result file was written.
+
+30
+00:02:19,346 --> 00:02:24,521
+The gate is complete when you can explain how the same code could be moved from
+
+31
+00:02:24,521 --> 00:02:26,462
+notebook exploration into the batch script.
 

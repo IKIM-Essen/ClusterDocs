@@ -1,204 +1,252 @@
 1
-00:00:00,000 --> 00:00:03,433
-Welcome to Class 6: protected project websites.
+00:00:00,000 --> 00:00:03,324
+Welcome to Class 6: Snakemake on RCC.
 
 2
-00:00:03,433 --> 00:00:07,847
+00:00:03,324 --> 00:00:07,598
 This video introduces the core decisions and working patterns.
 
 3
-00:00:07,847 --> 00:00:14,714
+00:00:07,598 --> 00:00:14,246
 Watch the complete lesson first, then use the written class page for copyable commands,
 
 4
-00:00:14,714 --> 00:00:17,166
+00:00:14,246 --> 00:00:16,620
 exercises, and detailed reference material.
 
 5
-00:00:17,166 --> 00:00:23,650
-By the end of this class, you should be able to: decide whether a project idea
+00:00:16,620 --> 00:00:22,973
+After this class, you can: explain what Snakemake controls and what Slurm controls;
 
 6
-00:00:23,650 --> 00:00:30,133
-belongs on the governed vhost platform; distinguish a static information site from an active project application;
+00:00:22,973 --> 00:00:30,792
+structure a workflow around inputs, outputs, rules, configuration, and logs; dry-run and inspect a workflow before
 
 7
-00:00:30,133 --> 00:00:36,617
-explain what RCC provides and what the project application must provide; use the copyable example without
+00:00:30,792 --> 00:00:37,634
+it submits jobs; use the managed RCC IKIM profile instead of copying scheduler settings;
 
 8
-00:00:36,617 --> 00:00:43,101
-creating local accounts or exposing storage paths; prepare a complete vhost request for project-lead and administrator
+00:00:37,634 --> 00:00:45,453
+request CPU, memory, time, partitions, GPUs, and local scratch per rule; keep software and data in
 
 9
-00:00:43,101 --> 00:00:48,369
-review; recognize when computation belongs in Slurm rather than in a web request.
+00:00:45,453 --> 00:00:53,272
+the correct storage locations; resume safely after correcting a failed rule; and retain enough provenance to
 
 10
-00:00:48,369 --> 00:00:53,780
-Good candidates include: project documentation and study information; read-only dashboards and reports;
+00:00:53,272 --> 00:00:55,227
+reproduce a scientific result.
 
 11
-00:00:53,780 --> 00:00:59,643
-search or query interfaces over an approved internal database; curated collections of reports,
+00:00:55,227 --> 00:00:59,736
+Snakemake builds a directed graph from declared input and output files.
 
 12
-00:00:59,643 --> 00:01:05,506
-images or result files; small project tools used by an identified project group;
+00:00:59,736 --> 00:01:05,475
+It decides which rules need to run and which completed outputs can be reused.
 
 13
-00:01:05,506 --> 00:01:10,466
-bounded forms or upload workflows with a defined destination and owner.
+00:01:05,475 --> 00:01:11,214
+Slurm decides where and when each submitted rule job runs and enforces its CPU,
 
 14
-00:01:10,466 --> 00:01:17,682
-A vhost is particularly useful when medical professionals or biomedical researchers need a browser-based interface and
+00:01:11,214 --> 00:01:13,673
+memory, time, partition, and GPU allocation.
 
 15
-00:01:17,682 --> 00:01:21,290
-should not be expected to install command-line tools.
+00:01:13,673 --> 00:01:19,002
+Do not run scientific rule bodies as unmanaged processes on an SSH gateway.
 
 16
-00:01:21,290 --> 00:01:28,696
-Inside the hospital network, an active project application can use the low-friction RCC username/password or passkey
+00:01:19,002 --> 00:01:25,151
+Do not add sbatch calls inside a rule: the managed profile is the scheduler boundary.
 
 17
-00:01:28,696 --> 00:01:29,159
-flow.
+00:01:25,151 --> 00:01:33,571
+Keep durable workflow state in an approved shared project directory: Git should contain workflow logic,
 
 18
-00:01:29,159 --> 00:01:32,862
-Outside the hospital, the gateway requires stronger authentication.
+00:01:33,571 --> 00:01:38,062
+configuration templates, environment or container declarations, and documentation.
 
 19
-00:01:32,862 --> 00:01:40,267
-Informational static sites may be available without login inside the hospital, but active applications always require
+00:01:38,062 --> 00:01:45,360
+It must not contain credentials, patient identifiers, raw research data, large generated results,
 
 20
-00:01:40,267 --> 00:01:41,656
-an individual identity.
+00:01:45,360 --> 00:01:48,167
+workflow caches, or Conda environments.
 
 21
-00:01:41,656 --> 00:01:46,285
-The backend application is not directly reachable by ordinary users.
+00:01:48,167 --> 00:01:52,617
+The managed command is /usr/local/bin/snakemake, normally available as snakemake.
 
 22
-00:01:46,285 --> 00:01:53,691
-This is important: the trusted identity information is meaningful only when it arrives through the RCC
+00:01:52,617 --> 00:01:59,539
+Confirm the version for a retained analysis: The control environment belongs to RCC administrators.
 
 23
-00:01:53,691 --> 00:01:54,154
-gateway.
+00:01:59,539 --> 00:02:05,472
+Analysis tools belong in reviewed per-rule Apptainer images or approved per-rule environments;
 
 24
-00:01:54,154 --> 00:02:01,024
-Junior developers are not expected to administer the authentication gateway, integrity checker or detection systems.
+00:02:05,472 --> 00:02:10,416
+do not install pipeline packages into the managed Snakemake environment.
 
 25
-00:02:01,024 --> 00:02:06,979
-They are expected to follow the application contract and keep their software maintainable.
+00:02:10,416 --> 00:02:17,487
+Copy the synthetic example from examples/snakemake-rcc into an approved project directory: Replace PROJECT with a project
 
 26
-00:02:06,979 --> 00:02:13,408
-### Database-backed interface Prefer a dedicated application account with access to approved views or tables.
+00:02:17,487 --> 00:02:18,812
+you may use.
 
 27
-00:02:13,408 --> 00:02:17,695
-A read-only dashboard should not receive write or administration privileges.
+00:02:18,812 --> 00:02:24,999
+Inspect Snakefile and config.yaml, then ask Snakemake what it would do without running anything:
 
 28
-00:02:17,695 --> 00:02:24,553
-### Curated file collection Store a catalogue that maps an opaque identifier to an approved file.
+00:02:24,999 --> 00:02:31,186
+Render the dependency graph when Graphviz is available: Run the bounded workflow through Slurm:
 
 29
-00:02:24,553 --> 00:02:28,411
-The browser supplies the identifier, not a filesystem path.
+00:02:31,186 --> 00:02:36,047
+The example creates three tiny synthetic sample files and one summary.
 
 30
-00:02:28,411 --> 00:02:32,697
-The application checks project membership again before returning the file.
+00:02:36,047 --> 00:02:41,792
+It uses one CPU, 256 MiB, five minutes, and cpu_short per rule job.
 
 31
-00:02:32,697 --> 00:02:38,269
-### Computational result portal The website may collect bounded parameters and display results,
+00:02:41,792 --> 00:02:48,421
+--jobs 4 is a concurrency ceiling, not a request for four CPUs in every job.
 
 32
-00:02:38,269 --> 00:02:42,984
-but substantial processing should be handled asynchronously through an approved workflow.
+00:02:48,421 --> 00:02:55,593
+Give each rule realistic resources based on a small measured pilot: threads becomes the rule's usable
 
 33
-00:02:42,984 --> 00:02:48,557
-Do not keep a browser request open while a large scientific analysis runs.
+00:02:55,593 --> 00:02:56,489
+CPU count.
 
 34
-00:02:48,557 --> 00:02:51,986
-### Upload workflow Use a staging directory, server-generated.
+00:02:56,489 --> 00:02:59,627
+mem_mb is host memory, not GPU VRAM.
 
 35
-00:02:51,986 --> 00:02:58,290
-A project lead describes the purpose, users, data type and required application pattern.
+00:02:59,627 --> 00:03:00,972
+runtime is minutes.
 
 36
-00:02:58,290 --> 00:03:03,624
-RCC Admin selects the fixed security recipe that matches the function.
+00:03:00,972 --> 00:03:08,143
+The managed profile translates the supported resource names into Slurm requests; keep cluster-specific defaults in the
 
 37
-00:03:03,624 --> 00:03:08,473
-A different administrator reviews the request and its data boundaries.
+00:03:08,143 --> 00:03:13,970
+profile or project configuration rather than scattering raw scheduler flags through every rule.
 
 38
-00:03:08,473 --> 00:03:11,867
-An operator reviews the generated Git change.
+00:03:13,970 --> 00:03:20,820
+Use node-local storage only inside a Slurm rule job and only for temporary work.
 
 39
-00:03:11,867 --> 00:03:15,746
-Deployment, local health checks and access tests run.
+00:03:20,820 --> 00:03:28,650
+The approved pattern stages required inputs to $TMPDIR, computes there, and copies declared outputs back to
 
 40
-00:03:15,746 --> 00:03:22,050
-The project owner periodically confirms that the site is still needed and maintained.
+00:03:28,650 --> 00:03:31,096
+shared project storage before success.
 
 41
-00:03:22,050 --> 00:03:26,414
-Developers describe required functions, upstream service and data dependencies.
+00:03:31,096 --> 00:03:36,968
+Never place the Snakefile, durable results, logs, or resume-critical state under /local.
 
 42
-00:03:26,414 --> 00:03:32,233
-They cannot disable authentication, integrity monitoring, logging, request limits or gateway-only access.
+00:03:36,968 --> 00:03:44,797
+A rule should use local scratch only when measurement justifies the staging cost—for example repeated random
 
 43
-00:03:32,233 --> 00:03:38,687
-The example demonstrates: trusted identity handling; project-group checks; a read-only database query;
+00:03:44,797 --> 00:03:48,712
+I/O, sorting, assembly, decompression, or many temporary files.
 
 44
-00:03:38,687 --> 00:03:45,678
-curated downloads using opaque identifiers; safe failure for direct clients and invalid requests.
+00:03:48,712 --> 00:03:52,137
+Class 14 contains the detailed local-I/O lesson.
 
 45
-00:03:45,678 --> 00:03:50,519
-Local demonstration mode accepts synthetic headers only from loopback.
+00:03:52,137 --> 00:03:56,526
+Inspect the failed rule's log and its Slurm accounting record.
 
 46
-00:03:50,519 --> 00:03:55,897
-Production must use the governed RCC gateway and deployment workflow.
+00:03:56,526 --> 00:04:03,548
+Correct the input, command, environment, or resource request, then dry-run again: Snakemake reuses outputs whose declared
 
 47
-00:03:55,897 --> 00:04:02,508
-You have completed this class when: all example unit tests pass; you can explain which of
+00:04:03,548 --> 00:04:05,303
+dependencies are still satisfied.
 
 48
-00:04:02,508 --> 00:04:09,119
-the four site patterns fits your project; the app refuses direct clients and missing project membership;
+00:04:05,303 --> 00:04:10,570
+Do not delete the whole results tree as a first troubleshooting step,
 
 49
-00:04:09,119 --> 00:04:14,904
-no filesystem path is accepted from the URL; the request template names an owner,
+00:04:10,570 --> 00:04:16,275
+submit several copies of the same workflow, or create an automatic retry storm.
 
 50
-00:04:14,904 --> 00:04:21,516
-project, data classification, application pattern, data dependency and review date; you can identify any heavy computation
+00:04:16,275 --> 00:04:23,297
+Use explicit rerun triggers or --forcerun RULE only after understanding why the existing output must be
 
 51
-00:04:21,516 --> 00:04:23,582
-that must move to Slurm.
+00:04:23,297 --> 00:04:23,735
+replaced.
+
+52
+00:04:23,735 --> 00:04:25,930
+Treat protected inputs as read-only.
+
+53
+00:04:25,930 --> 00:04:32,091
+Retain: the Git commit or archived workflow version; Snakefile, included rule files,
+
+54
+00:04:32,091 --> 00:04:40,305
+and resolved configuration; input inventory and checksums where appropriate; exact container digests or environment lock files;
+
+55
+00:04:40,305 --> 00:04:46,980
+the Snakemake and profile versions; the resolved command and concurrency limit; rule logs,
+
+56
+00:04:46,980 --> 00:04:54,167
+benchmarks, and relevant Slurm job identifiers; and output checksums and the scientific validation record.
+
+57
+00:04:54,167 --> 00:05:01,355
+A technically successful workflow can still use the wrong samples, reference, parameters, or model.
+
+58
+00:05:01,355 --> 00:05:04,436
+Scheduler success is not scientific validation.
+
+59
+00:05:04,436 --> 00:05:11,182
+You have completed Class 6 when: the synthetic workflow dry-run lists the expected four rule jobs;
+
+60
+00:05:11,182 --> 00:05:17,928
+the managed IKIM profile completes the bounded run; a second dry-run reports that nothing needs to
+
+61
+00:05:17,928 --> 00:05:23,410
+be done; you can explain the difference between --jobs, threads, mem_mb, and runtime;
+
+62
+00:05:23,410 --> 00:05:29,313
+you can identify which files belong in Git, shared project storage, and node-local scratch;
+
+63
+00:05:29,313 --> 00:05:34,373
+and you can name the provenance required before retaining a scientific result.
 

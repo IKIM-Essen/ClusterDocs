@@ -1,13 +1,33 @@
-# RCC Onboarding Class 9 narration: Shiny applications
+# RCC Onboarding Class 9 narration: Python notebooks for large datasets
 
-**Estimated duration:** 7-8 minutes
+**Estimated duration:** 8-9 minutes
 
-Shiny is a good way to give colleagues an interactive view of results. But a Shiny app has to be treated differently depending on the audience.
+## Chapter 1 — What notebooks are for
 
-For one developer or a small demonstration, Shiny can run in a Slurm allocation and listen only on loopback. You connect through an SSH tunnel, just like with Jupyter. This is development mode. It is not a production service.
+In this class we use Python notebooks for what they are good at: looking at data, checking assumptions, calculating summaries, and making figures that explain what is happening.
 
-For other users, a Shiny app must go through the governed vhost process. The gateway handles authentication. The app must know which project group is allowed. The data source must be reviewed. The application must not simply expose a project directory through the browser.
+A notebook is not a magic lightweight tool. The Python kernel is a real process. It uses CPU, memory, temporary disk space, and sometimes a GPU. On RCC that means the kernel must run inside a Slurm allocation.
 
-A safe Shiny app usually reads a curated table, a database view, or a small result collection. If it accepts uploads, those uploads go into a staging area and are validated before they become part of a project collection. Expensive computation belongs in Slurm, not in a browser request.
+The safe pattern is simple. You submit a Jupyter job. The notebook listens only on the worker itself. You create an SSH tunnel from your laptop. Then your browser talks to your local address while the computation remains inside the scheduled allocation.
 
-The class is complete when you can run the Shiny development example and then decide whether your own app is a tunnelled demo or a governed project service.
+## Chapter 2 — Start small, then scale
+
+Large-data work should not begin by loading everything. First ask what the question is. Then inspect the file size, format, and columns. Load a small sample. Summarise groups before plotting. Measure memory. Only after that should you decide whether pandas is enough or whether you need DuckDB, Arrow, Polars, or a batch workflow.
+
+This habit protects the cluster and saves your time. A mistake that is invisible on a small laptop example can become a long-running job or a memory failure when applied to real project data.
+
+## Chapter 3 — The provided example
+
+The course contains a synthetic Python notebook and a matching Slurm batch script. The notebook is for inspection. The script is for repeatable execution. Both use safe sample data and avoid real project identifiers.
+
+Open the notebook, run the group summary, and look at the sampled plot. Then inspect the batch script. Notice that it stages work into local scratch and copies final results back. That separation is one of the most important RCC habits.
+
+## Chapter 4 — Security and attribution
+
+Do not paste passwords, tokens, private keys, patient identifiers, or restricted sample sheets into notebooks. Do not share a notebook containing hidden output cells with sensitive data. Do not use another person’s account to access a project. If somebody needs access, ask for named project membership.
+
+A notebook should explain the analysis. It should not become an unreviewed archive of secrets and patient data.
+
+## Chapter 5 — Completion
+
+The class is complete when you can start one Jupyter job, connect through one tunnel, run the synthetic example, and stop the job. You should also be able to explain when work belongs in the notebook and when it belongs in a Slurm batch job.

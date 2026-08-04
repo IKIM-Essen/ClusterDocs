@@ -1,6 +1,6 @@
 # RCC onboarding curriculum for biomedical researchers
 
-This staging package contains a fifteen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
+This staging package contains a seventeen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
 
 ## Curriculum
 
@@ -35,19 +35,19 @@ The original four classes include:
 - a Markdown narration script.
 
 The canonical source for the original four classes is the Markdown document in
-`source/`. Classes 5–15 are maintained directly in the course, exercise,
+`source/`. Classes 5–17 are maintained directly in the course, exercise,
 narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
 files are rendered review artifacts; MP4 files are published separately from
 ordinary Git history.
 
 ## Video format
 
-The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–15
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–17
 use the macOS Daniel British-English voice with sentence-aware pacing,
 technical-term pronunciation handling, de-essing, gentle compression, EBU R128
 loudness normalization, and captions. Rebuild them with
 `python3 build/build_videos.py` for Classes 1–4 and
-`python3 build/build_course_videos.py` for Classes 5–15. The builds record settings, durations, and
+`python3 build/build_course_videos.py` for Classes 5–17. The builds record settings, durations, and
 hashes in `meta/video-build-report.json`. Videos do not connect to production
 RCC services and contain no credentials or biomedical data.
 
@@ -96,8 +96,8 @@ Then open <http://127.0.0.1:8765/>.
 
 ## v0.1.2 additions
 
-This staging version adds Classes 7-10 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
+This staging version adds Classes 9-12 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
 
 ## v0.1.3 additions
 
-This version adds Class 11 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.
+This version adds Class 13 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.

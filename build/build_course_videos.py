@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate and build video lessons for RCC Classes 5–15.
+"""Generate and build video lessons for RCC Classes 5–17.
 
 The Markdown course pages remain authoritative. This script selects the key
 sections for each class, creates a concise visual storyboard and narration,
@@ -32,36 +32,40 @@ REPORT = ROOT / "meta/course-video-build-report.json"
 
 CLASS_FILES = {
     5: "class-05-slurm.md",
-    6: "class-06-vhosts.md",
-    7: "class-07-python-notebooks.md",
-    8: "class-08-r-analysis.md",
-    9: "class-09-shiny.md",
-    10: "class-10-notebook-to-service.md",
-    11: "class-11-biomedical-data-privacy.md",
-    12: "class-12-efficient-io.md",
-    13: "class-13-storage-architecture.md",
-    14: "class-14-wet-lab-data-workflows.md",
-    15: "class-15-data-lifecycle.md",
+    6: "class-06-snakemake.md",
+    7: "class-07-nextflow.md",
+    8: "class-08-vhosts.md",
+    9: "class-09-python-notebooks.md",
+    10: "class-10-r-analysis.md",
+    11: "class-11-shiny.md",
+    12: "class-12-notebook-to-service.md",
+    13: "class-13-biomedical-data-privacy.md",
+    14: "class-14-efficient-io.md",
+    15: "class-15-storage-architecture.md",
+    16: "class-16-wet-lab-data-workflows.md",
+    17: "class-17-data-lifecycle.md",
 }
 
 ACCENTS = {
     5: "D15B47", 6: "0A8FB2", 7: "2C6EAF", 8: "7057A3", 9: "B4233D",
     10: "2B8A65", 11: "A56500", 12: "D15B47", 13: "0B456E",
-    14: "0A8FB2", 15: "2B8A65",
+    14: "0A8FB2", 15: "2B8A65", 16: "7057A3", 17: "0B456E",
 }
 
 SECTIONS = {
-    5: ["Three execution modes", "Everyday Slurm commands", "Pattern 1", "Pattern 2", "Pattern 3", "Built-in availability protection", "What the examples prove"],
-    6: ["Learning outcomes", "What is in scope", "Standard architecture", "Division of responsibility", "Safe data-access patterns", "Request and approval workflow", "Local copyable example", "Completion gate"],
-    7: ["Learning goals", "The RCC notebook rule", "Large-data pattern", "Copyable example", "Python tool choices", "Good security", "Completion gate"],
-    8: ["Learning goals", "Recommended R workflow", "Handling larger tables", "Reproducibility", "Copyable example", "Good cluster patterns", "Completion gate"],
-    9: ["Learning goals", "Development mode", "What makes Shiny production-ready", "Safe data pattern", "Common mistakes", "Completion gate"],
-    10: ["Learning goals", "Decision guide", "Service boundary", "Preparing for review", "Completion gate"],
-    11: ["Learning outcome", "The RCC rule in one sentence", "Why biomedical data receive special protection", "A practical RCC decision model", "Genomic research", "X-ray", "Data minimisation", "Legal and institutional resources", "Completion gate"],
-    12: ["Learning objectives", "1. Storage is part", "2. Streaming", "4. Why runtime", "5. The RCC staging pattern", "8. Snakemake integration", "10. Cache containers", "12. Diagnose", "14. Decision checklist"],
-    13: ["Learning objectives", "1. Redis", "2. MinIO", "3. RCC network", "4. Large files", "6. JuiceFS", "8. Slurm placement", "10. Diagnosing", "Completion gate"],
-    14: ["Learning objectives", "1. Four different roles", "2. The instrument-data lifecycle", "3. Before starting", "4. Choosing a transfer", "5. File count", "10. When RCC", "11. A safe handoff", "12. Verification", "Practical exercise"],
-    15: ["Learning objectives", "1. The lifecycle", "2. Classify", "3. Match storage", "4. Build the minimum archive", "5. Coscine", "6. Archive acceptance", "7. Review", "Completion gate"],
+    5: ["Three execution modes", "Everyday Slurm commands", "Choosing the right GPU", "Request any standard GPU", "Request an exact model", "GPU VRAM", "Pattern 1", "Built-in availability protection", "What the examples prove"],
+    6: ["Learning objectives", "1. Snakemake", "2. Prepare", "3. Use", "4. First bounded", "5. Declare resources", "7. Local scratch", "9. Failures", "10. Provenance", "Completion gate"],
+    7: ["Learning objectives", "1. How the pieces", "2. Prepare", "3. Start", "4. First bounded", "5. Resource requests", "6. GPU labels", "7. Containers", "8. Running nf-core", "10. Failures", "Completion gate"],
+    8: ["Learning outcomes", "What is in scope", "Standard architecture", "Division of responsibility", "Safe data-access patterns", "Request and approval workflow", "Local copyable example", "Completion gate"],
+    9: ["Learning goals", "The RCC notebook rule", "Large-data pattern", "Copyable example", "Python tool choices", "Good security", "Completion gate"],
+    10: ["Learning goals", "Recommended R workflow", "Handling larger tables", "Reproducibility", "Copyable example", "Good cluster patterns", "Completion gate"],
+    11: ["Learning goals", "Development mode", "What makes Shiny production-ready", "Safe data pattern", "Common mistakes", "Completion gate"],
+    12: ["Learning goals", "Decision guide", "Service boundary", "Preparing for review", "Completion gate"],
+    13: ["Learning outcome", "The RCC rule in one sentence", "Why biomedical data receive special protection", "A practical RCC decision model", "Genomic research", "X-ray", "Data minimisation", "Legal and institutional resources", "Completion gate"],
+    14: ["Learning objectives", "1. Storage is part", "2. Streaming", "4. Why runtime", "5. The RCC staging pattern", "8. Snakemake integration", "10. Cache containers", "12. Diagnose", "14. Decision checklist"],
+    15: ["Learning objectives", "1. Redis", "2. MinIO", "3. RCC network", "4. Large files", "6. JuiceFS", "8. Slurm placement", "10. Diagnosing", "Completion gate"],
+    16: ["Learning objectives", "1. Four different roles", "2. The instrument-data lifecycle", "3. Before starting", "4. Choosing a transfer", "5. File count", "10. When RCC", "11. A safe handoff", "12. Verification", "Practical exercise"],
+    17: ["Learning objectives", "1. The lifecycle", "2. Classify", "3. Match storage", "4. Build the minimum archive", "5. Coscine", "6. Archive acceptance", "7. Review", "Completion gate"],
 }
 
 
@@ -294,7 +298,7 @@ def build_class(class_number: int, voice: str, rate: int) -> dict[str, object]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("classes", nargs="*", type=int, default=list(range(5, 16)))
+    parser.add_argument("classes", nargs="*", type=int, default=list(range(5, 18)))
     parser.add_argument("--voice", default=media.VOICE)
     parser.add_argument("--rate", type=int, default=media.RATE)
     args = parser.parse_args()
@@ -305,11 +309,11 @@ def main() -> None:
         existing = {int(item["class"]): item for item in json.loads(REPORT.read_text())}
     for class_number in args.classes:
         if class_number not in CLASS_FILES:
-            raise SystemExit("Classes must be selected from 5 through 15")
+            raise SystemExit("Classes must be selected from 5 through 17")
         result = build_class(class_number, args.voice, args.rate)
         existing[class_number] = result
+        REPORT.write_text(json.dumps([existing[key] for key in sorted(existing)], indent=2) + "\n")
         print(f"Class {class_number}: {result['duration_seconds'] / 60:.1f} min -> {result['video']}", flush=True)
-    REPORT.write_text(json.dumps([existing[key] for key in sorted(existing)], indent=2) + "\n")
 
 
 if __name__ == "__main__":

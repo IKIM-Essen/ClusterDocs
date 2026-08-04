@@ -40,91 +40,21 @@ workflow caches from search and file watching.
 
 ## Good cluster pattern
 
-Use Snakemake to describe dependencies and submit work through Slurm. Do not keep a large workflow running as ordinary processes on the login host. Use a dry run before submission:
+Use a workflow engine to describe dependencies and submit scientific work
+through Slurm. Do not keep a large workflow running as ordinary processes on
+an SSH gateway. Class 6 teaches the ready-now managed Snakemake path; Class 7
+documents the not-yet-released managed Nextflow path.
+
+The first safe question is always a non-mutating dry run. For Snakemake:
 
 ```bash
 snakemake --dry-run --printshellcmds
 ```
 
-Then use the managed RCC execution profile: `snakemake --profile IKIM`.
-
-## Guided nf-core and Nextflow example
-
-> **Service status — not yet released:** the planned, pinned `rcc-nextflow`
-> launcher and institutional Slurm configuration are not available to users
-> yet. This section is preparation material, not a command to run before RCC
-> announces the service. The supplied runner stops without changing project
-> data when `rcc-nextflow`, `apptainer`, or `sbatch` is missing; do not install
-> an unpinned launcher or start a controller on a login gateway to bypass it.
-
-[nf-core](https://nf-co.re/) publishes reviewed community pipelines that run
-with [Nextflow](https://www.nextflow.io/). They complement Snakemake: use the
-workflow system that your reviewed analysis and research community support.
-Do not translate a validated pipeline merely to standardize on one engine.
-
-The class example runs the small public `nf-core/demo` test dataset. It pins the
-pipeline release, submits processes through Slurm, runs tools in Apptainer, and
-limits scheduler concurrency and process resources. From a local clone of the
-class materials, copy the
-[`rcc-test.config`](../classes/examples/nf-core/rcc-test.config) and
-[`run-demo.sh`](../classes/examples/nf-core/run-demo.sh) files into an approved
-project directory:
-
-```bash
-mkdir -p /projects/PROJECT/training/nf-core-demo
-cp docs/classes/examples/nf-core/rcc-test.config \
-  /projects/PROJECT/training/nf-core-demo/
-cp docs/classes/examples/nf-core/run-demo.sh \
-  /projects/PROJECT/training/nf-core-demo/
-cd /projects/PROJECT/training/nf-core-demo
-```
-
-Replace `PROJECT` with a project to which you have access. Inspect both files,
-then—only after managed Nextflow-to-Slurm support is released—run one bounded
-test with both the project root and run directory:
-
-```bash
-bash run-demo.sh /projects/PROJECT "$PWD/run-01"
-```
-
-The test profile downloads public test data and container images. Run it only
-when the RCC outbound proxy path is available; do not add tokens or copy
-credentials into the project. Under the planned service, the Nextflow
-coordinator stays on the approved submission host while individual tasks use
-Slurm; workers do not need their own Java or Nextflow installation. Durable
-Nextflow work state, required container images, and results remain on shared
-project storage so every worker can reach them and `-resume` remains possible.
-Task bodies use `scratch = true`, which stages work through the worker's
-`$TMPDIR` under `/local/tmp` and copies declared outputs back.
-
-Inspect the run without opening every task directory:
-
-```bash
-squeue --me
-rcc-nextflow --project-root /projects/PROJECT log
-find run-01/results -maxdepth 2 -type f | sort
-```
-
-The corresponding production-shaped RNA-seq example is intentionally a
-template, not a command to paste unchanged. Review
-[`params-rnaseq.example.json`](../classes/examples/nf-core/params-rnaseq.example.json),
-replace every placeholder with approved project paths, select a reviewed
-pipeline release, and validate the pipeline-specific samplesheet and reference
-requirements before submission:
-
-```bash
-rcc-nextflow --project-root /projects/PROJECT run nf-core/rnaseq \
-  -r PINNED_RELEASE \
-  -profile apptainer \
-  -c rcc-test.config \
-  -params-file params-rnaseq.json \
-  -work-dir /projects/PROJECT/nextflow-work/rnaseq
-```
-
-Do not use the classroom resource caps for a real analysis without reviewing
-the pipeline's requirements. The official [nf-core running guide](https://nf-co.re/docs/running/run-pipelines)
-and the [Nextflow Slurm executor reference](https://docs.seqera.io/nextflow/executor#slurm)
-explain the command structure and scheduler mapping.
+Then continue with [Class 6: Snakemake on RCC](class-06-snakemake.md). If a
+reviewed project uses Nextflow or nf-core, read [Class 7](class-07-nextflow.md)
+for the planned controller, Slurm, shared-work, scratch, Apptainer, and
+`-resume` boundary. **Managed Nextflow support is not yet released.**
 
 ## Software environments inside jobs
 

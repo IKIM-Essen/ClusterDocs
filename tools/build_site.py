@@ -17,17 +17,18 @@ NAV=[
  ('Course','Class 3 · Performance','course/class-03-performance.md'),
  ('Course','Class 4 · Containers','course/class-04-containers.md'),
  ('Course','Class 5 · Slurm','course/class-05-slurm.md'),
- ('Course','Nextflow on RCC · Not yet released','classes/nextflow-on-rcc.md'),
- ('Course','Class 6 · Project websites','course/class-06-vhosts.md'),
- ('Course','Class 7 · Python notebooks','course/class-07-python-notebooks.md'),
- ('Course','Class 8 · R analysis','course/class-08-r-analysis.md'),
- ('Course','Class 9 · Shiny apps','course/class-09-shiny.md'),
- ('Course','Class 10 · Notebook to service','course/class-10-notebook-to-service.md'),
- ('Course','Class 11 · Data privacy','course/class-11-biomedical-data-privacy.md'),
- ('Course','Class 12 · Efficient local I/O','course/class-12-efficient-io.md'),
- ('Course','Class 13 · Storage architecture','course/class-13-storage-architecture.md'),
- ('Course','Class 14 · Wet-lab instrument data','course/class-14-wet-lab-data-workflows.md'),
- ('Course','Class 15 · Research data lifecycle','course/class-15-data-lifecycle.md'),
+ ('Course','Class 6 · Snakemake','course/class-06-snakemake.md'),
+ ('Course','Class 7 · Nextflow · Not yet released','course/class-07-nextflow.md'),
+ ('Course','Class 8 · Project websites','course/class-08-vhosts.md'),
+ ('Course','Class 9 · Python notebooks','course/class-09-python-notebooks.md'),
+ ('Course','Class 10 · R analysis','course/class-10-r-analysis.md'),
+ ('Course','Class 11 · Shiny apps','course/class-11-shiny.md'),
+ ('Course','Class 12 · Notebook to service','course/class-12-notebook-to-service.md'),
+ ('Course','Class 13 · Data privacy','course/class-13-biomedical-data-privacy.md'),
+ ('Course','Class 14 · Efficient local I/O','course/class-14-efficient-io.md'),
+ ('Course','Class 15 · Storage architecture','course/class-15-storage-architecture.md'),
+ ('Course','Class 16 · Wet-lab instrument data','course/class-16-wet-lab-data-workflows.md'),
+ ('Course','Class 17 · Research data lifecycle','course/class-17-data-lifecycle.md'),
  ('Data lifecycle','TL;DR · Instrument to Coscine','data/data-lifecycle-tldr.md'),
  ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
  ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),
@@ -355,7 +356,7 @@ def main():
     for part in range(1,5):
         poster=ROOT/'slides/frames'/f'part{part}'/'slide-01.png'
         if poster.exists(): shutil.copy2(poster,poster_out/f'part{part}.png')
-    for class_number in range(5,16):
+    for class_number in range(5,18):
         poster=ROOT/'slides/frames'/f'class{class_number}'/'slide-01.png'
         if poster.exists(): shutil.copy2(poster,poster_out/f'class{class_number}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])

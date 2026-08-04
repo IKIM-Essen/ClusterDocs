@@ -25,8 +25,8 @@ Complete and test these items before publishing the curriculum.
 - [ ] Confirm checksum commands and expected behavior.
 - [ ] State which data classes may use the service and which require additional approval.
 - [ ] Confirm the local policy that direct identifiers and re-identification keys remain outside RCC while approved biomedical research data may be processed in the controlled enclave.
-- [ ] Review Class 11 wording, external legal links, and the data-protection contact before publication.
-- [ ] Review the Class 11 scenarios for genomic, imaging, pseudonymised, and directly identifying data with the responsible institutional office.
+- [ ] Review Class 13 wording, external legal links, and the data-protection contact before publication.
+- [ ] Review the Class 13 scenarios for genomic, imaging, pseudonymised, and directly identifying data with the responsible institutional office.
 - [ ] Publish project, home, archive, and scratch storage purposes and quotas.
 - [ ] Confirm retention, deletion, backup, and recovery statements.
 
@@ -86,8 +86,8 @@ Complete and test these items before publishing the curriculum.
 - [ ] Set `site_status: production` and replace every unresolved value in `config/public.yml`.
 - [ ] Build successfully with `python tools/build_site.py --production`.
 - [ ] Configure a reviewed deployment target, TLS, rollback procedure, and named owner for updates.
-- [x] Verify all 15 staged MP4 files locally against the hashes, sizes, codecs, dimensions, channels, and durations in `config/media-manifest.yml`.
-- [ ] Publish all 15 MP4 files at the RCC documentation vhost URL and verify their SHA-256 values against `config/media-manifest.yml`.
+- [x] Verify all 17 staged MP4 files locally against the hashes, sizes, codecs, dimensions, channels, and durations in `config/media-manifest.yml` after the two-class expansion.
+- [ ] Publish all 17 MP4 files at the RCC documentation vhost URL and verify their SHA-256 values against `config/media-manifest.yml`.
 - [ ] Confirm the RCC media service supports trusted HTTPS, `video/mp4`, and byte-range requests for every file.
 - [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.
 - [ ] Review every caption file against the final audio and test in-player captions in supported browsers.

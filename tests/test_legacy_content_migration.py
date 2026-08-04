@@ -37,7 +37,7 @@ class LegacyContentMigrationTests(unittest.TestCase):
         windows = (ROOT / "docs/data/legacy-storage-windows.md").read_text().lower()
         macos = (ROOT / "docs/data/legacy-storage-macos.md").read_text().lower()
         vscode = (ROOT / "docs/reference/access-ssh-vscode.md").read_text().lower()
-        jupyter = (ROOT / "docs/course/class-07-python-notebooks.md").read_text().lower()
+        jupyter = (ROOT / "docs/course/class-09-python-notebooks.md").read_text().lower()
         self.assertIn("setting up access now? skip this page", windows)
         self.assertIn("setting up access now? skip this page", macos)
         self.assertIn("do not copy target names", vscode)

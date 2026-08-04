@@ -1,7 +1,7 @@
 # Choosing an instrument-data transfer path
 
 Use this decision guide with
-[Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
+[Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
 and the current [storage and transfer reference](../reference/storage-transfer.md).
 
 > **Service status:** project Samba shares are **ready now** for approved
@@ -34,7 +34,7 @@ instrument -> RCC project -> job-local analysis -> RCC project results
            -> recorded RCC disposition
 ```
 
-See [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md)
+See [Class 17: research data lifecycle](../course/class-17-data-lifecycle.md)
 and the [planned RCC project to Coscine flow](rcc-project-to-coscine.md).
 
 ## Lab network option
