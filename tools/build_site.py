@@ -18,6 +18,7 @@ NAV=[
  ('Course','Class 4 · Containers','course/class-04-containers.md'),
  ('Course','Class 5 · Slurm','course/class-05-slurm.md'),
  ('Course','Choosing a GPU','classes/gpu-selection.md'),
+ ('Course','Nextflow on RCC · Not yet released','classes/nextflow-on-rcc.md'),
  ('Course','Class 6 · Project websites','course/class-06-vhosts.md'),
  ('Course','Class 7 · Python notebooks','course/class-07-python-notebooks.md'),
  ('Course','Class 8 · R analysis','course/class-08-r-analysis.md'),

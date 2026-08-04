@@ -22,6 +22,7 @@ nav:
       - Class 4 - Apptainer containers: course/class-04-containers.md
       - Class 5 - Slurm acceptance patterns: course/class-05-slurm.md
       - Choosing a GPU - model, architecture, and memory: classes/gpu-selection.md
+      - Nextflow on RCC (not yet released): classes/nextflow-on-rcc.md
       - Class 6 - Protected project websites: course/class-06-vhosts.md
       - Class 7 - Python notebooks: course/class-07-python-notebooks.md
       - Class 8 - R analysis: course/class-08-r-analysis.md

@@ -1,0 +1,47 @@
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DOC = ROOT / "docs/classes/nextflow-on-rcc.md"
+EXAMPLE = ROOT / "docs/classes/examples/nextflow-rcc/main.nf"
+
+
+class NextflowDocsTests(unittest.TestCase):
+    def test_navigation_contains_nextflow_class(self):
+        nav = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
+        builder = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
+        self.assertIn("Nextflow on RCC (not yet released): classes/nextflow-on-rcc.md", nav)
+        self.assertIn("classes/nextflow-on-rcc.md", builder)
+
+    def test_user_contract_keeps_controller_off_gateways(self):
+        text = DOC.read_text(encoding="utf-8")
+        self.assertIn("shellhost", text)
+        self.assertIn("Do not run Nextflow on `login.ikim.uk-essen.de`", text)
+        self.assertIn("tmux", text)
+        self.assertIn("not yet released", text.lower())
+
+    def test_work_state_and_scratch_are_distinct(self):
+        text = DOC.read_text(encoding="utf-8")
+        self.assertIn("Never set", text)
+        self.assertIn("`/local`", text)
+        self.assertIn("label 'rcc_scratch'", text)
+        self.assertIn("-resume", text)
+
+    def test_examples_are_bounded_and_synthetic(self):
+        text = EXAMPLE.read_text(encoding="utf-8")
+        self.assertIn("cpus 1", text)
+        self.assertIn("memory 512.MB", text)
+        self.assertIn("time 5.m", text)
+        self.assertNotIn("patient", text.lower())
+        self.assertNotIn("latest", text.lower())
+
+    def test_docs_cover_scheduler_and_container_policy(self):
+        text = DOC.read_text(encoding="utf-8")
+        for token in ("Slurm", "Apptainer", "rcc_array", "rcc_gpu_a6000", "sacct", "RELEASE_TAG"):
+            with self.subTest(token=token):
+                self.assertIn(token, text)
+
+
+if __name__ == "__main__":
+    unittest.main()
