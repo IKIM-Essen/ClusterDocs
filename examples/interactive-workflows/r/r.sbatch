@@ -8,7 +8,7 @@
 
 set -euo pipefail
 source /etc/profile.d/conda.sh
-scratch="/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}"
+scratch="/local/work/${USER}/slurm-job-${SLURM_JOB_ID}"
 work="${scratch}/r"
 mkdir -p "${work}"
 cp analysis.R environment.yml "${work}/"

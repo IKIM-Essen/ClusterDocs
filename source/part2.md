@@ -1,14 +1,14 @@
 ---
 title: "RCC Onboarding - Part 2"
 subtitle: "Concepts and reproducible workflows with Miniforge, Bioconda, Snakemake, nf-core, Nextflow, Slurm, statistics, and DNA sequence analysis"
-author: "IKIM RCC documentation proposal"
-date: "11 July 2026"
+author: "IKIM RCC documentation"
+date: "4 August 2026"
 ---
 
 # Contents
 
 - Purpose, learning goals, and essential vocabulary
-- Information that administrators must complete
+- RCC software and scheduler values
 - 1. Why workflows are different from command lists
 - 2. Project storage and directory design
 - 3. Software environments: Miniforge, Conda, and Mamba
@@ -71,25 +71,37 @@ This tutorial is deliberately prescriptive. Use the directory names and commands
 
 A workflow can execute successfully and still be scientifically invalid. Snakemake and Slurm provide execution discipline; they do not choose an appropriate statistical test, reference genome, quality threshold, or biological interpretation.
 
-# Information that administrators must complete
+# RCC software and scheduler values
 
-> **Administrator action required.** Replace every value marked **ADMIN** before publication. Users must not have to infer cluster policy from examples.
-
-- **Supported Miniforge source:** **[ADMIN: RCC-provided installer, module, or approved download procedure]**
-- **Miniforge installation location:** **[ADMIN: recommended user path or shared installation]**
-- **Conda package and environment location:** **[ADMIN: approved location and quota guidance]**
-- **RCC Snakemake profile:** **[ADMIN: exact profile name and invocation]**
-- **Required Slurm account:** **[ADMIN: state whether `--account` is required]**
-- **Default CPU partition:** **[ADMIN: exact partition or state that the profile chooses it]**
-- **Maximum beginner workflow concurrency:** **[ADMIN: recommended `--jobs` value]**
-- **Internet access policy:** **[ADMIN: explain where package downloads are permitted]**
-- **Supported Snakemake version:** **[ADMIN: minimum or pinned version]**
-- **Supported Nextflow installation and version:** **[ADMIN: managed command or approved environment]**
-- **nf-core outbound-data and container policy:** **[ADMIN: approved proxy and shared image-cache path]**
-- **RCC support contact:** **[ADMIN: support email or ticket address]**
-
-
-The examples below use `RCC_PROFILE` as a placeholder for the supported Snakemake profile. Replace it with the profile published by RCC.
+- **Miniforge:** use the managed installation at `/opt/miniforge3`; do not
+  download or install a second system copy.
+- **Conda storage:** environments default to `/local/conda/$USER/envs` and
+  packages to `/local/conda/$USER/pkgs`. These are node-local, so retain a
+  pinned environment file from which another worker can rebuild them.
+- **Snakemake:** RCC currently provides Snakemake 9.23.1 at
+  `/usr/local/bin/snakemake` with the `IKIM` Slurm profile. Run
+  `snakemake --profile IKIM` and verify the installed version before a retained
+  production analysis.
+- **Slurm:** `cpu_nodes` is the default CPU partition and does not require a
+  `--partition` line. `cpu_short` is the bounded teaching queue with a two-hour
+  maximum. Do not invent an account value: use the project entitlement shown
+  by the live scheduler or the current RCC instructions if a workflow requires
+  one. Beginner examples cap concurrency at four unless an exercise states a
+  smaller value.
+- **Outbound access:** HTTP(S) package, pipeline, test-data, and image downloads
+  use the managed proxy `http://proxy.ikim.uk-essen.de:3128`. Never embed
+  credentials or tokens in workflow files.
+- **Nextflow and nf-core:** RCC does not currently publish a centrally managed,
+  pinned Nextflow command. The bounded nf-core example later in this tutorial
+  is optional and fails closed unless an approved project environment already
+  supplies `nextflow`, `apptainer`, and `sbatch`. Ask the IKIM Cluster
+  Mattermost channel for the current approved Nextflow installation route
+  before running it.
+- **Container caches:** keep Nextflow/Apptainer caches on node-local storage for
+  ordinary work; the class runner uses a shared project-scoped cache only for
+  its small multi-node teaching run so all scheduled tasks can reach it.
+- **Support:** use the **IKIM Cluster channel on Mattermost** without posting
+  credentials or sensitive project data.
 
 # 1. The workflow model
 
@@ -187,31 +199,21 @@ Miniforge is a minimal conda-forge distribution that provides `conda` and `mamba
 
 This tutorial uses Mamba because it resolves environments quickly while remaining compatible with Conda environment files.
 
-## 3.4 Prefer the RCC-supported installation method
+## 3.4 Use the managed RCC installation
 
-Follow **[ADMIN: supported Miniforge procedure]**. One of the following patterns will normally apply.
-
-### Pattern A: RCC provides Miniforge centrally
-
-The administrator may provide a module or shell initialisation command. For example only:
-
-```bash
-module load miniforge
-```
-
-Do not copy this example unless RCC publishes it.
-
-### Pattern B: RCC provides an installer on shared storage
-
-For example only:
+RCC provides Miniforge centrally at `/opt/miniforge3`. Login shells source
+`/etc/profile.d/conda.sh`, so `conda` and `mamba` are available without
+`module load`, `conda init`, or a user-installed Miniforge copy. Confirm the
+managed entry point before creating an environment:
 
 ```bash
-bash /software/installers/Miniforge3-Linux-x86_64.sh -b -p "$HOME/.local/miniforge3"
+type conda
+/opt/miniforge3/bin/conda --version
+printf '%s\n' "$CONDA_ENVS_PATH" "$CONDA_PKGS_DIRS"
 ```
 
-### Pattern C: RCC permits installation from the official release
-
-Only use the URL and checksum published by RCC. Verify the installer before executing it. Do not copy an installer from another user or run an unverified script received by email.
+The last two values should point below `/local/conda/$USER`. If they do not,
+stop and ask RCC support rather than installing another distribution.
 
 ## 3.5 Initialise the shell
 
@@ -270,43 +272,28 @@ channels:
 
 Not every environment needs Bioconda. Statistical Python environments should normally use only `conda-forge` and `nodefaults`.
 
-# 5. Create the Snakemake control environment
+# 5. Use the managed Snakemake control environment
 
 ## Why the workflow engine and analysis tools are separated
 
-Snakemake is the coordinator. pandas, fastp, minimap2, samtools, and other programs are workers used by individual rules. Keeping the coordinator in a small control environment avoids a large collection of unrelated dependencies and allows each rule to declare only the software it needs.
+Snakemake is the coordinator. pandas, fastp, minimap2, samtools, and other programs are workers used by individual rules. RCC keeps the managed coordinator separate from those analysis environments so each rule can declare only the software it needs.
 
 This separation also improves provenance. A future reader can see that one rule used a specific statistics environment while another used a specific bioinformatics environment.
 
-The Snakemake executable belongs in its own control environment. Analysis tools belong in per-rule environments and must not be added to the Snakemake control environment.
+The Snakemake executable is managed at `/usr/local/bin/snakemake`. Analysis tools belong in per-rule environments and must not be installed into the managed control environment.
 
-Create the control environment:
-
-```bash
-mamba create --name snakemake \
-  --channel conda-forge \
-  --channel bioconda \
-  snakemake \
-  snakemake-storage-plugin-fs \
-  snakemake-executor-plugin-slurm
-```
-
-Activate it and record the version:
+Confirm the managed command and profile:
 
 ```bash
-conda activate snakemake
-snakemake --version
+/usr/local/bin/snakemake --version
+test -r /etc/xdg/snakemake/IKIM/config.yaml
+snakemake --profile IKIM --help >/dev/null
 ```
 
-Export a portable record:
-
-```bash
-conda env export --from-history --name snakemake > "$HOME/snakemake-control-environment.yml"
-```
-
-The `--from-history` export records the packages you explicitly requested rather than every platform-specific dependency.
-
-> If RCC supplies a pinned environment or wrapper command, use that instead. Do not update a centrally maintained environment yourself.
+Record the reported version with the workflow provenance. Do not update or add
+packages to this centrally maintained command yourself. Per-rule Conda
+environments remain project-owned and are reconstructed from the versioned
+environment files in the workflow.
 
 # 6. Use tmux for workflow drivers
 
@@ -587,7 +574,6 @@ From the project root:
 
 ```bash
 cd "$RCC_WORK/stats-demo"
-conda activate snakemake
 snakemake --snakefile workflow/Snakefile --dry-run --printshellcmds
 ```
 
@@ -608,14 +594,14 @@ Use the RCC-supported profile:
 ```bash
 nice snakemake \
   --snakefile workflow/Snakefile \
-  --profile RCC_PROFILE \
-  --jobs 10 \
+  --profile IKIM \
+  --jobs 4 \
   --software-deployment-method conda \
   --rerun-incomplete \
   --printshellcmds
 ```
 
-`--jobs 10` is a concurrency ceiling, not a request for ten CPUs for every rule. Each rule declares its own threads and resources.
+`--jobs 4` is a concurrency ceiling, not a request for four CPUs for every rule. Each rule declares its own threads and resources.
 
 If the profile requires an explicit account or other site option, use the command published by RCC rather than inventing an option.
 
@@ -902,7 +888,6 @@ rule multiqc:
 
 ```bash
 cd "$RCC_WORK/dna-demo"
-conda activate snakemake
 snakemake --snakefile workflow/Snakefile --dry-run --printshellcmds
 snakemake --snakefile workflow/Snakefile --lint
 ```
@@ -914,8 +899,8 @@ Snakemake should plan the data-generation, trimming, mapping, indexing, flagstat
 ```bash
 nice snakemake \
   --snakefile workflow/Snakefile \
-  --profile RCC_PROFILE \
-  --jobs 10 \
+  --profile IKIM \
+  --jobs 4 \
   --software-deployment-method conda \
   --rerun-incomplete \
   --printshellcmds
@@ -1170,7 +1155,7 @@ You have completed Part 2 when all of the following are true:
 
 - [ ] `conda --version` and `mamba --version` work in a new terminal.
 - [ ] Channel priority is strict.
-- [ ] Snakemake is installed in a dedicated control environment.
+- [ ] The managed Snakemake command and `IKIM` profile are available.
 - [ ] You can start, detach from, and reattach to a tmux session.
 - [ ] The statistics workflow passes a dry run and lint check.
 - [ ] The statistics rules execute through Slurm, not on the submission host.

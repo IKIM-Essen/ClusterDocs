@@ -20,7 +20,7 @@ class EfficientLocalIOClassTests(unittest.TestCase):
     def test_examples_use_current_job_scratch_pattern(self):
         page = (ROOT / "docs/course/class-12-efficient-io.md").read_text()
         job = (ROOT / "docs/classes/examples/local-io-demo.sh").read_text()
-        expected = "/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}"
+        expected = "/local/work/${USER}/slurm-job-${SLURM_JOB_ID}"
         self.assertIn("SLURM_TMPDIR", page)
         self.assertIn("SLURM_TMPDIR", job)
         self.assertIn(expected, page)

@@ -87,6 +87,13 @@ version and profile before updating a production workflow.
 
 ## Nextflow and nf-core
 
+> **Software prerequisite:** RCC does not currently publish a centrally
+> managed, pinned Nextflow command. The classroom example is optional and its
+> runner fails closed when `nextflow`, `apptainer`, or `sbatch` is unavailable.
+> Ask the IKIM Cluster Mattermost channel for the current approved project
+> environment and version before running it; do not download an unpinned
+> launcher as a workaround.
+
 Nextflow maps each process to an execution backend. On RCC, use its Slurm
 executor so analysis processes become ordinary scheduled jobs rather than
 unmanaged work on a submission host. nf-core supplies community-maintained
@@ -184,9 +191,9 @@ Use a clean environment and explicit binds:
 
 ```bash
 apptainer exec --cleanenv \
-  --bind /APPROVED/INPUT:/input:ro \
-  --bind "$PWD/results:/results" \
-  /APPROVED/IMAGES/tool.sif \
+  --bind /projects/<project>/data/input:/input:ro \
+  --bind /projects/<project>/results:/results \
+  /projects/<project>/containers/tool.sif \
   tool --input /input/sample.dat --output /results/result.dat
 ```
 
@@ -201,8 +208,8 @@ Point those locations at the approved local or managed cache path rather than a
 metadata-sensitive shared environment tree:
 
 ```bash
-export APPTAINER_CACHEDIR=/APPROVED/CACHE/PATH
-export APPTAINER_TMPDIR=/APPROVED/TEMP/PATH
+export APPTAINER_CACHEDIR="/local/apptainercache/$USER"
+export APPTAINER_TMPDIR=/local/tmp
 ```
 
 ### GPU jobs
@@ -211,7 +218,8 @@ Request the GPU through Slurm, then expose the assigned host driver using the
 approved Apptainer option:
 
 ```bash
-apptainer exec --cleanenv --nv /APPROVED/IMAGES/gpu-tool.sif nvidia-smi
+apptainer exec --cleanenv --nv \
+  /projects/<project>/containers/gpu-tool.sif nvidia-smi
 ```
 
 Do not override `CUDA_VISIBLE_DEVICES`; Slurm uses it to identify the devices

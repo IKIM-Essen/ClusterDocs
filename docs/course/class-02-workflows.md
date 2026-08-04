@@ -46,9 +46,16 @@ Use Snakemake to describe dependencies and submit work through Slurm. Do not kee
 snakemake --dry-run --printshellcmds
 ```
 
-Then use the RCC-supported execution profile described on the production site.
+Then use the managed RCC execution profile: `snakemake --profile IKIM`.
 
 ## Guided nf-core and Nextflow example
+
+> **Optional prerequisite:** RCC does not currently publish a centrally
+> managed, pinned Nextflow command. Before this exercise, ask the IKIM Cluster
+> Mattermost channel for the approved project environment and version. The
+> supplied runner stops without changing project data when `nextflow`,
+> `apptainer`, or `sbatch` is missing; do not install an unpinned launcher just
+> to bypass that check.
 
 [nf-core](https://nf-co.re/) publishes reviewed community pipelines that run
 with [Nextflow](https://www.nextflow.io/). They complement Snakemake: use the

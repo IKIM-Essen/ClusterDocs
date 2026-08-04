@@ -10,7 +10,7 @@ set -euo pipefail
 source /etc/profile.d/conda.sh
 
 project_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-scratch_dir="/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}"
+scratch_dir="/local/work/${USER}/slurm-job-${SLURM_JOB_ID}"
 mkdir -p -- "$scratch_dir"
 export TMPDIR="$scratch_dir"
 

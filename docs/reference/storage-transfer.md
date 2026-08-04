@@ -62,7 +62,7 @@ The supported pattern is durable input, local computation, durable result:
 #SBATCH --time=00:30:00
 
 set -euo pipefail
-scratch="${SLURM_TMPDIR:-/local/work/slurm-jobs/$USER/slurm-job-$SLURM_JOB_ID}"
+scratch="${SLURM_TMPDIR:-/local/work/$USER/slurm-job-$SLURM_JOB_ID}"
 mkdir -p "$scratch/input" "$scratch/output"
 cp --reflink=auto --archive "$SLURM_SUBMIT_DIR/data/input.tsv" "$scratch/input/"
 srun my-analysis "$scratch/input/input.tsv" "$scratch/output/result.tsv"

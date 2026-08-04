@@ -199,7 +199,7 @@ umask 007
 
 readonly INPUT="/projects/example/input/sample.fastq.gz"
 readonly OUTPUT_DIR="/projects/example/results"
-readonly WORKDIR="${SLURM_TMPDIR:-/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}}"
+readonly WORKDIR="${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}"
 
 cleanup() {
     local status=$?
@@ -276,7 +276,7 @@ shared storage throughout the computation.
 ### Better pattern
 
 ```bash
-work="${SLURM_TMPDIR:-/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}}"
+work="${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}"
 mkdir -p "${work}"
 rsync -a /projects/study/input/sample-01/ "${work}/input/"
 
@@ -307,7 +307,7 @@ rule analyse_sample:
         r"""
         set -Eeuo pipefail
 
-        scratch_root="${{SLURM_TMPDIR:-/local/work/slurm-jobs/$USER/slurm-job-${{SLURM_JOB_ID}}}}"
+        scratch_root="${{SLURM_TMPDIR:-/local/work/$USER/slurm-job-${{SLURM_JOB_ID}}}}"
         work="$scratch_root/{wildcards.sample}"
         trap 'rm -rf -- "$work"' EXIT INT TERM
         mkdir -p -- "$work"
@@ -382,7 +382,7 @@ Use a stable cache directory separate from job-specific scratch:
 
 ```bash
 readonly CACHE_ROOT="/local/apptainercache/${USER}"
-readonly JOB_WORK="${SLURM_TMPDIR:-/local/work/slurm-jobs/${USER}/slurm-job-${SLURM_JOB_ID}}"
+readonly JOB_WORK="${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}"
 readonly IMAGE_SRC="/projects/containers/tool-2.4.1.sif"
 readonly IMAGE_SHA256="EXPECTED_SHA256"
 readonly IMAGE_CACHE="${CACHE_ROOT}/containers/${IMAGE_SHA256}.sif"

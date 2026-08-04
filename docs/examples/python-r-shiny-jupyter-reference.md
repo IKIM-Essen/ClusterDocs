@@ -16,7 +16,7 @@ Use these locations consistently:
 | Source code, notebooks, small configuration | project or home storage | Keep under version control where possible. |
 | Input and final output | project storage | Prefer compressed, sequential formats. |
 | Conda environments and package cache | `/local/conda/$USER` | Configured automatically on RCC worker nodes. |
-| Job scratch | `/local/work/slurm-jobs/$USER/slurm-job-$SLURM_JOB_ID` | Created by the Slurm prolog and removed after it becomes stale. |
+| Job scratch | `/local/work/$USER/slurm-job-$SLURM_JOB_ID` | Created by the Slurm prolog and removed when the job ends. |
 | Apptainer cache | `/local/apptainercache/$USER` | Node-local; do not place container caches on network storage. |
 
 Avoid environments containing thousands of small files on shared storage. Create the environment within an allocated worker node, or build a reproducible Apptainer image and reuse it.

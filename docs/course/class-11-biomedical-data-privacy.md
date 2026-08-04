@@ -72,7 +72,7 @@ These terms are often used inconsistently.
 - **De-identified:** useful descriptive language, but not a legal conclusion by itself. State what was removed, transformed, aggregated, or separated.
 - **Controlled research data:** data that may still be personal or special-category data but are processed under an approved purpose and technical/organisational safeguards in a restricted environment.
 
-The European Data Protection Board distinguishes pseudonymisation from anonymisation: pseudonymisation reduces linkability, while properly anonymised data are no longer attributable to an individual. [EDPB: anonymisation and pseudonymisation](https://www.edpb.europa.eu/topics/ai-and-technology/anonymisationpseudonymisation_en)
+The European Data Protection Board distinguishes pseudonymisation from anonymisation: pseudonymisation reduces linkability, while properly anonymised data are no longer attributable to an individual. [EDPB: anonymisation and pseudonymisation](https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en)
 
 ## A practical RCC decision model
 
@@ -205,7 +205,7 @@ Use these official sources for orientation:
 - [German Health Data Use Act](https://www.gesetze-im-internet.de/gdng/) — use of health data for public-interest research and healthcare development.
 - [German Health Data Use Act, Section 7](https://www.gesetze-im-internet.de/gdng/__7.html) — purpose limitation, confidentiality, and prohibition of re-identification for data made available under the Act.
 - [German Criminal Code, Section 203](https://www.gesetze-im-internet.de/stgb/__203.html) — protection of private secrets and professional confidentiality.
-- [EDPB: anonymisation and pseudonymisation](https://www.edpb.europa.eu/topics/ai-and-technology/anonymisationpseudonymisation_en).
+- [EDPB: anonymisation and pseudonymisation](https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en).
 - [Universitätsklinikum Essen data-protection information](https://www.uk-essen.de/datenschutz).
 
 These links support training. They do not determine the legal basis for a specific project.

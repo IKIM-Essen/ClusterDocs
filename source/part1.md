@@ -1,14 +1,14 @@
 ---
 title: "RCC Onboarding - Part 1"
 subtitle: "Concepts, secure access, remote editing, data transfer, and the first Slurm job"
-author: "IKIM RCC documentation proposal"
-date: "11 July 2026"
+author: "IKIM RCC documentation"
+date: "4 August 2026"
 ---
 
 # Contents
 
 - About Part 1 and essential vocabulary
-- Information that must be completed before publication
+- RCC connection values and support
 - 1. Cluster architecture and the local/remote mental model
 - 2. Accounts, authorisation, and data protection
 - 3. Local software: OpenSSH and Visual Studio Code
@@ -74,21 +74,23 @@ Before pressing Enter, ask:
 
 These four questions form the mental model for both parts of the tutorial.
 
-# Information that must be completed before publication
+# RCC connection values and support
 
-> **Administrator action required**
-> The values below are specific to the RCC installation. Replace every value marked **ADMIN** before publishing this page. Do not ask users to guess these values.
+RCC connection targets and SSH host identities can change during maintenance,
+so this tutorial does not freeze them into a long-lived document. Obtain the
+current SSH configuration and fingerprints through the approved institutional
+RCC instructions, keep the local alias `rcc`, and compare every first-use or
+changed host key through that independent trusted channel. Do not copy a host
+name or fingerprint from an old screenshot, email, or colleague's configuration.
 
-- **SSH login gateway:** `login1.ikim.uk-essen.de`
-- **Slurm submission host:** `shellhost.ikim.uk-essen.de`
-- **Local SSH name used in this tutorial:** `rcc`
-- **RCC web transfer address:** **[ADMIN: insert the web transfer address]**
-- **RCC transfer collection:** **[ADMIN: insert the exact collection name]**
-- **Login identity provider:** **[ADMIN: state how users sign in to the transfer service]**
-- **VPN requirement:** **[ADMIN: state whether and when VPN is required]**
-- **RCC support contact:** **[ADMIN: insert support email or ticket address]**
-- **Login-gateway ED25519 fingerprint:** **[ADMIN: insert verified fingerprint]**
-- **Submission-host ED25519 fingerprint(s):** **[ADMIN: insert every valid fingerprint, or document the SSH host certificate authority]**
+Browser-based project transfer is available at
+<https://files.ikim.uk-essen.de/>. Sign in through the institutional flow shown
+by the portal and open the project assigned to you; the service exposes project
+storage rather than a separate transfer “collection” that users must guess.
+Network or VPN requirements are part of the current institutional connection
+instructions because they can differ by location. For help, use the **IKIM
+Cluster channel on Mattermost** without posting credentials, private keys, or
+sensitive project data.
 
 
 Your project coordinator must also give you:
@@ -382,21 +384,16 @@ New-Item -ItemType File -Force "$HOME\.ssh\config" | Out-Null
 notepad "$HOME\.ssh\config"
 ```
 
-Insert the following configuration and save the file:
+Insert the host block supplied in the current institutional RCC instructions.
+It has the following safe shape; replace the host value as well as the username:
 
 ```sshconfig
-Host rcc-login
-    HostName login1.ikim.uk-essen.de
-    User <RCC_USERNAME>
-    IdentityFile ~/.ssh/id_rcc
-    IdentitiesOnly yes
-
 Host rcc
-    HostName shellhost.ikim.uk-essen.de
+    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
-    ProxyJump rcc-login
+    ForwardAgent no
     ServerAliveInterval 60
     ServerAliveCountMax 3
 ```
@@ -413,23 +410,16 @@ chmod 600 ~/.ssh/config
 open -e ~/.ssh/config
 ```
 
-Insert the following configuration and save the file:
+Insert the host block supplied in the current institutional RCC instructions.
+It has the following safe shape; replace the host value as well as the username:
 
 ```sshconfig
-Host rcc-login
-    HostName login1.ikim.uk-essen.de
-    User <RCC_USERNAME>
-    IdentityFile ~/.ssh/id_rcc
-    IdentitiesOnly yes
-    AddKeysToAgent yes
-    UseKeychain yes
-
 Host rcc
-    HostName shellhost.ikim.uk-essen.de
+    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
-    ProxyJump rcc-login
+    ForwardAgent no
     ServerAliveInterval 60
     ServerAliveCountMax 3
     AddKeysToAgent yes
@@ -468,7 +458,9 @@ Your public key tells RCC which user is connecting. The server fingerprint tells
 
 During the first connection, SSH may ask you to verify the login gateway and the submission host.
 
-Compare every displayed fingerprint with the values published at the top of this tutorial. Type `yes` only when they match exactly.
+Compare every displayed fingerprint with the current value supplied through the
+independent institutional RCC instructions. Type `yes` only when it matches
+exactly.
 
 If a fingerprint is missing, unexpected, or different:
 
@@ -595,11 +587,12 @@ A transfer normally **copies** data. It does not prove that the destination copy
 
 ## Understand the main storage locations
 
-Exact RCC paths and retention policies must be published by administrators, but most clusters distinguish:
+RCC separates storage by purpose:
 
-- **Home directory:** for small personal configuration and scripts. Do not use it as permanent bulk project storage.
-- **Project or group storage:** for shared approved inputs and outputs. Use the exact path assigned to the project.
-- **Scratch or temporary storage:** for high-speed intermediate files with limited retention. Use it only when the project documents staging and cleanup.
+- **Home directory (`/homes/<user>`):** for small personal configuration and scripts. Do not use it as permanent bulk project storage.
+- **Project storage (`/projects/<project>`):** for approved durable inputs and outputs shared by the project's members, including members of different primary groups.
+- **Primary-group storage (`/groups/<primary-group>`):** for material shared only inside the user's one organizational primary group; it is not a substitute for a cross-group project.
+- **Job-local scratch (`/local/work/$USER/slurm-job-$SLURM_JOB_ID`):** for temporary high-I/O work on one worker. It is not shared or backed up and is removed when the job ends.
 - **Laptop storage:** for local working copies and transfer sources. Do not keep the only copy of important research data there.
 
 A path beginning with `/` is an absolute Linux path. A path beginning with `~` is relative to your RCC home directory. Windows drive-letter paths such as `C:\` do not exist in the remote Linux shell.
@@ -608,7 +601,8 @@ A path beginning with `/` is an absolute Linux path. A path beginning with `~` i
 
 A SHA-256 checksum is a compact value calculated from every byte in a file. Matching local and remote checksums provide strong evidence that the file content is identical. A checksum does not prove that the file is scientifically correct, permitted, or placed in the correct project.
 
-This section assumes that browser-based upload and download are enabled for the RCC transfer collection.
+Browser upload and download are available for projects exposed through the RCC
+files portal.
 
 # 8.1 Create a small local test file
 
@@ -646,9 +640,9 @@ mkdir -p <YOUR_ASSIGNED_WORK_DIRECTORY>/incoming
 
 # 8.3 Upload through the browser
 
-1. Open **[ADMIN: RCC web transfer address]** in your browser.
-2. Sign in using **[ADMIN: identity provider and login instructions]**.
-3. Select the collection **[ADMIN: exact RCC collection name]**.
+1. Open <https://files.ikim.uk-essen.de/> in your browser.
+2. Follow the institutional sign-in flow shown by the portal.
+3. Open the project assigned to you.
 4. Navigate to your assigned project directory.
 5. Open the `incoming` subdirectory.
 6. Select **Upload**.

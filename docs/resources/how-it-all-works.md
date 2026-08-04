@@ -237,7 +237,7 @@ Implementation details and current caveats are maintained in the
 [PiKVM Tailscale guide](https://docs.pikvm.org/tailscale/). Also read Tailscale's
 [connection-types explanation](https://tailscale.com/docs/reference/connection-types),
 [firewall guidance](https://tailscale.com/docs/reference/faq/firewall-ports),
-and [free-plan terms](https://tailscale.com/kb/1154/free-plans-discounts).
+and [free-plan terms](https://tailscale.com/docs/account/manage-plans/free-plans-discounts).
 
 ## Technical details
 

@@ -1,14 +1,14 @@
 ---
 title: "RCC Onboarding - Part 4"
 subtitle: "Apptainer containers for reproducible and I/O-efficient biomedical workflows"
-author: "IKIM RCC documentation proposal"
-date: "11 July 2026"
+author: "IKIM RCC documentation"
+date: "4 August 2026"
 ---
 
 # Contents
 
 - Purpose and learning goals
-- Information that administrators must complete
+- RCC container values and safety boundaries
 - 1. Why RCC uses containers
 - 2. What a container is and is not
 - 3. Why Conda environments perform poorly on network storage
@@ -43,22 +43,44 @@ By the end of Part 4, you should be able to:
 > **Primary RCC container principle**
 > Use an immutable Apptainer SIF image for deployed software. Keep research data and durable outputs in approved project storage. Use node-local temporary storage for I/O-intensive temporary work.
 
-# Information that administrators must complete
+# RCC container values and safety boundaries
 
-Replace every value marked **ADMIN** before publication.
-
-- **Supported Apptainer version:** **[ADMIN: insert and test]**
-- **Approved image registries:** **[ADMIN: list registries and authentication requirements]**
-- **RCC image store or project convention:** **[ADMIN: define where approved `.sif` files belong]**
-- **Apptainer cache policy:** **[ADMIN: document `APPTAINER_CACHEDIR` location and quota]**
-- **Apptainer temporary-build policy:** **[ADMIN: document `APPTAINER_TMPDIR` and whether users may build]**
-- **Build service or CI process:** **[ADMIN: define how production images are created and reviewed]**
-- **Allowed bind paths:** **[ADMIN: document automatic and user-defined binds]**
-- **Network access from submission and compute nodes:** **[ADMIN: document where `apptainer pull` works]**
-- **GPU flags and supported CUDA policy:** **[ADMIN: validate `--nv` and driver compatibility]**
-- **RCC Snakemake profile settings:** **[ADMIN: define `apptainer-prefix`, `--cleanenv`, and scratch behavior]**
-- **Container security and vulnerability-review policy:** **[ADMIN: insert policy]**
-- **Support contact:** **[ADMIN: insert RCC support address]**
+- **Managed runtime:** RCC currently provides its reviewed Apptainer 1.4.5
+  package at `/usr/bin/apptainer`. Verify it with `apptainer --version`; users
+  must not replace the system installation.
+- **Image sources:** use only a reviewed image or definition from a trusted
+  registry/source and pin the immutable digest. RCC does not publish a blanket
+  approval for every public registry. Keep registry credentials out of shell
+  history, workflow files, images, and Git; ask support before using a private
+  registry.
+- **Durable images and local caches:** retain reviewed project images under a
+  project-owned path such as `/projects/<project>/containers/`. Keep the
+  runtime cache at `/local/apptainercache/$USER` and temporary build data under
+  `/local/tmp`; these local paths are not backups or the sole retained copy.
+- **Building:** rootless builds from reviewed definition files are supported on
+  RCC workers. Build in a bounded Slurm allocation, record the definition and
+  resulting SIF digest, and use a reviewed project CI/build process when the
+  project has one. There is no separate public RCC build service to assume.
+- **Binds:** bind only the required project path and job-local work path. Never
+  expose another project, credentials directory, or a broad storage root merely
+  for convenience.
+- **Network:** external HTTP(S) image access is proxy-only through
+  `http://proxy.ikim.uk-essen.de:3128`. A production job must not depend on an
+  unreviewed mutable remote image; stage a digest-verified SIF first.
+- **GPUs:** request the device from Slurm first, then use `apptainer exec --nv`.
+  Do not override `CUDA_VISIBLE_DEVICES`, and verify application/CUDA
+  compatibility in a bounded acceptance job before production.
+- **Snakemake:** the managed `IKIM` profile enables Slurm plus Conda and
+  Apptainer, uses `/local/apptainercache/$USER/images`, and stages job scratch
+  below `/local/work/$USER/slurm-job-$JOBID`. Add `--cleanenv` only when the
+  reviewed workflow requires it; it is not silently promised by the site
+  profile.
+- **Security review:** pin and record the image digest, inspect its provenance
+  and definition, scan it with the project's approved process when available,
+  rebuild for security updates, and never treat a container as a data-access
+  boundary.
+- **Support:** use the **IKIM Cluster channel on Mattermost** without posting
+  credentials or sensitive project data.
 
 # 1. Why RCC uses containers
 
@@ -387,16 +409,19 @@ or:
 snakemake --sdm apptainer
 ```
 
-The RCC profile should normally provide this option and approved arguments:
+The managed RCC profile provides the execution and local-cache settings:
 
 ```yaml
 executor: slurm
 software-deployment-method: apptainer
-apptainer-args: "--cleanenv"
-apptainer-prefix: "[ADMIN: approved image/cache path]"
+apptainer-prefix: /local/apptainercache/$USER/images
+local-storage-prefix: /local/work/$USER/snakemake-scratch
+remote-job-local-storage-prefix: /local/work/$USER/slurm-job-$JOBID/snakemake-scratch
 ```
 
-The exact profile must be tested with the RCC Slurm executor plugin.
+Use `--profile IKIM`; the managed profile is installed with the RCC Slurm
+executor plugin. A workflow may add `apptainer-args: "--cleanenv"` only after
+testing that it does not remove environment values the application requires.
 
 ## Combine containers with node-local scratch
 
@@ -572,4 +597,7 @@ You can complete Part 4 when you can:
 - Snakemake 9.23.1, Command Line Interface: `apptainer-prefix`, `apptainer-args`, and software deployment.
 - Slurm GPU/GRES documentation.
 
-All registry names, image digests, cache paths, build procedures, and GPU flags must be validated on the production RCC environment before publication.
+The paths and runtime above match the current RCC contract. Each retained
+workflow must still record its exact registry source, immutable image digest,
+build procedure, binds, and GPU acceptance result; those are project-specific
+provenance rather than missing site documentation.
