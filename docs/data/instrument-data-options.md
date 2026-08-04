@@ -4,6 +4,10 @@ Use this decision guide with
 [Class 14: wet-lab instrument data](../course/class-14-wet-lab-data-workflows.md)
 and the current [storage and transfer reference](../reference/storage-transfer.md).
 
+> **Service status:** project Samba shares are **ready now** for approved
+> projects and registered devices. Ardia integration and RCC-to-Coscine
+> transfer are **not yet released**.
+
 ## Start with six questions
 
 1. Is the instrument still writing?
@@ -26,7 +30,8 @@ The lifecycle continues after ingestion:
 
 ```text
 instrument -> RCC project -> job-local analysis -> RCC project results
-           -> verified Coscine archive -> recorded RCC disposition
+           -> future verified Coscine archive [not yet released]
+           -> recorded RCC disposition
 ```
 
 See [Class 15: research data lifecycle](../course/class-15-data-lifecycle.md)
@@ -48,6 +53,26 @@ credentials, server dependencies, and target project before connection.
 
 Read [how RCC and the Lab network work together](../resources/how-it-all-works.md)
 before requesting onboarding.
+
+## Usual Lab-network path: the project's Samba share
+
+For an ordinary file-producing instrument or Windows acquisition computer, the
+usual approved destination is a **Samba share for the project**. Samba is the
+technology behind a familiar Windows network folder. The operator completes a
+run or supported export, copies it to that project folder, and verifies the
+handoff. The data then belongs to the project team rather than to the operator's
+personal account.
+
+```text
+registered instrument -> project Samba share -> RCC project/incoming
+```
+
+RCC supplies the exact share, server, credentials, and allowed device. Do not
+guess those values, reuse another project's share, or use a personal home
+directory. A Samba share is an ingestion path, not a place to run analysis over
+the network. **Ardia integration is not yet released.** Its future route will
+use the vendor-supported integration or export path agreed with RCC and the
+facility.
 
 ## Browser or managed portal
 

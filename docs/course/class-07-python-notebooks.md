@@ -5,13 +5,9 @@
   <h2>Watch the class first</h2>
   <p>Safe Jupyter access, large-data patterns, Python tools, reproducibility, and responsible AI exploration. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class7.png" src="{{ media_base_url }}/RCC_Onboarding_Class_7_Video_Enhanced.mp4?v=49fe9ec6">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_7_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_7_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_7_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_7_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 This class teaches a safe pattern for interactive Python analysis on RCC. A notebook is useful for inspection, statistics, and figures. It is **not** the place to run an overnight computation or keep many gigabytes in memory without limits.

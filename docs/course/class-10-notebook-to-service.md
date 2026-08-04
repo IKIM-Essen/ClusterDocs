@@ -1,17 +1,17 @@
 # Class 10: From notebooks to governed project services
 
+> **Service status:** RCC workers and Slurm workflows are **ready now**.
+> Project vhosts are **not yet released**; this class prepares an architecture
+> and review package for the future service.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 2 min video</p>
   <h2>Watch the class first</h2>
   <p>Choosing between notebooks, workflows, and services, with clear boundaries and review preparation. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class10.png" src="{{ media_base_url }}/RCC_Onboarding_Class_10_Video_Enhanced.mp4?v=a5df048c">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_10_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_10_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_10_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_10_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 This includes model-backed research services. A trained model, embedding index,
@@ -36,10 +36,10 @@ After this class, you can:
 |---|---|
 | Explore data and make notes | Notebook in a Slurm allocation |
 | Repeat an analysis reliably | Slurm batch job or Snakemake workflow |
-| Let a small team adjust parameters interactively | Shiny or Python app behind the gateway |
-| Publish static instructions or reports | Static information vhost |
-| Provide a dashboard against approved data | Active read-only vhost |
-| Process large uploads | Upload vhost plus backend Slurm workflow |
+| Let a small team adjust parameters interactively | For now, a bounded tunnelled development session; later, an app behind the vhost gateway |
+| Publish static instructions or reports | Future static information vhost — not yet released |
+| Provide a dashboard against approved data | Future active read-only vhost — not yet released |
+| Process large uploads | Future upload vhost plus a ready RCC-worker/Slurm workflow |
 
 ## Service boundary
 
@@ -53,7 +53,7 @@ A good pattern is:
 4. The app displays completed results.
 5. Logs and receipts keep the action attributable to a named user.
 
-## Preparing for review
+## Preparing for future vhost review
 
 Before asking for a vhost, prepare:
 

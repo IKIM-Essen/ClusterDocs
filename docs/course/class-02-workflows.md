@@ -5,18 +5,17 @@
   <h2>Watch the class first</h2>
   <p>Projects, environments, Snakemake, Slurm, and reproducibility. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/part2.png" src="{{ media_base_url }}/RCC_Onboarding_Part_2_Video_Enhanced.mp4?v=28494fd2">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Part_2_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Part_2_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Part_2_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Part_2_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 ## Learning objectives
 
-You will create a project that separates raw data, workflow definitions, software declarations, logs, benchmarks and generated results.
+You will create a project that separates raw data, workflow definitions,
+software declarations, logs, benchmarks and generated results. You will also
+compare a project-authored Snakemake workflow with a versioned community
+pipeline run through Nextflow and nf-core.
 
 ## Recommended layout
 
@@ -49,6 +48,74 @@ snakemake --dry-run --printshellcmds
 
 Then use the RCC-supported execution profile described on the production site.
 
+## Guided nf-core and Nextflow example
+
+[nf-core](https://nf-co.re/) publishes reviewed community pipelines that run
+with [Nextflow](https://www.nextflow.io/). They complement Snakemake: use the
+workflow system that your reviewed analysis and research community support.
+Do not translate a validated pipeline merely to standardize on one engine.
+
+The class example runs the small public `nf-core/demo` test dataset. It pins the
+pipeline release, submits processes through Slurm, runs tools in Apptainer, and
+limits scheduler concurrency and process resources. From a local clone of the
+class materials, copy the
+[`rcc-test.config`](../classes/examples/nf-core/rcc-test.config) and
+[`run-demo.sh`](../classes/examples/nf-core/run-demo.sh) files into an approved
+project directory:
+
+```bash
+mkdir -p /projects/PROJECT/training/nf-core-demo
+cp docs/classes/examples/nf-core/rcc-test.config \
+  /projects/PROJECT/training/nf-core-demo/
+cp docs/classes/examples/nf-core/run-demo.sh \
+  /projects/PROJECT/training/nf-core-demo/
+cd /projects/PROJECT/training/nf-core-demo
+```
+
+Replace `PROJECT` with a project to which you have access. Inspect both files,
+then run one bounded test:
+
+```bash
+bash run-demo.sh "$PWD/run-01"
+```
+
+The test profile downloads public test data and container images. Run it only
+when the RCC outbound proxy path is available; do not add tokens or copy
+credentials into the project. The Nextflow coordinator stays on the approved
+submission host while individual tasks use Slurm. Durable Nextflow state,
+container images, and results remain on shared project storage so every worker
+can reach them. Task bodies use `scratch = true`, which stages work through the
+worker's `$TMPDIR` under `/local/tmp` and copies declared outputs back.
+
+Inspect the run without opening every task directory:
+
+```bash
+squeue --me
+nextflow log
+find run-01/results -maxdepth 2 -type f | sort
+```
+
+The corresponding production-shaped RNA-seq example is intentionally a
+template, not a command to paste unchanged. Review
+[`params-rnaseq.example.json`](../classes/examples/nf-core/params-rnaseq.example.json),
+replace every placeholder with approved project paths, select a reviewed
+pipeline release, and validate the pipeline-specific samplesheet and reference
+requirements before submission:
+
+```bash
+nextflow run nf-core/rnaseq \
+  -r PINNED_RELEASE \
+  -profile apptainer \
+  -c rcc-test.config \
+  -params-file params-rnaseq.json \
+  -work-dir /projects/PROJECT/nextflow-work/rnaseq
+```
+
+Do not use the classroom resource caps for a real analysis without reviewing
+the pipeline's requirements. The official [nf-core running guide](https://nf-co.re/docs/running/run-pipelines)
+and the [Nextflow Slurm executor reference](https://docs.seqera.io/nextflow/executor#slurm)
+explain the command structure and scheduler mapping.
+
 ## Software environments inside jobs
 
 Keep the environment declaration in Git and create it inside an allocated
@@ -63,9 +130,9 @@ srun python analysis.py
 Do not run `conda init` in every job. Confirm environment and package caches use
 the approved node-local paths rather than metadata-sensitive shared storage.
 
-> **Reference companion:** [Conda, Snakemake, and Apptainer](../reference/software-workflows.md)
-> covers batch activation, Snakemake sessions, explicit container binds, cache
-> placement, GPU exposure, and reproducibility records.
+> **Reference companion:** [Conda, Snakemake, Nextflow, nf-core, and Apptainer](../reference/software-workflows.md)
+> covers batch activation, Snakemake sessions, Nextflow and nf-core, explicit
+> container binds, cache placement, GPU exposure, and reproducibility records.
 
 ## Security moment
 

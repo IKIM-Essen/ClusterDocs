@@ -4,6 +4,9 @@ Use these copy-ready examples to run bounded Python, R, Jupyter, and Shiny
 workflows through Slurm. Each example includes its environment and uses
 synthetic data so it can be explored safely before adapting it to a project.
 
+> **Service status:** RCC workers and these bounded Slurm development patterns
+> are **ready now**. Production project vhosts are **not yet released**.
+
 ## Included examples
 
 | Directory | Purpose |
@@ -26,7 +29,8 @@ regular compute, not on interactive nodes.
 - Tokens remain enabled.
 - Examples use synthetic data only.
 - No example scans hosts, enumerates infrastructure, or exposes internal addresses.
-- Production web hosting uses the governed vhost process, not a tunnelled Slurm job.
+- When released, production web hosting will use the governed vhost process,
+  not a tunnelled Slurm job.
 
 ## Good cluster patterns
 

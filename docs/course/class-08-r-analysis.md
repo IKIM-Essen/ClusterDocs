@@ -5,13 +5,9 @@
   <h2>Watch the class first</h2>
   <p>Recommended R workflows, efficient table handling, reproducibility, and good cluster patterns. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class8.png" src="{{ media_base_url }}/RCC_Onboarding_Class_8_Video_Enhanced.mp4?v=608da687">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_8_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_8_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_8_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_8_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 This class teaches the same RCC pattern for R: use interactive sessions to inspect, visualise, and explain; use Slurm jobs for expensive computation.

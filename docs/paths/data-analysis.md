@@ -4,6 +4,10 @@ Use this path when your main goal is to explore research data, run statistical
 analyses, train or evaluate models, create figures, or build a reproducible
 result pipeline.
 
+> **Service status:** RCC workers and Slurm analysis are **ready now**. Project
+> vhosts and RCC-to-Coscine transfer are **not yet released**; the linked
+> classes prepare those future publication and archive steps.
+
 ## 1. Build the shared foundation
 
 | Step | Learn | Why it matters |
@@ -18,9 +22,9 @@ result pipeline.
 
 ## 2. Choose your analysis environment
 
-Start with the optional [account starter setups](../reference/account-starter-setups.md)
-if you want a reviewable Conda data-science environment, an inexpensive prompt,
-or an importable Shiny template. The installer previews all changes first.
+Read the optional [account setup patterns](../reference/account-starter-setups.md)
+if you want guidance for a reviewable Conda data-science environment, an
+inexpensive prompt, or a bounded Shiny setup.
 
 - [Class 7: Python notebooks](../course/class-07-python-notebooks.md) for pandas,
   Polars, DuckDB, Arrow, numerical analysis, visualization, machine learning,
@@ -50,8 +54,8 @@ diagnose metadata, object-storage, network, or cache behavior in more detail.
   workflow.
 - Use [Class 10](../course/class-10-notebook-to-service.md) when converting a
   notebook, model, or analysis into a governed service.
-- Use [Class 6](../course/class-06-vhosts.md) before requesting a protected
-  project website.
+- Use [Class 6](../course/class-06-vhosts.md) to plan a protected project
+  website. Project vhosts are not yet released.
 
 An analysis result, model, or AI prediction remains a research output unless
 the applicable clinical validation and governance processes explicitly approve

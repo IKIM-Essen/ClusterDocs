@@ -1,17 +1,18 @@
 # Class 14: from instrument to analysis for wet-lab teams
 
+> **Service status:** project Samba shares are **ready now** for approved
+> projects and registered devices. Ardia-to-RCC integration and RCC-to-Coscine
+> transfer are **not yet released**; references to them describe the intended
+> future workflows.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 5 min video</p>
   <h2>Watch the class first</h2>
   <p>A secure, verifiable handoff from wet-lab instruments into governed RCC project workflows. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class14.png" src="{{ media_base_url }}/RCC_Onboarding_Class_14_Video_Enhanced.mp4?v=aca9964e">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_14_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_14_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_14_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_14_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 This course is for laboratory assistants, technical staff, students, and
@@ -29,6 +30,22 @@ Typical participants use Windows or macOS and work with:
 You do not need to become a system administrator. You do need to understand
 where instrument data are written, which copy is authoritative, how to transfer
 data safely, and when RCC compute or storage is useful.
+
+The everyday model is:
+
+1. every operator uses an individual account and has one primary group;
+2. the approved project brings together everyone who may use the data, even
+   when they work in different primary groups;
+3. a registered Lab-network instrument can deliver a completed run to that
+   project's ready Samba share, while the future Ardia route will use its
+   supported integration or export path;
+4. analysis runs through Slurm and durable results return to the project; and
+5. a reviewed final set may later be archived in Coscine through the planned
+   service.
+
+Samba is simply the technology behind a Windows-style network folder. RCC
+provides the project-specific connection details; instrument operators should
+not have to discover servers or Linux paths themselves.
 
 For suitable registered devices, the **Lab network** is an additional
 protection option. It removes general direct Internet connectivity while
@@ -254,7 +271,10 @@ Decide before the run:
 For long-running acquisition, use a facility-approved incremental ingestion
 process rather than repeated drag-and-drop copies.
 
-## 8. Mass spectrometry and Ardia
+## 8. Mass spectrometry and future Ardia integration
+
+> **Not yet released:** RCC does not yet provide the Ardia integration described
+> here. This section is for planning a vendor-supported data flow.
 
 Ardia is part of the instrument and data-management environment, not merely a
 folder tree.

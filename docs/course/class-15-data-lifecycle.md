@@ -1,17 +1,17 @@
 # Class 15: manage the research data lifecycle
 
+> **Service status — not yet released:** RCC-to-Coscine transfer is a planned
+> archive workflow. This class prepares data and control decisions; it is not
+> an operational transfer procedure.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 7 min video</p>
   <h2>Watch the class first</h2>
   <p>From classification and project storage through analysis, review, retention, and planned archival in Coscine. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class15.png" src="{{ media_base_url }}/RCC_Onboarding_Class_15_Video_Enhanced.mp4?v=73650b13">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_15_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_15_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_15_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_15_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 Research data needs a plan before an instrument creates the first file. This

@@ -1,13 +1,20 @@
 publication:
-  method: github_pages_same_origin
-  base_url: https://ikim-essen.github.io/ClusterDocs/media/rcc-onboarding
-  gh_pages_commit: 0d595ca
-  verified_at: 2026-08-03T17:47:00+02:00
-  verification:
-    https: passed
-    byte_ranges: passed
-    full_download_sha256: passed
-    exact_sizes: passed
+  method: rcc_docs_vhost
+  base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding
+  web_root: /srv/www/docs/media/rcc-onboarding
+  status: prepared_pending_dns_tls
+  preview_links: disabled_until_verified_live
+  staged_asset_set:
+    source_directory: new-videos
+    verified_at: 2026-08-04T09:10:00+02:00
+    video_count: 15
+    total_size_bytes: 107968919
+    sha256s_file_sha256: 550cade9505dfb44b36978e134934b70384b186806cdae2fb5afcc3f6fb58c79
+    verification:
+      manifest_sha256: passed
+      exact_sizes: passed
+      ffprobe_streams: passed
+      durations: passed
 video_build:
   command: python3 build/build_videos.py
   additional_classes_command: python3 build/build_course_videos.py

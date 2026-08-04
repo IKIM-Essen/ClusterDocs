@@ -1,8 +1,8 @@
 # Planned RCC project to Coscine archive flow
 
-> **Service status: planned.** This page describes the intended control points.
-> It is not a live self-service transfer procedure, and it does not authorize
-> users to copy governed RCC data to Coscine.
+> **Service status — not yet released.** This page describes intended control
+> points. It is not a live self-service transfer procedure, and it does not
+> authorize users to copy governed RCC data to Coscine.
 
 Use this flow when a project is considering Coscine for a stable archive set.
 The RCC team must confirm when the supported transfer mechanism, eligibility

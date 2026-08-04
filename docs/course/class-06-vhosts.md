@@ -1,22 +1,38 @@
 # Class 6: protected project websites
 
+> **Service status — not yet released:** project vhost hosting and its request
+> workflow are planning material in this class. RCC Admin is ready, but it does
+> not yet provision project vhosts for users.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 5 min video</p>
   <h2>Watch the class first</h2>
   <p>Protected project websites, responsibilities, safe data access, and the approval path. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class6.png" src="{{ media_base_url }}/RCC_Onboarding_Class_6_Video_Enhanced.mp4?v=ecf422b9">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_6_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_6_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_6_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_6_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
-A **vhost**, or virtual host, is a named project website delivered through the RCC web gateway. It can be a simple information page or a small active application with a database-backed search, a curated file collection, a dashboard, a form, or a controlled upload area.
+A **vhost**, or virtual host, will be a named project website delivered through the RCC web gateway. It may be a simple information page or a small active application with a database-backed search, a curated file collection, a dashboard, a form, or a controlled upload area.
 
 The vhost service is designed to make useful research web interfaces easier to deploy **without asking each project to build its own login system, internet-facing server, or security gateway**.
+
+## The short version
+
+When the service is released, a project that needs a website, dashboard, form,
+or small browser application will be able to request a **vhost for that
+project**. Think of it as the project's protected front door:
+
+```text
+individual user -> RCC sign-in -> project membership check -> project vhost
+```
+
+Each vhost will belong to one project and have a named project owner. People
+will continue to use their own accounts; they will not share a project
+password. The vhost may show an approved application or curated data, but it
+must not expose the whole project folder. Projects without a clear web use case
+will not need a vhost.
 
 ## Learning outcomes
 
@@ -155,7 +171,7 @@ The website may collect bounded parameters and display results, but substantial 
 
 Use a staging directory, server-generated names, limits, validation and a recorded promotion step. Do not mount an entire project directory writable into the application.
 
-## Request and approval workflow
+## Future request and approval workflow
 
 1. A project lead describes the purpose, users, data type and required application pattern.
 2. RCC Admin selects the fixed security recipe that matches the function.
@@ -196,7 +212,7 @@ Local demonstration mode accepts synthetic headers only from loopback. Productio
 - Returning stack traces or environment details to users.
 - Leaving an application without an active owner or update plan.
 
-## Completion gate
+## Planning completion gate
 
 You have completed this class when:
 

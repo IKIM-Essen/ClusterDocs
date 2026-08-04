@@ -2,6 +2,11 @@
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
+> **Availability note:** RCC Admin, RCC workers/Slurm, and project Samba shares
+> are **ready now**. Project vhosts, Ardia integration, and RCC-to-Coscine transfer are
+> **not yet released**. Classes 6 and 15, and the Ardia parts of Class 14, are
+> preparation for those future services.
+
 ## Prefer to learn by video?
 
 Start with one of the complete video lessons below. Each class page opens with
@@ -29,20 +34,20 @@ and detailed reference.
 | Class | Main outcome | Typical time | Gate |
 |---|---|---:|---|
 | 1 | Connect safely using SSH and VS Code | 45-60 min | Local tools and one bounded SSH test |
-| 2 | Build a reproducible Snakemake project | 60-90 min | Dry run and reproducible output |
+| 2 | Build a reproducible workflow and compare a bounded nf-core/Nextflow run | 60-90 min | Dry run and reproducible output |
 | 3 | Choose CPU, RAM, GPU and I/O patterns | 45-60 min | Diagnose a synthetic bottleneck |
 | 4 | Run a pinned Apptainer image | 45-60 min | Immutable image and clean environment |
 | 5 | Submit three small Slurm acceptance jobs | 45-60 min | Byte-for-byte expected output |
-| 6 | Select, build and request an appropriately scoped protected project website | 75-100 min | Local tests, scope decision and vhost checklist |
+| 6 | Plan an appropriately scoped protected project website (vhosts not yet released) | 75-100 min | Local tests, scope decision and future vhost checklist |
 | 7 | Use Python notebooks for large-data inspection, data science, and responsible AI exploration | 75-100 min | Loopback-only Jupyter job and example validation |
 | 8 | Use R notebooks and batch scripts for statistical and larger tabular analysis | 75-100 min | R example job and reproducibility explanation |
-| 9 | Develop Shiny apps safely before governed deployment | 60-90 min | Tunnelled development session and vhost readiness decision |
+| 9 | Develop Shiny apps safely and plan for a future vhost | 60-90 min | Tunnelled development session and future-vhost readiness decision |
 | 10 | Convert notebooks into governed services or Slurm workflows | 60-90 min | Architecture statement and review checklist |
 | 11 | Use biomedical data lawfully and safely in the RCC research enclave | 60-75 min | Scenario-based knowledge check and project-governance confirmation |
 | 12 | Stage I/O-intensive work to job-local scratch and publish results safely | 60-90 min | Direct-versus-local synthetic comparison and justified storage choice |
 | 13 | Trace RCC metadata, object-storage, network, and cache behavior | 45-60 min | Storage-path diagnosis and measurement plan |
 | 14 | Move wet-lab instrument data into an approved RCC workflow | 60-90 min | Verified synthetic handoff plan with ownership and retention |
-| 15 | Move instrument data through governed project storage and analysis to Coscine | 60-75 min | Synthetic instrument-to-Coscine lifecycle plan with verified acceptance criteria |
+| 15 | Plan movement from project storage to Coscine (transfer not yet released) | 60-75 min | Synthetic instrument-to-Coscine lifecycle plan with verified acceptance criteria |
 
 ## Course rules
 

@@ -5,10 +5,63 @@ for the first time, or use it to find the right detailed guide.
 
 ## RCC in one minute
 
-RCC is a shared research-computing environment. You connect with an individual
-account, keep governed data in an approved project, and run computation through
-Slurm. Interactive tools such as Jupyter and Shiny also run inside bounded
-allocations and are reached through protected local connections.
+RCC is organised around people and projects:
+
+- your **individual account** is your personal badge and must not be shared;
+- every user has **exactly one primary group**, meaning their home department
+  or organisational affiliation; and
+- a user can join **one or more projects**, which are the shared workrooms where
+  named people from different primary groups can work with the same approved
+  data.
+
+The primary group says where you belong. The project says which research data,
+services, and collaborators you may work with. Do not change somebody's primary
+group merely to share project data; add their individual account to the project.
+
+### What is available now?
+
+| Capability | Status |
+|---|---|
+| RCC Admin, including self-administration and primary approval | **Ready now** |
+| RCC workers and Slurm jobs | **Ready now** |
+| Project Samba shares for approved Lab-network instruments | **Ready now** |
+| Project vhosts | **Not yet released** |
+| Ardia integration with RCC | **Not yet released** |
+| RCC-to-Coscine archive transfer | **Not yet released** |
+
+The unreleased entries are included so teams can plan safely. They are not
+instructions to start using those services.
+
+```text
+person -> individual RCC account -> exactly one primary group (affiliation)
+                              \-> one or more projects (collaboration)
+
+Lab-network instrument
+    -> approved Samba share for its project [ready]
+       or future Ardia integration [not yet released]
+    -> RCC project storage -> Slurm analysis -> project results
+    -> optional protected vhost for that project [not yet released]
+    -> reviewed archive set -> Coscine later [not yet released]
+```
+
+**Samba** is the technology behind a Windows-style network folder. For a
+registered Lab-network instrument or acquisition computer, RCC can approve a
+project-scoped Samba share so completed data arrives in the project rather than
+in one person's home directory. **Ardia integration is not yet released.** Its
+future mass-spectrometry data flow must use a vendor-supported integration or
+export path instead of treating Ardia as an ordinary folder.
+
+**Project vhosts are not yet released.** When the service is released, a
+project that needs an easier browser interface will be able to request its own
+protected **vhost** (virtual host). The vhost will belong to that project and
+use individual identities plus project membership; it will not be a shared
+account or a way to expose the whole project directory.
+
+Computation runs through Slurm. Interactive tools such as Jupyter and Shiny
+also run inside bounded allocations and are reached through protected local
+connections. A selected final dataset may later move to Coscine after project
+review and verification. **RCC-to-Coscine transfer is not yet released**; it
+remains planned and not yet a live self-service transfer.
 
 For most users, **VS Code with Remote - SSH is the suggested everyday route**
 for coding and preparing data analysis. It combines the editor, remote file
@@ -35,11 +88,10 @@ instrument -> RCC project -> job-local analysis -> RCC project results
            -> verified Coscine archive -> recorded RCC disposition
 ```
 
-The RCC-to-Coscine service is planned, not yet a live self-service transfer.
-
 ## Ten rules that prevent most problems
 
-1. Use only your own RCC account and approved project membership.
+1. Use only your own RCC account. Keep your one primary group as your
+   affiliation and use approved project membership for collaboration.
 2. Never send a private SSH key, password, token, passkey export, or
    re-identification key to another person.
 3. Verify the approved RCC endpoint and host identity; do not bypass an SSH
@@ -82,6 +134,7 @@ server name from a screenshot.
 | Content | Correct place |
 |---|---|
 | Personal configuration and small source files | Home storage |
+| Material shared only within your primary group | Approved primary-group storage |
 | Authoritative project input | Approved project storage |
 | Validated results, code, metadata, and provenance | Approved project storage |
 | Active temporary and random I/O | Job-local storage inside the allocation |
@@ -93,11 +146,13 @@ owner, approved purpose, membership, retention, legal context, and continuity
 when a team member leaves. Home capacity and filesystem behavior are also not
 intended for large recurring instrument ingestion.
 
-For collaboration, request a project whose Unix group contains every approved
-member. A setgid project directory keeps new files associated with that group;
-it does not authorize disclosure or make files group-writable by itself. Use
-the [data-sharing guide](reference/data-sharing.md) for colleagues in your
-project, other RCC groups, and external recipients.
+For collaboration across primary groups, request a project whose Unix group
+contains every approved member. A setgid project directory keeps new files
+associated with that project group; it does not authorize disclosure or make
+files group-writable by itself. Use the
+[users, groups, and projects guide](reference/users-groups-projects.md) for the
+identity model and the [data-sharing guide](reference/data-sharing.md) for
+colleagues in your project, other RCC groups, and external recipients.
 
 Read [Class 12: efficient local I/O](course/class-12-efficient-io.md),
 [Class 13: storage architecture](course/class-13-storage-architecture.md), and
@@ -166,7 +221,12 @@ A notebook is not a production service. Use
 [Class 10](course/class-10-notebook-to-service.md) to separate request handling
 from expensive Slurm computation, then complete
 [Class 6](course/class-06-vhosts.md) before requesting a governed protected
-project website.
+project website. When a project needs a browser interface, request a vhost for
+that project **after the vhost service is released**. The current Class 6
+material is for planning and training, not an operational request. Each future
+vhost will have a named project owner, be authorised by project membership, and
+expose only the approved application or curated data—not every file in project
+storage. A project will not need a vhost unless it has a clear web use case.
 
 Do not expose an ad-hoc listener, notebook, Shiny app, or development server to
 the network. Authentication, authorization, proxy behavior, logs, secrets,
@@ -196,6 +256,13 @@ while retaining direct access to explicitly approved server endpoints or
 services. Limited outbound web access through an explicit HTTP proxy can
 support approved needs such as updates without allowing unsolicited inbound
 Internet access.
+
+For an ordinary file-producing instrument, the approved endpoint is commonly a
+project-scoped **Samba share**: a Windows-style network folder that delivers a
+completed run directly to the right RCC project. RCC supplies the exact share
+and credentials; do not guess them or reuse another project's connection.
+**Ardia integration is not yet released.** When released, the managed vendor
+platform will require its supported integration or export route.
 
 The Lab network reduces exposure; it does not make a device trusted. RCC must
 review the owner, software and update needs, vendor support, licensing,

@@ -1,4 +1,4 @@
-# Conda, Snakemake, and Apptainer reference
+# Conda, Snakemake, Nextflow, nf-core, and Apptainer reference
 
 This guide complements Classes 2 and 4 with the command-level material from the
 earlier ClusterDocs site.
@@ -84,6 +84,66 @@ tmux attach -t workflow
 Do not rely on a historic Snakemake version or profile name from a copied guide.
 Check the current RCC software guidance or ask support for the supported
 version and profile before updating a production workflow.
+
+## Nextflow and nf-core
+
+Nextflow maps each process to an execution backend. On RCC, use its Slurm
+executor so analysis processes become ordinary scheduled jobs rather than
+unmanaged work on a submission host. nf-core supplies community-maintained
+Nextflow pipelines, standard test profiles, parameter schemas, and run
+provenance.
+
+Keep these distinctions clear:
+
+- Nextflow options use one leading dash, for example `-r`, `-profile`,
+  `-params-file`, `-c`, `-work-dir`, and `-resume`;
+- pipeline parameters use two leading dashes, for example `--input` and
+  `--outdir`;
+- pin a pipeline release or commit with `-r` for every retained analysis;
+- use an nf-core `test` profile for a small infrastructure check, not as
+  scientific input;
+- keep the launch directory, work directory, Apptainer cache, and results on
+  approved shared project storage because the coordinator and allocated
+  workers must all reach them;
+- use Nextflow's `scratch` process directive for I/O-heavy task bodies so RCC's
+  worker-local `$TMPDIR` is used and declared outputs are staged back;
+- cap `executor.queueSize` during learning and set justified CPU, memory, time,
+  and partition limits for production runs.
+
+The RCC classroom configuration is
+[`rcc-test.config`](../classes/examples/nf-core/rcc-test.config). It is a
+bounded teaching profile, not a universal production profile. A minimal launch
+has this shape:
+
+```bash
+nextflow run nf-core/demo \
+  -r 1.2.0 \
+  -profile test,apptainer \
+  -c rcc-test.config \
+  -work-dir /projects/PROJECT/nextflow-work/demo \
+  --outdir /projects/PROJECT/results/demo
+```
+
+The first test may retrieve pipeline source, public test data, and container
+images. Use the approved RCC outbound proxy path and a shared writable
+Apptainer cache. Do not place registry tokens, GitHub tokens, sample secrets,
+or patient identifiers in Nextflow configuration or parameter files.
+
+Before a real run, inspect the pipeline's current usage page and input schema,
+review its license and release, validate the samplesheet, and save parameters
+in JSON or YAML. Retain the pipeline revision, resolved command, parameter
+file, configuration, reports, trace, input checksums, result checksums, and
+Slurm job identifiers. Use `-resume` only with the same intended work directory
+and reviewed inputs; it reuses cached tasks and is not a substitute for
+provenance review.
+
+Official references:
+
+- [Run nf-core pipelines](https://nf-co.re/docs/running/run-pipelines)
+- [Run the nf-core demo pipeline](https://nf-co.re/docs/get_started/run-your-first-pipeline)
+- [Nextflow Slurm executor](https://docs.seqera.io/nextflow/executor#slurm)
+- [Nextflow process scratch](https://docs.seqera.io/nextflow/reference/process#scratch)
+- [Nextflow with Apptainer](https://docs.seqera.io/nextflow/container#apptainer)
 
 ## Apptainer execution model
 

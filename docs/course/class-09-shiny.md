@@ -1,23 +1,24 @@
 # Class 9: Shiny applications on RCC
 
+> **Service status:** RCC workers and tunnelled Shiny development are **ready
+> now**. Project vhost hosting is **not yet released**; the production material
+> below is preparation only.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 3 min video</p>
   <h2>Watch the class first</h2>
   <p>Safe Shiny development, production readiness, governed data access, and common mistakes. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class9.png" src="{{ media_base_url }}/RCC_Onboarding_Class_9_Video_Enhanced.mp4?v=c58e4ed8">
-    <track kind="captions" srclang="en" label="English captions" src="../../downloads/captions/RCC_Onboarding_Class_9_Captions.vtt" default>
+    <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_9_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
-  <div class="course-video-links" aria-label="Video alternatives and downloads">
-    <a href="../../downloads/captions/RCC_Onboarding_Class_9_Captions.srt">Captions</a>
-    <a href="../../downloads/narration/RCC_Onboarding_Class_9_Video_Narration.md">Read transcript</a>
-  </div>
 </section>
 
 Shiny is useful when a project needs an interactive browser view for plots, parameters, and curated results. On RCC there are two separate modes:
 
 1. **Development or demonstration:** Shiny runs in a Slurm allocation and you connect through an SSH tunnel.
-2. **Service for other users:** the application must go through the governed vhost process described in Class 6.
+2. **Future service for other users:** after project vhosts are released, the
+   application must go through the governed process described in Class 6.
 
 ## Learning goals
 
@@ -41,7 +42,7 @@ sbatch shiny.sbatch
 
 Read the job output and use the SSH tunnel shown there. The Shiny process binds to `127.0.0.1` on the worker. This is a development pattern only. It is not a public service and it is not a replacement for the vhost process.
 
-## What makes Shiny production-ready?
+## Planning for a future production service
 
 A production Shiny service needs:
 

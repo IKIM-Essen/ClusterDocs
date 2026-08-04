@@ -10,7 +10,6 @@ checks=[
 for cmd in checks: subprocess.run(cmd,check=True,cwd=ROOT)
 yaml.safe_load((ROOT/'config/public.yml').read_text())
 build=[sys.executable,str(ROOT/'tools/build_site.py'),'--output','site-test']
-if all((ROOT/'videos-enhanced'/f'RCC_Onboarding_Part_{i}_Video_Enhanced.mp4').exists() for i in range(1,5)): build.append('--include-media')
 subprocess.run(build,check=True,cwd=ROOT)
 subprocess.run([sys.executable,str(ROOT/'tools/check_site_links.py'),str(ROOT/'site-test')],check=True,cwd=ROOT)
 subprocess.run(['rm','-rf',str(ROOT/'site-test')],check=True)

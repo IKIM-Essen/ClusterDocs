@@ -21,6 +21,7 @@ nav:
       - Class 3 - Performance and I/O: course/class-03-performance.md
       - Class 4 - Apptainer containers: course/class-04-containers.md
       - Class 5 - Slurm acceptance patterns: course/class-05-slurm.md
+      - Choosing a GPU - model, architecture, and memory: classes/gpu-selection.md
       - Class 6 - Protected project websites: course/class-06-vhosts.md
       - Class 7 - Python notebooks: course/class-07-python-notebooks.md
       - Class 8 - R analysis: course/class-08-r-analysis.md
@@ -52,10 +53,8 @@ nav:
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
       - RCC connection name: connecting/stable-endpoints.md
-  - Security:
       - Safe everyday practice: security/safe-use.md
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
   - Resources:
       - Who we are: team.md
       - Lab network properties and remote access: resources/how-it-all-works.md
-      - Media and downloads: media/index.md

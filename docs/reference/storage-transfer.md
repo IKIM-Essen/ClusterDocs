@@ -2,6 +2,10 @@
 
 Choose storage by lifecycle and access pattern, not only by free capacity.
 
+> **Service status:** RCC workers and project Samba shares are **ready now**.
+> RCC-to-Coscine archive transfer is **not yet released**; references to it are
+> lifecycle planning, not an operational transfer command.
+
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
 > the files portal, [Class 3](../course/class-03-performance.md) explains local
 > staging, and [Class 11](../course/class-11-biomedical-data-privacy.md) covers

@@ -10,7 +10,10 @@ Mental model of a shared cluster, local versus remote work, SSH and key handling
 
 ### Part 2 - Reproducible scientific workflows
 
-Project structure, Miniforge, Mamba, Bioconda, software environments, Snakemake dependency graphs, Slurm execution, a minimal statistical workflow, a synthetic DNA sequence workflow, logging, benchmarking, and Git.
+Project structure, Miniforge, Mamba, Bioconda, software environments,
+Snakemake dependency graphs, a bounded nf-core/Nextflow example, Slurm
+execution, a minimal statistical workflow, a synthetic DNA sequence workflow,
+logging, benchmarking, and Git.
 
 ### Part 3 - Performance and efficient I/O
 

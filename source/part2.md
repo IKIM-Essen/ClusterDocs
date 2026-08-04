@@ -1,6 +1,6 @@
 ---
 title: "RCC Onboarding - Part 2"
-subtitle: "Concepts and reproducible workflows with Miniforge, Bioconda, Snakemake, Slurm, statistics, and DNA sequence analysis"
+subtitle: "Concepts and reproducible workflows with Miniforge, Bioconda, Snakemake, nf-core, Nextflow, Slurm, statistics, and DNA sequence analysis"
 author: "IKIM RCC documentation proposal"
 date: "11 July 2026"
 ---
@@ -23,6 +23,7 @@ date: "11 July 2026"
 - 12. Reproducibility and provenance
 - 13. Git without data leakage
 - 14. Common beginner mistakes
+- Optional follow-up: a bounded nf-core/Nextflow run
 - 15. Completion checklist
 - 16. Next steps
 - References for maintainers
@@ -41,7 +42,8 @@ By the end of Part 2, you will be able to:
 4. use Snakemake to submit individual analysis steps to Slurm;
 5. run a small statistical workflow that produces tables and a figure;
 6. run a minimal paired-end DNA sequence workflow that performs read quality control and mapping; and
-7. record the software, parameters, logs, and resource use needed to reproduce an analysis.
+7. record the software, parameters, logs, and resource use needed to reproduce an analysis; and
+8. distinguish a project-authored Snakemake workflow from a versioned community nf-core pipeline executed by Nextflow.
 
 This tutorial is deliberately prescriptive. Use the directory names and commands as written for the exercises. Adapt them only after both examples work.
 
@@ -82,6 +84,8 @@ A workflow can execute successfully and still be scientifically invalid. Snakema
 - **Maximum beginner workflow concurrency:** **[ADMIN: recommended `--jobs` value]**
 - **Internet access policy:** **[ADMIN: explain where package downloads are permitted]**
 - **Supported Snakemake version:** **[ADMIN: minimum or pinned version]**
+- **Supported Nextflow installation and version:** **[ADMIN: managed command or approved environment]**
+- **nf-core outbound-data and container policy:** **[ADMIN: approved proxy and shared image-cache path]**
 - **RCC support contact:** **[ADMIN: support email or ticket address]**
 
 
@@ -1127,6 +1131,38 @@ Absolute paths make a workflow hard to move. Use a project root and configuratio
 ## Treating a successful exit code as scientific validation
 
 A technically successful workflow can use the wrong samples, reference, model, or parameters. Reproducibility supports scientific review; it does not replace it.
+
+# Optional follow-up: a bounded nf-core/Nextflow run
+
+nf-core publishes community-maintained analysis pipelines implemented in
+Nextflow. This is a complementary model rather than a replacement for the
+Snakemake examples above. A project should retain a validated workflow in the
+engine supported by its scientific community instead of translating it merely
+for local uniformity.
+
+The copyable class materials under `docs/classes/examples/nf-core/` contain:
+
+- `run-demo.sh`, which pins `nf-core/demo` release `1.2.0` and selects the
+  public `test` data plus Apptainer profiles;
+- `rcc-test.config`, which submits processes through Slurm, selects
+  `cpu_short`, caps queue concurrency at four, limits each task to four CPUs,
+  16 GB, and 30 minutes, and stages task bodies through local `$TMPDIR`; and
+- `params-rnaseq.example.json`, a production-shaped parameter template whose
+  project, input, reference, result, and run placeholders must all be reviewed
+  before use.
+
+Run the demo only from an approved shared project path and only while RCC's
+approved outbound proxy path is available. The launch directory, Nextflow work
+directory, Apptainer image cache, and durable outputs must be shared between
+the submission service and Slurm workers. Nextflow's `scratch = true` setting
+stages each task through worker-local `$TMPDIR` and returns only declared
+outputs to the shared work directory.
+
+For a retained run, record the pipeline revision, command, parameter file,
+configuration, input and output checksums, Nextflow reports and trace, and
+Slurm job identifiers. A successful test profile proves only that the small
+public example works; it does not validate a scientific pipeline, samplesheet,
+reference, or production resource request.
 
 # 15. Completion checklist
 

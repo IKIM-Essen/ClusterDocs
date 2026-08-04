@@ -32,7 +32,7 @@ class DataLifecycleCourseTests(unittest.TestCase):
     def test_planned_flow_has_required_control_points(self):
         page = (ROOT / "docs/data/rcc-project-to-coscine.md").read_text().lower()
         for phrase in [
-            "service status: planned",
+            "service status — not yet released",
             "eligibility decision",
             "freeze and describe",
             "verify and accept",
@@ -57,7 +57,7 @@ class DataLifecycleCourseTests(unittest.TestCase):
             "not a user's home directory",
             "job-local storage",
             "verified coscine archive",
-            "planned and not yet a live self-service",
+            "not yet released",
             "five checks before you finish",
             "consider the lab network",
             "limited outbound web access",

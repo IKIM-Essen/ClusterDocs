@@ -17,6 +17,7 @@ NAV=[
  ('Course','Class 3 · Performance','course/class-03-performance.md'),
  ('Course','Class 4 · Containers','course/class-04-containers.md'),
  ('Course','Class 5 · Slurm','course/class-05-slurm.md'),
+ ('Course','Choosing a GPU','classes/gpu-selection.md'),
  ('Course','Class 6 · Project websites','course/class-06-vhosts.md'),
  ('Course','Class 7 · Python notebooks','course/class-07-python-notebooks.md'),
  ('Course','Class 8 · R analysis','course/class-08-r-analysis.md'),
@@ -47,11 +48,10 @@ NAV=[
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
  ('Reference','RCC connection name','connecting/stable-endpoints.md'),
- ('Governance','Safe everyday practice','security/safe-use.md'),
- ('Governance','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
+ ('Reference','Safe everyday practice','security/safe-use.md'),
+ ('Reference','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Resources','Who we are','team.md'),
  ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),
- ('Resources','Media and downloads','media/index.md'),
 ]
 PAGE='''<!doctype html>
 <html lang="en">
@@ -192,9 +192,9 @@ a:hover { color:var(--cyan); }
 .content-card .course-video-hero > p { max-width:68ch; margin:.35rem 0 1.25rem; color:rgba(255,255,255,.88); font-size:1rem; line-height:1.55; }
 .content-card .course-video-hero .course-video-kicker { margin:0; color:#8ee7f2; font-size:.76rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
 .content-card .course-video-hero video { width:100%; aspect-ratio:16/9; border:1px solid rgba(255,255,255,.28); border-radius:14px; background:#02131f; box-shadow:0 18px 38px rgba(0,0,0,.28); }
-.course-video-links { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1rem; }
-.content-card .course-video-links a { padding:.5rem .78rem; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:rgba(255,255,255,.1); color:#fff; font-size:.86rem; text-decoration:none; }
-.content-card .course-video-links a:hover { background:#fff; color:var(--navy); }
+.course-video-pending { margin-top:1.25rem; padding:1.1rem 1.2rem; border:1px solid rgba(255,255,255,.32); border-radius:14px; background:rgba(2,19,31,.58); }
+.course-video-pending strong { display:block; margin-bottom:.35rem; color:#8ee7f2; font-size:1.08rem; }
+.content-card .course-video-hero .course-video-pending p { margin:0; color:#fff; }
 .video-course-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1rem 0 2.5rem; }
 .content-card .video-course-card { overflow:hidden; border:1px solid rgba(6,42,70,.12); border-radius:16px; background:#fff; color:var(--navy); box-shadow:0 8px 20px rgba(6,42,70,.08); text-decoration:none; transition:transform .16s ease,box-shadow .16s ease; }
 .content-card .video-course-card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(6,42,70,.14); }
@@ -272,6 +272,17 @@ def substitute(text,cfg):
         if isinstance(v,(str,int,float)): text=text.replace('{{ '+k+' }}',str(v))
     return text
 
+def gate_unreleased_videos(text,publication):
+    """Do not turn a prepared-but-unpublished media destination into dead links."""
+    if (publication.get('status') == 'verified_live'
+            and publication.get('preview_links') == 'enabled'):
+        return text
+    notice='''<div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>'''
+    return re.sub(r'<video\b[^>]*>.*?</video>',notice,text,flags=re.S)
+
 def title_of(text):
     m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else 'RCC ClusterDocs'
 
@@ -313,10 +324,9 @@ def normalize_caption_text(text):
     return text
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); ap.add_argument('--include-media',action='store_true'); a=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
-    if a.include_media:
-        cfg=dict(cfg); cfg['media_base_url']='__LOCAL_MEDIA_BASE__'
+    media=yaml.safe_load((ROOT/'config/media-manifest.yml').read_text())['publication']
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
         if cfg.get('site_status') != 'production': bad.insert(0,'site_status')
@@ -341,10 +351,9 @@ def main():
     group_for_path={path:group for group,_,path in NAV}
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
-        text=substitute(src.read_text(),cfg); content=md(text)
-        if a.include_media:
-            local_media=Path(os.path.relpath(out/'media',target.parent)).as_posix()
-            content=content.replace('__LOCAL_MEDIA_BASE__',local_media)
+        text=substitute(src.read_text(),cfg)
+        text=gate_unreleased_videos(text,media)
+        content=md(text)
         def rewrite_local(match):
             attribute=match.group(1); value=match.group(2)
             path,separator,fragment=value.partition('#')
@@ -372,33 +381,11 @@ def main():
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():
         shutil.copytree(class_examples,out/'classes/examples',dirs_exist_ok=True)
-    # Copy learner exercises and reviewable text assets, never credentials.
-    shutil.copytree(ROOT/'exercises',out/'downloads/exercises')
-    if (ROOT/'examples').exists():
-        shutil.copytree(ROOT/'examples',out/'downloads/examples')
-        if (ROOT/'examples/account-setup').exists():
-            shutil.make_archive(
-                str(out/'downloads/rcc-account-setup'),
-                'zip',
-                root_dir=ROOT/'examples',
-                base_dir='account-setup',
-            )
-    for name in ['captions','narration']:
-        if (ROOT/name).exists(): shutil.copytree(ROOT/name,out/'downloads'/name)
-    slide_out=out/'downloads/slides'; slide_out.mkdir(parents=True,exist_ok=True)
-    for filename in (
-        'RCC_Class_7_Interactive_Large_Data.pptx',
-        'RCC_Class_9_Shiny_Jupyter_Project_Apps.pptx',
-    ):
-        source=ROOT/'slides'/filename
-        if source.exists(): shutil.copy2(source,slide_out/filename)
-    caption_out=out/'downloads/captions'
-    if caption_out.exists():
-        for srt in caption_out.glob('*.srt'):
-            normalized=normalize_caption_text(srt.read_text())
-            srt.write_text(normalized)
-            srt.with_suffix('.vtt').write_text(srt_to_vtt(normalized))
-    if a.include_media and (ROOT/'videos-enhanced').exists():
-        shutil.copytree(ROOT/'videos-enhanced',out/'media',dirs_exist_ok=True)
+    # Keep captions available to the embedded player without publishing the
+    # source SRT files or recreating the retired downloads tree.
+    caption_out=out/'assets/captions'; caption_out.mkdir(parents=True,exist_ok=True)
+    for srt in (ROOT/'captions').glob('*.srt'):
+        normalized=normalize_caption_text(srt.read_text())
+        (caption_out/f'{srt.stem}.vtt').write_text(srt_to_vtt(normalized))
     print(out)
 if __name__=='__main__': main()
