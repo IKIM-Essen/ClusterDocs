@@ -53,7 +53,18 @@ RCC services and contain no credentials or biomedical data.
 
 ## Production status
 
-This is a publication candidate, not a claim that every local command has already been validated against the production RCC configuration. Before publication, administrators must complete the local values and run the tests in `ADMIN_CHECKLIST.md`.
+This is a content-complete publication candidate with release-state labels and
+fail-closed media links. Deployment operators must still complete the
+operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
+DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
+asking readers to fill documentation placeholders.
+
+Managed Nextflow-to-Slurm support is documented as **not yet released**. The
+planned contract uses a pinned `rcc-nextflow` launcher on an approved submission
+host, Slurm for every scientific task, shared persistent work state for
+`-resume`, explicit node-local task scratch, and Apptainer on workers. The site
+does not claim this service is live while its infrastructure role remains
+disabled and digest approval and acceptance are outstanding.
 
 Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
 and novice review can begin. Run `python3 tools/rollout_readiness.py` for the

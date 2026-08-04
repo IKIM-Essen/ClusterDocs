@@ -15,6 +15,7 @@ Think of RCC as a set of project workrooms rather than one large shared disk:
 | RCC Admin self-administration and primary-approver workflow | **Ready now** |
 | RCC workers and Slurm computation | **Ready now** |
 | Project Samba shares for approved projects and registered Lab-network devices | **Ready now** |
+| Managed Nextflow-to-Slurm support | **Not yet released** — use the managed Snakemake path until RCC announces the `rcc-nextflow` launcher |
 | Protected project vhosts | **Not yet released** — the documentation is planning and training material |
 | Ardia-to-RCC integration | **Not yet released** — use no Ardia transfer route until RCC announces it |
 | RCC-to-Coscine archive transfer | **Not yet released** — prepare archive sets, but do not treat the planned flow as operational |
@@ -29,6 +30,7 @@ another project's service.
 | Your primary group | Your home department or organisational affiliation. Every user has exactly one. |
 | A project | A shared workroom for named, approved people. A project can include people from different primary groups. |
 | A project Samba share | A Windows-compatible network folder where an approved Lab-network instrument or acquisition computer can deliver data to the project. |
+| Managed Nextflow support | A future launcher that will keep the workflow controller on an approved submission host while Slurm runs each task on an RCC worker. It is not yet released. |
 | A project vhost | A future optional protected website for that project. Project-vhost hosting is not yet released. |
 | Coscine | A planned later destination for a reviewed archive set. RCC-to-Coscine transfer is not yet released. |
 

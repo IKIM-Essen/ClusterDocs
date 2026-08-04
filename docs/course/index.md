@@ -3,9 +3,10 @@
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
 > **Availability note:** RCC Admin, RCC workers/Slurm, and project Samba shares
-> are **ready now**. Project vhosts, Ardia integration, and RCC-to-Coscine transfer are
-> **not yet released**. Classes 6 and 15, and the Ardia parts of Class 14, are
-> preparation for those future services.
+> are **ready now**. Managed Nextflow-to-Slurm support, project vhosts, Ardia
+> integration, and RCC-to-Coscine transfer are **not yet released**. The
+> Nextflow part of Class 2, Classes 6 and 15, and the Ardia parts of Class 14
+> are preparation for those future services.
 
 ## Prefer to learn by video?
 
@@ -34,7 +35,7 @@ and detailed reference.
 | Class | Main outcome | Typical time | Gate |
 |---|---|---:|---|
 | 1 | Connect safely using SSH and VS Code | 45-60 min | Local tools and one bounded SSH test |
-| 2 | Build a reproducible workflow and compare a bounded nf-core/Nextflow run | 60-90 min | Dry run and reproducible output |
+| 2 | Build a reproducible Snakemake workflow and understand the planned bounded nf-core/Nextflow path (not yet released) | 60-90 min | Snakemake dry run and reproducible output |
 | 3 | Choose CPU, RAM, GPU and I/O patterns | 45-60 min | Diagnose a synthetic bottleneck |
 | 4 | Run a pinned Apptainer image | 45-60 min | Immutable image and clean environment |
 | 5 | Submit three small Slurm acceptance jobs | 45-60 min | Byte-for-byte expected output |

@@ -50,12 +50,12 @@ Then use the managed RCC execution profile: `snakemake --profile IKIM`.
 
 ## Guided nf-core and Nextflow example
 
-> **Optional prerequisite:** RCC does not currently publish a centrally
-> managed, pinned Nextflow command. Before this exercise, ask the IKIM Cluster
-> Mattermost channel for the approved project environment and version. The
-> supplied runner stops without changing project data when `nextflow`,
-> `apptainer`, or `sbatch` is missing; do not install an unpinned launcher just
-> to bypass that check.
+> **Service status — not yet released:** the planned, pinned `rcc-nextflow`
+> launcher and institutional Slurm configuration are not available to users
+> yet. This section is preparation material, not a command to run before RCC
+> announces the service. The supplied runner stops without changing project
+> data when `rcc-nextflow`, `apptainer`, or `sbatch` is missing; do not install
+> an unpinned launcher or start a controller on a login gateway to bypass it.
 
 [nf-core](https://nf-co.re/) publishes reviewed community pipelines that run
 with [Nextflow](https://www.nextflow.io/). They complement Snakemake: use the
@@ -80,25 +80,28 @@ cd /projects/PROJECT/training/nf-core-demo
 ```
 
 Replace `PROJECT` with a project to which you have access. Inspect both files,
-then run one bounded test:
+then—only after managed Nextflow-to-Slurm support is released—run one bounded
+test with both the project root and run directory:
 
 ```bash
-bash run-demo.sh "$PWD/run-01"
+bash run-demo.sh /projects/PROJECT "$PWD/run-01"
 ```
 
 The test profile downloads public test data and container images. Run it only
 when the RCC outbound proxy path is available; do not add tokens or copy
-credentials into the project. The Nextflow coordinator stays on the approved
-submission host while individual tasks use Slurm. Durable Nextflow state,
-container images, and results remain on shared project storage so every worker
-can reach them. Task bodies use `scratch = true`, which stages work through the
-worker's `$TMPDIR` under `/local/tmp` and copies declared outputs back.
+credentials into the project. Under the planned service, the Nextflow
+coordinator stays on the approved submission host while individual tasks use
+Slurm; workers do not need their own Java or Nextflow installation. Durable
+Nextflow work state, required container images, and results remain on shared
+project storage so every worker can reach them and `-resume` remains possible.
+Task bodies use `scratch = true`, which stages work through the worker's
+`$TMPDIR` under `/local/tmp` and copies declared outputs back.
 
 Inspect the run without opening every task directory:
 
 ```bash
 squeue --me
-nextflow log
+rcc-nextflow --project-root /projects/PROJECT log
 find run-01/results -maxdepth 2 -type f | sort
 ```
 
@@ -110,7 +113,7 @@ pipeline release, and validate the pipeline-specific samplesheet and reference
 requirements before submission:
 
 ```bash
-nextflow run nf-core/rnaseq \
+rcc-nextflow --project-root /projects/PROJECT run nf-core/rnaseq \
   -r PINNED_RELEASE \
   -profile apptainer \
   -c rcc-test.config \

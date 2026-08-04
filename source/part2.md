@@ -91,15 +91,17 @@ A workflow can execute successfully and still be scientifically invalid. Snakema
 - **Outbound access:** HTTP(S) package, pipeline, test-data, and image downloads
   use the managed proxy `http://proxy.ikim.uk-essen.de:3128`. Never embed
   credentials or tokens in workflow files.
-- **Nextflow and nf-core:** RCC does not currently publish a centrally managed,
-  pinned Nextflow command. The bounded nf-core example later in this tutorial
-  is optional and fails closed unless an approved project environment already
-  supplies `nextflow`, `apptainer`, and `sbatch`. Ask the IKIM Cluster
-  Mattermost channel for the current approved Nextflow installation route
-  before running it.
-- **Container caches:** keep Nextflow/Apptainer caches on node-local storage for
-  ordinary work; the class runner uses a shared project-scoped cache only for
-  its small multi-node teaching run so all scheduled tasks can reach it.
+- **Nextflow and nf-core — not yet released:** RCC is preparing a pinned
+  `rcc-nextflow` launcher and institutional Slurm configuration. The controller
+  will run only on the approved submission host; compute workers will execute
+  generated tasks through Slurm without their own Java or Nextflow install.
+  The bounded example later in this tutorial is preparation material and fails
+  closed until `rcc-nextflow`, `apptainer`, and `sbatch` are available.
+- **Nextflow work and containers:** when the service is released,
+  resume-critical `NXF_WORK`, required container images, and retained output
+  must use shared project storage visible at the same path from the submission
+  host and workers. Node-local `/local` is only for explicitly labelled task
+  scratch; Apptainer is the supported worker runtime.
 - **Support:** use the **IKIM Cluster channel on Mattermost** without posting
   credentials or sensitive project data.
 
@@ -1119,6 +1121,10 @@ A technically successful workflow can use the wrong samples, reference, model, o
 
 # Optional follow-up: a bounded nf-core/Nextflow run
 
+> **Not yet released:** this section documents the planned RCC
+> Nextflow-to-Slurm service. Do not run it until RCC announces the pinned
+> `rcc-nextflow` launcher and institutional configuration.
+
 nf-core publishes community-maintained analysis pipelines implemented in
 Nextflow. This is a complementary model rather than a replacement for the
 Snakemake examples above. A project should retain a validated workflow in the
@@ -1127,8 +1133,9 @@ for local uniformity.
 
 The copyable class materials under `docs/classes/examples/nf-core/` contain:
 
-- `run-demo.sh`, which pins `nf-core/demo` release `1.2.0` and selects the
-  public `test` data plus Apptainer profiles;
+- `run-demo.sh`, which requires the future `rcc-nextflow` launcher, pins
+  `nf-core/demo` release `1.2.0`, and selects the public `test` data plus
+  Apptainer profiles;
 - `rcc-test.config`, which submits processes through Slurm, selects
   `cpu_short`, caps queue concurrency at four, limits each task to four CPUs,
   16 GB, and 30 minutes, and stages task bodies through local `$TMPDIR`; and
@@ -1136,12 +1143,14 @@ The copyable class materials under `docs/classes/examples/nf-core/` contain:
   project, input, reference, result, and run placeholders must all be reviewed
   before use.
 
-Run the demo only from an approved shared project path and only while RCC's
-approved outbound proxy path is available. The launch directory, Nextflow work
-directory, Apptainer image cache, and durable outputs must be shared between
-the submission service and Slurm workers. Nextflow's `scratch = true` setting
-stages each task through worker-local `$TMPDIR` and returns only declared
-outputs to the shared work directory.
+After release, run the demo only from the approved submission host, within an
+approved shared project path, and while RCC's outbound proxy path is available.
+The launch directory, Nextflow work directory, required Apptainer images, and
+durable outputs must be shared between the submission service and Slurm
+workers. Nextflow's `scratch = true` setting stages each task through
+worker-local `$TMPDIR` and returns only declared outputs to the shared work
+directory. Never place `NXF_WORK` under `/local`, because local cleanup or task
+movement would destroy resume state.
 
 For a retained run, record the pipeline revision, command, parameter file,
 configuration, input and output checksums, Nextflow reports and trace, and

@@ -22,6 +22,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                 "rcc_admin_primary_approval": "ready",
                 "rcc_workers": "ready",
                 "samba_project_shares": "ready",
+                "nextflow_slurm_support": "not_yet_released",
                 "project_vhosts": "not_yet_released",
                 "ardia_integration": "not_yet_released",
                 "rcc_to_coscine_transfer": "not_yet_released",
@@ -30,7 +31,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         )
 
     def test_every_public_unreleased_feature_mention_is_marked(self):
-        for feature in ("vhost", "ardia", "coscine"):
+        for feature in ("vhost", "ardia", "coscine", "nextflow"):
             pages = [
                 page
                 for page in DOCS.rglob("*.md")

@@ -87,12 +87,12 @@ version and profile before updating a production workflow.
 
 ## Nextflow and nf-core
 
-> **Software prerequisite:** RCC does not currently publish a centrally
-> managed, pinned Nextflow command. The classroom example is optional and its
-> runner fails closed when `nextflow`, `apptainer`, or `sbatch` is unavailable.
-> Ask the IKIM Cluster Mattermost channel for the current approved project
-> environment and version before running it; do not download an unpinned
-> launcher as a workaround.
+> **Service status — not yet released:** RCC is preparing a pinned
+> `rcc-nextflow` launcher and institutional Slurm configuration, but the
+> submit-host role is not active for users yet. The classroom runner fails
+> closed when `rcc-nextflow`, `apptainer`, or `sbatch` is unavailable. Do not
+> download an unpinned launcher or start a Nextflow controller on a login
+> gateway as a workaround.
 
 Nextflow maps each process to an execution backend. On RCC, use its Slurm
 executor so analysis processes become ordinary scheduled jobs rather than
@@ -117,13 +117,27 @@ Keep these distinctions clear:
 - cap `executor.queueSize` during learning and set justified CPU, memory, time,
   and partition limits for production runs.
 
+When released, the RCC execution boundary will be:
+
+- start the pinned Nextflow controller through `rcc-nextflow` on the approved
+  submission host, never on `login1` or `login2`;
+- submit every scientific process through Slurm; compute workers execute the
+  generated task wrapper and do not need Java or Nextflow installed;
+- keep `NXF_WORK` in persistent shared project storage at the same path on the
+  submission host and workers so `-resume` survives task placement and local
+  cleanup;
+- use `/local` only for a process explicitly labelled for scratch, with inputs
+  staged into `$TMPDIR` and declared outputs returned to shared storage; and
+- execute task software with Apptainer, using a shared or administrator-managed
+  immutable image cache rather than Docker on workers.
+
 The RCC classroom configuration is
 [`rcc-test.config`](../classes/examples/nf-core/rcc-test.config). It is a
 bounded teaching profile, not a universal production profile. A minimal launch
 has this shape:
 
 ```bash
-nextflow run nf-core/demo \
+rcc-nextflow --project-root /projects/PROJECT run nf-core/demo \
   -r 1.2.0 \
   -profile test,apptainer \
   -c rcc-test.config \
