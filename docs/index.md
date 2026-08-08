@@ -88,6 +88,9 @@ validation, uncertainty, bias, and scientific limitations.
 - Looking up a command after training: use the [day-to-day reference](reference/index.md).
 - Connecting a laboratory instrument or acquisition workstation: see
   [how the lab network and RCC fit together](resources/how-it-all-works.md).
+- Preparing approved remote-console access: read the
+  [RCC Headscale and PiKVM guide](connecting/pikvm-headscale.md). This service
+  is **not yet released**.
 - Moving data from an instrument into analysis: complete
   [Class 16](course/class-16-wet-lab-data-workflows.md).
 - Planning retention, Coscine archiving, or defensible cleanup: complete

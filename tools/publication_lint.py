@@ -9,19 +9,26 @@ TEXT_FILES=[ROOT/'README.md',ROOT/'ADMIN_CHECKLIST.md',ROOT/'config/public.yml',
 patterns={
  'internal or DMZ IP': re.compile(r'(?<![\d.])(?:10\.240\.\d+\.\d+|132\.252\.143\.\d+|100\.64\.\d+\.\d+)(?![\d.])'),
  'physical infrastructure hostname': re.compile(r'(?<![A-Za-z0-9-])(?:is2-[0-9]+|is-[0-9]+|s2-[0-9]+|c[0-9]{3}|g[0-9]+-[0-9]+)(?![A-Za-z0-9-])',re.I),
- 'hardware control-plane detail': re.compile(r'\b(?:PiKVM|BMC|IPMI|MAAS system.?id|power.?cycle endpoint)\b',re.I),
+ 'hardware control-plane detail': re.compile(r'\b(?:BMC|IPMI|MAAS system.?id|power.?cycle endpoint)\b',re.I),
+ 'obsolete Tailscale licensing warning': re.compile(r'(?i)\b(?:free\s*\(for private use\)|Tailscale (?:paid )?(?:license|plan) (?:is )?required|Tailscale (?:SaaS )?subscription (?:is )?required|Tailscale account (?:is )?required)\b'),
  'likely private key block': re.compile(r'-----BEGIN (?:OPENSSH|RSA|EC) PRIVATE KEY-----[\s\S]{40,}?-----END (?:OPENSSH|RSA|EC) PRIVATE KEY-----'),
  'likely secret assignment': re.compile(r'(?i)\b(?:password|token|secret)\s*[:=]\s*["\']?[A-Za-z0-9+/=_-]{12,}'),
  'unbounded retry example': re.compile(r'\bwhile\s+true\b|\bfor\s*\(\s*;\s*;\s*\)',re.I),
  'network scan command': re.compile(r'\b(?:nmap|masscan|zmap)\b',re.I),
 }
 errors=[]
-PUBLIC_HARDWARE_GUIDES={'docs/resources/how-it-all-works.md'}
+PUBLIC_HARDWARE_GUIDES={
+ 'docs/index.md',
+ 'docs/resources/how-it-all-works.md',
+ 'docs/connecting/pikvm-headscale.md',
+}
 
 def scan(label,text):
  for name,pat in patterns.items():
-  if name == 'hardware control-plane detail' and label in PUBLIC_HARDWARE_GUIDES: continue
   for m in pat.finditer(text): errors.append(f'{label}:{text.count(chr(10),0,m.start())+1}: {name}: {m.group(0)}')
+ if label not in PUBLIC_HARDWARE_GUIDES:
+  for m in re.finditer(r'\bPiKVM\b',text,re.I):
+   errors.append(f'{label}:{text.count(chr(10),0,m.start())+1}: hardware control-plane detail: {m.group(0)}')
 
 for item in TEXT_ROOTS:
  for p in item.rglob('*'):
