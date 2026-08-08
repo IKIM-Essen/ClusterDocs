@@ -6,12 +6,14 @@ ssh_alias: rcc-login
 transfer_service_name: RCC web transfer
 transfer_service_url: https://files.ikim.uk-essen.de/
 media_base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding
+lab_remote_access_name: RCC Headscale
 feature_status:
   rcc_admin: ready
   rcc_admin_self_administration: ready
   rcc_admin_primary_approval: ready
   rcc_workers: ready
   samba_project_shares: ready
+  headscale_pikvm_access: not_yet_released
   nextflow_slurm_support: not_yet_released
   project_vhosts: not_yet_released
   ardia_integration: not_yet_released

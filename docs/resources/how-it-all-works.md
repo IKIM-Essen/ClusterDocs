@@ -205,39 +205,26 @@ or power-cycle the target. Onboarding therefore requires:
 The [PiKVM authentication guide](https://docs.pikvm.org/auth/) documents the
 separate Linux and web-interface credentials, 2FA, and session controls.
 
-### Private tunnelling with Tailscale
+### Planned private tunnelling with RCC Headscale
 
-Tailscale is one possible private-overlay tunnel for PiKVM **when RCC and
-information security approve it**. It can connect authorized tailnet devices
-without publishing the PiKVM web interface to the public Internet. Direct
-peer-to-peer connections use WireGuard; when direct connectivity is impossible,
-Tailscale can use encrypted DERP relays. This does not require a direct incoming
-Internet connection to the Lab network, but it does require approved outbound
-access to Tailscale's coordination and relay services.
+> **Not yet released:** do not enroll a workstation or PiKVM device until RCC
+> announces the service and supplies a one-time enrollment through the approved
+> institutional channel.
 
-Use the pattern only as an RCC-managed design:
+RCC is preparing an institutionally operated Headscale coordination service for
+approved PiKVM access. Headscale replaces the hosted Tailscale control plane in
+this workflow. PiKVM devices and administrator computers still use a
+Tailscale-compatible client, configured to connect to RCC Headscale rather than
+to a personal hosted-service account.
 
-- use an institution-owned tailnet and identity, not a personal account;
-- grant access only to named administrators through reviewed tailnet policy;
-- expose only the PiKVM service within the tailnet; do not advertise the Lab
-  network as a subnet and do not configure an exit node;
-- do not use Tailscale Funnel or another public-publishing feature;
-- keep PiKVM authentication enabled even inside the tunnel;
-- review device-key expiry, offboarding, audit logs, updates, and recovery; and
-- test whether the Lab network's outbound policy supports the required control
-  and relay connections before relying on it.
+The design keeps the PiKVM interface off the public Internet. It first attempts
+a direct encrypted connection. Where the firewall or NAT prevents that, an
+RCC-operated relay carries already encrypted traffic. The tunnel grants access
+only to approved management services; it is not a route into the Lab network or
+the wider RCC infrastructure.
 
-The Tailscale **Personal** plan is free, but Tailscale describes it as suitable
-for personal/non-commercial use. That makes it useful for a private home-lab
-evaluation, not an automatic licensing answer for an institutional instrument.
-An RCC deployment needs an approved organizational plan or other confirmed
-terms; Tailscale publishes an educational-institution discount.
-
-Implementation details and current caveats are maintained in the
-[PiKVM Tailscale guide](https://docs.pikvm.org/tailscale/). Also read Tailscale's
-[connection-types explanation](https://tailscale.com/docs/reference/connection-types),
-[firewall guidance](https://tailscale.com/docs/reference/faq/firewall-ports),
-and [free-plan terms](https://tailscale.com/docs/account/manage-plans/free-plans-discounts).
+Read the dedicated [RCC Headscale and PiKVM guide](../connecting/pikvm-headscale.md)
+for the release boundary, enrollment safety rules, and access-removal process.
 
 ## Technical details
 

@@ -53,6 +53,7 @@ NAV=[
  ('Reference','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Resources','Who we are','team.md'),
  ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),
+ ('Resources','PiKVM through RCC Headscale · Not yet released','connecting/pikvm-headscale.md'),
 ]
 PAGE='''<!doctype html>
 <html lang="en">

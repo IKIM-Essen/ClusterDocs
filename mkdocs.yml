@@ -59,3 +59,4 @@ nav:
   - Resources:
       - Who we are: team.md
       - Lab network properties and remote access: resources/how-it-all-works.md
+      - PiKVM through RCC Headscale (not yet released): connecting/pikvm-headscale.md
