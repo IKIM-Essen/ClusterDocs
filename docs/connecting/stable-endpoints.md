@@ -51,6 +51,25 @@ When reviewing a saved configuration:
 Do not disable host-key checking, delete unrelated `known_hosts` entries, or
 replace a service alias with a physical node name.
 
+## During a backend maintenance window
+
+RCC may move an approved connection alias between equivalent backends. An
+existing SSH or VS Code session can disconnect during that change. Reconnect
+with the same approved alias; do not create separate workstation targets for
+physical backend names. A diagnostic `hostname` value is not a connection name
+for users.
+
+A timeout and a changed-host-key warning require different responses:
+
+1. For a timeout, confirm the hospital network or VPN is available, then retry
+   the same saved connection once.
+2. For a changed-host-key warning, stop and contact RCC support through an
+   official channel. Treat it as an infrastructure or security incident.
+
+Never delete the complete `~/.ssh/known_hosts` file, run a blanket
+`ssh-keygen -R` command, set `StrictHostKeyChecking no` or `accept-new`, or
+accept a replacement key merely to bypass the warning.
+
 ## Transfer guidance
 
 > **Service status:** project Samba shares are **ready now** for approved
