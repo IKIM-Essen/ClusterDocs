@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 16: from instrument to analysis for wet-lab teams · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a aria-current="page" href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a aria-current="page" href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-16-from-instrument-to-analysis-for-wet-lab-teams">Class 16: from instrument to analysis for wet-lab teams</h1>
+<blockquote>
+<p><strong>Service status:</strong> project Samba shares are <strong>ready now</strong> for approved
+projects and registered devices. Ardia-to-RCC integration and RCC-to-Coscine
+transfer are <strong>not yet released</strong>; references to them describe the intended
+future workflows.</p>
+</blockquote>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 5 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>A secure, verifiable handoff from wet-lab instruments into governed RCC project workflows. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>This course is for laboratory assistants, technical staff, students, and
+researchers who primarily operate instruments rather than Linux systems.</p>
+<p>Typical participants use Windows or macOS and work with:</p>
+<ul>
+<li>Illumina sequencers;</li>
+<li>Oxford Nanopore sequencers;</li>
+<li>mass-spectrometry systems managed through Ardia;</li>
+<li>light or electron microscopes;</li>
+<li>in-vivo or intravital imaging systems; or</li>
+<li>image-analysis workstations.</li>
+</ul>
+<p>You do not need to become a system administrator. You do need to understand
+where instrument data are written, which copy is authoritative, how to transfer
+data safely, and when RCC compute or storage is useful.</p>
+<p>The everyday model is:</p>
+<ol>
+<li>every operator uses an individual account and has one primary group;</li>
+<li>the approved project brings together everyone who may use the data, even
+when they work in different primary groups;</li>
+<li>a registered Lab-network instrument can deliver a completed run to that
+project's ready Samba share, while the future Ardia route will use its
+supported integration or export path;</li>
+<li>analysis runs through Slurm and durable results return to the project; and</li>
+<li>a reviewed final set may later be archived in Coscine through the planned
+service.</li>
+</ol>
+<p>Samba is simply the technology behind a Windows-style network folder. RCC
+provides the project-specific connection details; instrument operators should
+not have to discover servers or Linux paths themselves.</p>
+<p>For suitable registered devices, the <strong>Lab network</strong> is an additional
+protection option. It removes general direct Internet connectivity while
+retaining access to explicitly approved server endpoints and services. Limited
+outbound web access can be provided through an explicit HTTP proxy, for example
+for approved updates, without making the device reachable from the Internet.
+See <a href="../../resources/how-it-all-works/index.html">how RCC and the Lab network work together</a>.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this course, you should be able to:</p>
+<ul>
+<li>distinguish an instrument-control computer from storage and compute systems;</li>
+<li>explain how the Lab network limits Internet exposure while preserving
+approved server and proxy-based update access;</li>
+<li>choose among browser upload, SFTP, mounted storage, server-to-server transfer,
+and automated ingestion;</li>
+<li>estimate whether a dataset is difficult because of size, file count, or both;</li>
+<li>verify a transfer before deleting the source;</li>
+<li>explain why analysis should not run on an instrument-control computer;</li>
+<li>identify which data may be placed on RCC;</li>
+<li>place instrument data in an approved RCC project rather than a user's home
+directory;</li>
+<li>recognize and replace a saved Windows or macOS SSHFS configuration; and</li>
+<li>prepare a clean handoff to bioinformatics or image-analysis staff.</li>
+</ul>
+<h2 id="1-four-different-roles">1. Four different roles</h2>
+<h3 id="instrument-control-computer">Instrument-control computer</h3>
+<p>This system operates the sequencer, mass spectrometer, or microscope. Its
+priorities are stable acquisition, vendor support, enough local space for the
+current run, and minimal software change.</p>
+<p>Do not use it as a general-purpose analysis workstation unless the instrument
+facility explicitly supports that use.</p>
+<p>Where suitable, ask RCC whether the device can join the Lab network. Do not
+connect it yourself or guess network, server, or proxy settings. RCC must first
+review the owner, software and update requirements, required direct server
+endpoints, vendor remote-support needs, data flow, and destination project.</p>
+<p>The Lab network is not an Internet connection with extra firewall rules. It is
+an unrouted enclave with explicit service paths. Direct access is limited to
+approved servers or services such as a project share or managed acquisition
+tool. Proxy access is limited outbound web access for approved purposes such as
+updates; it does not make the device reachable from the Internet.</p>
+<h3 id="facility-or-acquisition-storage">Facility or acquisition storage</h3>
+<p>This is the first destination outside the instrument computer. It may be a
+laboratory file server, vendor-managed repository, Ardia-managed system,
+acquisition NAS, project share, or automated upload endpoint.</p>
+<h3 id="rcc-durable-project-storage">RCC durable project storage</h3>
+<p>RCC project storage is for approved, governed research data without direct
+identifiers and for durable analysis results. It is not a clinical archive, a
+vendor operational database, or a place for primary identifying fields.</p>
+<h3 id="rcc-compute-node">RCC compute node</h3>
+<p>A compute node runs scheduled analysis. Active temporary and random I/O should
+normally occur on node-local storage, with validated results returned to durable
+project storage.</p>
+<h2 id="2-the-instrument-data-lifecycle">2. The instrument-data lifecycle</h2>
+<pre><code class="language-text">plan experiment
+    -&gt; acquire data
+    -&gt; close and complete the run
+    -&gt; preserve the authoritative original
+    -&gt; transfer to an approved RCC project
+    -&gt; verify file count, size, and checksums
+    -&gt; register run and sample metadata
+    -&gt; analyse through Slurm or a supported service
+    -&gt; return validated results to the RCC project
+    -&gt; select and document the retained archive set
+    -&gt; transfer the approved archive set to Coscine
+    -&gt; verify archive acceptance
+    -&gt; remove temporary or superseded RCC copies according to policy
+</code></pre>
+<p>At every transition, somebody must know who owns the next step.</p>
+<p>This is the target lifecycle for data using the planned RCC-to-Coscine archive
+service. Coscine eligibility and the transfer route must still be confirmed for
+the specific project before real data moves.</p>
+<h3 id="the-rcc-landing-point-is-a-project-not-a-home-directory">The RCC landing point is a project, not a home directory</h3>
+<p>Instrument data must land in the approved RCC project area. A user's home
+directory is for personal configuration, small source files, and individual
+working material—not authoritative research data or shared instrument output.</p>
+<p>This separation matters for governance and legal compliance:</p>
+<ul>
+<li>a project connects the data to an approved purpose, accountable owner, and
+project-specific governance;</li>
+<li>project membership provides a managed, attributable access boundary instead
+of making one person's account the de facto owner;</li>
+<li>team members can continue the work when a user changes role or leaves;</li>
+<li>retention, access review, archival, legal hold, and deletion decisions can be
+applied to the project record; and</li>
+<li>it reduces uncontrolled personal copies whose purpose, access, and deletion
+status cannot be demonstrated reliably.</li>
+</ul>
+<p>It also matters operationally and for performance:</p>
+<ul>
+<li>home capacity and service behavior are intended for personal working files,
+not large or recurring instrument datasets;</li>
+<li>large transfers and many-small-file trees can consume home quota and create
+metadata load that affects unrelated interactive work;</li>
+<li>scheduled workflows need a stable team-owned input and output location; and</li>
+<li>temporary high-I/O analysis belongs on job-local storage, with validated
+results copied back to the project—not written intensively to either home or
+shared project storage.</li>
+</ul>
+<p>Use this pattern:</p>
+<pre><code class="language-text">instrument or facility storage
+    -&gt; approved RCC project/incoming
+    -&gt; job-local analysis workspace
+    -&gt; approved RCC project/results
+    -&gt; verified Coscine archive set
+</code></pre>
+<p>Do not use:</p>
+<pre><code class="language-text">instrument -&gt; /home/&lt;user&gt; -&gt; analysis -&gt; forgotten personal copy
+</code></pre>
+<p>Continue with <a href="../class-17-data-lifecycle/index.html">Class 17: manage the research data lifecycle</a>
+for selection, retention, Coscine archival, and RCC cleanup.</p>
+<h2 id="3-before-starting-a-run">3. Before starting a run</h2>
+<p>Record:</p>
+<ul>
+<li>project and responsible researcher;</li>
+<li>facility and instrument;</li>
+<li>run identifier;</li>
+<li>sample identifiers without direct patient identifiers;</li>
+<li>expected output size and file count;</li>
+<li>source directory and destination project;</li>
+<li>required analysis;</li>
+<li>retention requirements;</li>
+<li>person responsible for confirming the transfer.</li>
+</ul>
+<p>Use a directory name such as:</p>
+<pre><code class="language-text">PROJECT_YYYY-MM-DD_INSTRUMENT_RUNID
+</code></pre>
+<p>Do not place patient names, birth dates, hospital numbers, or similar fields in
+filenames.</p>
+<h2 id="4-choosing-a-transfer-method">4. Choosing a transfer method</h2>
+<table>
+<thead>
+<tr>
+  <th>Situation</th>
+  <th>Preferred option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>A few reports or spreadsheets</td>
+  <td>browser portal or mounted storage</td>
+</tr>
+<tr>
+  <td>Routine workstation transfer</td>
+  <td>SFTP or managed transfer</td>
+</tr>
+<tr>
+  <td>Large directory with many files</td>
+  <td>archive or manifest, then managed transfer</td>
+</tr>
+<tr>
+  <td>Recurring multi-terabyte output</td>
+  <td>automated facility ingestion</td>
+</tr>
+<tr>
+  <td>Data already on a facility server</td>
+  <td>server-to-server transfer</td>
+</tr>
+<tr>
+  <td>Editing one small file in place</td>
+  <td>an existing, RCC-approved SSHFS mount may be acceptable</td>
+</tr>
+<tr>
+  <td>Compute-intensive analysis</td>
+  <td>transfer first, then use Slurm</td>
+</tr>
+</tbody>
+</table>
+<p>Mounted storage is convenient but is not the preferred path for instrument
+datasets.</p>
+<h2 id="5-file-count-matters">5. File count matters</h2>
+<p>A 500 GB dataset in five files can be easier to move than a 50 GB dataset in
+500,000 files. Record total bytes, file count, largest file, directory depth,
+and whether files are still being written.</p>
+<p>Microscopy and mass-spectrometry workflows often create preview images,
+indexes, sidecars, databases, tiles, channels, or time-point files. Do not copy
+a live acquisition directory unless the facility has a tested ingestion
+process.</p>
+<h2 id="6-illumina-sequencing">6. Illumina sequencing</h2>
+<p>An Illumina run may include run metadata, base calls, quality information,
+logs, completion markers, sample sheets, and demultiplexed FASTQ files.</p>
+<p>The facility must define whether the authoritative original is the complete run
+directory, base calls, FASTQ files, or a combination. Do not delete a run
+directory merely because FASTQ files exist.</p>
+<p>Recommended handoff:</p>
+<ol>
+<li>wait for acquisition and required conversion to complete;</li>
+<li>freeze the source directory;</li>
+<li>record size and file count;</li>
+<li>transfer to durable storage;</li>
+<li>verify checksums or a validated transfer report;</li>
+<li>preserve sample sheets and run metadata;</li>
+<li>notify the analysis owner.</li>
+</ol>
+<p>Keep FASTQ files compressed when analysis tools support compressed input.</p>
+<h2 id="7-oxford-nanopore-sequencing">7. Oxford Nanopore sequencing</h2>
+<p>Oxford Nanopore runs may produce POD5 or FAST5 signal data, sequencing
+summaries, run reports, base-called FASTQ, alignment output, and continuously
+updated logs.</p>
+<p>Decide before the run:</p>
+<ul>
+<li>where base calling occurs;</li>
+<li>whether raw signal must be retained;</li>
+<li>whether data are exported incrementally;</li>
+<li>how open files are handled;</li>
+<li>how complete and partial runs are distinguished.</li>
+</ul>
+<p>For long-running acquisition, use a facility-approved incremental ingestion
+process rather than repeated drag-and-drop copies.</p>
+<h2 id="8-mass-spectrometry-and-future-ardia-integration">8. Mass spectrometry and future Ardia integration</h2>
+<blockquote>
+<p><strong>Not yet released:</strong> RCC does not yet provide the Ardia integration described
+here. This section is for planning a vendor-supported data flow.</p>
+</blockquote>
+<p>Ardia is part of the instrument and data-management environment, not merely a
+folder tree.</p>
+<p>Before export, determine:</p>
+<ul>
+<li>whether analysis requires vendor-native raw data;</li>
+<li>whether Ardia remains the authoritative repository;</li>
+<li>whether the export is immutable;</li>
+<li>which processing method and software version created derived results;</li>
+<li>whether files must remain together.</li>
+</ul>
+<p>Possible RCC handoffs include supported vendor-native exports, mzML or another
+facility-approved open format, result tables, spectral libraries, QC reports,
+and manifests.</p>
+<p>Do not copy an internal Ardia database or application directory as if it were a
+normal project folder. Use an Ardia-supported export or integration path.</p>
+<p>Preserve instrument, acquisition method, processing method, software version,
+database version, export time, operator, and checksum.</p>
+<h2 id="9-microscopy-and-imaging">9. Microscopy and imaging</h2>
+<p>The Imaging Center Essen covers light and electron microscopy, in-vivo and
+intravital imaging, and image analysis. Relevant instrument classes include:</p>
+<ul>
+<li>widefield and fluorescence microscopy;</li>
+<li>confocal and super-resolution microscopy;</li>
+<li>two-photon and light-sheet microscopy;</li>
+<li>IVIS and mouse ultrasound;</li>
+<li>TEM, SEM, and FIB-SEM;</li>
+<li>CLEM workflows;</li>
+<li>tiled, multichannel, time-series, and three-dimensional acquisition.</li>
+</ul>
+<p>Microscopy size grows across multiple dimensions:</p>
+<pre><code class="language-text">subjects x positions x tiles x z-planes x channels x time points
+</code></pre>
+<p>Ask before acquisition:</p>
+<ul>
+<li>Which vendor-native format is authoritative?</li>
+<li>Is an open-format export required?</li>
+<li>Will calibration and metadata survive export?</li>
+<li>Is the dataset one container or many files?</li>
+<li>Does analysis need GPU, large RAM, or local NVMe?</li>
+</ul>
+<p>Do not export every image to TIFF “just in case.” That can remove metadata,
+multiply file count, and greatly increase storage.</p>
+<h2 id="10-when-rcc-is-useful">10. When RCC is useful</h2>
+<p>RCC is appropriate for reproducible batch processing, many samples or images,
+CPU parallelism, GPU acceleration, large memory, containers, automated quality
+control, and durable project-level results.</p>
+<p>RCC is not automatically appropriate for live instrument control, diagnostic
+workflows, unsupported vendor databases, or data with primary identifying
+fields.</p>
+<h2 id="11-a-safe-handoff-package">11. A safe handoff package</h2>
+<pre><code class="language-text">RUN/
+├── README.txt
+├── MANIFEST.tsv
+├── CHECKSUMS.sha256
+├── metadata/
+├── raw-or-authoritative-export/
+└── reports/
+</code></pre>
+<p>The manifest should record relative path, size, role, sample ID, format, and
+creation time.</p>
+<p>Generate checksums only after acquisition is complete:</p>
+<pre><code class="language-bash">find RUN -type f -print0 | sort -z | xargs -0 sha256sum -- &gt; RUN/CHECKSUMS.sha256
+</code></pre>
+<h2 id="12-verification">12. Verification</h2>
+<p>Verify that:</p>
+<ul>
+<li>the destination exists;</li>
+<li>file count matches;</li>
+<li>total size is plausible;</li>
+<li>checksums match where practical;</li>
+<li>completion markers exist;</li>
+<li>key files open in the correct software;</li>
+<li>permissions allow the project team to read the data;</li>
+<li>source and destination are recorded.</li>
+</ul>
+<p>Only then should deletion be considered under the facility retention policy.</p>
+<h2 id="13-windows-and-macos">13. Windows and macOS</h2>
+<p>Start with a browser portal, approved SFTP client, facility-managed ingestion,
+or automated server-to-server transfer.</p>
+<p>Some workstations already mount RCC directories using SSHFS. These pages help
+you identify and replace such a setup; they are not setup instructions for a
+new connection:</p>
+<ul>
+<li><a href="../../data/legacy-storage-windows/index.html">Recognize an existing Windows SSHFS setup</a></li>
+<li><a href="../../data/legacy-storage-macos/index.html">Recognize an existing macOS SSHFS setup</a></li>
+</ul>
+<p>Do not copy their server names or port numbers. After RCC has supplied and
+tested the connection settings to use now, use SSHFS only for small files and
+occasional editing—not bulk instrument transfer or computation.</p>
+<h2 id="14-practical-exercise">14. Practical exercise</h2>
+<p>Using synthetic or non-sensitive data:</p>
+<ol>
+<li>identify the instrument and output type;</li>
+<li>estimate size and file count;</li>
+<li>choose a transfer path;</li>
+<li>create a run directory and manifest;</li>
+<li>transfer to an approved test destination;</li>
+<li>verify the copy;</li>
+<li>classify raw, derived, temporary, and durable files;</li>
+<li>describe the next analysis step.</li>
+</ol>
+<h2 id="take-home-rule">Take-home rule</h2>
+<blockquote>
+<p>Protect acquisition first. Preserve an authoritative original. Use a transfer
+method suited to the data shape. Verify before deleting. Analyse through
+supported RCC services rather than on the instrument-control computer.</p>
+</blockquote>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Using synthetic or non-sensitive data, produce a handoff plan that identifies
+the authoritative source, approved destination, transfer method, verification
+evidence, retention owner, and next Slurm or service-based analysis step.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

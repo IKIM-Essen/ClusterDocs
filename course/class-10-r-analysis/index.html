@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 10: R notebooks and large-data analysis · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a aria-current="page" href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a aria-current="page" href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-10-r-notebooks-and-large-data-analysis">Class 10: R notebooks and large-data analysis</h1>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 2 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Recommended R workflows, efficient table handling, reproducibility, and good cluster patterns. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>This class teaches the same RCC pattern for R: use interactive sessions to inspect, visualise, and explain; use Slurm jobs for expensive computation.</p>
+<p>For most users, VS Code with Remote - SSH is the suggested front end for R
+scripts, notebooks, environment files, and Slurm submissions. Install only the
+R extensions you need in the remote window, and keep data, package libraries,
+and generated results out of workspace-wide search and file watching.</p>
+<h2 id="learning-goals">Learning goals</h2>
+<p>After this class, you can:</p>
+<ul>
+<li>run R in a controlled Conda environment;</li>
+<li>use an R kernel in JupyterLab when needed;</li>
+<li>analyse larger tables with <code>data.table</code>, DuckDB, Arrow, and <code>dplyr</code> patterns;</li>
+<li>build figures with <code>ggplot2</code>;</li>
+<li>separate exploratory notebooks from batch analysis;</li>
+<li>prepare R code that can be rerun by a colleague.</li>
+</ul>
+<h2 id="recommended-r-workflow">Recommended R workflow</h2>
+<p>Start from the provided example:</p>
+<pre><code class="language-bash">cp -a examples/interactive-workflows/r my-r-analysis
+cd my-r-analysis
+sbatch r.sbatch
+</code></pre>
+<p>For an interactive R notebook, use the Jupyter example from Class 9. The environment already includes an R kernel.</p>
+<h2 id="handling-larger-tables">Handling larger tables</h2>
+<p>Do not begin by loading every file into memory. First check:</p>
+<ul>
+<li>file size;</li>
+<li>number of columns;</li>
+<li>expected row count;</li>
+<li>whether the file is compressed;</li>
+<li>whether the analysis needs all columns;</li>
+<li>whether the operation is streaming, grouped, or random-access.</li>
+</ul>
+<p>Good starting points:</p>
+<table>
+<thead>
+<tr>
+  <th>Pattern</th>
+  <th>R tool</th>
+  <th>Why it helps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Fast delimited file input</td>
+  <td><code>data.table::fread()</code></td>
+  <td>Efficient and familiar.</td>
+</tr>
+<tr>
+  <td>Tidy transformations</td>
+  <td><code>dplyr</code></td>
+  <td>Clear pipelines for moderate data.</td>
+</tr>
+<tr>
+  <td>Larger-than-memory query</td>
+  <td>DuckDB</td>
+  <td>SQL over local files without loading everything.</td>
+</tr>
+<tr>
+  <td>Columnar data</td>
+  <td>Arrow</td>
+  <td>Efficient column selection and interchange.</td>
+</tr>
+<tr>
+  <td>Reproducible plotting</td>
+  <td><code>ggplot2</code></td>
+  <td>Stable, reviewable figures.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reproducibility">Reproducibility</h2>
+<p>For teaching and small examples, the course uses Conda environments because they are easy to reproduce in Slurm jobs. For larger R projects, you may also use <code>renv</code>, but do not keep active package libraries with many small files on shared storage while computing. Restore packages into local job storage or use a reviewed container.</p>
+<h2 id="copyable-example">Copyable example</h2>
+<p>The course includes:</p>
+<ul>
+<li><code>examples/interactive-workflows/notebooks/r-large-data.ipynb</code></li>
+<li><code>examples/interactive-workflows/r/analysis.R</code></li>
+<li><code>examples/interactive-workflows/r/r.sbatch</code></li>
+<li><code>examples/interactive-workflows/r/environment.yml</code></li>
+</ul>
+<p>The notebook demonstrates group summaries and a sampled figure. The batch example writes reproducible output into a results directory.</p>
+<h2 id="good-cluster-patterns-for-r-users">Good cluster patterns for R users</h2>
+<ul>
+<li>Request only the CPU and memory your script can use.</li>
+<li>Keep raw data compressed where tools support it.</li>
+<li>Avoid thousands of tiny temporary files on shared storage.</li>
+<li>Use node-local scratch for intermediate output.</li>
+<li>Save final tables and figures back to the project area.</li>
+<li>Use <code>sacct</code> after completion to compare requested and observed memory.</li>
+</ul>
+<h2 id="security-habits">Security habits</h2>
+<ul>
+<li>Never store passwords or database credentials inside an <code>.RData</code> file.</li>
+<li>Do not publish notebooks with hidden patient identifiers in output cells.</li>
+<li>Do not reuse a colleague's RCC account to access a project.</li>
+<li>Use named project membership and named device accounts for instruments.</li>
+</ul>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Run:</p>
+<pre><code class="language-bash">python3 exercises/interactive/validate-interactive-examples.py
+</code></pre>
+<p>Then submit the R batch job once and verify that the result file was written. The gate is complete when you can explain how the same code could be moved from notebook exploration into the batch script.</p>
+<h2 id="self-check-questions">Self-check questions</h2>
+<ol>
+<li>When should you prefer DuckDB or Arrow over a plain data frame?</li>
+<li>Why should active R package libraries avoid shared storage during computation?</li>
+<li>Why does a plot usually use a sample rather than every row?</li>
+<li>What information should be recorded so another person can rerun your R analysis?</li>
+</ol>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

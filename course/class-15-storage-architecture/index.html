@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 15: RCC storage architecture · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a aria-current="page" href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a aria-current="page" href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-15-rcc-storage-architecture">Class 15: RCC storage architecture</h1>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 5 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>How RCC metadata, object storage, networking, caching, and Slurm placement fit together. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>This optional class explains the RCC data path:</p>
+<pre><code class="language-text">Compute application
+       |
+       v
+JuiceFS client
+   |         |
+   |         +---- metadata ----&gt; Redis
+   |
+   +-------------- file data ---&gt; S3 / MinIO
+       |
+       +---- memory and node-local cache
+</code></pre>
+<p>JuiceFS presents a POSIX filesystem to applications. Redis stores filesystem
+metadata, while MinIO stores file contents through an S3-compatible object
+interface. A single filesystem operation can therefore generate metadata,
+object-storage, network, and cache operations.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this class, you should be able to:</p>
+<ul>
+<li>describe the roles of Redis, MinIO, and the JuiceFS client;</li>
+<li>distinguish metadata traffic from file-content traffic;</li>
+<li>explain why small-file workloads differ from large streaming workloads;</li>
+<li>understand the RCC 100 Gb/s server and 10 Gb/s client topology;</li>
+<li>explain client and container caching; and</li>
+<li>choose appropriate I/O patterns for scientific workflows.</li>
+</ul>
+<h2 id="1-redis-handles-metadata">1. Redis handles metadata</h2>
+<p>Redis stores information such as:</p>
+<ul>
+<li>paths and directory entries;</li>
+<li>ownership and permissions;</li>
+<li>file sizes and timestamps;</li>
+<li>inode-like identifiers;</li>
+<li>object mappings;</li>
+<li>locks and coordination state; and</li>
+<li>filesystem bookkeeping.</li>
+</ul>
+<p>Operations such as <code>stat</code>, <code>ls</code>, <code>open</code>, <code>rename</code>, <code>mkdir</code>, and <code>unlink</code> may
+transfer almost no file content while still generating metadata requests.</p>
+<p>This makes workloads with hundreds of thousands of files fundamentally
+different from workloads containing a few large files. Increasing S3 bandwidth
+does not remove a metadata bottleneck.</p>
+<h2 id="2-minio-stores-file-contents">2. MinIO stores file contents</h2>
+<p>MinIO provides the S3-compatible object-storage layer used for durable file
+contents. Object storage is effective for:</p>
+<ul>
+<li>large objects;</li>
+<li>sequential reads and writes;</li>
+<li>durable replicated or erasure-coded storage;</li>
+<li>checksummed content; and</li>
+<li>aggregate access from many clients.</li>
+</ul>
+<p>The JuiceFS client translates filesystem reads and writes into object
+operations. Large streaming transfers amortize request overhead. Tiny,
+scattered reads and writes can generate many requests for relatively little
+useful data.</p>
+<h2 id="3-rcc-network-topology">3. RCC network topology</h2>
+<p>Storage and backend servers have connectivity of up to <strong>100 Gb/s</strong>. Typical
+compute clients have <strong>10 Gb/s</strong> links.</p>
+<pre><code class="language-text">compute process
+    |
+JuiceFS client
+    |
+10 Gb/s client link
+    |
+RCC network
+    |
+100 Gb/s aggregate backend
+    |
+Redis and MinIO
+</code></pre>
+<p>The 100 Gb/s server side is aggregate capacity. It does not provide 100 Gb/s to
+one compute node. Ten clients each attempting to sustain 10 Gb/s can already
+approach the nominal capacity of one 100 Gb/s backend link.</p>
+<p>Actual useful throughput is lower because of:</p>
+<ul>
+<li>protocol overhead;</li>
+<li>request latency;</li>
+<li>metadata operations;</li>
+<li>contention;</li>
+<li>checksums and encryption;</li>
+<li>filesystem translation; and</li>
+<li>application processing.</li>
+</ul>
+<p>Random and small-file workloads often do not fill a 10 Gb/s link with useful
+data. They spend their time waiting for network round trips and metadata.</p>
+<h2 id="4-large-files-versus-many-small-files">4. Large files versus many small files</h2>
+<p>Large compressed FASTQ, BAM, CRAM, archives, and model files generally support
+efficient streaming and readahead.</p>
+<p>Many small files require repeated:</p>
+<ul>
+<li>path lookups;</li>
+<li>permission checks;</li>
+<li>opens and closes;</li>
+<li>metadata updates;</li>
+<li>object requests;</li>
+<li>directory updates; and</li>
+<li>cache bookkeeping.</li>
+</ul>
+<p>Twenty gigabytes stored in 500,000 files can therefore perform much worse than
+one 20 GB archive.</p>
+<p>Conda environments are a common example: startup may require opening thousands
+of small files. This is one reason RCC prefers Apptainer images over Conda
+environments stored on shared network filesystems.</p>
+<h2 id="5-streaming-and-random-access">5. Streaming and random access</h2>
+<p>Streaming:</p>
+<pre><code class="language-text">chunk 1 -&gt; chunk 2 -&gt; chunk 3 -&gt; chunk 4
+</code></pre>
+<p>Random access:</p>
+<pre><code class="language-text">chunk 70 -&gt; chunk 2 -&gt; chunk 800 -&gt; chunk 71
+</code></pre>
+<p>Streaming supports readahead, larger requests, and efficient network transfer.
+Random access can repeatedly miss caches, request separate objects, and wait for
+metadata and network latency.</p>
+<p>Indexed scientific formats are useful. The problem is millions of tiny,
+poorly-localized requests against shared storage when the active working set
+could be staged locally.</p>
+<h2 id="6-juicefs-client-caching">6. JuiceFS client caching</h2>
+<p>The JuiceFS client may cache active data in memory and on node-local disk.</p>
+<p>A cache hit avoids another object download:</p>
+<pre><code class="language-text">application -&gt; JuiceFS client -&gt; local cache
+</code></pre>
+<p>A cache miss uses the complete path:</p>
+<pre><code class="language-text">application -&gt; JuiceFS client -&gt; network -&gt; MinIO -&gt; local cache
+</code></pre>
+<p>Caching helps when stable data is reused, for example:</p>
+<ul>
+<li>Apptainer images;</li>
+<li>reference genomes;</li>
+<li>aligner indexes;</li>
+<li>annotation databases;</li>
+<li>model weights; and</li>
+<li>read-only database snapshots.</li>
+</ul>
+<p>Cache entries should be identified by immutable version, digest, or checksum.
+Mutable names such as <code>latest.sif</code> are unsafe cache identities.</p>
+<h2 id="7-what-caching-does-not-solve">7. What caching does not solve</h2>
+<p>Caching does not remove:</p>
+<ul>
+<li>repeated metadata lookups;</li>
+<li>creation and deletion of thousands of temporary files;</li>
+<li>constantly changing writes;</li>
+<li>directory scans;</li>
+<li>cold starts on many different nodes;</li>
+<li>synchronized reads by hundreds of clients;</li>
+<li>data larger than cache capacity; or</li>
+<li>a poor access pattern inside a cached container.</li>
+</ul>
+<p>A cached container may start quickly while the application inside it still
+performs inefficient random I/O against JuiceFS.</p>
+<h2 id="8-slurm-placement-and-cache-locality">8. Slurm placement and cache locality</h2>
+<p>A parent job that stages data or warms a cache on one node should not submit
+child jobs that may run elsewhere:</p>
+<pre><code class="language-text">parent on worker A warms cache
+child on worker B downloads again
+child on worker C downloads again
+child on worker D downloads again
+</code></pre>
+<p>Nested submission destroys locality and can create repeated:</p>
+<ul>
+<li>S3 downloads;</li>
+<li>Redis metadata traffic;</li>
+<li>10 Gb/s client-link use;</li>
+<li>container transfers;</li>
+<li>reference-index transfers; and</li>
+<li>synchronized backend load.</li>
+</ul>
+<p>Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from
+an approved submission host. Each compute job should receive a complete unit of
+work.</p>
+<h2 id="9-recommended-patterns">9. Recommended patterns</h2>
+<p>Use shared JuiceFS storage for:</p>
+<ul>
+<li>durable inputs;</li>
+<li>validated final results;</li>
+<li>large sequential transfers;</li>
+<li>shared read-only references; and</li>
+<li>workflow-visible state.</li>
+</ul>
+<p>Use node-local storage for:</p>
+<ul>
+<li>temporary files;</li>
+<li>random-I/O working sets;</li>
+<li>per-job databases;</li>
+<li>decompressed intermediates;</li>
+<li>container and reference caches; and</li>
+<li>files that are created and deleted rapidly.</li>
+</ul>
+<p>Do not place primary identifying patient data on RCC.</p>
+<h2 id="10-diagnosing-the-slow-layer">10. Diagnosing the slow layer</h2>
+<table>
+<thead>
+<tr>
+  <th>Symptom</th>
+  <th>Likely layer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>ls</code>, <code>stat</code>, or file creation is slow</td>
+  <td>Redis metadata path or namespace pressure</td>
+</tr>
+<tr>
+  <td>large sequential reads are slow</td>
+  <td>MinIO, network, contention, or client link</td>
+</tr>
+<tr>
+  <td>first read is slow and second read is fast</td>
+  <td>cold versus warm client cache</td>
+</tr>
+<tr>
+  <td>many nodes slow simultaneously</td>
+  <td>shared backend or network contention</td>
+</tr>
+<tr>
+  <td>one node alone is slow</td>
+  <td>client link, local disk, cache, or mount state</td>
+</tr>
+<tr>
+  <td>container startup repeats downloads</td>
+  <td>cold or incorrectly keyed image cache</td>
+</tr>
+<tr>
+  <td>temporary-file-heavy tool is slow</td>
+  <td>metadata load and network round trips</td>
+</tr>
+</tbody>
+</table>
+<p>When reporting a problem, provide the Slurm job ID, node, path, approximate file
+count, total size, read/write pattern, and whether local staging changes the
+result. Do not include patient identifiers.</p>
+<h2 id="take-home-model">Take-home model</h2>
+<blockquote>
+<p>JuiceFS supplies the POSIX interface. Redis handles metadata. MinIO stores file
+contents as S3 objects. The network connects the layers. Good performance
+comes from streaming large data, minimizing metadata storms, reusing immutable
+caches, and moving temporary random I/O to node-local storage.</p>
+</blockquote>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Given one streaming workload and one small-file or random-I/O workload, trace
+the likely metadata, object-storage, network, and cache paths. State which data
+should remain durable, which work should use job-local scratch, and what you
+would measure before changing resources.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

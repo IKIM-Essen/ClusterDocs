@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>RCC biomedical-data use: quick training guide · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a aria-current="page" href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a aria-current="page" href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Reference · RCC ClusterDocs</p>
+      
+      <h1 id="rcc-biomedical-data-use-quick-training-guide">RCC biomedical-data use: quick training guide</h1>
+<p>RCC is a controlled research-computing enclave. It may process approved biomedical research data, including genomic data and X-ray, CT, and MRI images. These data are not automatically direct identifiers, but they may remain personal or special-category data and must be handled under the project's approved purpose and safeguards.</p>
+<h2 id="do-not-place-these-in-rcc">Do not place these in RCC</h2>
+<ul>
+<li>names, initials, postal or email addresses, or telephone numbers;</li>
+<li>patient, case, insurance, personnel, or hospital record numbers;</li>
+<li>the subject-code lookup or re-identification key;</li>
+<li>unreviewed free text, clinical letters, referrals, or consent forms;</li>
+<li>passwords, private keys, access tokens, or other credentials;</li>
+<li>data assigned by the project approval to another environment.</li>
+</ul>
+<h2 id="data-that-may-be-used-when-the-project-governance-covers-rcc">Data that may be used when the project governance covers RCC</h2>
+<ul>
+<li>pseudonymised research records without the re-identification key;</li>
+<li>individual-level genomic or variant data;</li>
+<li>X-ray, CT, MRI, and other medical images after the approved metadata process;</li>
+<li>rare-disease and small-cohort data with appropriate access controls;</li>
+<li>linked biomedical datasets covered by the approved purpose;</li>
+<li>synthetic, public-reference, aggregate, and derived data.</li>
+</ul>
+<h2 id="before-transfer">Before transfer</h2>
+<p>Confirm that:</p>
+<ol>
+<li>RCC is named or covered as an approved processing environment;</li>
+<li>the purpose and data categories match the project documentation;</li>
+<li>direct identifiers and the linkage key remain outside RCC;</li>
+<li>access is limited to named project members;</li>
+<li>retention, deletion, and output disclosure are defined;</li>
+<li>any new linkage, purpose, collaborator, or data source has been reviewed.</li>
+</ol>
+<h2 id="defacing">Defacing</h2>
+<p>Defacing head CT or MRI can reduce facial-recognition risk, especially before wider sharing or when required by the project plan. It is not an automatic requirement for approved processing inside RCC. It may be expensive, may remove scientifically relevant anatomy, and does not replace metadata cleaning or access control.</p>
+<h2 id="when-uncertain">When uncertain</h2>
+<p>Ask the project lead or the Universitätsklinikum Essen data-protection office before changing the purpose, linking new data, including direct identifiers, or moving data to a different environment.</p>
+<p><strong>Christian Hecke</strong><br />
+Universitätsklinikum Essen (AöR), Datenschutz<br />
+Hufelandstraße 55, D-45147 Essen<br />
+Telephone: +49 201 / 723-6315<br />
+Email: <a href="mailto:datenschutz@uk-essen.de">datenschutz@uk-essen.de</a><br />
+Official information: <a href="https://www.uk-essen.de/datenschutz">https://www.uk-essen.de/datenschutz</a></p>
+<p>Do not attach research data or include patient information in the initial enquiry.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

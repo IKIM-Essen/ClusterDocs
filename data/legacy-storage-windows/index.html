@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Windows: recognize an existing SSHFS setup · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a aria-current="page" href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a aria-current="page" href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Data lifecycle · RCC ClusterDocs</p>
+      
+      <h1 id="windows-recognize-an-existing-sshfs-setup">Windows: recognize an existing SSHFS setup</h1>
+<blockquote>
+<p><strong>Service status:</strong> project Samba shares are <strong>ready now</strong>. Ardia integration
+is <strong>not yet released</strong>. This historical SSHFS page is not a setup guide for
+either service.</p>
+</blockquote>
+<blockquote>
+<p><strong>Setting up access now? Skip this page.</strong> Follow
+<a href="../../reference/access-ssh-vscode/index.html">Account access, SSH, and VS Code</a> and use
+the RCC connection settings you were given. This page is only for people who
+already have an SSHFS setup on their Windows computer and need to identify or
+replace it.</p>
+</blockquote>
+<p>This type of setup used WinFsp, SSHFS-Win, SSHFS-Win Manager, an SSH tunnel,
+and optionally Windows Task Scheduler.</p>
+<p>If you see <code>login.ikim.uk-essen.de</code>, <code>shellhost</code>, or local port <code>6666</code> in a
+saved configuration, do not copy those values into a new setup. Ask RCC for
+the connection settings to use now.</p>
+<h2 id="ssh-settings-you-may-find-on-an-existing-computer">SSH settings you may find on an existing computer</h2>
+<p>Location:</p>
+<pre><code class="language-text">C:\Users\&lt;WINDOWS-USERNAME&gt;\.ssh\config
+</code></pre>
+<p>Pattern:</p>
+<pre><code class="language-sshconfig">Host ikim
+    HostName login.ikim.uk-essen.de
+    User &lt;RCC-USERNAME&gt;
+    IdentityFile ~/.ssh/id_ikim
+
+Host shellhost
+    HostName shellhost.ikim.uk-essen.de
+    User &lt;RCC-USERNAME&gt;
+    IdentityFile ~/.ssh/id_ikim
+    ProxyJump ikim
+</code></pre>
+<p>Do not reuse this unchanged. Obtain the current RCC configuration and key
+instructions from <a href="../../reference/access-ssh-vscode/index.html">Account access, SSH, and VS Code</a>.</p>
+<h2 id="tunnel-command-you-may-find">Tunnel command you may find</h2>
+<pre><code class="language-powershell">Start-Process ssh -WindowStyle Hidden `
+  -ArgumentList &quot;-fN&quot;, &quot;-L&quot;, `
+  &quot;6666:shellhost.ikim.uk-essen.de:22&quot;, &quot;shellhost&quot;
+</code></pre>
+<p>The SSHFS-Win Manager connection used the forwarded local port.</p>
+<h2 id="how-this-setup-was-installed">How this setup was installed</h2>
+<ol>
+<li>Install a supported WinFsp release.</li>
+<li>Install a compatible SSHFS-Win release.</li>
+<li>Install SSHFS-Win Manager.</li>
+<li>Configure and test SSH.</li>
+<li>Add the SSHFS connection.</li>
+<li>Optionally use Task Scheduler to start the tunnel.</li>
+<li>Test with a small non-sensitive file.</li>
+</ol>
+<p>The setup may refer to <code>/homes/&lt;username&gt;/</code>, <code>/groups/&lt;group&gt;/</code>, or
+<code>/project/&lt;project&gt;/</code>. Confirm your project path with RCC before transferring
+data.</p>
+<h3 id="recognize-the-installed-software">Recognize the installed software</h3>
+<blockquote>
+<p><strong>Do not copy values from these screenshots.</strong> They help you recognize an
+existing installation. For a new connection, use the software versions,
+server name, path, and port supplied by RCC.</p>
+</blockquote>
+<p>The WinFsp installer selected the core filesystem component rather than the
+developer components:</p>
+<p><img src="../../assets/WinFSP_download.png" alt="WinFsp installer with the Core component selected and developer components disabled" /></p>
+<p>The SSHFS-Win Manager example used a local forwarded connection and a group
+path. Do not copy its localhost port, key path, remote path, or automatic-start
+choice into a new setup:</p>
+<p><img src="../../assets/sshfs_win_manager.png" alt="SSHFS-Win Manager basic and advanced connection screens from an existing setup" /></p>
+<p>The former optional automation used Windows Task Scheduler. These screenshots
+are retained so an existing task can be recognized and removed or migrated:</p>
+<p><img src="../../assets/sshfs_win_manager_details1.png" alt="Historical Windows Task Scheduler General tab for the background SSH task" /></p>
+<p><img src="../../assets/sshfs_win_manager_details2.png" alt="Historical Windows Task Scheduler network-event trigger for the background SSH task" /></p>
+<p><img src="../../assets/sshfs_win_manager_conditions.png" alt="Historical Windows Task Scheduler Conditions tab limiting the task to an available network connection" /></p>
+<p><img src="../../assets/sshfs_win_manager_settings.png" alt="Historical Windows Task Scheduler Settings tab for the background SSH task" /></p>
+<p>Do not create an unattended background tunnel merely because it appears in the
+walkthrough. Before changing or recreating it, ask RCC to confirm the server
+name, host identity, credential handling, need for automatic mounting, and safe
+stop behavior.</p>
+<h2 id="appropriate-use">Appropriate use</h2>
+<p>Use the mount to inspect a report, edit a small text file, copy a sample sheet,
+or browse completed results.</p>
+<p>Do not use it for complete sequencing runs, live Nanopore output, Ardia exports,
+large microscopy datasets, analysis, or hundreds of thousands of files.</p>
+<p>Prefer the current RCC transfer portal, SFTP service, server-to-server transfer,
+or facility-managed ingestion for instrument data.</p>
+<p>Return to <a href="../instrument-data-options/index.html">Choosing an instrument-data transfer path</a>
+before selecting a current transfer method.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

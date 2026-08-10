@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Python, R, Shiny, and Jupyter on the RCC · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a aria-current="page" href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a aria-current="page" href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Examples · RCC ClusterDocs</p>
+      
+      <h1 id="python-r-shiny-and-jupyter-on-the-rcc">Python, R, Shiny, and Jupyter on the RCC</h1>
+<p>This guide provides supported patterns for interactive exploration and scheduled analysis on the RCC. The central rule is that <strong>computation runs through Slurm</strong>. Login and interactive nodes are for editing, submitting, monitoring, and forwarding connections—not for sustained computation.</p>
+<p>Short Python and R batch examples use <code>cpu_short</code> and must request no more than
+two hours. The <code>interactive</code> partition is for attended exploration and bounded
+Jupyter or Shiny development, not detached or overnight runners. Submit
+long-running analysis with <code>sbatch</code> on regular compute and make it restartable.</p>
+<h2 id="storage-and-environment-rules">Storage and environment rules</h2>
+<p>Use these locations consistently:</p>
+<table>
+<thead>
+<tr>
+  <th>Purpose</th>
+  <th>Location</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Source code, notebooks, small configuration</td>
+  <td>project or home storage</td>
+  <td>Keep under version control where possible.</td>
+</tr>
+<tr>
+  <td>Input and final output</td>
+  <td>project storage</td>
+  <td>Prefer compressed, sequential formats.</td>
+</tr>
+<tr>
+  <td>Conda environments and package cache</td>
+  <td><code>/local/conda/$USER</code></td>
+  <td>Configured automatically on RCC worker nodes.</td>
+</tr>
+<tr>
+  <td>Job scratch</td>
+  <td><code>/local/work/$USER/slurm-job-$SLURM_JOB_ID</code></td>
+  <td>Created by the Slurm prolog and removed when the job ends.</td>
+</tr>
+<tr>
+  <td>Apptainer cache</td>
+  <td><code>/local/apptainercache/$USER</code></td>
+  <td>Node-local; do not place container caches on network storage.</td>
+</tr>
+</tbody>
+</table>
+<p>Avoid environments containing thousands of small files on shared storage. Create the environment within an allocated worker node, or build a reproducible Apptainer image and reuse it.</p>
+<h2 id="python-batch-analysis">Python batch analysis</h2>
+<p>Copy the example directory and create its environment from a worker allocation:</p>
+<pre><code class="language-bash">cp -a examples/user-workflows/python my-python-analysis
+cd my-python-analysis
+srun --partition=interactive --pty --cpus-per-task=2 --mem=4G --time=00:30:00 bash
+mamba env create -f environment.yml -n rcc-python-example
+conda activate rcc-python-example
+python analysis.py
+exit
+</code></pre>
+<p>Submit the same analysis as a batch job:</p>
+<pre><code class="language-bash">sbatch python.sbatch
+</code></pre>
+<p>The batch script stages inputs into node-local scratch and copies only final results back to the submission directory.</p>
+<h2 id="r-batch-analysis">R batch analysis</h2>
+<p>The supported R pattern uses a pinned Conda environment, which keeps R and compiled package dependencies reproducible:</p>
+<pre><code class="language-bash">cp -a examples/user-workflows/r my-r-analysis
+cd my-r-analysis
+srun --partition=interactive --pty --cpus-per-task=2 --mem=6G --time=00:45:00 bash
+mamba env create -f environment.yml -n rcc-r-example
+conda activate rcc-r-example
+Rscript analysis.R
+exit
+sbatch r.sbatch
+</code></pre>
+<p>For larger projects, commit <code>environment.yml</code> and optionally an <code>renv.lock</code>. Do not use a shared-storage <code>renv/library</code> as the active library during computation; restore it into job-local storage or use the Conda environment shown here.</p>
+<h2 id="jupyterlab-notebooks">JupyterLab notebooks</h2>
+<p>Jupyter must run inside a Slurm allocation and listen only on loopback. The supplied launcher:</p>
+<pre><code class="language-bash">cp -a examples/user-workflows/jupyter my-notebooks
+cd my-notebooks
+sbatch jupyter.sbatch
+</code></pre>
+<p>The job output reports the assigned worker node, port, and tunnel command. On your workstation, create the tunnel through the RCC SSH entry point using the exact worker and port shown in the log:</p>
+<pre><code class="language-bash">ssh -N -L 8888:127.0.0.1:&lt;PORT&gt; \
+  -J &lt;RCC-SSH-ENTRY&gt; &lt;USERNAME&gt;@&lt;WORKER&gt;
+</code></pre>
+<p>Then open <code>http://127.0.0.1:8888</code> and paste the token printed in <code>jupyter-&lt;jobid&gt;.out</code>.</p>
+<p>Security requirements:</p>
+<ul>
+<li>Jupyter binds to <code>127.0.0.1</code>, never <code>0.0.0.0</code>.</li>
+<li>Do not disable the token.</li>
+<li>Do not expose notebook ports through the firewall.</li>
+<li>Stop the job when finished: <code>scancel &lt;jobid&gt;</code>.</li>
+<li>Notebook kernels consume the CPU, RAM, GPU, and time requested in the Slurm script.</li>
+</ul>
+<p>The example environment includes Python and an R kernel. Add packages to <code>environment.yml</code>, rebuild the environment, and keep notebooks separate from large input data.</p>
+<h2 id="shiny-applications">Shiny applications</h2>
+<p>Shiny applications also run inside a Slurm allocation and bind only to loopback:</p>
+<pre><code class="language-bash">cp -a examples/user-workflows/shiny my-shiny-app
+cd my-shiny-app
+sbatch shiny.sbatch
+</code></pre>
+<p>Read <code>shiny-&lt;jobid&gt;.out</code>, then create the tunnel reported there:</p>
+<pre><code class="language-bash">ssh -N -L 3838:127.0.0.1:&lt;PORT&gt; \
+  -J &lt;RCC-SSH-ENTRY&gt; &lt;USERNAME&gt;@&lt;WORKER&gt;
+</code></pre>
+<p>Open <code>http://127.0.0.1:3838</code> locally. This pattern is intended for development, demonstrations, and bounded research sessions. It is not a production web-hosting service. A persistent or multi-user Shiny deployment requires an explicitly reviewed RCI service, authentication, reverse proxying, logging, lifecycle management, and a data-protection review.</p>
+<h2 id="gpu-notebooks-and-python-jobs">GPU notebooks and Python jobs</h2>
+<p>Request a GPU only when the code uses it:</p>
+<pre><code class="language-bash">#SBATCH --partition=gpu_nodes
+#SBATCH --gres=gpu:1
+</code></pre>
+<p>Inside the allocation, first verify visibility:</p>
+<pre><code class="language-bash">nvidia-smi
+</code></pre>
+<p>Then verify the framework itself, for example:</p>
+<pre><code class="language-bash">python -c 'import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))'
+</code></pre>
+<p>Use a CUDA-enabled environment or a reviewed Apptainer image whose userspace CUDA libraries are compatible with the RCC driver. The host NVIDIA driver remains managed and tested by RCC operations.</p>
+<h2 id="resource-selection">Resource selection</h2>
+<p>Start conservatively and measure:</p>
+<ul>
+<li><code>--cpus-per-task</code>: threads the process can actually use.</li>
+<li><code>--mem</code>: total RAM for the job.</li>
+<li><code>--time</code>: realistic upper bound.</li>
+<li><code>--gres=gpu:1</code>: only for GPU-enabled work.</li>
+</ul>
+<p>Within Python use <code>psutil</code>, <code>/usr/bin/time -v</code>, or application profilers. Within R use <code>profvis</code>, <code>Rprof()</code>, and <code>peakRAM</code>. Slurm accounting can be inspected after completion with:</p>
+<pre><code class="language-bash">sacct -j &lt;jobid&gt; --format=JobID,State,Elapsed,AllocCPUS,ReqMem,MaxRSS,ExitCode
+</code></pre>
+<h2 id="common-failures">Common failures</h2>
+<p><strong>Environment creation is slow or causes heavy metadata I/O</strong>
+Confirm <code>CONDA_ENVS_PATH</code> and <code>CONDA_PKGS_DIRS</code> point to <code>/local/conda/$USER</code>. Build from a worker allocation, not directly on shared storage.</p>
+<p><strong>The browser cannot reach Jupyter or Shiny</strong>
+Confirm the job is running, use the worker and port from the job log, and keep the SSH tunnel process open.</p>
+<p><strong>The application starts on the login node</strong>
+Cancel it and submit through Slurm. Long-running Python, R, Jupyter, and Shiny processes are not permitted on login nodes.</p>
+<p><strong>The job cannot find files after staging</strong>
+Use absolute paths or derive the submission directory from <code>SLURM_SUBMIT_DIR</code>. Copy final outputs back before the job exits.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

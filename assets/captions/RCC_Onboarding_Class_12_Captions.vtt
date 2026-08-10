@@ -1,0 +1,82 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.685
+Welcome to Class 12: From notebooks to governed project services.
+
+2
+00:00:04.685 --> 00:00:08.902
+This video introduces the core decisions and working patterns.
+
+3
+00:00:08.902 --> 00:00:15.462
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:15.462 --> 00:00:17.805
+exercises, and detailed reference material.
+
+5
+00:00:17.805 --> 00:00:23.372
+After this class, you can: choose between notebook, batch job, Shiny app,
+
+6
+00:00:23.372 --> 00:00:30.796
+Python web app, and vhost; separate interactive presentation from expensive computation; package a small service for
+
+7
+00:00:30.796 --> 00:00:38.219
+review; write a minimal release note for project users; avoid patterns that leak data or overload
+
+8
+00:00:38.219 --> 00:00:39.147
+shared infrastructure.
+
+9
+00:00:39.147 --> 00:00:43.715
+A governed web app should be a presentation and coordination layer.
+
+10
+00:00:43.715 --> 00:00:49.944
+It may read approved data, collect small forms, start reviewed workflows, or display curated results.
+
+11
+00:00:49.944 --> 00:00:54.097
+It should not perform long-running analysis inside the web request.
+
+12
+00:00:54.097 --> 00:00:57.835
+A good pattern is: The web app validates input.
+
+13
+00:00:57.835 --> 00:01:00.741
+The app writes a small request record.
+
+14
+00:01:00.741 --> 00:01:03.648
+A Slurm workflow performs the heavy computation.
+
+15
+00:01:03.648 --> 00:01:05.725
+The app displays completed results.
+
+16
+00:01:05.725 --> 00:01:10.293
+Logs and receipts keep the action attributable to a named user.
+
+17
+00:01:10.293 --> 00:01:16.095
+Use the vhost request checklist from Class 8 and add one architectural sentence:
+
+18
+00:01:16.095 --> 00:01:23.235
+Heavy computation for this service will run through Slurm, while the web app only handles authentication,
+
+19
+00:01:23.235 --> 00:01:26.806
+parameter collection, status display, and curated result access.
+
+20
+00:01:26.806 --> 00:01:32.161
+If that sentence is false, redesign the application before requesting a vhost.
+

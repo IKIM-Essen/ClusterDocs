@@ -1,0 +1,209 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.182
+Welcome to Class 16: from instrument to analysis for wet-lab teams.
+
+2
+00:00:05.182 --> 00:00:09.422
+This video introduces the core decisions and working patterns.
+
+3
+00:00:09.422 --> 00:00:16.018
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:16.018 --> 00:00:18.374
+exercises, and detailed reference material.
+
+5
+00:00:18.374 --> 00:00:25.497
+After this course, you should be able to: distinguish an instrument-control computer from storage and compute
+
+6
+00:00:25.497 --> 00:00:32.620
+systems; explain how the Lab network limits Internet exposure while preserving approved server and proxy-based update
+
+7
+00:00:32.620 --> 00:00:38.407
+access; choose among browser upload, SFTP, mounted storage, server-to-server transfer, and automated ingestion;
+
+8
+00:00:38.407 --> 00:00:44.195
+estimate whether a dataset is difficult because of size, file count, or both;
+
+9
+00:00:44.195 --> 00:00:51.318
+verify a transfer before deleting the source; explain why analysis should not run on an instrument-control
+
+10
+00:00:51.318 --> 00:00:58.441
+computer; identify which data may be placed on RCC; place instrument data in an approved RCC
+
+11
+00:00:58.441 --> 00:01:05.119
+project rather than a user's home directory; recognize and replace a saved Windows or macOS.
+
+12
+00:01:05.119 --> 00:01:10.678
+### Instrument-control computer This system operates the sequencer, mass spectrometer, or microscope.
+
+13
+00:01:10.678 --> 00:01:17.163
+Its priorities are stable acquisition, vendor support, enough local space for the current run,
+
+14
+00:01:17.163 --> 00:01:19.016
+and minimal software change.
+
+15
+00:01:19.016 --> 00:01:26.428
+Do not use it as a general-purpose analysis workstation unless the instrument facility explicitly supports that
+
+16
+00:01:26.428 --> 00:01:26.892
+use.
+
+17
+00:01:26.892 --> 00:01:32.451
+Where suitable, ask RCC whether the device can join the Lab network.
+
+18
+00:01:32.451 --> 00:01:38.010
+Do not connect it yourself or guess network, server, or proxy settings.
+
+19
+00:01:38.010 --> 00:01:44.495
+RCC must first review the owner, software and update requirements, required direct server endpoints,
+
+20
+00:01:44.495 --> 00:01:48.201
+vendor remote-support needs, data flow, and destination project.
+
+21
+00:01:48.201 --> 00:01:53.761
+The Lab network is not an Internet connection with extra firewall rules..
+
+22
+00:01:53.761 --> 00:01:58.341
+At every transition, somebody must know who owns the next step.
+
+23
+00:01:58.341 --> 00:02:03.753
+This is the target lifecycle for data using the planned RCC-to-Coscine archive service.
+
+24
+00:02:03.753 --> 00:02:10.415
+Coscine eligibility and the transfer route must still be confirmed for the specific project before real
+
+25
+00:02:10.415 --> 00:02:11.248
+data moves.
+
+26
+00:02:11.248 --> 00:02:17.910
+### The RCC landing point is a project, not a home directory Instrument data must land
+
+27
+00:02:17.910 --> 00:02:20.408
+in the approved RCC project area.
+
+28
+00:02:20.408 --> 00:02:27.070
+A user's home directory is for personal configuration, small source files, and individual working material—not authoritative
+
+29
+00:02:27.070 --> 00:02:29.569
+research data or shared instrument output.
+
+30
+00:02:29.569 --> 00:02:36.231
+This separation matters for governance and legal compliance: a project connects the data to an approved
+
+31
+00:02:36.231 --> 00:02:37.480
+purpose, accountable owner.
+
+32
+00:02:37.480 --> 00:02:46.115
+Record: project and responsible researcher; facility and instrument; run identifier; sample identifiers without direct patient identifiers;
+
+33
+00:02:46.115 --> 00:02:53.130
+expected output size and file count; source directory and destination project; required analysis;
+
+34
+00:02:53.130 --> 00:02:57.448
+retention requirements; person responsible for confirming the transfer.
+
+35
+00:02:57.448 --> 00:03:04.464
+Use a directory name such as: Do not place patient names, birth dates,
+
+36
+00:03:04.464 --> 00:03:08.241
+hospital numbers, or similar fields in filenames.
+
+37
+00:03:08.241 --> 00:03:13.659
+Mounted storage is convenient but is not the preferred path for instrument datasets.
+
+38
+00:03:13.659 --> 00:03:21.590
+A 500 GB dataset in five files can be easier to move than a 50 GB
+
+39
+00:03:21.590 --> 00:03:23.573
+dataset in 500,000 files.
+
+40
+00:03:23.573 --> 00:03:31.504
+Record total bytes, file count, largest file, directory depth, and whether files are still being written.
+
+41
+00:03:31.504 --> 00:03:39.435
+Microscopy and mass-spectrometry workflows often create preview images, indexes, sidecars, databases, tiles, channels, or time-point files.
+
+42
+00:03:39.435 --> 00:03:46.871
+Do not copy a live acquisition directory unless the facility has a tested ingestion process.
+
+43
+00:03:46.871 --> 00:03:54.850
+RCC is appropriate for reproducible batch processing, many samples or images, CPU parallelism,
+
+44
+00:03:54.850 --> 00:04:02.215
+GPU acceleration, large memory, containers, automated quality control, and durable project-level results.
+
+45
+00:04:02.215 --> 00:04:10.808
+RCC is not automatically appropriate for live instrument control, diagnostic workflows, unsupported vendor databases,
+
+46
+00:04:10.808 --> 00:04:14.491
+or data with primary identifying fields.
+
+47
+00:04:14.491 --> 00:04:22.234
+The manifest should record relative path, size, role, sample ID, format, and creation time.
+
+48
+00:04:22.234 --> 00:04:26.105
+Generate checksums only after acquisition is complete:
+
+49
+00:04:26.105 --> 00:04:31.415
+Verify that: the destination exists; file count matches; total size is plausible;
+
+50
+00:04:31.415 --> 00:04:37.609
+checksums match where practical; completion markers exist; key files open in the correct software;
+
+51
+00:04:37.609 --> 00:04:43.803
+permissions allow the project team to read the data; source and destination are recorded.
+
+52
+00:04:43.803 --> 00:04:48.670
+Only then should deletion be considered under the facility retention policy.

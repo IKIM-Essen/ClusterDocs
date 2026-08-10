@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Account access, SSH, and VS Code reference · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a aria-current="page" href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a aria-current="page" href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Reference · RCC ClusterDocs</p>
+      
+      <h1 id="account-access-ssh-and-vs-code-reference">Account access, SSH, and VS Code reference</h1>
+<p>This guide collects the practical setup details from the earlier ClusterDocs
+site. Complete <a href="../../course/class-01-safe-access/index.html">Class 1</a> first so that the
+credential and host-verification rules are clear.</p>
+<blockquote>
+<p><strong>Recommended for most users:</strong> use <strong>VS Code with Remote - SSH</strong> as your
+everyday interface for writing code, editing configuration, using Git,
+reading logs, and preparing analyses. Use the RCC transfer service for large
+data movement, and submit computation through Slurm. Opening a remote VS Code
+window does not create a compute allocation.</p>
+</blockquote>
+<h2 id="request-an-rcc-account">Request an RCC account</h2>
+<p><strong>RCC Admin is ready now</strong>, including self-administration and the
+primary-approver workflow. Use RCC Admin for the account or membership request.
+If your project uses a coordinated onboarding process, prepare the following
+for the responsible project coordinator and primary approver:</p>
+<ul>
+<li>first and last name;</li>
+<li>institutional email address;</li>
+<li>project or working group;</li>
+<li>sponsor or project lead; and</li>
+<li>the <strong>public</strong> SSH key, never the private key.</li>
+</ul>
+<p>Every researcher receives an individual account. Project membership replaces
+shared accounts and shared credentials.</p>
+<p>Every user also has exactly one primary group. Internal users are assigned to
+their organizational group; external users are assigned to <code>collab</code>. The
+primary group records affiliation, while explicit project memberships grant
+access to the shared spaces where users from different groups exchange data.
+See <a href="../users-groups-projects/index.html">Users, groups, and projects</a> for the complete
+model.</p>
+<h2 id="create-an-ssh-key">Create an SSH key</h2>
+<p>Where a compatible FIDO2 authenticator is available, prefer a hardware-backed key. Its private material remains on the authenticator and normally requires user presence:</p>
+<pre><code class="language-bash">ssh-keygen -t ed25519-sk -f ~/.ssh/id_rcc
+</code></pre>
+<p>Otherwise, create the dedicated software-backed Ed25519 key described below. Do not copy either type of private credential between computers.</p>
+<h3 id="macos-and-linux">macOS and Linux</h3>
+<p>Create a dedicated Ed25519 key and protect it with a strong passphrase:</p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -f ~/.ssh/id_rcc
+</code></pre>
+<p>This creates two files:</p>
+<ul>
+<li><code>~/.ssh/id_rcc</code> is the private key. Keep it on your workstation and never
+send or paste it anywhere.</li>
+<li><code>~/.ssh/id_rcc.pub</code> is the public key. This is the file RCC registers.</li>
+</ul>
+<p>Show the public key when you need to copy it:</p>
+<pre><code class="language-bash">cat ~/.ssh/id_rcc.pub
+</code></pre>
+<h3 id="windows">Windows</h3>
+<p>Current Windows releases provide the OpenSSH client as an optional feature.
+Open PowerShell and check it first:</p>
+<pre><code class="language-powershell">ssh -V
+ssh-keygen -t ed25519 -f &quot;$HOME\.ssh\id_rcc&quot;
+</code></pre>
+<p>If <code>ssh</code> is unavailable, install the Microsoft OpenSSH Client optional feature
+using the official Windows instructions. The private and public files are
+normally stored under <code>C:\Users\&lt;username&gt;\.ssh\</code>.</p>
+<h2 id="configure-the-approved-rcc-target">Configure the approved RCC target</h2>
+<p>Use the current host block supplied through a trusted institutional channel.
+The public alias used in this course is <code>rcc-login</code>. A safe client block
+has this shape:</p>
+<pre><code class="language-sshconfig">Host rcc-login
+  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ForwardAgent no
+</code></pre>
+<p>Do not copy an old hostname from a colleague, disable host-key checking or
+enable agent forwarding merely to make a connection work. Verify the published
+RCC host identity through an independent institutional channel.</p>
+<p>Inspect the effective configuration without connecting:</p>
+<pre><code class="language-bash">ssh -G rcc-login
+</code></pre>
+<p>Then use the bounded readiness test from Class 1. For manual diagnostics, one
+verbose connection attempt is usually enough:</p>
+<pre><code class="language-bash">ssh -v rcc-login
+</code></pre>
+<p>Remove key material, usernames, local paths, and tokens before sharing a debug
+log with support.</p>
+<p>Do not approve an unexpected SSH identity warning and do not delete host
+records merely to make the warning disappear. Close the client, compare the
+configuration and host identity with the current RCC instructions, and contact
+RCC support if they do not match.</p>
+<h2 id="use-vs-code-remote-ssh-as-the-main-working-interface">Use VS Code Remote SSH as the main working interface</h2>
+<ol>
+<li>Install Visual Studio Code and Microsoft's <strong>Remote - SSH</strong> extension.</li>
+<li>Confirm terminal SSH works first.</li>
+<li>Open <strong>Remote Explorer</strong> and select the approved RCC alias from the SSH targets.</li>
+<li>Open only the project or source directory you need.</li>
+<li>Keep data, environment, cache, and generated-result directories out of
+workspace-wide search.</li>
+</ol>
+<p>Use VS Code for the work it does well:</p>
+<ul>
+<li>edit Python, R, shell, Snakemake, configuration, and documentation files;</li>
+<li>review Git changes before committing them;</li>
+<li>use the integrated terminal for navigation, small checks, and Slurm commands;</li>
+<li>inspect job logs and small result summaries; and</li>
+<li>work with a narrowly scoped project folder.</li>
+</ul>
+<p>Do not use the editor terminal for sustained analysis on the submission host.
+Do not drag large datasets through the file explorer, and do not open a home,
+group, or whole project storage root merely to browse it.</p>
+<h3 id="find-the-controls-shown-in-clusterdocs">Find the controls shown in ClusterDocs</h3>
+<p>The screenshots below show where the main VS Code controls are. Interface
+details can move between versions. Do not copy target names, usernames, or
+server labels from a screenshot; select the RCC connection you were given.</p>
+<p>Install Microsoft's Remote - SSH extension from the Extensions view:</p>
+<p><img src="../../assets/vs_code_ssh_remote_plugin.png" alt="VS Code Extensions view with Microsoft's Remote - SSH extension highlighted" /></p>
+<p>Open Remote Explorer and select the approved target. The screenshot contains
+example personal entries; do not copy them:</p>
+<p><img src="../../assets/vs_code_ssh_remote_explorer.png" alt="VS Code Remote Explorer showing multiple SSH targets and the Remote Explorer icon" /></p>
+<p>After connecting, use <strong>Open Folder</strong> to choose only the project or source tree
+needed for the task:</p>
+<p><img src="../../assets/vs_code_ssh_remote_folder.png" alt="VS Code remote window showing the Open Folder action and integrated terminal" /></p>
+<p>Do not manually accept an unexpected identity warning in VS Code. Close it,
+run the current RCC connection test, and contact RCC support if the warning
+remains.</p>
+<h2 id="customize-vs-code-without-creating-performance-problems">Customize VS Code without creating performance problems</h2>
+<p>VS Code uses <code>rg</code> for full-text search and watches workspace files for changes.
+A recursive search or watcher over shared data, Conda environments, package
+trees, workflow caches, or generated results can create substantial CPU,
+network, and filesystem metadata load. This was one of the most important
+practical warnings in the earlier ClusterDocs.</p>
+<p>Start by opening the smallest useful folder, usually the repository containing
+your code. Put directories that should never be searched in <code>.gitignore</code> or
+<code>.ignore</code>, for example:</p>
+<pre><code class="language-gitignore">.venv/
+.snakemake/
+data/
+results/
+node_modules/
+</code></pre>
+<p>For a large project, open <strong>Preferences: Open Workspace Settings (JSON)</strong> and
+add reviewed workspace settings such as:</p>
+<pre><code class="language-json">{
+  &quot;search.followSymlinks&quot;: false,
+  &quot;search.useIgnoreFiles&quot;: true,
+  &quot;search.exclude&quot;: {
+    &quot;**/.venv/**&quot;: true,
+    &quot;**/.snakemake/**&quot;: true,
+    &quot;**/node_modules/**&quot;: true,
+    &quot;**/data/**&quot;: true,
+    &quot;**/results/**&quot;: true
+  },
+  &quot;files.watcherExclude&quot;: {
+    &quot;**/.git/objects/**&quot;: true,
+    &quot;**/.venv/**&quot;: true,
+    &quot;**/.snakemake/**&quot;: true,
+    &quot;**/node_modules/**&quot;: true,
+    &quot;**/data/**&quot;: true,
+    &quot;**/results/**&quot;: true
+  }
+}
+</code></pre>
+<p>Adapt the names to your repository. Excluding a directory from search or file
+watching does not change its permissions and does not make its contents safe to
+publish. The old “exclude everything” setting is useful only as an emergency
+diagnostic; a small workspace plus precise exclusions is a better default.</p>
+<p>Use <strong>Files: Exclude</strong> only to reduce visual clutter. It hides matching paths
+from the Explorer but does not prevent code, terminals, extensions, or other
+tools from reading them.</p>
+<h3 id="extensions-workspace-trust-and-settings">Extensions, workspace trust, and settings</h3>
+<ul>
+<li>Install only extensions you need, check the publisher, and keep them updated.</li>
+<li>Notice whether an extension is installed <strong>locally</strong> or <strong>in the SSH remote</strong>.
+A remote extension can execute code and read files with your RCC account's
+permissions.</li>
+<li>Review an unfamiliar repository before granting Workspace Trust. Repository
+tasks, debug configurations, notebooks, and workspace settings may execute
+commands or influence tools.</li>
+<li>Keep passwords, tokens, private keys, patient identifiers, and internal
+service details out of <code>settings.json</code>, <code>.vscode/</code>, tasks, launch files, and
+extension configuration.</li>
+<li>Commit useful team settings only after review. Prefer a short
+<code>.vscode/extensions.json</code> recommendation list over automatic installation of
+a large extension collection.</li>
+<li>Do not enable SSH agent forwarding or bypass a host-identity warning to make
+Remote - SSH connect.</li>
+</ul>
+<h3 id="analysis-and-notebooks">Analysis and notebooks</h3>
+<p>VS Code is still the suggested front end for most Python and R users: edit the
+analysis, environment file, batch script, and notebook there. The execution
+rule does not change. Long or data-intensive Python and R programs run through
+Slurm. A Jupyter kernel also runs inside a bounded Slurm allocation and is
+reached through the documented loopback tunnel; do not let a notebook or an
+interactive editor kernel run sustained work on the submission host.</p>
+<p>For debugging, reproduce the issue with a tiny input in a short allocation.
+Do not attach a debugger to another user's process or expose a debug port on a
+public interface.</p>
+<h2 id="end-a-session-cleanly">End a session cleanly</h2>
+<p>Close remote editors and terminals when finished. Interactive analysis,
+notebooks, and long-running commands belong in bounded Slurm jobs; they should
+not depend on a laptop connection remaining open.</p>
+<h2 id="mount-a-small-remote-folder">Mount a small remote folder</h2>
+<p>Prefer the RCC files portal for browser-based access to approved project
+folders. SSHFS is appropriate only for light interactive use such as editing a
+small document. It is not a bulk-transfer or analysis filesystem.</p>
+<p>After installing a maintained SSHFS implementation for your operating system,
+create an empty mount point and use the configured RCC alias:</p>
+<pre><code class="language-bash">mkdir -p &quot;$HOME/rcc-project&quot;
+sshfs rcc-login:/projects/&lt;project&gt; &quot;$HOME/rcc-project&quot; \
+  -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+</code></pre>
+<p>Unmount before sleeping the computer or changing networks. The exact unmount
+command depends on the operating system and SSHFS package. Do not enable an
+unattended automatic mount until manual mount and unmount work reliably.</p>
+<p>Avoid opening large directory trees in Finder, Explorer, indexing services,
+backup tools, antivirus scanners, or VS Code through SSHFS. Use the
+<a href="../storage-transfer/index.html">storage and transfer reference</a> for larger transfers.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Slurm command reference · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a aria-current="page" href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a aria-current="page" href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Reference · RCC ClusterDocs</p>
+      
+      <h1 id="slurm-command-reference">Slurm command reference</h1>
+<p>Login and submission hosts are for editing, submitting, and monitoring. Sustained
+computation runs as a Slurm job.</p>
+<blockquote>
+<p><strong>Related learning:</strong> Complete the bounded acceptance patterns in
+<a href="../../course/class-05-slurm/index.html">Class 5</a> before adapting these commands to a
+research workload.</p>
+</blockquote>
+<blockquote>
+<p><strong>Resource-sharing policy:</strong> Groups that contribute hardware retain a
+reclaimable compute entitlement while restartable work may use idle capacity.
+See <a href="../how-shared-compute-works/index.html">How shared compute works</a>.</p>
+</blockquote>
+<h2 id="discover-the-scheduler">Discover the scheduler</h2>
+<pre><code class="language-bash">sinfo
+sinfo -o '%P %a %l %D %G'
+squeue --me
+</code></pre>
+<p>Use these summaries to choose an approved partition and resource shape. Do not
+copy scheduler inventories into public documents or build scripts around
+physical node names.</p>
+<h2 id="choose-the-execution-mode">Choose the execution mode</h2>
+<table>
+<thead>
+<tr>
+  <th>Work</th>
+  <th>Partition</th>
+  <th>Submission model</th>
+  <th>Boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Quick tests and batch jobs up to two hours</td>
+  <td><code>cpu_short</code></td>
+  <td><code>sbatch</code> or a bounded <code>srun</code></td>
+  <td>Keep the requested time at or below <code>02:00:00</code></td>
+</tr>
+<tr>
+  <td>Active exploration, debugging, notebooks, or Shiny development</td>
+  <td><code>interactive</code></td>
+  <td>Bounded interactive allocation or interactive application job</td>
+  <td>The user remains present; stop it when the session ends</td>
+</tr>
+<tr>
+  <td>Long-running CPU analysis</td>
+  <td><code>cpu_nodes</code></td>
+  <td>Restartable <code>sbatch</code> job</td>
+  <td>No unattended long runner on an interactive node</td>
+</tr>
+<tr>
+  <td>GPU analysis</td>
+  <td>Current GPU partition, normally <code>gpu_nodes</code></td>
+  <td>Bounded <code>sbatch</code> job with an explicit GPU request</td>
+  <td>Use only when the application can use the requested GPU</td>
+</tr>
+</tbody>
+</table>
+<p>The short queue is for genuinely short work, not for splitting a long job into
+unnecessary fragments. Interactive nodes are for human-in-the-loop work. Do not
+leave <code>tmux</code>, <code>screen</code>, <code>nohup</code>, notebook kernels, Shiny sessions, or other
+unattended long runners there. Move sustained computation into a batch script
+on the appropriate regular compute partition and add checkpointing when the
+application supports it.</p>
+<p>Partition policy can change. Confirm the live time limits with <code>sinfo</code> before
+submitting, while preserving this short/interactive/batch distinction.</p>
+<h2 id="resources-allocations-and-nodes">Resources, allocations, and nodes</h2>
+<p>A Slurm allocation is a reservation of the resources requested by a job: CPU
+cores, memory, GPUs, and time. It is <strong>not normally an exclusive reservation of
+an entire physical node</strong>.</p>
+<p>For a normal single-node program, request <code>--cpus-per-task</code>, <code>--mem</code>, and
+<code>--time</code>; Slurm chooses a node with those resources. Adding <code>--nodes=1</code> merely
+constrains placement to one node—it does not make that node exclusive. Request
+multiple nodes only for software designed for multi-node execution, such as a
+tested MPI application, and launch its work with <code>srun</code>. Whole-node or
+exclusive allocation should be exceptional and supported by measurements or
+agreed with the RCC team.</p>
+<h2 id="submit-an-interactive-shell">Submit an interactive shell</h2>
+<pre><code class="language-bash">srun --partition=interactive --pty --cpus-per-task=2 --mem=4G --time=00:30:00 bash -i
+</code></pre>
+<p>Always set a time limit and remain present. Exit the shell when finished so the
+allocation is released. An interactive allocation is not a way to host an
+overnight or unattended process.</p>
+<h2 id="submit-a-short-batch-job">Submit a short batch job</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --job-name=small-analysis
+#SBATCH --partition=cpu_short
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=4G
+#SBATCH --time=00:30:00
+#SBATCH --output=logs/%x-%j.out
+
+set -euo pipefail
+srun python analysis.py
+</code></pre>
+<p>Create the output directory before submission, then run:</p>
+<pre><code class="language-bash">mkdir -p logs
+sbatch job.sbatch
+</code></pre>
+<p><code>sbatch</code> starts the script on the first allocated node. Use <code>srun</code> for job steps
+that should use the allocated resources, especially multi-node work.</p>
+<h2 id="submit-a-long-running-batch-job">Submit a long-running batch job</h2>
+<p>Long runners belong in a bounded, restartable batch job on regular compute—not
+in a login shell, on an interactive node, or in the short queue:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --job-name=long-analysis
+#SBATCH --partition=cpu_nodes
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --time=12:00:00
+#SBATCH --output=logs/%x-%j.out
+
+set -euo pipefail
+srun python analysis.py
+</code></pre>
+<p>Twelve hours is an example request, not a default. Measure a representative
+run, request a realistic limit, save checkpoints to durable storage, and make
+the job safe to resume. A long job is still bounded.</p>
+<h2 id="inspect-and-cancel-jobs">Inspect and cancel jobs</h2>
+<pre><code class="language-bash">squeue --me
+scontrol show job &lt;jobid&gt;
+sacct -j &lt;jobid&gt; --format=JobID,State,Elapsed,AllocCPUS,ReqMem,MaxRSS,ExitCode
+scancel &lt;jobid&gt;
+</code></pre>
+<p>Common states include <code>PD</code> (pending), <code>R</code> (running), <code>CG</code> (completing), and
+<code>CD</code> (completed). For a pending job, <code>squeue</code> or <code>scontrol</code> reports a reason;
+do not repeatedly cancel and resubmit without understanding it.</p>
+<h2 id="job-dependencies">Job dependencies</h2>
+<p>Submit downstream work only after an upstream job succeeds:</p>
+<pre><code class="language-bash">first=$(sbatch --parsable preprocess.sbatch)
+sbatch --dependency=&quot;afterok:$first&quot; analysis.sbatch
+</code></pre>
+<p>Workflow managers such as Snakemake are preferable for larger dependency
+graphs because they record files, commands, and software requirements.</p>
+<h2 id="reuse-an-allocation">Reuse an allocation</h2>
+<p>For short development bursts, request a bounded allocation:</p>
+<pre><code class="language-bash">salloc --partition=interactive --no-shell --cpus-per-task=2 --mem=4G --time=01:00:00
+srun --jobid=&lt;allocation-id&gt; --pty bash -i
+scancel &lt;allocation-id&gt;
+</code></pre>
+<p>An allocation reserves resources even while no command is running. Cancel it
+when finished. Reuse is for an attended development burst, not for reserving an
+interactive node around an unattended long runner.</p>
+<h2 id="gpu-jobs">GPU jobs</h2>
+<p>Use the currently documented GPU partition and resource syntax. A typical job
+requests one GPU explicitly:</p>
+<pre><code class="language-bash">#SBATCH --partition=&lt;approved-gpu-partition&gt;
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --time=01:00:00
+</code></pre>
+<p>Inside the job:</p>
+<pre><code class="language-bash">nvidia-smi
+python -c 'import torch; print(torch.cuda.is_available())'
+</code></pre>
+<p>Do not overwrite <code>CUDA_VISIBLE_DEVICES</code>; Slurm uses it to expose only the GPUs
+assigned to the job. A reported driver capability does not mean every CUDA
+toolkit is installed in your environment.</p>
+<h2 id="resource-etiquette">Resource etiquette</h2>
+<ul>
+<li>Request the CPUs, RAM, GPUs, and time the program can actually use.</li>
+<li>Use <code>cpu_short</code> only for work that completes within its two-hour limit.</li>
+<li>Keep interactive sessions attended and move long runners to batch jobs.</li>
+<li>Start with one representative job, measure it, and adjust.</li>
+<li>Avoid unbounded arrays, retry loops, and multi-day interactive shells.</li>
+<li>Split checkpoint-capable long work into restartable jobs.</li>
+<li>Keep high-I/O intermediates on job-local scratch.</li>
+<li>Connect directly to a worker only for monitoring or debugging an allocation
+you own, using the current supported RCC connection method.</li>
+</ul>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

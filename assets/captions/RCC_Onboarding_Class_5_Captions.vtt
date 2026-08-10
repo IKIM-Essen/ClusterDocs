@@ -1,0 +1,150 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.410
+Welcome to Class 5: Slurm acceptance patterns.
+
+2
+00:00:03.410 --> 00:00:07.794
+This video introduces the core decisions and working patterns.
+
+3
+00:00:07.794 --> 00:00:14.614
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14.614 --> 00:00:17.050
+exercises, and detailed reference material.
+
+5
+00:00:17.050 --> 00:00:23.829
+GPU work follows the same principle: request the current GPU partition in a batch job and
+
+6
+00:00:23.829 --> 00:00:26.795
+keep interactive GPU exploration attended and bounded.
+
+7
+00:00:26.795 --> 00:00:33.574
+By the end of Class 5, you should also be able to distinguish a GPU partition,
+
+8
+00:00:33.574 --> 00:00:38.659
+an exact GPU type, an architecture feature, host memory, and GPU memory.
+
+9
+00:00:38.659 --> 00:00:44.167
+The GPU-selection lesson is included below rather than presented as a separate class.
+
+10
+00:00:44.167 --> 00:00:49.689
+The following screenshot was captured from the RCC scheduler on 25 July 2026.
+
+11
+00:00:49.689 --> 00:00:55.637
+It shows what sinfo looks like, but the available nodes and partitions can change.
+
+12
+00:00:55.637 --> 00:00:58.610
+Run sinfo yourself before choosing a partition.
+
+13
+00:00:58.610 --> 00:01:03.708
+A minimal batch script is: Slurm normally allocates the requested CPU, memory,
+
+14
+00:01:03.708 --> 00:01:06.682
+GPU, and time on a suitable node.
+
+15
+00:01:06.682 --> 00:01:10.930
+It does not give the job an exclusive whole node.
+
+16
+00:01:10.930 --> 00:01:17.727
+Ordinary jobs should not add --nodes or --exclusive; request whole or multiple nodes only for a
+
+17
+00:01:17.727 --> 00:01:20.276
+measured application designed to use them.
+
+18
+00:01:20.276 --> 00:01:27.721
+The default rule: Use the standard gpu_nodes partition and request one GPU without a model unless
+
+19
+00:01:27.721 --> 00:01:33.305
+your software, memory requirement, or reproducibility plan genuinely requires a particular GPU.
+
+20
+00:01:33.305 --> 00:01:37.958
+RCC does not create one queue for every GPU generation.
+
+21
+00:01:37.958 --> 00:01:45.404
+Ampere, Blackwell, and future standard GPU systems can share gpu_nodes when their scheduling policy is the
+
+22
+00:01:45.404 --> 00:01:45.869
+same.
+
+23
+00:01:45.869 --> 00:01:53.314
+Slurm selects an exact model through a typed GPU request and an architecture through a node
+
+24
+00:01:53.314 --> 00:01:53.780
+constraint.
+
+25
+00:01:53.780 --> 00:01:59.363
+### GPU learning objectives After this part of Class 5, you can:
+
+26
+00:01:59.363 --> 00:02:06.809
+distinguish a partition, GPU type, architecture feature, and system memory; discover the user-visible GPU labels without
+
+27
+00:02:06.809 --> 00:02:09.135
+enumerating physical nodes; request any.
+
+28
+00:02:09.135 --> 00:02:15.732
+The first job verifies scheduling, environment capture, output handling and exact comparison.
+
+29
+00:02:15.732 --> 00:02:20.839
+The gate: submits only one job at a time; uses one CPU,
+
+30
+00:02:20.839 --> 00:02:27.648
+128 MiB RAM and a two-minute limit; refuses job arrays; refuses to run when another learner
+
+31
+00:02:27.648 --> 00:02:32.755
+gate is active for the same user; waits for a bounded period;
+
+32
+00:02:32.755 --> 00:02:39.564
+compares output byte-for-byte; cleans only its own temporary directory; does not enumerate nodes or expose scheduler
+
+33
+00:02:39.564 --> 00:02:39.990
+configuration.
+
+34
+00:02:39.990 --> 00:02:45.780
+A passing class gate shows that your account can execute the pattern.
+
+35
+00:02:45.780 --> 00:02:53.019
+It is not a cluster-wide health test and must not be expanded into host-by-host probing.
+
+36
+00:02:53.019 --> 00:02:59.775
+Reference companion: After completing the bounded gates, use the Slurm command reference for dependencies,
+
+37
+00:02:59.775 --> 00:03:03.635
+reusable allocations, GPU requests, accounting, cancellation, and checkpointing.
+

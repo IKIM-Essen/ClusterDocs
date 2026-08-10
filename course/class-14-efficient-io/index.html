@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 14: efficient I/O—copy locally, compute locally, return results · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a aria-current="page" href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a aria-current="page" href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-14-efficient-i-o-copy-locally-compute-locally-return-results">Class 14: efficient I/O—copy locally, compute locally, return results</h1>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 6 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Why local scratch matters, safe staging, workflow integration, caching, diagnosis, and storage decisions. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<blockquote>
+<p><strong>The pattern:</strong> Keep durable inputs and final results on approved shared
+storage. For I/O-intensive computation, copy only the required inputs to the
+compute node's local scratch space, run the computation there, validate the
+output, and copy the final result back.</p>
+</blockquote>
+<p>This class teaches a practical RCC workflow pattern:</p>
+<ol>
+<li>submit the work through Slurm;</li>
+<li>create a job-specific directory on node-local storage;</li>
+<li>stage the required input files into that directory;</li>
+<li>perform temporary and random I/O locally;</li>
+<li>validate the result;</li>
+<li>copy only durable outputs back to shared storage; and</li>
+<li>remove the temporary directory automatically.</li>
+</ol>
+<p>The class is intended for biomedical researchers. The exercises use synthetic
+data and must not be replaced with data containing patient names or other
+primary identifying fields.</p>
+<p>Companion material:</p>
+<ul>
+<li><a href="../../classes/examples/make-synthetic-fastq.sh">create a synthetic FASTQ file</a>;</li>
+<li><a href="../../classes/examples/direct-io-demo.sh">run the direct shared-storage comparison</a>;</li>
+<li><a href="../../classes/examples/local-io-demo.sh">run the local-staging job</a>; and</li>
+<li>continue with <a href="../class-15-storage-architecture/index.html">Class 15: RCC storage architecture</a>.</li>
+</ul>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this class, you should be able to:</p>
+<ul>
+<li>distinguish durable shared storage from temporary node-local scratch;</li>
+<li>explain streaming, random, small-file, and metadata I/O;</li>
+<li>recognize when storage rather than CPU or GPU limits a job;</li>
+<li>write an <code>sbatch</code> job that stages inputs and returns outputs safely;</li>
+<li>use <code>rsync</code>, checksums, shell traps, and atomic publication;</li>
+<li>apply the same pattern in Snakemake; and</li>
+<li>explain how poor I/O structure can turn hours of computation into weeks or
+months of elapsed time.</li>
+</ul>
+<h2 id="1-storage-is-part-of-the-computation">1. Storage is part of the computation</h2>
+<p>A job does not merely execute instructions. It repeatedly moves data among:</p>
+<ul>
+<li>shared project storage;</li>
+<li>the network;</li>
+<li>the compute node's page cache;</li>
+<li>local disk;</li>
+<li>RAM; and</li>
+<li>CPU or GPU processes.</li>
+</ul>
+<p>The slowest required part of that path limits the complete job. Adding CPU cores
+does not help when those cores spend most of their time waiting for files.</p>
+<p>Shared storage is designed to make durable data available to many nodes. It is
+not designed to behave like a private local SSD for every job simultaneously.
+One badly structured job can also create contention for other researchers.</p>
+<h2 id="2-streaming-versus-random-i-o">2. Streaming versus random I/O</h2>
+<h3 id="streaming-i-o">Streaming I/O</h3>
+<p>Streaming I/O reads or writes a long sequence of bytes in order:</p>
+<pre><code class="language-text">start ------------------------------------------------------------&gt; end
+</code></pre>
+<p>Examples include:</p>
+<ul>
+<li>reading a compressed FASTQ file once from beginning to end;</li>
+<li>writing one BAM, CRAM, archive, or report;</li>
+<li>piping decompressed data directly into the next program; and</li>
+<li>copying one large file.</li>
+</ul>
+<p>Streaming works well because storage devices, operating-system readahead,
+compression libraries, and network protocols can transfer large blocks
+efficiently. The cost of opening the file is paid once and useful throughput can
+approach the storage system's bandwidth.</p>
+<h3 id="random-i-o">Random I/O</h3>
+<p>Random I/O repeatedly jumps among unrelated offsets or files:</p>
+<pre><code class="language-text">read here -&gt; jump -&gt; read there -&gt; open another file -&gt; seek -&gt; close
+</code></pre>
+<p>Examples include:</p>
+<ul>
+<li>repeatedly querying tiny genomic regions across a large alignment;</li>
+<li>a temporary database that performs many small updates;</li>
+<li>opening thousands of small files during every workflow step;</li>
+<li>repeatedly scanning a directory to discover whether outputs exist; and</li>
+<li>software environments containing tens of thousands of small files.</li>
+</ul>
+<p>Each operation may wait for network latency, metadata lookup, permission checks,
+file opening, seeking, and closing. A single operation may appear cheap, but
+millions of operations make latency dominate elapsed time.</p>
+<blockquote>
+<p><strong>Random access is not always wrong:</strong> Indexed BAM, CRAM, VCF, database, and
+image formats legitimately support random access. The problem is placing a
+large, repeated random-I/O workload on shared network storage when the active
+working set could be staged to node-local storage.</p>
+</blockquote>
+<h2 id="3-rcc-network-topology-and-what-it-means-for-i-o">3. RCC network topology and what it means for I/O</h2>
+<p>RCC storage and service servers are connected to the backend at up to
+<strong>100 Gb/s</strong>, while typical compute clients are connected at <strong>10 Gb/s</strong>.</p>
+<p>That topology is intentionally asymmetric:</p>
+<ul>
+<li>storage servers aggregate traffic from many clients;</li>
+<li>each compute node has a much smaller individual uplink;</li>
+<li>many nodes may read from or write to the same backend simultaneously; and</li>
+<li>the effective throughput of one job is limited by its own 10 Gb/s client link,
+protocol overhead, filesystem behavior, and contention.</li>
+</ul>
+<p>A 100 Gb/s storage server does <strong>not</strong> mean that every client receives 100 Gb/s.
+Ten clients each attempting to sustain 10 Gb/s can already consume the nominal
+server-side link. In practice, metadata traffic, TCP overhead, other users,
+multiple storage targets, and non-sequential access reduce useful throughput.</p>
+<p>The distinction is especially important for random and small-file I/O. A job
+that opens thousands of files or performs millions of small reads rarely comes
+close to saturating a 10 Gb/s link with useful data. It instead spends time on:</p>
+<ul>
+<li>network round trips;</li>
+<li>metadata lookup;</li>
+<li>permission checks;</li>
+<li>file open and close operations;</li>
+<li>filesystem locking; and</li>
+<li>queueing behind other clients.</li>
+</ul>
+<p>The correct conclusion is therefore not “the network is fast enough.” The
+correct conclusion is:</p>
+<blockquote>
+<p>The backend has high aggregate bandwidth, but each client has limited bandwidth
+and shared latency. Use the network for durable transfer and streaming; use
+node-local storage for active random and temporary I/O.</p>
+</blockquote>
+<h2 id="4-why-runtime-can-grow-from-hours-to-months">4. Why runtime can grow from hours to months</h2>
+<p>Suppose one sample requires:</p>
+<ul>
+<li>2 seconds of useful CPU work; and</li>
+<li>20 seconds waiting for small network-storage operations.</li>
+</ul>
+<p>For 5,000 samples and 10 workflow stages:</p>
+<pre><code class="language-text">22 seconds × 5,000 × 10 = 1,100,000 seconds ≈ 12.7 days
+</code></pre>
+<p>That estimate excludes queueing, retries, directory scans, environment startup,
+and contention caused by parallel jobs. If several rules repeat the same
+anti-pattern or failures force stages to restart, a workflow expected to finish
+in hours can remain active for weeks or months.</p>
+<p>Typical multipliers are:</p>
+<ul>
+<li>number of samples;</li>
+<li>files per sample;</li>
+<li>workflow stages;</li>
+<li>retries;</li>
+<li>parallel workers; and</li>
+<li>repeated decompression or copying.</li>
+</ul>
+<p>Measure one representative sample before launching thousands.</p>
+<h2 id="5-the-rcc-staging-pattern">5. The RCC staging pattern</h2>
+<p>The following job uses the scratch directory supplied by Slurm. The fallback
+matches the current RCC job-local layout and is used only when <code>SLURM_TMPDIR</code> is
+not set.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --job-name=local-io-demo
+#SBATCH --partition=cpu_short
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --time=00:30:00
+#SBATCH --output=logs/%x-%j.out
+
+set -Eeuo pipefail
+umask 007
+
+readonly INPUT=&quot;/projects/example/input/sample.fastq.gz&quot;
+readonly OUTPUT_DIR=&quot;/projects/example/results&quot;
+readonly WORKDIR=&quot;${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}&quot;
+
+cleanup() {
+    local status=$?
+    rm -rf -- &quot;${WORKDIR}&quot;
+    exit &quot;${status}&quot;
+}
+trap cleanup EXIT INT TERM
+
+mkdir -p -- &quot;${WORKDIR}&quot; &quot;${OUTPUT_DIR}&quot;
+
+# Stage only the files needed by this job.
+rsync -a --checksum -- &quot;${INPUT}&quot; &quot;${WORKDIR}/sample.fastq.gz&quot;
+
+# Compute locally. Temporary files and random I/O stay on the node.
+gzip -cd -- &quot;${WORKDIR}/sample.fastq.gz&quot; \
+    | awk 'NR % 4 == 2 { bases += length($0); reads += 1 }
+           END { print &quot;reads\t&quot; reads; print &quot;bases\t&quot; bases }' \
+    &gt; &quot;${WORKDIR}/summary.tsv&quot;
+
+# Validate before publishing.
+test -s &quot;${WORKDIR}/summary.tsv&quot;
+grep -q $'^reads\t' &quot;${WORKDIR}/summary.tsv&quot;
+grep -q $'^bases\t' &quot;${WORKDIR}/summary.tsv&quot;
+
+# Publish atomically: copy to a temporary name, then rename.
+tmp_output=&quot;${OUTPUT_DIR}/.summary.${SLURM_JOB_ID}.tmp&quot;
+final_output=&quot;${OUTPUT_DIR}/summary.tsv&quot;
+rsync -a -- &quot;${WORKDIR}/summary.tsv&quot; &quot;${tmp_output}&quot;
+mv -f -- &quot;${tmp_output}&quot; &quot;${final_output}&quot;
+
+sha256sum -- &quot;${final_output}&quot;
+</code></pre>
+<p>Submit it from a login or submission host:</p>
+<pre><code class="language-bash">mkdir -p logs
+sbatch local-io-demo.sh
+</code></pre>
+<p>The compute must occur inside the Slurm job, not directly on the login or
+submission host.</p>
+<h2 id="6-why-each-safety-step-matters">6. Why each safety step matters</h2>
+<table>
+<thead>
+<tr>
+  <th>Step</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>set -Eeuo pipefail</code></td>
+  <td>Stops on failed commands, unset variables, and failed pipeline stages.</td>
+</tr>
+<tr>
+  <td>job-specific work directory</td>
+  <td>Prevents jobs from overwriting one another.</td>
+</tr>
+<tr>
+  <td><code>trap cleanup EXIT</code></td>
+  <td>Removes scratch on success, failure, cancellation, or interruption.</td>
+</tr>
+<tr>
+  <td>stage only required inputs</td>
+  <td>Avoids copying entire projects for every job.</td>
+</tr>
+<tr>
+  <td>validate output locally</td>
+  <td>Prevents incomplete results from being published.</td>
+</tr>
+<tr>
+  <td>temporary destination plus <code>mv</code></td>
+  <td>Makes publication atomic on the destination filesystem.</td>
+</tr>
+<tr>
+  <td>checksum</td>
+  <td>Provides evidence that the final file is readable and stable.</td>
+</tr>
+</tbody>
+</table>
+<p>Do not copy a whole multi-terabyte project tree to every node. Staging is useful
+only when the copied working set is smaller than the repeated network I/O it
+replaces.</p>
+<h2 id="7-compare-the-patterns">7. Compare the patterns</h2>
+<h3 id="poor-pattern">Poor pattern</h3>
+<pre><code class="language-bash">my_tool \
+  --input /projects/study/all_samples \
+  --tmp-dir /projects/study/tmp/job-${SLURM_JOB_ID} \
+  --output /projects/study/results/sample-01
+</code></pre>
+<p>This may direct temporary shards, database updates, logs, and random reads to
+shared storage throughout the computation.</p>
+<h3 id="better-pattern">Better pattern</h3>
+<pre><code class="language-bash">work=&quot;${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}&quot;
+mkdir -p &quot;${work}&quot;
+rsync -a /projects/study/input/sample-01/ &quot;${work}/input/&quot;
+
+my_tool \
+  --input &quot;${work}/input&quot; \
+  --tmp-dir &quot;${work}/tmp&quot; \
+  --output &quot;${work}/output&quot;
+
+test -s &quot;${work}/output/result.tsv&quot;
+rsync -a &quot;${work}/output/result.tsv&quot; /projects/study/results/sample-01/
+</code></pre>
+<h2 id="8-snakemake-integration">8. Snakemake integration</h2>
+<p>The explicit staging pattern is easy to audit:</p>
+<pre><code class="language-python">rule analyse_sample:
+    input:
+        reads=&quot;/projects/study/reads/{sample}.fastq.gz&quot;
+    output:
+        report=&quot;/projects/study/results/{sample}.tsv&quot;
+    threads: 4
+    resources:
+        mem_mb=8000,
+        runtime=30
+    shell:
+        r&quot;&quot;&quot;
+        set -Eeuo pipefail
+
+        scratch_root=&quot;${{SLURM_TMPDIR:-/local/work/$USER/slurm-job-${{SLURM_JOB_ID}}}}&quot;
+        work=&quot;$scratch_root/{wildcards.sample}&quot;
+        trap 'rm -rf -- &quot;$work&quot;' EXIT INT TERM
+        mkdir -p -- &quot;$work&quot;
+
+        rsync -a --checksum -- &quot;{input.reads}&quot; &quot;$work/reads.fastq.gz&quot;
+
+        gzip -cd -- &quot;$work/reads.fastq.gz&quot; \
+          | awk 'NR % 4 == 2 {{ bases += length($0); reads += 1 }}
+                 END {{ print &quot;reads\t&quot; reads; print &quot;bases\t&quot; bases }}' \
+          &gt; &quot;$work/report.tsv&quot;
+
+        test -s &quot;$work/report.tsv&quot;
+        install -D -m 0660 &quot;$work/report.tsv&quot; &quot;{output.report}.tmp&quot;
+        mv -f -- &quot;{output.report}.tmp&quot; &quot;{output.report}&quot;
+        &quot;&quot;&quot;
+</code></pre>
+<p>Where available and tested on RCC, Snakemake <code>shadow</code> rules and the <code>tmpdir</code>
+resource can provide a more declarative implementation. The same invariants
+remain:</p>
+<ul>
+<li>active temporary work is local;</li>
+<li>durable inputs remain unchanged;</li>
+<li>only required outputs return to shared storage; and</li>
+<li>failed jobs do not publish apparently complete results.</li>
+</ul>
+<h2 id="9-streaming-and-compression">9. Streaming and compression</h2>
+<p>Leave files compressed when downstream tools support compressed input:</p>
+<pre><code class="language-bash">gzip -cd reads.fastq.gz | consumer --stdin
+</code></pre>
+<p>This avoids writing a large uncompressed intermediate. Streaming through a pipe
+can reduce both storage consumption and I/O, but it also couples the processes:
+if the consumer fails, <code>pipefail</code> must make the complete command fail.</p>
+<p>Do not repeatedly decompress the same large source into shared storage. Either:</p>
+<ul>
+<li>let the tool read the compressed format;</li>
+<li>stream decompression into the consumer; or</li>
+<li>decompress once into local scratch when repeated local access justifies it.</li>
+</ul>
+<h2 id="10-cache-containers-indexes-and-reusable-reference-data">10. Cache containers, indexes, and reusable reference data</h2>
+<p>Repeatedly transferring or rebuilding the same immutable data wastes both
+network capacity and wall-clock time. Suitable reusable objects include:</p>
+<ul>
+<li>Apptainer images;</li>
+<li>read-only reference genomes;</li>
+<li>annotation databases;</li>
+<li>aligner indexes;</li>
+<li>model weights;</li>
+<li>software archives; and</li>
+<li>decompressed copies of compressed references when repeated local access
+justifies the space.</li>
+</ul>
+<p>A cache is not a substitute for provenance. Every cached object must be tied to
+an immutable identity such as:</p>
+<ul>
+<li>a cryptographic checksum;</li>
+<li>a container digest;</li>
+<li>an exact version;</li>
+<li>a versioned path; or</li>
+<li>a workflow-managed content hash.</li>
+</ul>
+<h3 id="node-local-cache-pattern">Node-local cache pattern</h3>
+<p>Use a stable cache directory separate from job-specific scratch:</p>
+<pre><code class="language-bash">readonly CACHE_ROOT=&quot;/local/apptainercache/${USER}&quot;
+readonly JOB_WORK=&quot;${SLURM_TMPDIR:-/local/work/${USER}/slurm-job-${SLURM_JOB_ID}}&quot;
+readonly IMAGE_SRC=&quot;/projects/containers/tool-2.4.1.sif&quot;
+readonly IMAGE_SHA256=&quot;EXPECTED_SHA256&quot;
+readonly IMAGE_CACHE=&quot;${CACHE_ROOT}/containers/${IMAGE_SHA256}.sif&quot;
+
+mkdir -p -- &quot;$(dirname -- &quot;${IMAGE_CACHE}&quot;)&quot; &quot;${JOB_WORK}&quot;
+
+if [[ ! -s &quot;${IMAGE_CACHE}&quot; ]]; then
+    tmp=&quot;${IMAGE_CACHE}.${SLURM_JOB_ID}.tmp&quot;
+    rsync -a -- &quot;${IMAGE_SRC}&quot; &quot;${tmp}&quot;
+    echo &quot;${IMAGE_SHA256}  ${tmp}&quot; | sha256sum -c -
+    mv -f -- &quot;${tmp}&quot; &quot;${IMAGE_CACHE}&quot;
+fi
+
+apptainer exec &quot;${IMAGE_CACHE}&quot; tool ...
+</code></pre>
+<p>The temporary file plus atomic rename prevents concurrent jobs from seeing a
+partially populated cache entry. For heavily shared nodes, administrators may
+provide a managed read-only cache instead of per-user caches.</p>
+<h3 id="what-should-not-be-cached-blindly">What should not be cached blindly</h3>
+<p>Do not treat these as immutable cache objects without additional controls:</p>
+<ul>
+<li>patient-derived working data;</li>
+<li>outputs still being modified;</li>
+<li>files selected only by a mutable name such as <code>latest.sif</code>;</li>
+<li>credentials, tokens, or secrets;</li>
+<li>databases whose files are updated in place; and</li>
+<li>data whose license or governance rules prohibit local persistence.</li>
+</ul>
+<p>Cached patient-related data remains subject to the same security and deletion
+requirements as the source. Primary identifying fields are not allowed on RCC.</p>
+<h3 id="container-cache-behavior">Container cache behavior</h3>
+<p>Apptainer may cache downloaded images and layers. Workflows should avoid
+independent jobs repeatedly pulling the same container from the internet or
+shared storage. Prefer:</p>
+<ol>
+<li>a centrally managed, versioned <code>.sif</code> image;</li>
+<li>a digest-pinned image;</li>
+<li>a node-local or administrator-managed cache; and</li>
+<li>pre-staging before the compute-intensive phase.</li>
+</ol>
+<p>A cached container improves startup time and reduces repeated small-file or
+network operations, but it does not make the application's own data access
+pattern efficient. Application inputs and temporary files may still require
+local staging.</p>
+<h2 id="11-do-not-submit-slurm-jobs-from-inside-slurm-jobs">11. Do not submit Slurm jobs from inside Slurm jobs</h2>
+<p>A batch job should normally perform the computation assigned to it. It should
+not act as an uncontrolled scheduler that creates additional <code>sbatch</code> jobs.</p>
+<p>Nested job submission is harmful because it separates resource allocation from
+the process that understands the data:</p>
+<ul>
+<li>the parent allocation may sit idle while child jobs wait in the queue;</li>
+<li>child jobs may run on unrelated nodes where no staged data or warm cache
+exists;</li>
+<li>the same input or container may be copied repeatedly to many nodes;</li>
+<li>temporary data produced by the parent may be inaccessible to children;</li>
+<li>cancellation of the parent does not necessarily cancel all descendants;</li>
+<li>accounting, failure handling, and dependency tracking become harder;</li>
+<li>job storms can overload the scheduler; and</li>
+<li>large bursts of child jobs can create synchronized metadata and network
+traffic against shared storage.</li>
+</ul>
+<p>This directly disrupts good I/O patterns. A parent job may stage 100 GB to local
+disk, then submit child jobs that are scheduled elsewhere and must read the same
+100 GB again from the network. The staged copy becomes useless, caches are cold,
+and the workflow produces avoidable traffic.</p>
+<h3 id="bad-pattern">Bad pattern</h3>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --cpus-per-task=1
+
+for sample in samples/*; do
+    sbatch run-one-sample.sh &quot;${sample}&quot;
+done
+</code></pre>
+<p>This uses a compute allocation merely to submit work and gives Slurm no
+structured view of the complete workflow's data dependencies.</p>
+<h3 id="better-patterns">Better patterns</h3>
+<p>Submit arrays from a login or submission host:</p>
+<pre><code class="language-bash">sbatch --array=0-999 run-one-sample.sh
+</code></pre>
+<p>Use explicit Slurm dependencies:</p>
+<pre><code class="language-bash">first=$(sbatch --parsable stage-data.sh)
+second=$(sbatch --parsable --dependency=afterok:&quot;${first}&quot; analyse.sh)
+sbatch --dependency=afterok:&quot;${second}&quot; publish.sh
+</code></pre>
+<p>Or let Snakemake submit the workflow from an approved submission service using
+the configured Slurm executor. Snakemake should express files, resources,
+retries, and dependencies; individual compute jobs should not recursively
+create more jobs.</p>
+<p>There are advanced cases in which a scheduler-aware workflow engine submits
+jobs while itself running under a controlled service allocation, but this must
+be an RCC-approved design. It is not the default user pattern.</p>
+<h2 id="12-diagnose-an-i-o-bound-job">12. Diagnose an I/O-bound job</h2>
+<p>Start with Slurm accounting:</p>
+<pre><code class="language-bash">sacct -j JOB_ID \
+  --format=JobID,State,Elapsed,AllocCPUS,TotalCPU,ReqMem,MaxRSS
+</code></pre>
+<p>Inside an active allocation, useful tools may include:</p>
+<pre><code class="language-bash">time command ...
+pidstat -dru 2
+vmstat 2
+iostat -xz 2
+</code></pre>
+<p>Interpretation:</p>
+<table>
+<thead>
+<tr>
+  <th>Observation</th>
+  <th>Likely issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>elapsed time is high but total CPU time is low</td>
+  <td>waiting, serial work, or I/O</td>
+</tr>
+<tr>
+  <td>high I/O wait and low CPU utilization</td>
+  <td>storage bottleneck</td>
+</tr>
+<tr>
+  <td>many file opens and long startup</td>
+  <td>small-file or metadata pressure</td>
+</tr>
+<tr>
+  <td>CPU use increases after staging locally</td>
+  <td>network I/O was limiting</td>
+</tr>
+<tr>
+  <td>local staging costs more than it saves</td>
+  <td>working set too large or workload already streams efficiently</td>
+</tr>
+</tbody>
+</table>
+<p>Use representative pilot data and change one variable at a time.</p>
+<h2 id="13-class-exercise">13. Class exercise</h2>
+<ol>
+<li>Create a synthetic compressed FASTQ file on approved shared storage.</li>
+<li>Run the supplied direct shared-storage example.</li>
+<li>Run the local-staging example with the same input and resources.</li>
+<li>Compare elapsed time, CPU time, output checksum, and file-operation pattern.</li>
+<li>Increase the number of small temporary files and observe how runtime changes.</li>
+<li>Explain which version is safer for scaling to thousands of samples.</li>
+</ol>
+<p>The exercise is about the access pattern, not about producing an artificially
+large benchmark that disrupts the cluster.</p>
+<h2 id="14-decision-checklist">14. Decision checklist</h2>
+<p>Use local scratch when:</p>
+<ul>
+<li>the tool creates many temporary files;</li>
+<li>the tool performs repeated random reads or writes;</li>
+<li>the input will be reread many times during one job;</li>
+<li>a temporary database or index is built per job; or</li>
+<li>local staging measurably reduces elapsed time and shared-storage pressure.</li>
+</ul>
+<p>Keep direct shared-storage streaming when:</p>
+<ul>
+<li>the tool performs one sequential pass;</li>
+<li>input is much larger than local capacity;</li>
+<li>staging would duplicate most of the job's total I/O;</li>
+<li>several nodes must concurrently read one durable source; or</li>
+<li>RCC policy identifies the storage tier as suitable for that pattern.</li>
+</ul>
+<h2 id="take-home-rule">Take-home rule</h2>
+<blockquote>
+<p>Shared storage is for durable data. Node-local scratch is for active
+temporary computation. Stream when possible; stage locally when random or
+small-file I/O would otherwise dominate.</p>
+</blockquote>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Using only synthetic data, run the direct and local-staging examples with the
+same Slurm resources. Record elapsed time, CPU time, output checksums, and the
+access pattern. Explain which version you would choose for a larger workload
+and why.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

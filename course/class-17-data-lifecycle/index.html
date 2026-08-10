@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 17: manage the research data lifecycle · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a aria-current="page" href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a aria-current="page" href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-17-manage-the-research-data-lifecycle">Class 17: manage the research data lifecycle</h1>
+<blockquote>
+<p><strong>Service status — not yet released:</strong> RCC-to-Coscine transfer is a planned
+archive workflow. This class prepares data and control decisions; it is not
+an operational transfer procedure.</p>
+</blockquote>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 6 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>From classification and project storage through analysis, review, retention, and planned archival in Coscine. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>Research data needs a plan before an instrument creates the first file. This
+class follows data from instrument acquisition into an approved RCC project,
+through analysis and validation, and into a verified Coscine archive set. It
+connects every technical copy to ownership, access, retention, reuse, and
+defensible deletion decisions.</p>
+<p>It is for researchers, project owners, data stewards, laboratory staff, and
+technical staff who need to decide what happens to data when active RCC work
+slows down or a project ends.</p>
+<p>Need the two-page version first? Read the
+<a href="../../data/data-lifecycle-tldr/index.html">data lifecycle TL;DR</a>.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this class, you should be able to:</p>
+<ul>
+<li>identify the lifecycle stage of a dataset;</li>
+<li>explain why instrument and research data belongs to an approved project and
+not a user's home directory;</li>
+<li>distinguish authoritative data, reproducible intermediates, durable results,
+records, and disposable temporary files;</li>
+<li>assign an owner, retention basis, access model, and review date;</li>
+<li>prepare data and metadata for reuse or archiving;</li>
+<li>explain when Coscine may be an appropriate archive option;</li>
+<li>follow the planned RCC-project-to-Coscine flow without treating it as a live
+self-service transfer; and</li>
+<li>require verification and acceptance before removing an RCC copy.</li>
+</ul>
+<h2 id="1-the-lifecycle-is-a-set-of-decisions">1. The lifecycle is a set of decisions</h2>
+<pre><code class="language-text">plan
+  -&gt; instrument creates or acquires data
+  -&gt; approved RCC project receives and verifies it
+  -&gt; job-local workspace supports active analysis
+  -&gt; RCC project receives validated results and records
+  -&gt; project owner selects a documented archive set
+  -&gt; Coscine receives and verifies the approved archive set
+  -&gt; RCC copies are retained or removed by recorded decision
+</code></pre>
+<p>The arrows are not a one-way conveyor belt. Published data may be reused and
+analysed again. An archived dataset may need a controlled correction. A
+retention decision may change when consent, law, contracts, funder rules, or
+scientific value change.</p>
+<p>At every stage, record:</p>
+<ul>
+<li>the accountable project owner;</li>
+<li>the approved purpose and governance basis;</li>
+<li>where the authoritative copy lives;</li>
+<li>who may access it;</li>
+<li>the metadata and provenance needed to interpret it;</li>
+<li>the retention period or review date; and</li>
+<li>the event that permits archival or deletion.</li>
+</ul>
+<p>For this course, Coscine is the planned endpoint for an eligible retained
+archive set. It is not the destination for every temporary file, failed run, or
+unreviewed project directory, and it is not available until the project and
+transfer route have been approved.</p>
+<h2 id="2-classify-before-moving">2. Classify before moving</h2>
+<table>
+<thead>
+<tr>
+  <th>Data class</th>
+  <th>Typical treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Authoritative raw or acquired data</td>
+  <td>Preserve under the approved retention plan; never infer that derived files replace it</td>
+</tr>
+<tr>
+  <td>Curated analysis input</td>
+  <td>Retain with provenance linking it to its source and transformation</td>
+</tr>
+<tr>
+  <td>Reproducible intermediate</td>
+  <td>Recreate when practical; retain only when cost, risk, or policy justifies it</td>
+</tr>
+<tr>
+  <td>Validated result</td>
+  <td>Retain with code, parameters, environment, logs, and review evidence</td>
+</tr>
+<tr>
+  <td>Publication or sharing package</td>
+  <td>Preserve the exact released version, metadata, licence, and persistent identifier where applicable</td>
+</tr>
+<tr>
+  <td>Project record</td>
+  <td>Retain decisions, approvals, manifests, access history, and disposal evidence as required</td>
+</tr>
+<tr>
+  <td>Cache, scratch, or failed-run output</td>
+  <td>Remove through a bounded cleanup process after confirming it is not the only useful copy</td>
+</tr>
+</tbody>
+</table>
+<p>File age alone is not a classification. A large old raw dataset may still be
+the authoritative scientific record, while yesterday's multi-terabyte scratch
+directory may already be disposable.</p>
+<h2 id="3-match-storage-to-the-lifecycle-stage">3. Match storage to the lifecycle stage</h2>
+<p>RCC project storage supports active, governed computation and durable project
+results. Job-local storage supports temporary high-I/O work. A publication
+repository supports a released dataset. An archive supports retained data that
+is no longer actively changing.</p>
+<h3 id="why-project-data-must-not-live-in-a-user-s-home-directory">Why project data must not live in a user's home directory</h3>
+<p>A home directory is attached to an individual account. It is suitable for
+personal configuration, small source files, and limited working material. It
+must not become the authoritative landing area for instrument output, shared
+research input, or durable results.</p>
+<p>From a governance and legal-compliance perspective, approved project storage:</p>
+<ul>
+<li>ties processing to the project's documented purpose, responsible owner, and
+applicable approvals;</li>
+<li>applies project membership as the access boundary;</li>
+<li>supports reviewable stewardship when staff, students, or collaborators
+change;</li>
+<li>gives retention, archival, legal-hold, and deletion decisions a project
+context; and</li>
+<li>avoids relying on an individual's account to demonstrate who controls the
+data and why it is retained.</li>
+</ul>
+<p>This does not make every project directory legally suitable for every dataset.
+Consent, data-protection classification, contracts, funder rules, and other
+project-specific requirements still decide whether RCC and Coscine are
+permitted destinations.</p>
+<p>From a performance and operational perspective:</p>
+<ul>
+<li>large instrument datasets and recurring ingestion can exhaust personal
+quotas and create excessive filesystem metadata work;</li>
+<li>team workflows need stable paths that do not depend on one user account;</li>
+<li>durable shared storage should hold inputs and validated outputs, not the
+random I/O of an active computation; and</li>
+<li>high-I/O intermediates should be staged to job-local storage and removed
+after required results return to the project.</li>
+</ul>
+<p>The intended placement is therefore:</p>
+<table>
+<thead>
+<tr>
+  <th>Lifecycle point</th>
+  <th>Storage role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Instrument acquisition</td>
+  <td>Instrument or approved facility storage until the run is complete; suitable registered devices may use the protected Lab network</td>
+</tr>
+<tr>
+  <td>RCC ingestion</td>
+  <td>Named approved project area, with manifest and transfer verification</td>
+</tr>
+<tr>
+  <td>Active computation</td>
+  <td>Job-local storage for temporary high-I/O work</td>
+</tr>
+<tr>
+  <td>Durable analysis record</td>
+  <td>RCC project inputs, validated outputs, code, metadata, and provenance</td>
+</tr>
+<tr>
+  <td>Retained end state</td>
+  <td>Verified, approved Coscine archive set</td>
+</tr>
+<tr>
+  <td>Personal setup</td>
+  <td>Home directory only for configuration, small source files, and non-authoritative working material</td>
+</tr>
+</tbody>
+</table>
+<p>An archive is not:</p>
+<ul>
+<li>a backup of live, changing project storage;</li>
+<li>a substitute for tested recovery;</li>
+<li>a place to hide undocumented files;</li>
+<li>automatically suitable for every data-protection class; or</li>
+<li>permission to delete the source immediately after upload.</li>
+</ul>
+<p>Keep at least one recorded authoritative copy throughout a migration. If the
+project requires backup or disaster recovery, document that separately from
+archival retention.</p>
+<h2 id="4-build-the-minimum-archive-package">4. Build the minimum archive package</h2>
+<p>Select data intentionally rather than copying an entire project tree by
+default. A reviewable package should include:</p>
+<pre><code class="language-text">ARCHIVE_SET/
+├── README.md
+├── MANIFEST.tsv
+├── CHECKSUMS.sha256
+├── metadata/
+├── data/
+├── code-and-environments/
+├── documentation/
+└── approvals-and-retention/
+</code></pre>
+<p>The manifest should record at least the relative path, byte size, checksum,
+data class, source, format, responsible owner, access class, retention basis,
+and relationship to other files. Use meaningful metadata that remains useful
+after current team members leave.</p>
+<p>Do not place secrets, credentials, direct identifiers, or re-identification
+keys in README files, manifests, filenames, or general metadata fields.</p>
+<h2 id="5-coscine-as-an-archive-option">5. Coscine as an archive option</h2>
+<p><a href="https://about.coscine.de/en/about/overview/">Coscine</a> is a research-data
+management platform that can associate project data with structured metadata.
+Its available resource types do not all retain the same thing: some can hold
+data and metadata, while others represent or retain metadata about data held
+elsewhere. Confirm the selected resource type, allocation, protection level,
+retention period, and institutional approval before transfer.</p>
+<p>Coscine is the planned final lifecycle point for an eligible completed or
+stable research dataset that needs:</p>
+<ul>
+<li>an accountable project and membership model;</li>
+<li>descriptive metadata for discovery and reuse;</li>
+<li>a stable retained package rather than active RCC computation; and</li>
+<li>an archive period supported by the selected Coscine resource.</li>
+</ul>
+<p>It is not automatically appropriate merely because data currently fits on
+RCC. Biomedical-data governance, consent, contracts, intellectual-property
+rules, export controls, and repository requirements still apply. Complete
+<a href="../class-13-biomedical-data-privacy/index.html">Class 13: biomedical data privacy</a> and
+obtain the project-specific approvals before moving governed data.</p>
+<p>The RCC integration is <strong>planned, not yet a live self-service service</strong>. Do not
+stage the archive through a home directory. Follow
+the <a href="../../data/rcc-project-to-coscine/index.html">planned RCC project to Coscine archive flow</a>
+and wait for the RCC team to confirm the supported transfer route.</p>
+<p>For current Coscine behavior and resource-specific limitations, consult the
+official <a href="https://docs.coscine.de/en/resources/archiving/">Coscine archiving documentation</a>.</p>
+<h2 id="6-archive-acceptance-comes-before-rcc-cleanup">6. Archive acceptance comes before RCC cleanup</h2>
+<p>A successful command or upload is not archive acceptance. Before changing or
+removing the RCC source, record evidence that:</p>
+<ol>
+<li>the intended archive set was frozen;</li>
+<li>file count, total bytes, and checksums match;</li>
+<li>metadata is complete enough for an independent project member;</li>
+<li>the destination resource contains data as well as metadata when required;</li>
+<li>access has been tested by an authorised person;</li>
+<li>retention and archive state are recorded;</li>
+<li>the project owner and archive owner accepted the transfer; and</li>
+<li>the RCC retention or deletion action was separately approved.</li>
+</ol>
+<p>When any check fails, preserve the RCC copy, record the failure, and resume from
+a known state. Do not repeatedly launch unbounded transfer attempts.</p>
+<h2 id="7-review-instead-of-forgetting">7. Review instead of forgetting</h2>
+<p>Set a review date even when the archive has a defined retention period. Review:</p>
+<ul>
+<li>ownership and contact continuity;</li>
+<li>access membership;</li>
+<li>consent, legal, contractual, and funder obligations;</li>
+<li>whether formats and documentation remain usable;</li>
+<li>whether a persistent identifier or publication link is still correct;</li>
+<li>whether the data remains in scope for the selected archive; and</li>
+<li>what must happen at the end of retention.</li>
+</ul>
+<p>Record deletion as an accountable lifecycle event. The record should identify
+what was removed, under whose authority, when, from which locations, and which
+retained or published copies remain.</p>
+<h2 id="8-practical-exercise">8. Practical exercise</h2>
+<p>Using synthetic or non-sensitive files, prepare a lifecycle decision for one
+small dataset:</p>
+<ol>
+<li>classify raw data, curated inputs, intermediates, results, and records;</li>
+<li>trace the dataset from an instrument into its named RCC project;</li>
+<li>explain why the home directory is not an acceptable landing point;</li>
+<li>name the authoritative copy and accountable owner;</li>
+<li>state the governance basis and retention or review date;</li>
+<li>separate job-local intermediates from durable project records;</li>
+<li>create a manifest and checksums for the Coscine archive set;</li>
+<li>walk through the planned Coscine flow without transferring real data; and</li>
+<li>write the acceptance evidence required before any RCC cleanup.</li>
+</ol>
+<h2 id="take-home-rule">Take-home rule</h2>
+<blockquote>
+<p>Move instrument data into a governed project, not a personal home directory.
+Archive a deliberate, documented set in Coscine, verify acceptance, and only
+then apply the recorded RCC retention or deletion decision.</p>
+</blockquote>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Produce a synthetic lifecycle and archive plan that identifies the data
+classes, authoritative copy, owner, governance basis, retention decision,
+metadata, verification evidence, destination acceptance, and permitted RCC
+cleanup action. The plan must trace instrument data through project storage and
+job-local analysis to Coscine, explain why home storage is excluded, and state
+that the RCC-to-Coscine flow is planned and requires service confirmation.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>RCC Expedition · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../index.html">Home</a><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../course/index.html">Course overview</a><a  href="../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../reference/index.html">Reference overview</a><a  href="../reference/terminology/index.html">RCC terminology</a><a  href="../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../reference/data-sharing/index.html">Sharing data</a><a  href="../reference/software-workflows/index.html">Software workflows</a><a  href="../reference/slurm/index.html">Slurm commands</a><a  href="../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../reference/resources/index.html">Resources and discovery</a><a  href="../reference/ai-data-science/index.html">AI and data science</a><a  href="../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../security/safe-use/index.html">Safe everyday practice</a><a  href="../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../team/index.html">Who we are</a><a  href="../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../index.html">Home</a><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../course/index.html">Course overview</a><a  href="../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../reference/index.html">Reference overview</a><a  href="../reference/terminology/index.html">RCC terminology</a><a  href="../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../reference/data-sharing/index.html">Sharing data</a><a  href="../reference/software-workflows/index.html">Software workflows</a><a  href="../reference/slurm/index.html">Slurm commands</a><a  href="../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../reference/resources/index.html">Resources and discovery</a><a  href="../reference/ai-data-science/index.html">AI and data science</a><a  href="../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../security/safe-use/index.html">Safe everyday practice</a><a  href="../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../team/index.html">Who we are</a><a  href="../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Documentation · RCC ClusterDocs</p>
+      
+      <h1 id="rcc-expedition">RCC Expedition</h1>
+<p>!!! tip &quot;Recommended onboarding for new RCC users&quot;
+RCC Expedition is a self-contained interactive course for <strong>Windows 11</strong>
+and <strong>current macOS</strong>. It starts with workstation security and continues
+through SSH, Linux, Slurm, storage, data boundaries, and reproducible RCC
+workflows.</p>
+<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.0.zip"><strong>Download RCC Expedition v1.0.0</strong></a></p>
+<p>SHA-256:</p>
+<pre><code class="language-text">680cc16b4d226de59e4dd7c6e0468ac3e9137b3bb7d438b94ad0c93152aa18c7
+</code></pre>
+<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.0.sha256">Checksum file</a></p>
+<h2 id="privacy-datensparsam-by-design">Privacy: datensparsam by design</h2>
+<p>RCC Expedition runs locally on the user's computer.</p>
+<p>It has:</p>
+<ul>
+<li>no learner account;</li>
+<li>no analytics;</li>
+<li>no telemetry;</li>
+<li>no central progress database;</li>
+<li>no supervisor dashboard; and</li>
+<li>no background course synchronization.</li>
+</ul>
+<p>Course progress stays in local browser storage. Local workstation checks retain
+only coarse states such as <code>PASS</code>, <code>WARN</code>, <code>FAIL</code>, or <code>UNKNOWN</code>.</p>
+<p>The course does <strong>not</strong> collect passwords, MFA secrets, BitLocker/FileVault
+recovery keys, SSH private-key contents, filenames, shell history, raw Wi-Fi
+network names, or research data.</p>
+<p>External documentation is contacted only when the user clicks an external
+reference. RCC is contacted only when the user deliberately runs an RCC SSH
+exercise.</p>
+<h2 id="supported-workstation-baseline">Supported workstation baseline</h2>
+<p>Use:</p>
+<ul>
+<li>a currently supported and patched <strong>Windows 11</strong> system; or</li>
+<li>a currently supported and patched <strong>macOS</strong> system.</li>
+</ul>
+<p>Windows 10 is not treated as a suitable baseline for a newly configured RCC
+research workstation because normal free Windows 10 security support ended in
+October 2025.</p>
+<h3 id="windows-11">Windows 11</h3>
+<p>The course covers:</p>
+<ul>
+<li>Windows Update and application patching;</li>
+<li>Device Encryption / BitLocker;</li>
+<li>BitLocker recovery-key handling;</li>
+<li>Windows Security / Microsoft Defender;</li>
+<li>Windows Firewall and Secure Boot;</li>
+<li>screen locking and personal user accounts;</li>
+<li>backups plus an actual restore test;</li>
+<li>Windows OpenSSH Client; and</li>
+<li>RCC SSH-key setup.</li>
+</ul>
+<h3 id="macos">macOS</h3>
+<p>The course covers:</p>
+<ul>
+<li>macOS and application patching;</li>
+<li>FileVault;</li>
+<li>Gatekeeper;</li>
+<li>screen locking and personal user accounts;</li>
+<li>encrypted Time Machine backups plus an actual restore test; and</li>
+<li>RCC SSH-key setup.</li>
+</ul>
+<h2 id="research-workstation-and-clinical-network-boundary">Research workstation and clinical-network boundary</h2>
+<p>A privately maintained or research workstation used for RCC should not be
+turned into a clinical hospital endpoint.</p>
+<p>Do <strong>not</strong> use hospital/clinical VPN as an RCC connectivity workaround, and do
+not connect an unmanaged research laptop or desktop to clinical/internal
+networks merely because those networks are available.</p>
+<p>Network reachability itself can expose clinical resources and governed data to
+browser sessions, mapped shares, caches, sync tools, temporary files, IDE
+extensions, logs, and other background software.</p>
+<p>Use an appropriately managed hospital endpoint for hospital-only clinical
+resources.</p>
+<p>For ordinary Internet access:</p>
+<ul>
+<li>use <strong>eduroam</strong> when eligible and available;</li>
+<li>where locally provided, <strong>Stiftungsnetz</strong> may be used as a
+semi-official/transitional Internet bootstrap route; or</li>
+<li>use another approved guest Internet path or a personal hotspot where
+appropriate.</li>
+</ul>
+<p>Stiftungsnetz is mentioned only as a practical bootstrap option. This
+documentation makes no undocumented claim about its network isolation.</p>
+<h2 id="what-the-course-teaches">What the course teaches</h2>
+<p>The release contains platform-specific and common missions for:</p>
+<ol>
+<li>workstation security and patching;</li>
+<li>encryption and recovery planning;</li>
+<li>backup and restore;</li>
+<li>passwords and MFA;</li>
+<li>safe network boundaries;</li>
+<li>ClusterDocs as the RCC source of truth;</li>
+<li>OpenSSH and RCC SSH keys;</li>
+<li>Linux shell fundamentals;</li>
+<li>submission hosts versus compute allocations;</li>
+<li>first Slurm job and resource requests;</li>
+<li>durable storage versus node-local scratch;</li>
+<li>governed data and transfer boundaries;</li>
+<li>explicit software environments;</li>
+<li>Apptainer;</li>
+<li>Snakemake and managed Nextflow, both ready now;</li>
+<li>optional VS Code and Jupyter; and</li>
+<li>an end-to-end synthetic RCC experiment.</li>
+</ol>
+<p>Exercises use synthetic/non-sensitive material.</p>
+<h2 id="install">Install</h2>
+<ol>
+<li>Download the ZIP.</li>
+<li>Verify the SHA-256 checksum where practical.</li>
+<li>Extract it to a local directory, or copy the extracted contents to a trusted
+USB key.</li>
+<li>Open <code>START HERE.html</code>.</li>
+<li>Follow the <strong>Windows 11</strong> or <strong>macOS</strong> path.</li>
+<li>Continue in the local course.</li>
+</ol>
+<h2 id="relationship-to-clusterdocs">Relationship to ClusterDocs</h2>
+<p><strong>ClusterDocs remains the source of truth for mutable RCC technical facts.</strong></p>
+<p>RCC Expedition links back to ClusterDocs for current:</p>
+<ul>
+<li>login/SSH configuration;</li>
+<li>Slurm resource policy;</li>
+<li>storage layout;</li>
+<li>transfer services;</li>
+<li>GPU instructions;</li>
+<li>containers;</li>
+<li>workflow execution; and</li>
+<li>Jupyter/remote-development instructions.</li>
+</ul>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

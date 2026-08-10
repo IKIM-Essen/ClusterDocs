@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 7: Nextflow on RCC · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a aria-current="page" href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a aria-current="page" href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-7-nextflow-on-rcc">Class 7: Nextflow on RCC</h1>
+<blockquote>
+<p><strong>Service status — ready now:</strong> RCC provides the pinned <code>rcc-nextflow</code>
+launcher and institutional Slurm configuration on its shellhosts and
+allocation-backed interactive nodes. Ordinary workers execute the submitted
+tasks and do not host workflow controllers.</p>
+</blockquote>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 7 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>The managed controller on an RCC shellhost or allocation-backed interactive node, Slurm tasks, shared resume state, local scratch, GPU labels, Apptainer, nf-core, and failure recovery.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<blockquote>
+<p><strong>Five rules for the supported service:</strong></p>
+<ol>
+<li>Run <strong>one Nextflow controller per analysis</strong> on an RCC shellhost,
+normally in <code>tmux</code>, or in an allocation-backed interactive session.</li>
+<li>Let <code>rcc-nextflow</code> provide Slurm and Apptainer policy; do not build a
+second site configuration.</li>
+<li>Keep Nextflow work state on persistent shared project storage; use
+<code>/local</code> only as task scratch.</li>
+<li>Start with a representative pilot, measure CPU, memory, and I/O, then tune
+only the processes that need it.</li>
+<li>When a run stops, diagnose it and use <code>-resume</code>; do not launch duplicate
+controllers as a retry mechanism.</li>
+</ol>
+</blockquote>
+<p>Do not run Nextflow on <code>login.ikim.uk-essen.de</code>, <code>login1</code>, or <code>login2</code>. Those
+machines are SSH gateways. Do not run the Nextflow controller inside an
+ordinary compute job. Scientific processes are the Slurm jobs; the controller
+only plans, submits, monitors, and records them.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this class, you can:</p>
+<ul>
+<li>explain what runs on the shellhost or interactive allocation and what runs on compute nodes;</li>
+<li>start a persistent Nextflow controller in <code>tmux</code>;</li>
+<li>use the RCC launcher and a shared project root;</li>
+<li>pilot, measure, and tune task CPU, memory, time, and I/O;</li>
+<li>request short-queue, scratch, array, and GPU resources;</li>
+<li>use Apptainer without placing Conda environments on shared storage;</li>
+<li>resume an interrupted pipeline safely; and</li>
+<li>inspect Slurm and Nextflow evidence when something fails.</li>
+</ul>
+<h2 id="1-the-mental-model">1. The mental model</h2>
+<pre><code class="language-text">Your laptop
+  -&gt; login.ikim.uk-essen.de
+       -&gt; RCC shellhost or allocation-backed interactive node
+            -&gt; Nextflow JVM
+                 -&gt; sbatch
+                      -&gt; RCC compute node
+                           -&gt; Bash task wrapper
+                           -&gt; Apptainer application
+                           -&gt; optional /local task scratch
+
+persistent project storage
+  &lt;- Nextflow work and cache state
+  &lt;- declared task outputs
+  &lt;- final published results
+</code></pre>
+<p>The Nextflow program remains on the shellhost or interactive allocation. It reads the pipeline graph, decides
+which tasks are ready, and submits them to Slurm. Slurm allocates CPUs, memory,
+time, partitions, and GPUs. Scientific computation occurs only in Slurm jobs.
+Compute workers execute generated task wrappers and do not need their own Java
+or Nextflow installation. Nextflow describes dependencies, Slurm allocates
+machines, and RCC provides execution policy.</p>
+<h2 id="2-keep-rcc-site-policy-and-user-resources-separate">2. Keep RCC site policy and user resources separate</h2>
+<p>Choose the project directory that owns the
+workflow and results, and give each analysis its own directory:</p>
+<pre><code class="language-bash">export RCC_PROJECT_ROOT=/projects/MY_PROJECT
+mkdir -p &quot;$RCC_PROJECT_ROOT/analyses/wes-2026-08&quot;
+cd &quot;$RCC_PROJECT_ROOT/analyses/wes-2026-08&quot;
+</code></pre>
+<p>Replace <code>MY_PROJECT</code> with a directory you are authorized to use. The launcher
+creates these private per-user directories:</p>
+<pre><code class="language-text">/projects/MY_PROJECT/.nextflow/USERNAME/work
+/projects/MY_PROJECT/.nextflow/USERNAME/apptainer-cache
+</code></pre>
+<p>The work directory is part of Nextflow's cache and resume mechanism. Never set
+it below <code>/local</code>. Local scratch is disposable and belongs to one compute job;
+a later task may run on another node.</p>
+<p>The launcher supplies the institutional Nextflow configuration: the Slurm
+executor, approved partitions, bounded scheduler interaction, Apptainer, and
+shared work/cache placement. Do not copy a complete <code>slurm.config</code> or redefine
+site controls such as:</p>
+<pre><code class="language-groovy">process.executor
+process.queue
+process.clusterOptions
+executor.queueSize
+executor.submitRateLimit
+apptainer.enabled
+apptainer.cacheDir
+workDir
+</code></pre>
+<p>Those settings affect scheduling, node placement, the container runtime, or
+resume-critical state and belong to RCC. Tune scientific task resources only
+after measuring a pilot; the example <code>resources.config.example</code> shows that
+narrow boundary.</p>
+<h2 id="3-one-analysis-one-active-controller">3. One analysis, one active controller</h2>
+<p>Connect to an RCC shellhost and create a persistent terminal session, or start
+the controller inside an allocation-backed interactive session. Do not start
+this controller on the preceding SSH gateway or inside an ordinary batch-worker
+allocation:</p>
+<pre><code class="language-bash">tmux new -s nextflow
+</code></pre>
+<p>Inside the <code>tmux</code> session:</p>
+<pre><code class="language-bash">rcc-nextflow --project-root &quot;$RCC_PROJECT_ROOT&quot; run PIPELINE [OPTIONS]
+</code></pre>
+<p>Detach without stopping Nextflow:</p>
+<pre><code class="language-text">Ctrl-b, then d
+</code></pre>
+<p>Return later:</p>
+<pre><code class="language-bash">tmux attach -t nextflow
+</code></pre>
+<p>A dropped laptop or jump-host connection then does not terminate the workflow
+controller.</p>
+<p>Before starting another command because a workflow looks quiet, check:</p>
+<pre><code class="language-bash">tmux ls
+pgrep -af '[n]extflow.*run' || true
+rcc-nextflow --project-root &quot;$RCC_PROJECT_ROOT&quot; log 2&gt;/dev/null || true
+squeue -u &quot;$USER&quot;
+</code></pre>
+<p>If the controller is still running, do not start another copy of the same
+analysis. Nextflow protects session/cache state with locks, and duplicate
+controllers can duplicate expensive Slurm work.</p>
+<p>The class example includes <code>run-rcc-nextflow.sh</code>. It uses a lock scoped to the
+analysis directory and preserves a timestamped controller log below <code>logs/</code>.
+After copying it into the analysis directory:</p>
+<pre><code class="language-bash">chmod +x run-rcc-nextflow.sh
+./run-rcc-nextflow.sh run main.nf
+</code></pre>
+<h2 id="4-first-bounded-rcc-workflow">4. First bounded RCC workflow</h2>
+<p>The copyable example is in
+<a href="../../classes/examples/nextflow-rcc/README/index.html"><code>examples/nextflow-rcc</code></a>. Copy
+that directory into your project, enter it, and run:</p>
+<pre><code class="language-bash">./run-rcc-nextflow.sh \
+  run main.nf \
+  -with-trace trace.tsv \
+  -with-report report.html \
+  -with-timeline timeline.html
+</code></pre>
+<p>The example submits two small <code>cpu_short</code> jobs. One uses the shared task work
+directory; one uses node-local scratch and returns only its declared output.
+Every example has strict CPU, memory, and time limits.</p>
+<p>Run it again with:</p>
+<pre><code class="language-bash">./run-rcc-nextflow.sh \
+  run main.nf \
+  -with-trace trace-resume.tsv \
+  -resume
+</code></pre>
+<p>The second run should reuse completed task results. Keep the same project root,
+pipeline revision, inputs, and work directory for resume to succeed.</p>
+<h2 id="5-pilot-measure-tune-then-scale">5. Pilot, measure, tune, then scale</h2>
+<p>Do not tune a large workflow by intuition alone:</p>
+<pre><code class="language-text">representative samples -&gt; pilot -&gt; trace/report plus sacct -&gt; tune -&gt; repeat -&gt; scale
+</code></pre>
+<p>Record task evidence on every serious pilot:</p>
+<pre><code class="language-bash">-with-trace trace.tsv \
+-with-report report.html \
+-with-timeline timeline.html
+</code></pre>
+<p>Then compare it with Slurm accounting:</p>
+<pre><code class="language-bash">sacct -S today -u &quot;$USER&quot; \
+  --format=JobID,JobName%35,State,Elapsed,AllocCPUS,ReqMem,MaxRSS,ExitCode
+</code></pre>
+<p>Resource requests are reservations. Asking for 32 CPUs or 100 GB when a task
+repeatedly uses a fraction of them reduces cluster throughput and can increase
+queue time without making the task faster. Use several representative task
+instances rather than one anomalous measurement.</p>
+<h2 id="6-resource-requests">6. Resource requests</h2>
+<p>Nextflow process directives map to Slurm requests:</p>
+<pre><code class="language-groovy">process ALIGN {
+    cpus 8
+    memory 32.GB
+    time 4.h
+
+    script:
+    &quot;&quot;&quot;
+    aligner --threads ${task.cpus} input.fastq.gz &gt; output.bam
+    &quot;&quot;&quot;
+}
+</code></pre>
+<p>Request what the program can actually use. More CPUs or memory can increase
+queue time without reducing runtime.</p>
+<h3 id="short-jobs">Short jobs</h3>
+<p>Apply the RCC label only when every task instance is guaranteed to finish
+within two hours:</p>
+<pre><code class="language-groovy">label 'rcc_short'
+</code></pre>
+<p>This selects <code>cpu_short</code> and a maximum task time of two hours.</p>
+<h3 id="local-scratch">Local scratch</h3>
+<p>Use local scratch for repeated random I/O, temporary databases, sorting,
+assembly, decompressed intermediates, or very large numbers of temporary files:</p>
+<pre><code class="language-groovy">label 'rcc_scratch'
+</code></pre>
+<p>Nextflow creates a unique task directory below the Slurm job's <code>$TMPDIR</code>, stages
+inputs, executes locally, copies declared outputs back with <code>rsync</code>, and removes
+the task scratch directory after successful stage-out.</p>
+<p>Do not label every process as scratch. Copying a multi-terabyte input for one
+sequential pass may cost more than reading it once from shared storage.</p>
+<h3 id="job-arrays">Job arrays</h3>
+<p>For a process with many tasks and identical resource requirements:</p>
+<pre><code class="language-groovy">label 'rcc_array'
+</code></pre>
+<p>RCC initially groups up to 50 tasks per Slurm array submission. CPUs, memory,
+time, queue, and cluster options must be uniform for all array members. Failed
+members can be retried separately.</p>
+<h2 id="7-gpu-labels">7. GPU labels</h2>
+<p>Request any standard GPU:</p>
+<pre><code class="language-groovy">label 'rcc_gpu'
+</code></pre>
+<p>Request the current exact RTX A6000 type:</p>
+<pre><code class="language-groovy">label 'rcc_gpu_a6000'
+</code></pre>
+<p>Request an architecture family:</p>
+<pre><code class="language-groovy">label 'rcc_gpu_ampere'
+// or, when a standard Blackwell node is available in gpu_nodes:
+label 'rcc_gpu_blackwell'
+</code></pre>
+<p>Request the special ARM64/GB10 platform only when the workflow supports that
+architecture and platform policy:</p>
+<pre><code class="language-groovy">label 'rcc_ai_top_atom'
+</code></pre>
+<p>RCC adds Apptainer <code>--nv</code> for these labels. GPU VRAM is not the same resource
+as host memory requested with <code>memory</code>.</p>
+<h2 id="8-containers">8. Containers</h2>
+<p>RCC uses Apptainer for Nextflow tasks. A process can declare an immutable image:</p>
+<pre><code class="language-groovy">process TOOL {
+    container 'docker://REGISTRY/PROJECT/IMAGE@sha256:DIGEST'
+    cpus 4
+    memory 8.GB
+    time 1.h
+
+    script:
+    &quot;&quot;&quot;
+    tool --threads ${task.cpus}
+    &quot;&quot;&quot;
+}
+</code></pre>
+<p>Prefer a reviewed SIF file or a digest-pinned OCI reference. Do not use mutable
+<code>latest</code> tags. The per-user Apptainer cache is on shared project storage so a
+job scheduled on another node can reuse the image.</p>
+<p>Avoid Nextflow-managed Conda as the default RCC profile. Conda environments
+contain many small files and create poor metadata-I/O patterns on shared
+storage. Use Apptainer unless a reviewed pipeline has a specific exception.</p>
+<p>If Apptainer reports missing user-account information, <code>Operation not permitted</code>, or a missing RCC scratch path, treat that as a possible worker or
+runtime problem and report the Slurm job ID and node. Do not work around it with
+privileged container modes.</p>
+<h2 id="9-running-nf-core-pipelines">9. Running nf-core pipelines</h2>
+<p>The separate bounded nf-core example pins <code>nf-core/demo</code> release <code>1.2.0</code>, uses
+public synthetic test data, caps scheduler concurrency, and supplies teaching
+resources through
+<a href="../../classes/examples/nf-core/rcc-test.config"><code>rcc-test.config</code></a>. Its
+<a href="../../classes/examples/nf-core/run-demo.sh"><code>run-demo.sh</code></a> wrapper fails closed
+unless <code>rcc-nextflow</code>, <code>apptainer</code>, and <code>sbatch</code> are present.</p>
+<p>Copy both files into an approved project directory and run:</p>
+<pre><code class="language-bash">bash run-demo.sh /projects/PROJECT \
+  /projects/PROJECT/training/nf-core-demo/run-01
+</code></pre>
+<p>The first run may retrieve pipeline source, public test data, and reviewed
+container images through the approved proxy path. Do not add tokens or copy
+credentials into the project.</p>
+<p>For a real pipeline, use an explicit release and its Apptainer profile:</p>
+<pre><code class="language-bash">./run-rcc-nextflow.sh \
+  run nf-core/rnaseq \
+  -r RELEASE_TAG \
+  -profile apptainer \
+  -resume \
+  --input samplesheet.csv \
+  --outdir results
+</code></pre>
+<p>Replace <code>RELEASE_TAG</code> with a reviewed release. Do not implicitly follow a
+pipeline's changing default branch. Pilot a small synthetic or non-sensitive
+input before launching a complete study.</p>
+<p>The production-shaped
+<a href="../../classes/examples/nf-core/params-rnaseq.example.json"><code>params-rnaseq.example.json</code></a>
+is a template, not a command to paste unchanged. Replace every placeholder
+with approved project paths, validate the samplesheet and references, and
+review the pipeline-specific resource requirements before submission.</p>
+<p>The RCC institutional config is appended by the launcher. The pipeline may
+keep its own profiles and process-specific resources, while RCC retains the
+Slurm executor, approved partitions, bounded scheduler interaction, and
+Apptainer runtime.</p>
+<p>Start with the pipeline defaults and a small pilot. If one process repeatedly
+needs adjustment, override only that process in a small file such as
+<code>resources.config.example</code>, then add <code>-c resources.config</code> to the command. Do
+not copy every nf-core resource label into a local <code>slurm.config</code> before you
+have measured the pipeline.</p>
+<p>An exit code <code>137</code> or Slurm <code>OUT_OF_MEMORY</code> makes memory a reasonable first
+hypothesis. If Nextflow instead reports that a process was &quot;terminated by the
+external system&quot; without a task exit status, collect Slurm and node evidence
+before automatically increasing memory.</p>
+<h2 id="10-monitor-the-run">10. Monitor the run</h2>
+<p>Nextflow view:</p>
+<pre><code class="language-bash">cat .nextflow.log
+column -t -s $'\t' trace.tsv | less -S
+</code></pre>
+<p>Slurm view:</p>
+<pre><code class="language-bash">squeue -u &quot;$USER&quot; -o '%.18i %.16j %.10T %.10M %.6D %R'
+sacct -S today -u &quot;$USER&quot; \
+  --format=JobID,JobName%30,State,Elapsed,AllocCPUS,ReqMem,MaxRSS,ExitCode
+</code></pre>
+<p>A pending reason such as <code>Resources</code>, <code>Priority</code>, or <code>QOS...</code> is scheduler
+information, not a signal to submit duplicate workflows.</p>
+<h2 id="11-diagnose-before-resuming">11. Diagnose before resuming</h2>
+<p>A failed task has useful evidence in its work directory:</p>
+<pre><code class="language-text">.command.sh      command Nextflow executed
+.command.run     generated task wrapper
+.command.out     standard output
+.command.err     standard error
+.command.log     combined task log where available
+.exitcode        task exit status when the wrapper completed normally
+</code></pre>
+<p>Common first interpretations are:</p>
+<table>
+<thead>
+<tr>
+  <th>Evidence</th>
+  <th>First interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>exit <code>137</code>, <code>OUT_OF_MEMORY</code></td>
+  <td>investigate task memory</td>
+</tr>
+<tr>
+  <td><code>TIMEOUT</code></td>
+  <td>task walltime too short</td>
+</tr>
+<tr>
+  <td><code>NODE_FAIL</code> or failed node</td>
+  <td>cluster/node incident</td>
+</tr>
+<tr>
+  <td>Apptainer says <code>unknown userid</code></td>
+  <td>worker identity/NSS/SSSD incident</td>
+</tr>
+<tr>
+  <td>missing <code>/local/...</code> scratch path</td>
+  <td>worker/prolog/runtime incident</td>
+</tr>
+<tr>
+  <td><code>terminated by the external system</code> with no task exit code</td>
+  <td>inspect Slurm and node state first</td>
+</tr>
+<tr>
+  <td>Nextflow session lock error</td>
+  <td>another controller for this analysis is active</td>
+</tr>
+</tbody>
+</table>
+<p>After correcting the input, configuration, resource request, or software issue:</p>
+<pre><code class="language-bash">./run-rcc-nextflow.sh \
+  run PIPELINE [THE SAME OPTIONS] \
+  -resume
+</code></pre>
+<p>Do not delete the work directory as a first troubleshooting step. Do not start
+several copies of the same workflow because one appears slow. Record:</p>
+<ul>
+<li>the Nextflow command and exact pipeline revision;</li>
+<li>the Nextflow run name;</li>
+<li>the timestamped controller log below <code>logs/</code>;</li>
+<li>relevant <code>.command.err</code> and <code>.command.log</code> excerpts;</li>
+<li>Slurm job IDs, states, and nodes;</li>
+<li>the failed task work directory;</li>
+<li>requested and observed resources; and</li>
+<li>whether the process used shared or local scratch.</li>
+</ul>
+<p>Never include passwords, tokens, private keys, or patient-identifying data in a
+support request.</p>
+<h2 id="12-decision-checklist">12. Decision checklist</h2>
+<p>After the service is released and before a large run, confirm:</p>
+<ul>
+<li>one active Nextflow controller is running on an interactive node (<code>shellhost</code>)
+inside <code>tmux</code>;</li>
+<li><code>rcc-nextflow</code> supplies Slurm and Apptainer policy;</li>
+<li>no copied site-level <code>slurm.config</code> overrides RCC infrastructure;</li>
+<li>the project root and <code>NXF_WORK</code> are shared and persistent;</li>
+<li>the pipeline is pinned to an exact revision;</li>
+<li>Apptainer images are reviewed or digest-pinned;</li>
+<li>each task has realistic CPU, memory, and time requests;</li>
+<li>scratch is used only where its staging cost is justified;</li>
+<li>high-fan-out uniform processes use arrays where appropriate;</li>
+<li>a small pilot completed and resumed successfully;</li>
+<li>trace/report and Slurm accounting evidence was reviewed; and</li>
+<li>primary identifying patient data is absent.</li>
+</ul>
+<h2 id="completion-gate">Completion gate</h2>
+<p>Before release, you have completed the preparation gate when you can explain:</p>
+<ol>
+<li>why the controller runs on an interactive node (<code>shellhost</code>), never an SSH
+gateway or worker allocation;</li>
+<li>why every scientific task goes through Slurm;</li>
+<li>why <code>NXF_WORK</code> stays on persistent shared project storage;</li>
+<li>when <code>/local</code> task scratch helps and how outputs return;</li>
+<li>why workers need Apptainer, but not Java or Nextflow; and</li>
+<li>which revisions, parameters, reports, image digests, checksums, and Slurm
+IDs form retained provenance.</li>
+</ol>
+<p>After RCC releases <code>rcc-nextflow</code>, run the bounded synthetic example and verify
+that <code>-resume</code> reuses completed work.</p>
+<h2 id="take-home-rule">Take-home rule</h2>
+<blockquote>
+<p>One controller on a shellhost or allocation-backed interactive node; Slurm for every compute task;
+shared state for resume; local scratch for measured I/O bottlenecks;
+Apptainer for software. Pilot, measure, tune, then scale.</p>
+</blockquote>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

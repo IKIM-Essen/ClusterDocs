@@ -1,0 +1,530 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.487
+Part Three explains performance engineering for biomedical research.
+
+2
+00:00:03.487 --> 00:00:10.024
+The most important message is that faster hardware does not rescue a poorly structured workflow.
+
+3
+00:00:10.024 --> 00:00:16.997
+A computation that should finish in hours can extend to weeks or months when it repeatedly
+
+4
+00:00:16.997 --> 00:00:23.099
+scans network storage, opens millions of small files, requests the wrong number of threads,
+
+5
+00:00:23.099 --> 00:00:26.150
+or runs out of memory and restarts.
+
+6
+00:00:26.150 --> 00:00:30.944
+We will separate CPU, GPU, RAM, disk capacity, and I/O behavior.
+
+7
+00:00:30.944 --> 00:00:36.174
+We will also explain streaming versus random access, large versus small files,
+
+8
+00:00:36.174 --> 00:00:40.968
+compression, node-local scratch, and the tools used to find a bottleneck.
+
+9
+00:00:40.968 --> 00:00:44.890
+The goal is not maximum speed at any cost.
+
+10
+00:00:44.890 --> 00:00:48.813
+The goal is predictable, fair, and scientifically correct performance.
+
+11
+00:00:48.813 --> 00:00:51.372
+Performance is not a single number.
+
+12
+00:00:51.372 --> 00:00:56.492
+An analysis may be limited by CPU instructions, GPU kernels, memory capacity,
+
+13
+00:00:56.492 --> 00:01:01.184
+memory bandwidth, network transfer, storage throughput, storage latency, or metadata operations.
+
+14
+00:01:01.184 --> 00:01:05.450
+Improving a resource that is not limiting usually changes little.
+
+15
+00:01:05.450 --> 00:01:12.276
+For example, adding CPU cores to a job that waits for thousands of small files can
+
+16
+00:01:12.276 --> 00:01:14.409
+increase contention without shortening runtime.
+
+17
+00:01:14.409 --> 00:01:19.955
+Start by describing the data path and measuring where elapsed time is spent.
+
+18
+00:01:19.955 --> 00:01:22.941
+Then change one variable at a time.
+
+19
+00:01:22.941 --> 00:01:29.767
+This approach is more reliable than guessing from the reputation of a tool or copying a
+
+20
+00:01:29.767 --> 00:01:31.900
+resource request from another project.
+
+21
+00:01:31.900 --> 00:01:34.943
+Consider a workflow with five thousand samples.
+
+22
+00:01:34.943 --> 00:01:40.596
+If a step spends one second on useful computation and twenty seconds opening,
+
+23
+00:01:40.596 --> 00:01:45.378
+seeking, and closing small files on shared storage, the overhead dominates.
+
+24
+00:01:45.378 --> 00:01:52.334
+Repeat that pattern across many rules and retries, and a nominally short analysis can occupy the
+
+25
+00:01:52.334 --> 00:01:53.639
+system for weeks.
+
+26
+00:01:53.639 --> 00:02:00.160
+Another common pattern is decompressing the same source repeatedly, copying entire directories for each rule,
+
+27
+00:02:00.160 --> 00:02:04.508
+or requesting one core for software configured to use sixteen.
+
+28
+00:02:04.508 --> 00:02:09.725
+Performance mistakes multiply by the number of samples, files, and workflow stages.
+
+29
+00:02:09.725 --> 00:02:15.812
+Estimate scale before launch: number of jobs, files per job, bytes read and written,
+
+30
+00:02:15.812 --> 00:02:17.986
+and expected runtime per unit.
+
+31
+00:02:17.986 --> 00:02:21.737
+A CPU node contains cores that execute instruction streams.
+
+32
+00:02:21.737 --> 00:02:24.238
+Some tools expose a threads option.
+
+33
+00:02:24.238 --> 00:02:30.906
+Slurm must allocate at least that many CPUs per task, and the command must be told
+
+34
+00:02:30.906 --> 00:02:32.156
+to use them.
+
+35
+00:02:32.156 --> 00:02:37.991
+Parallel efficiency usually declines as thread count increases because threads coordinate, share memory bandwidth,
+
+36
+00:02:37.991 --> 00:02:39.658
+and wait for input.
+
+37
+00:02:39.658 --> 00:02:46.326
+Two independent samples may run faster as two smaller jobs than as one very wide job.
+
+38
+00:02:46.326 --> 00:02:51.744
+Measure elapsed time and CPU utilization at several thread counts using representative data.
+
+39
+00:02:51.744 --> 00:02:58.412
+Never start many background processes outside the allocation, and do not assume that a tool called
+
+40
+00:02:58.412 --> 00:02:59.662
+multithreaded scales linearly.
+
+41
+00:02:59.662 --> 00:03:05.423
+GPUs contain many execution units optimized for highly parallel numerical work.
+
+42
+00:03:05.423 --> 00:03:12.232
+They can accelerate deep learning, image analysis, molecular simulation, and selected sequence-analysis tools.
+
+43
+00:03:12.232 --> 00:03:19.041
+A CPU program does not become GPU-enabled merely because a GPU is allocated.
+
+44
+00:03:19.041 --> 00:03:26.373
+Request the correct GPU resource, use software built for the available driver and libraries,
+
+45
+00:03:26.373 --> 00:03:28.992
+and monitor utilization with nvidia-smi.
+
+46
+00:03:28.992 --> 00:03:35.801
+Low utilization may indicate tiny batches, CPU preprocessing, slow data loading, insufficient parallelism,
+
+47
+00:03:35.801 --> 00:03:37.896
+or frequent host-to-device transfers.
+
+48
+00:03:37.896 --> 00:03:46.276
+GPUs are scarce shared resources, so release them when the GPU portion is complete rather than
+
+49
+00:03:46.276 --> 00:03:49.418
+reserving one during long CPU-only stages.
+
+50
+00:03:49.418 --> 00:03:54.958
+RAM holds the active working set: data structures, indices, buffers, and program state.
+
+51
+00:03:54.958 --> 00:04:00.497
+If a job exceeds its Slurm memory allocation, the job may be terminated.
+
+52
+00:04:00.497 --> 00:04:07.314
+If the operating system begins swapping, performance can collapse because disk is far slower than RAM.
+
+53
+00:04:07.314 --> 00:04:13.280
+Requesting far more memory than needed can delay scheduling and reduce capacity for everyone.
+
+54
+00:04:13.280 --> 00:04:17.967
+Use Slurm accounting to inspect maximum resident memory after representative jobs.
+
+55
+00:04:17.967 --> 00:04:23.506
+Some tools scale memory with threads or input size, so record the relationship.
+
+56
+00:04:23.506 --> 00:04:29.898
+A memory leak shows steadily rising use; a normal workload often rises to a plateau.
+
+57
+00:04:29.898 --> 00:04:31.837
+Disk space is capacity.
+
+58
+00:04:31.837 --> 00:04:34.745
+I/O performance describes how data moves.
+
+59
+00:04:34.745 --> 00:04:41.046
+Four useful dimensions are throughput, latency, I/O operations per second, and metadata rate.
+
+60
+00:04:41.046 --> 00:04:46.863
+Throughput matters for large sequential reads such as scanning a compressed FASTQ.
+
+61
+00:04:46.863 --> 00:04:51.226
+Latency matters when a program waits for individual operations.
+
+62
+00:04:51.226 --> 00:04:55.104
+IOPS matters for many small reads and writes.
+
+63
+00:04:55.104 --> 00:05:02.859
+Metadata rate matters when listing directories, checking file existence, opening files, or creating thousands of paths.
+
+64
+00:05:02.859 --> 00:05:10.615
+Network storage is designed for shared durable data, but it cannot provide local-disk behavior to every
+
+65
+00:05:10.615 --> 00:05:11.584
+job simultaneously.
+
+66
+00:05:11.584 --> 00:05:15.462
+Match the access pattern to the storage tier.
+
+67
+00:05:15.462 --> 00:05:19.263
+Streaming I/O reads or writes long contiguous sequences.
+
+68
+00:05:19.263 --> 00:05:24.964
+This lets storage, operating-system caches, compression libraries, and network protocols work efficiently.
+
+69
+00:05:24.964 --> 00:05:32.565
+Random I/O jumps among many positions or files and repeatedly pays seek, latency, and metadata costs.
+
+70
+00:05:32.565 --> 00:05:39.216
+Indexed BAM and VCF access can be appropriate when querying a small genomic interval,
+
+71
+00:05:39.216 --> 00:05:46.818
+but repeatedly issuing tiny queries across the entire genome can be slower than one sequential pass.
+
+72
+00:05:46.818 --> 00:05:53.469
+Against network storage, avoid database-like random write patterns and large collections of temporary shards.
+
+73
+00:05:53.469 --> 00:06:00.595
+Stage active files to node-local disk, process them there, and return only the required outputs.
+
+74
+00:06:00.595 --> 00:06:06.464
+A directory with hundreds of thousands of files can make listing, tab completion,
+
+75
+00:06:06.464 --> 00:06:09.625
+backups, workflow discovery, and deletion painfully slow.
+
+76
+00:06:09.625 --> 00:06:14.140
+Small files also waste storage blocks and require metadata operations.
+
+77
+00:06:14.140 --> 00:06:19.557
+Many bioinformatics tools create temporary fragments, per-read outputs, or tiny environment files.
+
+78
+00:06:19.557 --> 00:06:24.975
+Prefer a reasonable directory hierarchy, one result bundle per sample or batch,
+
+79
+00:06:24.975 --> 00:06:27.684
+and archive cold collections when appropriate.
+
+80
+00:06:27.684 --> 00:06:34.456
+Do not use tar archives as a substitute for formats that need random indexed access,
+
+81
+00:06:34.456 --> 00:06:41.229
+but do use structured containers or archives for collections that are transferred and consumed together.
+
+82
+00:06:41.229 --> 00:06:46.195
+Clean temporary files through workflow rules instead of leaving them indefinitely.
+
+83
+00:06:46.195 --> 00:06:48.406
+Biomedical data is often compressible.
+
+84
+00:06:48.406 --> 00:06:51.502
+FASTQ is commonly stored as gzip-compressed FASTQ.
+
+85
+00:06:51.502 --> 00:06:55.040
+VCF can use block gzip with an index.
+
+86
+00:06:55.040 --> 00:06:58.578
+BAM and CRAM are compressed binary alignment formats.
+
+87
+00:06:58.578 --> 00:07:05.655
+Keeping files compressed reduces bytes transferred and stored, which often saves more time than decompression costs.
+
+88
+00:07:05.655 --> 00:07:12.289
+Avoid repeatedly expanding a file to network storage merely because one command expects a path.
+
+89
+00:07:12.289 --> 00:07:19.365
+Many tools read compressed input directly, and Unix pipes can stream decompressed data between compatible tools.
+
+90
+00:07:19.365 --> 00:07:25.557
+Confirm that the chosen compression is splittable or indexable when parallel access is required.
+
+91
+00:07:25.557 --> 00:07:31.306
+Keep the original compressed source and generate only formats needed for downstream analysis.
+
+92
+00:07:31.306 --> 00:07:35.394
+Node-local scratch is temporary storage attached to the compute node.
+
+93
+00:07:35.394 --> 00:07:41.527
+It provides lower latency and avoids making shared storage handle every temporary read and write.
+
+94
+00:07:41.527 --> 00:07:46.432
+Snakemake can expose the job temporary directory through the standard tmpdir resource.
+
+95
+00:07:46.432 --> 00:07:52.973
+Shadow rules can execute in an isolated directory, with modes that link or copy the required
+
+96
+00:07:52.973 --> 00:07:53.382
+inputs.
+
+97
+00:07:53.382 --> 00:07:59.514
+For tools that perform random access or create many temporary files, use an RCC-tested pattern:
+
+98
+00:07:59.514 --> 00:08:05.238
+copy the required inputs to local scratch, run the command there, validate the output,
+
+99
+00:08:05.238 --> 00:08:07.690
+and copy only final results back.
+
+100
+00:08:07.690 --> 00:08:13.005
+Scratch is temporary, so the workflow must not treat it as durable storage.
+
+101
+00:08:13.005 --> 00:08:14.852
+Use Slurm accounting first.
+
+102
+00:08:14.852 --> 00:08:22.241
+S acct shows job state, elapsed time, allocated CPUs, and fields such as maximum resident memory.
+
+103
+00:08:22.241 --> 00:08:25.936
+S stat reports live statistics for running jobs.
+
+104
+00:08:25.936 --> 00:08:32.863
+Inside an allocation, time measures elapsed and CPU time, top or h top shows processes,
+
+105
+00:08:32.863 --> 00:08:38.866
+and tools such as pidstat, vmstat, iostat, or dstat can reveal CPU wait,
+
+106
+00:08:38.866 --> 00:08:42.099
+memory pressure, and storage activity when available.
+
+107
+00:08:42.099 --> 00:08:48.564
+nvidia-smi reports GPU utilization and memory.
+
+108
+00:08:48.564 --> 00:08:52.259
+Snakemake benchmark files connect measurements to specific rules.
+
+109
+00:08:52.259 --> 00:08:59.648
+Interpret metrics together: low CPU plus high I/O wait suggests storage; full memory and rising swap
+
+110
+00:08:59.648 --> 00:09:05.651
+suggests RAM; low GPU utilization with busy CPUs suggests preprocessing or data loading.
+
+111
+00:09:05.651 --> 00:09:08.262
+A symptom is not a diagnosis.
+
+112
+00:09:08.262 --> 00:09:15.222
+Low CPU efficiency may be caused by I/O wait, serial code, thread oversubscription, or frequent synchronization.
+
+113
+00:09:15.222 --> 00:09:22.183
+A job killed for memory needs either a larger allocation or a method that reduces the
+
+114
+00:09:22.183 --> 00:09:23.053
+working set.
+
+115
+00:09:23.053 --> 00:09:29.579
+A GPU at ten percent utilization may be waiting on CPU preprocessing or tiny batches.
+
+116
+00:09:29.579 --> 00:09:34.799
+A workflow that pauses while discovering files may have a metadata problem.
+
+117
+00:09:34.799 --> 00:09:41.325
+Build a small representative benchmark, change one factor, and compare elapsed time and resource efficiency.
+
+118
+00:09:41.325 --> 00:09:48.285
+Stop when performance is adequate and fair; optimization also has engineering cost and can introduce scientific
+
+119
+00:09:48.285 --> 00:09:48.720
+errors.
+
+120
+00:09:48.720 --> 00:09:51.129
+The operating rules are straightforward.
+
+121
+00:09:51.129 --> 00:09:52.574
+Measure before scaling.
+
+122
+00:09:52.574 --> 00:09:55.945
+Match Slurm requests to the software configuration.
+
+123
+00:09:55.945 --> 00:09:58.835
+Keep source data compressed where possible.
+
+124
+00:09:58.835 --> 00:10:00.762
+Prefer sequential streaming access.
+
+125
+00:10:00.762 --> 00:10:04.133
+Avoid random temporary I/O on network storage.
+
+126
+00:10:04.133 --> 00:10:09.432
+Stage active files to node-local scratch through a tested Snakemake pattern.
+
+127
+00:10:09.432 --> 00:10:11.840
+Reduce small-file and directory counts.
+
+128
+00:10:11.840 --> 00:10:15.693
+Preserve only necessary outputs and clean temporary files.
+
+129
+00:10:15.693 --> 00:10:21.955
+Use Slurm accounting, Snakemake benchmarks, and operating-system tools to identify the actual bottleneck.
+
+130
+00:10:21.955 --> 00:10:25.808
+Above all, perform a pilot at realistic scale.
+
+131
+00:10:25.808 --> 00:10:33.514
+An inefficient workflow multiplied across thousands of samples can turn hours into months and degrade the
+
+132
+00:10:33.514 --> 00:10:35.441
+shared service for colleagues.
+

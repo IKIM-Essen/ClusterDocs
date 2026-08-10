@@ -1,0 +1,190 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.289
+Welcome to Class 9: Python notebooks for large datasets.
+
+2
+00:00:04.289 --> 00:00:08.577
+This video introduces the core decisions and working patterns.
+
+3
+00:00:08.577 --> 00:00:15.248
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:15.248 --> 00:00:17.631
+exercises, and detailed reference material.
+
+5
+00:00:17.630 --> 00:00:23.581
+After this class, you can: start JupyterLab only inside a Slurm allocation;
+
+6
+00:00:23.581 --> 00:00:29.532
+tunnel the notebook to your workstation without exposing it to the network;
+
+7
+00:00:29.532 --> 00:00:35.978
+inspect a large dataset by sampling and summarising instead of loading everything blindly;
+
+8
+00:00:35.978 --> 00:00:42.425
+choose between pandas, Polars, DuckDB, Arrow, NumPy, SciPy, and Matplotlib; distinguish descriptive analysis,
+
+9
+00:00:42.425 --> 00:00:50.359
+statistical modeling, machine-learning training, validation, and inference; measure memory and runtime; move expensive work from a
+
+10
+00:00:50.359 --> 00:00:53.335
+notebook into a Slurm batch script.
+
+11
+00:00:53.335 --> 00:00:56.259
+A notebook kernel is a normal process.
+
+12
+00:00:56.259 --> 00:01:00.853
+It consumes CPU, memory, local scratch space, and sometimes a GPU.
+
+13
+00:01:00.853 --> 00:01:06.283
+Therefore, on RCC it must run under Slurm: Read the job output file.
+
+14
+00:01:06.283 --> 00:01:11.296
+It shows the worker, the selected loopback port, and the tunnel command.
+
+15
+00:01:11.296 --> 00:01:15.055
+Open only the local address shown by the tunnel.
+
+16
+00:01:15.055 --> 00:01:21.321
+Do not bind a notebook to a public interface and do not disable the token.
+
+17
+00:01:21.321 --> 00:01:28.004
+The connection sequence is always: submit the Jupyter job; wait for the job to report its
+
+18
+00:01:28.004 --> 00:01:33.434
+worker, loopback port, token, and tunnel; run that tunnel command on your workstation;
+
+19
+00:01:33.434 --> 00:01:37.193
+open the local 127.0.0.1 address; stop the Slurm job.
+
+20
+00:01:37.193 --> 00:01:43.570
+Use this sequence before writing a full analysis: Describe the question in one sentence.
+
+21
+00:01:43.570 --> 00:01:46.303
+Inspect the file size and format.
+
+22
+00:01:46.303 --> 00:01:50.858
+Load a small sample or a small set of columns.
+
+23
+00:01:50.858 --> 00:01:52.680
+Summarise groups before plotting.
+
+24
+00:01:52.680 --> 00:01:54.046
+Check memory use.
+
+25
+00:01:54.046 --> 00:01:56.323
+Save a small reproducible notebook.
+
+26
+00:01:56.323 --> 00:01:59.512
+Move full-scale work into a Slurm script.
+
+27
+00:01:59.512 --> 00:02:03.156
+For tabular data, prefer columnar or chunked access.
+
+28
+00:02:03.156 --> 00:02:06.800
+CSV is portable, but slow for repeated analysis.
+
+29
+00:02:06.800 --> 00:02:13.632
+Parquet, Arrow, DuckDB, or an indexed database table are usually better for repeated interactive work.
+
+30
+00:02:13.632 --> 00:02:22.770
+The course includes: examples/interactive-workflows/notebooks/python-large-data.ipynb examples/interactive-workflows/python/analysis.py examples/interactive-workflows/python/python.sbatch examples/interactive-workflows/python/environment.yml The notebooks use synthetic data so that you can
+
+31
+00:02:22.770 --> 00:02:23.913
+practice safely.
+
+32
+00:02:23.913 --> 00:02:33.051
+Their RiboSnake-inspired section builds a Bray--Curtis PCoA and a ranked waterfall plot in both Python and
+
+33
+00:02:33.051 --> 00:02:33.622
+R.
+
+34
+00:02:33.622 --> 00:02:42.760
+Run the cells to render the figures; committed notebook outputs stay empty so that results or
+
+35
+00:02:42.760 --> 00:02:46.187
+restricted data cannot be published accidentally.
+
+36
+00:02:46.187 --> 00:02:53.041
+The batch script shows the same idea as a scheduled Slurm job.
+
+37
+00:02:53.041 --> 00:02:58.538
+Do not paste patient identifiers, tokens, private keys, or passwords into notebooks.
+
+38
+00:02:58.538 --> 00:03:02.202
+Do not commit notebook outputs containing restricted data.
+
+39
+00:03:02.202 --> 00:03:07.241
+Keep notebooks small enough that another person can review the reasoning.
+
+40
+00:03:07.241 --> 00:03:09.531
+Put package versions in environment.yml.
+
+41
+00:03:09.531 --> 00:03:13.654
+Use project membership rather than sharing another user account.
+
+42
+00:03:13.654 --> 00:03:17.777
+Shut down the Slurm job when you are finished.
+
+43
+00:03:17.777 --> 00:03:24.267
+Run the local structure check before using the example on RCC: Then start one Jupyter job
+
+44
+00:03:24.267 --> 00:03:29.540
+and confirm three things: The job output says the notebook binds to 127.0.0.1.
+
+45
+00:03:29.540 --> 00:03:32.379
+You can connect through the SSH tunnel.
+
+46
+00:03:32.379 --> 00:03:35.218
+You can stop the job with scancel.
+
+47
+00:03:35.218 --> 00:03:39.680
+Do not run more than one notebook job for this class.
+

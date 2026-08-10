@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 6: Snakemake on RCC · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a aria-current="page" href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a aria-current="page" href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-6-snakemake-on-rcc">Class 6: Snakemake on RCC</h1>
+<p>Snakemake support is <strong>ready now</strong> on RCC. This class turns the workflow ideas
+from Class 2 and the Slurm resource model from Class 5 into a complete,
+copyable execution pattern.</p>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 6 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Managed Snakemake, dependency graphs, the IKIM profile, bounded resources, scratch, recovery, and provenance. Watch the complete lesson, then use the written page below for copyable commands and exercises.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After this class, you can:</p>
+<ul>
+<li>explain what Snakemake controls and what Slurm controls;</li>
+<li>structure a workflow around inputs, outputs, rules, configuration, and logs;</li>
+<li>dry-run and inspect a workflow before it submits jobs;</li>
+<li>use the managed RCC <code>IKIM</code> profile instead of copying scheduler settings;</li>
+<li>request CPU, memory, time, partitions, GPUs, and local scratch per rule;</li>
+<li>keep software and data in the correct storage locations;</li>
+<li>resume safely after correcting a failed rule; and</li>
+<li>retain enough provenance to reproduce a scientific result.</li>
+</ul>
+<h2 id="1-snakemake-and-slurm-have-different-jobs">1. Snakemake and Slurm have different jobs</h2>
+<p>Snakemake builds a directed graph from declared input and output files. It
+decides which rules need to run and which completed outputs can be reused.
+Slurm decides where and when each submitted rule job runs and enforces its CPU,
+memory, time, partition, and GPU allocation.</p>
+<pre><code class="language-text">Snakefile + configuration + existing files
+                  -&gt; Snakemake dependency graph
+                       -&gt; managed IKIM profile
+                            -&gt; Slurm job per ready rule
+                                 -&gt; RCC worker
+</code></pre>
+<p>Do not run scientific rule bodies as unmanaged processes on an SSH gateway.
+Do not add <code>sbatch</code> calls inside a rule: the managed profile is the scheduler
+boundary.</p>
+<h2 id="2-prepare-the-project-layout">2. Prepare the project layout</h2>
+<p>Keep durable workflow state in an approved shared project directory:</p>
+<pre><code class="language-text">/projects/PROJECT/analysis/
+├── Snakefile
+├── config.yaml
+├── workflow/
+├── scripts/
+├── envs/
+├── inputs/       # authoritative or verified inputs; treat as read-only
+├── results/      # declared generated outputs
+├── logs/
+└── benchmarks/
+</code></pre>
+<p>Git should contain workflow logic, configuration templates, environment or
+container declarations, and documentation. It must not contain credentials,
+patient identifiers, raw research data, large generated results, workflow
+caches, or Conda environments.</p>
+<h2 id="3-use-the-managed-installation">3. Use the managed installation</h2>
+<p>The managed command is <code>/usr/local/bin/snakemake</code>, normally available as
+<code>snakemake</code>. Confirm the version for a retained analysis:</p>
+<pre><code class="language-bash">command -v snakemake
+snakemake --version
+snakemake --profile IKIM --help &gt;/dev/null
+</code></pre>
+<p>The control environment belongs to RCC administrators. Analysis tools belong
+in reviewed per-rule Apptainer images or approved per-rule environments; do not
+install pipeline packages into the managed Snakemake environment.</p>
+<h2 id="4-first-bounded-workflow">4. First bounded workflow</h2>
+<p>Copy the synthetic example from
+<a href="../../classes/examples/snakemake-rcc/README/index.html"><code>examples/snakemake-rcc</code></a> into an
+approved project directory:</p>
+<pre><code class="language-bash">mkdir -p /projects/PROJECT/training/snakemake-rcc
+cp -R docs/classes/examples/snakemake-rcc/. \
+  /projects/PROJECT/training/snakemake-rcc/
+cd /projects/PROJECT/training/snakemake-rcc
+</code></pre>
+<p>Replace <code>PROJECT</code> with a project you may use. Inspect <code>Snakefile</code> and
+<code>config.yaml</code>, then ask Snakemake what it would do without running anything:</p>
+<pre><code class="language-bash">snakemake --dry-run --printshellcmds --reason
+</code></pre>
+<p>Render the dependency graph when Graphviz is available:</p>
+<pre><code class="language-bash">snakemake --dag | dot -Tsvg &gt; workflow-dag.svg
+</code></pre>
+<p>Run the bounded workflow through Slurm:</p>
+<pre><code class="language-bash">snakemake --profile IKIM --jobs 4 --printshellcmds
+</code></pre>
+<p>The example creates three tiny synthetic sample files and one summary. It uses
+one CPU, 256 MiB, five minutes, and <code>cpu_short</code> per rule job. <code>--jobs 4</code> is a
+concurrency ceiling, not a request for four CPUs in every job.</p>
+<h2 id="5-declare-resources-per-rule">5. Declare resources per rule</h2>
+<p>Give each rule realistic resources based on a small measured pilot:</p>
+<pre><code class="language-python">rule align:
+    input:
+        reads=&quot;inputs/{sample}.fastq.gz&quot;
+    output:
+        &quot;results/{sample}.bam&quot;
+    threads: 8
+    resources:
+        mem_mb=32000,
+        runtime=240,
+        slurm_partition=&quot;cpu_nodes&quot;
+    log:
+        &quot;logs/align/{sample}.log&quot;
+    benchmark:
+        &quot;benchmarks/align/{sample}.tsv&quot;
+    shell:
+        &quot;aligner --threads {threads} {input.reads} &gt; {output} 2&gt; {log}&quot;
+</code></pre>
+<p><code>threads</code> becomes the rule's usable CPU count. <code>mem_mb</code> is host memory, not
+GPU VRAM. <code>runtime</code> is minutes. The managed profile translates the supported
+resource names into Slurm requests; keep cluster-specific defaults in the
+profile or project configuration rather than scattering raw scheduler flags
+through every rule.</p>
+<h2 id="6-short-jobs-regular-jobs-and-gpus">6. Short jobs, regular jobs, and GPUs</h2>
+<p>Use <code>cpu_short</code> only when every rule instance is guaranteed to finish within
+two hours. Use <code>cpu_nodes</code> for longer bounded CPU jobs. For a standard GPU:</p>
+<pre><code class="language-python">resources:
+    slurm_partition=&quot;gpu_nodes&quot;,
+    gpu=1,
+    mem_mb=16000,
+    runtime=30
+</code></pre>
+<p>Only add an exact GPU model or architecture when the measured workload or
+validated software requires it. Class 5 contains the full GPU decision guide.</p>
+<h2 id="7-local-scratch-for-i-o-heavy-rules">7. Local scratch for I/O-heavy rules</h2>
+<p>Use node-local storage only inside a Slurm rule job and only for temporary work.
+The approved pattern stages required inputs to <code>$TMPDIR</code>, computes there, and
+copies declared outputs back to shared project storage before success. Never
+place the Snakefile, durable results, logs, or resume-critical state under
+<code>/local</code>.</p>
+<p>A rule should use local scratch only when measurement justifies the staging
+cost—for example repeated random I/O, sorting, assembly, decompression, or many
+temporary files. Class 14 contains the detailed local-I/O lesson.</p>
+<h2 id="8-software-environments-and-containers">8. Software environments and containers</h2>
+<p>Prefer a digest-pinned Apptainer image for stable production rules:</p>
+<pre><code class="language-python">rule tool:
+    input:
+        &quot;inputs/data.tsv&quot;
+    output:
+        &quot;results/data.tsv&quot;
+    container:
+        &quot;docker://REGISTRY/PROJECT/IMAGE@sha256:DIGEST&quot;
+    threads: 4
+    resources:
+        mem_mb=8000,
+        runtime=60,
+        slurm_partition=&quot;cpu_nodes&quot;
+    shell:
+        &quot;tool --threads {threads} {input} &gt; {output}&quot;
+</code></pre>
+<p>Use reviewed immutable SIF files or digest-pinned OCI references. Avoid mutable
+<code>latest</code> tags. Large Conda environments with thousands of small files do not
+belong on metadata-sensitive shared storage; follow the RCC node-local or
+packed-environment guidance when a container is not suitable.</p>
+<h2 id="9-failures-reruns-and-safe-recovery">9. Failures, reruns, and safe recovery</h2>
+<p>Inspect the failed rule's log and its Slurm accounting record. Correct the
+input, command, environment, or resource request, then dry-run again:</p>
+<pre><code class="language-bash">snakemake --dry-run --printshellcmds --reason
+snakemake --profile IKIM --jobs 4 --rerun-incomplete
+</code></pre>
+<p>Snakemake reuses outputs whose declared dependencies are still satisfied. Do
+not delete the whole results tree as a first troubleshooting step, submit
+several copies of the same workflow, or create an automatic retry storm.</p>
+<p>Use explicit rerun triggers or <code>--forcerun RULE</code> only after understanding why
+the existing output must be replaced. Treat protected inputs as read-only.</p>
+<h2 id="10-provenance-for-retained-analyses">10. Provenance for retained analyses</h2>
+<p>Retain:</p>
+<ul>
+<li>the Git commit or archived workflow version;</li>
+<li><code>Snakefile</code>, included rule files, and resolved configuration;</li>
+<li>input inventory and checksums where appropriate;</li>
+<li>exact container digests or environment lock files;</li>
+<li>the Snakemake and profile versions;</li>
+<li>the resolved command and concurrency limit;</li>
+<li>rule logs, benchmarks, and relevant Slurm job identifiers; and</li>
+<li>output checksums and the scientific validation record.</li>
+</ul>
+<p>A technically successful workflow can still use the wrong samples, reference,
+parameters, or model. Scheduler success is not scientific validation.</p>
+<h2 id="completion-gate">Completion gate</h2>
+<p>You have completed Class 6 when:</p>
+<ol>
+<li>the synthetic workflow dry-run lists the expected four rule jobs;</li>
+<li>the managed <code>IKIM</code> profile completes the bounded run;</li>
+<li>a second dry-run reports that nothing needs to be done;</li>
+<li>you can explain the difference between <code>--jobs</code>, <code>threads</code>, <code>mem_mb</code>, and
+<code>runtime</code>;</li>
+<li>you can identify which files belong in Git, shared project storage, and
+node-local scratch; and</li>
+<li>you can name the provenance required before retaining a scientific result.</li>
+</ol>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

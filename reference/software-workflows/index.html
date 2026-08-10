@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Conda, Snakemake, Nextflow, nf-core, and Apptainer reference · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a aria-current="page" href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a aria-current="page" href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Reference · RCC ClusterDocs</p>
+      
+      <h1 id="conda-snakemake-nextflow-nf-core-and-apptainer-reference">Conda, Snakemake, Nextflow, nf-core, and Apptainer reference</h1>
+<p>This guide complements Classes 2 and 4 with the command-level material from the
+earlier ClusterDocs site.</p>
+<h2 id="conda-and-mamba-environments">Conda and Mamba environments</h2>
+<p>RCC does not use Environment Modules or Lmod. Commands such as <code>module load</code>
+are therefore not part of the RCC workflow. Use the managed Miniforge
+installation or a project-specific Conda environment instead.</p>
+<p>Keep an environment declaration with the project and pin important versions:</p>
+<pre><code class="language-yaml">name: analysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - pandas
+  - snakemake
+</code></pre>
+<p>Create and update the environment with the RCC-supported Conda-compatible
+client. Do not place credentials in <code>environment.yml</code>.</p>
+<p>Create environments inside an allocated worker. Confirm <code>CONDA_ENVS_PATH</code> and
+<code>CONDA_PKGS_DIRS</code> use the approved RCC node-local paths rather than shared home
+or project storage.</p>
+<p>An active Conda environment can contain thousands of small files. For heavy or
+repeated workloads, prefer an approved managed environment, a packed
+environment staged locally, or an immutable Apptainer image.</p>
+<h3 id="activate-conda-inside-a-slurm-script">Activate Conda inside a Slurm script</h3>
+<p><code>conda activate</code> is a shell function and may be unavailable in a non-interactive
+batch shell. Initialize the shell hook explicitly:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --partition=cpu_short
+#SBATCH --time=00:10:00
+#SBATCH --cpus-per-task=1
+
+eval &quot;$(conda shell.bash hook)&quot;
+conda activate analysis
+srun python analysis.py
+</code></pre>
+<p>Do not run <code>conda init</code> inside each Slurm job. Record the environment export or
+lock file with the analysis.</p>
+<h2 id="snakemake">Snakemake</h2>
+<p>Snakemake describes dependencies between files and can submit bounded work to
+Slurm. Keep workflow definitions on shared project storage so every allocated
+worker can reach them, while allowing individual rules to stage high-I/O data
+to local scratch.</p>
+<p>Start with a dry run:</p>
+<pre><code class="language-bash">snakemake --dry-run --printshellcmds
+</code></pre>
+<p>Then use the currently supported RCC execution profile. Limit concurrency to a
+value justified by the workflow rather than launching an unbounded number of
+jobs. Keep the scheduler process in a named <code>tmux</code> session only when the
+approved profile requires a persistent submission process:</p>
+<pre><code class="language-bash">tmux new -s workflow
+snakemake --jobs 4
+</code></pre>
+<p>After reconnecting to the same approved submission service:</p>
+<pre><code class="language-bash">tmux attach -t workflow
+</code></pre>
+<p>Do not rely on a historic Snakemake version or profile name from a copied guide.
+Check the current RCC software guidance or ask support for the supported
+version and profile before updating a production workflow.</p>
+<h2 id="nextflow-and-nf-core">Nextflow and nf-core</h2>
+<blockquote>
+<p><strong>Service status — ready now:</strong> RCC provides a pinned <code>rcc-nextflow</code> launcher
+and institutional Slurm configuration on shellhosts and allocation-backed
+interactive nodes. The classroom runner fails closed when <code>rcc-nextflow</code>,
+<code>apptainer</code>, or <code>sbatch</code> is unavailable. Do not
+download an unpinned launcher or start a Nextflow controller on a login
+gateway as a workaround.</p>
+</blockquote>
+<p>Nextflow maps each process to an execution backend. On RCC, use its Slurm
+executor so analysis processes become ordinary scheduled jobs rather than
+unmanaged work on a submission host. nf-core supplies community-maintained
+Nextflow pipelines, standard test profiles, parameter schemas, and run
+provenance.</p>
+<p>Keep these distinctions clear:</p>
+<ul>
+<li>Nextflow options use one leading dash, for example <code>-r</code>, <code>-profile</code>,
+<code>-params-file</code>, <code>-c</code>, <code>-work-dir</code>, and <code>-resume</code>;</li>
+<li>pipeline parameters use two leading dashes, for example <code>--input</code> and
+<code>--outdir</code>;</li>
+<li>pin a pipeline release or commit with <code>-r</code> for every retained analysis;</li>
+<li>use an nf-core <code>test</code> profile for a small infrastructure check, not as
+scientific input;</li>
+<li>keep the launch directory, work directory, Apptainer cache, and results on
+approved shared project storage because the coordinator and allocated
+workers must all reach them;</li>
+<li>use Nextflow's <code>scratch</code> process directive for I/O-heavy task bodies so RCC's
+worker-local <code>$TMPDIR</code> is used and declared outputs are staged back;</li>
+<li>cap <code>executor.queueSize</code> during learning and set justified CPU, memory, time,
+and partition limits for production runs.</li>
+</ul>
+<p>The RCC execution boundary is:</p>
+<ul>
+<li>start the pinned Nextflow controller through <code>rcc-nextflow</code> on the approved
+submission host, never on <code>login1</code> or <code>login2</code>;</li>
+<li>submit every scientific process through Slurm; compute workers execute the
+generated task wrapper and do not need Java or Nextflow installed;</li>
+<li>keep <code>NXF_WORK</code> in persistent shared project storage at the same path on the
+submission host and workers so <code>-resume</code> survives task placement and local
+cleanup;</li>
+<li>use <code>/local</code> only for a process explicitly labelled for scratch, with inputs
+staged into <code>$TMPDIR</code> and declared outputs returned to shared storage; and</li>
+<li>execute task software with Apptainer, using a shared or administrator-managed
+immutable image cache rather than Docker on workers.</li>
+</ul>
+<p>The RCC classroom configuration is
+<a href="../../classes/examples/nf-core/rcc-test.config"><code>rcc-test.config</code></a>. It is a
+bounded teaching profile, not a universal production profile. A minimal launch
+has this shape:</p>
+<pre><code class="language-bash">rcc-nextflow --project-root /projects/PROJECT run nf-core/demo \
+  -r 1.2.0 \
+  -profile test,apptainer \
+  -c rcc-test.config \
+  -work-dir /projects/PROJECT/nextflow-work/demo \
+  --outdir /projects/PROJECT/results/demo
+</code></pre>
+<p>The first test may retrieve pipeline source, public test data, and container
+images. Use the approved RCC outbound proxy path and a shared writable
+Apptainer cache. Do not place registry tokens, GitHub tokens, sample secrets,
+or patient identifiers in Nextflow configuration or parameter files.</p>
+<p>Before a real run, inspect the pipeline's current usage page and input schema,
+review its license and release, validate the samplesheet, and save parameters
+in JSON or YAML. Retain the pipeline revision, resolved command, parameter
+file, configuration, reports, trace, input checksums, result checksums, and
+Slurm job identifiers. Use <code>-resume</code> only with the same intended work directory
+and reviewed inputs; it reuses cached tasks and is not a substitute for
+provenance review.</p>
+<p>Official references:</p>
+<ul>
+<li><a href="https://nf-co.re/docs/running/run-pipelines">Run nf-core pipelines</a></li>
+<li><a href="https://nf-co.re/docs/get_started/run-your-first-pipeline">Run the nf-core demo pipeline</a></li>
+<li><a href="https://docs.seqera.io/nextflow/executor#slurm">Nextflow Slurm executor</a></li>
+<li><a href="https://docs.seqera.io/nextflow/reference/process#scratch">Nextflow process scratch</a></li>
+<li><a href="https://docs.seqera.io/nextflow/container#apptainer">Nextflow with Apptainer</a></li>
+</ul>
+<h2 id="apptainer-execution-model">Apptainer execution model</h2>
+<p>Apptainer runs containers as the calling user and does not grant Docker-style
+root privileges. Production images should be immutable SIF files identified by
+a digest.</p>
+<h3 id="rootless-execution">Rootless execution</h3>
+<p>“Rootless” describes the privilege boundary during normal container
+execution. Apptainer does not depend on a privileged Docker-style daemon, and
+the container process keeps the calling user's effective access to host files.
+An apparent <code>root</code> identity inside an image is not unrestricted root on the RCC
+host: it cannot override host permissions, administer the kernel, select
+unallocated devices, or escape the resources assigned by Slurm.</p>
+<p>RCC uses this model because many unrelated projects share the same compute
+nodes. Keeping container work at the submitter's privilege level reduces the
+attack surface and prevents a container from becoming a shortcut around
+project membership, filesystem permissions, device allocation, or central
+driver management.</p>
+<p>Rootless execution is not a sandbox for data the user can already access. A
+container can modify any writable visible or bound path with the user's normal
+permissions. Use explicit least-privilege binds, read-only inputs, immutable
+images, clean environments, and reviewed sources. Image <em>building</em> is a
+separate operation: use the RCC-supported rootless/fakeroot or approved remote
+builder where available, and never assume that a production job may acquire
+host-root privileges.</p>
+<p>Common commands are:</p>
+<ul>
+<li><code>apptainer run IMAGE.sif</code> for the image's default action;</li>
+<li><code>apptainer exec IMAGE.sif COMMAND</code> for a specific command;</li>
+<li><code>apptainer shell IMAGE.sif</code> for bounded interactive inspection.</li>
+</ul>
+<p>Use a clean environment and explicit binds:</p>
+<pre><code class="language-bash">apptainer exec --cleanenv \
+  --bind /projects/&lt;project&gt;/data/input:/input:ro \
+  --bind /projects/&lt;project&gt;/results:/results \
+  /projects/&lt;project&gt;/containers/tool.sif \
+  tool --input /input/sample.dat --output /results/result.dat
+</code></pre>
+<p>The container filesystem is normally read-only. Host directories such as the
+working directory may be visible inside the container, so a container is not a
+security boundary for project data. Bind only what the tool needs.</p>
+<h3 id="cache-and-temporary-files">Cache and temporary files</h3>
+<p>Image conversion and pulls can create substantial cache and temporary data.
+Point those locations at the approved local or managed cache path rather than a
+metadata-sensitive shared environment tree:</p>
+<pre><code class="language-bash">export APPTAINER_CACHEDIR=&quot;/local/apptainercache/$USER&quot;
+export APPTAINER_TMPDIR=/local/tmp
+</code></pre>
+<h3 id="gpu-jobs">GPU jobs</h3>
+<p>Request the GPU through Slurm, then expose the assigned host driver using the
+approved Apptainer option:</p>
+<pre><code class="language-bash">apptainer exec --cleanenv --nv \
+  /projects/&lt;project&gt;/containers/gpu-tool.sif nvidia-smi
+</code></pre>
+<p>Do not override <code>CUDA_VISIBLE_DEVICES</code>; Slurm uses it to identify the devices
+allocated to the job.</p>
+<h3 id="writable-sandboxes">Writable sandboxes</h3>
+<p>Writable sandboxes generate many files and are unsuitable as a production
+artifact on shared storage. Build and inspect them only in an approved local
+development location, then produce an immutable reviewed SIF image for normal
+use.</p>
+<h2 id="reproducibility-record">Reproducibility record</h2>
+<p>For an important run, retain the Git commit, environment or container
+declaration, container SHA-256 digest where applicable, input and final-output
+checksums, Slurm job ID and resource request, application versions, parameters,
+logs, and benchmark output.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

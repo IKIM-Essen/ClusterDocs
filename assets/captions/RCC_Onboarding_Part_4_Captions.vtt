@@ -1,0 +1,490 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.539
+Part Four introduces containers using Apptainer.
+
+2
+00:00:02.539 --> 00:00:07.193
+Containers package an application and its libraries into a portable image.
+
+3
+00:00:07.193 --> 00:00:13.963
+On RCC, the operational reason is especially important: a large Conda environment contains thousands of small
+
+4
+00:00:13.963 --> 00:00:14.387
+files.
+
+5
+00:00:14.387 --> 00:00:19.464
+If those files are repeatedly opened from network storage by many jobs,
+
+6
+00:00:19.464 --> 00:00:22.426
+metadata and random I/O can dominate runtime.
+
+7
+00:00:22.426 --> 00:00:29.196
+A read-only Apptainer SIF image consolidates that software stack into one managed artifact and
+
+8
+00:00:29.196 --> 00:00:31.735
+is suitable for shared high-performance computing.
+
+9
+00:00:31.735 --> 00:00:37.236
+We will distinguish the image from project data, explain cache and temporary storage,
+
+10
+00:00:37.236 --> 00:00:44.006
+cover bind mounts and GPU access, and show how Snakemake associates a container with a rule.
+
+11
+00:00:44.006 --> 00:00:49.432
+A Conda environment can contain tens of thousands of files: Python modules,
+
+12
+00:00:49.432 --> 00:00:53.049
+shared libraries, metadata records, executables, and package caches.
+
+13
+00:00:53.049 --> 00:01:00.284
+Starting a command may trigger many opens, stats, library searches, and imports before useful computation begins.
+
+14
+00:01:00.284 --> 00:01:03.901
+On local solid-state storage this may be acceptable.
+
+15
+00:01:03.901 --> 00:01:11.135
+On shared network storage, hundreds of simultaneous jobs can turn environment startup into a metadata bottleneck.
+
+16
+00:01:11.135 --> 00:01:17.465
+The result may look like slow software even though the CPU is mostly waiting.
+
+17
+00:01:17.465 --> 00:01:24.700
+Containers address this by packaging the software stack into a smaller number of image artifacts and
+
+18
+00:01:24.700 --> 00:01:27.865
+by making the environment immutable and reproducible.
+
+19
+00:01:27.865 --> 00:01:32.144
+A container image packages user-space software, libraries, and selected configuration.
+
+20
+00:01:32.144 --> 00:01:38.564
+It does not include a separate hardware machine and normally shares the host Linux kernel.
+
+21
+00:01:38.564 --> 00:01:43.272
+Apptainer is designed for multi-user high-performance computing and normally runs rootless.
+
+22
+00:01:43.272 --> 00:01:50.119
+That means the process keeps your RCC user and group access instead of gaining unrestricted root
+
+23
+00:01:50.119 --> 00:01:55.683
+on the host, and it does not depend on a privileged Docker-style daemon.
+
+24
+00:01:55.683 --> 00:02:00.819
+This is important on shared compute nodes: the host kernel, drivers, devices,
+
+25
+00:02:00.819 --> 00:02:07.666
+file permissions, and Slurm allocation remain under RCC control, while a mistaken or compromised application is
+
+26
+00:02:07.666 --> 00:02:11.946
+limited to the access already held by the submitting user.
+
+27
+00:02:11.946 --> 00:02:16.226
+Rootless does not mean harmless or isolated from your data.
+
+28
+00:02:16.226 --> 00:02:22.646
+The container can still read, change, or delete visible files that your user can access,
+
+29
+00:02:22.646 --> 00:02:29.065
+so bind only the paths the job needs and make source data read-only where possible.
+
+30
+00:02:29.065 --> 00:02:35.485
+The image is not the correct place for active project data, credentials, or patient information.
+
+31
+00:02:35.485 --> 00:02:41.048
+Containers improve reproducibility of software, but they do not validate algorithms, reference data,
+
+32
+00:02:41.048 --> 00:02:42.760
+parameters, or scientific interpretation.
+
+33
+00:02:42.760 --> 00:02:48.324
+Building an image is a separate operation and must use the RCC-approved rootless,
+
+34
+00:02:48.324 --> 00:02:50.036
+fakeroot, or remote-builder pattern.
+
+35
+00:02:50.036 --> 00:02:54.465
+Apptainer commonly uses the Singularity Image Format, or SIF.
+
+36
+00:02:54.465 --> 00:02:59.698
+A SIF image can contain a compressed read-only filesystem plus metadata and signatures.
+
+37
+00:02:59.698 --> 00:03:06.140
+Read-only images reduce accidental drift: a job cannot silently install a different library into the image.
+
+38
+00:03:06.140 --> 00:03:09.763
+The same image can be used by many jobs.
+
+39
+00:03:09.763 --> 00:03:14.595
+Record the image source, digest or checksum, creation recipe, and validation status.
+
+40
+00:03:14.595 --> 00:03:19.023
+Do not rely only on a floating tag such as latest.
+
+41
+00:03:19.023 --> 00:03:25.465
+A container is a versioned research dependency and should be managed with the same care as
+
+42
+00:03:25.465 --> 00:03:27.880
+a reference genome or analysis script.
+
+43
+00:03:27.880 --> 00:03:30.559
+Container workflows involve several storage locations.
+
+44
+00:03:30.559 --> 00:03:34.576
+The SIF image is a durable, versioned software artifact.
+
+45
+00:03:34.576 --> 00:03:39.933
+The Apptainer cache stores downloaded layers and should use an RCC-approved path;
+
+46
+00:03:39.933 --> 00:03:46.182
+uncontrolled caches on a shared home directory can consume space and create metadata traffic.
+
+47
+00:03:46.182 --> 00:03:51.093
+Temporary build or extraction space should use local scratch when possible.
+
+48
+00:03:51.093 --> 00:03:56.896
+Project data remains in approved shared storage and is bound into the container.
+
+49
+00:03:56.896 --> 00:04:04.038
+Distinguishing these locations prevents accidental data loss and avoids turning network storage into a scratch disk.
+
+50
+00:04:04.038 --> 00:04:11.180
+The RCC should publish standard environment variables and paths for image stores, caches, and temporary directories.
+
+51
+00:04:11.180 --> 00:04:16.881
+Only run images from trusted sources or images built from reviewed definitions.
+
+52
+00:04:16.881 --> 00:04:19.732
+Prefer immutable digests over floating tags.
+
+53
+00:04:19.732 --> 00:04:25.908
+Calculate and record a checksum for a SIF image when it is transferred.
+
+54
+00:04:25.908 --> 00:04:28.283
+Inspect image metadata and labels.
+
+55
+00:04:28.283 --> 00:04:33.985
+Record the base image, installed package versions, build date, and definition file.
+
+56
+00:04:33.985 --> 00:04:37.785
+Scan or review images according to institutional policy.
+
+57
+00:04:37.785 --> 00:04:43.011
+Most importantly, validate the scientific behavior with synthetic and reference data.
+
+58
+00:04:43.011 --> 00:04:50.613
+A correctly signed image can still contain an unsuitable algorithm, outdated database, or incorrect default parameter.
+
+59
+00:04:50.613 --> 00:04:55.364
+Trust has both a software-supply-chain component and a scientific-validation component.
+
+60
+00:04:55.364 --> 00:04:58.875
+Apptainer exec runs a command inside an image.
+
+61
+00:04:58.875 --> 00:05:03.704
+Start with a harmless version check, then a small synthetic test.
+
+62
+00:05:03.704 --> 00:05:09.849
+The clean environment option reduces accidental inheritance of host variables that could change behavior.
+
+63
+00:05:09.849 --> 00:05:15.116
+The contain-all or site-recommended isolation options may be appropriate depending on policy.
+
+64
+00:05:15.116 --> 00:05:18.628
+Record the full command in the workflow log.
+
+65
+00:05:18.628 --> 00:05:25.651
+Avoid interactive changes inside writable sandboxes for production work because those changes are difficult to reproduce.
+
+66
+00:05:25.651 --> 00:05:30.918
+If a command depends on locale, threads, temporary paths, or license variables,
+
+67
+00:05:30.918 --> 00:05:34.868
+declare them explicitly and document why they are needed.
+
+68
+00:05:34.868 --> 00:05:41.371
+A bind mount makes a host path visible at a chosen path inside the container.
+
+69
+00:05:41.371 --> 00:05:43.971
+Bind source data read-only whenever possible.
+
+70
+00:05:43.971 --> 00:05:46.572
+Bind a dedicated result directory read-write.
+
+71
+00:05:46.572 --> 00:05:49.173
+Bind node-local scratch for temporary work.
+
+72
+00:05:49.173 --> 00:05:56.109
+Avoid binding your entire home directory merely for convenience, because that makes hidden configuration and credentials
+
+73
+00:05:56.109 --> 00:05:57.843
+visible and reduces reproducibility.
+
+74
+00:05:57.843 --> 00:06:04.779
+Use stable internal paths such as /data, /results, and /tmp so the command
+
+75
+00:06:04.779 --> 00:06:07.813
+is independent of the host project layout.
+
+76
+00:06:07.813 --> 00:06:11.714
+Verify ownership and permissions before starting thousands of jobs.
+
+77
+00:06:11.714 --> 00:06:15.675
+A container does not make random network I/O fast.
+
+78
+00:06:15.675 --> 00:06:22.717
+The executable may be packaged efficiently, but inputs, outputs, caches, and temporary files still follow the
+
+79
+00:06:22.717 --> 00:06:24.037
+underlying storage behavior.
+
+80
+00:06:24.037 --> 00:06:26.678
+Keep compressed inputs compressed when supported.
+
+81
+00:06:26.678 --> 00:06:32.399
+Stage files that require random access or many temporary writes to node-local scratch.
+
+82
+00:06:32.399 --> 00:06:37.240
+Avoid writing package caches or application caches into the project directory.
+
+83
+00:06:37.240 --> 00:06:41.641
+Limit the number of tiny output files and organize directories.
+
+84
+00:06:41.641 --> 00:06:48.682
+A container can even make performance worse if every job independently pulls an image from a
+
+85
+00:06:48.682 --> 00:06:49.122
+registry.
+
+86
+00:06:49.122 --> 00:06:55.724
+Pre-stage approved images and use a shared read-only image location or an RCC-supported cache strategy.
+
+87
+00:06:55.724 --> 00:07:02.403
+For a GPU job, request the GPU through Slurm and run Apptainer with the --nv
+
+88
+00:07:02.403 --> 00:07:08.665
+option so the relevant NVIDIA devices and host driver libraries are available inside the container.
+
+89
+00:07:08.665 --> 00:07:14.092
+The image should contain compatible user-space frameworks such as CUDA-enabled PyTorch or TensorFlow,
+
+90
+00:07:14.092 --> 00:07:18.684
+but it should not attempt to replace the host kernel driver.
+
+91
+00:07:18.684 --> 00:07:24.946
+Test compatibility on a small allocation and use nvidia-smi both on the host allocation and,
+
+92
+00:07:24.946 --> 00:07:27.033
+where appropriate, inside the container.
+
+93
+00:07:27.033 --> 00:07:31.207
+Record image digest, GPU type, driver, framework version, and command.
+
+94
+00:07:31.207 --> 00:07:37.052
+GPU access does not change the need to optimize data loading and batch size.
+
+95
+00:07:37.052 --> 00:07:43.366
+Snakemake can associate a container image with a rule and execute the workflow using the Apptainer
+
+96
+00:07:43.366 --> 00:07:44.156
+deployment method.
+
+97
+00:07:44.156 --> 00:07:50.470
+This places the software dependency next to the declared inputs, outputs, threads, resources, log, and command.
+
+98
+00:07:50.470 --> 00:07:56.390
+Use an RCC-supported Apptainer prefix or image store so jobs do not repeatedly download images.
+
+99
+00:07:56.390 --> 00:08:02.705
+The rule should still use tmpdir or a shadow pattern when the tool needs local temporary
+
+100
+00:08:02.705 --> 00:08:03.100
+work.
+
+101
+00:08:03.100 --> 00:08:08.625
+Pin the image to an immutable digest or version and record it in reports.
+
+102
+00:08:08.625 --> 00:08:13.756
+Test both the workflow logic and the image before scaling to production data.
+
+103
+00:08:13.756 --> 00:08:20.711
+A production image should be built from a version-controlled Apptainer definition file or an equivalent reviewed
+
+104
+00:08:20.711 --> 00:08:21.146
+recipe.
+
+105
+00:08:21.146 --> 00:08:27.666
+Build in an approved environment, because image construction may require privileges or a remote builder.
+
+106
+00:08:27.666 --> 00:08:30.274
+Record base images and package versions.
+
+107
+00:08:30.274 --> 00:08:35.491
+Run automated smoke tests, workflow tests with synthetic data, and scientific validation.
+
+108
+00:08:35.491 --> 00:08:41.142
+Publish the image to an approved registry or image store, record the digest,
+
+109
+00:08:41.142 --> 00:08:42.881
+and make it read-only.
+
+110
+00:08:42.881 --> 00:08:47.228
+Rebuild through the recipe rather than modifying an existing image.
+
+111
+00:08:47.228 --> 00:08:53.748
+Deprecate images that contain security problems or obsolete references, but preserve provenance for completed analyses.
+
+112
+00:08:53.748 --> 00:08:56.253
+The container rules are these.
+
+113
+00:08:56.253 --> 00:08:58.758
+Use trusted, immutable SIF images.
+
+114
+00:08:58.758 --> 00:09:02.264
+Record source, digest, build recipe, and validation.
+
+115
+00:09:02.264 --> 00:09:05.270
+Keep project data outside the image.
+
+116
+00:09:05.270 --> 00:09:11.281
+Bind source data read-only, results deliberately, and temporary space to local scratch.
+
+117
+00:09:11.281 --> 00:09:14.788
+Place caches and images in RCC-approved locations.
+
+118
+00:09:14.788 --> 00:09:17.793
+Use clean environments and explicit commands.
+
+119
+00:09:17.793 --> 00:09:24.806
+Request GPUs through Slurm and use the Apptainer GPU option only for compatible images.
+
+120
+00:09:24.806 --> 00:09:31.319
+In Snakemake, pin the container per rule or workflow and avoid repeated pulls.
+
+121
+00:09:31.319 --> 00:09:38.332
+Remember that containers improve software reproducibility and startup I/O, but good data I/O patterns,
+
+122
+00:09:38.332 --> 00:09:41.839
+performance measurement, and scientific validation remain essential.
+

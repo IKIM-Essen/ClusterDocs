@@ -1,0 +1,322 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.714
+Welcome to Class 13: European and German data protection for biomedical research.
+
+2
+00:00:05.714 --> 00:00:10.000
+This video introduces the core decisions and working patterns.
+
+3
+00:00:10.000 --> 00:00:16.666
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:16.666 --> 00:00:19.047
+exercises, and detailed reference material.
+
+5
+00:00:19.047 --> 00:00:27.195
+After this class, you should be able to distinguish direct identifiers from sensitive biomedical research data,
+
+6
+00:00:27.195 --> 00:00:35.342
+understand why pseudonymised data remain personal data, and recognise when RCC is an appropriate controlled research
+
+7
+00:00:35.342 --> 00:00:35.852
+environment.
+
+8
+00:00:35.852 --> 00:00:38.907
+This class is practical RCC training.
+
+9
+00:00:38.907 --> 00:00:45.018
+It does not replace the project's legal basis, ethics approval, consent documents,
+
+10
+00:00:45.018 --> 00:00:51.129
+data-management plan, institutional policy, information-security review, or advice from the data-protection officer.
+
+11
+00:00:51.129 --> 00:00:57.023
+RCC may process approved biomedical research data inside its controlled research enclave,
+
+12
+00:00:57.023 --> 00:01:02.917
+but direct identifiers and re-identification keys must not be stored in RCC.
+
+13
+00:01:02.917 --> 00:01:09.302
+Examples of direct identifiers that must not be uploaded include: names or initials;
+
+14
+00:01:09.302 --> 00:01:15.196
+postal or email addresses; telephone or fax numbers; patient, case, insurance, personnel,
+
+15
+00:01:15.196 --> 00:01:21.581
+or hospital record numbers; identifying free text, letters, referrals, consent forms, or screenshots;
+
+16
+00:01:21.581 --> 00:01:29.439
+account credentials, access tokens, or authentication data; a lookup table that connects study codes to named
+
+17
+00:01:29.439 --> 00:01:29.930
+individuals.
+
+18
+00:01:29.930 --> 00:01:36.316
+The absence of these fields does not automatically make the remaining data anonymous.
+
+19
+00:01:36.316 --> 00:01:42.701
+The research project must still have an appropriate legal basis and governance decision.
+
+20
+00:01:42.701 --> 00:01:50.080
+The EU General Data Protection Regulation treats genetic data, biometric data used for unique identification,
+
+21
+00:01:50.080 --> 00:01:54.999
+and data concerning health as special categories of personal data.
+
+22
+00:01:54.999 --> 00:02:01.395
+Their processing requires an applicable legal basis and safeguards appropriate to the risk.
+
+23
+00:02:01.395 --> 00:02:07.298
+RCC contributes technical safeguards through controlled access, named user accounts, project-group permissions,
+
+24
+00:02:07.298 --> 00:02:11.234
+auditability, restricted services, and a managed research-computing environment.
+
+25
+00:02:11.234 --> 00:02:19.105
+Technical safeguards do not create the legal basis; they help implement an approved research project safely.
+
+26
+00:02:19.105 --> 00:02:22.549
+Biomedical data can become identifying through context.
+
+27
+00:02:22.549 --> 00:02:30.420
+Examples include: a very rare diagnosis in a small cohort; exact treatment or sampling dates linked
+
+28
+00:02:30.420 --> 00:02:34.356
+to known clinical events; family relationships or pedigrees.
+
+29
+00:02:34.356 --> 00:02:40.064
+### Suitable under the normal project workflow Examples include: synthetic teaching data;
+
+30
+00:02:40.064 --> 00:02:46.249
+public reference genomes and public datasets used under their licence; non-human experimental data;
+
+31
+00:02:46.249 --> 00:02:52.909
+aggregate statistics and approved derived results; approved individual-level biomedical research data without direct identifiers;
+
+32
+00:02:52.909 --> 00:03:00.045
+approved genomic data; approved X-ray, CT, MRI, and other medical images after required metadata handling;
+
+33
+00:03:00.045 --> 00:03:07.657
+pseudonymised research data when the project governance explicitly covers RCC and the re-identification key is held
+
+34
+00:03:07.657 --> 00:03:08.132
+separately.
+
+35
+00:03:08.132 --> 00:03:15.744
+### Requires a project-level review before transfer Pause and confirm the approved workflow when the data
+
+36
+00:03:15.744 --> 00:03:22.404
+include: a new data source not listed in the project documentation; detailed free text;
+
+37
+00:03:22.404 --> 00:03:24.307
+a rare cohort or.
+
+38
+00:03:24.307 --> 00:03:29.612
+Individual-level human genomic data can be scientifically valuable and computationally demanding.
+
+39
+00:03:29.612 --> 00:03:37.328
+RCC can support such research when the project has established the permitted purpose and access model.
+
+40
+00:03:37.328 --> 00:03:44.562
+Good practice includes: keep subject identity and the re-identification key in a separate approved system;
+
+41
+00:03:44.562 --> 00:03:52.279
+use study codes rather than names or clinical identifiers; grant access only to named project members;
+
+42
+00:03:52.279 --> 00:03:59.995
+document the source, purpose, permitted analyses, retention period, and deletion process; avoid unnecessary exports and local
+
+43
+00:03:59.995 --> 00:04:06.265
+convenience copies; release results only through the project's approved disclosure process; consider relatives,
+
+44
+00:04:06.265 --> 00:04:10.605
+rare variants, and external linkage when evaluating disclosure risk.
+
+45
+00:04:10.605 --> 00:04:14.946
+The objective is controlled research use—not a claim that.
+
+46
+00:04:14.946 --> 00:04:20.534
+Medical images can be used in RCC when covered by the project governance.
+
+47
+00:04:20.534 --> 00:04:27.412
+The main practical checks are: remove or transform direct identifiers in DICOM headers as required by
+
+48
+00:04:27.412 --> 00:04:32.570
+the approved export process; check for burned-in names, numbers, dates, or annotations;
+
+49
+00:04:32.570 --> 00:04:39.448
+keep the linkage key outside RCC; preserve scientifically necessary image information; restrict access to the project
+
+50
+00:04:39.448 --> 00:04:45.896
+group; do not place images or derived visualisations on public web pages without disclosure review.
+
+51
+00:04:45.896 --> 00:04:52.344
+An image may contain anatomy that could contribute to indirect identification, especially in head imaging,
+
+52
+00:04:52.344 --> 00:04:58.792
+but that does not make every image a direct identifier or make research processing impossible.
+
+53
+00:04:58.792 --> 00:05:02.887
+Use only the data needed for the approved purpose.
+
+54
+00:05:02.887 --> 00:05:08.346
+In practice: select required columns instead of copying a complete clinical export;
+
+55
+00:05:08.346 --> 00:05:13.806
+avoid detailed dates or locations when the analysis does not need them;
+
+56
+00:05:13.806 --> 00:05:19.266
+transfer derived results rather than source data when this preserves the science;
+
+57
+00:05:19.266 --> 00:05:25.180
+keep one authoritative project copy rather than personal duplicates; define retention and deletion;
+
+58
+00:05:25.180 --> 00:05:31.550
+restrict access to named project members; avoid publishing small-cell or rare-combination outputs without review.
+
+59
+00:05:31.550 --> 00:05:38.830
+Data minimisation often improves transfer speed, storage use, reproducibility, and analysis clarity as well as privacy.
+
+60
+00:05:38.830 --> 00:05:47.452
+Use these official sources for orientation: EU General Data Protection Regulation (official EUR-Lex text) — especially
+
+61
+00:05:47.452 --> 00:05:52.301
+Articles 4, 5, 9, 25, 32, 35, and 89.
+
+62
+00:05:52.301 --> 00:06:00.384
+German Federal Data Protection Act, Section 22 — safeguards for special categories of personal data.
+
+63
+00:06:00.384 --> 00:06:09.006
+German Health Data Use Act — use of health data for public-interest research and healthcare development.
+
+64
+00:06:09.006 --> 00:06:17.628
+German Health Data Use Act, Section 7 — purpose limitation, confidentiality, and prohibition of re-identification for
+
+65
+00:06:17.628 --> 00:06:20.861
+data made available under the Act.
+
+66
+00:06:20.861 --> 00:06:27.866
+German Criminal Code, Section 203 — protection of private secrets and professional confidentiality.
+
+67
+00:06:27.866 --> 00:06:30.022
+EDPB: anonymisation and pseudonymisation.
+
+68
+00:06:30.022 --> 00:06:32.177
+Universitätsklinikum Essen data-protection information.
+
+69
+00:06:32.177 --> 00:06:34.333
+These links support training.
+
+70
+00:06:34.333 --> 00:06:35.410
+They do.
+
+71
+00:06:35.410 --> 00:06:41.493
+This class does not use an automated research-file scanner or a machine-generated legal decision.
+
+72
+00:06:41.493 --> 00:06:44.968
+Completion is based on understanding and project governance.
+
+73
+00:06:44.968 --> 00:06:51.920
+Before moving data into RCC, you should be able to answer: What is the approved research
+
+74
+00:06:51.920 --> 00:06:52.354
+purpose?
+
+75
+00:06:52.354 --> 00:06:55.830
+Which data categories are required for that purpose?
+
+76
+00:06:55.830 --> 00:07:00.609
+Have direct identifiers and the re-identification key been excluded from RCC?
+
+77
+00:07:00.609 --> 00:07:06.691
+Does the project documentation cover genomic data, images, pseudonymised records, or linkages being used?
+
+78
+00:07:06.691 --> 00:07:13.208
+Who may access the data, and how will access be removed when no longer needed?
+
+79
+00:07:13.208 --> 00:07:17.987
+Where will authoritative data, intermediate files, and final results be stored?
+
+80
+00:07:17.987 --> 00:07:21.028
+What is the retention and deletion plan?.
+

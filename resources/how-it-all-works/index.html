@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Lab network: properties, limits, and remote access · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a aria-current="page" href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a aria-current="page" href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Resources · RCC ClusterDocs</p>
+      
+      <h1 id="lab-network-properties-limits-and-remote-access">Lab network: properties, limits, and remote access</h1>
+<p>Research data often begins on an instrument rather than on the cluster. The
+<strong>Lab network</strong> provides a controlled way to connect suitable devices and move
+their output into storage in the <strong>Research Compute Cluster (RCC)</strong>.</p>
+<blockquote>
+<p><strong>Service status:</strong> project Samba shares are <strong>ready now</strong> for approved
+projects and registered devices. Ardia-to-RCC integration is <strong>not yet
+released</strong>. RCC-to-Coscine transfer is also <strong>not yet released</strong>.</p>
+</blockquote>
+<p><img src="../../assets/lab-network-flow.svg" alt="Laboratory instruments upload data through ready Samba shares or a future Ardia integration into the Research Compute Cluster, where researchers analyse and share approved results" /></p>
+<h2 id="what-can-connect">What can connect?</h2>
+<p>The Lab network can support many research instruments and their acquisition
+workstations. Examples include:</p>
+<ul>
+<li><strong>Mass spectrometers</strong>, including LC–MS and other mass-spectrometry systems;</li>
+<li><strong>DNA sequencers</strong>, including short-read and long-read instruments;</li>
+<li><strong>Microscopes</strong>, including widefield, confocal, live-cell, slide-scanning,
+and electron microscopy systems;</li>
+<li><strong>Flow cytometers and cell sorters</strong>;</li>
+<li><strong>Plate readers and imaging systems</strong>; and</li>
+<li>other instruments that produce research files through a supported network
+interface or acquisition workstation.</li>
+</ul>
+<p>These are examples, not an automatic approval list. The RCC team checks each
+device, data flow, ownership model, and support requirement before connection.</p>
+<h2 id="protection-without-general-internet-exposure">Protection without general Internet exposure</h2>
+<p>Connecting an approved device to the Lab network is an option when an
+instrument or acquisition workstation needs RCC data services but should not
+remain directly connected to the Internet.</p>
+<p>The Lab network reduces exposure by removing general direct Internet
+connectivity. A registered device does not receive an ordinary routed path to
+the Internet, RCC, or the hospital network. Instead, it receives only the
+connections approved for its role:</p>
+<ul>
+<li><strong>Direct access to explicit server endpoints or services</strong>, such as an
+approved Samba project share or another released acquisition service. Ardia
+integration is not yet released. Access to one approved endpoint does not
+grant access to other RCC projects or servers.</li>
+<li><strong>Limited outbound web access through the Lab-network HTTP proxy</strong> when the
+device supports an explicit proxy and the use has been approved. This can
+support needs such as retrieving vendor or operating-system updates without
+giving the device unrestricted direct Internet routing.</li>
+<li><strong>No unsolicited inbound Internet access.</strong> Using the proxy does not publish
+the instrument to the Internet or make it reachable from outside the
+enclave.</li>
+</ul>
+<p>This is exposure reduction, not automatic trust. The device still needs a
+named owner, supported software, timely updates, approved credentials, a
+documented data flow, and a response plan. The RCC team must review required
+vendor cloud access, remote support, licensing, update URLs, and direct server
+dependencies before connection; some products may not be compatible with the
+Lab-network model.</p>
+<h2 id="why-the-network-works-this-way">Why the network works this way</h2>
+<p>Instrument-control computers are unusually difficult to secure. A vendor may
+require an old operating system, a fixed driver, an unsupported browser, or a
+software version that cannot be changed without invalidating the instrument's
+support or validation. Replacing that computer may also be far more disruptive
+than replacing an ordinary office workstation.</p>
+<p>The Lab network is a compensating control for that reality. It reduces the
+number of systems that can contact the device and the number of places the
+device can contact. In particular, <strong>there is no direct incoming access from
+the Internet</strong>. This removes an entire class of scanning, password guessing,
+remote-service exploitation, and accidental publication problems. Limited
+outbound access can still be provided for an approved update or licensing flow.</p>
+<pre><code class="language-text">Internet -------------------------X----------------&gt; instrument
+approved update site -&gt; HTTP proxy -&gt; outbound request and reply
+approved RCC service &lt;-----------&gt; explicitly allowed data path
+approved operator -&gt; private tunnel -&gt; PiKVM -&gt; keyboard/video/power console
+</code></pre>
+<p>Isolation does not repair an old operating system or make vulnerable software
+safe. Owners still need inventory, physical protection, unique credentials,
+backups, vendor coordination, incident contacts, and a replacement plan.</p>
+<h2 id="properties-and-limitations-at-a-glance">Properties and limitations at a glance</h2>
+<table>
+<thead>
+<tr>
+  <th>Property</th>
+  <th>What it means for a device owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Registered devices only</td>
+  <td>RCC records the device, owner, interface identifier, purpose, and target project before connection.</td>
+</tr>
+<tr>
+  <td>DHCP configuration</td>
+  <td>Use the network settings supplied automatically unless RCC has documented an exception. Do not invent a static address, router, or DNS server.</td>
+</tr>
+<tr>
+  <td>No general default route</td>
+  <td>Ordinary Internet, hospital-network, and arbitrary RCC destinations are not reachable directly.</td>
+</tr>
+<tr>
+  <td>Explicit service paths</td>
+  <td>Ready Samba shares, or another released project-ingestion service, are reachable only when RCC has approved that exact flow. Ardia is not yet released.</td>
+</tr>
+<tr>
+  <td>Explicit HTTP proxy</td>
+  <td>Approved outbound web requests can use the proxy settings shown on the Lab-network information page. Software that cannot use the proxy may not be able to update or license itself.</td>
+</tr>
+<tr>
+  <td>No direct incoming connection</td>
+  <td>Internet port forwarding, public remote desktop, and direct vendor callbacks are not available.</td>
+</tr>
+<tr>
+  <td>Project-scoped data access</td>
+  <td>Reaching one share or ingestion service does not grant access to other projects.</td>
+</tr>
+<tr>
+  <td>Broadcast discovery may stop at the enclave</td>
+  <td>Consumer-style discovery, arbitrary multicast, and services that assume a flat routed network may not work.</td>
+</tr>
+</tbody>
+</table>
+<p>These limitations are intentional. If a vendor requires unrestricted inbound
+remote support, a broad destination list, a public cloud relay, or a VPN agent,
+RCC must review the requirement before the device is connected. Do not work
+around a failed connection by adding a router, hotspot, second network cable,
+personal tunnel, or unregistered wireless adapter.</p>
+<h2 id="configure-a-device-from-the-lab-network-information-page">Configure a device from the Lab-network information page</h2>
+<p>When a registered device is connected, the Lab-network information page is the
+source for the values to use now. It may appear automatically as a captive
+page. If it does not, open an ordinary HTTP page so the browser can display the
+network notice, or contact RCC. Do not copy a proxy address, share name, or
+server value from a screenshot or another instrument.</p>
+<p>Use the page and the onboarding record to confirm:</p>
+<ol>
+<li>the device is registered and the recorded owner is correct;</li>
+<li>address configuration is set to DHCP unless an exception is documented;</li>
+<li>the current HTTP proxy address and port, if proxy access is approved;</li>
+<li>the exact approved RCC service, share, or ingestion destination;</li>
+<li>whether the vendor's update and licensing URLs have been approved;</li>
+<li>the support contact and change window; and</li>
+<li>a small connectivity and transfer test before routine acquisition begins.</li>
+</ol>
+<p>The public ClusterDocs page deliberately does not reproduce internal proxy,
+address, share, or server values. Keeping those values on the live information
+page avoids teaching users a configuration that becomes wrong after a service
+change. A support screenshot must remove device identifiers, addresses,
+credentials, license information, and project names.</p>
+<h2 id="the-simple-data-journey">The simple data journey</h2>
+<ol>
+<li>A registered instrument or acquisition workstation connects to the Lab
+network.</li>
+<li>It uploads data through an approved, ready <strong>Samba project share</strong>. The
+alternative <strong>Ardia</strong> integration is not yet released.</li>
+<li>The files are stored in the Research Compute Cluster. Access remains limited
+according to RCC project membership.</li>
+<li>Researchers analyse the data with Slurm, Python, R, notebooks, AI, or another
+approved workflow and share results through the project's approved route.</li>
+</ol>
+<p>Verify that an upload completed before deleting the instrument copy. Use a
+checksum when the source system supports one.</p>
+<h2 id="choose-an-upload-method">Choose an upload method</h2>
+<h3 id="samba">Samba</h3>
+<p>Samba is a good fit when an instrument or its acquisition workstation can save
+to an SMB network folder. It presents RCC storage as a familiar shared folder
+and keeps access aligned with project membership. Current connection and
+share names are supplied during onboarding.</p>
+<h3 id="future-ardia-integration">Future Ardia integration</h3>
+<blockquote>
+<p><strong>Not yet released:</strong> do not configure or rely on an Ardia-to-RCC route yet.</p>
+</blockquote>
+<p>When released, Ardia may be a better fit when it already collects output from
+the device, adds workflow context, or manages delivery into the correct RCC
+storage location.</p>
+<p>During onboarding, agree on the target project, file naming, metadata,
+checksums, retention, expected volume, and responsibility for failed or partial
+uploads.</p>
+<h2 id="plan-the-connection-before-plugging-in">Plan the connection before plugging in</h2>
+<p>Contact the team in the <strong>Mattermost IKIM Cluster channel</strong> with:</p>
+<ul>
+<li>the device type, owner, and physical location;</li>
+<li>its network interface identifier;</li>
+<li>expected data volume and upload frequency;</li>
+<li>software-update or external-access requirements;</li>
+<li>the target RCC project; and</li>
+<li>the preferred transfer method, if known.</li>
+</ul>
+<p>The team can onboard the ready Samba path or explain whether another released
+pattern fits. Ardia remains future work. Do not connect an unmanaged switch,
+wireless access point, router, or unregistered device, and do not guess network
+or proxy settings.</p>
+<h2 id="remote-console-option-raspberry-pi-and-pikvm">Remote console option: Raspberry Pi and PiKVM</h2>
+<p>A Raspberry Pi running <strong>PiKVM</strong> can provide keyboard, video, mouse, and—when
+the hardware is wired for it—power-button control for an instrument workstation.
+Unlike ordinary remote desktop, it can remain useful while the workstation is
+booting, showing firmware messages, or unable to start its operating system.
+That makes it a practical option for supported remote recovery and vendor
+sessions without enabling direct incoming access to the instrument computer.</p>
+<p>PiKVM is a privileged management device, not a harmless accessory. Anyone who
+controls it may be able to view the screen, type commands, attach virtual media,
+or power-cycle the target. Onboarding therefore requires:</p>
+<ul>
+<li>a separate registered device record, owner, physical location, and purpose;</li>
+<li>approval for the console and any power-control wiring;</li>
+<li>both factory passwords changed before connection;</li>
+<li>only required services enabled, with the web terminal disabled when it is
+not needed;</li>
+<li>named access, short sessions, logout after use, and 2FA where appropriate;</li>
+<li>maintained PiKVM software and a physical recovery path before remote updates;</li>
+<li>no public port forwarding, public DNS exposure, or direct Internet listener;
+and</li>
+<li>an incident and access-removal process when ownership or vendor support
+changes.</li>
+</ul>
+<p>The <a href="https://docs.pikvm.org/auth/">PiKVM authentication guide</a> documents the
+separate Linux and web-interface credentials, 2FA, and session controls.</p>
+<h3 id="planned-private-tunnelling-with-rcc-headscale">Planned private tunnelling with RCC Headscale</h3>
+<blockquote>
+<p><strong>Not yet released:</strong> do not enroll a workstation or PiKVM device until RCC
+announces the service and supplies a one-time enrollment through the approved
+institutional channel.</p>
+</blockquote>
+<p>RCC is preparing an institutionally operated Headscale coordination service for
+approved PiKVM access. Headscale replaces the hosted Tailscale control plane in
+this workflow. PiKVM devices and administrator computers still use a
+Tailscale-compatible client, configured to connect to RCC Headscale rather than
+to a personal hosted-service account.</p>
+<p>The design keeps the PiKVM interface off the public Internet. It first attempts
+a direct encrypted connection. Where the firewall or NAT prevents that, an
+RCC-operated relay carries already encrypted traffic. The tunnel grants access
+only to approved management services; it is not a route into the Lab network or
+the wider RCC infrastructure.</p>
+<p>Read the dedicated <a href="../../connecting/pikvm-headscale/index.html">RCC Headscale and PiKVM guide</a>
+for the release boundary, enrollment safety rules, and access-removal process.</p>
+<h2 id="technical-details">Technical details</h2>
+<h3 id="network-boundary">Network boundary</h3>
+<p>The Lab network is an <strong>unrouted Layer 2 enclave</strong>. A connected device does not
+receive a general routed path into RCC, the hospital network, or the Internet.
+The enclave provides only explicit services:</p>
+<ul>
+<li><strong>DHCP</strong> supplies network configuration. Receiving an address does not grant
+access to RCC data or projects.</li>
+<li>The <strong>HTTP proxy</strong> provides controlled outbound web access for devices that
+support an explicit proxy, for example to retrieve an approved update. It is
+not a general Internet route and does not make the device reachable from
+outside the enclave.</li>
+<li><strong>Samba</strong> provides the ready project data-transfer path. <strong>Ardia integration
+is not yet released.</strong> Both are service bridges rather than general network
+routes; only released and approved paths may be used.</li>
+<li>Other <strong>explicitly approved direct server endpoints</strong> may be made reachable
+where a documented instrument workflow requires them. This exception is
+scoped to those endpoints and does not create general RCC, hospital-network,
+or Internet access.</li>
+</ul>
+<p>Layer 2 connectivity does not make a device trusted. Every instrument still
+needs an owner, an approved use, appropriate configuration, and a supported
+transfer route.</p>
+<h3 id="samba-access-boundary">Samba access boundary</h3>
+<p>RCC Samba project shares follow the RCC project model:</p>
+<ul>
+<li>a share is published only for a project that has Samba access enabled;</li>
+<li>access is limited to authenticated members of that project;</li>
+<li>guest access is disabled;</li>
+<li>files are stored in RCC and inherit project group permissions; and</li>
+<li>the same data can be used by approved RCC workflows.</li>
+</ul>
+<p>Do not store an RCC password in an instrument configuration unless that exact
+credential arrangement has been approved. Where possible, upload from a
+maintained acquisition workstation using an individually attributable account.</p>
+<p>For storage choices and verification commands, continue with
+<a href="../../reference/storage-transfer/index.html">Storage and transfer</a>. For project and data
+eligibility, see <a href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a>.
+For a complete acquisition-to-analysis exercise, continue with
+<a href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16: wet-lab instrument data</a>
+and <a href="../../data/instrument-data-options/index.html">choose an instrument-data transfer path</a>.
+When active analysis ends, continue with
+<a href="../../course/class-17-data-lifecycle/index.html">Class 17: research data lifecycle</a> and the
+<a href="../../data/rcc-project-to-coscine/index.html">planned RCC project to Coscine archive flow</a>.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

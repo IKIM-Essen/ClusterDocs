@@ -1,0 +1,254 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.324
+Welcome to Class 6: Snakemake on RCC.
+
+2
+00:00:03.324 --> 00:00:07.598
+This video introduces the core decisions and working patterns.
+
+3
+00:00:07.598 --> 00:00:14.246
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14.246 --> 00:00:16.620
+exercises, and detailed reference material.
+
+5
+00:00:16.620 --> 00:00:22.973
+After this class, you can: explain what Snakemake controls and what Slurm controls;
+
+6
+00:00:22.973 --> 00:00:30.792
+structure a workflow around inputs, outputs, rules, configuration, and logs; dry-run and inspect a workflow before
+
+7
+00:00:30.792 --> 00:00:37.634
+it submits jobs; use the managed RCC IKIM profile instead of copying scheduler settings;
+
+8
+00:00:37.634 --> 00:00:45.453
+request CPU, memory, time, partitions, GPUs, and local scratch per rule; keep software and data in
+
+9
+00:00:45.453 --> 00:00:53.272
+the correct storage locations; resume safely after correcting a failed rule; and retain enough provenance to
+
+10
+00:00:53.272 --> 00:00:55.227
+reproduce a scientific result.
+
+11
+00:00:55.227 --> 00:00:59.736
+Snakemake builds a directed graph from declared input and output files.
+
+12
+00:00:59.736 --> 00:01:05.475
+It decides which rules need to run and which completed outputs can be reused.
+
+13
+00:01:05.475 --> 00:01:11.214
+Slurm decides where and when each submitted rule job runs and enforces its CPU,
+
+14
+00:01:11.214 --> 00:01:13.673
+memory, time, partition, and GPU allocation.
+
+15
+00:01:13.673 --> 00:01:19.002
+Do not run scientific rule bodies as unmanaged processes on an SSH gateway.
+
+16
+00:01:19.002 --> 00:01:25.151
+Do not add sbatch calls inside a rule: the managed profile is the scheduler boundary.
+
+17
+00:01:25.151 --> 00:01:33.571
+Keep durable workflow state in an approved shared project directory: Git should contain workflow logic,
+
+18
+00:01:33.571 --> 00:01:38.062
+configuration templates, environment or container declarations, and documentation.
+
+19
+00:01:38.062 --> 00:01:45.360
+It must not contain credentials, patient identifiers, raw research data, large generated results,
+
+20
+00:01:45.360 --> 00:01:48.167
+workflow caches, or Conda environments.
+
+21
+00:01:48.167 --> 00:01:52.617
+The managed command is /usr/local/bin/snakemake, normally available as snakemake.
+
+22
+00:01:52.617 --> 00:01:59.539
+Confirm the version for a retained analysis: The control environment belongs to RCC administrators.
+
+23
+00:01:59.539 --> 00:02:05.472
+Analysis tools belong in reviewed per-rule Apptainer images or approved per-rule environments;
+
+24
+00:02:05.472 --> 00:02:10.416
+do not install pipeline packages into the managed Snakemake environment.
+
+25
+00:02:10.416 --> 00:02:17.487
+Copy the synthetic example from examples/snakemake-rcc into an approved project directory: Replace PROJECT with a project
+
+26
+00:02:17.487 --> 00:02:18.812
+you may use.
+
+27
+00:02:18.812 --> 00:02:24.999
+Inspect Snakefile and config.yaml, then ask Snakemake what it would do without running anything:
+
+28
+00:02:24.999 --> 00:02:31.186
+Render the dependency graph when Graphviz is available: Run the bounded workflow through Slurm:
+
+29
+00:02:31.186 --> 00:02:36.047
+The example creates three tiny synthetic sample files and one summary.
+
+30
+00:02:36.047 --> 00:02:41.792
+It uses one CPU, 256 MiB, five minutes, and cpu_short per rule job.
+
+31
+00:02:41.792 --> 00:02:48.421
+--jobs 4 is a concurrency ceiling, not a request for four CPUs in every job.
+
+32
+00:02:48.421 --> 00:02:55.593
+Give each rule realistic resources based on a small measured pilot: threads becomes the rule's usable
+
+33
+00:02:55.593 --> 00:02:56.489
+CPU count.
+
+34
+00:02:56.489 --> 00:02:59.627
+mem_mb is host memory, not GPU VRAM.
+
+35
+00:02:59.627 --> 00:03:00.972
+runtime is minutes.
+
+36
+00:03:00.972 --> 00:03:08.143
+The managed profile translates the supported resource names into Slurm requests; keep cluster-specific defaults in the
+
+37
+00:03:08.143 --> 00:03:13.970
+profile or project configuration rather than scattering raw scheduler flags through every rule.
+
+38
+00:03:13.970 --> 00:03:20.820
+Use node-local storage only inside a Slurm rule job and only for temporary work.
+
+39
+00:03:20.820 --> 00:03:28.650
+The approved pattern stages required inputs to $TMPDIR, computes there, and copies declared outputs back to
+
+40
+00:03:28.650 --> 00:03:31.096
+shared project storage before success.
+
+41
+00:03:31.096 --> 00:03:36.968
+Never place the Snakefile, durable results, logs, or resume-critical state under /local.
+
+42
+00:03:36.968 --> 00:03:44.797
+A rule should use local scratch only when measurement justifies the staging cost—for example repeated random
+
+43
+00:03:44.797 --> 00:03:48.712
+I/O, sorting, assembly, decompression, or many temporary files.
+
+44
+00:03:48.712 --> 00:03:52.137
+Class 14 contains the detailed local-I/O lesson.
+
+45
+00:03:52.137 --> 00:03:56.526
+Inspect the failed rule's log and its Slurm accounting record.
+
+46
+00:03:56.526 --> 00:04:03.548
+Correct the input, command, environment, or resource request, then dry-run again: Snakemake reuses outputs whose declared
+
+47
+00:04:03.548 --> 00:04:05.303
+dependencies are still satisfied.
+
+48
+00:04:05.303 --> 00:04:10.570
+Do not delete the whole results tree as a first troubleshooting step,
+
+49
+00:04:10.570 --> 00:04:16.275
+submit several copies of the same workflow, or create an automatic retry storm.
+
+50
+00:04:16.275 --> 00:04:23.297
+Use explicit rerun triggers or --forcerun RULE only after understanding why the existing output must be
+
+51
+00:04:23.297 --> 00:04:23.735
+replaced.
+
+52
+00:04:23.735 --> 00:04:25.930
+Treat protected inputs as read-only.
+
+53
+00:04:25.930 --> 00:04:32.091
+Retain: the Git commit or archived workflow version; Snakefile, included rule files,
+
+54
+00:04:32.091 --> 00:04:40.305
+and resolved configuration; input inventory and checksums where appropriate; exact container digests or environment lock files;
+
+55
+00:04:40.305 --> 00:04:46.980
+the Snakemake and profile versions; the resolved command and concurrency limit; rule logs,
+
+56
+00:04:46.980 --> 00:04:54.167
+benchmarks, and relevant Slurm job identifiers; and output checksums and the scientific validation record.
+
+57
+00:04:54.167 --> 00:05:01.355
+A technically successful workflow can still use the wrong samples, reference, parameters, or model.
+
+58
+00:05:01.355 --> 00:05:04.436
+Scheduler success is not scientific validation.
+
+59
+00:05:04.436 --> 00:05:11.182
+You have completed Class 6 when: the synthetic workflow dry-run lists the expected four rule jobs;
+
+60
+00:05:11.182 --> 00:05:17.928
+the managed IKIM profile completes the bounded run; a second dry-run reports that nothing needs to
+
+61
+00:05:17.928 --> 00:05:23.410
+be done; you can explain the difference between --jobs, threads, mem_mb, and runtime;
+
+62
+00:05:23.410 --> 00:05:29.313
+you can identify which files belong in Git, shared project storage, and node-local scratch;
+
+63
+00:05:29.313 --> 00:05:34.373
+and you can name the provenance required before retaining a scientific result.
+

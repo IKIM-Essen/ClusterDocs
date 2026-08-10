@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 13: European and German data protection for biomedical research · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a aria-current="page" href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a aria-current="page" href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-13-european-and-german-data-protection-for-biomedical-research">Class 13: European and German data protection for biomedical research</h1>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 7 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Practical governance for biomedical data, including genomic and imaging research, minimisation, and project responsibilities. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<h2 id="learning-outcome">Learning outcome</h2>
+<p>After this class, you should be able to distinguish direct identifiers from sensitive biomedical research data, understand why pseudonymised data remain personal data, and recognise when RCC is an appropriate controlled research environment.</p>
+<p>This class is practical RCC training. It does not replace the project's legal basis, ethics approval, consent documents, data-management plan, institutional policy, information-security review, or advice from the data-protection officer.</p>
+<h2 id="the-rcc-rule-in-one-sentence">The RCC rule in one sentence</h2>
+<p><strong>RCC may process approved biomedical research data inside its controlled research enclave, but direct identifiers and re-identification keys must not be stored in RCC.</strong></p>
+<p>Examples of direct identifiers that must not be uploaded include:</p>
+<ul>
+<li>names or initials;</li>
+<li>postal or email addresses;</li>
+<li>telephone or fax numbers;</li>
+<li>patient, case, insurance, personnel, or hospital record numbers;</li>
+<li>identifying free text, letters, referrals, consent forms, or screenshots;</li>
+<li>account credentials, access tokens, or authentication data;</li>
+<li>a lookup table that connects study codes to named individuals.</li>
+</ul>
+<p>The absence of these fields does not automatically make the remaining data anonymous. The research project must still have an appropriate legal basis and governance decision for processing biomedical data in RCC.</p>
+<h2 id="genomic-and-medical-imaging-data-are-not-automatically-direct-identifiers">Genomic and medical-imaging data are not automatically direct identifiers</h2>
+<p>Human genomic data and X-ray, CT, and MRI images are <strong>not direct identifiers in the same sense as a name, address, telephone number, or hospital record number</strong>. They may be processed for approved research in RCC because RCC is a restricted research enclave rather than a public-release platform.</p>
+<p>They can nevertheless be:</p>
+<ul>
+<li>personal data or special-category health/genetic data;</li>
+<li>indirectly identifying in combination with other information;</li>
+<li>subject to consent, ethics, contractual, or project-specific restrictions;</li>
+<li>unsuitable for publication or transfer outside the approved project environment.</li>
+</ul>
+<p>The correct conclusion is therefore not “genomes and images are prohibited.” It is:</p>
+<blockquote>
+<p>Genomes and medical images require appropriate project approval, data minimisation, named access groups, and controlled processing. Direct identifiers and the re-identification key stay outside RCC.</p>
+</blockquote>
+<h2 id="why-biomedical-data-receive-special-protection">Why biomedical data receive special protection</h2>
+<p>The EU General Data Protection Regulation treats genetic data, biometric data used for unique identification, and data concerning health as special categories of personal data. Their processing requires an applicable legal basis and safeguards appropriate to the risk.</p>
+<p>RCC contributes technical safeguards through controlled access, named user accounts, project-group permissions, auditability, restricted services, and a managed research-computing environment. Technical safeguards do not create the legal basis; they help implement an approved research project safely.</p>
+<p>Biomedical data can become identifying through context. Examples include:</p>
+<ul>
+<li>a very rare diagnosis in a small cohort;</li>
+<li>exact treatment or sampling dates linked to known clinical events;</li>
+<li>family relationships or pedigrees;</li>
+<li>combinations of age, location, diagnosis, and dates;</li>
+<li>DICOM metadata or burned-in annotations;</li>
+<li>free-text notes;</li>
+<li>external linkage with another dataset.</li>
+</ul>
+<h2 id="anonymous-pseudonymous-coded-and-de-identified">Anonymous, pseudonymous, coded, and de-identified</h2>
+<p>These terms are often used inconsistently.</p>
+<ul>
+<li><strong>Anonymous / non-identifiable:</strong> the person cannot reasonably be singled out using the data and reasonably available additional information in the relevant context.</li>
+<li><strong>Pseudonymous / coded:</strong> direct identifiers are replaced, but a link can be restored or the person may still be singled out. This remains personal data.</li>
+<li><strong>De-identified:</strong> useful descriptive language, but not a legal conclusion by itself. State what was removed, transformed, aggregated, or separated.</li>
+<li><strong>Controlled research data:</strong> data that may still be personal or special-category data but are processed under an approved purpose and technical/organisational safeguards in a restricted environment.</li>
+</ul>
+<p>The European Data Protection Board distinguishes pseudonymisation from anonymisation: pseudonymisation reduces linkability, while properly anonymised data are no longer attributable to an individual. <a href="https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en">EDPB: anonymisation and pseudonymisation</a></p>
+<h2 id="a-practical-rcc-decision-model">A practical RCC decision model</h2>
+<h3 id="suitable-under-the-normal-project-workflow">Suitable under the normal project workflow</h3>
+<p>Examples include:</p>
+<ul>
+<li>synthetic teaching data;</li>
+<li>public reference genomes and public datasets used under their licence;</li>
+<li>non-human experimental data;</li>
+<li>aggregate statistics and approved derived results;</li>
+<li>approved individual-level biomedical research data without direct identifiers;</li>
+<li>approved genomic data;</li>
+<li>approved X-ray, CT, MRI, and other medical images after required metadata handling;</li>
+<li>pseudonymised research data when the project governance explicitly covers RCC and the re-identification key is held separately.</li>
+</ul>
+<h3 id="requires-a-project-level-review-before-transfer">Requires a project-level review before transfer</h3>
+<p>Pause and confirm the approved workflow when the data include:</p>
+<ul>
+<li>a new data source not listed in the project documentation;</li>
+<li>detailed free text;</li>
+<li>a rare cohort or a new linkage between datasets;</li>
+<li>exact dates or fine-grained locations not needed for the analysis;</li>
+<li>imaging exports whose metadata-handling process is unclear;</li>
+<li>human genomic data not covered by the existing project decision;</li>
+<li>an intended use that differs from the approved purpose;</li>
+<li>a plan to grant access to additional people or collaborators.</li>
+</ul>
+<p>A review does not mean that the research is prohibited. It means the project must confirm that the purpose, people, data categories, and RCC environment are covered.</p>
+<h3 id="must-not-enter-rcc">Must not enter RCC</h3>
+<p>Do not upload:</p>
+<ul>
+<li>direct identifiers listed above;</li>
+<li>the re-identification or subject-code lookup key;</li>
+<li>unreviewed raw clinical documents or exports containing direct identifiers;</li>
+<li>credentials or secrets;</li>
+<li>data that the project approval assigns to a different environment;</li>
+<li>data obtained without a valid research, contractual, ethical, or institutional basis.</li>
+</ul>
+<p>If prohibited data are discovered after upload, stop using the affected copy and contact the project lead and the appropriate data-protection or information-security channel. Do not reproduce the sensitive content in email, chat, screenshots, or tickets.</p>
+<h2 id="genomic-research-in-rcc">Genomic research in RCC</h2>
+<p>Individual-level human genomic data can be scientifically valuable and computationally demanding. RCC can support such research when the project has established the permitted purpose and access model.</p>
+<p>Good practice includes:</p>
+<ol>
+<li>keep subject identity and the re-identification key in a separate approved system;</li>
+<li>use study codes rather than names or clinical identifiers;</li>
+<li>grant access only to named project members;</li>
+<li>document the source, purpose, permitted analyses, retention period, and deletion process;</li>
+<li>avoid unnecessary exports and local convenience copies;</li>
+<li>release results only through the project's approved disclosure process;</li>
+<li>consider relatives, rare variants, and external linkage when evaluating disclosure risk.</li>
+</ol>
+<p>The objective is controlled research use—not a claim that a participant genome is anonymous and not a plan to publish the raw data.</p>
+<h2 id="x-ray-ct-mri-and-other-medical-images">X-ray, CT, MRI, and other medical images</h2>
+<p>Medical images can be used in RCC when covered by the project governance. The main practical checks are:</p>
+<ul>
+<li>remove or transform direct identifiers in DICOM headers as required by the approved export process;</li>
+<li>check for burned-in names, numbers, dates, or annotations;</li>
+<li>keep the linkage key outside RCC;</li>
+<li>preserve scientifically necessary image information;</li>
+<li>restrict access to the project group;</li>
+<li>do not place images or derived visualisations on public web pages without disclosure review.</li>
+</ul>
+<p>An image may contain anatomy that could contribute to indirect identification, especially in head imaging, but that does not make every image a direct identifier or make research processing impossible.</p>
+<h2 id="defacing-a-possible-safeguard-not-a-default-requirement">Defacing: a possible safeguard, not a default requirement</h2>
+<p>Defacing modifies facial structures in head CT or MRI to reduce the chance of recognising or reconstructing a face. It can be appropriate when:</p>
+<ul>
+<li>a project intends to release or share images more broadly;</li>
+<li>the approved data-protection plan requires it;</li>
+<li>the destination environment has a stricter admission rule;</li>
+<li>facial anatomy is not needed for the scientific question;</li>
+<li>the method has been validated and quality-controlled for the modality.</li>
+</ul>
+<p>Defacing is often <strong>not necessary</strong> merely to conduct approved analysis inside RCC. It can be expensive, can remove relevant anatomy, can fail on some scans, and does not remove DICOM metadata or burned-in annotations. The project should choose the least burdensome measure that achieves the approved protection goal.</p>
+<p>Possible alternatives include:</p>
+<ul>
+<li>controlled access inside RCC without public release;</li>
+<li>validated metadata cleaning;</li>
+<li>using derived measures, segmentations, features, or cropped regions;</li>
+<li>limiting data access and retention;</li>
+<li>performing disclosure-oriented transformations only when exporting results.</li>
+</ul>
+<h2 id="free-text-filenames-metadata-and-notebook-output">Free text, filenames, metadata, and notebook output</h2>
+<p>Direct identifiers are often introduced accidentally outside the main data table. Review:</p>
+<ul>
+<li>filenames and directory names;</li>
+<li>spreadsheet comments and hidden sheets;</li>
+<li>document properties;</li>
+<li>DICOM headers and overlays;</li>
+<li>notebook outputs and cached cells;</li>
+<li>plot labels and hover text;</li>
+<li>logs, command lines, and error messages;</li>
+<li>archive contents;</li>
+<li>clinical and laboratory free text.</li>
+</ul>
+<p>Never use a real patient identifier as a file or directory name.</p>
+<h2 id="data-minimisation-without-damaging-the-science">Data minimisation without damaging the science</h2>
+<p>Use only the data needed for the approved purpose. In practice:</p>
+<ul>
+<li>select required columns instead of copying a complete clinical export;</li>
+<li>avoid detailed dates or locations when the analysis does not need them;</li>
+<li>transfer derived results rather than source data when this preserves the science;</li>
+<li>keep one authoritative project copy rather than personal duplicates;</li>
+<li>define retention and deletion;</li>
+<li>restrict access to named project members;</li>
+<li>avoid publishing small-cell or rare-combination outputs without review.</li>
+</ul>
+<p>Data minimisation often improves transfer speed, storage use, reproducibility, and analysis clarity as well as privacy.</p>
+<h2 id="legal-and-institutional-resources">Legal and institutional resources</h2>
+<p>Use these official sources for orientation:</p>
+<ul>
+<li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj?locale=EN">EU General Data Protection Regulation (official EUR-Lex text)</a> — especially Articles 4, 5, 9, 25, 32, 35, and 89.</li>
+<li><a href="https://www.gesetze-im-internet.de/bdsg_2018/__22.html">German Federal Data Protection Act, Section 22</a> — safeguards for special categories of personal data.</li>
+<li><a href="https://www.gesetze-im-internet.de/gdng/">German Health Data Use Act</a> — use of health data for public-interest research and healthcare development.</li>
+<li><a href="https://www.gesetze-im-internet.de/gdng/__7.html">German Health Data Use Act, Section 7</a> — purpose limitation, confidentiality, and prohibition of re-identification for data made available under the Act.</li>
+<li><a href="https://www.gesetze-im-internet.de/stgb/__203.html">German Criminal Code, Section 203</a> — protection of private secrets and professional confidentiality.</li>
+<li><a href="https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en">EDPB: anonymisation and pseudonymisation</a>.</li>
+<li><a href="https://www.uk-essen.de/datenschutz">Universitätsklinikum Essen data-protection information</a>.</li>
+</ul>
+<p>These links support training. They do not determine the legal basis for a specific project.</p>
+<h2 id="contact-the-universit-tsklinikum-essen-data-protection-office">Contact the Universitätsklinikum Essen data-protection office</h2>
+<p>Contact the office when a project is uncertain about its legal basis, a new data linkage or secondary use is proposed, direct identifiers appear necessary, a data-protection impact assessment may be required, or the existing approval does not clearly cover RCC.</p>
+<p><strong>Christian Hecke</strong><br />
+Universitätsklinikum Essen (AöR)<br />
+Datenschutz<br />
+Hufelandstraße 55<br />
+D-45147 Essen<br />
+Telephone: +49 201 / 723-6315<br />
+Email: <a href="mailto:datenschutz@uk-essen.de">datenschutz@uk-essen.de</a></p>
+<p>Do not attach research data or include patient information in an initial enquiry. Describe the purpose, data categories, scale, proposed users, and existing approvals without transmitting the sensitive content.</p>
+<h2 id="completion-gate-explain-the-decision-do-not-scan-the-files">Completion gate: explain the decision, do not scan the files</h2>
+<p>This class does not use an automated research-file scanner or a machine-generated legal decision. Completion is based on understanding and project governance.</p>
+<p>Before moving data into RCC, you should be able to answer:</p>
+<ol>
+<li>What is the approved research purpose?</li>
+<li>Which data categories are required for that purpose?</li>
+<li>Have direct identifiers and the re-identification key been excluded from RCC?</li>
+<li>Does the project documentation cover genomic data, images, pseudonymised records, or linkages being used?</li>
+<li>Who may access the data, and how will access be removed when no longer needed?</li>
+<li>Where will authoritative data, intermediate files, and final results be stored?</li>
+<li>What is the retention and deletion plan?</li>
+<li>Which outputs require disclosure review before sharing or publication?</li>
+<li>Who should be contacted if the actual data differ from the approved description?</li>
+</ol>
+<h3 id="scenario-self-check">Scenario self-check</h3>
+<p><strong>Scenario A:</strong> A pseudonymised MRI study has approved RCC processing, cleaned headers, no burned-in identifiers, and a linkage key stored in a separate clinical system.<br />
+<strong>Decision:</strong> Suitable for RCC under the approved project workflow; defacing is not automatically required.</p>
+<p><strong>Scenario B:</strong> A whole-genome cohort is covered by the ethics and data-protection documentation, access is limited to named project members, and direct identifiers are held outside RCC.<br />
+<strong>Decision:</strong> Suitable for controlled RCC research; raw data must not be publicly released merely because they are stored without names.</p>
+<p><strong>Scenario C:</strong> A spreadsheet contains names, hospital record numbers, and free-text notes.<br />
+<strong>Decision:</strong> Do not upload. Create or request an approved research export first.</p>
+<p><strong>Scenario D:</strong> A project wants to combine an existing genomic cohort with a new registry that was not included in the original approval.<br />
+<strong>Decision:</strong> Pause and obtain the appropriate project-level and institutional decision before linkage.</p>
+<p>You complete this class when you can explain—in plain language—why the proposed RCC processing is permitted, which direct identifiers are excluded, what controls apply, and who owns the decision when circumstances change.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

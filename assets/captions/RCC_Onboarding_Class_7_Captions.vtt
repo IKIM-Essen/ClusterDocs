@@ -1,0 +1,317 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.329
+Welcome to Class 7: Nextflow on RCC.
+
+2
+00:00:03.329 --> 00:00:07.609
+This video introduces the core decisions and working patterns.
+
+3
+00:00:07.609 --> 00:00:14.266
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14.266 --> 00:00:16.644
+exercises, and detailed reference material.
+
+5
+00:00:16.644 --> 00:00:24.340
+After this class, you can: explain what runs on the interactive node (shellhost) and what runs
+
+6
+00:00:24.340 --> 00:00:30.113
+on compute nodes; start a persistent Nextflow controller in tmux after release;
+
+7
+00:00:30.113 --> 00:00:35.885
+use the RCC launcher and a shared project root; request CPU, memory,
+
+8
+00:00:35.885 --> 00:00:43.582
+time, short-queue, scratch, array, and GPU resources; use Apptainer without placing Conda environments on shared storage;
+
+9
+00:00:43.582 --> 00:00:50.316
+resume an interrupted pipeline safely; and inspect Slurm and Nextflow evidence when something fails.
+
+10
+00:00:50.316 --> 00:00:54.688
+The Nextflow program remains on the interactive node (shellhost).
+
+11
+00:00:54.688 --> 00:01:01.974
+It reads the pipeline graph, decides which tasks are ready, and submits them to Slurm.
+
+12
+00:01:01.974 --> 00:01:05.860
+Slurm allocates CPUs, memory, time, partitions, and GPUs.
+
+13
+00:01:05.860 --> 00:01:09.260
+Scientific computation occurs only in Slurm jobs.
+
+14
+00:01:09.260 --> 00:01:17.033
+Compute workers execute generated task wrappers and do not need their own Java or Nextflow installation.
+
+15
+00:01:17.033 --> 00:01:22.772
+After the service is released, choose the project directory that owns the workflow and results:
+
+16
+00:01:22.772 --> 00:01:26.598
+Replace MY_PROJECT with a directory you are authorized to use.
+
+17
+00:01:26.598 --> 00:01:32.719
+The launcher creates these private per-user directories: The work directory is part of Nextflow's cache and
+
+18
+00:01:32.719 --> 00:01:33.484
+resume mechanism.
+
+19
+00:01:33.484 --> 00:01:35.397
+Never set it below /local.
+
+20
+00:01:35.397 --> 00:01:41.519
+Local scratch is disposable and belongs to one compute job; a later task may run on
+
+21
+00:01:41.519 --> 00:01:42.284
+another node.
+
+22
+00:01:42.284 --> 00:01:49.471
+After release, connect to an RCC interactive node (a shellhost) and create a persistent terminal session.
+
+23
+00:01:49.471 --> 00:01:56.209
+Do not start this controller on the preceding SSH gateway or inside a compute-worker allocation:
+
+24
+00:01:56.209 --> 00:02:03.397
+Inside the tmux session: Detach without stopping Nextflow: Return later: A dropped laptop or jump-host connection
+
+25
+00:02:03.397 --> 00:02:06.541
+then does not terminate the workflow controller.
+
+26
+00:02:06.541 --> 00:02:09.329
+The copyable example is in examples/nextflow-rcc.
+
+27
+00:02:09.329 --> 00:02:14.907
+After release, copy that directory into your project, enter it, and run:
+
+28
+00:02:14.907 --> 00:02:18.160
+The example submits two small cpu_short jobs.
+
+29
+00:02:18.160 --> 00:02:25.596
+One uses the shared task work directory; one uses node-local scratch and returns only its declared
+
+30
+00:02:25.596 --> 00:02:26.061
+output.
+
+31
+00:02:26.061 --> 00:02:30.243
+Every example has strict CPU, memory, and time limits.
+
+32
+00:02:30.243 --> 00:02:35.820
+Run it again with: The second run should reuse completed task results.
+
+33
+00:02:35.820 --> 00:02:42.792
+Keep the same project root, pipeline revision, inputs, and work directory for resume to succeed.
+
+34
+00:02:42.792 --> 00:02:49.099
+Nextflow process directives map to Slurm requests: Request what the program can actually use.
+
+35
+00:02:49.099 --> 00:02:54.055
+More CPUs or memory can increase queue time without reducing runtime.
+
+36
+00:02:54.055 --> 00:03:01.264
+### Short jobs Apply the RCC label only when every task instance is guaranteed to finish
+
+37
+00:03:01.264 --> 00:03:07.571
+within two hours: This selects cpu_short and a maximum task time of two hours.
+
+38
+00:03:07.571 --> 00:03:12.977
+### Local scratch Use local scratch for repeated random I/O, temporary databases,
+
+39
+00:03:12.977 --> 00:03:20.186
+sorting, assembly, decompressed intermediates, or very large numbers of temporary files: Nextflow creates a unique task
+
+40
+00:03:20.186 --> 00:03:27.395
+directory below the Slurm job's $TMPDIR, stages inputs, executes locally, copies declared outputs back with rsync,
+
+41
+00:03:27.395 --> 00:03:30.098
+and removes the task scratch directory.
+
+42
+00:03:30.098 --> 00:03:37.916
+Request any standard GPU: Request the current exact RTX A6000 type: Request an architecture family:
+
+43
+00:03:37.916 --> 00:03:45.734
+Request the special ARM64/GB10 platform only when the workflow supports that architecture and platform policy:
+
+44
+00:03:45.734 --> 00:03:49.382
+RCC adds Apptainer --nv for these labels.
+
+45
+00:03:49.382 --> 00:03:56.158
+GPU VRAM is not the same resource as host memory requested with memory.
+
+46
+00:03:56.158 --> 00:03:58.756
+RCC uses Apptainer for Nextflow tasks.
+
+47
+00:03:58.756 --> 00:04:05.684
+A process can declare an immutable image: Prefer a reviewed SIF file or a digest-pinned OCI
+
+48
+00:04:05.684 --> 00:04:06.117
+reference.
+
+49
+00:04:06.117 --> 00:04:08.716
+Do not use mutable latest tags.
+
+50
+00:04:08.716 --> 00:04:15.644
+The per-user Apptainer cache is on shared project storage so a job scheduled on another node
+
+51
+00:04:15.644 --> 00:04:17.376
+can reuse the image.
+
+52
+00:04:17.376 --> 00:04:20.840
+Avoid Nextflow-managed Conda as the default RCC profile.
+
+53
+00:04:20.840 --> 00:04:26.903
+Conda environments contain many small files and create poor metadata-I/O patterns on shared storage.
+
+54
+00:04:26.903 --> 00:04:31.233
+Use Apptainer unless a reviewed pipeline has a specific exception.
+
+55
+00:04:31.233 --> 00:04:37.997
+The separate bounded nf-core example pins nf-core/demo release 1.2.0, uses public synthetic test data,
+
+56
+00:04:37.997 --> 00:04:42.345
+caps scheduler concurrency, and supplies teaching resources through rcc-test.config.
+
+57
+00:04:42.345 --> 00:04:48.142
+Its run-demo.sh wrapper fails closed unless rcc-nextflow, apptainer, and sbatch are present.
+
+58
+00:04:48.142 --> 00:04:53.940
+After release, copy both files into an approved project directory and run:
+
+59
+00:04:53.940 --> 00:05:01.670
+The first run may retrieve pipeline source, public test data, and reviewed container images through the
+
+60
+00:05:01.670 --> 00:05:03.119
+approved proxy path.
+
+61
+00:05:03.119 --> 00:05:07.950
+Do not add tokens or copy credentials into the project.
+
+62
+00:05:07.950 --> 00:05:13.748
+For a real pipeline, use an explicit release and its Apptainer profile:
+
+63
+00:05:13.748 --> 00:05:16.647
+Replace RELEASE_TAG with a reviewed release.
+
+64
+00:05:16.647 --> 00:05:20.995
+Do not implicitly follow a pipeline's changing default branch.
+
+65
+00:05:20.995 --> 00:05:21.961
+Pilot a.
+
+66
+00:05:21.961 --> 00:05:29.437
+After correcting the input, configuration, resource request, or software issue: Do not delete the work directory
+
+67
+00:05:29.437 --> 00:05:31.774
+as a first troubleshooting step.
+
+68
+00:05:31.774 --> 00:05:37.848
+Do not start several copies of the same workflow because one appears slow.
+
+69
+00:05:37.848 --> 00:05:43.455
+Record: the Nextflow command and exact pipeline revision; the Nextflow run name;
+
+70
+00:05:43.455 --> 00:05:49.530
+relevant .nextflow.log lines; Slurm job IDs and states; the failed task work directory;
+
+71
+00:05:49.530 --> 00:05:55.604
+requested and observed resources; and whether the process used shared or local scratch.
+
+72
+00:05:55.604 --> 00:06:01.679
+Never include passwords, tokens, private keys, or patient-identifying data in a support request.
+
+73
+00:06:01.679 --> 00:06:07.375
+Before release, you have completed the preparation gate when you can explain:
+
+74
+00:06:07.375 --> 00:06:14.970
+why the controller runs on an interactive node (shellhost), never an SSH gateway or worker allocation;
+
+75
+00:06:14.970 --> 00:06:22.090
+why every scientific task goes through Slurm; why NXF_WORK stays on persistent shared project storage;
+
+76
+00:06:22.090 --> 00:06:28.261
+when /local task scratch helps and how outputs return; why workers need Apptainer,
+
+77
+00:06:28.261 --> 00:06:33.957
+but not Java or Nextflow; and which revisions, parameters, reports, image digests,
+
+78
+00:06:33.957 --> 00:06:37.280
+checksums, and Slurm IDs form retained provenance.
+
+79
+00:06:37.280 --> 00:06:44.875
+After RCC releases rcc-nextflow, run the bounded synthetic example and verify that -resume reuses completed work.

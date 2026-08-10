@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 8: protected project websites · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a aria-current="page" href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a aria-current="page" href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-8-protected-project-websites">Class 8: protected project websites</h1>
+<blockquote>
+<p><strong>Service status — not yet released:</strong> project vhost hosting and its request
+workflow are planning material in this class. RCC Admin is ready, but it does
+not yet provision project vhosts for users.</p>
+</blockquote>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 3 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Protected project websites, responsibilities, safe data access, and the approval path. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>A <strong>vhost</strong>, or virtual host, will be a named project website delivered through the RCC web gateway. It may be a simple information page or a small active application with a database-backed search, a curated file collection, a dashboard, a form, or a controlled upload area.</p>
+<p>The vhost service is designed to make useful research web interfaces easier to deploy <strong>without asking each project to build its own login system, internet-facing server, or security gateway</strong>.</p>
+<h2 id="the-short-version">The short version</h2>
+<p>When the service is released, a project that needs a website, dashboard, form,
+or small browser application will be able to request a <strong>vhost for that
+project</strong>. Think of it as the project's protected front door:</p>
+<pre><code class="language-text">individual user -&gt; RCC sign-in -&gt; project membership check -&gt; project vhost
+</code></pre>
+<p>Each vhost will belong to one project and have a named project owner. People
+will continue to use their own accounts; they will not share a project
+password. The vhost may show an approved application or curated data, but it
+must not expose the whole project folder. Projects without a clear web use case
+will not need a vhost.</p>
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<p>By the end of this class, you should be able to:</p>
+<ul>
+<li>decide whether a project idea belongs on the governed vhost platform;</li>
+<li>distinguish a static information site from an active project application;</li>
+<li>explain what RCC provides and what the project application must provide;</li>
+<li>use the copyable example without creating local accounts or exposing storage paths;</li>
+<li>prepare a complete vhost request for project-lead and administrator review;</li>
+<li>recognize when computation belongs in Slurm rather than in a web request.</li>
+</ul>
+<h2 id="what-is-in-scope">What is in scope</h2>
+<p>Good candidates include:</p>
+<ul>
+<li>project documentation and study information;</li>
+<li>read-only dashboards and reports;</li>
+<li>search or query interfaces over an approved internal database;</li>
+<li>curated collections of reports, images or result files;</li>
+<li>small project tools used by an identified project group;</li>
+<li>bounded forms or upload workflows with a defined destination and owner.</li>
+</ul>
+<p>A vhost is particularly useful when medical professionals or biomedical researchers need a browser-based interface and should not be expected to install command-line tools.</p>
+<h2 id="what-is-not-in-scope">What is not in scope</h2>
+<p>The platform is <strong>not</strong>:</p>
+<ul>
+<li>a general-purpose virtual machine or shell account;</li>
+<li>an unrestricted public web-hosting service;</li>
+<li>a raw browser for an entire project filesystem;</li>
+<li>a database-administration interface;</li>
+<li>a place to expose development servers directly;</li>
+<li>a replacement for Slurm, Snakemake or batch processing;</li>
+<li>a way to bypass project membership, data-protection review or application ownership.</li>
+</ul>
+<p>A web request should return promptly. Expensive analyses, large conversions and long-running jobs should be submitted to Slurm and presented later through the web interface.</p>
+<h2 id="supported-site-patterns">Supported site patterns</h2>
+<h3 id="1-static-information-site">1. Static information site</h3>
+<p>Use this for documentation, instructions, schedules and other reviewed read-only information.</p>
+<ul>
+<li>No application code runs.</li>
+<li>Hospital users may read approved non-sensitive information without signing in.</li>
+<li>External access receives the centrally defined stronger authentication policy.</li>
+<li>Active scripts, forms and arbitrary file browsing are not part of this profile.</li>
+</ul>
+<h3 id="2-active-read-only-application">2. Active read-only application</h3>
+<p>Use this for dashboards, database searches and curated downloads.</p>
+<ul>
+<li>Every user has an individual RCC identity.</li>
+<li>Hospital access uses a low-friction sign-in such as username/password or passkey.</li>
+<li>External access requires the stronger central authentication policy.</li>
+<li>The application receives only narrowly scoped, usually read-only data access.</li>
+</ul>
+<h3 id="3-active-application-with-controlled-writes">3. Active application with controlled writes</h3>
+<p>Use this for bounded forms, annotations or other reviewed application changes.</p>
+<ul>
+<li>Writes are limited to named application data, not project-wide storage.</li>
+<li>The application records who changed what and when.</li>
+<li>Database permissions are limited to the exact tables or operations required.</li>
+</ul>
+<h3 id="4-controlled-upload-application">4. Controlled upload application</h3>
+<p>Use this when a browser-based upload is more usable than SSH or SFTP.</p>
+<ul>
+<li>Uploads enter a dedicated staging area.</li>
+<li>File names, sizes, types and checksums are validated.</li>
+<li>Uploaded material is not automatically published or treated as trusted.</li>
+<li>A separate process promotes accepted data into its final project location.</li>
+</ul>
+<h2 id="standard-architecture">Standard architecture</h2>
+<pre><code class="language-text">user browser
+    ↓ HTTPS
+RCC authentication and reverse proxy
+    ↓ trusted identity over a restricted backend path
+project application
+    ↓ narrowly scoped database or curated file collection
+</code></pre>
+<p>Inside the hospital network, an active project application can use the low-friction RCC username/password or passkey flow. Outside the hospital, the gateway requires stronger authentication. Informational static sites may be available without login inside the hospital, but active applications always require an individual identity.</p>
+<p>The backend application is not directly reachable by ordinary users. This is important: the trusted identity information is meaningful only when it arrives through the RCC gateway.</p>
+<h2 id="division-of-responsibility">Division of responsibility</h2>
+<table>
+<thead>
+<tr>
+  <th>RCC platform provides</th>
+  <th>Project team provides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Central authentication and project-group authorization</td>
+  <td>A named project lead and technical contact</td>
+</tr>
+<tr>
+  <td>TLS, routing and gateway-only access</td>
+  <td>A clearly described user-facing purpose</td>
+</tr>
+<tr>
+  <td>Standard request limits and security headers</td>
+  <td>Application code and tests</td>
+</tr>
+<tr>
+  <td>Integrity monitoring, logging and detection recipes</td>
+  <td>A declared database or curated-file dependency</td>
+</tr>
+<tr>
+  <td>Deployment and operational health checks</td>
+  <td>Safe handling of research data and user input</td>
+</tr>
+<tr>
+  <td>Stronger authentication for external access</td>
+  <td>Maintenance, dependency updates and review responses</td>
+</tr>
+</tbody>
+</table>
+<p>Junior developers are not expected to administer the authentication gateway, integrity checker or detection systems. They are expected to follow the application contract and keep their software maintainable.</p>
+<h2 id="application-contract">Application contract</h2>
+<p>A governed active application must:</p>
+<ul>
+<li>have no local login form or separate password database;</li>
+<li>accept identity headers only from the trusted gateway;</li>
+<li>independently require the expected project group;</li>
+<li>reject unexpected host and forwarding information;</li>
+<li>use a dedicated, least-privilege database identity;</li>
+<li>expose curated records or opaque file identifiers, never arbitrary filesystem paths;</li>
+<li>keep deployed code and configuration read-only;</li>
+<li>keep runtime state, uploads and caches in separate writable locations;</li>
+<li>return safe error messages without stack traces, secrets or internal paths;</li>
+<li>log actions using the authenticated RCC username;</li>
+<li>avoid long-running computation in the web request.</li>
+</ul>
+<h2 id="safe-data-access-patterns">Safe data-access patterns</h2>
+<h3 id="database-backed-interface">Database-backed interface</h3>
+<p>Prefer a dedicated application account with access to approved views or tables. A read-only dashboard should not receive write or administration privileges.</p>
+<h3 id="curated-file-collection">Curated file collection</h3>
+<p>Store a catalogue that maps an opaque identifier to an approved file. The browser supplies the identifier, not a filesystem path. The application checks project membership again before returning the file.</p>
+<h3 id="computational-result-portal">Computational result portal</h3>
+<p>The website may collect bounded parameters and display results, but substantial processing should be handled asynchronously through an approved workflow. Do not keep a browser request open while a large scientific analysis runs.</p>
+<h3 id="upload-workflow">Upload workflow</h3>
+<p>Use a staging directory, server-generated names, limits, validation and a recorded promotion step. Do not mount an entire project directory writable into the application.</p>
+<h2 id="future-request-and-approval-workflow">Future request and approval workflow</h2>
+<ol>
+<li>A project lead describes the purpose, users, data type and required application pattern.</li>
+<li>RCC Admin selects the fixed security recipe that matches the function.</li>
+<li>A different administrator reviews the request and its data boundaries.</li>
+<li>An operator reviews the generated Git change.</li>
+<li>Deployment, local health checks and access tests run.</li>
+<li>The project owner periodically confirms that the site is still needed and maintained.</li>
+</ol>
+<p>Developers describe required functions, upstream service and data dependencies. They cannot disable authentication, integrity monitoring, logging, request limits or gateway-only access.</p>
+<h2 id="local-copyable-example">Local copyable example</h2>
+<pre><code class="language-bash">cd exercises/vhost/protected-app
+python3 -m unittest -v
+python3 app.py
+</code></pre>
+<p>The example demonstrates:</p>
+<ul>
+<li>trusted identity handling;</li>
+<li>project-group checks;</li>
+<li>a read-only database query;</li>
+<li>curated downloads using opaque identifiers;</li>
+<li>safe failure for direct clients and invalid requests.</li>
+</ul>
+<p>Local demonstration mode accepts synthetic headers only from loopback. Production must use the governed RCC gateway and deployment workflow.</p>
+<h2 id="common-mistakes-to-avoid">Common mistakes to avoid</h2>
+<ul>
+<li>Building another username/password system inside the application.</li>
+<li>Sharing one project account among several people.</li>
+<li>Mounting or publishing the whole project filesystem.</li>
+<li>Passing a filename or directory path directly from the browser to the operating system.</li>
+<li>Running a development server as the production service.</li>
+<li>Giving a read-only interface a database-owner account.</li>
+<li>Performing large analyses synchronously in a web request.</li>
+<li>Returning stack traces or environment details to users.</li>
+<li>Leaving an application without an active owner or update plan.</li>
+</ul>
+<h2 id="planning-completion-gate">Planning completion gate</h2>
+<p>You have completed this class when:</p>
+<ul>
+<li>all example unit tests pass;</li>
+<li>you can explain which of the four site patterns fits your project;</li>
+<li>the app refuses direct clients and missing project membership;</li>
+<li>no filesystem path is accepted from the URL;</li>
+<li>the request template names an owner, project, data classification, application pattern, data dependency and review date;</li>
+<li>you can identify any heavy computation that must move to Slurm.</li>
+</ul>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>

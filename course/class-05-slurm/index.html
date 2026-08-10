@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Class 5: Slurm acceptance patterns · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a aria-current="page" href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" >
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" open>
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a aria-current="page" href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Course · RCC ClusterDocs</p>
+      
+      <h1 id="class-5-slurm-acceptance-patterns">Class 5: Slurm acceptance patterns</h1>
+<section class="course-video-hero" id="watch-first">
+  <p class="course-video-kicker">Recommended starting point · 3 min video</p>
+  <h2 id="watch-the-class-first">Watch the class first</h2>
+  <p>Slurm execution modes, everyday commands, bounded acceptance patterns, GPU selection, and safe scheduler use. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <div class="course-video-pending" role="status">
+    <strong>Video not yet released</strong>
+    <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
+  </div>
+</section>
+
+<p>This class adapts the same three patterns used by RCC software acceptance testing, but scales them down for one learner and one tiny job at a time.</p>
+<h2 id="three-execution-modes">Three execution modes</h2>
+<table>
+<thead>
+<tr>
+  <th>Mode</th>
+  <th>Use it for</th>
+  <th>Do not use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Short queue (<code>cpu_short</code>)</td>
+  <td>Tests and batch jobs that finish within two hours</td>
+  <td>Long runners or work that needs a longer limit</td>
+</tr>
+<tr>
+  <td>Interactive (<code>interactive</code>)</td>
+  <td>Attended shells, debugging, notebooks, and Shiny development</td>
+  <td>Overnight, detached, or unattended computation</td>
+</tr>
+<tr>
+  <td>Regular compute (<code>cpu_nodes</code>)</td>
+  <td>Bounded long-running CPU batch jobs</td>
+  <td>Interactive sessions kept open while nobody is working</td>
+</tr>
+</tbody>
+</table>
+<p>GPU work follows the same principle: request the current GPU partition in a
+batch job and keep interactive GPU exploration attended and bounded.</p>
+<p>By the end of Class 5, you should also be able to distinguish a GPU partition,
+an exact GPU type, an architecture feature, host memory, and GPU memory. The
+GPU-selection lesson is included below rather than presented as a separate
+class.</p>
+<h2 id="everyday-slurm-commands">Everyday Slurm commands</h2>
+<table>
+<thead>
+<tr>
+  <th>Task</th>
+  <th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>See partition summaries</td>
+  <td><code>sinfo</code></td>
+</tr>
+<tr>
+  <td>See your jobs</td>
+  <td><code>squeue --me</code></td>
+</tr>
+<tr>
+  <td>Open a bounded worker shell</td>
+  <td><code>srun --partition=interactive --pty --cpus-per-task=1 --mem=1G --time=00:15:00 bash -i</code></td>
+</tr>
+<tr>
+  <td>Submit a script</td>
+  <td><code>sbatch job.sbatch</code></td>
+</tr>
+<tr>
+  <td>Inspect a job</td>
+  <td><code>scontrol show job &lt;jobid&gt;</code></td>
+</tr>
+<tr>
+  <td>Measure a completed job</td>
+  <td><code>sacct -j &lt;jobid&gt; --format=JobID,State,Elapsed,MaxRSS,ExitCode</code></td>
+</tr>
+<tr>
+  <td>Stop a job</td>
+  <td><code>scancel &lt;jobid&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>The following screenshot was captured from the RCC scheduler on 25 July 2026.
+It shows what <code>sinfo</code> looks like, but the available nodes and partitions can
+change. Run <code>sinfo</code> yourself before choosing a partition.</p>
+<p><img src="../../assets/rcc-slurm-overview.png" alt="Terminal showing the RCC Slurm version and a partition summary" /></p>
+<p>A minimal batch script is:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --job-name=small-test
+#SBATCH --partition=cpu_short
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH --time=00:10:00
+
+set -euo pipefail
+srun python analysis.py
+</code></pre>
+<p>Slurm normally allocates the requested CPU, memory, GPU, and time on a suitable
+node. It does not give the job an exclusive whole node. Ordinary jobs should
+not add <code>--nodes</code> or <code>--exclusive</code>; request whole or multiple nodes only for a
+measured application designed to use them.</p>
+<h2 id="choosing-the-right-gpu-on-rcc">Choosing the right GPU on RCC</h2>
+<blockquote>
+<p><strong>The default rule:</strong> Use the standard <code>gpu_nodes</code> partition and request
+<strong>one GPU without a model</strong> unless your software, memory requirement, or
+reproducibility plan genuinely requires a particular GPU.</p>
+</blockquote>
+<p>RCC does not create one queue for every GPU generation. Ampere, Blackwell, and
+future standard GPU systems can share <code>gpu_nodes</code> when their scheduling policy
+is the same. Slurm selects an exact model through a typed GPU request and an
+architecture through a node constraint.</p>
+<h3 id="gpu-learning-objectives">GPU learning objectives</h3>
+<p>After this part of Class 5, you can:</p>
+<ul>
+<li>distinguish a partition, GPU type, architecture feature, and system memory;</li>
+<li>discover the user-visible GPU labels without enumerating physical nodes;</li>
+<li>request any available GPU for the shortest practical queue time;</li>
+<li>request an exact GPU type when compatibility or reproducibility requires it;</li>
+<li>select an architecture without inventing a new partition name;</li>
+<li>request GPUs from Snakemake; and</li>
+<li>verify the GPU assigned to a running job.</li>
+</ul>
+<h3 id="four-different-concepts">Four different concepts</h3>
+<table>
+<thead>
+<tr>
+  <th>Concept</th>
+  <th>RCC/Slurm example</th>
+  <th>What it controls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>partition</td>
+  <td><code>gpu_nodes</code></td>
+  <td>queue policy, limits, access, and priority</td>
+</tr>
+<tr>
+  <td>typed GPU GRES</td>
+  <td><code>rtx_a6000</code></td>
+  <td>exact consumable GPU model</td>
+</tr>
+<tr>
+  <td>architecture feature</td>
+  <td><code>gpu_arch_ampere</code></td>
+  <td>Boolean hardware capability</td>
+</tr>
+<tr>
+  <td>system memory</td>
+  <td><code>--mem=32G</code></td>
+  <td>host RAM, not GPU VRAM</td>
+</tr>
+</tbody>
+</table>
+<p>Do not create a mental model in which “partition” means “GPU model.” Partitions
+exist for policy. Types and features describe hardware.</p>
+<h3 id="see-the-available-labels">See the available labels</h3>
+<p>This command prints unique GPU resource/feature combinations without showing
+physical node names:</p>
+<pre><code class="language-bash">sinfo -h -N -p gpu_nodes -o '%G|%f' | sort -u
+</code></pre>
+<p>You may see labels such as:</p>
+<pre><code class="language-text">gpu:rtx_a6000:1|gpu,gpu_arch_ampere,gpu_model_rtx_a6000
+</code></pre>
+<p>The exact list can change as hardware is accepted. Copy the type exactly as
+published by Slurm and ClusterDocs; do not guess a marketing abbreviation.</p>
+<p>RCC currently also has an <code>ai_top_atom</code> platform queue with typed GPU <code>gb10</code>
+and feature <code>gpu_arch_blackwell</code>. That queue exists because the ARM64
+Grace-Blackwell platform uses a different exclusive-user policy. It is a
+policy exception, not the pattern for future Blackwell GPU servers.</p>
+<h3 id="request-any-standard-gpu">Request any standard GPU</h3>
+<p>Use this when the application supports all GPUs currently offered in
+<code>gpu_nodes</code>:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+#SBATCH --job-name=gpu-any
+#SBATCH --partition=gpu_nodes
+#SBATCH --gpus-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=00:10:00
+#SBATCH --output=logs/%x-%j.out
+
+set -Eeuo pipefail
+nvidia-smi -L
+python your_gpu_program.py
+</code></pre>
+<p>The bounded copyable version is
+<a href="../../classes/examples/gpu-any.sbatch"><code>gpu-any.sbatch</code></a>. Submit it with:</p>
+<pre><code class="language-bash">mkdir -p logs
+sbatch gpu-any.sbatch
+</code></pre>
+<p>This request gives Slurm the largest set of eligible systems and normally
+reduces waiting time.</p>
+<h3 id="request-an-exact-model">Request an exact model</h3>
+<p>Use an exact model when at least one of these is true:</p>
+<ul>
+<li>the working set requires the VRAM available on that model;</li>
+<li>the application or container has been validated only on that model;</li>
+<li>a benchmark must be comparable with earlier runs;</li>
+<li>a numerical or performance result is explicitly hardware-dependent; or</li>
+<li>the application uses model-specific capabilities.</li>
+</ul>
+<p>Example for the current standard x86 GPU type:</p>
+<pre><code class="language-bash">#SBATCH --partition=gpu_nodes
+#SBATCH --gpus-per-node=rtx_a6000:1
+</code></pre>
+<p>The bounded copyable version is
+<a href="../../classes/examples/gpu-rtx-a6000.sbatch"><code>gpu-rtx-a6000.sbatch</code></a>. The
+equivalent command-line form is:</p>
+<pre><code class="language-bash">sbatch --partition=gpu_nodes --gpus-per-node=rtx_a6000:1 gpu-work.sbatch
+</code></pre>
+<p>Do not request <code>rtx_a6000</code> merely because it is familiar. An untyped request is
+more portable and gives the scheduler more choices.</p>
+<h3 id="request-an-architecture">Request an architecture</h3>
+<p>Use a constraint when the requirement applies to an architecture family rather
+than one exact model:</p>
+<pre><code class="language-bash">#SBATCH --partition=gpu_nodes
+#SBATCH --gpus-per-node=1
+#SBATCH --constraint=gpu_arch_ampere
+</code></pre>
+<p>A future standard Blackwell server with the normal RCC GPU policy would use:</p>
+<pre><code class="language-bash">#SBATCH --partition=gpu_nodes
+#SBATCH --gpus-per-node=1
+#SBATCH --constraint=gpu_arch_blackwell
+</code></pre>
+<p>The second example becomes runnable only when such a node is listed in
+<code>gpu_nodes</code>. Do not substitute the special <code>ai_top_atom</code> queue unless your work
+is approved and compatible with that ARM64 platform.</p>
+<p>For a soft preference rather than a requirement, advanced users may use:</p>
+<pre><code class="language-bash">sbatch --partition=gpu_nodes --gpus-per-node=1 \
+  --prefer=gpu_arch_blackwell gpu-work.sbatch
+</code></pre>
+<p>A preference permits fallback; a constraint does not.</p>
+<h3 id="gpu-vram-versus-mem">GPU VRAM versus <code>--mem</code></h3>
+<p><code>--mem=32G</code> requests <strong>system RAM</strong>. It does not reserve 32 GB of GPU memory.
+GPU VRAM is a property of the selected GPU type. Select a type only when the
+application's measured peak GPU-memory use requires it.</p>
+<p>Inside the job:</p>
+<pre><code class="language-bash">nvidia-smi --query-gpu=name,memory.total,memory.used,driver_version \
+  --format=csv
+</code></pre>
+<p>Measure representative data before launching a large workflow. Out-of-memory
+failures should lead to a reviewed resource change, not an automatic retry
+storm.</p>
+<h3 id="apptainer-gpu-jobs">Apptainer GPU jobs</h3>
+<p>Slurm allocates the GPU. Apptainer exposes the host NVIDIA driver and devices:</p>
+<pre><code class="language-bash">apptainer exec --nv --cleanenv /approved/images/tool.sif \
+  python /work/run_analysis.py
+</code></pre>
+<p>The container must not install or replace the host NVIDIA driver. Record the
+image digest, GPU type, driver version, and important application versions with
+the analysis when hardware-dependent reproducibility matters.</p>
+<h3 id="snakemake-gpu-resources">Snakemake GPU resources</h3>
+<p>For any standard GPU:</p>
+<pre><code class="language-python">rule gpu_analysis:
+    input:
+        &quot;data/input.tsv&quot;
+    output:
+        &quot;results/output.tsv&quot;
+    threads: 4
+    resources:
+        slurm_partition=&quot;gpu_nodes&quot;,
+        gpu=1,
+        mem_mb=16000,
+        runtime=30
+    shell:
+        &quot;python workflow/scripts/gpu_analysis.py {input} {output}&quot;
+</code></pre>
+<p>For an exact model:</p>
+<pre><code class="language-python">resources:
+    slurm_partition=&quot;gpu_nodes&quot;,
+    gpu=1,
+    gpu_model=&quot;rtx_a6000&quot;,
+    mem_mb=16000,
+    runtime=30
+</code></pre>
+<p>For an architecture requirement:</p>
+<pre><code class="language-python">resources:
+    slurm_partition=&quot;gpu_nodes&quot;,
+    gpu=1,
+    constraint=&quot;gpu_arch_ampere&quot;,
+    mem_mb=16000,
+    runtime=30
+</code></pre>
+<p>Keep RCC-specific labels in a workflow profile or configuration layer when the
+workflow should also run on other clusters.</p>
+<h3 id="verify-the-allocation">Verify the allocation</h3>
+<p>Inside the job, capture:</p>
+<pre><code class="language-bash">printf 'job=%s node=%s\n' &quot;$SLURM_JOB_ID&quot; &quot;$SLURMD_NODENAME&quot;
+printf 'allocated_gpu_ids=%s\n' &quot;${SLURM_JOB_GPUS:-unknown}&quot;
+nvidia-smi -L
+nvidia-smi --query-gpu=name,uuid,memory.total,driver_version --format=csv
+</code></pre>
+<p>After completion:</p>
+<pre><code class="language-bash">sacct -j JOB_ID \
+  --format=JobID,State,Elapsed,AllocTRES,ReqTRES,MaxRSS,ExitCode
+</code></pre>
+<p>Retain this information for performance studies and hardware-sensitive
+analyses.</p>
+<h3 id="why-a-gpu-job-is-pending">Why a GPU job is pending</h3>
+<p>Use the reason Slurm gives you:</p>
+<pre><code class="language-bash">squeue -j JOB_ID -o '%.18i %.9T %.40R'
+</code></pre>
+<p>Common interpretations:</p>
+<table>
+<thead>
+<tr>
+  <th>Reason</th>
+  <th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>Resources</code></td>
+  <td>matching GPUs are busy</td>
+</tr>
+<tr>
+  <td><code>Priority</code></td>
+  <td>other eligible jobs currently rank ahead</td>
+</tr>
+<tr>
+  <td><code>QOS...</code> or <code>Assoc...</code></td>
+  <td>an account/QOS limit applies</td>
+</tr>
+<tr>
+  <td><code>ReqNodeNotAvail</code></td>
+  <td>required hardware is unavailable or drained</td>
+</tr>
+</tbody>
+</table>
+<p>A typed model or architecture constraint deliberately reduces the eligible
+pool. Remove it only when the application can genuinely run on other GPUs.</p>
+<h3 id="gpu-decision-checklist">GPU decision checklist</h3>
+<p>Use <strong>any GPU</strong> when:</p>
+<ul>
+<li>the application supports all published standard GPU types;</li>
+<li>the dataset fits on all standard GPUs; and</li>
+<li>exact hardware is not part of the scientific comparison.</li>
+</ul>
+<p>Use an <strong>exact type</strong> when:</p>
+<ul>
+<li>measured VRAM requirements demand it;</li>
+<li>validated software compatibility is model-specific; or</li>
+<li>reproducibility requires the same model.</li>
+</ul>
+<p>Use an <strong>architecture constraint</strong> when:</p>
+<ul>
+<li>compiled kernels or capabilities require the architecture family; and</li>
+<li>more than one model in that architecture would be acceptable.</li>
+</ul>
+<p>Use a <strong>special partition</strong> only when RCC documents a policy/platform reason.
+Never invent <code>gpu_ampere</code>, <code>gpu_blackwell</code>, or a model-specific queue name.</p>
+<h3 id="gpu-completion-exercise">GPU completion exercise</h3>
+<ol>
+<li>Run <code>sinfo -h -N -p gpu_nodes -o '%G|%f' | sort -u</code>.</li>
+<li>Submit the bounded “any GPU” example.</li>
+<li>Record the assigned model and total VRAM.</li>
+<li>Submit the typed example only if <code>rtx_a6000</code> remains published.</li>
+<li>Explain which request gives Slurm more placement choices and why.</li>
+</ol>
+<h2 id="pattern-1-bash-hello">Pattern 1: Bash hello</h2>
+<p>The first job verifies scheduling, environment capture, output handling and exact comparison.</p>
+<pre><code class="language-bash">bash exercises/slurm/run-gate.sh bash
+</code></pre>
+<h2 id="pattern-2-snakemake-inside-an-allocation">Pattern 2: Snakemake inside an allocation</h2>
+<p>The second job runs a minimal local Snakemake workflow. It does not download packages or contact external services.</p>
+<pre><code class="language-bash">bash exercises/slurm/run-gate.sh snakemake
+</code></pre>
+<h2 id="pattern-3-apptainer-inside-an-allocation">Pattern 3: Apptainer inside an allocation</h2>
+<p>The third job uses an instructor-provided, immutable training image:</p>
+<pre><code class="language-bash">export RCC_TRAINING_IMAGE=/approved/path/to/training-image.sif
+bash exercises/slurm/run-gate.sh apptainer
+</code></pre>
+<h2 id="built-in-availability-protection">Built-in availability protection</h2>
+<p>The gate:</p>
+<ul>
+<li>submits only one job at a time;</li>
+<li>uses one CPU, 128 MiB RAM and a two-minute limit;</li>
+<li>refuses job arrays;</li>
+<li>refuses to run when another learner gate is active for the same user;</li>
+<li>waits for a bounded period;</li>
+<li>compares output byte-for-byte;</li>
+<li>cleans only its own temporary directory;</li>
+<li>does not enumerate nodes or expose scheduler configuration.</li>
+</ul>
+<h2 id="what-the-examples-prove">What the examples prove</h2>
+<p>A passing class gate shows that your account can execute the pattern. It is not a cluster-wide health test and must not be expanded into host-by-host probing.</p>
+<blockquote>
+<p><strong>Reference companion:</strong> After completing the bounded gates, use the
+<a href="../../reference/slurm/index.html">Slurm command reference</a> for dependencies, reusable
+allocations, GPU requests, accounting, cancellation, and checkpointing.</p>
+</blockquote>
+<h2 id="knowledge-check">Knowledge check</h2>
+<details><summary>Why compare output byte-for-byte?</summary>
+
+<p>It detects small, unexpected changes and makes the gate deterministic.</p>
+</details>
+
+<details><summary>Why not run all examples in parallel?</summary>
+
+<p>Parallelism is unnecessary for a learner gate and creates avoidable load and harder-to-understand failures.</p>
+</details>
+
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>
