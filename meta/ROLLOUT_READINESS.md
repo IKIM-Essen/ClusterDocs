@@ -1,25 +1,26 @@
 # ClusterDocs NG production-candidate status
 
-Review date: 4 August 2026
+Review date: 9 August 2026
 
 ## Current decision
 
-ClusterDocs NG is **ready to begin structured expert and novice review**. It is
-not yet approved for public production. The automated candidate gate now keeps
-those two decisions separate: human review can start without weakening the
-fail-closed production gate.
+ClusterDocs NG has completed expert content review. Novice acceptance is
+scheduled immediately after the new site is rolled out and therefore does not
+block the initial switch; it does block declaring rollout complete. The site
+is not yet approved for public production because the remaining operational,
+media, institutional, and accessibility gates are still fail-closed.
 
 ## Completed in this round
 
 - Verified the expanded 17-video RCC handoff locally: the exact filename set,
   122,808,554 total bytes, SHA-256 values, H.264 1280×720 video, stereo AAC,
   and durations match `config/media-manifest.yml`.
-- Prepared the RCC documentation-vhost target and a fail-closed activation
+- Prepared the separate RCC media-vhost target and a fail-closed activation
   gate. Until DNS, TLS, MIME type, byte ranges, and full downloads pass, the
   generated site displays a release notice and emits no MP4 URL.
-- Replaced the obsolete GitHub Pages handoff with an RCC-vhost deployment,
-  acceptance, activation, and rollback runbook. `site_status` remains
-  `staging` until the operational, human, and institutional gates close.
+- Reworked publication so Gitea replaces the current GitHub Pages content with
+  the NG build. `site_status` remains `staging` until the operational, human,
+  and institutional gates close.
 - Archived the speculative rollout page and removed “RCC Connect” and rollout
   language from public instructions. Users are directed to the current
   institutional RCC configuration and support route.
@@ -36,22 +37,38 @@ fail-closed production gate.
   video player.
 - Removed unused rollout-only production placeholders, reducing the unresolved
   configuration to values the published site actually needs.
+- Added a manually dispatched Gitea-only production workflow. It validates the
+  exact `clusterdocs-ng` commit and publishes a normal, non-forced child commit
+  to the existing GitHub `gh-pages` branch. GitHub Actions remains manual
+  validation only and has no deployment credentials.
+- Rebuilt RCC Expedition with the current GitHub Pages production origin and
+  the future NG lesson routes, then added archive, checksum, path-safety, and
+  embedded public-content validation.
+- Recorded expert content review as complete and the approved post-rollout
+  timing for novice acceptance in `config/review-status.yml`.
+- Audited all 60 GitHub PRs through #61, all six surviving GitHub branches, and
+  every advertised Gitea branch. No missing content change blocks the switch;
+  the two open legacy PRs are respectively unsafe to port and already
+  incorporated semantically. See `meta/BRANCH_PR_AUDIT.md`.
 
 ## Production blockers that remain
 
-1. Deploy `docs.ikim.uk-essen.de`, publish the exact staged MP4 set, and pass
-   the full online media gate for trusted HTTPS, `video/mp4`, byte ranges,
-   exact sizes, and SHA-256 values.
+1. Publish the exact staged MP4 set at its separate media endpoint and pass the
+   full online media gate for trusted HTTPS, `video/mp4`, byte ranges, exact
+   sizes, and SHA-256 values.
 2. Activate the players, complete Firefox playback and clean-client visual
    checks, then record human video approval for all 17 classes.
 3. Complete the institutional administrator checklist: operational endpoints,
    supported versions, storage and Slurm behavior, privacy/domain approval,
    accessibility, ownership, monitoring, and rollback.
-4. Add and review a production deployment workflow. Current CI validates and
-   uploads a preview artifact but does not deploy.
+4. Provision and review the dedicated GitHub Pages deploy key and pinned host
+   key in Gitea as described in `meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md`; verify
+   the Pages branch/root setting, non-forced update, receipt, and rollback.
 5. Change `site_status` to `production` only after the preceding gates pass.
+6. Run novice acceptance against the live site immediately after switching;
+   resolve blockers before declaring rollout complete.
 
-## Start manual review
+## Continue manual review
 
 Use `meta/EXPERT_REVIEW_GUIDE.md`, `meta/NOVICE_REVIEW_GUIDE.md`, and
 `meta/VIDEO_REVIEW_GUIDE.md`. Build the exact candidate and verify the gate:
@@ -62,7 +79,9 @@ python3 tools/build_site.py --output site-review
 python3 tools/rollout_readiness.py --manual-review
 ```
 
-The final command must report `READY_FOR_EXPERT_AND_NOVICE_REVIEW`.
+The final command verifies that the review materials remain coherent. Expert
+completion and post-rollout novice timing are enforced separately by the full
+rollout readiness gate.
 
 ## Production release gate
 

@@ -11,21 +11,20 @@ class NextflowDocsTests(unittest.TestCase):
     def test_navigation_contains_nextflow_class(self):
         nav = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
         builder = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
-        self.assertIn("Class 7 - Nextflow on RCC (not yet released): course/class-07-nextflow.md", nav)
-        self.assertIn("('Course','Class 7 · Nextflow · Not yet released','course/class-07-nextflow.md')", builder)
+        self.assertIn("Class 7 - Nextflow on RCC: course/class-07-nextflow.md", nav)
+        self.assertIn("('Course','Class 7 · Nextflow','course/class-07-nextflow.md')", builder)
 
     def test_user_contract_keeps_controller_off_gateways(self):
         text = DOC.read_text(encoding="utf-8")
-        self.assertIn("interactive node (`shellhost`)", text)
+        self.assertIn("allocation-backed interactive node", text)
         self.assertIn("Do not run Nextflow on `login.ikim.uk-essen.de`", text)
         self.assertNotIn("approved submission host", text)
         self.assertIn("tmux", text)
-        self.assertIn("not yet released", text.lower())
+        self.assertIn("service status — ready now", text.lower())
 
     def test_all_public_nextflow_summaries_name_the_interactive_shellhost(self):
         paths = (
             ROOT / "README.md",
-            ROOT / "docs/index.md",
             ROOT / "docs/tldr.md",
             ROOT / "docs/classes/examples/nextflow-rcc/README.md",
             ROOT / "source/part2.md",

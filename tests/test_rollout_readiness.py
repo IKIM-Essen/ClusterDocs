@@ -23,9 +23,19 @@ class RolloutReadinessTests(unittest.TestCase):
         self.assertNotIn("unresolved production configuration", joined)
         self.assertIn("videos lack recorded human approval", joined)
         self.assertIn("administrator publication checklist", joined)
-        self.assertIn("no reviewed production deployment workflow", joined)
+        self.assertNotIn("no reviewed production deployment workflow", joined)
+        self.assertNotIn("expert content review is not recorded", joined)
         self.assertTrue(warnings)
+        self.assertIn(
+            "novice acceptance is scheduled after initial rollout", "\n".join(warnings)
+        )
+        self.assertNotIn("post-rollout", joined)
         self.assertIn("all 17 course pages declare in-player English captions", ready)
+        self.assertIn("Gitea-only production deployment workflow is present", ready)
+        self.assertIn(
+            "all ClusterDocs main/NG branches and pull requests have dispositions", ready
+        )
+        self.assertIn("expert content review is recorded as completed", ready)
 
     def test_candidate_is_ready_to_start_manual_review(self):
         blockers, ready = load_readiness().manual_review_audit()

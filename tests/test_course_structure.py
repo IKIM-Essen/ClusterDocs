@@ -30,7 +30,7 @@ class CourseTests(unittest.TestCase):
   runner=(ROOT/'docs/classes/examples/nf-core/run-demo.sh').read_text()
   params=(ROOT/'docs/classes/examples/nf-core/params-rnaseq.example.json').read_text()
   self.assertIn('nf-core/demo',page)
-  self.assertIn('not yet released',page.lower())
+  self.assertIn('service status — ready now',page.lower())
   self.assertIn('rcc-test.config',page)
   self.assertIn("executor = 'slurm'",config)
   self.assertIn("queue = 'cpu_short'",config)

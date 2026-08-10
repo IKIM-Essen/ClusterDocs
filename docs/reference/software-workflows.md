@@ -87,10 +87,10 @@ version and profile before updating a production workflow.
 
 ## Nextflow and nf-core
 
-> **Service status — not yet released:** RCC is preparing a pinned
-> `rcc-nextflow` launcher and institutional Slurm configuration, but the
-> submit-host role is not active for users yet. The classroom runner fails
-> closed when `rcc-nextflow`, `apptainer`, or `sbatch` is unavailable. Do not
+> **Service status — ready now:** RCC provides a pinned `rcc-nextflow` launcher
+> and institutional Slurm configuration on shellhosts and allocation-backed
+> interactive nodes. The classroom runner fails closed when `rcc-nextflow`,
+> `apptainer`, or `sbatch` is unavailable. Do not
 > download an unpinned launcher or start a Nextflow controller on a login
 > gateway as a workaround.
 
@@ -117,7 +117,7 @@ Keep these distinctions clear:
 - cap `executor.queueSize` during learning and set justified CPU, memory, time,
   and partition limits for production runs.
 
-When released, the RCC execution boundary will be:
+The RCC execution boundary is:
 
 - start the pinned Nextflow controller through `rcc-nextflow` on the approved
   submission host, never on `login1` or `login2`;

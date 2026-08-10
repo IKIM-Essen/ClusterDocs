@@ -9,6 +9,7 @@ class ReferenceGuideTests(unittest.TestCase):
     def test_expected_reference_guides_exist(self):
         expected = {
             "index.md",
+            "terminology.md",
             "users-groups-projects.md",
             "account-starter-setups.md",
             "access-ssh-vscode.md",

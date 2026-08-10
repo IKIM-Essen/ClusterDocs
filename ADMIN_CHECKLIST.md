@@ -71,10 +71,11 @@ Complete and test these items before publishing the curriculum.
 
 ## Editorial and accessibility
 
-- [ ] Replace all administrator placeholders.
+- [x] Replace all administrator placeholders and keep the repository/configuration placeholder gates passing.
 - [ ] Build MkDocs locally and run markdownlint.
 - [ ] Check all internal and external links.
 - [ ] Review terminology with a novice biomedical researcher.
+- [x] Complete expert content review for the current site candidate and record its status.
 - [ ] Review data-protection wording with the responsible institutional office.
 - [ ] Review statistical and sequence-analysis disclaimers with domain experts.
 - [ ] Check PDF and slide rendering on Windows and macOS.
@@ -86,11 +87,15 @@ Complete and test these items before publishing the curriculum.
 - [ ] Set `site_status: production` and replace every unresolved value in `config/public.yml`.
 - [ ] Build successfully with `python tools/build_site.py --production`.
 - [ ] Configure a reviewed deployment target, TLS, rollback procedure, and named owner for updates.
+- [x] Add a fail-closed, manually dispatched Gitea production workflow; keep GitHub validation manual and deployment-free.
+- [x] Audit every ClusterDocs `main`/`clusterdocs-ng` PR and surviving GitHub/Gitea branch for missing release work.
+- [ ] Provision and acceptance-test the dedicated GitHub Pages deploy key and pinned GitHub SSH host key in Gitea.
 - [x] Verify all 17 staged MP4 files locally against the hashes, sizes, codecs, dimensions, channels, and durations in `config/media-manifest.yml` after the two-class expansion.
 - [ ] Publish all 17 MP4 files at the RCC documentation vhost URL and verify their SHA-256 values against `config/media-manifest.yml`.
 - [ ] Confirm the RCC media service supports trusted HTTPS, `video/mp4`, and byte-range requests for every file.
 - [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.
 - [ ] Review every caption file against the final audio and test in-player captions in supported browsers.
-- [x] Retire the obsolete media/downloads tree and keep only embedded videos, in-player WebVTT captions, and written lessons in the generated site.
+- [x] Retire the obsolete general downloads tree; allow only the validated, versioned RCC Expedition ZIP and checksum.
 - [x] Archive the speculative rollout page and RCC Connect wording until an operationally approved user journey exists.
+- [ ] [post-rollout] Complete novice acceptance against the live site before declaring rollout complete.
 - [ ] Run `python tools/rollout_readiness.py` and resolve every reported blocker.

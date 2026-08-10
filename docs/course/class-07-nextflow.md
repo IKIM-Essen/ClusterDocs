@@ -1,23 +1,22 @@
 # Class 7: Nextflow on RCC
 
-> **Service status — not yet released:** this numbered class documents the planned RCC
-> Nextflow-to-Slurm service so projects can prepare. The pinned `rcc-nextflow`
-> launcher and institutional configuration are not active for users yet. Do not
-> run these commands until RCC announces the service; use the ready managed
-> Snakemake path in the meantime.
+> **Service status — ready now:** RCC provides the pinned `rcc-nextflow`
+> launcher and institutional Slurm configuration on its shellhosts and
+> allocation-backed interactive nodes. Ordinary workers execute the submitted
+> tasks and do not host workflow controllers.
 
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 7 min video</p>
   <h2>Watch the class first</h2>
-  <p>The planned controller on an RCC interactive node (a shellhost), Slurm tasks, shared resume state, local scratch, GPU labels, Apptainer, nf-core, and failure recovery. Watch the lesson as preparation; the managed service is not yet released.</p>
+  <p>The managed controller on an RCC shellhost or allocation-backed interactive node, Slurm tasks, shared resume state, local scratch, GPU labels, Apptainer, nf-core, and failure recovery.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/class7.png" src="{{ media_base_url }}/RCC_Onboarding_Class_7_Video_Enhanced.mp4?v=818f6aa4">
     <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Class_7_Captions.vtt" default>
     Your browser does not support embedded video.
   </video>
 </section>
 
-> **The planned supported pattern:** start Nextflow in `tmux` on an RCC
-> **interactive node (`shellhost`)**.
+> **The supported pattern:** start Nextflow in `tmux` on an RCC
+> **shellhost**, or run it within an allocation-backed interactive session.
 > Nextflow submits each process to Slurm. Keep the Nextflow work directory on
 > shared project storage, use Apptainer for software, and opt into node-local
 > scratch only for processes that benefit from it.
@@ -31,8 +30,8 @@ service design.
 
 After this class, you can:
 
-- explain what runs on the interactive node (`shellhost`) and what runs on compute nodes;
-- start a persistent Nextflow controller in `tmux` after release;
+- explain what runs on the shellhost or interactive allocation and what runs on compute nodes;
+- start a persistent Nextflow controller in `tmux`;
 - use the RCC launcher and a shared project root;
 - request CPU, memory, time, short-queue, scratch, array, and GPU resources;
 - use Apptainer without placing Conda environments on shared storage;
@@ -44,7 +43,7 @@ After this class, you can:
 ```text
 Your laptop
   -> login.ikim.uk-essen.de
-       -> RCC interactive node (shellhost)
+       -> RCC shellhost or allocation-backed interactive node
             -> Nextflow JVM
                  -> sbatch
                       -> RCC compute node
@@ -53,7 +52,7 @@ Your laptop
                            -> optional /local scratch
 ```
 
-The Nextflow program remains on the interactive node (`shellhost`). It reads the pipeline graph, decides
+The Nextflow program remains on the shellhost or interactive allocation. It reads the pipeline graph, decides
 which tasks are ready, and submits them to Slurm. Slurm allocates CPUs, memory,
 time, partitions, and GPUs. Scientific computation occurs only in Slurm jobs.
 Compute workers execute generated task wrappers and do not need their own Java
@@ -61,7 +60,7 @@ or Nextflow installation.
 
 ## 2. Prepare a shared project root
 
-After the service is released, choose the project directory that owns the
+Choose the project directory that owns the
 workflow and results:
 
 ```bash
@@ -83,9 +82,10 @@ a later task may run on another node.
 
 ## 3. Start the controller in tmux
 
-After release, connect to an RCC interactive node (a `shellhost`) and create a
-persistent terminal session. Do not start this controller on the preceding SSH
-gateway or inside a compute-worker allocation:
+Connect to an RCC shellhost and create a persistent terminal session, or start
+the controller inside an allocation-backed interactive session. Do not start
+this controller on the preceding SSH gateway or inside an ordinary batch-worker
+allocation:
 
 ```bash
 tmux new -s nextflow
@@ -115,7 +115,7 @@ controller.
 ## 4. First bounded RCC workflow
 
 The copyable example is in
-[`examples/nextflow-rcc`](../classes/examples/nextflow-rcc/README.md). After release, copy
+[`examples/nextflow-rcc`](../classes/examples/nextflow-rcc/README.md). Copy
 that directory into your project, enter it, and run:
 
 ```bash

@@ -1,51 +1,25 @@
 # RCC ClusterDocs NG
 
-Welcome to the staged RCC learning site for medical professionals, biomedical researchers, research software developers, and technical project staff.
+Welcome to the staged RCC learning site for medical professionals, biomedical researchers, research software developers, and technical project staff. If you are new to RCC or preparing a new computer, start with [RCC Expedition](rcc-expedition.md), the self-contained onboarding course for Windows 11 and macOS, then return here for current cluster guidance.
 
 The course is designed so that a new user can progress without needing an administrator beside them. Each class has a small practical exercise and a gate that checks readiness without exposing credentials or generating significant cluster load.
 
+<section class="expedition-callout" aria-labelledby="expedition-title">
+  <p class="expedition-kicker">Standalone onboarding · Windows 11 and macOS</p>
+  <h2 id="expedition-title">Start with RCC Expedition</h2>
+  <p>If you are new to RCC or setting up a new workstation, take the self-contained local course covering workstation security, SSH, Linux, Slurm, storage, data transfer, and reproducible workflows.</p>
+  <div class="expedition-actions">
+    <a class="expedition-primary" href="rcc-expedition.md">Open RCC Expedition →</a>
+    <a href="assets/downloads/RCC-Expedition-USB-v1.0.0.zip">Download v1.0.0 for offline use</a>
+  </div>
+  <p class="expedition-privacy">Datensparsam by design: no learner account, analytics, telemetry, central progress database, or supervisor dashboard.</p>
+</section>
+
 ## RCC in plain language
 
-Think of RCC as a set of project workrooms rather than one large shared disk:
-
-### Service availability
-
-| Capability | Status |
-|---|---|
-| RCC Admin self-administration and primary-approver workflow | **Ready now** |
-| RCC workers and Slurm computation | **Ready now** |
-| Project Samba shares for approved projects and registered Lab-network devices | **Ready now** |
-| Managed Nextflow-to-Slurm support | **Not yet released** — use the managed Snakemake path until RCC announces the `rcc-nextflow` launcher |
-| Protected project vhosts | **Not yet released** — the documentation is planning and training material |
-| Ardia-to-RCC integration | **Not yet released** — use no Ardia transfer route until RCC announces it |
-| RCC-to-Coscine archive transfer | **Not yet released** — prepare archive sets, but do not treat the planned flow as operational |
-
-“Ready now” still means that the user, project, data, and—where applicable—the
-instrument must be approved. It does not mean that one project can access
-another project's service.
-
-| RCC term | Plain-language meaning |
-|---|---|
-| Your account | Your personal badge. Use your own account so actions remain attributable. |
-| Your primary group | Your home department or organisational affiliation. Every user has exactly one. |
-| A project | A shared workroom for named, approved people. A project can include people from different primary groups. |
-| A project Samba share | A Windows-compatible network folder where an approved Lab-network instrument or acquisition computer can deliver data to the project. |
-| Managed Nextflow support | A future launcher that will keep the workflow controller on an RCC interactive node (a shellhost) while Slurm runs each task on an RCC worker. It is not yet released. |
-| A project vhost | A future optional protected website for that project. Project-vhost hosting is not yet released. |
-| Coscine | A planned later destination for a reviewed archive set. RCC-to-Coscine transfer is not yet released. |
-
-The usual journey is:
-
-```text
-people from one or more primary groups
-    -> one approved project and its shared data
-Lab-network instrument
-    -> approved project Samba share [ready]
-       or future Ardia integration [not yet released]
-    -> RCC project storage -> Slurm analysis -> project results
-    -> optional project vhost [not yet released]
-    -> reviewed archive set -> Coscine later [not yet released]
-```
+Think of RCC as a set of project workrooms rather than one large shared disk.
+For definitions used throughout the documentation, see the
+[RCC terminology reference](reference/terminology.md).
 
 Your primary group records where you belong; it is not how cross-department
 research data is shared. The project is the access and collaboration boundary.

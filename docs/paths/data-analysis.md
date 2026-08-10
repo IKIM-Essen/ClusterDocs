@@ -40,8 +40,8 @@ inexpensive prompt, or a bounded Shiny setup.
 
 Use [Class 2](../course/class-02-workflows.md) to organise the project, then
 [Class 6](../course/class-06-snakemake.md) for the ready managed workflow path.
-Use [Class 7](../course/class-07-nextflow.md) only as preparation when a
-reviewed community workflow uses Nextflow; that service is not yet released.
+Use [Class 7](../course/class-07-nextflow.md) when a reviewed community
+workflow uses Nextflow or nf-core.
 Use [Class 4](../course/class-04-containers.md) when an immutable runtime is
 more appropriate than an environment containing many small files.
 

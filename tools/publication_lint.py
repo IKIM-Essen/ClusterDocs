@@ -37,6 +37,26 @@ for item in TEXT_ROOTS:
 for p in TEXT_FILES:
  if p.exists(): scan(str(p.relative_to(ROOT)),p.read_text(errors='replace'))
 
+# Downloads are executable teaching material, so scan their visible source too.
+# Reject ambiguous or traversing paths before reading any member.
+DOWNLOAD_TEXT_SUFFIXES={'.cmd','.command','.css','.html','.js','.ps1','.sh','.txt'}
+for p in (ROOT/'docs/assets/downloads').glob('*.zip'):
+ try:
+  with zipfile.ZipFile(p) as z:
+   names=z.namelist()
+   normalized_names=[name.replace('\\','/') for name in names]
+   if len(normalized_names) != len({name.casefold() for name in normalized_names}):
+    errors.append(f'{p.relative_to(ROOT)}: duplicate archive paths')
+   for name,normalized in zip(names,normalized_names):
+    member=Path(normalized)
+    if member.is_absolute() or '..' in member.parts or not member.parts or ':' in member.parts[0]:
+     errors.append(f'{p.relative_to(ROOT)}:{name}: unsafe archive path')
+     continue
+    if member.suffix.lower() in DOWNLOAD_TEXT_SUFFIXES:
+     scan(f'{p.relative_to(ROOT)}:{name}',z.read(name).decode('utf-8',errors='replace'))
+ except zipfile.BadZipFile:
+  errors.append(f'{p.relative_to(ROOT)}: invalid download archive')
+
 # Extract only visible text nodes from DOCX/PPTX XML, avoiding theme/color metadata.
 for p in list((ROOT/'docx').glob('*.docx'))+list((ROOT/'slides').glob('*.pptx')):
  chunks=[]

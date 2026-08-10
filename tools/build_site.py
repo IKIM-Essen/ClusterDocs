@@ -18,7 +18,7 @@ NAV=[
  ('Course','Class 4 · Containers','course/class-04-containers.md'),
  ('Course','Class 5 · Slurm','course/class-05-slurm.md'),
  ('Course','Class 6 · Snakemake','course/class-06-snakemake.md'),
- ('Course','Class 7 · Nextflow · Not yet released','course/class-07-nextflow.md'),
+ ('Course','Class 7 · Nextflow','course/class-07-nextflow.md'),
  ('Course','Class 8 · Project websites','course/class-08-vhosts.md'),
  ('Course','Class 9 · Python notebooks','course/class-09-python-notebooks.md'),
  ('Course','Class 10 · R analysis','course/class-10-r-analysis.md'),
@@ -37,6 +37,7 @@ NAV=[
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
  ('Reference','Reference overview','reference/index.md'),
+ ('Reference','RCC terminology','reference/terminology.md'),
  ('Reference','Users, groups, and projects','reference/users-groups-projects.md'),
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
@@ -124,6 +125,9 @@ PAGE='''<!doctype html>
         <figcaption>One research environment for statistics, data science, reproducible AI, distributed computation, visualization, and governed sharing.</figcaption>
       </figure>{% endif %}
     </main>
+    {% if is_home and home_rail %}<aside class="home-rail" aria-label="RCC Expedition onboarding">
+      {{ home_rail }}
+    </aside>{% endif %}
   </div>
 </div>
 <footer>
@@ -160,6 +164,9 @@ a:hover { color:var(--cyan); }
 .service-nav .admin-link:hover { background:var(--navy-2); color:#fff; }
 .shell { max-width:1280px; margin:0 auto; padding:2rem 1.4rem 4rem; }
 .docs-layout { display:grid; grid-template-columns:minmax(230px,270px) minmax(0,900px); gap:1.5rem; align-items:start; justify-content:center; }
+.home .shell { max-width:1600px; }
+.home .docs-layout { grid-template-columns:minmax(220px,250px) minmax(0,760px) minmax(280px,340px); }
+.home-rail { position:sticky; top:94px; min-width:0; }
 .sidebar { position:sticky; top:94px; max-height:calc(100vh - 112px); overflow:auto; scrollbar-width:thin; }
 .sidebar-card,.content-card { background:var(--paper); border:1px solid rgba(6,42,70,.1); border-radius:20px; box-shadow:0 9px 24px rgba(6,42,70,.065); }
 .sidebar-card { padding:1rem; }
@@ -211,6 +218,17 @@ a:hover { color:var(--cyan); }
 .research-figure img { width:100%; border-radius:0; }
 .content-card hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
 .content-card a { font-weight:600; }
+.expedition-callout { position:relative; overflow:hidden; margin:1.6rem 0 2.5rem; padding:clamp(1.35rem,3vw,2rem); border-radius:20px; background:linear-gradient(140deg,var(--navy) 0,var(--navy-2) 70%,#096d86 100%); color:#fff; box-shadow:var(--shadow); }
+.home-rail .expedition-callout { margin:0; padding:1.5rem; }
+.expedition-callout::after { content:""; position:absolute; width:210px; height:210px; right:-95px; bottom:-120px; border:32px solid rgba(142,231,242,.13); border-radius:50%; }
+.expedition-callout h2 { position:relative; z-index:1; margin:.25rem 0 .65rem; padding:0; color:#fff; font-size:clamp(1.55rem,2.3vw,2.25rem); line-height:1.08; }
+.expedition-callout > p { position:relative; z-index:1; max-width:68ch; color:rgba(255,255,255,.9); line-height:1.6; }
+.expedition-callout .expedition-kicker { margin:0; color:#8ee7f2; font-size:.76rem; font-weight:850; letter-spacing:.11em; text-transform:uppercase; }
+.expedition-actions { position:relative; z-index:1; display:flex; align-items:center; flex-wrap:wrap; gap:.75rem 1rem; margin:1.2rem 0; }
+.expedition-actions a { color:#fff; font-weight:800; }
+.expedition-actions .expedition-primary { padding:.68rem .9rem; border-radius:10px; background:#fff; color:var(--navy); text-decoration:none; }
+.expedition-actions .expedition-primary:hover { background:#dff7fa; color:var(--navy); }
+.expedition-callout .expedition-privacy { margin-bottom:0; color:rgba(255,255,255,.76); font-size:.88rem; }
 .path-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1.15rem 0 2.4rem; }
 .path-card { position:relative; display:flex; min-height:310px; flex-direction:column; overflow:hidden; padding:1.45rem; border:1px solid rgba(6,42,70,.1); border-radius:18px; background:linear-gradient(150deg,#fff 0,#f6fbfc 100%); box-shadow:0 9px 24px rgba(6,42,70,.065); }
 .path-card::after { content:""; position:absolute; width:150px; height:150px; right:-70px; bottom:-80px; border:25px solid rgba(10,143,178,.08); border-radius:50%; }
@@ -235,6 +253,10 @@ summary { color:var(--navy); font-weight:750; cursor:pointer; }
 .mobile-nav { display:none; }
 footer { max-width:1280px; margin:0 auto; padding:1.4rem; border-top:1px solid rgba(6,42,70,.1); color:var(--muted); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-size:.88rem; }
 footer p { margin:0; }
+@media (max-width:1180px) {
+  .home .docs-layout { grid-template-columns:220px minmax(0,1fr); }
+  .home-rail { grid-column:2; position:static; }
+}
 @media (max-width:980px) {
   .docs-layout { grid-template-columns:220px minmax(0,1fr); }
   .content-card { padding:1.6rem; }
@@ -247,6 +269,7 @@ footer p { margin:0; }
   .shell { padding:1rem; }
   .sidebar { display:none; }
   .docs-layout { display:block; }
+  .home-rail { margin-top:1rem; }
   .mobile-nav { display:block; margin:0 0 1rem; padding:.72rem 1rem; border:1px solid rgba(6,42,70,.1); border-radius:14px; background:#fff; box-shadow:0 9px 24px rgba(6,42,70,.05); }
   .mobile-nav nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; padding-top:1rem; }
   .content-card h1 { font-size:clamp(2rem,11vw,3rem); }
@@ -385,6 +408,17 @@ def main():
             if separator: rewritten+=separator+fragment
             return attribute+'="'+rewritten+'"'
         content=re.sub(r'(href|src)="([^"]+)"', rewrite_local, content)
+        is_home=str(rel)=='index.md'
+        home_rail=''
+        if is_home:
+            rail_match=re.search(
+                r'<section class="expedition-callout".*?</section>',
+                content,
+                flags=re.S,
+            )
+            if rail_match:
+                home_rail=rail_match.group(0)
+                content=content[:rail_match.start()]+content[rail_match.end():]
         current_url=out_url(str(rel))
         target.write_text(Template(PAGE).render(
             title=title_of(text),
@@ -394,7 +428,8 @@ def main():
             status=cfg['site_status'],
             current_url=current_url,
             page_group=group_for_path.get(str(rel),'Documentation'),
-            is_home=str(rel)=='index.md',
+            is_home=is_home,
+            home_rail=home_rail,
         ))
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():

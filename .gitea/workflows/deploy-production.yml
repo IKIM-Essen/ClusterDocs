@@ -1,0 +1,67 @@
+name: deploy-clusterdocs-ng-production
+
+# Gitea builds and publishes the existing GitHub Pages branch. GitHub Actions
+# remains a manual validation fallback and receives no deployment credential.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clusterdocs-production
+  cancel-in-progress: false
+
+jobs:
+  production-deploy:
+    runs-on: rcc-ci
+    timeout-minutes: 45
+    steps:
+      - name: Checkout the exact Gitea commit without an external action
+        env:
+          GITEA_ACTIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: /opt/rcc-ci/bin/gitea-ci-checkout
+
+      - name: Require the protected production branch and immutable toolchain
+        run: |
+          set -eu
+          test "$GITHUB_REF" = "refs/heads/clusterdocs-ng"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test -z "$(git status --porcelain)"
+          /opt/rcc-ci/venv/bin/python tools/check_ci_environment.py
+
+      - name: Run fail-closed production gates
+        run: |
+          set -eu
+          /opt/rcc-ci/venv/bin/python tools/validate_repo.py
+          /opt/rcc-ci/venv/bin/python tools/rollout_readiness.py
+          /opt/rcc-ci/venv/bin/python tools/build_site.py --production --output site-production
+          /opt/rcc-ci/venv/bin/python tools/check_site_links.py site-production
+          printf '{"source_commit":"%s"}\n' "$GITHUB_SHA" > site-production/assets/release.json
+          touch site-production/.nojekyll
+          test ! -e site-production/CNAME
+
+      - name: Publish the exact tree to the existing GitHub Pages branch
+        env:
+          GITHUB_PAGES_DEPLOY_KEY: ${{ secrets.CLUSTERDOCS_GITHUB_PAGES_DEPLOY_KEY }}
+          GITHUB_SSH_HOST_KEY: ${{ secrets.CLUSTERDOCS_GITHUB_SSH_HOST_KEY }}
+        run: |
+          set -eu
+          deploy_tmp="$(mktemp -d)"
+          trap 'rm -rf "$deploy_tmp"' EXIT HUP INT TERM
+          install -m 0700 -d "$deploy_tmp/ssh"
+          printf '%s\n' "$GITHUB_PAGES_DEPLOY_KEY" > "$deploy_tmp/ssh/id_ed25519"
+          printf '%s\n' "$GITHUB_SSH_HOST_KEY" > "$deploy_tmp/ssh/known_hosts"
+          chmod 0600 "$deploy_tmp/ssh/id_ed25519" "$deploy_tmp/ssh/known_hosts"
+          export GIT_SSH_COMMAND="ssh -i $deploy_tmp/ssh/id_ed25519 -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$deploy_tmp/ssh/known_hosts -o ConnectTimeout=15"
+          git clone --branch gh-pages --single-branch --depth 1 \
+            git@github.com:IKIM-Essen/ClusterDocs.git "$deploy_tmp/pages"
+          git -C "$deploy_tmp/pages" rm -r --ignore-unmatch .
+          cp -R site-production/. "$deploy_tmp/pages/"
+          git -C "$deploy_tmp/pages" add --all
+          git -C "$deploy_tmp/pages" config user.name "RCC Gitea CI"
+          git -C "$deploy_tmp/pages" config user.email "rcc-ci@ikim.uk-essen.de"
+          git -C "$deploy_tmp/pages" commit -m "Deploy ClusterDocs NG $GITHUB_SHA"
+          published_commit="$(git -C "$deploy_tmp/pages" rev-parse HEAD)"
+          git -C "$deploy_tmp/pages" push origin HEAD:gh-pages
+          test "$(git -C "$deploy_tmp/pages" ls-remote origin refs/heads/gh-pages | awk '{print $1}')" = "$published_commit"

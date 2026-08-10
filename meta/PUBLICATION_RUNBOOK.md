@@ -1,12 +1,13 @@
-# ClusterDocs NG RCC-vhost publication runbook
+# ClusterDocs NG GitHub Pages publication runbook
 
-This is the handoff for the RCC documentation vhost. It keeps media deployment,
-online verification, link activation, and site deployment as separate guarded
-steps. A failure leaves the generated site without dead video links.
+This replaces the content of the existing GitHub Pages site while keeping media
+deployment, online verification, link activation, and site publication as
+separate guarded steps. A failure leaves the generated site without dead video
+links.
 
 ## Fixed targets and content set
 
-- Site URL: <https://docs.ikim.uk-essen.de/>
+- Site URL: <https://ikim-essen.github.io/ClusterDocs/>
 - Media URL: <https://docs.ikim.uk-essen.de/media/rcc-onboarding/>
 - Media web root: `/srv/www/docs/media/rcc-onboarding`
 - Reviewed local MP4 source: `new-videos/`
@@ -14,9 +15,10 @@ steps. A failure leaves the generated site without dead video links.
 - Media set: 17 MP4 files, 122,808,554 bytes total
 - Media-set checksum receipt: `9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11`
 
-The site publishes no local MP4 copies, GitHub media URLs, downloads tree,
-source captions, narration downloads, or office-document downloads. WebVTT
-captions and posters are built into the site as player assets.
+The site publishes no local MP4 copies, GitHub media URLs, general downloads
+tree, source captions, narration downloads, or office-document downloads. The
+only versioned download is the validated RCC Expedition archive and its outer
+checksum. WebVTT captions and posters are built into the site as player assets.
 
 ## 1. Verify the exact handoff before copying it
 
@@ -32,7 +34,7 @@ The media gate must report `PASS (17 videos)`. It checks the manifest filename
 set, exact size, SHA-256, H.264 1280×720 video, stereo AAC audio, and duration.
 Do not deploy an extra file or substitute a same-named file with another hash.
 
-## 2. Deploy the vhost and the fixed media directory
+## 2. Deploy the separate media vhost and fixed media directory
 
 Deploy the reviewed RCC `docs.ikim.uk-essen.de` static-vhost configuration with
 document root `/srv/www/docs`. Copy exactly the 17 files from `new-videos/` into
@@ -96,15 +98,43 @@ python tools/build_site.py --production --output site-production
 python tools/check_site_links.py site-production
 ```
 
-Deploy the exact `site-production` tree to `/srv/www/docs` while preserving the
-already verified `/srv/www/docs/media/rcc-onboarding` directory. Re-run the
-online media gate and Firefox playback acceptance after deployment.
+Site deployment is owned by the manually dispatched Gitea workflow in
+`.gitea/workflows/deploy-production.yml`. GitHub Actions remains a manual
+validation fallback and must never hold production deployment credentials or
+deploy the site. The workflow replaces the generated content of the existing
+`IKIM-Essen/ClusterDocs` `gh-pages` branch; it does not create another Pages
+project.
+
+Before the first dispatch, provision these repository secrets in Gitea only:
+
+- `CLUSTERDOCS_GITHUB_PAGES_DEPLOY_KEY`: a dedicated write-enabled deploy key
+  for only the ClusterDocs GitHub repository; and
+- `CLUSTERDOCS_GITHUB_SSH_HOST_KEY`: the reviewed, pinned GitHub SSH host-key
+  line.
+
+Follow `meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md`. The workflow accepts only the
+`clusterdocs-ng` branch, checks out the exact event SHA through the RCC runner
+helper, runs every production gate, creates a normal child commit of the
+current `gh-pages` head, pushes without force, and verifies the published
+commit. It deliberately emits `.nojekyll` and refuses a `CNAME` file.
+
+After GitHub Pages serves the new commit, re-run the online media gate and
+Firefox playback acceptance, then perform the novice acceptance tasks
+immediately against the live site. Novice acceptance does not block the initial
+switch, but it blocks declaring rollout complete; a blocking safety or
+task-completion finding requires rollback or a corrected release.
+
+A future `docs.ikim.uk-essen.de` CNAME remains a separate decision. Do not add
+DNS or a Pages `CNAME` file during this content rollout. That review must also
+resolve where `/media/rcc-onboarding/` will live, because the current media
+plan uses the same hostname on the RCC web service.
 
 ## Rollback
 
-Keep the previously accepted site tree and media directory until post-release
+Keep the previous `gh-pages` commit and media directory until post-release
 acceptance completes. If the media path fails, immediately set
 `preview_links: disabled_until_verified_live` and rebuild; this removes all
 player URLs without introducing a local or third-party fallback. Roll back the
-site tree independently. Never replace an MP4 in place without updating the
+site with a new commit restoring the previously accepted generated tree; do not
+force-rewrite `gh-pages`. Never replace an MP4 in place without updating the
 manifest hash, cache key, staged-set receipt, and verification evidence.

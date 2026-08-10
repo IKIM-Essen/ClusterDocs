@@ -11,6 +11,7 @@ theme:
 nav:
   - Home: index.md
   - ClusterDocs NG TL;DR: tldr.md
+  - RCC Expedition - interactive onboarding: rcc-expedition.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
@@ -22,7 +23,7 @@ nav:
       - Class 4 - Apptainer containers: course/class-04-containers.md
       - Class 5 - Slurm acceptance patterns: course/class-05-slurm.md
       - Class 6 - Snakemake on RCC: course/class-06-snakemake.md
-      - Class 7 - Nextflow on RCC (not yet released): course/class-07-nextflow.md
+      - Class 7 - Nextflow on RCC: course/class-07-nextflow.md
       - Class 8 - Protected project websites: course/class-08-vhosts.md
       - Class 9 - Python notebooks: course/class-09-python-notebooks.md
       - Class 10 - R analysis: course/class-10-r-analysis.md
@@ -42,6 +43,7 @@ nav:
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md
+      - RCC terminology: reference/terminology.md
       - Users, groups, and projects: reference/users-groups-projects.md
       - Account starter setups: reference/account-starter-setups.md
       - Access, SSH, and VS Code: reference/access-ssh-vscode.md

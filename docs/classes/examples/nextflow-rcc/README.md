@@ -1,9 +1,9 @@
 # RCC Nextflow class example
 
-> **Service status — not yet released:** keep this example for preparation and
-> review. Do not run it until RCC announces the managed `rcc-nextflow` service.
+> **Service status — ready now:** run this bounded example through the managed
+> `rcc-nextflow` launcher on a shellhost or allocation-backed interactive node.
 
-After release, on an RCC interactive node (a `shellhost`), not on an SSH
+On an RCC shellhost or allocation-backed interactive node, not on an SSH
 gateway or a compute worker:
 
 ```bash

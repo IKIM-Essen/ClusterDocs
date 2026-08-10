@@ -1,5 +1,14 @@
 # Class 1: safe access to RCC
 
+!!! tip "New workstation or first RCC experience?"
+    Start with [RCC Expedition](../rcc-expedition.md). It is a self-contained
+    local onboarding course for Windows 11 and current macOS covering
+    workstation security/patching, SSH/Linux basics, the research/clinical
+    network boundary, Slurm, storage, data transfer, and reproducible workflows.
+
+    The course is **datensparsam** and does not report learner progress to RCC.
+    This page remains the conventional step-by-step reference tutorial.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 8 min video</p>
   <h2>Watch the class first</h2>

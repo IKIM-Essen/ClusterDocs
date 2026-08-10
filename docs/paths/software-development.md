@@ -32,7 +32,7 @@ describe reviewable shell, prompt, Conda, and bounded Shiny practices.
 | Goal | Continue with |
 |---|---|
 | Batch analysis or dependency graph | [Class 6: Snakemake](../course/class-06-snakemake.md) |
-| Reviewed Nextflow or nf-core pipeline | [Class 7: Nextflow — not yet released](../course/class-07-nextflow.md) |
+| Reviewed Nextflow or nf-core pipeline | [Class 7: Nextflow](../course/class-07-nextflow.md) |
 | Python analysis package or notebook workflow | [Class 9: Python](../course/class-09-python-notebooks.md) |
 | R analysis package or report | [Class 10: R](../course/class-10-r-analysis.md) |
 | Shiny application | [Class 11: Shiny](../course/class-11-shiny.md) |

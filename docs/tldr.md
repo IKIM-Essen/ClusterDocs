@@ -3,6 +3,12 @@
 This page is the shortest useful introduction to RCC. Read it before connecting
 for the first time, or use it to find the right detailed guide.
 
+> **Start with RCC Expedition:** If you are new to RCC or preparing a new
+> computer, begin with the self-contained [RCC Expedition](rcc-expedition.md)
+> course for Windows 11 and macOS. It covers workstation security, SSH, Linux,
+> Slurm, storage, data transfer, and reproducible workflows; return to this
+> TL;DR for the current RCC rules and links.
+
 ## RCC in one minute
 
 RCC is organised around people and projects:
@@ -17,21 +23,6 @@ RCC is organised around people and projects:
 The primary group says where you belong. The project says which research data,
 services, and collaborators you may work with. Do not change somebody's primary
 group merely to share project data; add their individual account to the project.
-
-### What is available now?
-
-| Capability | Status |
-|---|---|
-| RCC Admin, including self-administration and primary approval | **Ready now** |
-| RCC workers and Slurm jobs | **Ready now** |
-| Project Samba shares for approved Lab-network instruments | **Ready now** |
-| Managed Nextflow-to-Slurm support | **Not yet released** |
-| Project vhosts | **Not yet released** |
-| Ardia integration with RCC | **Not yet released** |
-| RCC-to-Coscine archive transfer | **Not yet released** |
-
-The unreleased entries are included so teams can plan safely. They are not
-instructions to start using those services.
 
 ```text
 person -> individual RCC account -> exactly one primary group (affiliation)
@@ -64,14 +55,13 @@ connections. A selected final dataset may later move to Coscine after project
 review and verification. **RCC-to-Coscine transfer is not yet released**; it
 remains planned and not yet a live self-service transfer.
 
-**Managed Nextflow-to-Slurm support is not yet released.** The planned service
-will run the Nextflow controller only on an RCC interactive node (a
-`shellhost`) and send
+**Managed Nextflow-to-Slurm support is ready now.** The managed service runs
+the Nextflow controller on an RCC shellhost or allocation-backed interactive
+node and sends
 each analysis task to a worker through Slurm. Resume-critical work state will
 stay in shared project storage; node-local storage will be used only for
-explicit temporary task work. Until RCC announces the `rcc-nextflow` launcher,
-use the ready managed Snakemake path or ask support instead of installing an
-unmanaged Nextflow controller on a login host.
+explicit temporary task work. Use the pinned `rcc-nextflow` launcher instead
+of installing an unmanaged Nextflow controller on a login host.
 
 For most users, **VS Code with Remote - SSH is the suggested everyday route**
 for coding and preparing data analysis. It combines the editor, remote file

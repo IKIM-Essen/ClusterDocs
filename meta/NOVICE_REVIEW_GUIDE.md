@@ -1,5 +1,13 @@
 # Novice review guide
 
+## Rollout timing
+
+Run this acceptance review against the newly published production site. It does
+not block the initial switch because the exercise depends on that live user
+journey, but it blocks declaring rollout complete. Roll back or publish a
+corrected release if the reviewer finds a safety blocker or cannot complete a
+required task without coaching.
+
 ## Who should review
 
 A biomedical researcher who has not used RCC before and has not helped write

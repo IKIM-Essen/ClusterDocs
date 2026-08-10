@@ -23,20 +23,28 @@ def unresolved_config(config: dict[str, object]) -> list[str]:
 
 
 def has_deployment_workflow() -> bool:
-    workflow_root = ROOT / ".github/workflows"
-    text = "\n".join(
-        path.read_text(errors="replace").lower()
-        for path in workflow_root.glob("*.y*ml")
+    workflow = ROOT / ".gitea/workflows/deploy-production.yml"
+    if not workflow.is_file():
+        return False
+    text = workflow.read_text(errors="replace")
+    required = (
+        "workflow_dispatch:",
+        "runs-on: rcc-ci",
+        "/opt/rcc-ci/bin/gitea-ci-checkout",
+        "tools/validate_repo.py",
+        "tools/rollout_readiness.py",
+        "tools/build_site.py --production",
+        "git@github.com:IKIM-Essen/ClusterDocs.git",
+        "--branch gh-pages",
+        "push origin HEAD:gh-pages",
+        "touch site-production/.nojekyll",
+        "test ! -e site-production/CNAME",
+        "StrictHostKeyChecking=yes",
     )
-    signals = (
-        "actions/deploy-pages",
-        "peaceiris/actions-gh-pages",
-        "aws s3 sync",
-        "rclone copy",
-        "rsync ",
-        "netlify",
+    forbidden = ("pull_request:", "\n  push:", "schedule:", "uses:")
+    return all(signal in text for signal in required) and not any(
+        signal in text for signal in forbidden
     )
-    return any(signal in text for signal in signals)
 
 
 def manual_review_audit() -> tuple[list[str], list[str]]:
@@ -114,12 +122,43 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     else:
         ready.append("all 17 course pages declare in-player English captions")
 
-    unchecked = len(re.findall(r"(?m)^- \[ \] ", (ROOT / "ADMIN_CHECKLIST.md").read_text()))
+    checklist_text = (ROOT / "ADMIN_CHECKLIST.md").read_text()
+    unchecked_lines = re.findall(r"(?m)^- \[ \] .+$", checklist_text)
+    unchecked = len(
+        [
+            line
+            for line in unchecked_lines
+            if "[post-rollout]" not in line
+            and "Run `python tools/rollout_readiness.py`" not in line
+        ]
+    )
     if unchecked:
         blockers.append(f"administrator publication checklist has {unchecked} unchecked items")
 
     if not has_deployment_workflow():
         blockers.append("no reviewed production deployment workflow is present")
+    else:
+        ready.append("Gitea-only production deployment workflow is present")
+
+    if not (ROOT / "meta/BRANCH_PR_AUDIT.md").is_file():
+        blockers.append("ClusterDocs main/NG branch and pull-request audit is missing")
+    else:
+        ready.append("all ClusterDocs main/NG branches and pull requests have dispositions")
+
+    review_status = yaml.safe_load((ROOT / "config/review-status.yml").read_text())
+    if review_status.get("expert_content_review", {}).get("status") != "completed":
+        blockers.append("expert content review is not recorded as completed")
+    else:
+        ready.append("expert content review is recorded as completed")
+    novice = review_status.get("novice_acceptance", {})
+    if novice.get("status") == "scheduled_post_rollout" and not novice.get(
+        "blocks_initial_switchover", True
+    ):
+        warnings.append(
+            "novice acceptance is scheduled after initial rollout and blocks rollout completion"
+        )
+    elif novice.get("status") != "completed":
+        blockers.append("novice acceptance timing is not approved for initial switchover")
 
     review_blockers, review_ready = manual_review_audit()
     blockers.extend(review_blockers)
@@ -129,7 +168,7 @@ def audit() -> tuple[list[str], list[str], list[str]]:
         (
             "external links require a final online link check",
             "the archived transition announcement needs a new operational review before reuse",
-            "browser, mobile, screen-reader, and novice-user acceptance remain manual checks",
+            "browser, mobile, and screen-reader acceptance remain manual checks",
         )
     )
     return blockers, warnings, ready

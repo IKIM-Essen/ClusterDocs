@@ -23,7 +23,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                 "rcc_workers": "ready",
                 "samba_project_shares": "ready",
                 "headscale_pikvm_access": "not_yet_released",
-                "nextflow_slurm_support": "not_yet_released",
+                "nextflow_slurm_support": "ready",
                 "project_vhosts": "not_yet_released",
                 "ardia_integration": "not_yet_released",
                 "rcc_to_coscine_transfer": "not_yet_released",
@@ -32,7 +32,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         )
 
     def test_every_public_unreleased_feature_mention_is_marked(self):
-        for feature in ("vhost", "ardia", "coscine", "nextflow", "headscale"):
+        for feature in ("vhost", "ardia", "coscine", "headscale"):
             pages = [
                 page
                 for page in DOCS.rglob("*.md")
@@ -45,6 +45,20 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                     normalized(page),
                     f"{page.relative_to(ROOT)} mentions {feature} without its release status",
                 )
+
+    def test_every_public_nextflow_page_marks_it_ready(self):
+        pages = (
+            DOCS / "tldr.md",
+            DOCS / "course/class-07-nextflow.md",
+            DOCS / "reference/software-workflows.md",
+            DOCS / "classes/examples/nextflow-rcc/README.md",
+        )
+        for page in pages:
+            self.assertIn(
+                "ready now",
+                normalized(page),
+                f"{page.relative_to(ROOT)} mentions Nextflow without its ready status",
+            )
 
     def test_every_public_samba_page_marks_it_ready(self):
         pages = [
@@ -61,12 +75,18 @@ class FeatureReleaseStatusTests(unittest.TestCase):
             )
 
     def test_rcc_admin_and_workers_are_not_described_as_pending(self):
-        homepage = normalized(DOCS / "index.md")
         access = normalized(DOCS / "reference/access-ssh-vscode.md")
-        self.assertIn("rcc admin self-administration and primary-approver workflow | **ready now**", homepage)
-        self.assertIn("rcc workers and slurm computation | **ready now**", homepage)
+        analysis = normalized(DOCS / "paths/data-analysis.md")
         self.assertIn("**rcc admin is ready now**", access)
+        self.assertIn("rcc workers and slurm analysis are **ready now**", analysis)
         self.assertNotIn("rcc admin request flow when it is available", access)
+
+    def test_overview_pages_do_not_duplicate_the_service_availability_table(self):
+        for page in (DOCS / "index.md", DOCS / "tldr.md"):
+            text = normalized(page)
+            self.assertNotIn("service availability", text)
+            self.assertNotIn("what is available now?", text)
+            self.assertNotIn("| capability | status |", text)
 
 
 if __name__ == "__main__":

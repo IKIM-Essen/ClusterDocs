@@ -11,17 +11,21 @@ def normalized(path):
 
 
 class NewcomerLayOfLandTests(unittest.TestCase):
-    def test_homepage_explains_the_complete_plain_language_model(self):
-        page = normalized(DOCS / "index.md")
+    def test_reference_explains_the_complete_plain_language_model(self):
+        page = normalized(DOCS / "reference/terminology.md")
         for phrase in (
             "your personal badge",
             "every user has exactly one",
             "people from different primary groups",
             "project samba share",
             "project vhost",
-            "coscine later [not yet released]",
+            "rcc-to-coscine transfer is not yet released",
         ):
             self.assertIn(phrase, page)
+
+    def test_homepage_links_the_terminology_reference(self):
+        page = normalized(DOCS / "index.md")
+        self.assertIn("[rcc terminology reference](reference/terminology.md)", page)
 
     def test_main_tldr_connects_identity_projects_instruments_and_services(self):
         page = normalized(DOCS / "tldr.md")
