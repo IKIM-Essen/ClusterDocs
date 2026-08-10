@@ -1,0 +1,13 @@
+name: rcc-data-science
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - polars
+  - pyarrow
+  - duckdb
+  - matplotlib
+  - scikit-learn
+  - jupyterlab

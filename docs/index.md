@@ -1,31 +1,72 @@
-# IKIM Scientific Computing
+# RCC ClusterDocs NG
 
-!!! warning "Upcoming RCC change: Slurm-first computing"
-    RCC is moving to a **Slurm-first operating model**. Long-running, CPU-intensive, high-memory, and GPU work must be submitted through Slurm instead of being run directly on shared servers.
+Welcome to the staged RCC learning site for medical professionals, biomedical researchers, research software developers, and technical project staff. If you are new to RCC or preparing a new computer, start with [RCC Expedition](rcc-expedition.md), the self-contained onboarding course for Windows 11 and macOS, then return here for current cluster guidance.
 
-    **TL;DR:** Convert direct server sessions into Slurm jobs, request only the CPU, RAM, GPU, and time you need, and release resources when work is idle. This is especially urgent for GPU nodes, which are currently underused for substantial periods while unavailable to other users.
+The course is designed so that a new user can progress without needing an administrator beside them. Each class has a small practical exercise and a gate that checks readiness without exposing credentials or generating significant cluster load.
 
-    The rollout will be incremental, so not every new feature will be present on day one. Read the [detailed transition notice](upcoming-rcc-changes.md). We will also discuss concerns at a Friday Computing Club meeting at the end of July; the exact date, time, and room will be announced separately.
+<section class="expedition-callout" aria-labelledby="expedition-title">
+  <p class="expedition-kicker">Standalone onboarding · Windows 11 and macOS</p>
+  <h2 id="expedition-title">Start with RCC Expedition</h2>
+  <p>If you are new to RCC or setting up a new workstation, take the self-contained local course covering workstation security, SSH, Linux, Slurm, storage, data transfer, and reproducible workflows.</p>
+  <div class="expedition-actions">
+    <a class="expedition-primary" href="rcc-expedition.md">Open RCC Expedition →</a>
+    <a href="assets/downloads/RCC-Expedition-USB-v1.0.0.zip">Download v1.0.0 for offline use</a>
+  </div>
+  <p class="expedition-privacy">Datensparsam by design: no learner account, analytics, telemetry, central progress database, or supervisor dashboard.</p>
+</section>
 
-This website contains documentation for the scientific computing infrastructure at the Institute for AI in Medicine (IKIM) in Essen. The documentation is geared towards researchers and students that aim to run scientific experiments on the cluster. See [Getting Started](getting-started.md) for general instructions.
+## RCC in plain language
 
-The image below shows members of IKIM assembling the cluster
-![Cluster](./assets/cluster_barnraiser.png)
+Think of RCC as a set of project workrooms rather than one large shared disk.
+For definitions used throughout the documentation, see the
+[RCC terminology reference](reference/terminology.md).
 
-## About
+Your primary group records where you belong; it is not how cross-department
+research data is shared. The project is the access and collaboration boundary.
+Start with the [complete plain-language TL;DR](tldr.md) for the important limits
+and links.
 
-The sources of this documentation can be found on [GitHub](https://github.com/IKIM-Essen/ClusterDocs) and we encourage contribution.
+RCC supports statistics, visualization, Python and R data science, machine
+learning, GPU-accelerated AI, and distributed data processing. These techniques
+remain part of a reproducible research workflow: computation runs through
+Slurm, data stays within its project governance, and model evaluation includes
+validation, uncertainty, bias, and scientific limitations.
 
-## Intro
+## Choose your path
 
-We believe it is important to know a thing or two about the underlying computer and network infrastructure to be effective. We note this will also limit your frustration level. We do not provide extensive documentation, but rather jumping off points and short best practice info on your setup and your procedures.
+<section class="path-grid" aria-label="Choose an RCC learning path">
+  <article class="path-card analysis-path">
+    <span class="path-number">01</span>
+    <p class="path-label">Data analysis</p>
+    <h3>Move from research data to a reproducible result</h3>
+    <p>Learn Python, R, notebooks, statistics, AI and machine learning, efficient I/O, GPUs, validation, and governed result sharing.</p>
+    <a class="path-action" href="paths/data-analysis.md">Follow the data analysis path →</a>
+  </article>
+  <article class="path-card development-path">
+    <span class="path-number">02</span>
+    <p class="path-label">Software development</p>
+    <h3>Build reviewable workflows and protected services</h3>
+    <p>Learn Git, Snakemake, Slurm, Conda, Apptainer, Python and R applications, Shiny, APIs, and governed deployment.</p>
+    <a class="path-action" href="paths/software-development.md">Follow the software development path →</a>
+  </article>
+</section>
 
-By configuring your environment correctly you can make your job easier. Start off by learning the basics of the [Slurm](slurm.md) cluster. For info on getting the right execution environment set up for your code, check out [Mamba/Conda](conda.md) or install your software in a [container](apptainer.md) as you would with Docker. Some users will benefit from using interactive [Jupyter Notebooks](jupyter.md).
+## Shared foundation
 
-Most computes involve [storing, accessing and moving data](storage.md), as well as [transferring data](transfer.md) into the cluster.
-
-If you pay attention to a few details in organizing your compute things will go a lot smoother. We recommend using reproducible approaches with [SnakeMake](snakemake.md) to structure your compute.
-
-We note that typically compute resources are available but the lack of good computing practices leads to contention for IO resources, which in turn slow everyone down.
-
-We are adding things to the documentation to aid our users, please familiarize yourself with it. Also check out the [lessons learned](patterns.md).
+- Need the complete short version first? Read the
+  [ClusterDocs NG TL;DR](tldr.md).
+- Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
+- Use the [course overview](course/index.md) when you want the complete seventeen-class sequence.
+- Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
+- Working with human biomedical data: complete [Class 13](course/class-13-biomedical-data-privacy.md) before transfer or analysis.
+- Looking up a command after training: use the [day-to-day reference](reference/index.md).
+- Connecting a laboratory instrument or acquisition workstation: see
+  [how the lab network and RCC fit together](resources/how-it-all-works.md).
+- Preparing approved remote-console access: read the
+  [RCC Headscale and PiKVM guide](connecting/pikvm-headscale.md). This service
+  is **not yet released**.
+- Moving data from an instrument into analysis: complete
+  [Class 16](course/class-16-wet-lab-data-workflows.md).
+- Planning retention, Coscine archiving, or defensible cleanup: complete
+  [Class 17](course/class-17-data-lifecycle.md).
+- Questions or feedback: [meet the RCC team and find the best contact route](team.md).

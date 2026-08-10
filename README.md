@@ -1,32 +1,103 @@
-# IKIM Cluster Documentation
+# RCC onboarding curriculum for biomedical researchers
 
-Welcome to the IKIM cluster documentation! If you are interested in the documentation, please refer to the website: <https://ikim-essen.github.io/ClusterDocs/>
+This staging package contains a seventeen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
 
-## Introduction
+## Curriculum
 
-- All documentation is written in markdown which makes it easy to contribute to the docs (see below)
-- Website is rendered with [mkdocs](https://www.mkdocs.org) and the [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) theme and is hosted on GitHub pages
-- New commits to `main` are automatically built and deployed to the `gh-pages` branch
-- For consistent formatting of markdown sources we use [markdownlint](https://github.com/DavidAnson/markdownlint)
+### Part 1 - Your first day on the RCC cluster
 
-## Contributing
+Mental model of a shared cluster, local versus remote work, SSH and key handling, Windows and macOS preparation, VS Code Remote SSH, managed data transfer, checksums, the Slurm job lifecycle, and appropriate use of tmux.
 
-You are welcome to open a pull request for changes to the documentation. If you want to make larger changes and you would like to see how they would appear on the rendered site, you can run mkdocs locally.
+### Part 2 - Reproducible scientific workflows
 
-```sh
-# Install dependencies
-conda create -n cluster-docs -c conda-forge python=3.8 mkdocs mkdocs-material
-conda activate cluster-docs
+Project structure, Miniforge, Mamba, Bioconda, software environments,
+Snakemake dependency graphs, a bounded nf-core/Nextflow example, Slurm
+execution, a minimal statistical workflow, a synthetic DNA sequence workflow,
+logging, benchmarking, and Git.
 
-# Build and serve documentation
-mkdocs serve
+### Part 3 - Performance and efficient I/O
+
+CPU, threads, GPU, RAM, storage capacity, throughput, latency, IOPS, metadata operations, streaming versus random access, large versus small files, crowded directories, compression, node-local scratch, Snakemake staging patterns, and bottleneck diagnosis. It explicitly warns that poor workflow structure can turn an analysis expected to take hours into one that takes weeks or months.
+
+### Part 4 - Containers with Apptainer
+
+Why containerized software is useful on a shared cluster; why active Conda environments on network storage can create a small-file and metadata workload; immutable SIF images; cache, temporary space, bind mounts, read-only inputs, GPU use, Snakemake container directives, image trust, and production image lifecycle.
+
+## Deliverable types
+
+The original four classes include:
+
+- a long-form PDF;
+- an editable DOCX source;
+- an editable PowerPoint slide deck with speaker notes;
+- a slide-based MP4 training video with natural British-English narration;
+- an SRT caption file; and
+- a Markdown narration script.
+
+The canonical source for the original four classes is the Markdown document in
+`source/`. Classes 5–17 are maintained directly in the course, exercise,
+narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
+files are rendered review artifacts; MP4 files are published separately from
+ordinary Git history.
+
+## Video format
+
+The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–17
+use the macOS Daniel British-English voice with sentence-aware pacing,
+technical-term pronunciation handling, de-essing, gentle compression, EBU R128
+loudness normalization, and captions. Rebuild them with
+`python3 build/build_videos.py` for Classes 1–4 and
+`python3 build/build_course_videos.py` for Classes 5–17. The builds record settings, durations, and
+hashes in `meta/video-build-report.json`. Videos do not connect to production
+RCC services and contain no credentials or biomedical data.
+
+## Production status
+
+This is a content-complete publication candidate with release-state labels and
+fail-closed media links. Deployment operators must still complete the
+operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
+DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
+asking readers to fill documentation placeholders.
+
+Managed Nextflow-to-Slurm support is documented as **not yet released**. The
+planned contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
+node (a `shellhost`), Slurm for every scientific task, shared persistent work state for
+`-resume`, explicit node-local task scratch, and Apptainer on workers. The site
+does not claim this service is live while its infrastructure role remains
+disabled and digest approval and acceptance are outstanding.
+
+Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
+and novice review can begin. Run `python3 tools/rollout_readiness.py` for the
+stricter production exit status and
+an itemized list of known launch blockers. A normal content validation pass is
+necessary but does not mean the site is production-ready.
+
+The statistical and DNA examples are educational. They are not validated clinical pipelines and do not replace study-design, statistical, bioinformatics, data-protection, or clinical review.
+
+## Local website preview
+
+The custom RCC-styled site produced by `tools/build_site.py` is the canonical
+ClusterDocs NG website. The `mkdocs.yml` file remains useful for content and
+navigation checks, but `mkdocs serve` does not reproduce the published design.
+
+Build and browse the same site used by the validation and deployment workflow:
+
+```bash
+python tools/build_site.py --output site-preview
+python -m http.server 8765 --bind 127.0.0.1 --directory site-preview
 ```
 
-You can run markdownlint and fix basic errors as follows:
+Then open <http://127.0.0.1:8765/>.
 
-```sh
-npm install -g markdownlint-cli
+## Repository integration
 
-markdownlint docs/
-markdownlint --fix docs/
-```
+`meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.
+
+
+## v0.1.2 additions
+
+This staging version adds Classes 9-12 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
+
+## v0.1.3 additions
+
+This version adds Class 13 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.

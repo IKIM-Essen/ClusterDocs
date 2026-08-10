@@ -1,0 +1,224 @@
+1
+00:00:00,000 --> 00:00:03,505
+Welcome to Class 15: RCC storage architecture.
+
+2
+00:00:03,505 --> 00:00:08,012
+This video introduces the core decisions and working patterns.
+
+3
+00:00:08,012 --> 00:00:15,022
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:15,022 --> 00:00:17,526
+exercises, and detailed reference material.
+
+5
+00:00:17,526 --> 00:00:23,906
+After this class, you should be able to: describe the roles of Redis,
+
+6
+00:00:23,906 --> 00:00:31,757
+MinIO, and the JuiceFS client; distinguish metadata traffic from file-content traffic; explain why small-file workloads differ
+
+7
+00:00:31,757 --> 00:00:39,118
+from large streaming workloads; understand the RCC 100 Gb/s server and 10 Gb/s client topology;
+
+8
+00:00:39,118 --> 00:00:45,498
+explain client and container caching; and choose appropriate I/O patterns for scientific workflows.
+
+9
+00:00:45,498 --> 00:00:51,508
+Redis stores information such as: paths and directory entries; ownership and permissions;
+
+10
+00:00:51,508 --> 00:00:59,022
+file sizes and timestamps; inode-like identifiers; object mappings; locks and coordination state; and filesystem bookkeeping.
+
+11
+00:00:59,022 --> 00:01:07,035
+Operations such as stat, ls, open, rename, mkdir, and unlink may transfer almost no file content
+
+12
+00:01:07,035 --> 00:01:09,540
+while still generating metadata requests.
+
+13
+00:01:09,540 --> 00:01:17,554
+This makes workloads with hundreds of thousands of files fundamentally different from workloads containing a few
+
+14
+00:01:17,554 --> 00:01:18,556
+large files.
+
+15
+00:01:18,556 --> 00:01:23,063
+Increasing S3 bandwidth does not remove a metadata bottleneck.
+
+16
+00:01:23,063 --> 00:01:28,707
+MinIO provides the S3-compatible object-storage layer used for durable file contents.
+
+17
+00:01:28,707 --> 00:01:36,916
+Object storage is effective for: large objects; sequential reads and writes; durable replicated or erasure-coded storage;
+
+18
+00:01:36,916 --> 00:01:41,020
+checksummed content; and aggregate access from many clients.
+
+19
+00:01:41,020 --> 00:01:46,664
+The JuiceFS client translates filesystem reads and writes into object operations.
+
+20
+00:01:46,664 --> 00:01:49,742
+Large streaming transfers amortize request overhead.
+
+21
+00:01:49,742 --> 00:01:56,925
+Tiny, scattered reads and writes can generate many requests for relatively little useful data.
+
+22
+00:01:56,925 --> 00:02:01,998
+Storage and backend servers have connectivity of up to 100 Gb/s.
+
+23
+00:02:01,998 --> 00:02:05,227
+Typical compute clients have 10 Gb/s links.
+
+24
+00:02:05,227 --> 00:02:08,917
+The 100 Gb/s server side is aggregate capacity.
+
+25
+00:02:08,917 --> 00:02:13,529
+It does not provide 100 Gb/s to one compute node.
+
+26
+00:02:13,529 --> 00:02:20,908
+Ten clients each attempting to sustain 10 Gb/s can already approach the nominal capacity of one
+
+27
+00:02:20,908 --> 00:02:22,753
+100 Gb/s backend link.
+
+28
+00:02:22,753 --> 00:02:28,749
+Actual useful throughput is lower because of: protocol overhead; request latency; metadata operations;
+
+29
+00:02:28,749 --> 00:02:32,899
+contention; checksums and encryption; filesystem translation; and application processing.
+
+30
+00:02:32,899 --> 00:02:39,818
+Random and small-file workloads often do not fill a 10 Gb/s link with useful data.
+
+31
+00:02:39,818 --> 00:02:44,891
+They spend their time waiting for network round trips and metadata.
+
+32
+00:02:44,891 --> 00:02:52,485
+Large compressed FASTQ, BAM, CRAM, archives, and model files generally support efficient streaming and readahead.
+
+33
+00:02:52,485 --> 00:02:58,560
+Many small files require repeated: path lookups; permission checks; opens and closes;
+
+34
+00:02:58,560 --> 00:03:03,116
+metadata updates; object requests; directory updates; and cache bookkeeping.
+
+35
+00:03:03,116 --> 00:03:11,216
+Twenty gigabytes stored in 500,000 files can therefore perform much worse than one 20 GB archive.
+
+36
+00:03:11,216 --> 00:03:18,303
+Conda environments are a common example: startup may require opening thousands of small files.
+
+37
+00:03:18,303 --> 00:03:26,404
+This is one reason RCC prefers Apptainer images over Conda environments stored on shared network filesystems.
+
+38
+00:03:26,404 --> 00:03:32,724
+The JuiceFS client may cache active data in memory and on node-local disk.
+
+39
+00:03:32,724 --> 00:03:39,530
+A cache hit avoids another object download: A cache miss uses the complete path:
+
+40
+00:03:39,530 --> 00:03:45,850
+Caching helps when stable data is reused, for example: Apptainer images; reference genomes;
+
+41
+00:03:45,850 --> 00:03:50,711
+aligner indexes; annotation databases; model weights; and read-only database snapshots.
+
+42
+00:03:50,711 --> 00:03:56,059
+Cache entries should be identified by immutable version, digest, or checksum.
+
+43
+00:03:56,059 --> 00:04:00,434
+Mutable names such as latest.sif are unsafe cache identities.
+
+44
+00:04:00,434 --> 00:04:07,822
+A parent job that stages data or warms a cache on one node should not submit
+
+45
+00:04:07,822 --> 00:04:14,287
+child jobs that may run elsewhere: Nested submission destroys locality and can create repeated:
+
+46
+00:04:14,287 --> 00:04:20,290
+S3 downloads; Redis metadata traffic; 10 Gb/s client-link use; container transfers; reference-index transfers;
+
+47
+00:04:20,290 --> 00:04:22,137
+and synchronized backend load.
+
+48
+00:04:22,137 --> 00:04:29,064
+Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from an approved submission host.
+
+49
+00:04:29,064 --> 00:04:33,681
+Each compute job should receive a complete unit of work.
+
+50
+00:04:33,681 --> 00:04:40,766
+When reporting a problem, provide the Slurm job ID, node, path, approximate file count,
+
+51
+00:04:40,766 --> 00:04:46,332
+total size, read/write pattern, and whether local staging changes the result.
+
+52
+00:04:46,332 --> 00:04:48,862
+Do not include patient identifiers.
+
+53
+00:04:48,862 --> 00:04:55,408
+Given one streaming workload and one small-file or random-I/O workload, trace the likely metadata,
+
+54
+00:04:55,408 --> 00:04:57,745
+object-storage, network, and cache paths.
+
+55
+00:04:57,745 --> 00:05:03,356
+State which data should remain durable, which work should use job-local scratch,
+
+56
+00:05:03,356 --> 00:05:07,096
+and what you would measure before changing resources.
+

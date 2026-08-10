@@ -1,0 +1,254 @@
+# Conda, Snakemake, Nextflow, nf-core, and Apptainer reference
+
+This guide complements Classes 2 and 4 with the command-level material from the
+earlier ClusterDocs site.
+
+## Conda and Mamba environments
+
+RCC does not use Environment Modules or Lmod. Commands such as `module load`
+are therefore not part of the RCC workflow. Use the managed Miniforge
+installation or a project-specific Conda environment instead.
+
+Keep an environment declaration with the project and pin important versions:
+
+```yaml
+name: analysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - pandas
+  - snakemake
+```
+
+Create and update the environment with the RCC-supported Conda-compatible
+client. Do not place credentials in `environment.yml`.
+
+Create environments inside an allocated worker. Confirm `CONDA_ENVS_PATH` and
+`CONDA_PKGS_DIRS` use the approved RCC node-local paths rather than shared home
+or project storage.
+
+An active Conda environment can contain thousands of small files. For heavy or
+repeated workloads, prefer an approved managed environment, a packed
+environment staged locally, or an immutable Apptainer image.
+
+### Activate Conda inside a Slurm script
+
+`conda activate` is a shell function and may be unavailable in a non-interactive
+batch shell. Initialize the shell hook explicitly:
+
+```bash
+#!/usr/bin/env bash
+#SBATCH --partition=cpu_short
+#SBATCH --time=00:10:00
+#SBATCH --cpus-per-task=1
+
+eval "$(conda shell.bash hook)"
+conda activate analysis
+srun python analysis.py
+```
+
+Do not run `conda init` inside each Slurm job. Record the environment export or
+lock file with the analysis.
+
+## Snakemake
+
+Snakemake describes dependencies between files and can submit bounded work to
+Slurm. Keep workflow definitions on shared project storage so every allocated
+worker can reach them, while allowing individual rules to stage high-I/O data
+to local scratch.
+
+Start with a dry run:
+
+```bash
+snakemake --dry-run --printshellcmds
+```
+
+Then use the currently supported RCC execution profile. Limit concurrency to a
+value justified by the workflow rather than launching an unbounded number of
+jobs. Keep the scheduler process in a named `tmux` session only when the
+approved profile requires a persistent submission process:
+
+```bash
+tmux new -s workflow
+snakemake --jobs 4
+```
+
+After reconnecting to the same approved submission service:
+
+```bash
+tmux attach -t workflow
+```
+
+Do not rely on a historic Snakemake version or profile name from a copied guide.
+Check the current RCC software guidance or ask support for the supported
+version and profile before updating a production workflow.
+
+## Nextflow and nf-core
+
+> **Service status — ready now:** RCC provides a pinned `rcc-nextflow` launcher
+> and institutional Slurm configuration on shellhosts and allocation-backed
+> interactive nodes. The classroom runner fails closed when `rcc-nextflow`,
+> `apptainer`, or `sbatch` is unavailable. Do not
+> download an unpinned launcher or start a Nextflow controller on a login
+> gateway as a workaround.
+
+Nextflow maps each process to an execution backend. On RCC, use its Slurm
+executor so analysis processes become ordinary scheduled jobs rather than
+unmanaged work on a submission host. nf-core supplies community-maintained
+Nextflow pipelines, standard test profiles, parameter schemas, and run
+provenance.
+
+Keep these distinctions clear:
+
+- Nextflow options use one leading dash, for example `-r`, `-profile`,
+  `-params-file`, `-c`, `-work-dir`, and `-resume`;
+- pipeline parameters use two leading dashes, for example `--input` and
+  `--outdir`;
+- pin a pipeline release or commit with `-r` for every retained analysis;
+- use an nf-core `test` profile for a small infrastructure check, not as
+  scientific input;
+- keep the launch directory, work directory, Apptainer cache, and results on
+  approved shared project storage because the coordinator and allocated
+  workers must all reach them;
+- use Nextflow's `scratch` process directive for I/O-heavy task bodies so RCC's
+  worker-local `$TMPDIR` is used and declared outputs are staged back;
+- cap `executor.queueSize` during learning and set justified CPU, memory, time,
+  and partition limits for production runs.
+
+The RCC execution boundary is:
+
+- start the pinned Nextflow controller through `rcc-nextflow` on the approved
+  submission host, never on `login1` or `login2`;
+- submit every scientific process through Slurm; compute workers execute the
+  generated task wrapper and do not need Java or Nextflow installed;
+- keep `NXF_WORK` in persistent shared project storage at the same path on the
+  submission host and workers so `-resume` survives task placement and local
+  cleanup;
+- use `/local` only for a process explicitly labelled for scratch, with inputs
+  staged into `$TMPDIR` and declared outputs returned to shared storage; and
+- execute task software with Apptainer, using a shared or administrator-managed
+  immutable image cache rather than Docker on workers.
+
+The RCC classroom configuration is
+[`rcc-test.config`](../classes/examples/nf-core/rcc-test.config). It is a
+bounded teaching profile, not a universal production profile. A minimal launch
+has this shape:
+
+```bash
+rcc-nextflow --project-root /projects/PROJECT run nf-core/demo \
+  -r 1.2.0 \
+  -profile test,apptainer \
+  -c rcc-test.config \
+  -work-dir /projects/PROJECT/nextflow-work/demo \
+  --outdir /projects/PROJECT/results/demo
+```
+
+The first test may retrieve pipeline source, public test data, and container
+images. Use the approved RCC outbound proxy path and a shared writable
+Apptainer cache. Do not place registry tokens, GitHub tokens, sample secrets,
+or patient identifiers in Nextflow configuration or parameter files.
+
+Before a real run, inspect the pipeline's current usage page and input schema,
+review its license and release, validate the samplesheet, and save parameters
+in JSON or YAML. Retain the pipeline revision, resolved command, parameter
+file, configuration, reports, trace, input checksums, result checksums, and
+Slurm job identifiers. Use `-resume` only with the same intended work directory
+and reviewed inputs; it reuses cached tasks and is not a substitute for
+provenance review.
+
+Official references:
+
+- [Run nf-core pipelines](https://nf-co.re/docs/running/run-pipelines)
+- [Run the nf-core demo pipeline](https://nf-co.re/docs/get_started/run-your-first-pipeline)
+- [Nextflow Slurm executor](https://docs.seqera.io/nextflow/executor#slurm)
+- [Nextflow process scratch](https://docs.seqera.io/nextflow/reference/process#scratch)
+- [Nextflow with Apptainer](https://docs.seqera.io/nextflow/container#apptainer)
+
+## Apptainer execution model
+
+Apptainer runs containers as the calling user and does not grant Docker-style
+root privileges. Production images should be immutable SIF files identified by
+a digest.
+
+### Rootless execution
+
+“Rootless” describes the privilege boundary during normal container
+execution. Apptainer does not depend on a privileged Docker-style daemon, and
+the container process keeps the calling user's effective access to host files.
+An apparent `root` identity inside an image is not unrestricted root on the RCC
+host: it cannot override host permissions, administer the kernel, select
+unallocated devices, or escape the resources assigned by Slurm.
+
+RCC uses this model because many unrelated projects share the same compute
+nodes. Keeping container work at the submitter's privilege level reduces the
+attack surface and prevents a container from becoming a shortcut around
+project membership, filesystem permissions, device allocation, or central
+driver management.
+
+Rootless execution is not a sandbox for data the user can already access. A
+container can modify any writable visible or bound path with the user's normal
+permissions. Use explicit least-privilege binds, read-only inputs, immutable
+images, clean environments, and reviewed sources. Image *building* is a
+separate operation: use the RCC-supported rootless/fakeroot or approved remote
+builder where available, and never assume that a production job may acquire
+host-root privileges.
+
+Common commands are:
+
+- `apptainer run IMAGE.sif` for the image's default action;
+- `apptainer exec IMAGE.sif COMMAND` for a specific command;
+- `apptainer shell IMAGE.sif` for bounded interactive inspection.
+
+Use a clean environment and explicit binds:
+
+```bash
+apptainer exec --cleanenv \
+  --bind /projects/<project>/data/input:/input:ro \
+  --bind /projects/<project>/results:/results \
+  /projects/<project>/containers/tool.sif \
+  tool --input /input/sample.dat --output /results/result.dat
+```
+
+The container filesystem is normally read-only. Host directories such as the
+working directory may be visible inside the container, so a container is not a
+security boundary for project data. Bind only what the tool needs.
+
+### Cache and temporary files
+
+Image conversion and pulls can create substantial cache and temporary data.
+Point those locations at the approved local or managed cache path rather than a
+metadata-sensitive shared environment tree:
+
+```bash
+export APPTAINER_CACHEDIR="/local/apptainercache/$USER"
+export APPTAINER_TMPDIR=/local/tmp
+```
+
+### GPU jobs
+
+Request the GPU through Slurm, then expose the assigned host driver using the
+approved Apptainer option:
+
+```bash
+apptainer exec --cleanenv --nv \
+  /projects/<project>/containers/gpu-tool.sif nvidia-smi
+```
+
+Do not override `CUDA_VISIBLE_DEVICES`; Slurm uses it to identify the devices
+allocated to the job.
+
+### Writable sandboxes
+
+Writable sandboxes generate many files and are unsuitable as a production
+artifact on shared storage. Build and inspect them only in an approved local
+development location, then produce an immutable reviewed SIF image for normal
+use.
+
+## Reproducibility record
+
+For an important run, retain the Git commit, environment or container
+declaration, container SHA-256 digest where applicable, input and final-output
+checksums, Slurm job ID and resource request, application versions, parameters,
+logs, and benchmark output.

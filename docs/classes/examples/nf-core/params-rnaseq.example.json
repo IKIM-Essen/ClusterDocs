@@ -1,0 +1,9 @@
+{
+  "input": "/projects/PROJECT/inputs/samplesheet.csv",
+  "outdir": "/projects/PROJECT/results/rnaseq-RUN_ID",
+  "fasta": "/projects/PROJECT/reference/genome.fa",
+  "gtf": "/projects/PROJECT/reference/genes.gtf",
+  "max_cpus": 16,
+  "max_memory": "64.GB",
+  "max_time": "2.h"
+}

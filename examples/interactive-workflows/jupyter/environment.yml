@@ -1,0 +1,12 @@
+name: rcc-jupyter
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pandas
+  - matplotlib
+  - r-base=4.4
+  - r-irkernel

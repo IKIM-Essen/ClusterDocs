@@ -1,0 +1,62 @@
+[
+  {
+    "part": 1,
+    "voice": "Daniel",
+    "locale": "en_GB",
+    "rate_words_per_minute": 172,
+    "slide_count": 12,
+    "duration_seconds": 486.225,
+    "video": "videos-enhanced/RCC_Onboarding_Part_1_Video_Enhanced.mp4",
+    "video_sha256": "a536afc04782017fe226b0c813f4cf33c949795e35cceddb6e89091ecacdcc67",
+    "captions": "captions/RCC_Onboarding_Part_1_Captions.srt",
+    "caption_entries": 112,
+    "audio_target_lufs": -16,
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
+  },
+  {
+    "part": 2,
+    "voice": "Daniel",
+    "locale": "en_GB",
+    "rate_words_per_minute": 172,
+    "slide_count": 12,
+    "duration_seconds": 517.5,
+    "video": "videos-enhanced/RCC_Onboarding_Part_2_Video_Enhanced.mp4",
+    "video_sha256": "28494fd2d4e30e8feeac0bef2d3d30de27cfecaf630e159d08a2ff0aed02e536",
+    "captions": "captions/RCC_Onboarding_Part_2_Captions.srt",
+    "caption_entries": 109,
+    "audio_target_lufs": -16,
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
+  },
+  {
+    "part": 3,
+    "voice": "Daniel",
+    "locale": "en_GB",
+    "rate_words_per_minute": 172,
+    "slide_count": 14,
+    "duration_seconds": 635.5,
+    "video": "videos-enhanced/RCC_Onboarding_Part_3_Video_Enhanced.mp4",
+    "video_sha256": "883aec62066b69d01b40595d3a6f11f25159deb2cbeab3f6e3d920a1716addd9",
+    "captions": "captions/RCC_Onboarding_Part_3_Captions.srt",
+    "caption_entries": 132,
+    "audio_target_lufs": -16,
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
+  },
+  {
+    "part": 4,
+    "voice": "Daniel",
+    "locale": "en_GB",
+    "rate_words_per_minute": 172,
+    "slide_count": 13,
+    "duration_seconds": 582.0,
+    "video": "videos-enhanced/RCC_Onboarding_Part_4_Video_Enhanced.mp4",
+    "video_sha256": "0cb25d31bf4d2d0129b025cdd353265db1ce35cc21e172c1a08481cee4216bd7",
+    "captions": "captions/RCC_Onboarding_Part_4_Captions.srt",
+    "caption_entries": 122,
+    "audio_target_lufs": -16,
+    "audio_true_peak_limit_db": -1.5,
+    "audio_channels": 2
+  }
+]

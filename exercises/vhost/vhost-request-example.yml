@@ -1,0 +1,16 @@
+project: demo
+site_name: example
+site_type: active-readonly
+purpose: Read-only interface for reviewed project results
+project_lead: REPLACE_WITH_PROJECT_LEAD_UID
+technical_contact: REPLACE_WITH_DEVELOPER_UID
+data_classification: REPLACE_WITH_APPROVED_CLASSIFICATION
+upstream_service_alias: REPLACE_WITH_APPROVED_SERVICE_ALIAS
+upstream_port: REPLACE_WITH_APPROVED_PORT
+required_project_group: project_demo
+needs_database: true
+database_access: read-only views only
+needs_file_downloads: true
+file_access: curated opaque identifiers only
+needs_uploads: false
+review_due: YYYY-MM-DD

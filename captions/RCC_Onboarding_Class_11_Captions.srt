@@ -1,0 +1,104 @@
+1
+00:00:00,000 --> 00:00:03,846
+Welcome to Class 11: Shiny applications on RCC.
+
+2
+00:00:03,846 --> 00:00:08,172
+This video introduces the core decisions and working patterns.
+
+3
+00:00:08,172 --> 00:00:14,902
+Watch the complete lesson first, then use the written class page for copyable commands,
+
+4
+00:00:14,902 --> 00:00:17,305
+exercises, and detailed reference material.
+
+5
+00:00:17,305 --> 00:00:23,158
+After this class, you can: run a small Shiny app inside a Slurm allocation;
+
+6
+00:00:23,158 --> 00:00:29,428
+explain why tunnelled development is different from production hosting; avoid direct exposure of project files;
+
+7
+00:00:29,428 --> 00:00:34,863
+design a Shiny app that uses curated data rather than browsing the filesystem;
+
+8
+00:00:34,863 --> 00:00:38,625
+prepare the information needed for a governed vhost request.
+
+9
+00:00:38,625 --> 00:00:44,139
+Copy the example: Read the job output and use the SSH tunnel shown there.
+
+10
+00:00:44,139 --> 00:00:47,683
+The Shiny process binds to 127.0.0.1 on the worker.
+
+11
+00:00:47,683 --> 00:00:50,046
+This is a development pattern only.
+
+12
+00:00:50,046 --> 00:00:56,348
+It is not a public service and it is not a replacement for the vhost process.
+
+13
+00:00:56,348 --> 00:01:02,520
+A Shiny app should not receive a raw mount of an entire project directory.
+
+14
+00:01:02,520 --> 00:01:08,251
+Use one of these safer patterns: a read-only SQLite, DuckDB, or PostgreSQL view;
+
+15
+00:01:08,251 --> 00:01:14,423
+a curated result directory with approved files; opaque file IDs rather than user-supplied paths;
+
+16
+00:01:14,423 --> 00:01:17,950
+a separate upload staging area for write workflows.
+
+17
+00:01:17,950 --> 00:01:20,487
+Running Shiny on a login host.
+
+18
+00:01:20,487 --> 00:01:23,023
+Binding Shiny to every network interface.
+
+19
+00:01:23,023 --> 00:01:27,251
+Sharing the URL to a worker port without a tunnel.
+
+20
+00:01:27,251 --> 00:01:29,788
+Letting users type arbitrary filesystem paths.
+
+21
+00:01:29,788 --> 00:01:33,171
+Using a personal account as the application identity.
+
+22
+00:01:33,171 --> 00:01:37,821
+Skipping the vhost request because the demo worked for one person.
+
+23
+00:01:37,821 --> 00:01:42,129
+Run the local example validation: Then run the Shiny development job once,
+
+24
+00:01:42,129 --> 00:01:45,719
+open it through the tunnel, and stop it with scancel.
+
+25
+00:01:45,719 --> 00:01:51,463
+The class is complete when you can explain whether your app is a one-person development session
+
+26
+00:01:51,463 --> 00:01:53,258
+or a governed project service.
+

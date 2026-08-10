@@ -1,0 +1,36 @@
+schema_version: 1
+collection: rcc-login-overview-visuals
+status: staging-only
+generated: 2026-08-08
+publication:
+  linked_from_docs: false
+  publication_review_required: true
+  reason: >-
+    Source images may contain internal RCC hostnames, network ranges, service
+    placement, or security/operations topology.
+assets:
+  - file: rcc-login-infrastructure-view.png
+    purpose: infrastructure and services
+    sha256: b1b36c56fe54578af7a23a4172fd00d114a6248bdb681f3fbb29fbf1d5fdb9a7
+    bytes: 1341947
+    publish_directly: false
+  - file: rcc-login-onboarding-poster.png
+    purpose: beginner onboarding
+    sha256: 7b31c5792751fa7a54b631baede4cacac1e286d8c53e11233e2cf0a6da37a916
+    bytes: 1426914
+    publish_directly: false
+  - file: rcc-login-security-trust-boundaries-alt.png
+    purpose: alternate security composition
+    sha256: 27cdaa73b4d58378704aacc2d6f72985037cd5da2dd13fd9f64dbac1ca3bc5d6
+    bytes: 1547344
+    publish_directly: false
+  - file: rcc-login-security-trust-boundaries.png
+    purpose: security and trust boundaries
+    sha256: 7cc1e41d5c868b2020d6d3b60ddb2d4744803833b664855a537500abd467b6b3
+    bytes: 1402570
+    publish_directly: false
+  - file: rcc-login-user-journey.png
+    purpose: user journey
+    sha256: 3c56646f20c0e15c2504e3f873df2d0f5e5febe54e56704d6a40152689621572
+    bytes: 1349322
+    publish_directly: false

@@ -1,0 +1,41 @@
+# Interactive Python, R, Jupyter and Shiny examples
+
+Use these copy-ready examples to run bounded Python, R, Jupyter, and Shiny
+workflows through Slurm. Each example includes its environment and uses
+synthetic data so it can be explored safely before adapting it to a project.
+
+> **Service status:** RCC workers and these bounded Slurm development patterns
+> are **ready now**. Production project vhosts are **not yet released**.
+
+## Included examples
+
+| Directory | Purpose |
+|---|---|
+| `examples/interactive-workflows/python` | Python batch analysis with a pinned Conda environment. |
+| `examples/interactive-workflows/r` | R batch analysis with a pinned Conda environment. |
+| `examples/interactive-workflows/jupyter` | JupyterLab inside a Slurm allocation, bound to loopback. |
+| `examples/interactive-workflows/shiny` | Shiny development session inside a Slurm allocation, bound to loopback. |
+| `examples/interactive-workflows/notebooks` | Synthetic Python and R notebooks with sampled distributions, Bray--Curtis PCoA, and waterfall visuals. |
+
+The Python and R batch examples use `cpu_short` because they finish quickly.
+Jupyter and Shiny use bounded `interactive` allocations and must be stopped when
+the attended session ends. Long runners belong in restartable `sbatch` jobs on
+regular compute, not on interactive nodes.
+
+## Security boundaries
+
+- Interactive servers bind only to `127.0.0.1`.
+- Users connect through a local SSH tunnel.
+- Tokens remain enabled.
+- Examples use synthetic data only.
+- No example scans hosts, enumerates infrastructure, or exposes internal addresses.
+- When released, production web hosting will use the governed vhost process,
+  not a tunnelled Slurm job.
+
+## Good cluster patterns
+
+- Use notebooks for inspection and figures.
+- Use Slurm scripts for full-scale computation.
+- Keep Conda environments and caches on node-local storage when computing.
+- Copy final outputs back to the project area.
+- Stop interactive jobs when finished.
