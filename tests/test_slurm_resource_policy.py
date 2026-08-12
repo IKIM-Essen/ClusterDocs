@@ -48,6 +48,19 @@ class SlurmResourcePolicyTests(unittest.TestCase):
         custom_nav = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
         self.assertIn("reference/how-shared-compute-works.md", nav)
         self.assertIn("reference/how-shared-compute-works.md", custom_nav)
+        self.assertIn("reference/opportunistic-capacity.md", nav)
+        self.assertIn("reference/opportunistic-capacity.md", custom_nav)
+
+    def test_opportunistic_policy_is_automatic_bounded_and_staged(self):
+        text = (ROOT / "docs/reference/opportunistic-capacity.md").read_text(encoding="utf-8")
+        for phrase in (
+            "controller-first canary",
+            "at most two hours",
+            "No special RCC partition",
+            "`--no-requeue`",
+            "atomically move",
+        ):
+            self.assertIn(phrase, text)
 
 
 if __name__ == "__main__":
