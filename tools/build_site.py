@@ -9,6 +9,7 @@ DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
  ('Overview','ClusterDocs NG TL;DR','tldr.md'),
+ ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Course','Course overview','course/index.md'),
@@ -29,6 +30,7 @@ NAV=[
  ('Course','Class 15 · Storage architecture','course/class-15-storage-architecture.md'),
  ('Course','Class 16 · Wet-lab instrument data','course/class-16-wet-lab-data-workflows.md'),
  ('Course','Class 17 · Research data lifecycle','course/class-17-data-lifecycle.md'),
+ ('Course','Class 18 · Coding agents without sharing real data','course/class-18-coding-agents.md'),
  ('Data lifecycle','TL;DR · Instrument to Coscine','data/data-lifecycle-tldr.md'),
  ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
  ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),

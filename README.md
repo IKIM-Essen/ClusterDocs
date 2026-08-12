@@ -1,6 +1,6 @@
 # RCC onboarding curriculum for biomedical researchers
 
-This staging package contains a seventeen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, and research-data lifecycle planning.
+This staging package contains an eighteen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, research-data lifecycle planning, and safe use of coding agents.
 
 ## Curriculum
 
@@ -38,7 +38,9 @@ The canonical source for the original four classes is the Markdown document in
 `source/`. Classes 5–17 are maintained directly in the course, exercise,
 narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
 files are rendered review artifacts; MP4 files are published separately from
-ordinary Git history.
+ordinary Git history. Class 18 is currently a written and illustrated class;
+its proposed video narration is retained separately and is not presented as a
+released video.
 
 ## Video format
 
@@ -59,12 +61,10 @@ operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
 DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
 asking readers to fill documentation placeholders.
 
-Managed Nextflow-to-Slurm support is documented as **not yet released**. The
-planned contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
+Managed Nextflow-to-Slurm support is documented as **ready now**. The
+supported contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
 node (a `shellhost`), Slurm for every scientific task, shared persistent work state for
-`-resume`, explicit node-local task scratch, and Apptainer on workers. The site
-does not claim this service is live while its infrastructure role remains
-disabled and digest approval and acceptance are outstanding.
+`-resume`, explicit node-local task scratch, and Apptainer on workers.
 
 Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
 and novice review can begin. Run `python3 tools/rollout_readiness.py` for the

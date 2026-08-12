@@ -304,7 +304,7 @@ entire unrestricted logs.
 
 ## Choose the next page
 
-- New to RCC: [complete the seventeen-class course](course/index.md).
+- New to RCC: [complete the eighteen-class course](course/index.md).
 - Analysing data: [follow the data-analysis path](paths/data-analysis.md).
 - Building software or services: [follow the development path](paths/software-development.md).
 - Looking up commands: [open the day-to-day reference](reference/index.md).

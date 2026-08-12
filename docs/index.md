@@ -56,7 +56,7 @@ validation, uncertainty, bias, and scientific limitations.
 - Need the complete short version first? Read the
   [ClusterDocs NG TL;DR](tldr.md).
 - Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
-- Use the [course overview](course/index.md) when you want the complete seventeen-class sequence.
+- Use the [course overview](course/index.md) when you want the complete eighteen-class sequence.
 - Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
 - Working with human biomedical data: complete [Class 13](course/class-13-biomedical-data-privacy.md) before transfer or analysis.
 - Looking up a command after training: use the [day-to-day reference](reference/index.md).

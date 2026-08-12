@@ -119,8 +119,13 @@ class TrainingMediaTests(unittest.TestCase):
             self.assertFalse((output / "media").exists())
             self.assertFalse((output / "media/index.html").exists())
             class_pages = list((output / "course").glob("class-*/index.html"))
-            self.assertEqual(17, len(class_pages))
-            for page in class_pages:
+            self.assertEqual(18, len(class_pages))
+            video_pages = [
+                page for page in class_pages
+                if page.parent.name != "class-18-coding-agents"
+            ]
+            self.assertEqual(17, len(video_pages))
+            for page in video_pages:
                 text = page.read_text()
                 self.assertIn("Video not yet released", text)
                 self.assertNotIn("Video_Enhanced.mp4", text)

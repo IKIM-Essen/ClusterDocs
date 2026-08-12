@@ -1,0 +1,5 @@
+sample_id,group,age_band,measurement_a,passed_qc
+SYN-001,group_a,40-49,12.4,true
+SYN-002,group_a,50-59,11.8,true
+SYN-003,group_b,40-49,18.1,false
+SYN-004,group_b,50-59,17.6,true

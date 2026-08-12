@@ -30,7 +30,7 @@ class RolloutReadinessTests(unittest.TestCase):
             "novice acceptance is scheduled after initial rollout", "\n".join(warnings)
         )
         self.assertNotIn("post-rollout", joined)
-        self.assertIn("all 17 course pages declare in-player English captions", ready)
+        self.assertIn("all 17 video-backed course pages declare in-player English captions", ready)
         self.assertIn("Gitea-only production deployment workflow is present", ready)
         self.assertIn(
             "all ClusterDocs main/NG branches and pull requests have dispositions", ready

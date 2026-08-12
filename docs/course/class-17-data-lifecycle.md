@@ -274,3 +274,6 @@ metadata, verification evidence, destination acceptance, and permitted RCC
 cleanup action. The plan must trace instrument data through project storage and
 job-local analysis to Coscine, explain why home storage is excluded, and state
 that the RCC-to-Coscine flow is planned and requires service confirmation.
+
+Continue with [Class 18: use a coding agent without sharing your real
+data](class-18-coding-agents.md).

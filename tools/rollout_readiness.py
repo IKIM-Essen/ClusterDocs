@@ -114,13 +114,19 @@ def audit() -> tuple[list[str], list[str], list[str]]:
         )
 
     course_pages = sorted((ROOT / "docs/course").glob("class-*.md"))
+    video_classes = set(classes)
+    video_pages = [
+        page
+        for page in course_pages
+        if int(page.name.removeprefix("class-")[:2]) in video_classes
+    ]
     missing_tracks = [
-        page.name for page in course_pages if 'kind="captions"' not in page.read_text()
+        page.name for page in video_pages if 'kind="captions"' not in page.read_text()
     ]
     if missing_tracks:
         blockers.append("course videos lack in-player caption tracks: " + ", ".join(missing_tracks))
     else:
-        ready.append("all 17 course pages declare in-player English captions")
+        ready.append("all 17 video-backed course pages declare in-player English captions")
 
     checklist_text = (ROOT / "ADMIN_CHECKLIST.md").read_text()
     unchecked_lines = re.findall(r"(?m)^- \[ \] .+$", checklist_text)

@@ -2,9 +2,9 @@ import re, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class CourseTests(unittest.TestCase):
- def test_seventeen_classes_exist(self):
-  pages=sorted((ROOT/'docs/course').glob('class-*.md')); self.assertEqual(len(pages),17)
-  self.assertEqual([f'class-{number:02d}' for number in range(1,18)],[page.stem[:8] for page in pages])
+ def test_eighteen_classes_exist(self):
+  pages=sorted((ROOT/'docs/course').glob('class-*.md')); self.assertEqual(len(pages),18)
+  self.assertEqual([f'class-{number:02d}' for number in range(1,19)],[page.stem[:8] for page in pages])
  def test_each_class_has_gate_or_completion(self):
   for p in (ROOT/'docs/course').glob('class-*.md'):
    t=p.read_text().lower(); self.assertRegex(t,r'gate|completion')

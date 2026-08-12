@@ -1,4 +1,4 @@
-# Seventeen-class RCC learning path
+# Eighteen-class RCC learning path
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
@@ -53,6 +53,7 @@ and detailed reference.
 | 15 | Trace RCC metadata, object-storage, network, and cache behavior | 45-60 min | Storage-path diagnosis and measurement plan |
 | 16 | Move wet-lab instrument data into an approved RCC workflow | 60-90 min | Verified synthetic handoff plan with ownership and retention |
 | 17 | Plan movement from project storage to Coscine (transfer not yet released) | 60-75 min | Synthetic instrument-to-Coscine lifecycle plan with verified acceptance criteria |
+| 18 | Use an off-site coding agent without sharing real research data | 45-60 min | Invented task bundle, reviewed code, synthetic test, and bounded RCC run plan |
 
 ## Course rules
 
