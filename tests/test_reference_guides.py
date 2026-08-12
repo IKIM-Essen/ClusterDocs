@@ -18,6 +18,7 @@ class ReferenceGuideTests(unittest.TestCase):
             "software-workflows.md",
             "slurm.md",
             "how-shared-compute-works.md",
+            "opportunistic-capacity.md",
             "troubleshooting.md",
             "resources.md",
             "ai-data-science.md",
