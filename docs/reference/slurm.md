@@ -11,10 +11,6 @@ computation runs as a Slurm job.
 > reclaimable compute entitlement while restartable work may use idle capacity.
 > See [How shared compute works](how-shared-compute-works.md).
 
-> **Short CPU jobs:** When the canary policy is active, a CPU-only job with an
-> explicit limit of two hours or less may use accepted spare capacity
-> automatically. See [Opportunistic capacity](opportunistic-capacity.md).
-
 ## Discover the scheduler
 
 ```bash

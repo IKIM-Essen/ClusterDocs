@@ -21,12 +21,6 @@ capacity for suitable restartable work.
   otherwise idle interactive capacity for restartable batch work without
   allowing that work to delay a real interactive request.
 
-Short CPU-only jobs with an explicit time limit of at most two hours may also
-be placed automatically on accepted spare interactive or GPU capacity. Users
-never select the hidden partitions or protected QOS names. See
-[Opportunistic capacity](opportunistic-capacity.md) for the rollout status and
-restart-safe job pattern.
-
 Borrowed work can be stopped and returned to the queue when the owner needs the
 capacity. It starts again from the beginning unless the application has a
 working checkpoint. Do not use borrowed capacity for work that cannot tolerate
@@ -140,17 +134,13 @@ salloc \
   --time=02:00:00
 ```
 
-Where opportunistic interactive capacity is active, selected interactive nodes
-may run short batch work with reduced advertised CPU and RAM and low contention
-weight. The two-hour bound and retained headroom protect interactive use; this
-path itself is non-preemptive.
+Where the `interactive_backfill` partition is advertised, idle interactive
+nodes may run short batch work there. A real interactive request can requeue
+that backfill work. This improves utilization while preserving responsive
+interactive access.
 
-This replaces the older user-visible `interactive_backfill` selection pattern:
-eligible jobs are routed automatically and users do not name the hidden path.
-
-These jobs are batch-only and explicitly time-limited. They should still be
-restart-safe because the same submission may also be eligible for reclaimable
-GPU capacity unless the user explicitly disables requeue.
+Interactive-backfill jobs have the same basic requirements as borrowed jobs:
+they are batch-only, explicitly time-limited, requeue-enabled, and restartable.
 
 ### What requeue means
 

@@ -46,7 +46,6 @@ NAV=[
  ('Reference','Software workflows','reference/software-workflows.md'),
  ('Reference','Slurm commands','reference/slurm.md'),
  ('Reference','How shared compute works','reference/how-shared-compute-works.md'),
- ('Reference','Opportunistic capacity','reference/opportunistic-capacity.md'),
  ('Reference','Troubleshooting','reference/troubleshooting.md'),
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
