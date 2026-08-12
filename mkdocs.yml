@@ -52,6 +52,7 @@ nav:
       - Conda, Snakemake, and Apptainer: reference/software-workflows.md
       - Slurm commands: reference/slurm.md
       - How shared compute works: reference/how-shared-compute-works.md
+      - Opportunistic capacity: reference/opportunistic-capacity.md
       - Troubleshooting: reference/troubleshooting.md
       - Resources and discovery: reference/resources.md
       - AI and data science: reference/ai-data-science.md
