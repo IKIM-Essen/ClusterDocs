@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>Off-site coding agents must not receive RCC research data · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC ClusterDocs home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <nav class="service-nav" aria-label="RCC services">
+      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a class="active" href="../../index.html" aria-current="page">Documentation</a>
+      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
+      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      
+      
+      <section><h2>Overview</h2><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a aria-current="page" href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
+        <nav aria-label="Documentation navigation">
+          
+          
+          <details class="nav-section" open>
+            <summary>Overview</summary>
+            <div><a  href="../../index.html">Home</a><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a aria-current="page" href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Paths</summary>
+            <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Course</summary>
+            <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Data lifecycle</summary>
+            <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Examples</summary>
+            <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Reference</summary>
+            <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+          </details>
+          
+          
+          
+          <details class="nav-section" >
+            <summary>Resources</summary>
+            <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+          </details>
+          
+          
+        </nav>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <p class="eyebrow">Overview · RCC ClusterDocs</p>
+      
+      <h1 id="off-site-coding-agents-must-not-receive-rcc-research-data">Off-site coding agents must not receive RCC research data</h1>
+<p>A coding agent—an AI tool that writes, tests, and revises code—can save a great
+deal of time. You can describe the table, plot, report, or workflow you want and
+ask it to build reproducible code.</p>
+<p>But RCC projects may contain patient-derived, genetic, confidential,
+unpublished, or otherwise protected material. <strong>You must not paste, upload, or
+otherwise make real or pseudonymised RCC project data available to an off-site
+coding agent.</strong> Sending a prompt or file to such an agent is data processing and
+disclosure outside the controlled RCC project environment.</p>
+<p>Health and genetic data are specially protected. <a href="https://eur-lex.europa.eu/eli/reg/2016/679/art_9/oj">Article 9 of the
+GDPR</a> starts from a
+prohibition on processing these data unless a specific exception and safeguards
+apply. German research provisions such as <a href="https://www.gesetze-im-internet.de/bdsg_2018/__27.html">section 27
+BDSG</a> impose necessity
+and protective measures; they are not blanket permission to disclose research
+data to another service. Medical confidentiality may impose additional duties
+under <a href="https://www.gesetze-im-internet.de/stgb/__203.html">section 203
+StGB</a>.</p>
+<p>An agent being licensed, commercially available, institutionally provided, or
+described as “approved” does <strong>not</strong> authorize it to receive RCC data. A user
+cannot create the required legal basis, processor arrangement, safeguards, or
+third-country transfer basis by opening an account or accepting a service's
+terms. Any exceptional off-site processing arrangement must be established and
+explicitly authorized by the responsible institution for that exact service
+and purpose. Do not infer such authorization from this documentation.</p>
+<p>There are two practical routes.</p>
+<h2 id="route-a-use-a-coding-agent-inside-rcc">Route A: use a coding agent inside RCC</h2>
+<p>Use an RCC-internal coding agent when it is available for your project. It works
+inside the RCC environment under your normal project access. The real data stays
+in RCC while the agent prepares code, requests bounded cluster computation, and
+writes the permitted results back to the project.</p>
+<pre><code class="language-text">your request + real project data
+              |
+              v
+     RCC-internal coding agent
+              |
+              v
+       RCC workers -&gt; project results
+</code></pre>
+<p>The agent does not become an administrator and does not gain access to another
+project. You still review important actions, and substantial computation runs
+through Slurm.</p>
+<p>Read <a href="../agents-and-mcp/index.html">how the RCC-internal coding-agent route works and what it can
+do</a>.</p>
+<h2 id="route-b-give-an-off-site-coding-agent-synthetic-data-only">Route B: give an off-site coding agent synthetic data only</h2>
+<p>An off-site coding agent can still write useful code without seeing the real
+dataset. Give it a small coding example in which every row and value is
+invented, but the safe structure and the analysis task resemble the real
+problem.</p>
+<pre><code class="language-text">real data stays in RCC
+          |
+          +--&gt; invented coding example --&gt; off-site coding agent
+                                                |
+                                                v
+                                           general code
+                                                |
+                                                v
+                              test and run inside RCC on real data
+</code></pre>
+<p>Bring the returned code into RCC, inspect it, test it on the invented example,
+and then run it against the real input inside RCC. Real inputs, revealing error
+messages, and real outputs do not go back to the off-site agent.</p>
+<p><a href="../../course/class-18-coding-agents/index.html">Class 18 shows how to make the synthetic coding example and bring the code
+back safely</a>. It includes a downloadable
+example bundle and a prompt you can reuse. The documented manual method is
+available now; <strong>Make coding example</strong> is the intended future shortcut.</p>
+<h2 id="which-route-should-i-choose">Which route should I choose?</h2>
+<table>
+<thead>
+<tr>
+  <th>Situation</th>
+  <th>Route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>The agent runs inside RCC and is available for this project</td>
+  <td><strong>A — work inside RCC</strong></td>
+</tr>
+<tr>
+  <td>The agent is a website, desktop service, or other system outside RCC</td>
+  <td><strong>B — synthetic data only</strong></td>
+</tr>
+<tr>
+  <td>You cannot tell where the agent processes or stores prompts and files</td>
+  <td>Do not attach the real data; use <strong>B</strong></td>
+</tr>
+<tr>
+  <td>A useful synthetic example cannot be made without exposing protected detail</td>
+  <td>Use <strong>A</strong> or continue without an agent</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-not-to-send-outside-rcc">What not to send outside RCC</h2>
+<p>Do not paste or upload real project files, real rows, identifiers, free text,
+exact dates, revealing filenames, screenshots, real outputs, or unredacted error
+messages to an off-site coding agent. Shuffling rows, hashing identifiers, or
+changing names does not make the remaining data synthetic.</p>
+<p>For the fuller data boundary, read <a href="../../data/privacy-and-agents/index.html">before sharing data with a coding
+agent</a>.</p>
+<h2 id="the-goal-is-still-simple">The goal is still simple</h2>
+<p>Whichever route you use, ask for code that:</p>
+<ul>
+<li>accepts explicit input and output paths;</li>
+<li>does not modify its input;</li>
+<li>records its command, package versions, and logs;</li>
+<li>is tested on small invented data first; and</li>
+<li>uses RCC workers for substantial computation.</li>
+</ul>
+<p>The result should be reviewable code and reproducible project output—not a
+conversation that only the coding agent can reconstruct.</p>
+<h2 id="related-guidance">Related guidance</h2>
+<ul>
+<li><a href="../agents-and-mcp/index.html">RCC-internal coding agents and MCP</a></li>
+<li><a href="../../course/class-18-coding-agents/index.html">Class 18: off-site coding agents with synthetic data</a></li>
+<li><a href="../workbench-interfaces/index.html">Where you can work with RCC</a></li>
+<li><a href="../projects-and-capabilities/index.html">Projects and supported actions</a></li>
+<li><a href="../../rcc-expedition/index.html">RCC Expedition for new users</a></li>
+</ul>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+</footer>
+</body>
+</html>
