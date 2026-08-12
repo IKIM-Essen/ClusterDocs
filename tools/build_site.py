@@ -73,10 +73,11 @@ PAGE='''<!doctype html>
       <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
     </a>
     <nav class="service-nav" aria-label="RCC services">
-      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
+      <a href="https://rcc.ikim.uk-essen.de/">Home</a>
       <a class="active" href="{{ root }}index.html" aria-current="page">Documentation</a>
-      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
-      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
+      <a href="https://files.ikim.uk-essen.de/web/client">Files</a>
+      <a class="portal-link" href="https://rcc-admin.ikim.uk-essen.de/myrcc">My RCC</a>
+      <a href="https://assistant.ikim.uk-essen.de/">AI assistant</a>
     </nav>
   </div>
 </header>
@@ -127,7 +128,7 @@ PAGE='''<!doctype html>
 </div>
 <footer>
   <p>RCC · Research Compute Cluster · University Hospital Essen</p>
-  <p><a href="{{ root }}index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+  <p><a href="{{ root }}index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/myrcc">My RCC</a> · <a href="https://files.ikim.uk-essen.de/web/client">Files</a></p>
 </footer>
 </body>
 </html>'''
@@ -155,8 +156,8 @@ a:hover { color:var(--cyan); }
 .service-nav { display:flex; align-items:center; gap:.45rem; flex-wrap:wrap; justify-content:flex-end; }
 .service-nav a { text-decoration:none; font-weight:650; font-size:.9rem; padding:.55rem .72rem; border-radius:999px; }
 .service-nav a:hover,.service-nav a.active { background:var(--cyan-light); color:var(--navy-2); }
-.service-nav .admin-link { background:var(--navy); color:#fff; }
-.service-nav .admin-link:hover { background:var(--navy-2); color:#fff; }
+.service-nav .portal-link { background:var(--navy); color:#fff; }
+.service-nav .portal-link:hover { background:var(--navy-2); color:#fff; }
 .shell { max-width:1280px; margin:0 auto; padding:2rem 1.4rem 4rem; }
 .docs-layout { display:grid; grid-template-columns:minmax(230px,270px) minmax(0,900px); gap:1.5rem; align-items:start; justify-content:center; }
 .sidebar { position:sticky; top:94px; max-height:calc(100vh - 112px); overflow:auto; scrollbar-width:thin; }

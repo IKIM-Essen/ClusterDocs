@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="rcc-shell-header">
+  <div class="rcc-shell-inner">
+    <a class="rcc-shell-brand" href="{{ config.extra.rcc_shell.home_url }}" aria-label="RCC home">
+      <strong>RCC</strong>
+      <span>Research Compute Cluster</span>
+    </a>
+    <nav class="rcc-shell-nav" aria-label="RCC navigation">
+      <a href="{{ config.extra.rcc_shell.myrcc_url }}">My RCC</a>
+      {% if config.extra.rcc_shell.workbench_url %}
+      <a href="{{ config.extra.rcc_shell.workbench_url }}">Workbench</a>
+      {% endif %}
+      <a href="{{ config.extra.rcc_shell.files_url }}">Files</a>
+      <a class="active" href="{{ config.extra.rcc_shell.docs_url }}" aria-current="page">Documentation</a>
+    </nav>
+  </div>
+</header>
+{{ super() }}
+{% endblock %}

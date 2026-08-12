@@ -4,10 +4,20 @@ site_url: https://ikim-essen.github.io/ClusterDocs/
 docs_dir: docs
 theme:
   name: material
+  custom_dir: overrides
   features:
     - navigation.sections
     - navigation.indexes
     - content.code.copy
+extra_css:
+  - stylesheets/rcc-shell.css
+extra:
+  rcc_shell:
+    home_url: https://rcc.ikim.uk-essen.de/
+    myrcc_url: https://rcc-admin.ikim.uk-essen.de/myrcc
+    workbench_url: ""
+    files_url: https://files.ikim.uk-essen.de/web/client
+    docs_url: https://ikim-essen.github.io/ClusterDocs/
 nav:
   - Home: index.md
   - ClusterDocs NG TL;DR: tldr.md
