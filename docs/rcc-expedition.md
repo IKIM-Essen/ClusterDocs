@@ -127,6 +127,17 @@ The release contains platform-specific and common missions for:
 
 Exercises use synthetic/non-sensitive material.
 
+### Using a coding agent with RCC
+
+When an RCC-internal coding agent is available for your project, you can ask it
+to help turn a research question into code, a scheduled calculation, plots, and
+a report. It works inside RCC under your normal project access; larger
+calculations run on RCC workers; results return to the project. The coding agent
+does not gain extra access. Never give RCC research data to an off-site coding
+agent; use fully synthetic data instead.
+
+Start with [coding agents and your data](concepts/how-rcc-works.md).
+
 ## Install
 
 1. Download the ZIP.

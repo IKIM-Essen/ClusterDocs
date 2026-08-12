@@ -11,6 +11,7 @@ theme:
 nav:
   - Home: index.md
   - ClusterDocs NG TL;DR: tldr.md
+  - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
@@ -35,6 +36,7 @@ nav:
       - Class 15 - RCC storage architecture: course/class-15-storage-architecture.md
       - Class 16 - Wet-lab instrument data: course/class-16-wet-lab-data-workflows.md
       - Class 17 - Research data lifecycle: course/class-17-data-lifecycle.md
+      - Class 18 - Coding agents without sharing real data: course/class-18-coding-agents.md
   - Data lifecycle:
       - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
       - Choosing a transfer path: data/instrument-data-options.md

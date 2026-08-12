@@ -11,7 +11,7 @@ repository read-only after promotion.
 
 ## Pull request sequence
 
-1. **Course shell and publication boundary**: seventeen-class navigation,
+1. **Course shell and publication boundary**: eighteen-class navigation,
    staging build, public-information linter, and current institutional
    connection guidance.
 2. **Class 1**: Windows/macOS SSH and VS Code gates, one bounded credential test, web-transfer guidance.

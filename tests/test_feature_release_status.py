@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -36,7 +37,10 @@ class FeatureReleaseStatusTests(unittest.TestCase):
             pages = [
                 page
                 for page in DOCS.rglob("*.md")
-                if feature in page.read_text(encoding="utf-8").lower()
+                if re.search(
+                    rf"\b{re.escape(feature)}\b",
+                    page.read_text(encoding="utf-8").lower(),
+                )
             ]
             self.assertTrue(pages, feature)
             for page in pages:

@@ -95,6 +95,11 @@ This avoids making a laptop an unnecessary intermediate copy.
 Suitable for sequencers, recurring microscopy, mass-spectrometry exports,
 long-running instruments, and high data volumes.
 
+Where a direct RCC integration exists, use the dedicated campus **Lab VLAN**
+and the managed ingestion endpoint configured for the instrument/project. The
+Lab VLAN is an acquisition path; it does not make the instrument-control
+computer a general compute node or unrestricted storage client.
+
 Automation must define:
 
 - run-completion detection;
