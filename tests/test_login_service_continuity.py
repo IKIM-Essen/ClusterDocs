@@ -16,11 +16,29 @@ class LoginServiceContinuityTests(unittest.TestCase):
         self.assertIn("RCC connection name: connecting/stable-endpoints.md", nav)
 
     def test_guidance_uses_approved_aliases_not_backend_names(self):
-        self.assertIn("{{ ssh_alias }}", self.page)
+        self.assertIn("{{ ssh_gateway_alias }}", self.page)
+        self.assertIn("{{ ssh_target_alias }}", self.page)
         self.assertIn("same approved alias", self.page)
         self.assertIn("do not create separate workstation targets", self.page)
         self.assertNotIn("HostName login1", self.page)
         self.assertNotIn("HostName login2", self.page)
+
+    def test_gateway_and_destination_are_both_configured(self):
+        pages = [
+            self.page,
+            (ROOT / "docs/course/class-01-safe-access.md").read_text(encoding="utf-8"),
+            (ROOT / "docs/reference/access-ssh-vscode.md").read_text(encoding="utf-8"),
+        ]
+        for page in pages:
+            with self.subTest(page=page[:40]):
+                self.assertIn("Host {{ ssh_gateway_alias }}", page)
+                self.assertIn(
+                    "Host {{ ssh_target_alias }} c? c?? c??? g?-? g?-??", page
+                )
+                self.assertIn("HostName %h.ikim.uk-essen.de", page)
+                self.assertIn("ProxyJump {{ ssh_gateway_alias }}", page)
+                self.assertIn("forwarding-only", page)
+                self.assertRegex(page, r"will not provide an\s+interactive shell")
 
     def test_timeout_and_host_key_warning_are_distinct(self):
         for token in (

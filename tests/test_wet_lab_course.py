@@ -41,7 +41,8 @@ class WetLabCourseTests(unittest.TestCase):
 
     def test_endpoint_page_uses_configured_alias(self):
         page = (ROOT / "docs/connecting/stable-endpoints.md").read_text()
-        self.assertIn("{{ ssh_alias }}", page)
+        self.assertIn("{{ ssh_gateway_alias }}", page)
+        self.assertIn("{{ ssh_target_alias }}", page)
         self.assertNotIn("is2-2", page)
         self.assertNotIn("is2-5", page)
 

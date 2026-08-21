@@ -2,7 +2,8 @@ site_name: RCC ClusterDocs NG
 site_status: staging
 site_url: https://ikim-essen.github.io/ClusterDocs/
 support_contact: IKIM Cluster channel on Mattermost
-ssh_alias: rcc-login
+ssh_gateway_alias: rcc-login
+ssh_target_alias: shellhost
 transfer_service_name: RCC web transfer
 transfer_service_url: https://files.ikim.uk-essen.de/
 media_base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding

@@ -86,7 +86,7 @@ Example with `rsync`:
 
 ```bash
 rsync --archive --partial --info=progress2 \
-  ./dataset/ {{ ssh_alias }}:/projects/<project>/incoming/dataset/
+  ./dataset/ {{ ssh_target_alias }}:/projects/<project>/incoming/dataset/
 ```
 
 Example with an archive and checksum:
@@ -95,7 +95,7 @@ Example with an archive and checksum:
 tar -czf dataset.tar.gz dataset/
 sha256sum dataset.tar.gz > dataset.tar.gz.sha256
 scp dataset.tar.gz dataset.tar.gz.sha256 \
-  {{ ssh_alias }}:/projects/<project>/incoming/
+  {{ ssh_target_alias }}:/projects/<project>/incoming/
 ```
 
 On RCC, verify before extracting:
