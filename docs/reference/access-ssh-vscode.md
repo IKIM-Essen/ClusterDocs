@@ -80,17 +80,33 @@ normally stored under `C:\Users\<username>\.ssh\`.
 ## Configure the approved RCC target
 
 Use the current host block supplied through a trusted institutional channel.
-The public alias used in this course is `{{ ssh_alias }}`. A safe client block
-has this shape:
+`{{ ssh_gateway_alias }}` is the forwarding gateway and
+`{{ ssh_target_alias }}` is the normal user destination. A safe client
+configuration has this shape:
 
 ```sshconfig
-Host {{ ssh_alias }}
+Host {{ ssh_gateway_alias }}
   HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
   ForwardAgent no
+
+Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??
+  HostName %h.ikim.uk-essen.de
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ProxyJump {{ ssh_gateway_alias }}
+  ForwardAgent no
 ```
+
+Use `{{ ssh_target_alias }}` for normal login and VS Code. The node patterns
+are for a node assigned by an active Slurm interactive allocation, not for
+selecting arbitrary compute capacity. The `{{ ssh_gateway_alias }}` account is
+forwarding-only and will not provide an interactive shell. Do not use
+`ssh {{ ssh_gateway_alias }}` as a login test or try to start a second SSH
+connection there; `ProxyJump` uses it automatically.
 
 Do not copy an old hostname from a colleague, disable host-key checking or
 enable agent forwarding merely to make a connection work. Verify the published
@@ -99,14 +115,14 @@ RCC host identity through an independent institutional channel.
 Inspect the effective configuration without connecting:
 
 ```bash
-ssh -G {{ ssh_alias }}
+ssh -G {{ ssh_target_alias }}
 ```
 
 Then use the bounded readiness test from Class 1. For manual diagnostics, one
 verbose connection attempt is usually enough:
 
 ```bash
-ssh -v {{ ssh_alias }}
+ssh -v {{ ssh_target_alias }}
 ```
 
 Remove key material, usernames, local paths, and tokens before sharing a debug
@@ -264,7 +280,7 @@ create an empty mount point and use the configured RCC alias:
 
 ```bash
 mkdir -p "$HOME/rcc-project"
-sshfs {{ ssh_alias }}:/projects/<project> "$HOME/rcc-project" \
+sshfs {{ ssh_target_alias }}:/projects/<project> "$HOME/rcc-project" \
   -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
 ```
 

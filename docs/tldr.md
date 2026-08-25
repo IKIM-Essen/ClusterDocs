@@ -123,7 +123,8 @@ The basic sequence is:
 4. obtain the current approved RCC configuration through a trusted channel;
 5. inspect the effective configuration;
 6. make one bounded connection test; and
-7. use the approved alias `{{ ssh_alias }}` in current instructions.
+7. use the approved destination alias `{{ ssh_target_alias }}` through the
+   configured `{{ ssh_gateway_alias }}` gateway.
 
 The access reference includes a visual VS Code walkthrough plus recommended
 search, file-watcher, extension, and Workspace Trust settings. Do not copy a

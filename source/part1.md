@@ -384,11 +384,12 @@ New-Item -ItemType File -Force "$HOME\.ssh\config" | Out-Null
 notepad "$HOME\.ssh\config"
 ```
 
-Insert the host block supplied in the current institutional RCC instructions.
-It has the following safe shape; replace the host value as well as the username:
+Insert the host blocks supplied in the current institutional RCC instructions.
+They have the following safe shape; replace the gateway host value as well as
+the username:
 
 ```sshconfig
-Host rcc
+Host rcc-login
     HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
@@ -396,7 +397,22 @@ Host rcc
     ForwardAgent no
     ServerAliveInterval 60
     ServerAliveCountMax 3
+
+Host shellhost c? c?? c??? d?? g?-? g?-??
+    HostName %h.ikim.uk-essen.de
+    User <RCC_USERNAME>
+    IdentityFile ~/.ssh/id_rcc
+    IdentitiesOnly yes
+    ProxyJump rcc-login
+    ForwardAgent no
 ```
+
+Use `shellhost` for normal login. The node patterns support a node assigned by
+an active Slurm interactive allocation; they do not authorize selecting a
+compute node or running work outside Slurm. The `rcc-login` account is
+forwarding-only and will not provide an interactive shell. Do not test it with
+`ssh rcc-login`; `ProxyJump` uses it automatically when you connect to the
+destination.
 
 Confirm that the file is named exactly `config`, not `config.txt`.
 
@@ -410,11 +426,12 @@ chmod 600 ~/.ssh/config
 open -e ~/.ssh/config
 ```
 
-Insert the host block supplied in the current institutional RCC instructions.
-It has the following safe shape; replace the host value as well as the username:
+Insert the host blocks supplied in the current institutional RCC instructions.
+They have the following safe shape; replace the gateway host value as well as
+the username:
 
 ```sshconfig
-Host rcc
+Host rcc-login
     HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
@@ -422,6 +439,16 @@ Host rcc
     ForwardAgent no
     ServerAliveInterval 60
     ServerAliveCountMax 3
+    AddKeysToAgent yes
+    UseKeychain yes
+
+Host shellhost c? c?? c??? d?? g?-? g?-??
+    HostName %h.ikim.uk-essen.de
+    User <RCC_USERNAME>
+    IdentityFile ~/.ssh/id_rcc
+    IdentitiesOnly yes
+    ProxyJump rcc-login
+    ForwardAgent no
     AddKeysToAgent yes
     UseKeychain yes
 ```
@@ -438,7 +465,7 @@ The keychain stores the passphrase locally so that you do not need to re-enter i
 
 ## Why test outside VS Code first
 
-A terminal test separates SSH problems from VS Code problems. If `ssh rcc` fails in PowerShell or Terminal, VS Code cannot repair the underlying account, key, host-name, VPN, or fingerprint issue. If the terminal test succeeds but VS Code fails, the problem is limited to the editor or extension.
+A terminal test separates SSH problems from VS Code problems. If `ssh shellhost` fails in PowerShell or Terminal, VS Code cannot repair the underlying account, key, host-name, VPN, or fingerprint issue. If the terminal test succeeds but VS Code fails, the problem is limited to the editor or extension.
 
 An SSH session is a network connection to a remote shell. Commands typed after the connection run remotely until you type `exit`, close the terminal, or lose the connection.
 
@@ -447,7 +474,7 @@ Test the terminal connection before attempting to use Visual Studio Code.
 On Windows, use PowerShell. On macOS, use Terminal.
 
 ```bash
-ssh rcc
+ssh shellhost
 ```
 
 # 6.1 Verify the host fingerprints
@@ -495,7 +522,7 @@ exit
 If login fails, collect diagnostic output:
 
 ```bash
-ssh -vvv rcc
+ssh -vvv shellhost
 ```
 
 Send the output to RCC support, but never send your private key or its passphrase.
@@ -530,7 +557,7 @@ Visual Studio Code runs on your laptop. The Remote - SSH extension opens a remot
 6. Verify any host-key prompt against the fingerprints published by RCC.
 7. Enter the SSH-key passphrase if requested.
 
-When connected, the lower-left corner of the VS Code window should display an SSH connection such as `SSH: rcc`.
+When connected, the lower-left corner of the VS Code window should display an SSH connection such as `SSH: shellhost`.
 
 # 7.2 Open a terminal on the submission host
 
@@ -957,7 +984,7 @@ Check:
 - that RCC support confirmed activation; and
 - that the private key still exists on the same computer.
 
-Run `ssh -vvv rcc` and send the diagnostic output to RCC support if the problem remains.
+Run `ssh -vvv shellhost` and send the diagnostic output to RCC support if the problem remains.
 
 # `Could not resolve hostname`
 
@@ -969,7 +996,7 @@ Stop. Do not automatically run `ssh-keygen -R` and do not delete `known_hosts`. 
 
 # VS Code repeatedly asks for the key passphrase
 
-First confirm that `ssh rcc` works in PowerShell or Terminal. On macOS, run:
+First confirm that `ssh shellhost` works in PowerShell or Terminal. On macOS, run:
 
 ```bash
 ssh-add --apple-use-keychain ~/.ssh/id_rcc
@@ -979,7 +1006,7 @@ On a managed Windows computer, ask local IT or RCC support whether the Windows `
 
 # VS Code connects, but `sbatch` is not found
 
-You are probably connected to the wrong host. The VS Code remote target for this tutorial must be `rcc`, which resolves to the Slurm submission host through the login gateway.
+You are probably connected to the wrong host. The VS Code remote target for this tutorial must be `shellhost`, which resolves to the Slurm submission host through the `rcc-login` gateway.
 
 # The job remains in `PD`
 
@@ -1005,9 +1032,9 @@ You have completed Part 1 when all of the following are true:
 
 - [ ] You know which file is your private SSH key and have never shared it.
 - [ ] Your key passphrase is stored in an approved password manager.
-- [ ] `ssh rcc` works from PowerShell or Terminal.
+- [ ] `ssh shellhost` works from PowerShell or Terminal.
 - [ ] You verified the RCC host fingerprints.
-- [ ] Visual Studio Code displays `SSH: rcc`.
+- [ ] Visual Studio Code displays `SSH: shellhost`.
 - [ ] You can open a remote terminal and identify the submission host.
 - [ ] You transferred `rcc-transfer-test.txt` into your approved directory.
 - [ ] The local and remote SHA-256 checksums match.

@@ -66,21 +66,36 @@ without `.pub` is the private key and stays on your computer.
 
 Use the current SSH configuration supplied through an approved RCC channel.
 Do not reconstruct it from an old screenshot or a colleague's saved settings.
-Its safe shape is:
+Its safe shape includes both the gateway and the destination:
 
 ```sshconfig
-Host {{ ssh_alias }}
+Host {{ ssh_gateway_alias }}
   HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
   ForwardAgent no
+
+Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??
+  HostName %h.ikim.uk-essen.de
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ProxyJump {{ ssh_gateway_alias }}
+  ForwardAgent no
 ```
+
+Use `{{ ssh_target_alias }}` for normal login. The additional node patterns
+support a node assigned by an active Slurm interactive allocation; they do not
+permit work outside Slurm. The `{{ ssh_gateway_alias }}` account is
+forwarding-only and will not provide an interactive shell. Do not test it with
+`ssh {{ ssh_gateway_alias }}`; `ProxyJump` uses it automatically when you
+connect to the destination.
 
 Inspect the effective configuration without connecting:
 
 ```bash
-ssh -G {{ ssh_alias }}
+ssh -G {{ ssh_target_alias }}
 ```
 
 ## Gate 1A: local readiness
