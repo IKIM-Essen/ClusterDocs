@@ -76,7 +76,7 @@ Host {{ ssh_gateway_alias }}
   IdentitiesOnly yes
   ForwardAgent no
 
-Host {{ ssh_target_alias }} c? c?? c??? g?-? g?-??
+Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??
   HostName %h.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc

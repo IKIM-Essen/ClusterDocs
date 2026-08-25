@@ -398,7 +398,7 @@ Host rcc-login
     ServerAliveInterval 60
     ServerAliveCountMax 3
 
-Host shellhost c? c?? c??? g?-? g?-??
+Host shellhost c? c?? c??? d?? g?-? g?-??
     HostName %h.ikim.uk-essen.de
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
@@ -442,7 +442,7 @@ Host rcc-login
     AddKeysToAgent yes
     UseKeychain yes
 
-Host shellhost c? c?? c??? g?-? g?-??
+Host shellhost c? c?? c??? d?? g?-? g?-??
     HostName %h.ikim.uk-essen.de
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc

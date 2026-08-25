@@ -33,7 +33,7 @@ class LoginServiceContinuityTests(unittest.TestCase):
             with self.subTest(page=page[:40]):
                 self.assertIn("Host {{ ssh_gateway_alias }}", page)
                 self.assertIn(
-                    "Host {{ ssh_target_alias }} c? c?? c??? g?-? g?-??", page
+                    "Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??", page
                 )
                 self.assertIn("HostName %h.ikim.uk-essen.de", page)
                 self.assertIn("ProxyJump {{ ssh_gateway_alias }}", page)
