@@ -1,9 +1,9 @@
 name: temporary-clusterdocs-rcc-shell-validation
 
 on:
-  push:
+  pull_request:
     branches:
-      - validation/rcc-visual-shell-20260826
+      - main
 
 permissions:
   contents: read
