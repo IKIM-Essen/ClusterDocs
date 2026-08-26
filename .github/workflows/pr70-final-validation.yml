@@ -1,0 +1,31 @@
+name: pr70-final-validation
+
+on:
+  push:
+    branches:
+      - validate/pr70-final
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils ffmpeg
+      - run: pip install -r ci/requirements.txt
+      - name: Validate repository
+        run: python tools/validate_repo.py
+      - name: Build and theme twice
+        run: |
+          set -eu
+          python tools/build_site.py --output site
+          python tools/apply_rcc_visual_theme.py site
+          python tools/apply_rcc_visual_theme.py site
+      - name: Validate links
+        run: python tools/check_site_links.py site
