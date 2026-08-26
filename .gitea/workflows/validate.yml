@@ -24,4 +24,7 @@ jobs:
       - name: Validate repository and public-content boundaries
         run: /opt/rcc-ci/venv/bin/python tools/validate_repo.py
       - name: Build the review artifact
-        run: /opt/rcc-ci/venv/bin/python tools/build_site.py --output site
+        run: |
+          set -eu
+          /opt/rcc-ci/venv/bin/python tools/build_site.py --output site
+          /opt/rcc-ci/venv/bin/python tools/apply_rcc_visual_theme.py site
