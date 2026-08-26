@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
 """Apply the RCC dark-sidebar visual shell to a rendered ClusterDocs site.
 
-The renderer remains authoritative for content and navigation. This post-build step
-changes presentation only and fails closed when the expected generated shell is not
-present, so renderer drift cannot silently publish a partially themed site.
+The renderer remains authoritative for documentation content and navigation. This
+post-build step changes presentation only and fails closed when the expected shell
+is not present. The RCC service navigation is relocated from the top bar into the
+left rail so ClusterDocs reads as one RCC surface without becoming another RCC
+application dashboard.
 """
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
-MARKER = "/* RCC visual shell v2 */"
+MARKER = "/* RCC visual shell v3 */"
+HTML_MARKER = "<!-- RCC service rail v1 -->"
+SERVICE_NAV_RE = re.compile(
+    r"\s*<nav class=\"service-nav\" aria-label=\"RCC services\">.*?</nav>",
+    re.DOTALL,
+)
+SIDEBAR_CARD = '<div class="sidebar-card">'
 
 THEME = r"""
-/* RCC visual shell v2 */
+/* RCC visual shell v3 */
 body {
   background: linear-gradient(180deg, #ffffff 0, var(--background) 42rem);
 }
@@ -25,6 +34,7 @@ body {
 .topbar-inner {
   max-width: 1720px;
   padding: .8rem 1.5rem;
+  justify-content: flex-start;
 }
 .brand img {
   padding: .3rem .45rem;
@@ -34,20 +44,6 @@ body {
 .brand-copy { border-left-color: rgba(255,255,255,.25); }
 .brand-copy strong { color: #fff; }
 .brand-copy span { color: rgba(255,255,255,.72); }
-.service-nav a { color: rgba(255,255,255,.88); }
-.service-nav a:hover,
-.service-nav a.active {
-  background: rgba(255,255,255,.10);
-  color: #fff;
-}
-.service-nav .admin-link {
-  background: #fff;
-  color: var(--navy);
-}
-.service-nav .admin-link:hover {
-  background: var(--cyan-light);
-  color: var(--navy);
-}
 .shell {
   max-width: 1720px;
   padding: 1.25rem 1.5rem 4rem;
@@ -71,6 +67,50 @@ body {
   background: linear-gradient(180deg, var(--navy) 0, #07345f 72%, #052845 100%);
   color: #fff;
   box-shadow: 0 14px 32px rgba(6,42,70,.16);
+}
+.rcc-service-rail {
+  margin: -.15rem -.1rem .85rem;
+  padding: .15rem .1rem .85rem;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.rcc-sidebar-kicker {
+  margin: 0 0 .45rem;
+  padding: 0 .55rem;
+  color: rgba(255,255,255,.58);
+  font-size: .66rem;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.rcc-service-rail .service-nav {
+  display: grid;
+  gap: .2rem;
+}
+.rcc-service-rail .service-nav a {
+  display: block;
+  padding: .55rem .58rem;
+  border-radius: 9px;
+  color: rgba(255,255,255,.88);
+  font-size: .86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.rcc-service-rail .service-nav a:hover {
+  background: rgba(255,255,255,.08);
+  color: #fff;
+}
+.rcc-service-rail .service-nav a.active {
+  background: linear-gradient(90deg,#1262b0,#0b5a9f);
+  color: #fff;
+  box-shadow: inset 3px 0 0 #3ab0ff;
+}
+.rcc-service-rail .service-nav .admin-link {
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+}
+.rcc-service-rail .service-nav .admin-link:hover {
+  background: rgba(255,255,255,.12);
+  color: #fff;
 }
 .sidebar-heading { border-bottom-color: rgba(255,255,255,.14); }
 .sidebar-heading strong { color: #fff; }
@@ -125,19 +165,61 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(f"FAIL {message}")
 
 
+def _relocate_service_nav(path: Path) -> None:
+    html = path.read_text(encoding="utf-8")
+    marker_count = html.count(HTML_MARKER)
+    require(marker_count <= 1, f"{path} contains duplicate RCC service-rail markers")
+
+    if marker_count == 0:
+        matches = list(SERVICE_NAV_RE.finditer(html))
+        require(len(matches) == 1, f"{path} must contain exactly one RCC service navigation")
+        match = matches[0]
+        service_nav = match.group(0).strip()
+        html = html[: match.start()] + html[match.end() :]
+        require(SIDEBAR_CARD in html, f"{path} lacks the generated sidebar card")
+        rail = (
+            SIDEBAR_CARD
+            + "\n        "
+            + HTML_MARKER
+            + '\n        <section class="rcc-service-rail">'
+            + '\n          <p class="rcc-sidebar-kicker">RCC services</p>\n          '
+            + service_nav
+            + "\n        </section>"
+        )
+        html = html.replace(SIDEBAR_CARD, rail, 1)
+        path.write_text(html, encoding="utf-8")
+
+    themed = path.read_text(encoding="utf-8")
+    require(themed.count(HTML_MARKER) == 1, f"{path} must contain one service-rail marker")
+    require(themed.count('aria-label="RCC services"') == 1,
+            f"{path} must contain one RCC service navigation after theming")
+    header = themed.split("</header>", 1)[0]
+    require('aria-label="RCC services"' not in header,
+            f"{path} still renders RCC services in the top bar")
+    require('class="rcc-service-rail"' in themed,
+            f"{path} does not render RCC services in the left rail")
+
+
 def apply(output: Path) -> None:
     css_path = output / "assets" / "site.css"
     index_path = output / "index.html"
     require(css_path.is_file(), f"missing rendered stylesheet {css_path}")
     require(index_path.is_file(), f"missing rendered home page {index_path}")
 
+    html_paths = sorted(output.rglob("*.html"))
+    require(html_paths, "rendered ClusterDocs site contains no HTML pages")
+    for path in html_paths:
+        _relocate_service_nav(path)
+
     html = index_path.read_text(encoding="utf-8")
     css = css_path.read_text(encoding="utf-8")
     for token in (
         'class="topbar"',
         'class="sidebar"',
+        'class="sidebar-card"',
         'class="content-card"',
         'alt="Universitätsklinikum Essen"',
+        'class="rcc-service-rail"',
         'aria-label="RCC services"',
     ):
         require(token in html, f"rendered ClusterDocs shell lacks expected marker {token}")
@@ -150,6 +232,7 @@ def apply(output: Path) -> None:
     themed = css_path.read_text(encoding="utf-8")
     require(themed.count(MARKER) == 1, "RCC visual theme must be present exactly once")
     for token in (
+        ".rcc-service-rail",
         ".sidebar-card",
         "linear-gradient(180deg, var(--navy)",
         '.sidebar nav a[aria-current="page"]',
