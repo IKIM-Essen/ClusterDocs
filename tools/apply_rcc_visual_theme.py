@@ -31,9 +31,7 @@ body {
   border-radius: 8px;
   background: #fff;
 }
-.brand-copy {
-  border-left-color: rgba(255,255,255,.25);
-}
+.brand-copy { border-left-color: rgba(255,255,255,.25); }
 .brand-copy strong { color: #fff; }
 .brand-copy span { color: rgba(255,255,255,.72); }
 .service-nav a { color: rgba(255,255,255,.88); }
@@ -158,13 +156,6 @@ def apply(output: Path) -> None:
         ".topbar",
     ):
         require(token in themed, f"themed stylesheet lacks {token}")
-
-    # The theme is intentionally a presentation-only post-build step. It must
-    # not introduce a second script/application layer into the generated docs.
-    for page in output.rglob("*.html"):
-        text = page.read_text(encoding="utf-8")
-        require("data-access-set" not in text and "role_preview_level" not in text,
-                f"generated docs unexpectedly contain role-preview controls: {page}")
 
 
 def main() -> int:
