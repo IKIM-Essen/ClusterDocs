@@ -1,6 +1,10 @@
 name: validate-clusterdocs-ng-fallback
 
+# Temporary validation branch for PR #70. Main keeps workflow_dispatch-only.
 on:
+  push:
+    branches:
+      - validate/pr70-github-fallback
   workflow_dispatch:
 
 permissions:
