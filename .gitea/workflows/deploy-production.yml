@@ -36,6 +36,7 @@ jobs:
           /opt/rcc-ci/venv/bin/python tools/validate_repo.py
           /opt/rcc-ci/venv/bin/python tools/rollout_readiness.py
           /opt/rcc-ci/venv/bin/python tools/build_site.py --production --output site-production
+          /opt/rcc-ci/venv/bin/python tools/apply_rcc_visual_theme.py site-production
           /opt/rcc-ci/venv/bin/python tools/check_site_links.py site-production
           printf '{"source_commit":"%s"}\n' "$GITHUB_SHA" > site-production/assets/release.json
           touch site-production/.nojekyll
