@@ -33,8 +33,9 @@ Use **Files** when the task is primarily about data movement or browsing:
 - perform a bounded transfer without opening a shell.
 
 Files is not a general server filesystem browser and it does not replace project
-membership or data-release approval. For larger or specialized transfers, use
-the route documented in [Storage and transfer](../reference/storage-transfer.md).
+membership or data-release approval. Read
+[RCC Files: browse and transfer project data](rcc-files.md) before choosing the
+browser/SFTP route for a new workflow.
 
 ## Workbench: interactive work
 
@@ -46,8 +47,8 @@ RCC workers through Slurm.
 A Workbench session does not grant extra project access. It runs under your RCC
 identity and project authorization.
 
-Read [Where you can work with RCC](workbench-interfaces.md) for the complete
-Workbench model and current release status.
+Read [RCC Workbench](workbench-interfaces.md) for the complete Workbench model
+and current release status.
 
 ## RCC Analysis: repeatable scientific execution
 
@@ -59,7 +60,7 @@ runs it through Slurm using Nextflow or Snakemake where appropriate.
 A useful rule is:
 
 ```text
-explore / develop / debug  -> Workbench
+explore / develop / debug   -> Workbench
 repeat / govern / reproduce -> RCC Analysis
 ```
 
@@ -85,6 +86,25 @@ Finding an action in the interface does not mean every user may execute it.
 Read [Projects and supported actions](projects-and-capabilities.md) for the
 plain-language capability model.
 
+## Two concepts follow you across every surface
+
+### Your authentication method is not your authorization
+
+RCC may use SSO/passkeys for web sign-in and SSH public keys for command-line
+access. Those credentials prove who you are; they do not independently grant
+project or administrator rights.
+
+Read [How RCC authentication fits together](../reference/authentication-lifecycle.md).
+
+### Project type changes the data-movement model
+
+Current projects use the Regular project model. RCC also defines a future
+Controlled Data Project type in which protected data cannot simply leave through
+ordinary user transfer paths and results require a governed release boundary.
+Controlled Data project runtime admission is not yet released.
+
+Read [Regular and Controlled Data projects](project-types.md).
+
 ## One project, several interfaces
 
 Moving between Files, Workbench, Analysis, the Assistant, SSH, and Admin should
@@ -93,7 +113,7 @@ not change the fundamental authorization model:
 ```text
 RCC identity
     + project membership / delegated role
-    + data and service policy
+    + project type / data and service policy
               |
               +--> Files
               +--> Workbench
