@@ -13,6 +13,10 @@ nav:
   - ClusterDocs NG TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
+  - RCC services:
+      - Which RCC service should I use?: concepts/rcc-services.md
+      - RCC Workbench (not yet released): concepts/workbench-interfaces.md
+      - RCC Analysis (not yet released): analysis/rcc-analysis.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
