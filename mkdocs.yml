@@ -17,6 +17,7 @@ nav:
       - Which RCC service should I use?: concepts/rcc-services.md
       - RCC Files: concepts/rcc-files.md
       - Project types: concepts/project-types.md
+      - RCC Gitea: concepts/rcc-gitea.md
       - RCC Workbench (not yet released): concepts/workbench-interfaces.md
       - RCC Analysis (not yet released): analysis/rcc-analysis.md
   - Choose a path:
@@ -46,6 +47,7 @@ nav:
   - Data lifecycle:
       - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
       - Choosing a transfer path: data/instrument-data-options.md
+      - Managed DataLad: data/datalad-managed-service.md
       - Existing Windows SSHFS setup: data/legacy-storage-windows.md
       - Existing macOS SSHFS setup: data/legacy-storage-macos.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
@@ -58,6 +60,7 @@ nav:
       - Access, SSH, and VS Code: reference/access-ssh-vscode.md
       - Storage and transfer: reference/storage-transfer.md
       - Sharing data: reference/data-sharing.md
+      - RCC Usage reporting: reference/usage-accounting.md
       - Conda, Snakemake, and Apptainer: reference/software-workflows.md
       - Slurm commands: reference/slurm.md
       - How shared compute works: reference/how-shared-compute-works.md
