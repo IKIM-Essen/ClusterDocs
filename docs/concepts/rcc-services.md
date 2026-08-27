@@ -86,6 +86,37 @@ Finding an action in the interface does not mean every user may execute it.
 Read [Projects and supported actions](projects-and-capabilities.md) for the
 plain-language capability model.
 
+## Supporting project/developer services
+
+Some RCC services are important but are not primary destinations for every
+researcher.
+
+### Gitea: source code and software artifacts
+
+Use RCC Gitea for code, workflow source, documentation, tests, and reviewed
+software artifacts. Repository permissions remain separate from project data
+membership, and secrets/research datasets do not belong in Git history.
+
+Read [RCC Gitea: source control inside RCC](rcc-gitea.md). The newer general
+RCC-authenticated Gitea access plane remains rollout-gated; depend on the
+currently approved repository path until RCC announces the new surface.
+
+### Managed DataLad: versioned large-dataset state
+
+When enabled for a project, DataLad can bind dataset history/identity to an
+RCC-managed storage provider without putting large content into ordinary Git.
+DataLad service enablement does not imply public sharing or Coscine archival.
+
+Read [Managed DataLad on RCC](../data/datalad-managed-service.md).
+
+### Usage: approximate capacity/storage governance
+
+Authorized RCC administrators/approvers may have a read-only Usage view showing
+capacity, waiting demand, storage growth, inodes, and pressure signals. It is
+approximate operational evidence, not billing or an entitlement system.
+
+Read [RCC Usage reporting](../reference/usage-accounting.md).
+
 ## Two concepts follow you across every surface
 
 ### Your authentication method is not your authorization
@@ -121,6 +152,7 @@ RCC identity
               +--> SSH / VS Code
               +--> Assistant
               +--> Admin
+              +--> Gitea / DataLad when separately entitled
 ```
 
 The interface changes **how you ask**. It does not change **what you are allowed
