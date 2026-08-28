@@ -12,6 +12,14 @@ Please keep the stable name **Research Compute Cluster (RCC)** in the text. Cons
 
 RCC does not currently designate a canonical methods or infrastructure paper for citation. Until one is formally designated, use the acknowledgement above rather than citing an unpublished manuscript.
 
+## Current RCC publication archive
+
+The RCC website carries the current reviewed list under [Publications](https://rcc.ikim.uk-essen.de/#rcc-publications).
+
+The initial historical seed contains **32 Folker Meyer scholarly outputs from 2020 through 2026**. The seed uses the exact Folker Meyer scholarly identity for discovery and was explicitly approved as a bounded historical import. Thirty entries are published; two very recent August 2026 Frontiers papers already have DOI records but are labelled **accepted** until final publication. Correction notices stay attached to the parent paper rather than being counted as additional publications.
+
+This seed is not a rule that every paper by an RCC user automatically belongs in the RCC archive. New publications follow the ordinary project-attribution and review workflow below.
+
 ## After your paper is published
 
 Keep these two pieces of information together:
