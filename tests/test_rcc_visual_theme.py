@@ -14,13 +14,15 @@ THEME = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(THEME)
 
 
+# Deliberately model the legacy custom-builder service labels. The theme layer is
+# the convergence boundary and must normalize these while relocating the rail.
 VALID_HTML = """<!doctype html>
 <html><body>
 <header class="topbar">
   <img alt="Universitätsklinikum Essen">
   <nav class="service-nav" aria-label="RCC services">
     <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
-    <a class="active" href="index.html">Documentation</a>
+    <a class="active" href="index.html" aria-current="page">Documentation</a>
     <a href="https://files.ikim.uk-essen.de/">File transfer</a>
     <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
   </nav>
@@ -41,11 +43,12 @@ class RCCVisualThemeTests(unittest.TestCase):
         (root / "assets").mkdir()
         (root / "nested").mkdir()
         (root / "index.html").write_text(html, encoding="utf-8")
-        (root / "nested" / "page.html").write_text(html, encoding="utf-8")
+        nested_html = html.replace('href="index.html"', 'href="../index.html"')
+        (root / "nested" / "page.html").write_text(nested_html, encoding="utf-8")
         (root / "assets" / "site.css").write_text(css, encoding="utf-8")
         return root
 
-    def test_theme_is_idempotent_and_moves_services_into_rail(self) -> None:
+    def test_theme_is_idempotent_and_moves_canonical_services_into_rail(self) -> None:
         root = self.make_site()
         THEME.apply(root)
         first_css = (root / "assets" / "site.css").read_text(encoding="utf-8")
@@ -60,8 +63,28 @@ class RCCVisualThemeTests(unittest.TestCase):
         self.assertEqual(second_html.count('aria-label="RCC services"'), 1)
         self.assertIn('class="rcc-service-rail"', second_html)
         self.assertNotIn('aria-label="RCC services"', second_html.split("</header>", 1)[0])
+        for label, href in (
+            ("Home", "https://rcc.ikim.uk-essen.de/"),
+            ("Documentation", "index.html"),
+            ("Files", "https://files.ikim.uk-essen.de/web/client"),
+            ("My RCC", "https://rcc-admin.ikim.uk-essen.de/myrcc"),
+            ("AI assistant", "https://assistant.ikim.uk-essen.de/"),
+        ):
+            self.assertIn(f'href="{href}"', second_html)
+            self.assertIn(f">{label}<", second_html)
+        self.assertIn('class="portal-link"', second_html)
+        for obsolete in (">About RCC<", ">File transfer<", ">RCC Admin<"):
+            self.assertNotIn(obsolete, second_html)
+
         nested = (root / "nested" / "page.html").read_text(encoding="utf-8")
         self.assertIn('class="rcc-service-rail"', nested)
+        self.assertIn('href="../index.html"', nested)
+        self.assertIn(">AI assistant<", nested)
+
+    def test_canonicalization_fails_without_one_documentation_link(self) -> None:
+        root = self.make_site(html=VALID_HTML.replace(">Documentation<", ">Docs<"))
+        with self.assertRaises(SystemExit):
+            THEME.apply(root)
 
     def test_theme_fails_closed_on_renderer_drift(self) -> None:
         root = self.make_site(html=VALID_HTML.replace('class="sidebar-card"', 'class="navigation-card"'))
