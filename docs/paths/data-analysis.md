@@ -4,9 +4,10 @@ Use this path when your main goal is to explore research data, run statistical
 analyses, train or evaluate models, create figures, or build a reproducible
 result pipeline.
 
-> **Service status:** RCC workers and Slurm analysis are **ready now**. Project
-> vhosts and RCC-to-Coscine transfer are **not yet released**; the linked
-> classes prepare those future publication and archive steps.
+> **Service status:** RCC workers and Slurm analysis are **ready now**. RCC
+> Analysis, project vhosts, and RCC-to-Coscine transfer are **not yet released**;
+> the linked documentation prepares those future workflow, publication, and
+> archive steps.
 
 ## 1. Build the shared foundation
 
@@ -35,6 +36,13 @@ inexpensive prompt, or a bounded Shiny setup.
   workflows, larger tables, reporting, and reproducible R environments.
 - [AI and data science](../reference/ai-data-science.md) for technique selection,
   validation, training, inference, GPUs, and distributed processing.
+
+For the planned product model, read
+[RCC Analysis: from data to a reproducible run](../analysis/rcc-analysis.md).
+It explains when to use RCC Analysis instead of an interactive Workbench,
+how RCC chooses an efficient execution plan, how exact reproduction differs
+from adaptation, and what provenance a governed run retains. RCC Analysis is
+not yet a live user service.
 
 ## 3. Make the analysis reproducible
 

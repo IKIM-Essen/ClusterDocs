@@ -32,6 +32,11 @@ remain part of a reproducible research workflow: computation runs through
 Slurm, data stays within its project governance, and model evaluation includes
 validation, uncertainty, bias, and scientific limitations.
 
+Not sure whether you need Files, an interactive session, RCC Analysis, the
+Assistant, or account/project management? Read
+[RCC services: where should I go?](concepts/rcc-services.md). It also records
+which newer surfaces are documented before release.
+
 ## Choose your path
 
 <section class="path-grid" aria-label="Choose an RCC learning path">
@@ -55,6 +60,8 @@ validation, uncertainty, bias, and scientific limitations.
 
 - Need the complete short version first? Read the
   [ClusterDocs NG TL;DR](tldr.md).
+- Unsure which RCC surface to use? Start with the
+  [RCC service map](concepts/rcc-services.md).
 - Everyone begins with [Class 1: safe access](course/class-01-safe-access.md).
 - Use the [course overview](course/index.md) when you want the complete eighteen-class sequence.
 - Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
