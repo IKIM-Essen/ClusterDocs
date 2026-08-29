@@ -4,8 +4,9 @@
 The renderer remains authoritative for documentation content and navigation. This
 post-build step changes presentation only and fails closed when the expected shell
 is not present. The RCC service navigation is relocated from the top bar into the
-left rail so ClusterDocs reads as one RCC surface without becoming another RCC
-application dashboard.
+left rail and normalized to the stable RCC user-facing service destinations so
+ClusterDocs reads as one RCC surface without becoming another RCC application
+dashboard.
 """
 from __future__ import annotations
 
@@ -18,6 +19,9 @@ HTML_MARKER = "<!-- RCC service rail v1 -->"
 SERVICE_NAV_RE = re.compile(
     r"\s*<nav class=\"service-nav\" aria-label=\"RCC services\">.*?</nav>",
     re.DOTALL,
+)
+DOCUMENTATION_LINK_RE = re.compile(
+    r'<a\s+class="active"\s+href="([^"]+)"(?:\s+aria-current="page")?\s*>Documentation</a>'
 )
 SIDEBAR_CARD = '<div class="sidebar-card">'
 
@@ -104,11 +108,11 @@ body {
   color: #fff;
   box-shadow: inset 3px 0 0 #3ab0ff;
 }
-.rcc-service-rail .service-nav .admin-link {
+.rcc-service-rail .service-nav .portal-link {
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.92);
 }
-.rcc-service-rail .service-nav .admin-link:hover {
+.rcc-service-rail .service-nav .portal-link:hover {
   background: rgba(255,255,255,.12);
   color: #fff;
 }
@@ -165,6 +169,31 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(f"FAIL {message}")
 
 
+def _canonical_service_nav(service_nav: str) -> str:
+    """Return the one stable user-facing RCC service navigation.
+
+    The custom builder historically emitted About RCC / File transfer / RCC Admin.
+    The visual-shell transformer is the convergence boundary, so generated sites
+    get the same stable service semantics even while renderer internals evolve.
+    The current page's relative Documentation href is preserved exactly.
+    """
+    matches = DOCUMENTATION_LINK_RE.findall(service_nav)
+    require(
+        len(matches) == 1,
+        "generated RCC service navigation must contain one active Documentation link",
+    )
+    documentation_href = matches[0]
+    return (
+        '<nav class="service-nav" aria-label="RCC services">\n'
+        '      <a href="https://rcc.ikim.uk-essen.de/">Home</a>\n'
+        f'      <a class="active" href="{documentation_href}" aria-current="page">Documentation</a>\n'
+        '      <a href="https://files.ikim.uk-essen.de/web/client">Files</a>\n'
+        '      <a class="portal-link" href="https://rcc-admin.ikim.uk-essen.de/myrcc">My RCC</a>\n'
+        '      <a href="https://assistant.ikim.uk-essen.de/">AI assistant</a>\n'
+        '    </nav>'
+    )
+
+
 def _relocate_service_nav(path: Path) -> None:
     html = path.read_text(encoding="utf-8")
     marker_count = html.count(HTML_MARKER)
@@ -174,7 +203,7 @@ def _relocate_service_nav(path: Path) -> None:
         matches = list(SERVICE_NAV_RE.finditer(html))
         require(len(matches) == 1, f"{path} must contain exactly one RCC service navigation")
         match = matches[0]
-        service_nav = match.group(0).strip()
+        service_nav = _canonical_service_nav(match.group(0).strip())
         html = html[: match.start()] + html[match.end() :]
         require(SIDEBAR_CARD in html, f"{path} lacks the generated sidebar card")
         rail = (
@@ -198,6 +227,16 @@ def _relocate_service_nav(path: Path) -> None:
             f"{path} still renders RCC services in the top bar")
     require('class="rcc-service-rail"' in themed,
             f"{path} does not render RCC services in the left rail")
+    for label, href in (
+        ("Home", "https://rcc.ikim.uk-essen.de/"),
+        ("Files", "https://files.ikim.uk-essen.de/web/client"),
+        ("My RCC", "https://rcc-admin.ikim.uk-essen.de/myrcc"),
+        ("AI assistant", "https://assistant.ikim.uk-essen.de/"),
+    ):
+        require(f'href="{href}"' in themed and f'>{label}<' in themed,
+                f"{path} lacks canonical RCC service link {label}")
+    for obsolete in (">About RCC<", ">File transfer<", ">RCC Admin<"):
+        require(obsolete not in themed, f"{path} retains obsolete RCC service label {obsolete}")
 
 
 def apply(output: Path) -> None:
