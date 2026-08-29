@@ -22,4 +22,11 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y poppler-utils ffmpeg
       - run: pip install -r ci/requirements.txt
       - run: python tools/validate_repo.py
-      - run: python tools/build_site.py --output site
+      - name: Build and theme review artifact
+        run: |
+          set -eu
+          python tools/build_site.py --output site
+          python tools/apply_rcc_visual_theme.py site
+          python tools/apply_rcc_visual_theme.py site
+      - name: Validate links after RCC visual theme
+        run: python tools/check_site_links.py site
