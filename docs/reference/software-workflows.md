@@ -3,6 +3,12 @@
 This guide complements Classes 2 and 4 with the command-level material from the
 earlier ClusterDocs site.
 
+If your starting point is a shell script, terminal history, or a document of
+commands, begin with
+[From shell commands to a repeatable workflow](../paths/from-shell-scripts.md).
+It provides a conversion checklist and a clear Snakemake-versus-Nextflow
+decision.
+
 ## Conda and Mamba environments
 
 RCC does not use Environment Modules or Lmod. Commands such as `module load`

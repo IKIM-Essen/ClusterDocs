@@ -21,6 +21,26 @@ boundaries.
 Changing the label on somebody's badge is not how a collaboration is created.
 Keep the correct primary group and add the person to the approved project.
 
+## Groups do have benefits—but a different purpose
+
+A primary group is useful. It gives a stable organizational affiliation, a
+home for material genuinely shared by that department or unit, and a sensible
+place for group-level contacts or defaults. Those benefits do not turn it into
+the access boundary for every study led by somebody in the group.
+
+Use this decision rule:
+
+| Question | Use |
+|---|---|
+| Is this about where the person organizationally belongs? | Primary group |
+| Is the material only for members of that one organizational group? | `/groups/<primary-group>/` |
+| Does the work have a scientific purpose, named team, data owner, or lifecycle? | Project |
+| Are collaborators from different groups or institutions involved? | Project |
+| Is this personal shell configuration or a small private working file? | Home |
+
+When in doubt for research data, choose a project. It makes membership,
+ownership, purpose, services, storage, retention, and handover explicit.
+
 ## Identity and access model
 
 | Concept | Rule | What it is for |
@@ -79,3 +99,51 @@ Each future vhost will belong to one project and check individual identity plus
 project membership. Do not plan one catch-all vhost for unrelated projects.
 Coscine archival is a later, reviewed lifecycle step; the RCC-to-Coscine route
 is not yet released and is not a live self-service transfer.
+
+## Organise storage for a large science team
+
+Use one project when the team shares the same approved purpose, governance,
+owner, membership model, sensitivity, and retention rules. Create separate
+projects when one of those boundaries is materially different. Do not create a
+new project for every script, sample batch, or temporary analysis.
+
+A large project can stay understandable with a documented internal layout:
+
+```text
+/projects/<project>/
+├── README.md          # owner, purpose, contacts, layout, retention
+├── incoming/          # newly received material awaiting verification
+├── raw/               # verified authoritative inputs; treat as read-only
+├── reference/         # named and versioned reference data
+├── workflows/         # code, configuration, environments, documentation
+├── analyses/          # one directory per study, release, or analysis unit
+├── results/           # validated shared outputs
+├── metadata/          # manifests, checksums, provenance, data dictionaries
+├── shared/            # intentional team exchange, not an unowned dumping area
+└── archive-staging/   # reviewed candidate set, not an automatic archive
+```
+
+This is a project-internal convention, not a new RCC top-level namespace. Keep
+the user-visible shared roots limited to `/homes/<user>`,
+`/groups/<primary-group>`, and `/projects/<project>`. Job-local `/local` is for
+temporary compute work and is not another collaborative storage tier.
+
+For every large project:
+
+1. Put the accountable owner, scientific purpose, contacts, and directory
+   meanings in the top-level `README.md`.
+2. Define who may add data, validate incoming material, publish results, and
+   approve archival or deletion.
+3. Give analyses stable identifiers and keep their code and configuration in
+   version control.
+4. Treat `raw/` as authoritative input and avoid editing it in place.
+5. Write active high-I/O intermediates to job-local scratch when appropriate,
+   then return declared results and evidence to the project.
+6. Review membership regularly and remove access through the project workflow,
+   never through broad permission changes.
+7. Separate storage cleanup from scientific or archival acceptance; a copied
+   file is not automatically a verified archive.
+
+Avoid opaque personal folders at the project root, duplicated datasets in many
+team members' homes, shared human accounts, and recursive `chmod` fixes. Those
+patterns obscure ownership and make departure, review, and cleanup harder.

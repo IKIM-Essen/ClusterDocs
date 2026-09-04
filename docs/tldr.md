@@ -3,11 +3,10 @@
 This page is the shortest useful introduction to RCC. Read it before connecting
 for the first time, or use it to find the right detailed guide.
 
-> **Start with RCC Expedition:** If you are new to RCC or preparing a new
-> computer, begin with the self-contained [RCC Expedition](rcc-expedition.md)
-> course for Windows 11 and macOS. It covers workstation security, SSH, Linux,
-> Slurm, storage, data transfer, and reproducible workflows; return to this
-> TL;DR for the current RCC rules and links.
+> **Need to connect now?** Use [RCC Expedition Light](getting-started/index.md)
+> and choose the Windows 11 or macOS checklist. For guided offline training,
+> use [RCC Expedition](rcc-expedition.md). Return here for the broader rules
+> and reference links.
 
 ## RCC in one minute
 

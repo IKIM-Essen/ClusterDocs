@@ -8,10 +8,17 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
+ ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
+ ('Start here','macOS setup','getting-started/macos.md'),
+ ('Start here','Windows 11 setup','getting-started/windows.md'),
+ ('Start here','VS Code with RCC','getting-started/vscode.md'),
+ ('Start here','Jump host, shell host, and workers','concepts/jump-shell-compute.md'),
+ ('Start here','What changed from the old cluster','getting-started/what-changed.md'),
  ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
+ ('Paths','Convert shell scripts into workflows','paths/from-shell-scripts.md'),
  ('Course','Course overview','course/index.md'),
  ('Course','Class 1 · Safe access','course/class-01-safe-access.md'),
  ('Course','Class 2 · Workflows','course/class-02-workflows.md'),

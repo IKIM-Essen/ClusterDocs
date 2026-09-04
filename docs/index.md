@@ -1,16 +1,20 @@
 # RCC ClusterDocs NG
 
-Welcome to the staged RCC learning site for medical professionals, biomedical researchers, research software developers, and technical project staff. If you are new to RCC or preparing a new computer, start with [RCC Expedition](rcc-expedition.md), the self-contained onboarding course for Windows 11 and macOS, then return here for current cluster guidance.
+Welcome to RCC guidance for medical professionals, biomedical researchers,
+research software developers, and technical project staff. If you want to
+connect now, use [RCC Expedition Light](getting-started/index.md). If you
+prefer a guided local course, use [RCC Expedition](rcc-expedition.md).
 
 The course is designed so that a new user can progress without needing an administrator beside them. Each class has a small practical exercise and a gate that checks readiness without exposing credentials or generating significant cluster load.
 
 <section class="expedition-callout" aria-labelledby="expedition-title">
-  <p class="expedition-kicker">Standalone onboarding · Windows 11 and macOS</p>
-  <h2 id="expedition-title">Start with RCC Expedition</h2>
-  <p>If you are new to RCC or setting up a new workstation, take the self-contained local course covering workstation security, SSH, Linux, Slurm, storage, data transfer, and reproducible workflows.</p>
+  <p class="expedition-kicker">Two clear starting routes · Windows 11 and macOS</p>
+  <h2 id="expedition-title">Connect quickly or learn step by step</h2>
+  <p>Use the short checklist when you need a working connection. Use the self-contained local Expedition for guided workstation security, SSH, Linux, Slurm, storage, data transfer, and workflow training.</p>
   <div class="expedition-actions">
-    <a class="expedition-primary" href="rcc-expedition.md">Open RCC Expedition →</a>
-    <a href="assets/downloads/RCC-Expedition-USB-v1.0.0.zip">Download v1.0.0 for offline use</a>
+    <a class="expedition-primary" href="getting-started/index.md">Start Expedition Light →</a>
+    <a href="rcc-expedition.md">Open RCC Expedition</a>
+    <a href="assets/downloads/RCC-Expedition-USB-v1.0.1.zip">Download v1.0.1 for offline use</a>
   </div>
   <p class="expedition-privacy">Datensparsam by design: no learner account, analytics, telemetry, central progress database, or supervisor dashboard.</p>
 </section>
@@ -25,6 +29,14 @@ Your primary group records where you belong; it is not how cross-department
 research data is shared. The project is the access and collaboration boundary.
 Start with the [complete plain-language TL;DR](tldr.md) for the important limits
 and links.
+
+The network path is just as simple: the jump host is a guarded doorway, the
+shell host is the desk where you prepare work, and Slurm workers perform the
+calculation. [See the three roles on one page](concepts/jump-shell-compute.md).
+
+Returning users can use the
+[old-cluster migration table](getting-started/what-changed.md) to see which
+access, storage, Slurm, Conda, and workflow habits changed.
 
 RCC supports statistics, visualization, Python and R data science, machine
 learning, GPU-accelerated AI, and distributed data processing. These techniques

@@ -91,14 +91,12 @@ A workflow can execute successfully and still be scientifically invalid. Snakema
 - **Outbound access:** HTTP(S) package, pipeline, test-data, and image downloads
   use the managed proxy `http://proxy.ikim.uk-essen.de:3128`. Never embed
   credentials or tokens in workflow files.
-- **Nextflow and nf-core — not yet released:** RCC is preparing a pinned
-  `rcc-nextflow` launcher and institutional Slurm configuration. The controller
-  will run only on an RCC interactive node (a `shellhost`); compute workers will execute
+- **Nextflow and nf-core — ready now:** RCC provides a pinned `rcc-nextflow`
+  launcher and institutional Slurm configuration. The controller runs only on
+  an RCC interactive node (a `shellhost`); compute workers execute
   generated tasks through Slurm without their own Java or Nextflow install.
-  The bounded example later in this tutorial is preparation material and fails
-  closed until `rcc-nextflow`, `apptainer`, and `sbatch` are available.
-- **Nextflow work and containers:** when the service is released,
-  resume-critical `NXF_WORK`, required container images, and retained output
+- **Nextflow work and containers:** resume-critical `NXF_WORK`, required
+  container images, and retained output
   must use shared project storage visible at the same path from the shellhost
   and workers. Node-local `/local` is only for explicitly labelled task
   scratch; Apptainer is the supported worker runtime.
@@ -1121,9 +1119,8 @@ A technically successful workflow can use the wrong samples, reference, model, o
 
 # Optional follow-up: a bounded nf-core/Nextflow run
 
-> **Not yet released:** this section documents the planned RCC
-> Nextflow-to-Slurm service. Do not run it until RCC announces the pinned
-> `rcc-nextflow` launcher and institutional configuration.
+> **Ready now:** use only the pinned `rcc-nextflow` launcher and institutional
+> configuration on an RCC shellhost or documented interactive allocation.
 
 nf-core publishes community-maintained analysis pipelines implemented in
 Nextflow. This is a complementary model rather than a replacement for the
@@ -1133,7 +1130,7 @@ for local uniformity.
 
 The copyable class materials under `docs/classes/examples/nf-core/` contain:
 
-- `run-demo.sh`, which requires the future `rcc-nextflow` launcher, pins
+- `run-demo.sh`, which requires the managed `rcc-nextflow` launcher, pins
   `nf-core/demo` release `1.2.0`, and selects the public `test` data plus
   Apptainer profiles;
 - `rcc-test.config`, which submits processes through Slurm, selects
@@ -1143,7 +1140,7 @@ The copyable class materials under `docs/classes/examples/nf-core/` contain:
   project, input, reference, result, and run placeholders must all be reviewed
   before use.
 
-After release, run the demo only from an RCC interactive node (a `shellhost`), within an
+Run the demo only from an RCC interactive node (a `shellhost`), within an
 approved shared project path, and while RCC's outbound proxy path is available.
 The launch directory, Nextflow work directory, required Apptainer images, and
 durable outputs must be shared between the shellhost and Slurm

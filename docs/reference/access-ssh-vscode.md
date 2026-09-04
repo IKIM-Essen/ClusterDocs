@@ -4,6 +4,13 @@ This guide collects the practical setup details from the earlier ClusterDocs
 site. Complete [Class 1](../course/class-01-safe-access.md) first so that the
 credential and host-verification rules are clear.
 
+For a new workstation, the shorter
+[macOS](../getting-started/macos.md) and
+[Windows 11](../getting-started/windows.md) checklists reach the same safe
+configuration with fewer branches. The
+[jump-host and shell-host page](../concepts/jump-shell-compute.md) explains why
+the configuration contains two hosts even though users type one destination.
+
 > **Recommended for most users:** use **VS Code with Remote - SSH** as your
 > everyday interface for writing code, editing configuration, using Git,
 > reading logs, and preparing analyses. Use the RCC transfer service for large
