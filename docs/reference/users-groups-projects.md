@@ -5,8 +5,9 @@ research data. A **primary group** says where a user belongs; a **project**
 brings selected users together so they can exchange data across group
 boundaries.
 
-> **Service status:** RCC Admin project and membership workflows are **ready
-> now**. Project Samba shares are **ready now** for approved projects. Project
+> **Service status:** RCC Admin project and membership workflows are an
+> **invite-only pilot**. Project Samba shares are **ready now** for approved
+> projects. Project
 > vhosts, Ardia integration, and RCC-to-Coscine transfer are **not yet
 > released**.
 
