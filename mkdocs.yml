@@ -11,6 +11,7 @@ theme:
 nav:
   - Home: index.md
   - Start here:
+      - Request and activate an RCC account: getting-started/account-enrollment.md
       - Expedition Light - first 15 minutes: getting-started/index.md
       - macOS setup: getting-started/macos.md
       - Windows 11 setup: getting-started/windows.md
