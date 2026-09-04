@@ -7,7 +7,8 @@ DOCS = ROOT / "docs"
 
 
 def normalized(path):
-    return " ".join(path.read_text(encoding="utf-8").lower().split())
+    text = " ".join(path.read_text(encoding="utf-8").lower().split())
+    return text.replace("> ", "").replace("**", "")
 
 
 class RccAdminEnrollmentDocsTests(unittest.TestCase):
@@ -16,7 +17,7 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
         for statement in (
             "invite-only pilot",
             "signed link is valid for seven days",
-            "do **not** choose an rcc username, upload an ssh key, or request a project",
+            "do not choose an rcc username, upload an ssh key, or request a project",
             "does not email activation secrets",
             "project membership is requested separately after activation",
             "stacked directly on #1672",
@@ -37,9 +38,11 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
             paragraphs = page.read_text(encoding="utf-8").lower().split("\n\n")
             for paragraph in paragraphs:
                 if "rcc admin" in paragraph and "ready now" in paragraph:
+                    paragraph = " ".join(paragraph.split()).replace("> ", "")
+                    paragraph = paragraph.replace("**", "")
                     self.assertIn(
                         "invite-only pilot",
-                        " ".join(paragraph.split()),
+                        paragraph,
                         f"{page.relative_to(ROOT)} mixes RCC Admin with a ready-now claim without marking the pilot",
                     )
 
