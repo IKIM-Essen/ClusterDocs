@@ -1,13 +1,17 @@
 # Class 1: safe access to RCC
 
 !!! tip "New workstation or first RCC experience?"
-    Start with [RCC Expedition](../rcc-expedition.md). It is a self-contained
-    local onboarding course for Windows 11 and current macOS covering
+    Complete [RCC Expedition Light](../getting-started/index.md) for the
+    required first-use path. Use [RCC Expedition](../rcc-expedition.md) for a
+    self-contained local course covering
     workstation security/patching, SSH/Linux basics, the research/clinical
     network boundary, Slurm, storage, data transfer, and reproducible workflows.
 
     The course is **datensparsam** and does not report learner progress to RCC.
     This page remains the conventional step-by-step reference tutorial.
+
+Before configuring SSH, read the one-page explanation of the
+[jump host, shell host, and Slurm workers](../concepts/jump-shell-compute.md).
 
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 8 min video</p>

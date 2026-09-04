@@ -2,6 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 import unittest
+import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +28,7 @@ class ExpeditionReleaseTests(unittest.TestCase):
             (ROOT / "config/public.yml").read_text(),
         )
         self.assertIn(
-            "assets/downloads/RCC-Expedition-USB-v1.0.0.zip",
+            "assets/downloads/RCC-Expedition-USB-v1.0.1.zip",
             (ROOT / "docs/index.md").read_text(),
         )
 
@@ -38,6 +39,17 @@ class ExpeditionReleaseTests(unittest.TestCase):
             self.assertIn("[RCC Expedition](rcc-expedition.md)", opening, relative)
             self.assertIn("Windows 11", opening, relative)
             self.assertIn("macOS", opening, relative)
+
+    def test_expedition_can_start_without_installing(self):
+        archive = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.1.zip"
+        with zipfile.ZipFile(archive) as release:
+            start = release.read("START HERE.html").decode("utf-8")
+            readme = release.read("READ ME FIRST.txt").decode("utf-8")
+
+        self.assertIn('href="payload/course/index.html"', start)
+        self.assertIn("Start now — no installation", start)
+        self.assertIn("FASTEST START — NO INSTALLATION", readme)
+        self.assertIn("Optional: add a Desktop shortcut", start)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,13 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.0.zip"
+SOURCE_ARCHIVE = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.0.zip"
+ARCHIVE = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.1.zip"
+OVERLAY_DIR = ROOT / "expedition-overlays"
+OVERLAYS = {
+    "READ ME FIRST.txt": OVERLAY_DIR / "READ ME FIRST.txt",
+    "START HERE.html": OVERLAY_DIR / "START HERE.html",
+}
 CANONICAL_BASE = "https://ikim-essen.github.io/ClusterDocs/"
 ALTERNATE_BASE = "https://docs.ikim.uk-essen.de/"
 REPLACEMENTS = (
@@ -35,13 +41,14 @@ def sha256(data: bytes) -> str:
 
 
 def main() -> None:
-    with zipfile.ZipFile(ARCHIVE) as source:
+    with zipfile.ZipFile(SOURCE_ARCHIVE) as source:
         infos = source.infolist()
         payload: dict[str, bytes] = {}
         for info in infos:
             if info.filename == "SHA256SUMS":
                 continue
-            data = source.read(info.filename)
+            overlay = OVERLAYS.get(info.filename)
+            data = overlay.read_bytes() if overlay else source.read(info.filename)
             if Path(info.filename).suffix.lower() in TEXT_SUFFIXES:
                 text = data.decode("utf-8")
                 for old, new in REPLACEMENTS:

@@ -10,6 +10,13 @@ common Slurm states/errors, diagnose supported environment/container problems,
 explain transfer/storage guidance, prepare project requests, and escalate with
 useful evidence.
 
+It can also help convert sanitized shell scripts or command collections into a
+dry-run-capable Snakemake or Nextflow workflow with explicit inputs, outputs,
+resources, tests, and a pinned Apptainer runtime. Start with the
+[safe conversion handoff](../paths/from-shell-scripts.md#7-ask-for-conversion-help-with-a-safe-handoff).
+Scientific method, parameters, reference data, and interpretation remain the
+project team's responsibility.
+
 ## Guardians
 
 Guardians observe scheduler, service, hardware, storage, and policy state.

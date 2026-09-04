@@ -1,5 +1,10 @@
 # Class 2: reproducible scientific workflows
 
+> **Starting from scripts or copied commands?** Use the
+> [script-to-workflow conversion guide](../paths/from-shell-scripts.md)
+> first. It turns the current analysis into explicit inputs, outputs,
+> software, resources, and a small test before choosing Snakemake or Nextflow.
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 9 min video</p>
   <h2>Watch the class first</h2>
@@ -43,7 +48,7 @@ workflow caches from search and file watching.
 Use a workflow engine to describe dependencies and submit scientific work
 through Slurm. Do not keep a large workflow running as ordinary processes on
 an SSH gateway. Class 6 teaches the ready-now managed Snakemake path; Class 7
-documents the not-yet-released managed Nextflow path.
+teaches the ready-now managed Nextflow path.
 
 The first safe question is always a non-mutating dry run. For Snakemake:
 

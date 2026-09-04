@@ -16,7 +16,7 @@ result pipeline.
 | [Class 3](../course/class-03-performance.md) | CPU, RAM, GPU, and efficient I/O | Avoid slow or disruptive analysis patterns |
 | [Class 5](../course/class-05-slurm.md) | Slurm jobs and resource requests | Run computation on managed workers |
 | [Class 6](../course/class-06-snakemake.md) | Ready-now managed Snakemake | Submit reproducible rule jobs through Slurm |
-| [Class 7](../course/class-07-nextflow.md) | Planned Nextflow and nf-core | Prepare for the not-yet-released managed service |
+| [Class 7](../course/class-07-nextflow.md) | Ready-now managed Nextflow and nf-core | Run reviewed pipelines through Slurm and Apptainer |
 | [Class 13](../course/class-13-biomedical-data-privacy.md) | Biomedical-data governance | Confirm the project and data are suitable for RCC |
 | [Class 14](../course/class-14-efficient-io.md) | Local staging and safe publication | Keep active I/O off shared storage when measurement supports it |
 | [Class 16](../course/class-16-wet-lab-data-workflows.md) | Wet-lab instrument handoff | Preserve authoritative acquisition data and verify transfer before analysis |
@@ -44,6 +44,11 @@ Use [Class 7](../course/class-07-nextflow.md) when a reviewed community
 workflow uses Nextflow or nf-core.
 Use [Class 4](../course/class-04-containers.md) when an immutable runtime is
 more appropriate than an environment containing many small files.
+
+If the analysis currently exists as shell history, scripts, or a document of
+commands, follow the
+[script-to-workflow conversion guide](from-shell-scripts.md)
+before scaling it.
 
 Keep durable inputs and final outputs in approved project storage. Stage
 high-I/O intermediates into job-local scratch and retain code, environments,

@@ -21,13 +21,16 @@ sustained work from the integrated terminal through Slurm.
 | [Class 2](../course/class-02-workflows.md) | Project structure, Git, and environments | Make changes reviewable and repeatable |
 | [Class 5](../course/class-05-slurm.md) | Slurm execution patterns | Keep sustained work off login hosts |
 | [Class 6](../course/class-06-snakemake.md) | Managed Snakemake | Turn dependency graphs into bounded Slurm jobs |
-| [Class 7](../course/class-07-nextflow.md) | Planned Nextflow and nf-core | Prepare reviewed pipelines for the not-yet-released service |
+| [Class 7](../course/class-07-nextflow.md) | Ready-now managed Nextflow and nf-core | Run reviewed pipelines through Slurm and Apptainer |
 | [Class 4](../course/class-04-containers.md) | Immutable Apptainer images | Package reviewed runtimes reproducibly |
 
 ## 2. Choose the software shape
 
 The optional [account setup patterns](../reference/account-starter-setups.md)
 describe reviewable shell, prompt, Conda, and bounded Shiny practices.
+
+For existing scripts or command collections, start with the
+[script-to-workflow conversion guide](from-shell-scripts.md).
 
 | Goal | Continue with |
 |---|---|

@@ -6,15 +6,34 @@
     through SSH, Linux, Slurm, storage, data boundaries, and reproducible RCC
     workflows.
 
-[**Download RCC Expedition v1.0.0**](assets/downloads/RCC-Expedition-USB-v1.0.0.zip)
+    Complete the required
+    [RCC Expedition Light](getting-started/index.md) first. Continue here for
+    optional deeper training after the first connection works.
+
+[**Download RCC Expedition v1.0.1**](assets/downloads/RCC-Expedition-USB-v1.0.1.zip)
 
 SHA-256:
 
 ```text
-680cc16b4d226de59e4dd7c6e0468ac3e9137b3bb7d438b94ad0c93152aa18c7
+0cc1b6ad446db85d276dd7634f1fddca1c6029c3838191d404870a9912278780
 ```
 
-[Checksum file](assets/downloads/RCC-Expedition-USB-v1.0.0.sha256)
+[Checksum file](assets/downloads/RCC-Expedition-USB-v1.0.1.sha256)
+
+## Start without installing anything
+
+1. Download the ZIP.
+2. Extract the whole ZIP to a normal local folder.
+3. Open `START HERE.html`.
+4. Choose **Open the course now**.
+
+The course runs from that folder in the browser. Keep the extracted folder
+until you finish. No administrator access, command line, Python, package
+manager, or network connection is required to start.
+
+The optional installer only adds a Desktop launcher and local readiness
+helpers. You can add it later from `START HERE.html`; it is not required to
+read or complete the course.
 
 ## Privacy: datensparsam by design
 
@@ -138,15 +157,12 @@ agent; use fully synthetic data instead.
 
 Start with [coding agents and your data](concepts/how-rcc-works.md).
 
-## Install
+## Optional integrity check
 
-1. Download the ZIP.
-2. Verify the SHA-256 checksum where practical.
-3. Extract it to a local directory, or copy the extracted contents to a trusted
-   USB key.
-4. Open `START HERE.html`.
-5. Follow the **Windows 11** or **macOS** path.
-6. Continue in the local course.
+The Desktop-helper installer verifies every packaged file before copying it.
+You can also compare the downloaded ZIP with the SHA-256 value shown above.
+Do not bypass Gatekeeper, SmartScreen, Windows Security, or antivirus to start
+the course.
 
 ## Relationship to ClusterDocs
 

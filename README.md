@@ -1,6 +1,12 @@
 # RCC onboarding curriculum for biomedical researchers
 
-This staging package contains an eighteen-class English-language onboarding curriculum for researchers and technical staff who are new to Linux clusters, distributed workflows, Slurm, VS Code, performance engineering, Apptainer, governed project web applications, efficient local I/O, RCC storage architecture, wet-lab instrument-data handoff, research-data lifecycle planning, and safe use of coding agents.
+This staging package contains RCC Expedition Light as the required first-use
+path plus an eighteen-class English-language onboarding curriculum for deeper
+optional training. It serves researchers and technical staff who are new to
+Linux clusters, distributed workflows, Slurm, VS Code, performance
+engineering, Apptainer, governed project web applications, efficient local
+I/O, RCC storage architecture, wet-lab instrument-data handoff, research-data
+lifecycle planning, and safe use of coding agents.
 
 ## Curriculum
 

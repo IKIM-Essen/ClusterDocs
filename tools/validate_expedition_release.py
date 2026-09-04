@@ -10,8 +10,11 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.0.zip"
+ARCHIVE = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.1.zip"
 CHECKSUM = ARCHIVE.with_suffix(".sha256")
+PRESERVED_RELEASES = (
+    ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.0.zip",
+)
 PRODUCTION_DOCS = "https://ikim-essen.github.io/ClusterDocs/"
 FORBIDDEN_DOCS = (
     "https://ikim-essen.github.io/clusterdocs-ng/",
@@ -41,9 +44,17 @@ def parse_checksum_lines(text: str) -> dict[str, str]:
 
 def main() -> None:
     expected_downloads = {ARCHIVE.name, CHECKSUM.name}
+    for preserved in PRESERVED_RELEASES:
+        expected_downloads.update({preserved.name, preserved.with_suffix(".sha256").name})
     actual_downloads = {path.name for path in ARCHIVE.parent.iterdir() if path.is_file()}
     if actual_downloads != expected_downloads:
         raise SystemExit("RCC Expedition downloads directory contains an unexpected file set")
+
+    for preserved in PRESERVED_RELEASES:
+        preserved_checksum = preserved.with_suffix(".sha256")
+        preserved_outer = parse_checksum_lines(preserved_checksum.read_text())
+        if preserved_outer != {preserved.name: digest(preserved.read_bytes())}:
+            raise SystemExit(f"preserved RCC Expedition checksum failed: {preserved.name}")
 
     expected_outer = parse_checksum_lines(CHECKSUM.read_text())
     archive_digest = digest(ARCHIVE.read_bytes())

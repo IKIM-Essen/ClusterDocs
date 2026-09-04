@@ -10,12 +10,20 @@ theme:
     - content.code.copy
 nav:
   - Home: index.md
+  - Start here:
+      - Expedition Light - first 15 minutes: getting-started/index.md
+      - macOS setup: getting-started/macos.md
+      - Windows 11 setup: getting-started/windows.md
+      - VS Code with RCC: getting-started/vscode.md
+      - Jump host, shell host, and workers: concepts/jump-shell-compute.md
+      - What changed from the old cluster: getting-started/what-changed.md
   - ClusterDocs NG TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
+      - Convert shell scripts into workflows: paths/from-shell-scripts.md
   - Course:
       - Course overview: course/index.md
       - Class 1 - Safe access: course/class-01-safe-access.md

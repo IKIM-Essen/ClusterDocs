@@ -3,8 +3,8 @@
 Current release:
 
 ```text
-RCC-Expedition-USB-v1.0.0.zip
-SHA-256 680cc16b4d226de59e4dd7c6e0468ac3e9137b3bb7d438b94ad0c93152aa18c7
+RCC-Expedition-USB-v1.0.1.zip
+SHA-256 0cc1b6ad446db85d276dd7634f1fddca1c6029c3838191d404870a9912278780
 ```
 
 ## Publication policy
@@ -41,3 +41,13 @@ Commit the resulting ZIP, outer checksum, and the checksum printed on the
 public Expedition page together. The repository validator checks the outer
 digest, every inner digest, archive path safety, and embedded documentation
 origins.
+
+`expedition-overlays/` contains the newcomer-facing `START HERE.html` and
+`READ ME FIRST.txt`. The deterministic rebuild replaces those two files before
+recomputing every inner checksum, so the public archive cannot drift from the
+reviewable source overlays.
+
+The original v1.0.0 ZIP and checksum remain in the download directory so an
+existing versioned link continues to resolve. Never replace an already
+published versioned archive; publish usability or content changes under a new
+version.
