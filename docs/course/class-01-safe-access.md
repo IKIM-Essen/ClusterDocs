@@ -28,6 +28,7 @@ Before configuring SSH, read the one-page explanation of the
 By the end of this class you can:
 
 - explain the difference between your SSH private key and the server host key;
+- explain why an RCC browser passkey and an SSH key are different credentials;
 - verify that an SSH client is installed;
 - identify a suitable RCC public key without displaying the private key;
 - validate the RCC SSH configuration before connecting;
@@ -46,6 +47,25 @@ instructions. A changed identity is not fixed by disabling checking; stop and
 confirm it through an independent institutional channel.
 
 Do not email private keys, copy a colleague's key, register one key for several human accounts, or share a browser session. When a colleague needs access, add their own account to the project.
+
+### Browser sign-in and SSH are separate credentials
+
+Your RCC username is one human identity, but RCC can authenticate that identity
+in different ways:
+
+- **web services** use the RCC sign-in/SSO flow and may use a password, passkey,
+  or another enrolled factor;
+- **SSH and VS Code Remote SSH** use your registered SSH public key;
+- **account recovery or sensitive account actions** may use separate step-up or
+  recovery credentials.
+
+A YubiKey can hold more than one kind of credential. A browser/WebAuthn passkey
+and an OpenSSH `*-sk` key are not the same credential merely because they are on
+the same physical key.
+
+Read [How RCC authentication fits together](../reference/authentication-lifecycle.md)
+before adding, replacing, or deleting passkeys, YubiKey credentials, recovery
+codes, or SSH keys.
 
 ## First-time client setup
 
@@ -147,9 +167,14 @@ contains copyable settings and the restored ClusterDocs performance advice.
 
 ## Web data transfer
 
-Inside the hospital network, use your individual RCC username and normal sign-in flow. External access may require an additional factor. Do not solve access problems by using a shared project account.
+Inside the hospital network, use your individual RCC username and normal RCC
+sign-in flow. External access may require an additional factor. Do not solve
+access problems by using a shared project account.
 
-The transfer portal exposes project data, not arbitrary server filesystems. Confirm the selected project and destination before uploading.
+The Files service exposes project-facing data, not arbitrary server filesystems.
+Confirm the selected project and destination before uploading. Read
+[RCC Files](../concepts/rcc-files.md) for the browser/SFTP distinction and
+project-data boundary.
 
 > **Reference companion:** Use [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
 > for account-request details, diagnostics, Remote SSH, and light SSHFS mounts.
@@ -177,9 +202,18 @@ and contact RCC support if they do not match.
 No. Each human account should have individually attributable credentials. Project access is granted through membership, not credential sharing.
 </details>
 
+<details><summary>Is my RCC browser passkey the same as my SSH key?</summary>
+
+No. They can live on the same physical authenticator, but WebAuthn/passkey
+credentials and OpenSSH keys are separate credentials used by different
+protocols.
+</details>
+
 ## Completion gate
 
 - The local readiness gate reports SSH and configuration as ready.
 - A single live test succeeds.
 - VS Code can open the same configured RCC target.
-- You can explain where your private key is stored without showing it.
+- You can explain where your private SSH key is stored without showing it.
+- You can explain why web sign-in credentials, recovery credentials, and SSH
+  keys are related to one RCC identity but are not interchangeable.

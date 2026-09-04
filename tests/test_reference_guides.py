@@ -22,6 +22,9 @@ class ReferenceGuideTests(unittest.TestCase):
             "troubleshooting.md",
             "resources.md",
             "ai-data-science.md",
+            "authentication-lifecycle.md",
+            "publications-and-rcc-credit.md",
+            "usage-accounting.md",
         }
         self.assertEqual(expected, {p.name for p in REF.glob("*.md")})
 
