@@ -70,6 +70,8 @@ which newer surfaces are documented before release.
 
 ## Shared foundation
 
+- Need an RCC account? Enrollment is currently an **invite-only pilot**; read
+  [Request and activate an RCC account](getting-started/account-enrollment.md).
 - Need the complete short version first? Read the
   [ClusterDocs NG TL;DR](tldr.md).
 - Unsure which RCC surface to use? Start with the
