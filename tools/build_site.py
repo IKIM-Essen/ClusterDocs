@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
+ ('Start here','Request and activate an RCC account','getting-started/account-enrollment.md'),
  ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
  ('Start here','macOS setup','getting-started/macos.md'),
  ('Start here','Windows 11 setup','getting-started/windows.md'),
