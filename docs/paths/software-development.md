@@ -4,8 +4,9 @@ Use this path when your main goal is to build reproducible research software,
 workflow automation, containers, protected applications, Shiny interfaces, or
 model-backed services.
 
-> **Service status:** RCC Admin, RCC workers, and Slurm workflows are **ready
-> now**. The newer general RCC-authenticated Gitea access plane, Workbench, and
+> **Service status:** RCC Admin enrollment and approval are an **invite-only
+> pilot**. RCC workers and Slurm workflows are **ready now**. The newer general
+> RCC-authenticated Gitea access plane, Workbench, and
 > project-vhost hosting are rollout-gated/not yet released as general user
 > surfaces; the linked pages document their stable product boundary without
 > claiming activation.

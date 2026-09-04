@@ -4,9 +4,9 @@ Start by deciding **who should receive the data** and **why they are allowed to
 receive it**. The right mechanism differs for members of your project, another
 RCC group, and someone outside RCC.
 
-> **Service status:** RCC Admin and project membership are **ready now**.
-> Project vhosts and RCC-to-Coscine transfer are **not yet released**; do not
-> select either as a current sharing route.
+> **Service status:** RCC Admin and project-membership self-service are an
+> **invite-only pilot**. Project vhosts and RCC-to-Coscine transfer are **not
+> yet released**; do not select either as a current sharing route.
 
 | Audience | Recommended route | Avoid |
 |---|---|---|
@@ -20,11 +20,11 @@ cover the disclosure. Technical access does not by itself authorize sharing.
 
 ## The recommended model: a project with a shared Unix group
 
-Use the ready RCC Admin self-administration and primary-approver workflow to
-request a project that identifies the responsible owner, purpose, approved
-members, storage location, and a **shared Unix group**. RCC adds each named
-member to that group. Members can then work in the supplied project path,
-normally under:
+During the pilot, use the approved RCC Admin invitation or the established
+support route to request a project that identifies the responsible owner,
+purpose, approved members, storage location, and a **shared Unix group**. RCC
+adds each named member to that group. Members can then work in the supplied
+project path, normally under:
 
 ```text
 /projects/<project>/

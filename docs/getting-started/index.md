@@ -3,6 +3,10 @@
 This is the shortest route from a new computer to a safe RCC shell. You do not
 need to understand the cluster before you begin.
 
+Need an account first? Enrollment is currently an **invite-only pilot**. Follow
+[Request and activate an RCC account](account-enrollment.md) before this
+connection checklist.
+
 Expedition Light is the required first-use path for new users. It deliberately
 stops after safe access, the basic host and storage model, VS Code, and a small
 Slurm check. The full RCC Expedition is optional deeper training and introduces

@@ -18,9 +18,9 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         config = yaml.safe_load((ROOT / "config/public.yml").read_text())
         self.assertEqual(
             {
-                "rcc_admin": "ready",
-                "rcc_admin_self_administration": "ready",
-                "rcc_admin_primary_approval": "ready",
+                "rcc_admin": "internal_pilot",
+                "rcc_admin_self_administration": "internal_pilot",
+                "rcc_admin_primary_approval": "invite_only_pilot",
                 "rcc_workers": "ready",
                 "samba_project_shares": "ready",
                 "headscale_pikvm_access": "not_yet_released",
@@ -78,12 +78,12 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                 f"{page.relative_to(ROOT)} mentions Samba without its ready status",
             )
 
-    def test_rcc_admin_and_workers_are_not_described_as_pending(self):
+    def test_rcc_admin_pilot_and_workers_have_distinct_statuses(self):
         access = normalized(DOCS / "reference/access-ssh-vscode.md")
         analysis = normalized(DOCS / "paths/data-analysis.md")
-        self.assertIn("**rcc admin is ready now**", access)
+        self.assertIn("**invite-only pilot**", access)
+        self.assertNotIn("rcc admin is ready now", access)
         self.assertIn("rcc workers and slurm analysis are **ready now**", analysis)
-        self.assertNotIn("rcc admin request flow when it is available", access)
 
     def test_overview_pages_do_not_duplicate_the_service_availability_table(self):
         for page in (DOCS / "index.md", DOCS / "tldr.md"):

@@ -18,7 +18,7 @@ surface does not create a second account or a second copy of your project.
 | **Documentation** | learn RCC and look up procedures | current user path |
 | **Workbench** | get an interactive shell, notebook, or development session | **not yet released** |
 | **Assistant** | ask for explanations or bounded RCC help | availability depends on the current RCC service/project |
-| **Admin / My RCC** | manage your account, project membership, and authorized project actions | current RCC surface |
+| **Admin / My RCC** | manage your account, project membership, and authorized project actions | **invite-only pilot** |
 | **RCC Analysis** | run a repeatable governed scientific workflow | **not yet released; RCC 23 product** |
 
 Open OnDemand is retired from the current RCC product model. Do not use old OOD
@@ -79,9 +79,12 @@ and [coding agents and your data](how-rcc-works.md).
 
 ## Admin / My RCC: identity and project governance
 
-Use the account/project surface for actions such as account security, project
-membership, and project-service requests that your role is authorized to make.
-Finding an action in the interface does not mean every user may execute it.
+RCC Admin/My RCC is currently an **invite-only pilot**, not a general public
+signup surface. New users begin with the
+[account enrollment guide](../getting-started/account-enrollment.md). After
+activation, use My RCC for account security, optional SSH keys, and authorized
+project actions. Finding an action in the interface does not mean every user
+may execute it.
 
 Read [Projects and supported actions](projects-and-capabilities.md) for the
 plain-language capability model.

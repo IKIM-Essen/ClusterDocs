@@ -19,26 +19,18 @@ the configuration contains two hosts even though users type one destination.
 
 ## Request an RCC account
 
-**RCC Admin is ready now**, including self-administration and the
-primary-approver workflow. Use RCC Admin for the account or membership request.
-If your project uses a coordinated onboarding process, prepare the following
-for the responsible project coordinator and primary approver:
+RCC Admin enrollment is currently an **invite-only pilot**, not general public
+signup. Start with [Request and activate an RCC account](../getting-started/account-enrollment.md)
+and use only the signed link supplied by your primary-group approver.
 
-- first and last name;
-- institutional email address;
-- project or working group;
-- sponsor or project lead; and
-- the **public** SSH key, never the private key.
+The enrollment request collects identity and contact information. It does not
+ask you to choose a project or upload an SSH key. After approval and activation,
+add an optional SSH public key in My RCC if you need terminal or VS Code access.
 
-Every researcher receives an individual account. Project membership replaces
-shared accounts and shared credentials.
-
-Every user also has exactly one primary group. Internal users are assigned to
-their organizational group; external users are assigned to `collab`. The
-primary group records affiliation, while explicit project memberships grant
-access to the shared spaces where users from different groups exchange data.
-See [Users, groups, and projects](users-groups-projects.md) for the complete
-model.
+Every researcher receives an individual account. Every user also has exactly
+one organizational primary group; external users use `collab`. Project
+memberships are separate and replace shared accounts or credentials. See
+[Users, groups, and projects](users-groups-projects.md) for the complete model.
 
 ## Create an SSH key
 

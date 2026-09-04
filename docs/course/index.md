@@ -2,9 +2,10 @@
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
-> **Availability note:** RCC Admin, RCC workers/Slurm, managed Nextflow-to-Slurm
-> support, and project Samba shares are **ready now**. Project vhosts, Ardia
-> integration, and RCC-to-Coscine transfer are **not yet released**. The
+> **Availability note:** RCC Admin enrollment and approval are an **invite-only
+> pilot**. RCC workers/Slurm, managed Nextflow-to-Slurm support, and project
+> Samba shares are **ready now**. Project vhosts, Ardia integration, and
+> RCC-to-Coscine transfer are **not yet released**. The
 > Class 8 (project vhosts), Class 17 (RCC-to-Coscine), and
 > the Ardia parts of Class 16 are preparation for those future services.
 
