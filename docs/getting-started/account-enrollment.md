@@ -2,7 +2,9 @@
 
 > **Current availability:** enrollment is an **invite-only pilot**, not general
 > public signup. RCC Admin and My RCC must complete the deployment gates tracked
-> in RCC PR #1672 and the directly stacked PR #1674 before the pilot expands.
+> in [RCC PR #1672](https://github.com/IKIM-Essen/rcc/pull/1672) and
+> [PR #1674](https://github.com/IKIM-Essen/rcc/pull/1674), which is stacked
+> directly on #1672, before the pilot expands.
 
 ## Before you begin
 
