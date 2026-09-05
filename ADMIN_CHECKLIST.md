@@ -92,6 +92,7 @@ acceptance gates.
 
 - [x] Pin the manual Gitea production workflow to `refs/heads/clusterdocs-3` and reject the retired `clusterdocs-ng` production source.
 - [x] Keep GitHub Actions as manual validation fallback only and deployment-credential free.
+- [ ] Choose and record the final ClusterDocs 3 release version; do not infer it solely from the branch name.
 - [ ] Complete the fresh ClusterDocs 3 adversarial expert review in `meta/EXPERT_REVIEW_GUIDE.md`.
 - [ ] Record the expert review as `completed` only after blocker/major findings are resolved or explicitly accepted.
 - [ ] Record zero-SSH novice browser acceptance as `completed` before broad exposure.

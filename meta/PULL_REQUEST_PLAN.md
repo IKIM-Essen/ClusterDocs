@@ -1,35 +1,64 @@
-# ClusterDocs NG development and promotion plan
+# ClusterDocs 3 integration and promotion plan
 
-## Repository recommendation
+`clusterdocs-3` is the future release line in the existing
+`IKIM-Essen/ClusterDocs` repository. Do not recreate the retired separate-NG
+promotion model and do not publish production from `clusterdocs-ng`.
 
-Develop the new curriculum in a separate `clusterdocs-ng` staging repository. Do not put public training material into the RCC infrastructure repository. The RCC repository remains authoritative for operational policy and tested examples; ClusterDocs NG imports reviewed, learner-safe copies with a source release reference.
+## Integration principle
 
-After expert and novice testing plus production approval, merge the Markdown,
-exercises, tests, and build workflow into the existing ClusterDocs repository.
-Publish large videos as institutional media or release assets. Archive the NG
-repository read-only after promotion.
+Keep one coherent candidate and integrate changes in small, reviewable waves.
+Every wave must preserve:
 
-## Pull request sequence
+- task-first/browser-first onboarding for ordinary researchers;
+- complete advanced capability discovery for experienced users;
+- explicit release-state truth for staged features;
+- project-scoped identity/authorization across browser, CLI, API, and agents;
+- the data-blind-by-default coding-agent boundary;
+- Slurm as the governed compute authority;
+- safe instrument/project/lifecycle boundaries; and
+- fail-closed publication from the exact `clusterdocs-3` commit.
 
-1. **Course shell and publication boundary**: eighteen-class navigation,
-   staging build, public-information linter, and current institutional
-   connection guidance.
-2. **Class 1**: Windows/macOS SSH and VS Code gates, one bounded credential test, web-transfer guidance.
-3. **Classes 2-4**: reproducible workflows, performance/I/O and Apptainer.
-4. **Class 5**: learner-safe Slurm Bash, Snakemake and Apptainer acceptance patterns.
-5. **Classes 6–7**: managed Snakemake and planned Nextflow/Slurm workflows.
-6. **Class 8**: governed vhost workflow and protected application example.
-7. **Classes 9–12**: Python, R, Jupyter, Shiny and notebook-to-service workflows.
-8. **Class 13**: biomedical-data privacy, legal resources, controlled-enclave scenarios, and project-governance training.
-9. **Media and accessibility**: remastered audio, captions, transcripts and media publication manifest.
-10. **Rollout promotion**: replace staging values, run production validation, publish user messages, merge into ClusterDocs proper.
+## Recommended change waves
 
-## Required acceptance tests
+1. **Research front door and navigation** — Files, Analysis, account/project
+   actions, advanced path, and capability overview.
+2. **Analysis and workflow model** — Notebook/Workflow convergence, provenance,
+   idempotent submission, and resource-efficiency guidance.
+3. **AI/agent model** — data-blind default, synthetic fixtures, bounded
+   diagnostics, explicit data-near exceptions, and capability authorization.
+4. **Instrument/storage/lifecycle model** — sequencers/microscopes/other devices,
+   project POSIX/S3/DataLad, scratch, Coscine status, and domain applications
+   such as SeqLab.
+5. **Release and operations** — deterministic shell, governed service endpoints,
+   v3 review receipts, accessibility, media, exact-source deployment, and
+   rollback.
 
-- One novice Windows user and one novice macOS user complete Class 1 without verbal assistance.
-- Readiness scripts never print private-key material and make at most one live connection attempt.
-- The three Slurm gates execute sequentially with fixed small limits.
-- The vhost example rejects direct access, wrong project membership and arbitrary paths.
-- Production publication fails if private IPs, physical hostnames, administrative control-plane details or unresolved placeholders appear.
-- A medical professional reviews readability; an IT-affine user reviews the technical path.
-- Videos and captions are reviewed for speech intelligibility and accidental terminal or infrastructure disclosure.
+Each wave should update regression tests with the product contract rather than
+retaining assertions whose only purpose was to preserve the previous NG mental
+model.
+
+## Acceptance closure before broad exposure
+
+The candidate is not broadly promotable until all of the following are recorded:
+
+- fresh ClusterDocs 3 adversarial expert review;
+- zero-SSH naive-user browser acceptance against the staged candidate;
+- separate advanced-user acceptance for SSH/VS Code/Slurm/containers/GPU and
+  workflow development;
+- institutional/privacy/accessibility/operational checklist closure;
+- required media review and online verification; and
+- a final release-version decision and production-status change.
+
+A small controlled pilot may precede closure to generate real evidence. It does
+not substitute for the acceptance gates.
+
+## Production source contract
+
+The manually dispatched Gitea production workflow accepts only
+`refs/heads/clusterdocs-3`, verifies the exact source SHA and clean worktree,
+runs the fail-closed gates, generates the site and release receipt, and updates
+`gh-pages` without force. GitHub Actions remains manual validation fallback only.
+
+The final release should be represented by the exact source commit and generated
+`assets/release.json`; historical checksum/audit artifacts from earlier NG work
+must not be mistaken for the ClusterDocs 3 source-of-truth receipt.
