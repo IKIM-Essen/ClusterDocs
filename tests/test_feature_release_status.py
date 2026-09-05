@@ -18,7 +18,11 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         config = yaml.safe_load((ROOT / "config/public.yml").read_text())
         self.assertEqual(
             {
+                "rcc_home": "ready",
+                "files": "ready",
+                "rcc_analysis": "not_yet_released",
                 "rcc_admin": "ready",
+                "my_rcc": "ready",
                 "rcc_admin_self_administration": "ready",
                 "rcc_admin_primary_approval": "ready",
                 "rcc_workers": "ready",
@@ -31,6 +35,18 @@ class FeatureReleaseStatusTests(unittest.TestCase):
             },
             config["feature_status"],
         )
+
+    def test_release_bundle_is_exact_and_analysis_blocks_it_today(self):
+        config = yaml.safe_load((ROOT / "config/public.yml").read_text())
+        self.assertEqual(
+            "all_required_surfaces_ready_before_publication",
+            config["release_bundle"]["policy"],
+        )
+        self.assertEqual(
+            ["rcc_home", "files", "rcc_analysis", "rcc_admin", "my_rcc"],
+            config["release_bundle"]["required_surfaces"],
+        )
+        self.assertEqual("not_yet_released", config["feature_status"]["rcc_analysis"])
 
     def test_every_public_unreleased_feature_mention_is_marked(self):
         for feature in ("vhost", "ardia", "coscine", "headscale"):
