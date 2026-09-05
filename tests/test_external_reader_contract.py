@@ -19,35 +19,27 @@ class ExternalReaderContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_home_distinguishes_current_foundation_from_target_state(self):
+    def test_home_makes_analysis_part_of_the_release_bundle(self):
         home = (DOCS / "index.md").read_text(encoding="utf-8").lower()
-        self.assertIn("## rcc today", home)
-        self.assertIn("## coming next", home)
-
-        current = home[home.index("## rcc today"):home.index("## coming next")]
+        self.assertIn("## clusterdocs 3 release bundle", home)
+        self.assertNotIn("## coming next", home)
         for phrase in (
-            "files is the current browser data path",
-            "account and project self-service is ready now",
-            "rcc workers and slurm analysis are ready now",
-            "managed nextflow-to-slurm support is ready now",
-            "project samba shares are ready now",
+            "rcc home",
+            "files",
+            "rcc analysis",
+            "my rcc",
+            "rcc admin",
+            "must be ready together before publication",
+            "rcc analysis remains a release blocker",
         ):
-            self.assertIn(phrase, current)
+            self.assertIn(phrase, home)
 
-        future = home[home.index("## coming next"):home.index("## what rcc can do")]
-        for phrase in (
-            "rcc analysis notebook and workflow are not yet released",
-            "rcc-to-coscine self-service transfer is not yet released",
-            "protected project vhosts are not yet released",
-            "ardia integration is not yet released",
-        ):
-            self.assertIn(phrase, future)
-
-    def test_advanced_capability_page_repeats_status_boundary_once(self):
+    def test_advanced_capability_page_uses_integrated_browser_baseline(self):
         page = (DOCS / "concepts/what-rcc-can-do.md").read_text(encoding="utf-8").lower()
-        self.assertIn("## current foundation versus integrated target", page)
-        self.assertIn("current rcc is already a substantial research-computing foundation", page)
-        self.assertIn("not yet released", page)
+        self.assertIn("## the integrated browser baseline", page)
+        self.assertIn("rcc home, files, rcc analysis, my rcc, and rcc admin", page)
+        self.assertIn("must all be ready before clusterdocs 3 is published", page)
+        self.assertIn("rcc_analysis", page)
 
 
 if __name__ == "__main__":
