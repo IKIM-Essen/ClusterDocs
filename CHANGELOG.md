@@ -10,11 +10,18 @@
   Notebook/Workflow, Slurm/GPU/HPC, delegated governance, project services,
   Coscine preservation status, and domain applications such as SeqLab.
 - Recorded a dated **external-reader review** in
-  `meta/EXTERNAL_READER_REVIEW_2026-09-05.md`. Its main remaining presentation
-  finding was current-versus-target-state ambiguity, so the home page now has a
-  compact **RCC today / Coming next** distinction using governed release facts
-  rather than another large status matrix; the advanced capability page repeats
-  the same boundary for readers who land there directly.
+  `meta/EXTERNAL_READER_REVIEW_2026-09-05.md`. The subsequent release decision
+  resolves its main current-versus-target ambiguity by making the integrated
+  browser experience a hard release boundary rather than publishing Analysis as
+  a post-release promise.
+- Defined the **ClusterDocs 3 integrated release bundle** as RCC Home + Files +
+  RCC Analysis + My RCC + RCC Admin. All five surfaces must be recorded `ready`
+  and pass end-to-end acceptance before production publication. The current
+  candidate is intentionally blocked while `rcc_analysis` is
+  `not_yet_released`.
+- Added `tools/release_bundle_gate.py` and wired it into the main-only production
+  workflow so changing `site_status` cannot bypass the five-surface release
+  requirement.
 - Made **I/O access pattern the primary architecture/performance rationale**:
   shared bandwidth does not make metadata storms, many-small-file workloads,
   temporary random I/O, synchronized reads, or editor/indexer traversal free.
@@ -33,7 +40,7 @@
   agents can explain, design, test with synthetic fixtures, develop workflows,
   and interpret bounded diagnostics while RCC executes against real data inside
   the governed project boundary.
-- Reframed RCC Analysis as the planned user-facing compute product with two
+- Reframed RCC Analysis as the required user-facing compute product with two
   primary modes: Jupyter-first **Notebook** for interactive exploration and
   **Workflow** for repeatable/scalable governed analysis.
 - Demoted “RCC Workbench” from a peer user product to the advanced/internal
@@ -50,14 +57,16 @@
   caption text with the no-passphrase SSH-key policy. Existing generated Part 1
   audio/video is deferred to the media wave and must be regenerated/re-reviewed
   before activation.
-- Added a **two-stage release model**: Stage 1 publishes the reviewed written
-  site with all video links fail-closed; Stage 2 later regenerates, reviews,
-  verifies, and enables media. Video approval is therefore not a Stage-1
-  blocker while player links remain disabled.
+- Kept a **two-stage media rollout**: Stage 1 is the integrated five-surface RCC
+  browser product plus the reviewed written site with video links fail-closed;
+  Stage 2 later regenerates, reviews, verifies, and enables media. Video approval
+  is not a Stage-1 blocker, but RCC Analysis is.
 - Added a prepared 3–4 minute **What changed from the old cluster?** returning-
   user narration for the Stage-2 media wave, centered on browser/project changes,
   I/O behavior, local scratch, and low-I/O VS Code settings.
-- Connected Files directly to the planned `Files -> Analysis -> Files` journey.
+- Connected Files directly to the `RCC Home -> Files -> Analysis -> Files`
+  journey and made My RCC/RCC Admin role separation part of the release
+  acceptance contract.
 - Added notebook-to-workflow resource guidance to discourage idle interactive
   allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
   fan-out, and inefficient shared-storage I/O.
@@ -69,9 +78,8 @@
   accepted `clusterdocs-3` candidate requires separate explicit authorization
   before merge into `main`; `clusterdocs-ng` and `clusterdocs-3` are retired
   only after verified main-based Stage-1 publication and rollback evidence.
-- Preserved current-release accuracy: until RCC Analysis and the governed
-  RCC-to-Coscine route are explicitly activated, the existing current paths
-  remain documented and staged capabilities remain marked not yet released.
+- Preserved release-state accuracy for separately staged services such as
+  RCC-to-Coscine transfer, project vhosts, and selected vendor integrations.
 
 ## v1.0.1
 
