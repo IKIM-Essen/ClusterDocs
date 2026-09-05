@@ -2,40 +2,40 @@
 
 ## Slide 1: Class 15: RCC storage architecture
 
-Welcome to Class 15: RCC storage architecture. This video introduces the core decisions and working patterns. Watch the complete lesson first, then use the written class page for copyable commands, exercises, and detailed reference material.
+Welcome to Class 15: RCC storage architecture. This lesson explains the storage contract and the I/O patterns that matter to scientific workflows. RCC may change individual storage products during reviewed migrations, so the important lesson is how metadata, object storage, networking, caching, local scratch, and Slurm placement fit together.
 
 ## Slide 2: Learning objectives
 
-After this class, you should be able to: describe the roles of Redis, MinIO, and the JuiceFS client; distinguish metadata traffic from file-content traffic; explain why small-file workloads differ from large streaming workloads; understand the RCC 100 Gb/s server and 10 Gb/s client topology; explain client and container caching; and choose appropriate I/O patterns for scientific workflows.
+After this class, you should be able to describe the roles of the metadata service, the S3-compatible object layer, and the JuiceFS client; distinguish metadata traffic from file-content traffic; explain why small-file workloads differ from large streaming workloads; understand aggregate backend bandwidth versus per-client bandwidth; explain client and container caching; and choose appropriate I/O patterns for scientific workflows.
 
-## Slide 3: Redis handles metadata
+## Slide 3: Metadata is a separate workload
 
-Redis stores information such as: paths and directory entries; ownership and permissions; file sizes and timestamps; inode-like identifiers; object mappings; locks and coordination state; and filesystem bookkeeping. Operations such as stat, ls, open, rename, mkdir, and unlink may transfer almost no file content while still generating metadata requests. This makes workloads with hundreds of thousands of files fundamentally different from workloads containing a few large files. Increasing S3 bandwidth does not remove a metadata bottleneck.
+The metadata service stores information such as paths, directory entries, ownership, permissions, sizes, timestamps, object mappings, locks, and filesystem bookkeeping. Operations such as stat, ls, open, rename, mkdir, and unlink may transfer almost no file content while still generating metadata requests. This makes workloads with hundreds of thousands of files fundamentally different from workloads containing a few large files. Increasing S3 bandwidth or replacing one object backend with another does not remove a metadata bottleneck.
 
-## Slide 4: MinIO stores file contents
+## Slide 4: The S3-compatible object layer stores file contents
 
-MinIO provides the S3-compatible object-storage layer used for durable file contents. Object storage is effective for: large objects; sequential reads and writes; durable replicated or erasure-coded storage; checksummed content; and aggregate access from many clients. The JuiceFS client translates filesystem reads and writes into object operations. Large streaming transfers amortize request overhead. Tiny, scattered reads and writes can generate many requests for relatively little useful data.
+RCC uses an S3-compatible object layer for durable file content. RCC has operated MinIO-backed storage and is moving toward SeaweedFS-backed S3 in the newer storage plane, but scientific workflows should not depend on either product name. Object storage is effective for large objects, sequential reads and writes, checksummed durable content, and aggregate access from many clients. Large streaming transfers amortize request overhead. Tiny scattered operations can generate many requests for little useful data.
 
-## Slide 5: RCC network topology
+## Slide 5: I/O pattern matters more than headline bandwidth
 
-Storage and backend servers have connectivity of up to 100 Gb/s. Typical compute clients have 10 Gb/s links. The 100 Gb/s server side is aggregate capacity. It does not provide 100 Gb/s to one compute node. Ten clients each attempting to sustain 10 Gb/s can already approach the nominal capacity of one 100 Gb/s backend link. Actual useful throughput is lower because of: protocol overhead; request latency; metadata operations; contention; checksums and encryption; filesystem translation; and application processing. Random and small-file workloads often do not fill a 10 Gb/s link with useful data. They spend their time waiting for network round trips and metadata.
+A high-bandwidth backend is aggregate capacity. It does not mean every compute node receives the full backend rate. More importantly, many small-file and random-access workloads never come close to filling the link with useful data. They wait for metadata lookups, permission checks, file opens and closes, request latency, cache misses, and contention. This is the central RCC storage lesson: changing to Ceph, SeaweedFS, MinIO, or another backend cannot make an inefficient access pattern free.
 
 ## Slide 6: Large files versus many small files
 
-Large compressed FASTQ, BAM, CRAM, archives, and model files generally support efficient streaming and readahead. Many small files require repeated: path lookups; permission checks; opens and closes; metadata updates; object requests; directory updates; and cache bookkeeping. Twenty gigabytes stored in 500,000 files can therefore perform much worse than one 20 GB archive. Conda environments are a common example: startup may require opening thousands of small files. This is one reason RCC prefers Apptainer images over Conda environments stored on shared network filesystems.
+Large compressed FASTQ, BAM, CRAM, archives, image blocks, and model files generally support efficient streaming and readahead. Many small files require repeated path lookups, permission checks, opens and closes, metadata updates, object requests, directory updates, and cache bookkeeping. Twenty gigabytes stored in five hundred thousand files can therefore perform much worse than one twenty-gigabyte archive. Conda environments are a common example, which is one reason RCC prefers reusable Apptainer images for repeated production execution.
 
-## Slide 7: JuiceFS client caching
+## Slide 7: Local scratch and caching
 
-The JuiceFS client may cache active data in memory and on node-local disk. A cache hit avoids another object download: A cache miss uses the complete path: Caching helps when stable data is reused, for example: Apptainer images; reference genomes; aligner indexes; annotation databases; model weights; and read-only database snapshots. Cache entries should be identified by immutable version, digest, or checksum. Mutable names such as latest.sif are unsafe cache identities.
+The JuiceFS client can cache active data in memory and on node-local disk. Stable reference data, container images, indexes, databases, and model weights can benefit from immutable cache identities. Temporary and random I/O often benefits even more from explicit node-local scratch. Keep durable inputs and final outputs with the project, but move the active working set close to the process when the workload would otherwise generate large amounts of random or temporary shared-storage traffic.
 
-## Slide 8: Slurm placement and cache locality
+## Slide 8: Slurm placement and locality
 
-A parent job that stages data or warms a cache on one node should not submit child jobs that may run elsewhere: Nested submission destroys locality and can create repeated: S3 downloads; Redis metadata traffic; 10 Gb/s client-link use; container transfers; reference-index transfers; and synchronized backend load. Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from an approved submission host. Each compute job should receive a complete unit of work.
+A job that warms a cache or stages data on one worker should not blindly launch child work onto unrelated workers and download everything again. Repeated placement changes can cause duplicate S3 downloads, metadata traffic, client-link use, container transfers, and synchronized backend load. Use reviewed workflow-to-Slurm patterns so each task receives a complete unit of work and its locality assumptions are explicit.
 
 ## Slide 9: Diagnosing the slow layer
 
-When reporting a problem, provide the Slurm job ID, node, path, approximate file count, total size, read/write pattern, and whether local staging changes the result. Do not include patient identifiers.
+When reporting a storage-performance problem, provide the Slurm job ID, node, path, approximate file count, total size, read/write pattern, and whether local staging changes the result. Those facts are usually more useful than saying only that the filesystem is slow. Do not include patient identifiers.
 
 ## Slide 10: Completion gate
 
-Given one streaming workload and one small-file or random-I/O workload, trace the likely metadata, object-storage, network, and cache paths. State which data should remain durable, which work should use job-local scratch, and what you would measure before changing resources.
+Given one streaming workload and one small-file or random-I/O workload, trace the likely metadata, object-storage, network, cache, and local-scratch paths. State which data should remain durable, which work should use job-local scratch, and what you would measure before changing resources or proposing a different storage backend.
