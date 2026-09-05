@@ -39,6 +39,7 @@ class CIRoutingTests(unittest.TestCase):
         self.assertNotIn('test "$GITHUB_REF" = "refs/heads/clusterdocs-3"', workflow)
         self.assertNotIn('refs/heads/clusterdocs-ng', workflow)
         self.assertIn('test "$(git rev-parse HEAD)" = "$GITHUB_SHA"', workflow)
+        self.assertIn("tools/release_bundle_gate.py", workflow)
         self.assertIn("tools/rollout_readiness.py", workflow)
         self.assertIn("tools/build_site.py --production", workflow)
         self.assertIn("git@github.com:IKIM-Essen/ClusterDocs.git", workflow)
