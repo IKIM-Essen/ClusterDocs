@@ -1,4 +1,4 @@
-name: validate-clusterdocs-3-fallback
+name: validate-clusterdocs-fallback
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: clusterdocs-3-github-fallback-${{ github.ref }}
+  group: clusterdocs-github-fallback-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -1,8 +1,8 @@
-name: deploy-clusterdocs-3-production
+name: deploy-clusterdocs-main-production
 
-# ClusterDocs 3 is the future production source. Gitea builds and publishes the
-# existing GitHub Pages branch. GitHub Actions remains a manual validation
-# fallback and receives no deployment credential.
+# Candidate work may be reviewed on temporary integration branches such as
+# clusterdocs-3, but production publication is intentionally main-only. Moving
+# an accepted candidate into main requires the separate explicit merge decision.
 on:
   workflow_dispatch:
 
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: clusterdocs-3-production
+  group: clusterdocs-main-production
   cancel-in-progress: false
 
 jobs:
@@ -23,10 +23,10 @@ jobs:
           GITEA_ACTIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: /opt/rcc-ci/bin/gitea-ci-checkout
 
-      - name: Require the ClusterDocs 3 release branch and immutable toolchain
+      - name: Require main and the immutable toolchain
         run: |
           set -eu
-          test "$GITHUB_REF" = "refs/heads/clusterdocs-3"
+          test "$GITHUB_REF" = "refs/heads/main"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test -z "$(git status --porcelain)"
           /opt/rcc-ci/venv/bin/python tools/check_ci_environment.py
@@ -38,7 +38,7 @@ jobs:
           /opt/rcc-ci/venv/bin/python tools/rollout_readiness.py
           /opt/rcc-ci/venv/bin/python tools/build_site.py --production --output site-production
           /opt/rcc-ci/venv/bin/python tools/check_site_links.py site-production
-          printf '{"source_branch":"clusterdocs-3","source_commit":"%s"}\n' "$GITHUB_SHA" > site-production/assets/release.json
+          printf '{"source_branch":"main","source_commit":"%s"}\n' "$GITHUB_SHA" > site-production/assets/release.json
           touch site-production/.nojekyll
           test ! -e site-production/CNAME
 
@@ -62,7 +62,7 @@ jobs:
           git -C "$deploy_tmp/pages" add --all
           git -C "$deploy_tmp/pages" config user.name "RCC Gitea CI"
           git -C "$deploy_tmp/pages" config user.email "rcc-ci@ikim.uk-essen.de"
-          git -C "$deploy_tmp/pages" commit -m "Deploy ClusterDocs 3 $GITHUB_SHA"
+          git -C "$deploy_tmp/pages" commit -m "Deploy ClusterDocs main $GITHUB_SHA"
           published_commit="$(git -C "$deploy_tmp/pages" rev-parse HEAD)"
           git -C "$deploy_tmp/pages" push origin HEAD:gh-pages
           test "$(git -C "$deploy_tmp/pages" ls-remote origin refs/heads/gh-pages | awk '{print $1}')" = "$published_commit"

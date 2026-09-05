@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed until ClusterDocs 3 has production decisions and review evidence."""
+"""Fail closed until ClusterDocs has production decisions and review evidence."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ def has_deployment_workflow() -> bool:
         "workflow_dispatch:",
         "runs-on: rcc-ci",
         "/opt/rcc-ci/bin/gitea-ci-checkout",
-        'refs/heads/clusterdocs-3',
+        'refs/heads/main',
         "tools/validate_repo.py",
         "tools/rollout_readiness.py",
         "tools/build_site.py --production",
@@ -41,15 +41,23 @@ def has_deployment_workflow() -> bool:
         "touch site-production/.nojekyll",
         "test ! -e site-production/CNAME",
         "StrictHostKeyChecking=yes",
+        '"source_branch":"main"',
     )
-    forbidden = ("refs/heads/clusterdocs-ng", "pull_request:", "\n  push:", "schedule:", "uses:")
+    forbidden = (
+        'test "$GITHUB_REF" = "refs/heads/clusterdocs-3"',
+        "refs/heads/clusterdocs-ng",
+        "pull_request:",
+        "\n  push:",
+        "schedule:",
+        "uses:",
+    )
     return all(signal in text for signal in required) and not any(
         signal in text for signal in forbidden
     )
 
 
 def manual_review_audit() -> tuple[list[str], list[str]]:
-    """Check whether the exact v3 candidate is coherent enough for human review."""
+    """Check whether the exact candidate is coherent enough for human review."""
     blockers: list[str] = []
     ready: list[str] = []
 
@@ -76,6 +84,25 @@ def manual_review_audit() -> tuple[list[str], list[str]]:
         blockers.append("speculative rollout wording remains public: " + ", ".join(stale_terms))
     else:
         ready.append("public guidance uses the current institutional connection route")
+
+    retired_passphrase_phrases = (
+        "use a strong passphrase",
+        "protect it with a strong passphrase",
+        "a strong key passphrase is still expected",
+        "use a separate passphrase to protect the private key",
+    )
+    active_credential_text = "\n".join(
+        [public_text]
+        + [
+            (ROOT / "narration/RCC_Onboarding_Part_1_Narration.md").read_text(errors="replace"),
+            (ROOT / "captions/RCC_Onboarding_Part_1_Captions.srt").read_text(errors="replace"),
+        ]
+    ).lower()
+    stale_active = [p for p in retired_passphrase_phrases if p in active_credential_text]
+    if stale_active:
+        blockers.append("active v3 guidance still carries retired SSH-passphrase policy")
+    else:
+        ready.append("active v3 guidance uses the current no-passphrase RCC SSH-key policy")
 
     if re.search(r"RCC_Onboarding_Part_[1-4]\.pptx", public_text):
         blockers.append("public pages still link unsynchronized Part 1–4 slide exports")
@@ -145,6 +172,17 @@ def audit() -> tuple[list[str], list[str], list[str]]:
             "videos lack recorded human approval for classes: " + ", ".join(not_human_reviewed)
         )
 
+    part1_source = (ROOT / "source/part1.md").read_text(errors="replace").lower()
+    if (
+        "# 4.2 handling the key passphrase" in part1_source
+        or "use a separate passphrase to protect the private key" in part1_source
+    ):
+        blockers.append(
+            "canonical Part 1 source still carries the retired SSH-passphrase policy; reconcile it and regenerate/re-review Part 1 media before production"
+        )
+    else:
+        ready.append("canonical Part 1 source matches the current RCC SSH-key policy")
+
     course_pages = sorted((ROOT / "docs/course").glob("class-*.md"))
     video_classes = set(classes)
     video_pages = [
@@ -169,9 +207,9 @@ def audit() -> tuple[list[str], list[str], list[str]]:
         blockers.append(f"administrator publication checklist has {unchecked} unchecked items")
 
     if not has_deployment_workflow():
-        blockers.append("no reviewed ClusterDocs 3 production deployment workflow is present")
+        blockers.append("no reviewed main-only ClusterDocs production deployment workflow is present")
     else:
-        ready.append("Gitea-only ClusterDocs 3 production deployment workflow is present")
+        ready.append("Gitea-only main production deployment workflow is present")
 
     if not (ROOT / "meta/BRANCH_PR_AUDIT.md").is_file():
         blockers.append("ClusterDocs branch and pull-request audit is missing")
@@ -211,6 +249,7 @@ def audit() -> tuple[list[str], list[str], list[str]]:
             "external links require a final online link check",
             "browser, mobile, keyboard, and screen-reader acceptance remain manual checks",
             "a controlled pilot is not evidence for broad production acceptance",
+            "production publication is main-only; validation of clusterdocs-3 does not authorize or perform its merge into main",
         )
     )
     return blockers, warnings, ready
@@ -246,7 +285,7 @@ def main() -> None:
         return
 
     blockers, warnings, ready = audit()
-    print("ClusterDocs 3 rollout readiness")
+    print("ClusterDocs rollout readiness")
     for item in ready:
         print(f"READY: {item}")
     for item in warnings:
