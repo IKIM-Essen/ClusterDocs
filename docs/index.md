@@ -29,7 +29,7 @@ For a researcher, the important sequence is simple:
 1. **Bring or choose project data.** Use Files, a project share, a managed
    instrument path, or another approved project ingestion route.
 2. **Analyse the data.** Use an interactive Notebook for exploration or a
-   governed Workflow for repeatable/scalable work when RCC Analysis is enabled.
+   governed Workflow for repeatable/scalable work in RCC Analysis.
 3. **Keep durable results with the project.** Results, provenance, code, and
    relevant metadata stay tied to the project rather than to one laptop or
    browser session.
@@ -41,43 +41,38 @@ RCC handles the infrastructure mechanics behind those actions. The researcher
 still controls the scientific question, data, method, parameters, and decision
 about what result is fit for use.
 
-## RCC today
+## ClusterDocs 3 release bundle
 
-The current RCC foundation is already substantial. An external reader should not
-have to infer that from a long list of future capabilities:
+ClusterDocs 3 is **not** intended to publish before the integrated browser
+experience is ready. The minimum release bundle is:
 
-- **Files is the current browser data path** for approved project-facing uploads,
-  browsing, and downloads.
-- **Account and project self-service is ready now**, including the current RCC
-  Admin/self-administration and primary-approval path.
-- **RCC workers and Slurm analysis are ready now**; SSH and VS Code remain the
-  current advanced route for direct scientific compute and workflow development.
-- **Managed Nextflow-to-Slurm support is ready now** for reproducible advanced
-  workflows.
-- **Project Samba shares are ready now** for approved registered devices and
-  appropriate instrument/acquisition ingestion.
+- **RCC Home** — the front door and authoritative view of enabled RCC services;
+- **Files** — browser project-data entry and exit;
+- **RCC Analysis** — Notebook for exploration and Workflow for repeatable or
+  scalable scientific execution;
+- **My RCC** — personal account, preferences, project membership, invitations,
+  and self-service actions; and
+- **RCC Admin** — the role-aware approval and administration surface for people
+  who hold those capabilities.
 
-These are current foundations, not a promise that every project automatically
-receives every service. Project membership, data policy, resource entitlement,
-and service-specific approval still apply.
+These are not independent future add-ons to ClusterDocs 3. They are the core
+user experience that this documentation release is meant to describe and must be
+ready together before publication. The same RCC identity, project authorization,
+and policy must follow the user across all five surfaces.
 
-## Coming next
+The current `clusterdocs-3` branch is therefore a **release candidate**, not a
+public promise that the browser bundle is already live. In particular, RCC
+Analysis remains a release blocker until its Notebook/Workflow path and its
+integration with RCC Home, Files, My RCC, and RCC Admin pass acceptance.
 
-The integrated browser experience is deliberately documented before every part
-is activated. The important staged capabilities are:
+Videos are separate: the written/product release can ship with video players
+fail-closed, and the regenerated/reviewed videos can follow in the later media
+stage.
 
-- **RCC Analysis Notebook and Workflow are not yet released** as the ordinary
-  browser compute surface.
-- **RCC-to-Coscine self-service transfer is not yet released**; preservation
-  guidance is available now, but the integrated transfer route remains staged.
-- **Protected project vhosts are not yet released** as a general user service.
-- **Ardia integration is not yet released**; vendor-specific instrument routes
-  remain separately reviewed and activated.
-
-RCC Home and the linked capability pages remain the final user-facing source for
-what is enabled for a particular account and project. The distinction above is
-intended to make the platform's current maturity visible without hiding the
-near-term target state.
+Other capabilities such as RCC-to-Coscine self-service, protected project
+vhosts, and selected vendor integrations may remain separately staged when the
+core ClusterDocs 3 bundle releases; their own pages must continue to state that
+truth explicitly.
 
 ## What RCC can do
 
@@ -109,14 +104,14 @@ Highlights include:
   infrastructure by hand.
 
 A capability being documented does not automatically mean it is active. Pages
-that describe staged or future functionality must say so explicitly.
+that describe separately staged functionality must say so explicitly.
 
 ## One project, many interfaces
 
 Think of an RCC project as the shared research workroom. It connects the approved
 people, data, compute, services, results, and lifecycle for one purpose.
-Switching from Files to Analysis, an agent-assisted workflow, VS Code, or a
-command line does not create a new authority boundary.
+Switching from Files to Analysis, an agent-assisted workflow, My RCC, RCC Admin,
+VS Code, or a command line does not create a new authority boundary.
 
 Your primary group records your organizational home. It is not the mechanism for
 sharing cross-department research data. Add collaborators to the project instead
