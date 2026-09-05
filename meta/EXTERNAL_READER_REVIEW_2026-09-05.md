@@ -91,44 +91,54 @@ and storage semantics that fit each workload, avoids two schedulers owning the
 same scientific compute, and shapes pathological I/O before assuming another
 backend will solve it.
 
-## The remaining external-reader uncertainty
+## The external-reader uncertainty identified during review
 
-The largest presentation risk is **current state versus target state**.
+The review originally identified **current state versus target state** as the
+largest presentation risk. At that point RCC Analysis was not yet released,
+while the browser-first story depended heavily on Analysis. A reader could
+therefore ask how much of the complete platform was actually part of the coming
+release.
 
-ClusterDocs is appropriately honest about staged capabilities, but the browser-
-first product story depends heavily on RCC Analysis, which is not yet released.
-RCC-to-Coscine self-service, project vhosts, and selected vendor integrations are
-also still staged. Repeated "not yet released" labels are truthful, but an
-outside reader can finish with the question:
+The initial editorial recommendation was to add compact **RCC today** and
+**Coming next** sections.
 
-> How much of this compelling platform is actually available today?
+## Resolution after product decision
 
-This is not a reason to weaken the target-state story. It is a reason to add one
-concise, authoritative distinction near the front door between the substantial
-foundation available now and the next integrated browser capabilities.
+That editorial recommendation has been superseded by a stronger product/release
+decision:
 
-## Recommended content correction
+> **ClusterDocs 3 will not be released before the integrated browser product is
+> ready.**
 
-Add compact **RCC today** and **Coming next** sections to the home page using only
-governed release facts. Do not create another large service-status matrix.
+The release baseline is now explicitly:
 
-The current foundation should emphasize:
+1. RCC Home;
+2. Files;
+3. RCC Analysis — Notebook and Workflow;
+4. My RCC; and
+5. RCC Admin.
 
-- Files as the current browser data path;
-- current account/project self-service and approval functionality;
-- RCC workers and Slurm as the current scientific-compute path;
-- SSH/VS Code as the current advanced path;
-- managed Nextflow-to-Slurm as ready now; and
-- project Samba shares as ready now for approved registered devices.
+All five are one release bundle. RCC Analysis is no longer described as a
+post-release capability that readers must mentally place under “coming next.”
+The current candidate is simply not releasable until Analysis is ready and the
+five-surface integration passes acceptance.
 
-The near-term integrated target should explicitly name:
+This resolves the external-reader ambiguity more cleanly than a current/future
+marketing split: the public ClusterDocs 3 release should describe the integrated
+browser baseline as the product users actually receive.
 
-- RCC Analysis Notebook and Workflow as not yet released;
-- RCC-to-Coscine self-service as not yet released;
-- protected project vhosts as not yet released; and
-- selected vendor integrations such as Ardia as not yet released.
+Separately governed capabilities can still remain staged after that boundary,
+including RCC-to-Coscine self-service transfer, protected project vhosts, and
+selected vendor integrations such as Ardia. Their individual status remains
+explicit.
 
-The detailed service pages remain the authority for per-capability status.
+The two-stage media plan is unaffected: Stage 1 is the integrated RCC browser
+product plus the written site with videos fail-closed; Stage 2 adds regenerated
+and reviewed videos.
+
+See `meta/RELEASE_BUNDLE_DECISION_2026-09-05.md` and
+`tools/release_bundle_gate.py` for the governing decision and machine-enforced
+release boundary.
 
 ## External one-sentence summary
 
@@ -142,7 +152,7 @@ A technically informed outside reader is likely to describe RCC as:
 
 ## Review conclusion
 
-The product narrative is already strong enough that further simplification
-should focus on **status clarity**, not removing advanced capability or technical
-rationale. The next editorial change should make the current-versus-next boundary
-visible in under one minute while preserving the task-first front door.
+The product narrative is strong enough that further simplification should focus
+on preserving a coherent integrated release, not hiding advanced capability or
+technical rationale. The five-surface browser bundle now provides that coherent
+baseline while separately staged services keep explicit status labels.
