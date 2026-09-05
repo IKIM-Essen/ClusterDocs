@@ -10,6 +10,11 @@
   </video>
 </section>
 
+> **Architecture rule:** the user-facing lesson is the storage **contract and I/O
+> pattern**, not one permanent product name. RCC may change the S3-compatible
+> object backend during an accepted migration without changing how researchers
+> should structure their workflows.
+
 This optional class explains the RCC data path:
 
 ```text
@@ -18,32 +23,39 @@ Compute application
        v
 JuiceFS client
    |         |
-   |         +---- metadata ----> Redis
+   |         +---- metadata ----> Redis-compatible metadata service
    |
-   +-------------- file data ---> S3 / MinIO
+   +-------------- file data ---> S3-compatible object storage
        |
        +---- memory and node-local cache
 ```
 
-JuiceFS presents a POSIX filesystem to applications. Redis stores filesystem
-metadata, while MinIO stores file contents through an S3-compatible object
-interface. A single filesystem operation can therefore generate metadata,
+JuiceFS presents a POSIX filesystem to applications. Metadata is maintained by
+the RCC metadata service, while file contents live in an S3-compatible object
+layer. A single filesystem operation can therefore generate metadata,
 object-storage, network, and cache operations.
+
+RCC has operated MinIO-backed object storage and is migrating/targeting
+SeaweedFS-backed S3 for the newer storage plane. **Do not build a scientific
+workflow around either product name.** The stable contract is S3/object semantics
+plus the JuiceFS POSIX view where provided. The migration does not change the
+central performance lesson: access pattern matters more than the backend label.
 
 ## Learning objectives
 
 After this class, you should be able to:
 
-- describe the roles of Redis, MinIO, and the JuiceFS client;
+- describe the roles of the metadata service, S3-compatible object storage, and
+  the JuiceFS client;
 - distinguish metadata traffic from file-content traffic;
 - explain why small-file workloads differ from large streaming workloads;
-- understand the RCC 100 Gb/s server and 10 Gb/s client topology;
+- understand the RCC aggregate-backend versus per-client network topology;
 - explain client and container caching; and
 - choose appropriate I/O patterns for scientific workflows.
 
-## 1. Redis handles metadata
+## 1. Metadata is a separate workload
 
-Redis stores information such as:
+The metadata layer stores information such as:
 
 - paths and directory entries;
 - ownership and permissions;
@@ -58,12 +70,12 @@ transfer almost no file content while still generating metadata requests.
 
 This makes workloads with hundreds of thousands of files fundamentally
 different from workloads containing a few large files. Increasing S3 bandwidth
-does not remove a metadata bottleneck.
+or replacing one object-store implementation with another does not remove a
+metadata bottleneck.
 
-## 2. MinIO stores file contents
+## 2. The S3-compatible object layer stores file contents
 
-MinIO provides the S3-compatible object-storage layer used for durable file
-contents. Object storage is effective for:
+The object layer is effective for:
 
 - large objects;
 - sequential reads and writes;
@@ -76,28 +88,33 @@ operations. Large streaming transfers amortize request overhead. Tiny,
 scattered reads and writes can generate many requests for relatively little
 useful data.
 
+This is why “move the data to Ceph,” “move it to SeaweedFS,” or “use another S3
+backend” is not, by itself, a fix for an inefficient workload. The storage
+technology changes operational tradeoffs; the application still controls its
+access pattern.
+
 ## 3. RCC network topology
 
-Storage and backend servers have connectivity of up to **100 Gb/s**. Typical
-compute clients have **10 Gb/s** links.
+Storage/backend servers have high aggregate connectivity, while individual
+compute clients have smaller per-node links.
 
 ```text
 compute process
     |
 JuiceFS client
     |
-10 Gb/s client link
+per-client link
     |
 RCC network
     |
-100 Gb/s aggregate backend
+high aggregate backend bandwidth
     |
-Redis and MinIO
+metadata + S3-compatible object layer
 ```
 
-The 100 Gb/s server side is aggregate capacity. It does not provide 100 Gb/s to
-one compute node. Ten clients each attempting to sustain 10 Gb/s can already
-approach the nominal capacity of one 100 Gb/s backend link.
+High backend bandwidth is **aggregate capacity**. It does not mean every client
+receives the full backend rate. Many clients can consume the shared capacity at
+once.
 
 Actual useful throughput is lower because of:
 
@@ -109,13 +126,13 @@ Actual useful throughput is lower because of:
 - filesystem translation; and
 - application processing.
 
-Random and small-file workloads often do not fill a 10 Gb/s link with useful
-data. They spend their time waiting for network round trips and metadata.
+Random and small-file workloads often do not fill even a modest client link with
+useful data. They spend their time waiting for network round trips and metadata.
 
 ## 4. Large files versus many small files
 
-Large compressed FASTQ, BAM, CRAM, archives, and model files generally support
-efficient streaming and readahead.
+Large compressed FASTQ, BAM, CRAM, archives, image blocks, and model files
+generally support efficient streaming and readahead.
 
 Many small files require repeated:
 
@@ -131,8 +148,9 @@ Twenty gigabytes stored in 500,000 files can therefore perform much worse than
 one 20 GB archive.
 
 Conda environments are a common example: startup may require opening thousands
-of small files. This is one reason RCC prefers Apptainer images over Conda
-environments stored on shared network filesystems.
+of small files. This is one reason RCC prefers immutable Apptainer images over
+large Conda environments stored as production runtimes on shared network
+filesystems.
 
 ## 5. Streaming and random access
 
@@ -169,7 +187,7 @@ application -> JuiceFS client -> local cache
 A cache miss uses the complete path:
 
 ```text
-application -> JuiceFS client -> network -> MinIO -> local cache
+application -> JuiceFS client -> network -> S3-compatible object backend -> local cache
 ```
 
 Caching helps when stable data is reused, for example:
@@ -198,7 +216,7 @@ Caching does not remove:
 - a poor access pattern inside a cached container.
 
 A cached container may start quickly while the application inside it still
-performs inefficient random I/O against JuiceFS.
+performs inefficient random I/O against shared project storage.
 
 ## 8. Slurm placement and cache locality
 
@@ -215,25 +233,25 @@ child on worker D downloads again
 Nested submission destroys locality and can create repeated:
 
 - S3 downloads;
-- Redis metadata traffic;
-- 10 Gb/s client-link use;
+- metadata traffic;
+- client-link use;
 - container transfers;
 - reference-index transfers; and
 - synchronized backend load.
 
-Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from
-an approved submission host. Each compute job should receive a complete unit of
-work.
+Use job arrays, explicit Slurm dependencies, or Snakemake/Nextflow's reviewed
+Slurm integration from an approved controller. Each compute job should receive a
+complete unit of work.
 
 ## 9. Recommended patterns
 
-Use shared JuiceFS storage for:
+Use shared project storage for:
 
 - durable inputs;
 - validated final results;
 - large sequential transfers;
 - shared read-only references; and
-- workflow-visible state.
+- workflow-visible state that genuinely must survive between jobs.
 
 Use node-local storage for:
 
@@ -244,14 +262,15 @@ Use node-local storage for:
 - container and reference caches; and
 - files that are created and deleted rapidly.
 
-Do not place primary identifying patient data on RCC.
+Use project S3/object access when the application genuinely benefits from object
+semantics rather than forcing object data through a POSIX view unnecessarily.
 
 ## 10. Diagnosing the slow layer
 
 | Symptom | Likely layer |
 |---|---|
-| `ls`, `stat`, or file creation is slow | Redis metadata path or namespace pressure |
-| large sequential reads are slow | MinIO, network, contention, or client link |
+| `ls`, `stat`, or file creation is slow | metadata path or namespace pressure |
+| large sequential reads are slow | object backend, network, contention, or client link |
 | first read is slow and second read is fast | cold versus warm client cache |
 | many nodes slow simultaneously | shared backend or network contention |
 | one node alone is slow | client link, local disk, cache, or mount state |
@@ -264,14 +283,20 @@ result. Do not include patient identifiers.
 
 ## Take-home model
 
-> JuiceFS supplies the POSIX interface. Redis handles metadata. MinIO stores file
-> contents as S3 objects. The network connects the layers. Good performance
-> comes from streaming large data, minimizing metadata storms, reusing immutable
-> caches, and moving temporary random I/O to node-local storage.
+> JuiceFS supplies a POSIX interface where RCC exposes one. The metadata service
+> handles namespace operations. The S3-compatible object layer stores file
+> contents. The network and caches connect those layers. **Good performance comes
+> primarily from good I/O patterns**: stream large data, minimize metadata
+> storms, reuse immutable caches, and move temporary/random I/O to node-local
+> storage.
+
+The exact object backend can change through an accepted migration. The workflow
+rule should not.
 
 ## Completion gate
 
 Given one streaming workload and one small-file or random-I/O workload, trace
 the likely metadata, object-storage, network, and cache paths. State which data
 should remain durable, which work should use job-local scratch, and what you
-would measure before changing resources.
+would measure before changing resources or proposing a different storage
+backend.
