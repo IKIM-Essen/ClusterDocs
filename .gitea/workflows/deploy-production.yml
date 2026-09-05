@@ -35,6 +35,7 @@ jobs:
         run: |
           set -eu
           /opt/rcc-ci/venv/bin/python tools/validate_repo.py
+          /opt/rcc-ci/venv/bin/python tools/release_bundle_gate.py
           /opt/rcc-ci/venv/bin/python tools/rollout_readiness.py
           /opt/rcc-ci/venv/bin/python tools/build_site.py --production --output site-production
           /opt/rcc-ci/venv/bin/python tools/check_site_links.py site-production
