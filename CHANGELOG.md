@@ -9,6 +9,12 @@
   instrument ingestion, project S3/object storage where enabled, DataLad,
   Notebook/Workflow, Slurm/GPU/HPC, delegated governance, project services,
   Coscine preservation status, and domain applications such as SeqLab.
+- Recorded a dated **external-reader review** in
+  `meta/EXTERNAL_READER_REVIEW_2026-09-05.md`. Its main remaining presentation
+  finding was current-versus-target-state ambiguity, so the home page now has a
+  compact **RCC today / Coming next** distinction using governed release facts
+  rather than another large status matrix; the advanced capability page repeats
+  the same boundary for readers who land there directly.
 - Made **I/O access pattern the primary architecture/performance rationale**:
   shared bandwidth does not make metadata storms, many-small-file workloads,
   temporary random I/O, synchronized reads, or editor/indexer traversal free.
