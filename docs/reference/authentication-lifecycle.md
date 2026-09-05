@@ -1,8 +1,8 @@
 # How RCC authentication fits together
 
 RCC uses one human identity across several access methods. The credentials are
-not interchangeable, and seeing one credential in one screen does not mean it
-is the credential used everywhere.
+not interchangeable, and **an RCC account does not imply that every user needs
+an SSH credential**.
 
 The useful mental model is:
 
@@ -11,11 +11,14 @@ RCC account
    |
    +--> web sign-in / SSO
    |      -> password and/or sign-in passkey
+   |      -> Files
+   |      -> My RCC
+   |      -> RCC Analysis Notebook/Workflow when released
    |
    +--> account step-up / recovery
    |      -> portal passkey or YubiKey, authenticator code, recovery codes
    |
-   +--> SSH / SFTP
+   +--> optional SSH / SFTP capability
           -> SSH public key registered to your RCC account
 ```
 
@@ -30,14 +33,22 @@ instructions supplied by RCC rather than an old screenshot or a colleague's
 saved procedure.
 
 After activation, the same human identity is used by RCC web services, project
-membership, Slurm attribution, Files, and SSH even though those surfaces may use
-different authentication mechanisms.
+membership, Slurm attribution, Files, and optional SSH even though those
+surfaces may use different authentication mechanisms.
+
+A browser-first user may stop here: if their work is fully supported through
+Files and RCC Analysis, there is no reason to create an SSH key merely because
+the account exists.
 
 ## 2. Web sign-in is shared across RCC services
 
 RCC web services use a common sign-in boundary where possible. A successful web
 sign-in can establish your authenticated RCC identity for services such as
 Files, account/project management, and other released RCC applications.
+
+When RCC Analysis is released, Notebook and Workflow modes use this browser
+identity plus server-side project authorization. They do not require a browser
+user to possess a Slurm signing key or SSH private key.
 
 This is **single sign-on**, not shared authorization. After sign-in, each service
 still checks whether your identity may access the requested project or action.
@@ -97,10 +108,18 @@ Do not place recovery codes in:
 When a recovery code is used, it should no longer be considered available for a
 future recovery.
 
-## 7. SSH keys are a separate access mechanism
+## 7. SSH keys are an optional separate access mechanism
 
 SSH does not normally reuse your browser passkey. It uses an SSH public/private
 key pair registered to your RCC account.
+
+Enroll an SSH key when you need the command-line path, VS Code Remote SSH, direct
+Slurm use, SFTP/public-key automation, or another capability that explicitly
+requires SSH.
+
+Do **not** enroll an SSH key merely because you think every RCC account must have
+one. Browser-first Files and future RCC Analysis users should be able to work
+without SSH credentials.
 
 Only the **public** key is registered with RCC. The private key remains on your
 computer or compatible hardware authenticator.
@@ -110,7 +129,7 @@ this is still conceptually different from a browser/WebAuthn passkey even when
 the same physical YubiKey is involved.
 
 Follow [Class 1: safe access](../course/class-01-safe-access.md) and
-[Access, SSH, and VS Code](access-ssh-vscode.md) for current connection setup.
+[Access, SSH, and VS Code](access-ssh-vscode.md) when you actually need SSH.
 
 ## 8. One physical security key can contain different credentials
 
@@ -127,9 +146,9 @@ Do not delete one entry merely because another entry on the same hardware works.
 ## 9. Sign-out and session expiry are normal security boundaries
 
 Web sessions expire and sensitive actions may require a fresh step-up even when
-you are still generally signed into RCC. A Workbench reconnect may similarly
-require fresh browser authentication while the underlying Slurm session still
-exists.
+you are still generally signed into RCC. An RCC Analysis Notebook reconnect may
+similarly require fresh browser authentication while the underlying Slurm-backed
+interactive session still exists.
 
 This separation prevents an old browser tab from becoming indefinite authority.
 
@@ -150,9 +169,10 @@ identity-verification and approver/support procedure.
 | Need | Credential / surface |
 |---|---|
 | Sign into RCC websites | RCC SSO password/passkey according to current policy |
+| Files / future Analysis Notebook / Workflow | web identity + project authorization; **no SSH key required** |
 | Confirm a sensitive account action | step-up factor requested by the account portal |
 | Emergency account recovery | recovery code or approved recovery procedure |
-| SSH / VS Code Remote SSH | your registered SSH public key + local private key |
+| SSH / VS Code Remote SSH / public-key SFTP | your registered SSH public key + local private key |
 | Project access | **not a credential** — project membership / delegated role |
 | Administrator capability | **not a credential** — separately authorized role/capability |
 

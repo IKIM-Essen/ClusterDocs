@@ -16,6 +16,11 @@ NAV=[
  ('Start here','What changed from the old cluster','getting-started/what-changed.md'),
  ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
+ ('RCC services','Which RCC service should I use?','concepts/rcc-services.md'),
+ ('RCC services','RCC Files','concepts/rcc-files.md'),
+ ('RCC services','RCC Analysis · Notebook and Workflow · planned','analysis/rcc-analysis.md'),
+ ('RCC services','Project types','concepts/project-types.md'),
+ ('RCC services','RCC Gitea','concepts/rcc-gitea.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Paths','Convert shell scripts into workflows','paths/from-shell-scripts.md'),
@@ -40,6 +45,7 @@ NAV=[
  ('Course','Class 18 · Coding agents without sharing real data','course/class-18-coding-agents.md'),
  ('Data lifecycle','TL;DR · Instrument to Coscine','data/data-lifecycle-tldr.md'),
  ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
+ ('Data lifecycle','Managed DataLad','data/datalad-managed-service.md'),
  ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),
  ('Data lifecycle','Existing macOS SSHFS setup','data/legacy-storage-macos.md'),
  ('Data lifecycle','Planned RCC to Coscine archive flow','data/rcc-project-to-coscine.md'),
@@ -48,10 +54,13 @@ NAV=[
  ('Reference','Reference overview','reference/index.md'),
  ('Reference','RCC terminology','reference/terminology.md'),
  ('Reference','Users, groups, and projects','reference/users-groups-projects.md'),
+ ('Reference','Authentication lifecycle','reference/authentication-lifecycle.md'),
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
+ ('Reference','Workbench execution layer · advanced · planned','concepts/workbench-interfaces.md'),
  ('Reference','Storage and transfer','reference/storage-transfer.md'),
  ('Reference','Sharing data','reference/data-sharing.md'),
+ ('Reference','RCC usage reporting','reference/usage-accounting.md'),
  ('Reference','Software workflows','reference/software-workflows.md'),
  ('Reference','Slurm commands','reference/slurm.md'),
  ('Reference','How shared compute works','reference/how-shared-compute-works.md'),
@@ -59,6 +68,7 @@ NAV=[
  ('Reference','Troubleshooting','reference/troubleshooting.md'),
  ('Reference','Resources and discovery','reference/resources.md'),
  ('Reference','AI and data science','reference/ai-data-science.md'),
+ ('Reference','Publications and acknowledging RCC','reference/publications-and-rcc-credit.md'),
  ('Reference','RCC connection name','connecting/stable-endpoints.md'),
  ('Reference','Safe everyday practice','security/safe-use.md'),
  ('Reference','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
@@ -97,6 +107,7 @@ PAGE='''<!doctype html>
       <section><h2>RCC surfaces</h2>
         <a href="https://rcc.ikim.uk-essen.de/">Home</a>
         <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener">Files ↗</a>
+        <a href="{{ root }}analysis/rcc-analysis/index.html">RCC Analysis · planned</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
         <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener">RCC Admin ↗</a>
       </section>
@@ -117,6 +128,7 @@ PAGE='''<!doctype html>
           <nav class="global-nav" aria-label="RCC services">
             <a href="https://rcc.ikim.uk-essen.de/">Home</a>
             <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="Files (opens in a new tab)">Files <span aria-hidden="true">↗</span></a>
+            <a href="{{ root }}analysis/rcc-analysis/index.html">RCC Analysis <span class="nav-status">Planned</span></a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
             <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="RCC Admin (opens in a new tab)">RCC Admin <span aria-hidden="true">↗</span></a>
           </nav>
@@ -182,7 +194,7 @@ a:hover { color:var(--cyan-strong); }
 .skip { position:fixed; left:-9999px; top:.75rem; z-index:100; border-radius:9px; background:var(--navy); color:#fff; padding:.65rem .9rem; }
 .skip:focus { left:.75rem; }
 .topbar { background:var(--navy); border-bottom:1px solid rgba(255,255,255,.1); color:var(--paper); position:sticky; top:0; z-index:20; }
-.topbar-inner { max-width:1760px; margin:0 auto; padding:.8rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.25rem; }
+.topbar-inner { width:100%; margin:0; padding:.8rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.25rem; }
 .brand { display:flex; align-items:center; gap:1rem; text-decoration:none; min-width:0; }
 .brand img { width:156px; height:48px; object-fit:contain; object-position:left center; padding:.3rem .45rem; border-radius:8px; background:var(--paper); }
 .brand-copy { border-left:1px solid rgba(255,255,255,.25); padding-left:1rem; line-height:1.05; }
@@ -193,9 +205,9 @@ a:hover { color:var(--cyan-strong); }
 .service-status-dot { display:inline-block; width:.55rem; height:.55rem; margin-right:.45rem; border-radius:50%; background:#58d39c; box-shadow:0 0 0 .22rem rgba(88,211,156,.18); }
 .topbar-button { padding:.62rem .85rem; border-radius:11px; background:var(--paper); color:var(--navy); font-size:.9rem; font-weight:700; text-decoration:none; }
 .topbar-button:hover { background:var(--cyan-light); color:var(--navy); }
-.shell { max-width:1760px; margin:0 auto; padding:0 1.5rem 4rem 0; }
-.docs-layout { display:grid; grid-template-columns:minmax(230px,270px) minmax(0,1000px); gap:1.8rem; align-items:start; justify-content:center; }
-.home .docs-layout { grid-template-columns:minmax(230px,270px) minmax(0,780px) minmax(280px,340px); }
+.shell { width:100%; margin:0; padding:0 1.5rem 4rem 0; }
+.docs-layout { display:grid; grid-template-columns:minmax(230px,270px) minmax(0,1fr); gap:1.8rem; align-items:start; }
+.home .docs-layout { grid-template-columns:minmax(230px,270px) minmax(0,1fr) minmax(280px,340px); }
 .home-rail { position:sticky; top:96px; min-width:0; margin-top:1.8rem; }
 .sidebar { position:sticky; top:74px; height:calc(100vh - 74px); overflow:auto; scrollbar-width:thin; }
 .sidebar-card { min-height:100%; padding:1.35rem 1rem; background:linear-gradient(180deg,var(--navy) 0,#07345f 72%,#052845 100%); color:var(--paper); }
@@ -218,6 +230,7 @@ a:hover { color:var(--cyan-strong); }
 .sidebar nav a { display:flex; align-items:center; justify-content:space-between; gap:.65rem; padding:.58rem .68rem; border-radius:10px; color:rgba(255,255,255,.9); font-size:.84rem; line-height:1.25; text-decoration:none; }
 .sidebar nav a:hover { background:rgba(255,255,255,.08); color:var(--paper); }
 .sidebar nav a[aria-current="page"] { background:linear-gradient(90deg,#1262b0,#0b5a9f); color:var(--paper); font-weight:700; box-shadow:inset 3px 0 0 #3ab0ff; }
+.nav-status { color:rgba(255,255,255,.58); font-size:.64rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
 .sidebar-note { margin-top:1.5rem; padding:1rem; border:1px solid rgba(255,255,255,.14); border-radius:12px; background:rgba(255,255,255,.05); }
 .sidebar-note strong,.sidebar-note span { display:block; }
 .sidebar-note strong { font-size:.84rem; }
@@ -296,7 +309,7 @@ tr:hover td { background:#fbfdfe; }
 details { margin:1rem 0; padding:.8rem 1rem; border:1px solid var(--line); border-radius:12px; background:#fbfdfe; }
 summary { color:var(--navy); font-weight:750; cursor:pointer; }
 .mobile-nav { display:none; }
-footer { max-width:1480px; margin:0 auto; padding:1.4rem 1.8rem; border-top:1px solid rgba(6,42,70,.1); color:var(--muted); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-size:.86rem; }
+footer { width:100%; margin:0; padding:1.4rem 1.8rem; border-top:1px solid rgba(6,42,70,.1); color:var(--muted); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-size:.86rem; }
 footer p { margin:0; }
 @media (max-width:1180px) {
   .home .docs-layout { grid-template-columns:220px minmax(0,1fr); }

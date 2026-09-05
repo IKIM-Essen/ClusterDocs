@@ -28,17 +28,24 @@ class ExpeditionReleaseTests(unittest.TestCase):
             (ROOT / "config/public.yml").read_text(),
         )
         self.assertIn(
-            "assets/downloads/RCC-Expedition-USB-v1.0.1.zip",
+            "[RCC Expedition](rcc-expedition.md)",
             (ROOT / "docs/index.md").read_text(),
         )
+        self.assertIn(
+            "assets/downloads/RCC-Expedition-USB-v1.0.1.zip",
+            (ROOT / "docs/rcc-expedition.md").read_text(),
+        )
 
-    def test_overview_pages_promote_expedition_near_the_top(self):
-        for relative in ("docs/index.md", "docs/tldr.md"):
-            page = (ROOT / relative).read_text(encoding="utf-8")
-            opening = page[:1_200]
-            self.assertIn("[RCC Expedition](rcc-expedition.md)", opening, relative)
-            self.assertIn("Windows 11", opening, relative)
-            self.assertIn("macOS", opening, relative)
+    def test_overview_promotes_both_supported_starting_paths(self):
+        overview = (ROOT / "docs/index.md").read_text(encoding="utf-8")[:1_200]
+        self.assertIn("browser-first research", overview)
+        self.assertIn("advanced command-line/developer access", overview)
+        self.assertIn("[RCC Expedition Light](getting-started/index.md)", overview)
+        self.assertIn("[RCC Expedition](rcc-expedition.md)", overview)
+
+        start = (ROOT / "docs/getting-started/index.md").read_text(encoding="utf-8")
+        self.assertIn("Windows 11", start)
+        self.assertIn("Current macOS", start)
 
     def test_expedition_can_start_without_installing(self):
         archive = ROOT / "docs/assets/downloads/RCC-Expedition-USB-v1.0.1.zip"

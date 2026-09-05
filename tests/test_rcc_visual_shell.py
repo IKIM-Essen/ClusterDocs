@@ -40,6 +40,31 @@ class RCCVisualShellTests(unittest.TestCase):
         self.assertIn('aria-label="Documentation navigation"', BUILDER)
         self.assertIn('aria-label="Mobile documentation navigation"', BUILDER)
 
+    def test_rcc_analysis_is_present_in_global_and_documentation_navigation(self):
+        self.assertEqual(
+            BUILDER.count('{{ root }}analysis/rcc-analysis/index.html'),
+            2,
+        )
+        self.assertIn(
+            "('RCC services','RCC Analysis · Notebook and Workflow · planned','analysis/rcc-analysis.md')",
+            BUILDER,
+        )
+        self.assertIn(
+            "('Reference','Workbench execution layer · advanced · planned','concepts/workbench-interfaces.md')",
+            BUILDER,
+        )
+
+    def test_desktop_shell_is_viewport_aligned_not_centered(self):
+        self.assertIn(".topbar-inner { width:100%; margin:0;", BUILDER)
+        self.assertIn(".shell { width:100%; margin:0;", BUILDER)
+        self.assertIn("grid-template-columns:minmax(230px,270px) minmax(0,1fr);", BUILDER)
+        self.assertIn("grid-template-columns:minmax(230px,270px) minmax(0,1fr) minmax(280px,340px);", BUILDER)
+        self.assertIn("footer { width:100%; margin:0;", BUILDER)
+        self.assertNotIn(".shell { max-width:1760px; margin:0 auto;", BUILDER)
+        self.assertNotIn("align-items:start; justify-content:center;", BUILDER)
+        self.assertNotIn("minmax(0,1000px)", BUILDER)
+        self.assertNotIn("minmax(0,780px)", BUILDER)
+
     def test_breadcrumbs_and_heading_scale_follow_the_design_system(self):
         self.assertIn('aria-label="Breadcrumb"', BUILDER)
         self.assertIn(".content-card h1 { margin:.1rem 0 1.2rem; font-size:1.75rem", BUILDER)
