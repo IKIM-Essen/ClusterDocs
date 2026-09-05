@@ -11,8 +11,20 @@ transfer_service_name: RCC web transfer
 transfer_service_url: https://files.ikim.uk-essen.de/
 media_base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding
 lab_remote_access_name: RCC Headscale
+release_bundle:
+  policy: all_required_surfaces_ready_before_publication
+  required_surfaces:
+    - rcc_home
+    - files
+    - rcc_analysis
+    - rcc_admin
+    - my_rcc
 feature_status:
+  rcc_home: ready
+  files: ready
+  rcc_analysis: not_yet_released
   rcc_admin: ready
+  my_rcc: ready
   rcc_admin_self_administration: ready
   rcc_admin_primary_approval: ready
   rcc_workers: ready
