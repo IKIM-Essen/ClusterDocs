@@ -40,14 +40,16 @@ use the built-in credential/password-manager facilities provided by supported
 Windows/macOS/browser environments or another institutionally approved manager.
 
 That guidance is **not** an SSH-key passphrase policy. RCC does not recommend a
-passphrase on the normal software-backed RCC SSH key. The v3 workstation and
-advanced-access guides make the empty passphrase explicit; hardware-backed FIDO
-SSH keys remain preferred where appropriate.
+passphrase on the normal software-backed RCC SSH key. The v3 workstation,
+advanced-access, canonical Part 1 source, narration, and caption text now make
+the no-passphrase policy explicit; hardware-backed FIDO SSH keys remain
+preferred where appropriate.
 
-The currently staged Part 1 video predates this correction and must be
-regenerated/re-reviewed before media activation. `source/part1.md` still requires
-reconciliation with the current policy and is therefore a production blocker,
-not authoritative v3 credential guidance.
+The **existing generated Part 1 audio/video predates this correction**. It must
+be regenerated from the corrected source/narration and its captions must be
+re-timed/re-reviewed against the new audio before media activation. The source
+policy itself is reconciled; generated media acceptance is the remaining Part 1
+credential-content gate.
 
 ## AI and agent principle
 
@@ -91,7 +93,7 @@ release machinery is fail-closed until the exact candidate has:
 3. completed zero-SSH naive-user browser acceptance before broad exposure;
 4. completed separate advanced-user acceptance;
 5. completed institutional/privacy/accessibility/operational checks;
-6. reconciled Part 1 source/media with the no-passphrase SSH-key policy and completed required media review/verification;
+6. regenerated and re-reviewed Part 1 media from the corrected no-passphrase credential source, and completed the remaining media review/verification;
 7. selected the final release version; and
 8. received explicit authorization to merge the accepted candidate into `main`.
 
