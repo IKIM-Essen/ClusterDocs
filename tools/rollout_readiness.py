@@ -31,6 +31,7 @@ def has_deployment_workflow() -> bool:
         "workflow_dispatch:",
         "runs-on: rcc-ci",
         "/opt/rcc-ci/bin/gitea-ci-checkout",
+        'refs/heads/clusterdocs-3',
         "tools/validate_repo.py",
         "tools/rollout_readiness.py",
         "tools/build_site.py --production",
@@ -41,7 +42,7 @@ def has_deployment_workflow() -> bool:
         "test ! -e site-production/CNAME",
         "StrictHostKeyChecking=yes",
     )
-    forbidden = ("pull_request:", "\n  push:", "schedule:", "uses:")
+    forbidden = ("refs/heads/clusterdocs-ng", "pull_request:", "\n  push:", "schedule:", "uses:")
     return all(signal in text for signal in required) and not any(
         signal in text for signal in forbidden
     )
@@ -162,23 +163,18 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     checklist_text = (ROOT / "ADMIN_CHECKLIST.md").read_text()
     unchecked_lines = re.findall(r"(?m)^- \[ \] .+$", checklist_text)
     unchecked = len(
-        [
-            line
-            for line in unchecked_lines
-            if "[post-rollout]" not in line
-            and "Run `python tools/rollout_readiness.py`" not in line
-        ]
+        [line for line in unchecked_lines if "Run `python tools/rollout_readiness.py`" not in line]
     )
     if unchecked:
         blockers.append(f"administrator publication checklist has {unchecked} unchecked items")
 
     if not has_deployment_workflow():
-        blockers.append("no reviewed production deployment workflow is present")
+        blockers.append("no reviewed ClusterDocs 3 production deployment workflow is present")
     else:
-        ready.append("Gitea-only production deployment workflow is present")
+        ready.append("Gitea-only ClusterDocs 3 production deployment workflow is present")
 
     if not (ROOT / "meta/BRANCH_PR_AUDIT.md").is_file():
-        blockers.append("ClusterDocs main/NG branch and pull-request audit is missing")
+        blockers.append("ClusterDocs branch and pull-request audit is missing")
     else:
         ready.append("ClusterDocs branch and pull-request audit is present")
 

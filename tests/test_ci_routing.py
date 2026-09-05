@@ -6,8 +6,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CIRoutingTests(unittest.TestCase):
-    def test_gitea_is_the_automatic_validation_authority(self):
+    def test_gitea_is_the_manual_validation_authority(self):
         workflow = (ROOT / ".gitea/workflows/validate.yml").read_text()
+        self.assertIn("name: validate-clusterdocs-3", workflow)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("runs-on: rcc-ci", workflow)
         self.assertIn("/opt/rcc-ci/bin/gitea-ci-checkout", workflow)
@@ -18,6 +19,7 @@ class CIRoutingTests(unittest.TestCase):
 
     def test_github_validation_is_manual_fallback_only(self):
         workflow = (ROOT / ".github/workflows/validate.yml").read_text()
+        self.assertIn("name: validate-clusterdocs-3-fallback", workflow)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertNotIn("pull_request:", workflow)
         self.assertNotIn("\n  push:", workflow)
@@ -25,12 +27,14 @@ class CIRoutingTests(unittest.TestCase):
         self.assertNotIn("rsync ", workflow)
         self.assertNotIn("CLUSTERDOCS_DEPLOY_", workflow)
 
-    def test_production_deployment_is_manual_and_gitea_only(self):
+    def test_production_deployment_is_manual_gitea_only_and_v3_pinned(self):
         workflow = (ROOT / ".gitea/workflows/deploy-production.yml").read_text()
+        self.assertIn("name: deploy-clusterdocs-3-production", workflow)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("runs-on: rcc-ci", workflow)
         self.assertIn("/opt/rcc-ci/bin/gitea-ci-checkout", workflow)
-        self.assertIn('test "$GITHUB_REF" = "refs/heads/clusterdocs-ng"', workflow)
+        self.assertIn('test "$GITHUB_REF" = "refs/heads/clusterdocs-3"', workflow)
+        self.assertNotIn('refs/heads/clusterdocs-ng', workflow)
         self.assertIn('test "$(git rev-parse HEAD)" = "$GITHUB_SHA"', workflow)
         self.assertIn("tools/rollout_readiness.py", workflow)
         self.assertIn("tools/build_site.py --production", workflow)
@@ -40,6 +44,7 @@ class CIRoutingTests(unittest.TestCase):
         self.assertIn("touch site-production/.nojekyll", workflow)
         self.assertIn("test ! -e site-production/CNAME", workflow)
         self.assertIn("StrictHostKeyChecking=yes", workflow)
+        self.assertIn('"source_branch":"clusterdocs-3"', workflow)
         self.assertNotIn("push --force", workflow)
         self.assertNotIn("uses:", workflow)
         self.assertNotIn("pull_request:", workflow)

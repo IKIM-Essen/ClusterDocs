@@ -1,108 +1,113 @@
-# RCC onboarding curriculum for biomedical researchers
+# RCC ClusterDocs 3 release candidate
 
-This staging package contains RCC Expedition Light as the required first-use
-path plus an eighteen-class English-language onboarding curriculum for deeper
-optional training. It serves researchers and technical staff who are new to
-Linux clusters, distributed workflows, Slurm, VS Code, performance
-engineering, Apptainer, governed project web applications, efficient local
-I/O, RCC storage architecture, wet-lab instrument-data handoff, research-data
-lifecycle planning, and safe use of coding agents.
+`clusterdocs-3` is the future RCC documentation release. It describes RCC as a
+governed research-computing platform rather than primarily as a cluster that
+every user must learn to operate from a shell.
 
-## Curriculum
+The public product model is **task-first and browser-first** for ordinary
+researchers: choose or bring project data, analyse it in a Notebook or governed
+Workflow when RCC Analysis is enabled, keep durable results with the project,
+and preserve or publish them through the appropriate governed lifecycle.
+SSH, VS Code, Slurm, containers, workflow engines, storage internals, and lower-
+level diagnostics remain first-class advanced tools.
 
-### Part 1 - Your first day on the RCC cluster
+Experienced users should see the full platform: instrument ingestion for
+sequencers, microscopes and other acquisition systems; project POSIX and
+S3/object storage where enabled; DataLad; Jupyter; governed workflows; GPUs/HPC;
+project self-governance and delegation; privacy-preserving AI/agent assistance;
+project services; Coscine preservation status; and domain applications such as
+SeqLab.
 
-Mental model of a shared cluster, local versus remote work, SSH and key handling, Windows and macOS preparation, VS Code Remote SSH, managed data transfer, checksums, the Slurm job lifecycle, and appropriate use of tmux.
+## AI and agent principle
 
-### Part 2 - Reproducible scientific workflows
+The default coding-agent pattern is **data-blind by default**. General-purpose
+or off-site agents can explain RCC, develop and review code/workflows, operate on
+public code and synthetic fixtures, and interpret bounded sanitized diagnostics.
+RCC executes the resulting analysis against real governed project data. Any
+RCC-local agent capability allowed to work near protected data is a separately
+reviewed exception rather than the default assumption.
 
-Project structure, Miniforge, Mamba, Bioconda, software environments,
-Snakemake dependency graphs, a bounded nf-core/Nextflow example, Slurm
-execution, a minimal statistical workflow, a synthetic DNA sequence workflow,
-logging, benchmarking, and Git.
+## Documentation and training layers
 
-### Part 3 - Performance and efficient I/O
+The site includes:
 
-CPU, threads, GPU, RAM, storage capacity, throughput, latency, IOPS, metadata operations, streaming versus random access, large versus small files, crowded directories, compression, node-local scratch, Snakemake staging patterns, and bottleneck diagnosis. It explicitly warns that poor workflow structure can turn an analysis expected to take hours into one that takes weeks or months.
+- a task-first home page and short browser-first start path;
+- a complete capability overview for advanced researchers and technical staff;
+- RCC Analysis, Files, identity/project, agent, storage, lifecycle, and service
+  documentation;
+- an eighteen-class English-language RCC course for deeper optional training;
+- advanced SSH/VS Code/Slurm/Snakemake/Nextflow/Apptainer reference material;
+- instrument-ingestion, biomedical-data, efficient-I/O, and research-data
+  lifecycle material; and
+- the versioned offline RCC Expedition package.
 
-### Part 4 - Containers with Apptainer
+The original four course parts retain editable/document and media source trees.
+Classes 1–17 have staged narrated media/captions governed by the media manifest;
+Class 18 remains written/illustrated unless separately approved for video
+publication.
 
-Why containerized software is useful on a shared cluster; why active Conda environments on network storage can create a small-file and metadata workload; immutable SIF images; cache, temporary space, bind mounts, read-only inputs, GPU use, Snakemake container directives, image trust, and production image lifecycle.
+## Release state
 
-## Deliverable types
+The branch is intentionally **not** self-declaring as production-ready. The
+release machinery is fail-closed until the exact candidate has:
 
-The original four classes include:
+1. passed repository/build/link validation;
+2. completed the fresh ClusterDocs 3 adversarial expert review;
+3. completed zero-SSH naive-user browser acceptance before broad exposure;
+4. completed separate advanced-user acceptance;
+5. completed institutional/privacy/accessibility/operational checks;
+6. completed required media review and online media verification; and
+7. been explicitly switched from `site_status: staging` to `production`.
 
-- a long-form PDF;
-- an editable DOCX source;
-- an editable PowerPoint slide deck with speaker notes;
-- a slide-based MP4 training video with natural British-English narration;
-- an SRT caption file; and
-- a Markdown narration script.
+A very small controlled pilot can precede broad acceptance to prove the deployed
+journey works in principle. It does not replace the release gates.
 
-The canonical source for the original four classes is the Markdown document in
-`source/`. Classes 5–17 are maintained directly in the course, exercise,
-narration, caption, and reviewed-frame trees. The DOCX, PDF, PPTX, and MP4
-files are rendered review artifacts; MP4 files are published separately from
-ordinary Git history. Class 18 is currently a written and illustrated class;
-its proposed video narration is retained separately and is not presented as a
-released video.
+## Release commands
 
-## Video format
+Check whether human review can begin:
 
-The videos are 1280 x 720 H.264/AAC slide-based training videos. Classes 1–17
-use the macOS Daniel British-English voice with sentence-aware pacing,
-technical-term pronunciation handling, de-essing, gentle compression, EBU R128
-loudness normalization, and captions. Rebuild them with
-`python3 build/build_videos.py` for Classes 1–4 and
-`python3 build/build_course_videos.py` for Classes 5–17. The builds record settings, durations, and
-hashes in `meta/video-build-report.json`. Videos do not connect to production
-RCC services and contain no credentials or biomedical data.
+```bash
+python3 tools/validate_repo.py
+python3 tools/build_site.py --output site-review
+python3 tools/rollout_readiness.py --manual-review
+```
 
-## Production status
+The final production gate is:
 
-This is a content-complete publication candidate with release-state labels and
-fail-closed media links. Deployment operators must still complete the
-operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
-DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
-asking readers to fill documentation placeholders.
+```bash
+python3 tools/validate_repo.py
+python3 tools/build_site.py --production --output site-production
+python3 tools/rollout_readiness.py
+```
 
-Managed Nextflow-to-Slurm support is documented as **ready now**. The
-supported contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
-node (a `shellhost`), Slurm for every scientific task, shared persistent work state for
-`-resume`, explicit node-local task scratch, and Apptainer on workers.
+The production command is expected to fail while the candidate remains staged or
+review evidence is incomplete.
 
-Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert
-and novice review can begin. Run `python3 tools/rollout_readiness.py` for the
-stricter production exit status and
-an itemized list of known launch blockers. A normal content validation pass is
-necessary but does not mean the site is production-ready.
+## Deployment authority
 
-The statistical and DNA examples are educational. They are not validated clinical pipelines and do not replace study-design, statistical, bioinformatics, data-protection, or clinical review.
+Gitea is the manually dispatched production deployment authority. The production
+workflow is pinned to `refs/heads/clusterdocs-3`, verifies the exact checked-out
+commit, runs the fail-closed gates, generates `assets/release.json`, and publishes
+the exact generated tree as a normal non-forced update to GitHub Pages. GitHub
+Actions remains a manual validation fallback and has no deployment credential.
 
 ## Local website preview
 
-The custom RCC-styled site produced by `tools/build_site.py` is the canonical
-ClusterDocs NG website. The `mkdocs.yml` file remains useful for content and
-navigation checks, but `mkdocs serve` does not reproduce the published design.
-
-Build and browse the same site used by the validation and deployment workflow:
+The RCC-styled site generated by `tools/build_site.py` is the canonical rendered
+product. `mkdocs.yml` remains useful for structure/content checks but does not
+reproduce the custom visual shell.
 
 ```bash
-python tools/build_site.py --output site-preview
-python -m http.server 8765 --bind 127.0.0.1 --directory site-preview
+python3 tools/build_site.py --output site-preview
+python3 -m http.server 8765 --bind 127.0.0.1 --directory site-preview
 ```
 
-Then open <http://127.0.0.1:8765/>.
+Then open `http://127.0.0.1:8765/` locally.
 
-## Repository integration
+## Safety boundary
 
-`meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.
-
-## v0.1.2 additions
-
-This staging version adds Classes 9-12 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.
-
-## v0.1.3 additions
-
-This version adds Class 13 on European and German data protection for biomedical research. It explains that direct identifiers and re-identification keys remain outside RCC, while approved genomic and X-ray/CT/MRI research data may be processed in the controlled enclave. It includes proportionate guidance on pseudonymisation, data minimisation, defacing, official legal resources, and the Universitätsklinikum Essen data-protection contact. Completion is based on training scenarios and project governance, not automated inspection of research files.
+Educational examples are not validated clinical pipelines and do not replace
+study-design, statistical, bioinformatics, data-protection, or clinical review.
+No documentation interface, agent, API, or workflow obtains authority beyond the
+user's RCC identity, project membership/delegated role, data policy, and current
+service release state.

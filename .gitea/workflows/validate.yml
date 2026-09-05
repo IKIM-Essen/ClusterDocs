@@ -1,4 +1,4 @@
-name: validate-clusterdocs-ng
+name: validate-clusterdocs-3
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: clusterdocs-ci-${{ github.ref }}
+  group: clusterdocs-3-ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
