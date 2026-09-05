@@ -352,7 +352,6 @@ Do not repeatedly decompress the same large source into shared storage. Either:
 - stream decompression into the consumer; or
 - decompress once into local scratch when repeated local access justifies it.
 
-
 ## 10. Cache containers, indexes, and reusable reference data
 
 Repeatedly transferring or rebuilding the same immutable data wastes both
@@ -495,7 +494,6 @@ create more jobs.
 There are advanced cases in which a scheduler-aware workflow engine submits
 jobs while itself running under a controlled service allocation, but this must
 be an RCC-approved design. It is not the default user pattern.
-
 
 ## 12. Diagnose an I/O-bound job
 

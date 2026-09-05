@@ -99,7 +99,6 @@ Then open <http://127.0.0.1:8765/>.
 
 `meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.
 
-
 ## v0.1.2 additions
 
 This staging version adds Classes 9-12 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows. It also includes copyable examples under `examples/interactive-workflows` and two new slide decks for instructors.

@@ -47,4 +47,3 @@ Git records changes to text files and supports review through branches and pull 
 ## Slide 12: 11. Part Two completion checklist
 
 You are ready for larger examples when the project has a clear directory structure and read-only source data; the software environment is declared; Snakemake can perform a dry run; the workflow submits rules through the approved Slurm profile; statistical inputs are validated; sequence files use appropriate compressed and indexed formats; logs and benchmarks are generated; and workflow changes are recorded in Git without sensitive data. The next lesson focuses on performance. It explains why an analysis with correct code can still take months when CPU, memory, and especially input-output behavior are structured poorly.
-

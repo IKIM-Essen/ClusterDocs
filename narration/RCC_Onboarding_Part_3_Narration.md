@@ -55,4 +55,3 @@ A symptom is not a diagnosis. Low CPU efficiency may be caused by input-output w
 ## Slide 14: 13. Part Three operating rules
 
 The operating rules are straightforward. Measure before scaling. Match Slurm requests to the software configuration. Keep source data compressed where possible. Prefer sequential streaming access. Avoid random temporary input-output on network storage. Stage active files to node-local scratch through a tested Snakemake pattern. Reduce small-file and directory counts. Preserve only necessary outputs and clean temporary files. Use Slurm accounting, Snakemake benchmarks, and operating-system tools to identify the actual bottleneck. Above all, perform a pilot at realistic scale. An inefficient workflow multiplied across thousands of samples can turn hours into months and degrade the shared service for colleagues.
-

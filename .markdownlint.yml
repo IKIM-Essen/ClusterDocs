@@ -1,0 +1,25 @@
+default: true
+
+# ClusterDocs is long-form curriculum content. Prose is intentionally wrapped
+# for readability rather than at an arbitrary fixed column.
+MD013: false
+
+# Canonical source and narration files may contain multiple complete lessons,
+# each retaining its own level-one heading.
+MD025: false
+
+# Sentence-like slide headings and blockquoted notices are intentional.
+MD026: false
+MD028: false
+
+# Ordered-list numbering carries semantic step numbers across intervening
+# explanatory material.
+MD029: false
+
+# The custom publication builder consumes reviewed inline HTML for components,
+# captions, and media markup.
+MD033: false
+
+# MkDocs Material admonition bodies are indented prose and are otherwise
+# misclassified as indented code blocks.
+MD046: false

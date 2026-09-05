@@ -92,7 +92,6 @@ instructions because they can differ by location. For help, use the **IKIM
 Cluster channel on Mattermost** without posting credentials, private keys, or
 sensitive project data.
 
-
 Your project coordinator must also give you:
 
 - your RCC username;
@@ -866,7 +865,6 @@ Common job states include:
 - **`PD`:** Pending: the job is waiting for resources or another condition
 - **`R`:** Running
 - **`CG`:** Completing
-
 
 A short job may disappear from `squeue` quickly after it finishes. This is normal.
 

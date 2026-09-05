@@ -25,7 +25,7 @@ Shuffling rows, hashing an identifier, or replacing names is not enough. If
 information can still be linked to a person using other information, it remains
 personal data. Use values that are fully invented rather than transformed from
 real people. The European Data Protection Board explains this distinction in
-its [guidance on pseudonymisation](https://www.edpb.europa.eu/news/edpb-adopts-pseudonymisation-guidelines-and-paves-way-improve-cooperation_en).
+its [guidance on pseudonymisation](https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en).
 
 ## When a coding agent can work with the data
 

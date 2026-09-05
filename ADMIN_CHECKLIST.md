@@ -22,7 +22,7 @@ Complete and test these items before publishing the curriculum.
 ## Data transfer and protection
 
 - [ ] Confirm the browser transfer service name, URL, sign-in method, collection/endpoint name, and destination convention.
-- [ ] Confirm checksum commands and expected behavior.
+- [x] Confirm checksum commands and expected behavior.
 - [ ] State which data classes may use the service and which require additional approval.
 - [ ] Confirm the local policy that direct identifiers and re-identification keys remain outside RCC while approved biomedical research data may be processed in the controlled enclave.
 - [ ] Review Class 13 wording, external legal links, and the data-protection contact before publication.
@@ -72,7 +72,7 @@ Complete and test these items before publishing the curriculum.
 ## Editorial and accessibility
 
 - [x] Replace all administrator placeholders and keep the repository/configuration placeholder gates passing.
-- [ ] Build MkDocs locally and run markdownlint.
+- [x] Build MkDocs locally and run markdownlint.
 - [ ] Check all internal and external links.
 - [ ] Review terminology with a novice biomedical researcher.
 - [x] Complete expert content review for the current site candidate and record its status.
@@ -84,13 +84,15 @@ Complete and test these items before publishing the curriculum.
 
 ## Website deployment and media
 
+- [ ] Integrate and validate the incoming RCC Workbench and RCC Analysis documentation before publishing.
 - [ ] Set `site_status: production` and replace every unresolved value in `config/public.yml`.
 - [ ] Build successfully with `python tools/build_site.py --production`.
 - [ ] Configure a reviewed deployment target, TLS, rollback procedure, and named owner for updates.
 - [x] Add a fail-closed, manually dispatched Gitea production workflow; keep GitHub validation manual and deployment-free.
 - [x] Audit every ClusterDocs `main`/`clusterdocs-ng` PR and surviving GitHub/Gitea branch for missing release work.
 - [ ] Provision and acceptance-test the dedicated GitHub Pages deploy key and pinned GitHub SSH host key in Gitea.
-- [x] Verify all 17 staged MP4 files locally against the hashes, sizes, codecs, dimensions, channels, and durations in `config/media-manifest.yml` after the two-class expansion.
+- [x] Verify all 17 regenerated `bf_emma` MP4 masters locally against the exact hashes in the two video-build reports and confirm stereo AAC audio at 48 kHz.
+- [ ] Promote the exact regenerated masters into the staged publication set, update `config/media-manifest.yml`, and rerun the complete local media gate.
 - [ ] Publish all 17 MP4 files at the RCC documentation vhost URL and verify their SHA-256 values against `config/media-manifest.yml`.
 - [ ] Confirm the RCC media service supports trusted HTTPS, `video/mp4`, and byte-range requests for every file.
 - [ ] Complete human review of every video for narration, visual accuracy, pronunciation, pacing, and absence of sensitive material.

@@ -87,4 +87,3 @@ submit the program with the supported Slurm or workflow command.
 
 Continue with [Class 1](../course/class-01-safe-access.md) for setup or
 [Class 5](../course/class-05-slurm.md) for job submission.
-
