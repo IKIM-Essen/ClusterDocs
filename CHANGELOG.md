@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+- Reframed RCC Analysis as the planned user-facing compute product with two
+  primary modes: Jupyter-first **Notebook** for interactive exploration and
+  **Workflow** for repeatable/scalable governed analysis.
+- Demoted “RCC Workbench” from a peer user product to the advanced/internal
+  interactive execution layer behind Analysis Notebook mode while preserving
+  its documentation URL for architecture/reference use.
+- Split onboarding into a browser-first path and an advanced SSH/VS Code path;
+  an RCC account no longer implies that the user must enroll an SSH key.
+- Connected Files directly to the planned `Files -> Analysis -> Files` journey.
+- Added notebook-to-workflow resource guidance to discourage idle interactive
+  allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
+  fan-out, and inefficient shared-storage I/O.
+- Preserved current-release accuracy: until RCC Analysis Notebook is explicitly
+  activated, the existing Slurm + SSH-tunnel Jupyter procedure remains the
+  supported notebook path.
+
 ## v1.0.1
 
 - Made RCC Expedition Light the required first-use route and added direct,
