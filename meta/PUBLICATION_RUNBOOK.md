@@ -1,31 +1,24 @@
-# ClusterDocs 3 publication runbook
+# ClusterDocs publication runbook
 
-This runbook publishes the future ClusterDocs 3 site while keeping media
-publication, human acceptance, online verification, and site promotion as
-separate fail-closed steps. A failed gate leaves the current production site in
-place.
+This runbook separates candidate review, explicit promotion into `main`, media
+verification, and production publication. A failed gate leaves the current
+production site in place.
 
-## Fixed targets and source
+## Fixed targets and branch roles
 
-- Production source branch: `clusterdocs-3`
+- Temporary candidate branch: `clusterdocs-3`
+- Long-term production source: `main`
+- Legacy temporary branch to retire after successful promotion: `clusterdocs-ng`
 - Site URL: <https://ikim-essen.github.io/ClusterDocs/>
 - Media URL: <https://docs.ikim.uk-essen.de/media/rcc-onboarding/>
 - Media web root: `/srv/www/docs/media/rcc-onboarding`
 - Reviewed local MP4 source: `new-videos/`
 - Manifest: `config/media-manifest.yml`
-- Media set: 17 MP4 files, 122,808,554 bytes total
-- Media-set checksum receipt: `9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11`
 
-The site publishes no local MP4 copies, GitHub media URLs, general downloads
-tree, source-caption downloads, narration downloads, or office-document
-downloads. The only versioned general download is the validated RCC Expedition
-archive and its checksum. WebVTT captions and posters are generated as player
-assets.
+Production must never be dispatched directly from `clusterdocs-3` or
+`clusterdocs-ng`. The production workflow accepts `main` only.
 
 ## 1. Build the exact staged candidate
-
-Work only from the exact `clusterdocs-3` candidate to be reviewed. Record its
-commit before testing:
 
 ```bash
 git switch clusterdocs-3
@@ -36,129 +29,95 @@ python3 tools/build_site.py --output site-review
 python3 tools/rollout_readiness.py --manual-review
 ```
 
-The worktree must be clean. `--manual-review` means the candidate is coherent
-enough to begin human acceptance; it does **not** mean it is production-ready.
+The worktree must be clean. Candidate validation proves only that human review
+can proceed; it does **not** authorize a merge or production publication.
 
-## 2. Run human acceptance before broad exposure
+## 2. Run human acceptance before promotion
 
-A very small controlled pilot may be exposed first to prove the deployed browser
-journey works in principle. Before broad exposure, complete all of:
+Before broad exposure complete:
 
-1. the fresh ClusterDocs 3 adversarial review in
-   `meta/EXPERT_REVIEW_GUIDE.md`;
-2. the zero-SSH naive-user browser session in
-   `meta/NOVICE_REVIEW_GUIDE.md` using synthetic/non-sensitive data;
-3. a separate advanced-user acceptance covering SSH, VS Code, Slurm,
-   containers, workflow development, GPUs, and lower-level diagnostics; and
-4. institutional/privacy/accessibility/operational review in
-   `ADMIN_CHECKLIST.md`.
+1. the fresh ClusterDocs 3 adversarial review;
+2. the zero-SSH naive-user browser session using synthetic/non-sensitive data;
+3. separate advanced-user acceptance including SSH/VS Code/Slurm/containers/GPU/workflows and the current no-passphrase SSH-key policy;
+4. architecture review of the Slurm/service-plane/Kubernetes rationale;
+5. institutional/privacy/accessibility/operational review; and
+6. media review, including regeneration of Part 1 after reconciling the canonical source with current credential policy.
 
-Do **not** substitute a successful SSH exercise for browser-first acceptance and
-do not reuse the August expert receipt for ClusterDocs 3.
+Do not reuse the August expert receipt or the old Part 1 audio as v3 evidence.
 
-Record completed evidence in `config/review-status.yml` only after blocker/major
-findings are resolved or explicitly accepted by the responsible owner.
+## 3. Verify media before promotion
 
-## 3. Verify the exact media handoff before copying it
+Run the local and online media gates as documented by `tools/media_gate.py` and
+`config/media-manifest.yml`. The currently staged Part 1 media must remain
+fail-closed until regenerated from corrected source/narration and re-reviewed.
+Do not substitute a same-named file with another hash without updating the
+manifest and evidence.
 
-From the same candidate, run:
+## 4. Explicit promotion checkpoint
 
-```bash
-python3 tools/media_gate.py --local-dir new-videos
-```
+After every candidate gate closes, stop. Merging `clusterdocs-3` into `main`
+requires **explicit authorization at that time**. This runbook and a green
+candidate do not authorize the merge.
 
-The gate must report `PASS (17 videos)`. It checks the manifest filename set,
-exact size, SHA-256, H.264 1280×720 video, stereo AAC audio, and duration. Do not
-deploy an extra file or substitute a same-named file with another hash.
+When authorization is given, use the normal repository merge path. Do not force
+move `main` and do not publish from the candidate branch as a shortcut.
 
-## 4. Deploy and verify the separate media endpoint
+## 5. Revalidate the exact main commit
 
-Deploy the reviewed RCC `docs.ikim.uk-essen.de` static-vhost configuration with
-document root `/srv/www/docs`. Copy exactly the approved files into
-`/srv/www/docs/media/rcc-onboarding`; the web service receives read access, not a
-writable project/user tree.
-
-Before enabling players, the final endpoint must provide trusted TLS, correct
-`video/mp4`, byte ranges with HTTP 206/`Content-Range`, and the exact manifest
-bytes. Directory listing should remain disabled.
-
-Run the online gate:
+After the authorized merge:
 
 ```bash
-python3 tools/media_gate.py \
-  --base-url https://docs.ikim.uk-essen.de/media/rcc-onboarding
-```
-
-It must report `media publication gate: PASS (17 videos)`. Also perform the
-required human video/caption review and clean-client browser playback tests.
-
-## 5. Activate video links only after online verification
-
-Only after the online/media reviews pass, change the governed publication values
-in `config/media-manifest.yml` to their verified-live state. Both the live status
-and link-enablement condition are required; partial activation must remain
-fail-closed and show the “Video not yet released” notice.
-
-Rebuild and verify:
-
-```bash
-python3 tools/build_site.py --output site-review
-python3 tools/check_site_links.py site-review
-```
-
-Review the course overview plus representative early, workflow, instrument, and
-lifecycle classes; verify captions, seeking, mobile layout, and the supported
-browser set.
-
-## 6. Final production gate
-
-Only after every required review is recorded and `ADMIN_CHECKLIST.md` is closed,
-set `site_status: production` and run on the exact source commit:
-
-```bash
+git switch main
+git pull --ff-only
+git status --short
+git rev-parse HEAD
 python3 tools/validate_repo.py
 python3 tools/rollout_readiness.py
 python3 tools/build_site.py --production --output site-production
 python3 tools/check_site_links.py site-production
 ```
 
-All commands must pass. The readiness gate intentionally rejects a candidate
-that still lacks fresh expert, zero-SSH novice, advanced-user, media,
-accessibility, or administrator evidence.
+Confirm the exact main tree corresponds to the accepted candidate plus only the
+explicitly reviewed merge/promotion changes. Any new content change requires
+re-review appropriate to its scope.
 
-## 7. Publish with the manual Gitea workflow
+## 6. Publish with the manual Gitea workflow
 
-Production deployment is owned by
-`.gitea/workflows/deploy-production.yml`. The workflow:
+`.gitea/workflows/deploy-production.yml` must:
 
-- accepts only `refs/heads/clusterdocs-3`;
-- checks out and validates the exact event SHA;
-- refuses a dirty/stale source;
-- reruns the full fail-closed production gates;
-- emits `assets/release.json` with source branch and commit;
-- clones only the existing GitHub `gh-pages` branch;
-- creates a normal child commit, never a forced update; and
-- verifies the remote `gh-pages` head after push.
+- accept only `refs/heads/main`;
+- validate the exact event SHA and clean worktree;
+- rerun the full production gates;
+- emit `assets/release.json` with `source_branch: main` and the exact commit;
+- clone only the existing GitHub `gh-pages` branch;
+- create a normal child commit, never a forced update; and
+- verify the remote Pages head after push.
 
 GitHub Actions remains manual validation fallback only and must not hold the
 Pages deployment credential.
 
-Before the first dispatch, provision the Gitea-only secrets documented in
-`meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md` and confirm Pages publishes the root of
-`gh-pages`.
-
-## 8. Post-publication verification
+## 7. Post-publication verification
 
 After the Pages commit becomes visible:
 
-- verify `assets/release.json` matches the intended `clusterdocs-3` commit;
-- re-run external links and representative browser/mobile/accessibility checks;
-- re-run the online media gate and representative video/caption playback; and
-- watch support/telemetry that has been institutionally approved for obvious
-  breakage.
+- verify `assets/release.json` matches the intended main commit;
+- rerun external link and representative browser/mobile/accessibility checks;
+- rerun the online media gate and representative video/caption playback; and
+- confirm rollback to the previous accepted Pages commit remains possible.
 
-These are verification checks, not a deferred substitute for pre-broad-rollout
-naive-user acceptance.
+These are verification checks, not substitutes for pre-promotion human
+acceptance.
+
+## 8. Retire temporary branches only after success
+
+Only after the main-based publication and rollback evidence are verified should
+`clusterdocs-ng` and `clusterdocs-3` be retired according to repository policy.
+Do not delete them during candidate review, immediately on merge, or as part of
+the production workflow itself.
+
+After retirement, ordinary ClusterDocs development should branch from `main` and
+return to `main`; future production publication should continue to originate
+from `main`.
 
 ## Rollback
 
@@ -166,11 +125,6 @@ Keep the previous accepted `gh-pages` commit and media set available until the
 new release is verified. Roll back the site with a new commit restoring the last
 accepted generated tree; never force-rewrite `gh-pages`.
 
-If media fails independently, disable preview links through the governed media
-configuration and republish the site; do not introduce a local or third-party
-fallback. Never replace an MP4 in place without updating its manifest hash and
-verification evidence.
-
-A future `docs.ikim.uk-essen.de` Pages CNAME remains a separate decision. Do not
-add a Pages `CNAME` file as part of this release unless that DNS/hosting review is
-completed separately.
+If media fails independently, disable preview links through governed media
+configuration and republish from an accepted `main`; do not introduce a local or
+third-party fallback.

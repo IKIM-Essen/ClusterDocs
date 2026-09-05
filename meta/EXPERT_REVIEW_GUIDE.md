@@ -2,8 +2,8 @@
 
 Status: **required for the ClusterDocs 3 candidate.** The expert review recorded
 on 9 August 2026 applied to the earlier product model and does not approve the
-browser-first, optional-SSH, RCC Analysis, capability, or agent boundaries added
-for ClusterDocs 3.
+browser-first, optional-SSH, RCC Analysis, capability, agent, credential, or
+architecture boundaries added for ClusterDocs 3.
 
 ## Purpose
 
@@ -33,53 +33,60 @@ reproduction steps where useful, and the required correction.
 6. **Data lifecycle:** instrument ingestion, project storage, S3/object storage
    where enabled, DataLad, sharing, scratch, retention, Coscine staging, and
    domain applications such as SeqLab.
-7. **Advanced path:** SSH/ProxyJump, VS Code, direct Slurm, containers, Gitea,
-   workflow engines, GPU selection, and efficient I/O remain technically
-   accurate without leaking into the novice critical path.
-8. **Web/ops shell:** service URLs and release states come from governed
+7. **Advanced path and credentials:** verify SSH/ProxyJump, VS Code, direct
+   Slurm, containers, Gitea, workflow engines, GPU selection, and efficient I/O.
+   The normal RCC software-backed SSH key must be generated without a passphrase;
+   Windows/macOS password-manager guidance applies to web/account credentials
+   and recovery material, not to SSH-key passphrases.
+8. **Architecture boundary:** adversarially review
+   `docs/concepts/why-not-kubernetes-everywhere.md`. Confirm Slurm remains the
+   scientific-compute authority, long-lived services remain on the RCC service
+   plane (including Nomad where deployed), and a browser/agent cannot become a
+   second scheduler. Confirm the text remains open to Kubernetes when a concrete
+   supported workload justifies it rather than dismissing the platform on
+   principle.
+9. **Web/ops shell:** service URLs and release states come from governed
    configuration; staged services fail closed; role-specific Admin/My RCC links
    are not misleading; decorative status UI does not masquerade as live health;
    external runtime assets are minimized; CSP/accessibility/mobile/keyboard and
    clean-client behavior are reviewed.
-9. **Supportability:** diagnostics are reproducible without requesting secrets,
-   unrestricted logs, patient data, or unnecessary filenames.
+10. **Release mechanics:** candidate validation may occur on `clusterdocs-3`,
+    but production deployment must accept only `main`. Confirm no workflow or
+    runbook treats candidate validation as merge authorization or publishes
+    directly from `clusterdocs-3`/`clusterdocs-ng`.
+11. **Supportability:** diagnostics are reproducible without requesting secrets,
+    unrestricted logs, patient data, or unnecessary filenames.
 
 ## Adversarial acceptance questions
 
-- Can a user reach a service the page labels unreleased, or does the product
-  merely document it?
+- Can a user reach a service the page labels unreleased, or does the product merely document it?
 - Can navigation or a deep link broaden project authority?
 - Can My RCC/self-service be confused with administrator authority?
-- Can an agent, MCP call, API, or natural-language request perform something the
-  same user could not perform through another interface?
-- Does the standard agent workflow expose real project data when a synthetic
-  fixture or bounded diagnostic would suffice?
+- Can an agent, MCP call, API, or natural-language request perform something the same user could not perform through another interface?
+- Does the standard agent workflow expose real project data when a synthetic fixture or bounded diagnostic would suffice?
 - Can a browser/network retry create a duplicate scientific run?
-- Can ordinary Analysis users inject raw Slurm/workflow-engine parameters that
-  bypass reviewed execution policy?
-- Are CPU/RAM/GPU defaults bounded and are idle/repeated workloads steered toward
-  more appropriate execution modes?
-- Do instrument instructions avoid laptops/personal homes as the default landing
-  zone and preserve project ownership/checksums/retry semantics?
-- Is S3/object access separately entitled and project-scoped rather than implied
-  by ordinary filesystem membership?
-- Are archive/preservation claims explicit about current release state and
-  verification rather than equating a copy with an archive?
-- Are domain applications such as SeqLab described as governed consumers of RCC
-  capabilities rather than hidden bypasses around project/storage/identity
-  policy?
-- Do advanced commands state where they run and avoid administrator privilege?
-- Can support diagnose failures without asking users to paste keys, tokens,
-  patient data, unrestricted logs, or complete datasets?
+- Can ordinary Analysis users inject raw Slurm/workflow-engine parameters that bypass reviewed execution policy?
+- Are CPU/RAM/GPU defaults bounded and are idle/repeated workloads steered toward more appropriate execution modes?
+- Do instrument instructions avoid laptops/personal homes as the default landing zone and preserve project ownership/checksums/retry semantics?
+- Is S3/object access separately entitled and project-scoped rather than implied by ordinary filesystem membership?
+- Are archive/preservation claims explicit about current release state and verification rather than equating a copy with an archive?
+- Are domain applications such as SeqLab described as governed consumers of RCC capabilities rather than hidden bypasses around project/storage/identity policy?
+- Does any active guide still recommend an SSH key passphrase contrary to current RCC policy?
+- Does the existing Part 1 video/audio still contain retired credential advice, and is its publication correctly blocked pending regeneration?
+- Would replacing Slurm or the service plane with Kubernetes actually remove an authority, or merely add another scheduler/control plane?
+- Can support diagnose failures without asking users to paste keys, tokens, patient data, unrestricted logs, or complete datasets?
 
 ## Severity
 
 - **Blocker:** unsafe or legally incorrect guidance; cross-project/role bypass;
   data-loss/disclosure risk; inaccessible critical service; wrong command;
-  misleading release state; browser-first path secretly requiring SSH; or
-  missing institutional decision required for exposure.
+  misleading release state; browser-first path secretly requiring SSH; stale
+  Part 1 media teaching the retired passphrase policy; production publication
+  from a temporary candidate branch; or a missing institutional decision
+  required for exposure.
 - **Major:** likely to block task completion, create duplicate/incorrect work,
-  cause substantial support load, or teach a systematically wasteful pattern.
+  cause substantial support load, teach a systematically wasteful pattern, or
+  create avoidable platform/control-plane complexity.
 - **Minor:** local ambiguity, terminology, accessibility, or presentation issue
   with a safe workaround.
 
