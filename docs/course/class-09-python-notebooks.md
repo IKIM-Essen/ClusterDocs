@@ -110,8 +110,9 @@ environment.
 
 ![Historical Jupyter notebook showing remote-host and Python-environment checks](../assets/jupyter-notebook.png)
 
-Do not reuse former worker hostnames, home paths, usernames, ports, or tokens from
-screenshots. Never publish a notebook token or include it in a support screenshot.
+Do not reuse those values: former worker hostnames, home paths, usernames, ports,
+or tokens from screenshots. Never publish a notebook token or include it in a
+support screenshot.
 
 ## Large-data pattern
 

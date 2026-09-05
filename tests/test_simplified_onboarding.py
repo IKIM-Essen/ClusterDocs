@@ -23,8 +23,10 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn(relative, builder)
 
         light = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
-        self.assertIn("Expedition Light is the required first-use path", light)
-        self.assertIn("full RCC Expedition is optional deeper training", light)
+        self.assertIn("two legitimate starting paths", light)
+        self.assertIn("Path A — browser-first research", light)
+        self.assertIn("Path B — command-line / developer access", light)
+        self.assertIn("RCC Expedition", light)
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
         for relative in ("getting-started/macos.md", "getting-started/windows.md"):

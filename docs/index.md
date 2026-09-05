@@ -102,6 +102,6 @@ which newer browser surfaces are documented before release.
   [how the lab network and RCC fit together](resources/how-it-all-works.md).
 - Moving data from an instrument into analysis: complete
   [Class 16](course/class-16-wet-lab-data-workflows.md).
-- Planning retention, Coscine archiving, or defensible cleanup: complete
+- Planning retention, Coscine archiving (not yet released), or defensible cleanup: complete
   [Class 17](course/class-17-data-lifecycle.md).
 - Questions or feedback: [meet the RCC team and find the best contact route](team.md).
