@@ -13,6 +13,27 @@ complete platform.
 > In particular, RCC Analysis, project vhosts, Ardia integration, and the
 > RCC-to-Coscine transfer path are **not yet released** in the current candidate.
 
+## The architecture starts with I/O behavior
+
+The most important technical constraint behind the current RCC platform is
+**I/O access pattern**, not simply advertised storage capacity or bandwidth.
+Scientific workloads can generate millions of small-file metadata operations,
+repeated directory scans, package/environment lookups, workflow temporary state,
+random database/index access, synchronized reference reads, and editor/indexer
+traffic.
+
+That is why RCC combines governed shared project storage with **node-local
+scratch**, deliberate staging, caching, immutable/reusable artifacts, and
+workflow guidance that distinguishes streaming from random/metadata-heavy I/O.
+It is also why RCC does not assume that putting everything on Ceph, Kubernetes,
+or any other single popular substrate would automatically solve the workload.
+A different backend cannot make an inefficient access pattern free.
+
+Advanced users should read
+[Why RCC does not run everything on Kubernetes](why-not-kubernetes-everywhere.md),
+[Class 14: efficient I/O](../course/class-14-efficient-io.md), and the
+[RCC-safe VS Code defaults](../getting-started/vscode.md#rcc-safe-vs-code-defaults).
+
 ## Connect instruments and acquisition systems
 
 RCC can accept data from sequencers, microscopes, mass spectrometers, acquisition
