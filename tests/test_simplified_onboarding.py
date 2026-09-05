@@ -49,15 +49,18 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         ):
             self.assertIn(phrase, page)
 
-    def test_vscode_has_a_dedicated_safe_start_section(self):
+    def test_vscode_has_visible_low_io_safe_start(self):
         page = (DOCS / "getting-started/vscode.md").read_text(encoding="utf-8")
         for phrase in (
-            "VS Code is the interface. It does not create a compute allocation",
+            "RCC-safe VS Code defaults",
             "Select `{{ ssh_target_alias }}`",
             "Do not select the jump-host alias",
-            "files.watcherExclude",
+            '"search.followSymlinks": false',
+            '"search.useIgnoreFiles": true',
+            '"files.watcherExclude"',
+            '"search.exclude"',
             "Treat the remote workspace as executable",
-            "submits computation through Slurm",
+            "submit computation through Slurm",
         ):
             self.assertIn(phrase, page)
 
@@ -73,16 +76,18 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         ):
             self.assertIn(phrase, page)
 
-    def test_old_cluster_comparison_has_a_precise_baseline_and_actions(self):
+    def test_old_cluster_comparison_has_baseline_io_and_actions(self):
         page = (DOCS / "getting-started/what-changed.md").read_text(encoding="utf-8")
         normalized = " ".join(page.split())
         for phrase in (
             "`8f5b2bd` from 21 July 2026",
             "release v1.0 on 10 August 2026",
+            "I/O pattern matters more than raw storage bandwidth",
             "Use `ssh {{ ssh_target_alias }}`",
             "Keep `ForwardAgent no`",
-            "Slurm is the normal execution path",
+            "Slurm is the normal execution authority",
             "Managed Nextflow-to-Slurm is ready now",
+            "RCC-safe VS Code defaults",
             "Migration checklist for an existing user",
         ):
             self.assertIn(phrase, normalized)
