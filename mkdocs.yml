@@ -23,10 +23,9 @@ nav:
   - RCC services:
       - Which RCC service should I use?: concepts/rcc-services.md
       - RCC Files: concepts/rcc-files.md
+      - RCC Analysis - notebooks and workflows (not yet released): analysis/rcc-analysis.md
       - Project types: concepts/project-types.md
       - RCC Gitea: concepts/rcc-gitea.md
-      - RCC Workbench (not yet released): concepts/workbench-interfaces.md
-      - RCC Analysis (not yet released): analysis/rcc-analysis.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
@@ -66,6 +65,7 @@ nav:
       - Authentication lifecycle: reference/authentication-lifecycle.md
       - Account starter setups: reference/account-starter-setups.md
       - Access, SSH, and VS Code: reference/access-ssh-vscode.md
+      - Workbench execution layer (advanced, not yet released): concepts/workbench-interfaces.md
       - Storage and transfer: reference/storage-transfer.md
       - Sharing data: reference/data-sharing.md
       - RCC Usage reporting: reference/usage-accounting.md

@@ -1,318 +1,294 @@
-# RCC Analysis: from data to a reproducible run
+# RCC Analysis: notebooks and governed workflows
 
 > **Service status:** RCC Analysis is **not yet released to users**. This page
-> documents the planned RCC 23 user workflow so researchers can understand the
-> product before activation. Current RCC workers and Slurm remain the supported
-> execution path; use the existing Snakemake, Nextflow, notebook, and Slurm
-> guidance until RCC Analysis is explicitly announced as available.
+> documents the staged browser-first product model. Current RCC workers, Slurm,
+> managed Snakemake/Nextflow, SSH-tunneled notebooks, and local VS Code remain
+> the supported paths until RCC Analysis is explicitly announced as available.
 
-RCC Analysis is the user-facing layer for running governed scientific workflows
-without having to design the Slurm execution plan by hand.
+RCC Analysis is the planned **user-facing compute product** for researchers who
+should not need to become HPC operators merely to use RCC.
 
-The researcher chooses the **data, scientific workflow, and scientific
-parameters**. RCC then proposes a deployment-appropriate execution plan for the
-hardware that is actually available, submits the work through Slurm, and records
-what was run so the result can be reproduced.
+It combines two related ways of working:
 
-In short:
+1. **Notebook** — interactive Jupyter-based exploration and bounded analysis;
+2. **Workflow** — repeatable, scalable, governed scientific execution.
+
+The two modes share RCC identity, project data, results, and resource governance.
+“Workbench” remains an internal engineering term for the interactive session
+machinery behind Notebook mode rather than a separate primary product.
+
+## The browser-first model
+
+```text
+Files: upload or choose project data
+        |
+        v
+RCC Analysis
+   |          |
+   |          +-> Workflow -> run reviewed repeatable analysis
+   |
+   +-> Notebook -> explore, visualize, prototype
+                         |
+                         +-> promote repeatable work to Workflow
+        |
+        v
+Files: inspect/download project results
+```
+
+A browser-first user can have a valid RCC account without enrolling an SSH key.
+Project membership and RCC web authentication are sufficient for browser
+capabilities that have been enabled for that user/project. SSH remains an
+optional advanced credential for command-line and local-editor access.
+
+## Notebook mode
+
+Use **Notebook** when the main question is “help me work with these data
+interactively.” The preferred interface is JupyterLab in the browser, backed by
+a bounded Slurm allocation selected by RCC.
+
+Typical uses include inspecting data, Python/R exploratory analysis, statistics
+and visualisation, examining workflow results, prototyping transformations or
+model code, and small-scale debugging.
+
+The normal user should not need to choose a worker, paste a cluster path, submit
+an `sbatch` command, create an SSH tunnel, copy a Jupyter token, expose a port,
+or select CPU/RAM/GPU/partition settings.
+
+### Jupyter and terminal security
+
+Jupyter is arbitrary user-code execution, not a sandbox. Kernels, subprocesses,
+and an optional Jupyter terminal all execute as the authenticated user.
+Therefore hiding a terminal would not be the RCC security boundary.
+
+The staged Notebook architecture instead places Jupyter Server, kernels,
+subprocesses, and terminal in the same networkless user/PID namespace inside the
+same Slurm allocation. Jupyter listens on a private job-local Unix socket, the
+extension manager is read-only, remote access is disabled, and browser transport
+uses a separate authenticated outbound agent.
+
+The terminal is an advanced tool **inside Notebook**, not a second service,
+login path, SSH substitute, or separate authority class.
+
+RCC does **not** provide a browser IDE in this release. Users who need a full IDE
+can continue to use a local editor such as VS Code through the separately
+governed SSH path.
+
+### Notebook resource rule
+
+A notebook is still real computation. RCC therefore starts with a modest
+interactive profile, reclaims idle sessions, bounds concurrent sessions, keeps
+large/GPU allocations exceptional, and directs repeated or scalable work to
+Workflow mode. Browser users do not choose raw scheduler resources.
+
+A GPU notebook is appropriate only when the measured workload benefits from the
+GPU; it is not a general “faster notebook” setting.
+
+## Workflow mode
+
+Use **Workflow** when the question is “run this scientific analysis reliably.”
+The researcher chooses project data, a scientific workflow, and scientifically
+meaningful parameters. RCC chooses the deployment-appropriate execution plan,
+submits through Slurm, and records what ran so the result can be reproduced.
 
 ```text
 project data
-    -> choose a workflow
-    -> choose parameters
-    -> review hardware fit and execution plan
+    -> choose supported workflow
+    -> choose scientific parameters
+    -> review important warnings and expected outputs
+    -> RCC selects efficient execution plan
     -> run through Slurm
-    -> inspect typed results
-    -> retain provenance / rerun / archive
+    -> typed results + provenance
+    -> open results in Files
 ```
 
-RCC Analysis does not replace Slurm, Nextflow, Snakemake, project storage, or
-RCC Workbench. It coordinates those components behind one governed analysis
-workflow.
+Normal users should not choose Nextflow versus Snakemake as a deployment detail,
+Slurm partitions, CPU counts, raw memory values, QOS, reservations, container
+flags, or arbitrary scheduler arguments unless a setting is genuinely part of
+the scientific method.
 
-## RCC Analysis or RCC Workbench?
+The browser request is not scheduler authority. Before execution, RCC recompiles
+the scientific intent against trusted server-side workflow/project evidence and
+re-checks current authorization. The privileged Slurm submission path then
+independently constrains the project/account, controller profile, engine,
+partition, resources, run paths, and generated controller shape.
 
-Use **RCC Workbench** when your main goal is interactive work: a shell, notebook,
-VS Code session, exploratory analysis, or development and debugging.
+## Moving from Notebook to Workflow
 
-Use **RCC Analysis** when your main goal is to run a repeatable scientific
-analysis with a defined workflow, inputs, parameters, outputs, and provenance.
+Notebook and Workflow are deliberately adjacent. Move work out of Notebook when
+it is repeated across samples or cohorts, long-running or unattended,
+provenance-critical, composed of many dependent tasks, resource-intensive,
+producing an official project result, or important for another researcher to
+rerun.
 
-| | RCC Workbench | RCC Analysis |
-|---|---|---|
-| Main question | “Give me an interactive environment.” | “Run this analysis.” |
-| Best for | Exploration, development, debugging | Repeatable production analysis |
-| You choose | Interactive environment and what you do inside it | Data, workflow, scientific parameters |
-| RCC chooses | Secure session placement | Operational execution and task placement |
-| Typical result | Files you create interactively | Governed run, typed outputs, provenance |
+The user changes mode inside Analysis rather than learning a second RCC product.
 
-A common pattern is to **develop in Workbench and run routinely in Analysis**.
+## Start from a project and its data
 
-## The RCC Analysis workflow
+An Analysis notebook or workflow belongs to an RCC project. Inputs and durable
+outputs stay within the same project authorization model used by Files.
 
-### 1. Start from a project and its data
+For a user with one eligible project, RCC should use it implicitly. A user with
+multiple eligible projects chooses from a server-generated list. Normal browser
+users should not type project identifiers or `/projects/...` paths.
 
-An Analysis run belongs to an RCC project. You select the input data objects the
-workflow should consume. Examples include a microscopy acquisition, an image
-set, paired FASTQ reads, a metagenome read set, a BAM file, or another supported
-data type.
+Deep links from Files may carry project/object context, but navigation never
+grants new authority; Analysis re-checks authorization server-side.
 
-RCC uses the project boundary for authorization and for durable results. The
-normal result location is conceptually:
+Workflow run results use the create-only Analysis result model:
 
 ```text
 /projects/<project>/rcc-analysis/<run-id>/
 ```
 
-An existing run is never silently replaced.
+Existing runs are never silently replaced. Notebook-created durable work should
+also be saved in project storage rather than treated as durable merely because a
+browser session is still open.
 
-### 2. Choose a scientific workflow
+## Canonical staged browser route
 
-RCC Analysis presents compatible workflows for the selected data. A workflow is
-not just a directory containing scripts: it has an exact version, an immutable
-source snapshot, declared inputs and outputs, parameters, citations, and an
-ownership scope.
-
-Workflows may belong to:
-
-- an individual user;
-- a group;
-- a project;
-- a facility; or
-- RCC itself.
-
-A workflow may also carry review or operational information such as
-**unreviewed**, **approved**, **supported**, or **preferred**. These labels help
-with discovery and operations; they do not grant project access and they do not
-claim that a scientific result is correct.
-
-### 3. Choose scientific parameters
-
-You provide the parameters that affect the scientific analysis: for example a
-reference database, threshold, model, sample grouping, or workflow option.
-
-You do **not** normally choose raw Slurm partitions, nodes, QOS, reservations,
-or arbitrary Nextflow/Snakemake scheduler arguments in the Analysis interface.
-Those are operational details owned by RCC.
-
-This distinction is deliberate: the scientific intent belongs to the
-researcher; machine placement belongs to the compute platform.
-
-### 4. Choose between exact reproduction and adaptation
-
-Imported or externally developed workflows can be used in two important modes.
-
-#### Exact reproduction
-
-Choose this when a paper, reviewer, benchmark, or validation exercise requires a
-specific implementation or configuration.
-
-RCC keeps the required source/version fixed and does not silently substitute a
-different scientific workflow. It may still use safe operational mechanisms such
-as RCC-managed Slurm submission or local scratch when those do not change the
-scientific computation.
-
-#### Adapt for RCC
-
-Choose this when the scientific goal matters more than preserving one cluster-
-specific implementation.
-
-RCC may recommend a more efficient operational plan or identify a better-suited
-reviewed workflow. You remain responsible for choosing whether to use the
-imported workflow or an alternative.
-
-### 5. Review hardware fit and task efficiency
-
-Before a run is submission-ready, RCC checks the workflow against the current
-RCC deployment rather than assuming that resource requests copied from another
-cluster are appropriate.
-
-The review can detect patterns such as:
-
-- thousands of very short scheduler jobs;
-- repeated large reads from shared project storage;
-- excessive workflow-controller or scheduler overhead;
-- poor CPU or memory utilisation;
-- GPU allocations with little measured GPU use;
-- locality-sensitive work with no local-scratch strategy; or
-- a GPU workflow that unnecessarily runs the workflow controller on a GPU.
-
-When enough recent measurements exist, RCC can use observed utilisation to
-right-size CPU, memory, scratch, or concurrency recommendations. A resource
-reservation is not treated as proof that the resource was useful.
-
-The user-facing decision should be understandable rather than scheduler-centric:
+The planned researcher-facing Analysis origin is:
 
 ```text
-RCC recommends a more efficient plan
-
-[ Use RCC recommendation ]
-
-[ Keep the requested configuration ]
-  reason required
+https://analysis.ikim.uk-essen.de/
 ```
 
-Keeping an inefficient configuration remains possible when there is a genuine
-scientific or reproduction reason; that decision becomes part of the run
-provenance.
+Workflow occupies the Analysis root. Notebook management is namespaced below
+`/notebook/`. This route is **staged source configuration, not a claim of live
+availability**.
 
-### 6. Review the exact run before submission
+The Analysis-to-Notebook management hop uses a separate mTLS identity and may be
+revoked independently. Jupyter workspace/session traffic remains on its separate
+hardened workspace origin rather than being tunneled through the Analysis
+management page.
 
-Before starting the analysis, the review page should make the important facts
-visible:
+## Choose a scientific workflow
 
-- project and selected inputs;
-- exact workflow name, version, and source identity;
-- scientific parameters;
-- expected outputs;
-- exact-reproduction requirements, if any;
-- RCC hardware-fit findings;
-- the proposed controller and task execution classes; and
-- any explicit exception you chose to retain.
+RCC Analysis presents compatible workflows for the selected data. A workflow
+has an exact version, immutable source snapshot, declared inputs/outputs,
+parameters, citations, ownership scope, and assurance state.
 
-RCC then seals this run plan. A later authorization change must not be hidden by
-an older plan: current project/workflow authority is checked again at activation
-time.
+Workflow ownership may be user, group, project, facility, or RCC. Assurance may
+include **unreviewed**, **approved**, **supported**, or deployment-specific
+**preferred** state. These labels guide discovery and operations; they do not
+grant project access and they are not claims that a scientific result is
+clinically correct.
 
-### 7. RCC runs the workflow through Slurm
+## Exact reproduction and adaptation
 
-Slurm remains the sole scheduler and accounting authority.
+Use **exact reproduction** when a paper, reviewer, benchmark, or validation
+exercise requires one exact implementation. Use **adapt for RCC** when the
+scientific goal matters more than preserving cluster-specific implementation
+details; RCC may recommend a more efficient operational plan while keeping
+scientific choices explicit.
 
-RCC Analysis separates the lightweight workflow controller from the scientific
-child tasks. For example, a GPU workflow can use a normal CPU allocation for the
-Nextflow or Snakemake controller while only the actual GPU tasks consume GPU
-nodes.
+## Hardware fit and bad computing patterns
 
-Conceptually:
+RCC should detect and correct patterns such as thousands of tiny jobs, repeated
+large shared-storage reads, excessive controller overhead, severe CPU/RAM
+over-request, idle GPU allocation, long-idle interactive sessions, repeated
+manual notebook runs that should be workflows, and locality-sensitive work with
+no scratch strategy.
 
-```text
-RCC Analysis
-    -> controller job
-       -> Nextflow or Snakemake
-          -> child Slurm jobs
-             -> CPU / GPU / locality class selected by RCC
-```
+With enough recent observations RCC can right-size CPU, memory, scratch,
+concurrency, and GPU recommendations. A reservation is not evidence that a
+resource was useful.
 
-The browser does not receive a Slurm signing key and RCC Analysis does not own a
-separate scheduler authority. Submission uses the shared RCC per-user Slurm
-submission boundary.
+Optimization evidence should be privacy-minimized: allocated/used CPU,
+requested/peak memory, GPU utilization where available, elapsed/idle time,
+aggregate I/O where defensible, and terminal state are useful. Commands,
+notebook contents, research filenames, and patient data are not required for
+ordinary right-sizing.
 
-### 8. Follow the run
+## Review and run
 
-The run view should focus on scientific progress and actionable failures rather
-than requiring the researcher to reconstruct state from several systems.
+Before a governed workflow starts, show a plain-language summary of the project,
+selected inputs, exact workflow revision, scientific parameters, expected
+outputs, relevant warnings/conditions, and resource/time expectation when the
+evidence supports one.
 
-Useful status includes:
+The primary action is **Run analysis**. The browser never accepts raw scheduler
+or workflow-engine arguments.
 
-- planned / waiting / running / completed / failed;
-- workflow-controller state;
-- task progress;
-- links to useful logs;
-- clear explanation of an authorization, placement, or input problem; and
-- whether a submission outcome is uncertain and needs reconciliation.
+## Follow progress
 
-RCC must not automatically submit a second copy merely because a scheduler reply
-was uncertain. Recovery first determines whether the original job exists.
+User-facing states should answer what the researcher needs to know:
 
-### 9. Inspect results and provenance
+- Preparing
+- Waiting for compute
+- Running
+- Finishing results
+- Complete
+- Stopped
+- Needs attention
 
-A successful run produces its declared result objects beneath the project run
-root. Depending on the workflow these might include tables, reports, images,
-segmentations, alignments, variant calls, or other governed outputs.
+Raw Slurm job IDs, controller jobs, engine logs, child-task counts, and internal
+session IDs are secondary diagnostics. If submission is uncertain, RCC
+reconciles before retrying; a browser network error must not create a duplicate
+scientific run.
 
-The run can also retain an RO-Crate research object containing the information
-needed to understand and reproduce the result, including:
+## Results and provenance
 
-- exact workflow identity and immutable source snapshot;
-- selected inputs and outputs;
-- scientific parameters;
-- citations or reproduction requirements;
-- RCC operational adaptations;
-- hardware/efficiency evidence used for the plan; and
-- an explicit record when an inefficient requested configuration was retained.
+A successful workflow produces declared result objects beneath the project run
+root. The completion view should provide a concise result summary where
+available, provenance/reproducibility details, and **Open results in Files**.
 
-This provenance stays with the project result. Optional DataLad binding can
-associate the result with an immutable dataset state, and the normal RCC/Coscine
-project archive path remains the custody mechanism when an approved result set
-is archived.
+The run may retain an RO-Crate research object containing exact workflow
+identity, inputs/outputs, scientific parameters, citations, RCC adaptations,
+hardware/efficiency evidence, and explicit retained-inefficiency decisions.
 
-## Importing a workflow
+RCC Analysis does not create a private result store disconnected from project
+data. Files remains the normal browser entry/exit surface, while governed
+Coscine/DataLad paths remain part of the wider data lifecycle.
 
-RCC Analysis is intended to support reviewed Nextflow and Snakemake workflows as
-well as workflows imported from public HTTPS Git repositories, public HTTPS
-URLs, or bounded pasted source.
+## Files project visibility and transfer acceptance
 
-Import is inspection, not execution. RCC examines the source in a data-less
-sandbox and does not mount project research data merely to determine whether a
-workflow can be represented safely.
+Ordinary Files should expose every current Files-enabled **Regular** project in
+which the user is a member; the primary project may affect the landing directory
+but must not hide other eligible projects. Controlled Data and unpublished or
+missing project directories remain intentionally absent from ordinary Files.
 
-An imported workflow starts as **unreviewed**. It cannot award itself RCC
-approval, support, or preferred status.
+Browser transfer performance must be accepted on the deployed system rather
+than inferred from architecture. The rollout pilot should measure multi-GiB
+upload/download, checksums, representative small-file behavior, concurrent
+users, retries/errors, and compare sustained performance with an accepted native
+transfer reference such as SFTP. A large unexplained browser penalty is an RCC
+defect to investigate, not a reason to make SSH a prerequisite again.
 
-Cluster-specific scheduler directives are also checked. A workflow that embeds
-unmanaged queue/account placement may require adaptation before RCC can safely
-compile an execution plan.
+## Zero-SSH browser acceptance
 
-## What “preferred” means
+Before broad production promotion, pilot users with **no SSH public key
+enrolled** should be able to:
 
-A **preferred** workflow is stronger than a casual recommendation. It refers to
-an exact workflow revision with evidence that it fits a particular RCC
-deployment and has a good hardware-efficiency review.
+1. sign in to RCC;
+2. open Files and upload/select project input;
+3. open RCC Analysis;
+4. open Notebook without typing project IDs, paths, hostnames, Slurm terms, or
+   choosing a resource profile;
+5. produce and save a small project result;
+6. run a supported Workflow using scientific inputs/parameters only;
+7. leave and return without losing owned run/session state;
+8. open/download results in Files; and
+9. sign out.
 
-That judgement is deployment-specific. A workflow that is preferred on one RCC
-installation is not automatically preferred on another installation with
-different hardware or measured behaviour.
-
-Preferred status is operational guidance; it is not scientific validation and
-it does not itself grant scheduler priority.
-
-## What RCC Analysis changes for the system
-
-For researchers, Analysis hides unnecessary scheduler detail. For RCC, it adds a
-controlled compilation layer between scientific intent and Slurm.
-
-Instead of accepting every workflow decomposition exactly as presented, RCC can
-reason about:
-
-```text
-scientific workflow
-    -> task behaviour
-    -> measured utilisation
-    -> available hardware
-    -> efficient execution plan
-    -> Slurm
-```
-
-This gives RCC a common place to enforce scheduler portability, avoid pathological
-small-job fan-out, improve CPU/GPU utilisation, use local scratch appropriately,
-and retain evidence about why a particular execution plan was chosen.
-
-The important authority boundaries remain unchanged:
-
-- Slurm schedules and accounts for compute;
-- project membership governs project access;
-- Nextflow and Snakemake remain workflow engines;
-- Workbench remains the interactive environment;
-- the Assistant may explain recommendations but does not invent measurements or
-  gain scheduler authority; and
-- Coscine/DataLad integration remains part of the governed data lifecycle rather
-  than a new credential path inside Analysis.
+Passing CLI/API canaries is necessary but not sufficient. The browser product is
+not prime-time until non-HPC users can complete this without facilitator shell
+intervention.
 
 ## What to use before RCC Analysis is released
 
-Until RCC Analysis is explicitly activated for users:
+Until RCC Analysis is explicitly activated:
 
-1. use [Class 5](../course/class-05-slurm.md) for Slurm execution;
-2. use [Class 6](../course/class-06-snakemake.md) for the current managed
-   Snakemake path;
-3. use [Class 7](../course/class-07-nextflow.md) for Nextflow guidance and
-   release status;
-4. use [Python notebooks](../course/class-09-python-notebooks.md) or
-   [R analysis](../course/class-10-r-analysis.md) for interactive exploration;
+1. use [Class 9](../course/class-09-python-notebooks.md) for the current
+   Jupyter-through-Slurm and SSH-tunnel notebook path;
+2. use [Class 6](../course/class-06-snakemake.md) for managed Snakemake;
+3. use [Class 7](../course/class-07-nextflow.md) for managed Nextflow;
+4. use [Class 5](../course/class-05-slurm.md) for direct Slurm execution;
 5. use [Class 14](../course/class-14-efficient-io.md) for efficient local I/O;
-   and
-6. retain code, parameters, environments, checksums, logs, and Slurm job IDs so
-   today's runs remain reproducible.
+6. use local VS Code/other editors through the released SSH path when an IDE is
+   genuinely needed; and
+7. retain code, parameters, environments, checksums, logs, and job IDs so
+   current runs remain reproducible.
 
-When RCC Analysis is released, ClusterDocs will replace this status notice with
-the live entry point and the exact user acceptance workflow.
+When RCC Analysis is released, ClusterDocs should make Analysis the normal
+data-analysis starting point while retaining direct SSH/Slurm material as an
+advanced/reference path.

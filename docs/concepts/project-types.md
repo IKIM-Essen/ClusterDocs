@@ -56,19 +56,21 @@ release boundary.
 The analyst can compute on the protected data, but a result becomes exportable
 only through the separately approved release workflow.
 
-## Workbench is not the Controlled Data sandbox
+## RCC Analysis Notebook is not the Controlled Data sandbox
 
-The planned RCC Workbench is an ordinary interactive project service. It is not
-an anti-exfiltration environment and should not be described as the future
+The planned ordinary **RCC Analysis Notebook** mode is an interactive Regular-
+project service backed by the Workbench session machinery and Slurm. It is not
+an anti-exfiltration environment and must not be described as the future
 Controlled Data runtime.
 
-Likewise, ordinary DataLad/S3 project services are not evidence that protected
-Controlled Data can be exported.
+Likewise, an ordinary RCC Analysis Workflow, Files, DataLad, S3, SSH, or browser
+session does not create Controlled Data release semantics. Controlled Data
+requires its own separately admitted runtime and governed output-release path.
 
 ## Project type is not a menu of protocols
 
 A project lead should not have to design a security policy by choosing a custom
-mixture of SSH, Files, SFTP, S3, Globus, or network toggles.
+mixture of SSH, Files, SFTP, S3, Globus, notebooks, or network toggles.
 
 The project type expresses the stable data-handling model. RCC then enforces the
 allowed service boundary consistently.

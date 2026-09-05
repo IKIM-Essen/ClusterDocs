@@ -1,167 +1,144 @@
-# RCC Workbench: interactive computing on RCC
+# Workbench execution layer behind RCC Analysis
 
-> **Service status:** RCC Workbench is **not yet released to users**. This page
-> documents the intended interactive-computing model while the existing SSH,
-> VS Code, notebook, and Slurm routes remain the supported paths.
+> **Service status:** the browser Notebook path is **not yet released to users**.
+> This page documents the staged execution/security model. For the planned
+> user-facing product, start with
+> [RCC Analysis: notebooks and governed workflows](../analysis/rcc-analysis.md).
 
-RCC Workbench is the interactive side of RCC. Use it when you want a working
-session in which to explore data, edit code, use a shell or notebook, develop a
-workflow, or debug a problem before turning it into a repeatable production
-analysis.
+“RCC Workbench” remains an internal engineering term, not a separate primary
+researcher product. It is the execution/session machinery that turns an
+authenticated RCC Analysis Notebook request into a bounded Slurm-backed Jupyter
+session.
 
-The important idea is simple:
-
-> **Workbench gives you an interactive environment. Slurm still runs substantial
-> computation.**
-
-A Workbench session does not create a new identity or a new project boundary.
-It uses your RCC identity and the project access you already have.
-
-## Workbench or RCC Analysis?
-
-| | RCC Workbench | RCC Analysis |
-|---|---|---|
-| Main question | “Give me an interactive environment.” | “Run this analysis.” |
-| Best for | Exploration, coding, debugging, notebooks | Repeatable governed scientific workflows |
-| You control | What you do interactively | Data, workflow, scientific parameters |
-| RCC controls | Secure session placement and attachment | Operational execution and task placement |
-| Typical output | Files and code you create | Governed run, typed results, provenance |
-
-A common lifecycle is:
+For the normal user, the intended action is:
 
 ```text
-Workbench
-  explore -> develop -> test -> debug
-                         |
-                         v
-                    RCC Analysis
-              repeat -> govern -> reproduce
+RCC Analysis -> Notebook -> Open notebook
 ```
 
-Read [RCC Analysis: from data to a reproducible run](../analysis/rcc-analysis.md)
-for the planned production-workflow path.
-
-## What a Workbench session is
-
-A Workbench session is an RCC-managed interactive session associated with your
-user identity. Depending on the released interface, it may provide a shell,
-notebook, or development environment such as VS Code.
-
-The browser-facing control layer is not the compute worker itself. RCC brokers
-the session, Slurm places the actual interactive work on an allowed worker, and
-the browser attaches to that session through a bounded authenticated path.
-
-You should not need to choose a physical worker or manually expose a port.
-
-## What you should use Workbench for
-
-Workbench is well suited to:
-
-- inspecting a small part of a dataset;
-- writing and reviewing scripts;
-- using Python or R notebooks;
-- developing or adapting Nextflow/Snakemake workflows;
-- testing on a small example;
-- examining logs and failed outputs;
-- preparing a larger Slurm job; and
-- deciding whether a workflow is ready for repeatable RCC Analysis execution.
-
-It is not intended to make a long-running calculation happen inside the browser
-process itself.
-
-## Project access does not widen in Workbench
-
-Your session receives only the project access admitted for your RCC identity.
-Opening Workbench does not:
-
-- add you to another project;
-- make another user's session visible;
-- turn a Regular project into a Controlled Data environment;
-- grant a scheduler reservation or priority; or
-- authorize data export.
-
-If a project is not visible to your ordinary RCC account, Workbench is not a
-workaround for that restriction.
-
-## Sessions belong to one user
-
-Workbench sessions are owner-scoped. A user should see and control their own
-sessions, not another researcher's sessions. RCC may also limit the number of
-simultaneous non-terminal sessions per user so abandoned browser tabs cannot
-consume unbounded shared capacity.
-
-When a session ends, durable results belong in project storage. Worker-local
-scratch is temporary and should not be treated as the authoritative result
-location.
-
-## Browser reconnects are attachments, not permanent authority
-
-The browser connection to a running workspace is deliberately bounded. A stale
-browser cookie or old tab should not become indefinite permission to reattach to
-compute.
-
-In practice this means you may occasionally be asked to authenticate again when
-reconnecting. That is expected security behavior, not evidence that the Slurm
-job or project data disappeared.
-
-## Where the computation actually runs
-
-Substantial interactive computation still runs through Slurm. Workbench is a
-safe way to request and attach to that allocation; it is not an alternative
-scheduler.
-
-The model is:
+not:
 
 ```text
-browser / Workbench control
-           |
-           v
-      RCC session broker
-           |
-           v
-         Slurm
-           |
-           v
-     approved RCC worker
+choose Workbench -> start web shell -> understand Slurm session details
 ```
 
-Use [Class 5: Slurm](../course/class-05-slurm.md) when you need to understand
-resource requests, queues, or batch execution.
+RCC does **not** plan to provide a browser IDE as part of this release. Developers
+who need a full IDE can continue to use a local editor such as VS Code through
+the separately governed SSH path. A terminal may be available from JupyterLab as
+an advanced tool, but it runs inside the same Notebook allocation and does not
+create a second login, worker route, or security class.
+
+## What the execution layer does
+
+The retained Workbench machinery:
+
+- accepts an authenticated RCC user and authorized project;
+- selects a bounded RCC-owned Notebook resource profile;
+- creates a Slurm allocation under that user's governed authority;
+- starts Jupyter inside the allocation;
+- puts the Jupyter server, kernels, subprocesses, and terminal in the same
+  networkless user/PID namespace;
+- exposes Jupyter only through a private mode-0600 job Unix socket;
+- uses a separate per-job outbound mTLS agent as the browser transport;
+- keeps the private Jupyter token out of the browser-facing management plane;
+- records/reconciles session state; and
+- stops or reclaims sessions according to policy.
+
+It does not create a new RCC identity, widen project membership, grant generic
+scheduler authority, or turn a Regular project into a Controlled Data
+environment.
+
+## Jupyter is arbitrary code, not the sandbox
+
+Jupyter notebooks, Python/R kernels, subprocesses, and Jupyter terminals can all
+execute arbitrary code as the authenticated user. Hiding a terminal would not
+turn Jupyter into a security sandbox.
+
+The security boundary is therefore the RCC execution environment around
+Jupyter: Unix identity and project permissions, the constrained Slurm
+allocation, network/user/PID isolation, the private Unix socket, authenticated
+proxy/agent transport, and fresh project authorization checks.
+
+The staged configuration also keeps XSRF protection enabled, disables remote
+Jupyter listening, and keeps the Jupyter extension manager read-only. Runtime
+extension/package mutation is not part of the accepted release path.
+
+## Canonical Analysis route
+
+The planned researcher-facing management origin is
+`analysis.ikim.uk-essen.de`. Workflow remains at the Analysis root and Notebook
+management is namespaced below `/notebook/`.
+
+That does **not** mean the staged URL is live today. Publication remains an
+explicit deployment gate. The Notebook management router is intentionally
+narrow: it may proxy the Notebook launcher/static/API surface, but Jupyter
+workspace/session traffic remains on the separately hardened workspace origin.
+
+The Analysis-to-Notebook management hop also uses its own mTLS client identity.
+Disabling that capability removes its credential and system-service drop-in;
+Workflow does not need to acquire Notebook-broker authority merely because both
+modes share one product page.
+
+## When a notebook should become a workflow
+
+Interactive convenience must not turn into poor cluster use. Notebook is for
+exploration and bounded attended computation. Move work to **RCC Analysis ->
+Workflow** when it becomes long-running, unattended, repeated across samples,
+many-task, resource-intensive, provenance-critical, or something another
+researcher should rerun reliably.
+
+```text
+Files -> Analysis: Notebook -> explore / prototype
+                           |
+                           +-> Analysis: Workflow -> repeat / scale / reproduce
+                                                      |
+                                                      +-> Files: results
+```
+
+## Resource guardrails
+
+Interactive sessions are deliberately conservative by default. RCC selects the
+normal Notebook profile; browser users do not choose partitions, CPU/RAM/GPU
+amounts, walltime, or arbitrary scheduler options. Idle sessions are reclaimed,
+concurrency is bounded, and repeated/scalable work should move to Workflow.
+
+RCC can use privacy-minimized scheduler/accounting evidence such as allocated
+versus used CPU, requested versus peak memory, GPU utilization where available,
+idle duration, aggregate I/O where defensible, and terminal state. Notebook
+contents, terminal commands, research filenames, and patient-related data are
+not required for ordinary right-sizing.
+
+## Where computation actually runs
+
+```text
+RCC Analysis browser
+        |
+        v
+Notebook management broker (internal Workbench machinery)
+        |
+        v
+      Slurm
+        |
+        v
+approved RCC worker
+        |
+        +-> JupyterLab + optional Jupyter terminal
+              inside one isolated allocation
+```
+
+The interactive runtime is not a replacement scheduler and the browser never
+receives Slurm signing credentials.
 
 ## Existing interfaces remain valid
 
-Until Workbench is released, use the current interfaces documented by RCC:
+Until RCC Analysis Notebook is explicitly activated, follow the current released
+guidance:
 
-### VS Code
+- [Class 9: Python notebooks](../course/class-09-python-notebooks.md) for the
+  current Jupyter-through-Slurm/tunnel procedure;
+- [VS Code with RCC](../getting-started/vscode.md) for current Remote SSH
+  development; and
+- [Class 5: Slurm](../course/class-05-slurm.md) for current direct scheduler use.
 
-Use VS Code with the approved Remote SSH configuration when you are developing
-scripts or working with a repository. Larger calculations still belong on RCC
-workers.
-
-### SSH
-
-Use SSH for command-line work and automation. Follow the current two-hop RCC
-configuration; the public login gateway is forwarding-only.
-
-### Notebooks
-
-Use the documented Python/R notebook workflow and submit substantial computation
-to workers rather than treating the login environment as a compute node.
-
-### RCC-internal coding agent
-
-When available for your project, an RCC-internal coding agent can help prepare
-code, submit bounded work, explain failures, and organize results under the same
-project authorization. It does not become an administrator.
-
-Read [RCC-internal coding agents](agents-and-mcp.md) for the data and authority
-boundary.
-
-## One simple rule
-
-Use an interactive interface for **exploring, editing, understanding, and
-starting work**. Use RCC workers for substantial computation. Keep durable
-inputs and final results in the project rather than on temporary worker disk.
-
-For the wider service map, read [RCC services: where should I go?](rcc-services.md).
-New users can start with [RCC Expedition](../rcc-expedition.md).
+Those remain advanced alternatives after browser notebooks arrive; they simply
+stop being prerequisites for ordinary researchers.
