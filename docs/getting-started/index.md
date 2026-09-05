@@ -3,25 +3,31 @@
 Start with the research task you need to complete. You do **not** need an SSH key
 or command-line expertise merely because you have an RCC account.
 
+> **Release-candidate note:** ClusterDocs 3 will not be published until the core
+> browser bundle—**RCC Home, Files, RCC Analysis, My RCC, and RCC Admin**—is ready
+> and accepted together. RCC Analysis is part of the minimum release, not a later
+> enhancement.
+
 ## Browser-first research
 
-Use the browser-first path when RCC Home shows the required services as enabled
-for your account and project.
+The ordinary ClusterDocs 3 path is:
 
 | Step | What you do | What RCC handles |
 |---|---|---|
-| 1 | Sign in and choose the project | identity and project authorization |
-| 2 | Open **Files** and choose/upload approved data | governed project access |
+| 1 | Open **RCC Home**, sign in, and choose the project/service | identity, project authorization, service discovery |
+| 2 | Open **Files** and choose/upload approved data | governed project data access |
 | 3 | Open **RCC Analysis**: Notebook to explore or Workflow to repeat/scale | Slurm placement, session/workflow execution, resource controls |
-| 4 | Save durable results and open them in Files | project result location and provenance |
+| 4 | Save durable results and open them in **Files** | project result location and provenance |
+| 5 | Use **My RCC** for personal/project self-service | account preferences, membership/invitation context, permitted self-service |
+| 6 | Use **RCC Admin** only when your role provides approval/admin capabilities | role-gated approvals and administration |
 
 A browser-first account can work without an SSH public key. Browser services use
 RCC web authentication and project membership; compute still runs through the
 governed RCC execution path behind the interface.
 
-> **Current release note:** RCC Analysis Notebook/Workflow is documented before
-> activation. Until RCC Home explicitly shows it as available, use the current
-> Files service for data tasks and the advanced/current compute path below.
+The release candidate remains blocked until this entire path can be completed
+against the deployed services. A successful Files or SSH path alone is not
+sufficient release evidence.
 
 ### Notebook or Workflow?
 
@@ -32,11 +38,10 @@ long-running, many-sample, unattended, provenance-critical, or needs to scale.
 Interactive convenience does not make compute free: start modestly, avoid idle
 GPU/CPU reservations, and move repeatable work into a workflow.
 
-## Advanced/current compute path
+## Advanced compute path
 
-Use this path when you need SSH, VS Code Remote SSH, direct Slurm commands,
-workflow development/automation, or when browser Analysis has not yet been
-activated.
+Use the advanced path when you need SSH, VS Code Remote SSH, direct Slurm
+commands, workflow development/automation, or lower-level diagnostics.
 
 | Computer | Follow this checklist |
 |---|---|
@@ -69,12 +74,14 @@ when you need that model.
 1. **Your account is your identity; SSH is optional.**
 2. **The project is the research boundary.** People, data, compute, services,
    results, and lifecycle decisions stay connected to it.
-3. **Files is the normal browser entry/exit surface for project data.**
-4. **Notebook is for exploration; Workflow is for repeatable/scalable work.**
-5. **Agents can help without receiving the dataset.** Prefer documentation,
+3. **RCC Home is the browser front door.**
+4. **Files is the browser entry/exit surface for project data.**
+5. **Notebook is for exploration; Workflow is for repeatable/scalable work.**
+6. **My RCC is self-service; RCC Admin is role-gated administration.**
+7. **Agents can help without receiving the dataset.** Prefer documentation,
    schemas, synthetic fixtures, public code, and bounded diagnostics; let RCC
    execute against real data inside the governed boundary.
-6. **Advanced controls remain available.** SSH, VS Code, Slurm, containers, and
+8. **Advanced controls remain available.** SSH, VS Code, Slurm, containers, and
    direct workflow tooling are there when the research or development task needs
    them.
 
@@ -96,12 +103,17 @@ group membership merely to share research data.
 
 ## You are ready when
 
-For browser-first research:
+For the browser-first release path:
 
+- RCC Home opens and exposes the correct role/project-aware services;
 - you can sign in without enrolling an SSH key;
-- Files shows the correct project;
-- you can explain Notebook versus Workflow mode;
-- you know how durable work returns to the project; and
+- Files shows the correct project and can hand selected data into the analysis
+  journey;
+- RCC Analysis Notebook and Workflow both operate through governed Slurm-backed
+  execution;
+- durable results return to the project and are visible through Files;
+- My RCC exposes only the user's self-service actions;
+- RCC Admin exposes additional actions only to authorized roles; and
 - you know where to ask for help without exporting protected research data.
 
 For advanced access:
