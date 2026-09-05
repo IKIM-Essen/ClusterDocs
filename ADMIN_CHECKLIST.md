@@ -4,9 +4,19 @@
 checks on the exact staged candidate before broad exposure. **Production
 publication remains main-only.** Merging this candidate into `main` requires a
 separate explicit authorization; this checklist does not authorize that merge.
-A small controlled pilot may prove the deployment works in principle but does
-not replace the expert, zero-SSH novice, advanced-user, accessibility, media, or
-operational acceptance gates.
+
+The rollout has two independent publication stages:
+
+1. **Stage 1 — written site:** publish the complete reviewed documentation with
+   video links fail-closed/disabled. Media regeneration and approval do not block
+   this stage.
+2. **Stage 2 — videos:** after the repository text is stable, regenerate the
+   videos on the approved workstation, review/publish them, and enable player
+   links through the governed media configuration.
+
+A small controlled pilot may prove the Stage-1 deployment works in principle but
+does not replace expert, zero-SSH novice, advanced-user, accessibility, or
+operational acceptance.
 
 ## Browser-first product and identity
 
@@ -30,6 +40,8 @@ operational acceptance gates.
 - [ ] Complete the advanced path on supported Windows and macOS clients.
 - [ ] Verify OpenSSH, host identity, ProxyJump, the **no-passphrase normal RCC software-key policy**, VS Code Remote SSH, and the forwarding-only gateway model.
 - [ ] Verify built-in Windows/macOS/browser password/passkey-manager guidance is limited to web/account credentials and recovery material rather than being presented as an SSH-key passphrase requirement.
+- [ ] Verify the [RCC-safe VS Code defaults](docs/getting-started/vscode.md#rcc-safe-vs-code-defaults) are visible before users are encouraged to open large project trees.
+- [ ] Verify `search.followSymlinks: false`, `search.useIgnoreFiles: true`, watcher exclusions, and search exclusions prevent automatic traversal of data/results/environments/work directories in the test workspace.
 - [ ] Verify direct Slurm, interactive allocations, GPU selection, accounting, cancellation, and current scheduler limits.
 - [ ] Verify Conda/Mamba, Snakemake, Nextflow, rootless Apptainer, Gitea, local scratch, and efficient I/O guidance.
 - [ ] Verify every command states or clearly implies the correct execution location and requires no unapproved privilege.
@@ -60,11 +72,13 @@ operational acceptance gates.
 - [ ] Verify archive guidance distinguishes a verified preservation transfer from an ordinary copy.
 - [ ] Review SeqLab/domain-application wording so archive submission capabilities remain governed by the deployed application and destination-specific review.
 
-## Architecture and platform boundaries
+## Architecture and I/O boundaries
 
 - [ ] Adversarially review `docs/concepts/why-not-kubernetes-everywhere.md` against the current RCC implementation.
-- [ ] Confirm Slurm remains the scientific-compute authority and Nomad/service orchestration remains the long-lived service-plane authority; user-facing browser/agent actions must not create a second scheduler.
-- [ ] Confirm the architecture page does not imply Kubernetes is prohibited forever; future Kubernetes adoption requires a concrete workload/operational benefit rather than popularity alone.
+- [ ] Confirm the documentation states that **I/O access pattern is the most important RCC architecture constraint**, rather than presenting CPU count or advertised backend bandwidth as the primary design metric.
+- [ ] Confirm the Ceph/Kubernetes comparison is fair: alternative platforms may be appropriate, but changing backend/orchestrator does not make small-file, metadata-heavy, random, temporary, or editor-driven I/O free.
+- [ ] Confirm Slurm remains the scientific-compute authority and Nomad/service orchestration remains the long-lived service-plane authority; browser/agent actions must not create a second scheduler.
+- [ ] Confirm future Kubernetes adoption remains possible when a concrete workload and operational benefit justify it.
 
 ## Data protection and scientific boundaries
 
@@ -90,14 +104,22 @@ operational acceptance gates.
 - [ ] Check internal links through the generated-site link checker and perform the final external link check online.
 - [ ] Verify rendering and critical workflows in the supported browser set.
 
-## Media
+## Stage 1 — written-site release
 
-- [x] Keep media publication fail-closed until the separate RCC media endpoint passes its checks.
-- [x] Reconcile `source/part1.md`, Class 1, workstation/reference guidance, narration, and caption text with the current **no-SSH-passphrase** policy.
-- [ ] Regenerate the Part 1 video/audio from the corrected source/narration and re-time/re-review its captions before activation; the staged generated media predates the current policy.
-- [ ] Promote the exact approved MP4 set into the staged publication manifest and verify hashes.
-- [ ] Verify trusted HTTPS, `video/mp4`, byte-range support, expected size, and full download for every released video.
-- [ ] Complete human review of every released video and caption against final narration and visuals.
+- [ ] Confirm `config/media-manifest.yml` keeps `preview_links` disabled before Stage-1 production publication.
+- [ ] Build the production site and verify every video source is replaced by the fail-closed “Video not yet released” state; no dead MP4 link may escape into Stage 1.
+- [ ] Confirm the written Class 1/source/caption policy is current even though the old generated Part-1 media is not being published.
+- [ ] Confirm the short “What changed from the old cluster?” video is documented as a Stage-2 plan rather than a Stage-1 dependency.
+
+## Stage 2 — media activation
+
+- [ ] [stage-2] Regenerate Part 1 video/audio from the corrected source/narration and re-time/re-review its captions.
+- [ ] [stage-2] Generate the short 3–4 minute “What changed from the old cluster?” video from `narration/RCC_What_Changed_From_Old_Cluster_Narration.md` if it remains useful after final text acceptance.
+- [ ] [stage-2] Rebuild any other course videos whose final written/narration source changed materially after the previous render.
+- [ ] [stage-2] Promote the exact approved MP4 set into the staged publication manifest and update hashes/sizes/durations.
+- [ ] [stage-2] Verify trusted HTTPS, `video/mp4`, byte-range support, expected size, and full download for every released video.
+- [ ] [stage-2] Complete human review of every released video and caption against final narration and visuals.
+- [ ] [stage-2] Set media publication to `verified_live` and enable player links only after all Stage-2 gates pass.
 
 ## Release control
 
@@ -112,10 +134,10 @@ operational acceptance gates.
 - [ ] Provision and acceptance-test the dedicated GitHub Pages deploy key and pinned GitHub SSH host key in Gitea.
 - [ ] Obtain explicit authorization to merge the accepted `clusterdocs-3` candidate into `main`. **No authorization is recorded by this checklist.**
 - [ ] After the authorized merge, run validation again on the exact `main` commit and verify it contains no unreviewed post-candidate changes.
-- [ ] Set `site_status: production` on the accepted main release only after all preceding gates pass.
+- [ ] Set `site_status: production` on the accepted main release only after all Stage-1 gates pass.
 - [ ] Run `python tools/validate_repo.py` on the exact main release commit.
 - [ ] Run `python tools/build_site.py --production --output site-production` on the exact main release commit.
-- [ ] Run `python tools/rollout_readiness.py` and resolve every reported blocker.
+- [ ] Run `python tools/rollout_readiness.py` and resolve every Stage-1 blocker.
 - [ ] Verify the published `assets/release.json` records `source_branch: main` and the exact main source commit.
 - [ ] Verify the GitHub Pages update is a normal non-forced child commit and that rollback is documented/tested.
 - [ ] Only after main-based publication is verified, retire the temporary `clusterdocs-ng` and `clusterdocs-3` branches according to repository policy; do not delete either branch as part of candidate review.
