@@ -81,7 +81,9 @@ command line does not create a new authority boundary.
 
 Your primary group records your organizational home. It is not the mechanism for
 sharing cross-department research data. Add collaborators to the project instead
-of moving them into another primary group merely to share data.
+of moving them into another primary group merely to share data. For the exact
+vocabulary used throughout ClusterDocs, see the
+[RCC terminology reference](reference/terminology.md).
 
 ## AI assistance without giving the agent the dataset
 

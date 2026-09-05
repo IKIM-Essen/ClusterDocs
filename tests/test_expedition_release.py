@@ -36,12 +36,15 @@ class ExpeditionReleaseTests(unittest.TestCase):
             (ROOT / "docs/rcc-expedition.md").read_text(),
         )
 
-    def test_overview_promotes_both_supported_starting_paths(self):
-        overview = (ROOT / "docs/index.md").read_text(encoding="utf-8")[:1_200]
-        self.assertIn("browser-first research", overview)
-        self.assertIn("advanced command-line/developer access", overview)
-        self.assertIn("[RCC Expedition Light](getting-started/index.md)", overview)
+    def test_overview_is_task_first_without_hiding_advanced_access(self):
+        overview = (ROOT / "docs/index.md").read_text(encoding="utf-8")
+        first = overview[:2_400]
+        self.assertIn("What do you want to do?", first)
+        self.assertIn("Browser-first by design", first)
+        self.assertIn("Advanced SSH / VS Code", first)
+        self.assertNotIn("jump host", first.lower())
         self.assertIn("[RCC Expedition](rcc-expedition.md)", overview)
+        self.assertIn("[What RCC can do](concepts/what-rcc-can-do.md)", overview)
 
         start = (ROOT / "docs/getting-started/index.md").read_text(encoding="utf-8")
         self.assertIn("Windows 11", start)
