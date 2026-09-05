@@ -13,6 +13,23 @@ complete platform.
 > In particular, RCC Analysis, project vhosts, Ardia integration, and the
 > RCC-to-Coscine transfer path are **not yet released** in the current candidate.
 
+## Current foundation versus integrated target
+
+The platform is not starting from zero while the browser experience is built.
+**Files, account/project self-service, RCC workers/Slurm, the advanced SSH/VS
+Code path, managed Nextflow-to-Slurm, and project Samba shares are ready now**
+subject to normal project/service authorization.
+
+The next integrated layer is the browser compute and lifecycle experience:
+**RCC Analysis Notebook/Workflow, protected project vhosts, Ardia integration,
+and RCC-to-Coscine self-service are not yet released**. ClusterDocs describes
+those capabilities early so their user, security, workflow, and resource
+contracts can be reviewed before activation.
+
+This distinction matters: the current RCC is already a substantial research-
+computing foundation, while the target state removes more infrastructure
+mechanics from the ordinary research path.
+
 ## The architecture starts with I/O behavior
 
 The most important technical constraint behind the current RCC platform is
