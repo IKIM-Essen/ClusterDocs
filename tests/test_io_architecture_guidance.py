@@ -19,6 +19,13 @@ class IOArchitectureGuidanceTests(unittest.TestCase):
         ):
             self.assertIn(phrase, page)
 
+    def test_capability_overview_exposes_io_first_architecture(self):
+        page = (DOCS / "concepts/what-rcc-can-do.md").read_text().lower()
+        self.assertIn("the architecture starts with i/o behavior", page)
+        self.assertIn("ceph", page)
+        self.assertIn("kubernetes", page)
+        self.assertIn("rcc-safe vs code defaults", page)
+
     def test_returning_user_page_highlights_io_and_short_video_plan(self):
         page = (DOCS / "getting-started/what-changed.md").read_text().lower()
         self.assertIn("i/o pattern matters more than raw storage bandwidth", page)
@@ -39,6 +46,14 @@ class IOArchitectureGuidanceTests(unittest.TestCase):
             '"**/results/**"',
         ):
             self.assertIn(token, page)
+
+    def test_storage_lesson_is_backend_neutral_and_migration_aware(self):
+        page = (DOCS / "course/class-15-storage-architecture.md").read_text().lower()
+        self.assertIn("s3-compatible object layer", page)
+        self.assertIn("minio", page)
+        self.assertIn("seaweedfs", page)
+        self.assertIn("do not build a scientific workflow around either product name", page)
+        self.assertIn("good performance comes primarily from good i/o patterns", page)
 
     def test_short_video_narration_is_staged_but_not_a_stage1_dependency(self):
         narration = ROOT / "narration/RCC_What_Changed_From_Old_Cluster_Narration.md"
