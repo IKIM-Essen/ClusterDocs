@@ -1,12 +1,13 @@
-# ClusterDocs NG GitHub Pages publication runbook
+# ClusterDocs 3 publication runbook
 
-This replaces the content of the existing GitHub Pages site while keeping media
-deployment, online verification, link activation, and site publication as
-separate guarded steps. A failure leaves the generated site without dead video
-links.
+This runbook publishes the future ClusterDocs 3 site while keeping media
+publication, human acceptance, online verification, and site promotion as
+separate fail-closed steps. A failed gate leaves the current production site in
+place.
 
-## Fixed targets and content set
+## Fixed targets and source
 
+- Production source branch: `clusterdocs-3`
 - Site URL: <https://ikim-essen.github.io/ClusterDocs/>
 - Media URL: <https://docs.ikim.uk-essen.de/media/rcc-onboarding/>
 - Media web root: `/srv/www/docs/media/rcc-onboarding`
@@ -16,125 +17,160 @@ links.
 - Media-set checksum receipt: `9bcbc20ff36123e77dc103f7619444b17b08c4d09aaa43fff1a1316bcef1ab11`
 
 The site publishes no local MP4 copies, GitHub media URLs, general downloads
-tree, source captions, narration downloads, or office-document downloads. The
-only versioned download is the validated RCC Expedition archive and its outer
-checksum. WebVTT captions and posters are built into the site as player assets.
+tree, source-caption downloads, narration downloads, or office-document
+downloads. The only versioned general download is the validated RCC Expedition
+archive and its checksum. WebVTT captions and posters are generated as player
+assets.
 
-## 1. Verify the exact handoff before copying it
+## 1. Build the exact staged candidate
 
-From the ClusterDocs worktree that will be deployed, run:
+Work only from the exact `clusterdocs-3` candidate to be reviewed. Record its
+commit before testing:
 
 ```bash
-python tools/validate_repo.py
-python tools/media_gate.py --local-dir new-videos
-python tools/rollout_readiness.py --manual-review
+git switch clusterdocs-3
+git status --short
+git rev-parse HEAD
+python3 tools/validate_repo.py
+python3 tools/build_site.py --output site-review
+python3 tools/rollout_readiness.py --manual-review
 ```
 
-The media gate must report `PASS (17 videos)`. It checks the manifest filename
-set, exact size, SHA-256, H.264 1280×720 video, stereo AAC audio, and duration.
-Do not deploy an extra file or substitute a same-named file with another hash.
+The worktree must be clean. `--manual-review` means the candidate is coherent
+enough to begin human acceptance; it does **not** mean it is production-ready.
 
-## 2. Deploy the separate media vhost and fixed media directory
+## 2. Run human acceptance before broad exposure
 
-Deploy the reviewed RCC `docs.ikim.uk-essen.de` static-vhost configuration with
-document root `/srv/www/docs`. Copy exactly the 17 files from `new-videos/` into
-`/srv/www/docs/media/rcc-onboarding`; directories must be readable/executable
-by the web service and MP4 files must be read-only to it. Do not publish the
-temporary upload directory or point the vhost into a user or project tree.
+A very small controlled pilot may be exposed first to prove the deployed browser
+journey works in principle. Before broad exposure, complete all of:
 
-Before DNS cut-over, test the intended hostname through the deployment network.
-The final listener must provide a trusted certificate for
-`docs.ikim.uk-essen.de`, serve MP4s as `video/mp4`, support byte ranges with
-HTTP 206 and `Content-Range`, and serve the exact manifest bytes. Directory
-listing is not required and should remain disabled.
+1. the fresh ClusterDocs 3 adversarial review in
+   `meta/EXPERT_REVIEW_GUIDE.md`;
+2. the zero-SSH naive-user browser session in
+   `meta/NOVICE_REVIEW_GUIDE.md` using synthetic/non-sensitive data;
+3. a separate advanced-user acceptance covering SSH, VS Code, Slurm,
+   containers, workflow development, GPUs, and lower-level diagnostics; and
+4. institutional/privacy/accessibility/operational review in
+   `ADMIN_CHECKLIST.md`.
 
-## 3. Verify the released URL before enabling players
+Do **not** substitute a successful SSH exercise for browser-first acceptance and
+do not reuse the August expert receipt for ClusterDocs 3.
 
-After DNS and TLS are live, run the full online gate:
+Record completed evidence in `config/review-status.yml` only after blocker/major
+findings are resolved or explicitly accepted by the responsible owner.
+
+## 3. Verify the exact media handoff before copying it
+
+From the same candidate, run:
 
 ```bash
-python tools/media_gate.py \
+python3 tools/media_gate.py --local-dir new-videos
+```
+
+The gate must report `PASS (17 videos)`. It checks the manifest filename set,
+exact size, SHA-256, H.264 1280×720 video, stereo AAC audio, and duration. Do not
+deploy an extra file or substitute a same-named file with another hash.
+
+## 4. Deploy and verify the separate media endpoint
+
+Deploy the reviewed RCC `docs.ikim.uk-essen.de` static-vhost configuration with
+document root `/srv/www/docs`. Copy exactly the approved files into
+`/srv/www/docs/media/rcc-onboarding`; the web service receives read access, not a
+writable project/user tree.
+
+Before enabling players, the final endpoint must provide trusted TLS, correct
+`video/mp4`, byte ranges with HTTP 206/`Content-Range`, and the exact manifest
+bytes. Directory listing should remain disabled.
+
+Run the online gate:
+
+```bash
+python3 tools/media_gate.py \
   --base-url https://docs.ikim.uk-essen.de/media/rcc-onboarding
 ```
 
-This range-tests and fully downloads all 17 videos. It must report
-`media publication gate: PASS (17 videos)`. Also test one class in Firefox with
-captions enabled. A successful home page or one successful MP4 is insufficient.
+It must report `media publication gate: PASS (17 videos)`. Also perform the
+required human video/caption review and clean-client browser playback tests.
 
-## 4. Activate video links with one reviewed configuration change
+## 5. Activate video links only after online verification
 
-Only after the online gate passes, change these two values in
-`config/media-manifest.yml`:
+Only after the online/media reviews pass, change the governed publication values
+in `config/media-manifest.yml` to their verified-live state. Both the live status
+and link-enablement condition are required; partial activation must remain
+fail-closed and show the “Video not yet released” notice.
 
-```yaml
-status: verified_live
-preview_links: enabled
-```
-
-Record the verification time and result in the deployment change. Both values
-are required: changing only one keeps the build fail-closed and emits the
-“Video not yet released” notice instead of an MP4 URL.
-
-Rebuild and prove that all 17 unique RCC URLs—and no local or GitHub media
-URLs—are present:
+Rebuild and verify:
 
 ```bash
-python tools/build_site.py --output site-preview
-python tools/check_site_links.py site-preview
+python3 tools/build_site.py --output site-review
+python3 tools/check_site_links.py site-review
 ```
 
-Review the course overview, Classes 1, 6, 7, 16, and 17, one caption track, seeking
-within a video, mobile layout, and Firefox playback before production cut-over.
+Review the course overview plus representative early, workflow, instrument, and
+lifecycle classes; verify captions, seeking, mobile layout, and the supported
+browser set.
 
-## 5. Publish the site
+## 6. Final production gate
 
-Complete `ADMIN_CHECKLIST.md`, record the required human content reviews, set
-`site_status: production`, and run:
+Only after every required review is recorded and `ADMIN_CHECKLIST.md` is closed,
+set `site_status: production` and run on the exact source commit:
 
 ```bash
-python tools/validate_repo.py
-python tools/rollout_readiness.py
-python tools/build_site.py --production --output site-production
-python tools/check_site_links.py site-production
+python3 tools/validate_repo.py
+python3 tools/rollout_readiness.py
+python3 tools/build_site.py --production --output site-production
+python3 tools/check_site_links.py site-production
 ```
 
-Site deployment is owned by the manually dispatched Gitea workflow in
-`.gitea/workflows/deploy-production.yml`. GitHub Actions remains a manual
-validation fallback and must never hold production deployment credentials or
-deploy the site. The workflow replaces the generated content of the existing
-`IKIM-Essen/ClusterDocs` `gh-pages` branch; it does not create another Pages
-project.
+All commands must pass. The readiness gate intentionally rejects a candidate
+that still lacks fresh expert, zero-SSH novice, advanced-user, media,
+accessibility, or administrator evidence.
 
-Before the first dispatch, provision these repository secrets in Gitea only:
+## 7. Publish with the manual Gitea workflow
 
-- `CLUSTERDOCS_GITHUB_PAGES_DEPLOY_KEY`: a dedicated write-enabled deploy key
-  for only the ClusterDocs GitHub repository; and
-- `CLUSTERDOCS_GITHUB_SSH_HOST_KEY`: the reviewed, pinned GitHub SSH host-key
-  line.
+Production deployment is owned by
+`.gitea/workflows/deploy-production.yml`. The workflow:
 
-Follow `meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md`. The workflow accepts only the
-`clusterdocs-ng` branch, checks out the exact event SHA through the RCC runner
-helper, runs every production gate, creates a normal child commit of the
-current `gh-pages` head, pushes without force, and verifies the published
-commit. It deliberately emits `.nojekyll` and refuses a `CNAME` file.
+- accepts only `refs/heads/clusterdocs-3`;
+- checks out and validates the exact event SHA;
+- refuses a dirty/stale source;
+- reruns the full fail-closed production gates;
+- emits `assets/release.json` with source branch and commit;
+- clones only the existing GitHub `gh-pages` branch;
+- creates a normal child commit, never a forced update; and
+- verifies the remote `gh-pages` head after push.
 
-After GitHub Pages serves the new commit, re-run the online media gate and
-Firefox playback acceptance, then perform the novice acceptance tasks
-immediately against the live site. Novice acceptance does not block the initial
-switch, but it blocks declaring rollout complete; a blocking safety or
-task-completion finding requires rollback or a corrected release.
+GitHub Actions remains manual validation fallback only and must not hold the
+Pages deployment credential.
 
-A future `docs.ikim.uk-essen.de` CNAME remains a separate decision. Do not add
-DNS or a Pages `CNAME` file during this content rollout. That review must also
-resolve where `/media/rcc-onboarding/` will live, because the current media
-plan uses the same hostname on the RCC web service.
+Before the first dispatch, provision the Gitea-only secrets documented in
+`meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md` and confirm Pages publishes the root of
+`gh-pages`.
+
+## 8. Post-publication verification
+
+After the Pages commit becomes visible:
+
+- verify `assets/release.json` matches the intended `clusterdocs-3` commit;
+- re-run external links and representative browser/mobile/accessibility checks;
+- re-run the online media gate and representative video/caption playback; and
+- watch support/telemetry that has been institutionally approved for obvious
+  breakage.
+
+These are verification checks, not a deferred substitute for pre-broad-rollout
+naive-user acceptance.
 
 ## Rollback
 
-Keep the previous `gh-pages` commit and media directory until post-release
-acceptance completes. If the media path fails, immediately set
-`preview_links: disabled_until_verified_live` and rebuild; this removes all
-player URLs without introducing a local or third-party fallback. Roll back the
-site with a new commit restoring the previously accepted generated tree; do not
-force-rewrite `gh-pages`. Never replace an MP4 in place without updating the
-manifest hash, cache key, staged-set receipt, and verification evidence.
+Keep the previous accepted `gh-pages` commit and media set available until the
+new release is verified. Roll back the site with a new commit restoring the last
+accepted generated tree; never force-rewrite `gh-pages`.
+
+If media fails independently, disable preview links through the governed media
+configuration and republish the site; do not introduce a local or third-party
+fallback. Never replace an MP4 in place without updating its manifest hash and
+verification evidence.
+
+A future `docs.ikim.uk-essen.de` Pages CNAME remains a separate decision. Do not
+add a Pages `CNAME` file as part of this release unless that DNS/hosting review is
+completed separately.
