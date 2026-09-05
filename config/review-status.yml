@@ -1,9 +1,15 @@
 expert_content_review:
-  status: completed
-  recorded_at: 2026-08-09
-  evidence: project-owner confirmation
+  status: required_v3_rereview
+  supersedes_recorded_at: 2026-08-09
+  reason: browser-first and agent/capability model materially changed
 
 novice_acceptance:
-  status: scheduled_post_rollout
-  blocks_initial_switchover: false
-  blocks_rollout_completion: true
+  status: required_pre_broad_rollout
+  zero_ssh_required: true
+  blocks_broad_exposure: true
+  controlled_pilot_allowed: true
+
+advanced_acceptance:
+  status: required_pre_broad_rollout
+  scope: ssh_vscode_slurm_containers_gpu_workflows
+  blocks_broad_exposure: true
