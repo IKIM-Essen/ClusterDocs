@@ -1,18 +1,18 @@
 ---
 title: "RCC Onboarding - Part 1"
-subtitle: "Concepts, secure access, remote editing, data transfer, and the first Slurm job"
+subtitle: "Browser identity, optional SSH access, data transfer, and the first Slurm job"
 author: "IKIM RCC documentation"
-date: "4 August 2026"
+date: "5 September 2026"
 ---
 
 # Contents
 
-- About Part 1 and essential vocabulary
-- RCC connection values and support
+- About Part 1 and who needs it
+- RCC identity, web credentials, and password managers
 - 1. Cluster architecture and the local/remote mental model
-- 2. Accounts, authorisation, and data protection
+- 2. Browser-first access and the optional advanced SSH path
 - 3. Local software: OpenSSH and Visual Studio Code
-- 4. SSH, keys, passphrases, and server identity
+- 4. SSH keys and server identity
 - 5. SSH configuration and the gateway route
 - 6. Terminal connection and verification
 - 7. VS Code Remote - SSH and remote editing
@@ -25,367 +25,209 @@ date: "4 August 2026"
 
 # About Part 1
 
-This tutorial is for researchers and students who have not previously worked with a Linux cluster, SSH, Visual Studio Code, or Slurm.
+ClusterDocs 3 is browser-first for ordinary researchers. If RCC Home, Files, and
+the browser analysis capabilities cover your work, you do not need to create an
+SSH credential merely because you have an RCC account.
 
-By the end of Part 1, you will be able to:
+Part 1 therefore has two purposes:
 
-1. install the required software on Windows or macOS;
-2. create and safely handle an SSH key;
-3. connect to the RCC cluster from a terminal and from Visual Studio Code;
-4. transfer a small test file through the RCC web transfer service; and
-5. submit, monitor, and inspect your first Slurm batch job.
+1. explain the common RCC identity/project/data boundaries used by every user;
+2. provide the advanced SSH, VS Code, and direct Slurm path for users who need it.
 
-Part 1 does **not** install scientific software or introduce Snakemake. Part 2 introduces reproducible workflows and scientific software. Part 3 explains performance and efficient data movement. Part 4 introduces Apptainer containers.
+By the end of the advanced path, you can:
+
+- explain the difference between web credentials, SSH keys, and server host keys;
+- create and safely handle the RCC SSH key when SSH is required;
+- connect to the RCC shell host through the forwarding gateway;
+- use Visual Studio Code Remote - SSH as an advanced development interface;
+- transfer a small non-sensitive test file through the RCC files service; and
+- submit, monitor, and inspect a small Slurm batch job.
+
+Part 1 does **not** install scientific software or introduce Snakemake. Later
+parts cover reproducible workflows, performance, and Apptainer.
 
 ## How to use this guide
 
-This is not a list of commands to copy without context. Each major section follows the same pattern:
+Do not copy commands without understanding where they run. For each command ask:
 
-1. **Concept:** what the component is and which problem it solves.
-2. **Location:** whether it is on your laptop, a gateway, a submission host, shared storage, or a compute node.
-3. **Action:** the exact steps to perform.
-4. **Verification:** a command or visible result that confirms success.
-5. **Failure boundary:** the point at which you should stop and ask for support rather than guessing.
+1. Which computer am I controlling?
+2. Where are the files?
+3. Does this run directly in the shell or through Slurm?
+4. What happens if the connection closes?
 
-Read the concept paragraphs even when the commands appear familiar. Most cluster mistakes happen because a correct command is run on the wrong computer, in the wrong directory, or outside Slurm.
+The browser-first interface hides many of these details. The advanced path makes
+them explicit because direct SSH/Slurm users are responsible for using the
+correct execution boundary.
 
-## Essential vocabulary
+# RCC identity, web credentials, and password managers
 
-- **Local:** your Windows or macOS computer.
-- **Remote:** a computer in the RCC environment.
-- **Terminal:** a window that displays text and lets you type commands. PowerShell and macOS Terminal are local terminals; the VS Code terminal after connection is remote.
-- **Shell:** the program that reads commands in a terminal. RCC examples use Bash.
-- **Command:** an instruction executed by the shell, such as `pwd` or `sbatch`.
-- **Path:** the address of a file or directory, such as `/projects/example/data.csv`.
-- **Process:** a running program. Every command starts one or more processes.
-- **Node:** one computer belonging to the cluster.
-- **Job:** a unit of work submitted to Slurm with requested resources.
-- **Cluster:** multiple computers, storage systems, and network services managed as one research-computing environment.
-- **Resource manager:** software that decides when and where jobs run. RCC uses Slurm.
+One RCC human identity is used across several interfaces, but the credentials
+are not interchangeable.
 
-## Four questions to ask before every command
+- **RCC web sign-in** may use a password, passkey, and/or another enrolled factor.
+- **Recovery/step-up** may use separate recovery codes, passkeys, or an approved authenticator.
+- **SSH** uses a registered SSH public key only when the user needs the advanced command-line path.
+- **Project membership** is authorization, not a shared credential.
 
-Before pressing Enter, ask:
+For RCC web passwords, passkeys, and appropriate recovery material, use the
+credential/password-manager facilities already provided by the supported Windows
+or macOS environment and browser, or another institutionally approved password
+manager. Do not store those credentials in project data, Git repositories,
+notes alongside research data, scripts, or chat.
 
-1. **Which computer am I controlling?** Your laptop, a login gateway, a submission host, or a compute node?
-2. **Where are the files?** Local disk, home directory, project storage, or temporary node-local storage?
-3. **Where will the process run?** Directly in the current shell, or as a Slurm job?
-4. **What happens if the connection closes?** Does the process stop, continue under Slurm, or remain inside a `tmux` session?
-
-These four questions form the mental model for both parts of the tutorial.
+That recommendation does **not** mean the RCC SSH key should have a passphrase.
+RCC does not recommend a passphrase on the normal software-backed RCC SSH key.
 
 # RCC connection values and support
 
-RCC connection targets and SSH host identities can change during maintenance,
-so this tutorial does not freeze them into a long-lived document. Obtain the
-current SSH configuration and fingerprints through the approved institutional
-RCC instructions, keep the local alias `rcc`, and compare every first-use or
-changed host key through that independent trusted channel. Do not copy a host
-name or fingerprint from an old screenshot, email, or colleague's configuration.
+RCC connection targets and SSH host identities can change during maintenance.
+Obtain the current SSH configuration and fingerprints through the approved RCC
+instructions. Do not reconstruct them from an old screenshot, email, or a
+colleague's configuration.
 
-Browser-based project transfer is available at
-<https://files.ikim.uk-essen.de/>. Sign in through the institutional flow shown
-by the portal and open the project assigned to you; the service exposes project
-storage rather than a separate transfer “collection” that users must guess.
-Network or VPN requirements are part of the current institutional connection
-instructions because they can differ by location. For help, use the **IKIM
-Cluster channel on Mattermost** without posting credentials, private keys, or
-sensitive project data.
+Browser-based project transfer is available through the RCC Files service. Sign
+in through the institutional web flow and open the project assigned to you.
+The files service exposes project-facing storage; it is not a separate shared
+account and does not broaden project membership.
 
-Your project coordinator must also give you:
-
-- your RCC username;
-- your project or group name;
-- the exact directory in which you may store project data; and
-- confirmation that your public SSH key has been activated.
+For help, use the approved RCC support route without posting credentials,
+private keys, or sensitive project data.
 
 # 1. Understand the basic layout
 
-## Why a cluster exists
-
-A laptop is designed for one person and normally has a small number of CPU cores, limited memory, and one local disk. Research analyses may need more memory, more processors, specialist hardware, shared datasets, or uninterrupted execution over many hours. A cluster combines many computers and shared services so that users can request the capacity needed by each task.
-
-The RCC cluster is not one large personal computer. It consists of several systems with different purposes. Separating these roles protects the service and allows many researchers to work at the same time.
+RCC is a shared research platform, not one large personal computer. Different
+systems have different responsibilities.
 
 ```text
-Your laptop
-    |
-    | SSH
-    v
-Login gateway
-    |
-    | ProxyJump
-    v
-Slurm submission host
-    |
-    | sbatch / squeue
-    v
-Compute node selected by Slurm
+Browser-first research
+    -> RCC Home / Files / Analysis
+    -> governed project + Slurm-backed execution
+
+Advanced command-line path
+    -> local workstation
+    -> forwarding gateway (ProxyJump; no working shell)
+    -> RCC shell host (edit, Git, submit, inspect)
+    -> Slurm allocation (scientific computation)
 ```
 
-The login gateway authenticates your connection. It is comparable to a controlled entrance, not a workplace for analysis. The submission host is where you edit small text files, prepare workflows, submit jobs, and inspect their status. Compute-intensive work must run on compute nodes allocated by Slurm.
+- **Your workstation:** local browser, terminal, and optional VS Code.
+- **Forwarding gateway:** guarded network entry; not a place to work.
+- **Shell host:** light editing, Git, job submission, workflow control, logs.
+- **Slurm worker/allocation:** CPU, memory, GPU, notebook, and scientific work.
+- **Project storage:** durable approved project inputs and results.
+- **Job-local scratch:** temporary high-I/O work inside an allocation.
 
-The systems have different responsibilities:
+Do not run sustained analysis on the gateway or shell host.
 
-- **Your laptop:** provides the user interface and stores the private SSH key. Use it for VS Code and a local terminal. Do not keep the only copy of important project data there.
-- **Login gateway:** provides the controlled entry to RCC. Use it for authentication and forwarding, not for analysis or large transfers.
-- **Submission host:** is the place for editing, Git, Slurm commands, and workflow coordination. Do not run scientific programs directly there.
-- **Compute node:** executes programs launched by Slurm. Beginners do not select a compute node manually.
-- **Shared storage:** holds approved project inputs and generated outputs. Do not store credentials or unapproved identifying data there.
+# 2. Browser-first access and the optional advanced SSH path
 
-## The prompt tells you where you are - but verify it
+An RCC account does not automatically require SSH.
 
-A shell prompt often contains a host name, but prompts can be customised and should not be treated as proof. Use these commands:
+Use browser-first access when the released RCC services cover the task. Use SSH
+when you need direct Slurm commands, VS Code Remote SSH, workflow development,
+SFTP/public-key automation, or another capability that explicitly requires it.
 
-```bash
-whoami
-hostname
-pwd
-```
+Only create/register an SSH key when that advanced capability is needed.
 
-- `whoami` reports the remote account.
-- `hostname` reports the computer currently running the shell.
-- `pwd` reports the current working directory.
+# 3. Install the required advanced-path software
 
-Run them whenever you are uncertain about the session.
+## Windows 11
 
-The data-transfer path is separate:
-
-```text
-Your computer or an approved data source
-    |
-    | RCC web transfer service
-    v
-Your approved project directory on RCC storage
-```
-
-> **Do not calculate on the login or submission hosts**
-> Do not run analyses, large file conversions, compression jobs, software builds, or long-running programs directly in the VS Code terminal. Create a Slurm job and submit it with `sbatch`.
-
-# 2. Before you begin
-
-## Accounts, authorisation, and software are separate things
-
-An RCC account proves who you are. Project membership determines which data and computing resources you may use. Installed software determines which programs are available. Having an account does not automatically grant access to every project, and installing VS Code does not create an RCC account.
-
-You need:
-
-- an active RCC account;
-- an RCC username;
-- permission to use an RCC project or group directory;
-- a password manager approved by your institution;
-- permission to install Visual Studio Code on your computer; and
-- approximately 30 minutes for the initial setup.
-
-# Data-protection rule
-
-Only data approved for the RCC environment may be transferred. The existing RCC policy states that directly identifying patient data and other personally identifying information must not be uploaded. Data must be de-identified before transfer unless a project-specific approval and technical environment explicitly allow otherwise.
-
-When uncertain, stop and ask your project coordinator or the RCC support contact before uploading the data.
-
-# 3. Install the required software
-
-## Local software versus remote software
-
-Visual Studio Code and the SSH client are installed on your laptop. They provide the interface and secure connection. The Linux shell, Slurm commands, project files, and later scientific programs are on RCC. When VS Code is connected remotely, the window is local but most file operations and terminal commands happen on RCC.
-
-You need two components on your own computer:
-
-- an OpenSSH client; and
-- Visual Studio Code with the Microsoft **Remote - SSH** extension.
-
-# 3.1 Windows 10 or Windows 11
-
-# Check OpenSSH
-
-1. Open **PowerShell**.
-2. Run:
+Open PowerShell and verify the built-in OpenSSH client:
 
 ```powershell
 ssh -V
 ```
 
-A version string means that the SSH client is available.
+If it is missing, install the Microsoft OpenSSH Client optional feature through
+the supported Windows mechanism. You do not need WSL merely to connect to RCC.
 
-If PowerShell reports that `ssh` is unknown, install **OpenSSH Client** through Windows **Optional features**. On a centrally managed computer, contact local IT if you cannot add the feature yourself.
+Install Visual Studio Code and Microsoft's Remote - SSH extension only if you
+need the advanced editor/developer path.
 
-# Install Visual Studio Code
+## macOS
 
-1. Download and install the current stable release of Visual Studio Code from Microsoft.
-2. Start Visual Studio Code.
-3. Open the **Extensions** view.
-4. Search for `Remote - SSH`.
-5. Install the extension published by Microsoft.
-
-Do not install PuTTY for this tutorial. Visual Studio Code Remote - SSH expects an OpenSSH-compatible client.
-
-# 3.2 macOS
-
-OpenSSH is included with macOS.
-
-1. Open **Terminal**.
-2. Run:
+Open Terminal and verify OpenSSH:
 
 ```bash
 ssh -V
 ```
 
-3. Download and install the current stable release of Visual Studio Code from Microsoft.
-4. Start Visual Studio Code.
-5. Open the **Extensions** view.
-6. Search for `Remote - SSH`.
-7. Install the extension published by Microsoft.
+OpenSSH is supplied with current macOS. Install Visual Studio Code and Remote -
+SSH only when you need the advanced path.
 
 # 4. Create your RCC SSH key
 
-## Why RCC uses SSH
+## 4.1 Private key, public key, and host key
 
-SSH stands for **Secure Shell**. It creates an encrypted connection between your laptop and a remote computer. Encryption prevents other systems on the network from reading the session. SSH also verifies identities in both directions:
+An SSH key pair contains:
 
-- RCC verifies **you** using your registered public key; and
-- you verify the **RCC server** using its host-key fingerprint.
+- a **private key**, which remains on the workstation or compatible hardware authenticator;
+- a **public key**, which RCC registers to the individual RCC account.
 
-This is why the tutorial discusses both user keys and host fingerprints. They solve different security problems.
+The server's **host-key fingerprint** is a different thing: it lets the client
+verify that the expected RCC server answered.
 
-SSH is also the transport used by VS Code Remote - SSH. VS Code does not bypass SSH; it builds its remote editing session on top of the same connection that you first test in a terminal.
+Never email, upload, paste, or commit the private SSH key. Project membership is
+never granted by sharing a credential.
 
-# 4.1 What an SSH key is
+## 4.2 RCC SSH-key policy
 
-An SSH key pair consists of two files:
+For the normal software-backed RCC key, create the key **without a passphrase**.
+The empty `-N ""` is intentional RCC policy, not a missing tutorial step.
 
-- the **private key**, which remains on your computer; and
-- the **public key**, which is registered with your RCC account.
+Security comes from keeping the private key on a protected endpoint, using
+individual attributable accounts, disabling agent forwarding, verifying the RCC
+server identity, promptly responding to lost devices, and preferring a
+hardware-backed FIDO SSH key where appropriate.
 
-The private key is an authentication credential. Anyone who obtains it may be able to act as you. Never send the private key by email, upload it to a ticket, place it in cloud storage, commit it to Git, or copy it to the cluster.
+Do not add an SSH-key passphrase merely because a generic SSH tutorial recommends
+one. Password-manager guidance in ClusterDocs applies to RCC web/account
+credentials and recovery material.
 
-The public key is designed to be shared with the RCC account administrator.
-
-A useful model is a challenge-and-response test. The server sends a mathematical challenge that can be answered only with the private key. The private key itself is not sent to RCC. The registered public key lets the server verify the answer.
-
-Do not confuse the following credentials:
-
-- **RCC username:** names your account and may be entered in configuration and support requests.
-- **Private SSH key:** proves possession of your identity credential and belongs on your laptop only.
-- **Public SSH key:** lets RCC verify the private key and is registered with your RCC account.
-- **Key passphrase:** encrypts the private-key file and belongs in an approved password manager and your memory only.
-- **Host-key fingerprint:** lets you verify the RCC server and must be obtained from official RCC documentation.
-
-# 4.2 Handling the key passphrase
-
-Use a separate passphrase to protect the private key unless RCC support explicitly instructs you otherwise.
-
-Follow these rules:
-
-1. Generate the passphrase in your approved password manager.
-2. Save it in the password manager **before** completing key generation.
-3. Do not rely on remembering it.
-4. Do not reuse your RCC, university, or email password.
-
-The key passphrase cannot be recovered or reset. If it is lost, create a new key pair, ask RCC support to register the new public key, and ask them to revoke the old key.
-
-When a terminal asks for the passphrase, no characters or dots are displayed while you type. This is normal.
-
-# 4.3 Generate the key on Windows
-
-Open PowerShell and run:
+## 4.3 Windows software-backed key
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.ssh" | Out-Null
-ssh-keygen -t ed25519 -a 100 -f "$HOME\.ssh\id_rcc" -C "$env:USERNAME@rcc"
+ssh-keygen -t ed25519 -N "" -f "$HOME\.ssh\id_rcc" -C "$env:USERNAME@rcc"
 ```
 
-Enter the passphrase stored in your password manager when prompted.
-
-Two files are created:
+The files are normally:
 
 ```text
 C:\Users\YOUR_WINDOWS_NAME\.ssh\id_rcc
 C:\Users\YOUR_WINDOWS_NAME\.ssh\id_rcc.pub
 ```
 
-- `id_rcc` is the private key. Never share it.
-- `id_rcc.pub` is the public key. This is the file that may be shared.
+Register only the `.pub` file/content.
 
-Copy the public key to the clipboard:
-
-```powershell
-Get-Content "$HOME\.ssh\id_rcc.pub" | Set-Clipboard
-```
-
-# 4.4 Generate the key on macOS
-
-Open Terminal and run:
+## 4.4 macOS software-backed key
 
 ```bash
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -a 100 -f ~/.ssh/id_rcc -C "$USER@rcc"
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_rcc -C "$USER@rcc"
+chmod 600 ~/.ssh/id_rcc
 ```
 
-Enter the passphrase stored in your password manager when prompted.
+Register only `~/.ssh/id_rcc.pub`.
 
-Two files are created:
+## 4.5 Hardware-backed FIDO SSH key
 
-```text
-~/.ssh/id_rcc
-~/.ssh/id_rcc.pub
-```
-
-- `id_rcc` is the private key. Never share it.
-- `id_rcc.pub` is the public key. This is the file that may be shared.
-
-Copy the public key to the clipboard:
+Where a compatible authenticator and current RCC/client support are available,
+prefer a hardware-backed key:
 
 ```bash
-pbcopy < ~/.ssh/id_rcc.pub
+ssh-keygen -t ed25519-sk -N "" -f ~/.ssh/id_rcc
 ```
 
-# 4.5 Register the public key
-
-Send only the contents of `id_rcc.pub` through the approved RCC account-enrolment process. Include the identifying information requested by the account form or project coordinator.
-
-A public key begins with text similar to:
-
-```text
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA... username@rcc
-```
-
-A private key begins with text similar to:
-
-```text
------BEGIN OPENSSH PRIVATE KEY-----
-```
-
-> **Stop if you see PRIVATE KEY**
-> Never send a file or text containing `BEGIN OPENSSH PRIVATE KEY`.
-
-Wait until your project coordinator or RCC support confirms that the public key has been activated.
+A browser/WebAuthn passkey and an OpenSSH `*-sk` credential are separate
+credentials even when both live on the same physical security key.
 
 # 5. Configure the SSH connection
 
-## Why use an SSH configuration file
-
-An SSH configuration file is a saved connection recipe. It records the official host names, your RCC username, the private key to use, and the route through the gateway. This reduces typing and prevents VS Code, the terminal, and later tools from using different connection settings.
-
-`ProxyJump` means that SSH first connects to the gateway and then opens the connection to the submission host through it. Your terminal still ends on the submission host; the gateway is an intermediate security boundary.
-
-The SSH configuration gives the two RCC systems short, unambiguous names. It also tells SSH to reach the submission host through the login gateway.
-
-Replace `<RCC_USERNAME>` with the username assigned to you. Do not include the angle brackets.
-
-# 5.1 Windows SSH configuration
-
-Open PowerShell and run:
-
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.ssh" | Out-Null
-New-Item -ItemType File -Force "$HOME\.ssh\config" | Out-Null
-notepad "$HOME\.ssh\config"
-```
-
-Insert the host blocks supplied in the current institutional RCC instructions.
-They have the following safe shape; replace the gateway host value as well as
-the username:
+Use the current host blocks supplied through the approved RCC channel. Their
+safe shape is:
 
 ```sshconfig
 Host rcc-login
@@ -406,99 +248,32 @@ Host shellhost c? c?? c??? d?? g?-? g?-??
     ForwardAgent no
 ```
 
-Use `shellhost` for normal login. The node patterns support a node assigned by
-an active Slurm interactive allocation; they do not authorize selecting a
-compute node or running work outside Slurm. The `rcc-login` account is
-forwarding-only and will not provide an interactive shell. Do not test it with
-`ssh rcc-login`; `ProxyJump` uses it automatically when you connect to the
-destination.
+The gateway is forwarding-only. Do not try to use it as a working shell. The
+worker/node patterns are only for a node assigned by an active Slurm allocation;
+they are not permission to choose arbitrary compute nodes.
 
-Confirm that the file is named exactly `config`, not `config.txt`.
-
-# 5.2 macOS SSH configuration
-
-Open Terminal and run:
-
-```bash
-touch ~/.ssh/config
-chmod 600 ~/.ssh/config
-open -e ~/.ssh/config
-```
-
-Insert the host blocks supplied in the current institutional RCC instructions.
-They have the following safe shape; replace the gateway host value as well as
-the username:
-
-```sshconfig
-Host rcc-login
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
-    User <RCC_USERNAME>
-    IdentityFile ~/.ssh/id_rcc
-    IdentitiesOnly yes
-    ForwardAgent no
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
-    AddKeysToAgent yes
-    UseKeychain yes
-
-Host shellhost c? c?? c??? d?? g?-? g?-??
-    HostName %h.ikim.uk-essen.de
-    User <RCC_USERNAME>
-    IdentityFile ~/.ssh/id_rcc
-    IdentitiesOnly yes
-    ProxyJump rcc-login
-    ForwardAgent no
-    AddKeysToAgent yes
-    UseKeychain yes
-```
-
-Add the key to the macOS keychain:
-
-```bash
-ssh-add --apple-use-keychain ~/.ssh/id_rcc
-```
-
-The keychain stores the passphrase locally so that you do not need to re-enter it for every connection.
+Do not add `ForwardAgent yes` and do not disable host-key checking to make a
+connection work.
 
 # 6. Test the SSH connection in a terminal
 
-## Why test outside VS Code first
+Inspect the effective configuration first:
 
-A terminal test separates SSH problems from VS Code problems. If `ssh shellhost` fails in PowerShell or Terminal, VS Code cannot repair the underlying account, key, host-name, VPN, or fingerprint issue. If the terminal test succeeds but VS Code fails, the problem is limited to the editor or extension.
+```bash
+ssh -G shellhost
+```
 
-An SSH session is a network connection to a remote shell. Commands typed after the connection run remotely until you type `exit`, close the terminal, or lose the connection.
-
-Test the terminal connection before attempting to use Visual Studio Code.
-
-On Windows, use PowerShell. On macOS, use Terminal.
+Then make one bounded connection attempt:
 
 ```bash
 ssh shellhost
 ```
 
-# 6.1 Verify the host fingerprints
+Compare every first-use or changed host-key fingerprint with the current value
+published through an independent institutional channel. Stop on an unexpected
+identity warning; do not delete all `known_hosts` entries.
 
-## User authentication and server authentication are different
-
-Your public key tells RCC which user is connecting. The server fingerprint tells you which server answered. Accepting an unverified fingerprint would protect the traffic cryptographically but could protect a connection to the wrong system. Therefore, compare the fingerprint before accepting it.
-
-During the first connection, SSH may ask you to verify the login gateway and the submission host.
-
-Compare every displayed fingerprint with the current value supplied through the
-independent institutional RCC instructions. Type `yes` only when it matches
-exactly.
-
-If a fingerprint is missing, unexpected, or different:
-
-1. answer `no` or press `Ctrl+C`;
-2. do not delete entries from `known_hosts`; and
-3. contact RCC support.
-
-A changed host key can be caused by legitimate maintenance, but it can also indicate that the connection is not reaching the intended server.
-
-# 6.2 Confirm the remote session
-
-After login, run:
+After login:
 
 ```bash
 whoami
@@ -506,284 +281,85 @@ hostname
 pwd
 ```
 
-Expected results:
-
-- `whoami` displays your RCC username;
-- `hostname` identifies an RCC submission host; and
-- `pwd` displays your RCC home directory.
-
-Then disconnect:
+Then disconnect with:
 
 ```bash
 exit
 ```
 
-If login fails, collect diagnostic output:
-
-```bash
-ssh -vvv shellhost
-```
-
-Send the output to RCC support, but never send your private key or its passphrase.
+If a client unexpectedly prompts for a password/passphrase when the configured
+RCC key was generated with `-N ""`, first verify that the correct key and host
+configuration are being used. Do not solve the problem by adding another secret
+or weakening authentication checks.
 
 # 7. Connect with Visual Studio Code
 
-## What an IDE is
+Use Visual Studio Code Remote - SSH only after terminal SSH works.
 
-An integrated development environment, or IDE, combines a text editor, file browser, terminal, search tools, version-control support, and extensions. VS Code is the preferred beginner IDE for RCC because it provides these tools in one window. It does not replace Linux, SSH, Slurm, or the need to understand file locations.
+1. Start VS Code.
+2. Open **Remote-SSH: Connect to Host...**.
+3. Select the approved RCC shell-host alias.
+4. Verify the remote indicator and `hostname`.
+5. Open only the smallest useful code/project subdirectory.
 
-## What “Remote - SSH” changes
+A VS Code remote window does not create a Slurm allocation. Its terminal runs on
+the RCC shell host. Use it for light commands, Git, job submission, monitoring,
+and logs; submit scientific computation through Slurm.
 
-After connection:
+Exclude data, results, package trees, workflow caches, and large environments
+from workspace-wide search and file watching. Review Workspace Trust and remote
+extensions because they can execute code with the RCC account's permissions.
 
-- the VS Code window and keyboard input remain on your laptop;
-- the opened folder is on RCC storage;
-- the integrated terminal runs on the RCC submission host;
-- remote extensions may run on RCC; and
-- saving a file changes the remote file immediately.
+# 8. Transfer a test file with RCC Files
 
-This local/remote split is important. Dragging a local file into a remote editor or selecting the wrong VS Code window can produce unexpected copies. Use the approved transfer service for research data.
+Use the browser Files service for the small first transfer rather than dragging
+research data through VS Code.
 
-Visual Studio Code runs on your laptop. The Remote - SSH extension opens a remote workspace on the RCC submission host. Files opened in that remote window are stored on the cluster, and terminals opened there run on the submission host.
-
-# 7.1 Open the RCC connection
-
-1. Start Visual Studio Code.
-2. Press `F1` to open the Command Palette.
-3. Select **Remote-SSH: Connect to Host...**.
-4. Select `rcc`.
-5. If asked for the remote platform, select **Linux**.
-6. Verify any host-key prompt against the fingerprints published by RCC.
-7. Enter the SSH-key passphrase if requested.
-
-When connected, the lower-left corner of the VS Code window should display an SSH connection such as `SSH: shellhost`.
-
-# 7.2 Open a terminal on the submission host
-
-Select **Terminal > New Terminal** and run:
-
-```bash
-whoami
-hostname
-pwd
-```
-
-These commands now execute on the RCC submission host, not on your laptop.
-
-# 7.3 Create the tutorial workspace
-
-In the VS Code terminal, run:
-
-```bash
-mkdir -p ~/rcc-introduction
-cd ~/rcc-introduction
-```
-
-Then select **File > Open Folder...** and open:
-
-```text
-~/rcc-introduction
-```
-
-This small tutorial directory may reside in your home directory. Real project data and shared analysis files must be stored in the project or group directory assigned to you.
-
-# 7.4 What may run in the VS Code terminal
-
-## A terminal command starts a process immediately
-
-When you type a program name in the VS Code terminal, the shell normally starts that process on the submission host. Slurm is involved only when you explicitly use `sbatch`, `srun`, or a supported workflow profile. A remote terminal is therefore not automatically a compute allocation.
-
-Appropriate commands on the submission host include:
-
-- `cd`, `pwd`, `ls`, and `mkdir`;
-- editing scripts and configuration files;
-- `sbatch`, `squeue`, `sacct`, and `scancel`;
-- small checks of file names and permissions; and
-- inspecting short log files.
-
-Do not directly run scientific analyses, large data-processing commands, compression jobs, or long-running programs in this terminal. Submit them to Slurm.
-
-# 8. Transfer a test file with the RCC web transfer service
-
-## Why data transfer is a separate workflow
-
-SSH is optimised for interactive control. VS Code is optimised for editing. Large or restartable research-data transfers need a service that can queue work, retry failures, report individual files, and move data without keeping an editor window open. For that reason, this tutorial uses the RCC web transfer service rather than the VS Code file explorer.
-
-A transfer normally **copies** data. It does not prove that the destination copy is complete and it does not automatically delete the source. Keep the source until verification has succeeded.
-
-## Understand the main storage locations
-
-RCC separates storage by purpose:
-
-- **Home directory (`/homes/<user>`):** for small personal configuration and scripts. Do not use it as permanent bulk project storage.
-- **Project storage (`/projects/<project>`):** for approved durable inputs and outputs shared by the project's members, including members of different primary groups.
-- **Primary-group storage (`/groups/<primary-group>`):** for material shared only inside the user's one organizational primary group; it is not a substitute for a cross-group project.
-- **Job-local scratch (`/local/work/$USER/slurm-job-$SLURM_JOB_ID`):** for temporary high-I/O work on one worker. It is not shared or backed up and is removed when the job ends.
-- **Laptop storage:** for local working copies and transfer sources. Do not keep the only copy of important research data there.
-
-A path beginning with `/` is an absolute Linux path. A path beginning with `~` is relative to your RCC home directory. Windows drive-letter paths such as `C:\` do not exist in the remote Linux shell.
-
-## What a checksum proves
-
-A SHA-256 checksum is a compact value calculated from every byte in a file. Matching local and remote checksums provide strong evidence that the file content is identical. A checksum does not prove that the file is scientifically correct, permitted, or placed in the correct project.
-
-Browser upload and download are available for projects exposed through the RCC
-files portal.
-
-# 8.1 Create a small local test file
-
-Create a plain-text file on your laptop named:
+Create a local non-sensitive file such as:
 
 ```text
 rcc-transfer-test.txt
 ```
 
-Add one line of text, for example:
-
-```text
-RCC transfer test
-```
-
-Do not use sensitive or patient-related data for the test.
-
-# 8.2 Identify the destination directory
-
-Use the exact project work directory supplied by your project coordinator. It should normally be located under a project or group path, not in your home directory.
-
-Example only:
-
-```text
-/projects/<PROJECT_NAME>/<YOUR_ASSIGNED_DIRECTORY>/incoming
-```
-
-Do not copy this example literally. Project layouts differ.
-
-You can create the assigned incoming directory from the VS Code terminal if you have permission:
+Upload it to the exact approved project destination. Then on RCC calculate:
 
 ```bash
-mkdir -p <YOUR_ASSIGNED_WORK_DIRECTORY>/incoming
-```
-
-# 8.3 Upload through the browser
-
-1. Open <https://files.ikim.uk-essen.de/> in your browser.
-2. Follow the institutional sign-in flow shown by the portal.
-3. Open the project assigned to you.
-4. Navigate to your assigned project directory.
-5. Open the `incoming` subdirectory.
-6. Select **Upload**.
-7. Choose `rcc-transfer-test.txt` from your laptop.
-8. Start the transfer.
-9. Wait until the transfer status reports success.
-
-Do not select a destination based only on a similar-looking project name. Use the exact path provided to you.
-
-# 8.4 Verify the uploaded file on RCC
-
-In the VS Code terminal, run:
-
-```bash
-cd <YOUR_ASSIGNED_WORK_DIRECTORY>/incoming
-ls -lah
-file rcc-transfer-test.txt
 sha256sum rcc-transfer-test.txt
 ```
 
-Calculate the checksum of the local file as well.
+Compare with the local checksum:
 
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
 Get-FileHash .\rcc-transfer-test.txt -Algorithm SHA256
 ```
 
-On macOS Terminal:
+macOS:
 
 ```bash
 shasum -a 256 rcc-transfer-test.txt
 ```
 
-The local and RCC SHA-256 values must be identical.
+Matching hashes provide strong evidence that the bytes match. They do not prove
+that a file is scientifically correct, permitted, or in the correct project.
 
-For a larger directory, also compare the number of files and review the transfer service's failure report. A successful top-level transfer does not remove the need to notice skipped or failed files.
-
-# 8.5 Transfer rules
-
-- Transfer research data only into an approved project or group directory.
-- Do not use the RCC home directory as permanent project storage.
-- Do not transfer a large dataset through the VS Code file explorer.
-- Do not upload private SSH keys, credentials, password exports, or unapproved identifying data.
-- Keep the original data until the transfer and integrity checks have completed.
+Keep large/recurring instrument transfers on their reviewed project ingestion
+path rather than using a laptop as an intermediate copy.
 
 # 9. Submit your first Slurm job
 
-## Why a resource manager is necessary
+Scientific computation is scheduled by Slurm. The first job should be small and
+synthetic.
 
-Many users share a finite number of compute nodes. If everyone started programs on arbitrary nodes, jobs would compete unpredictably for CPU time and memory, systems could become unresponsive, and no fair ordering would exist. Slurm records resource requests, applies site policy, finds a suitable node, starts the job, and records its outcome.
-
-Slurm is the resource manager for the RCC compute cluster. You describe the resources a program needs and submit a batch script. Slurm places the job in a queue and starts it on an appropriate compute node when resources are available.
-
-## Batch work versus interactive work
-
-A **batch job** is described in a script and can run without a person watching the terminal. This is the default for reproducible analysis. An **interactive allocation** gives a temporary shell on a compute node and is useful for debugging or software that genuinely requires interaction. Interactive allocations still require Slurm and will be covered separately in advanced documentation.
-
-## The job lifecycle
-
-```text
-script prepared -> submitted -> pending -> running -> completed or failed
-                      |            |          |
-                    job ID      compute    logs and
-                                 node       exit status
-```
-
-Pending is a normal state. It means Slurm has accepted the job but has not yet found the resources and policy conditions needed to start it.
-
-This first job uses only standard Linux tools. It creates five numbers and calculates their mean. No additional software is required.
-
-## What a batch script contains
-
-A batch script has two roles:
-
-1. `#SBATCH` directives describe the requested resources and log files to Slurm.
-2. Shell commands describe the work to execute after Slurm starts the job.
-
-Important shell concepts in the example:
-
-- `#!/usr/bin/env bash` selects Bash as the interpreter.
-- Lines beginning with `#` are comments, except that Slurm reads `#SBATCH` lines before execution.
-- `set -euo pipefail` makes common scripting errors stop the job instead of silently continuing.
-- `>` redirects command output into a file.
-- `${USER}` and `${SLURM_JOB_ID}` are environment variables.
-- A program returns an exit code; zero normally means success, and a non-zero code means failure.
-
-## CPU, memory, and time are different resources
-
-- **CPU cores** determine how many instructions can run in parallel when the software supports parallel execution.
-- **Memory** holds active data and program state. More CPU cores do not automatically provide enough memory.
-- **Wall time** is the maximum elapsed time Slurm allows the job to run.
-
-Requesting far more than needed can delay the job and waste shared capacity. Requesting too little can cause termination or poor performance. Part 2 explains how to use measured resource usage to improve requests.
-
-# 9.1 Create the directories
-
-In the VS Code terminal:
+Create:
 
 ```bash
+mkdir -p ~/rcc-introduction/{scripts,logs,results}
 cd ~/rcc-introduction
-mkdir -p scripts logs results
 ```
 
-The `logs` directory must exist before submitting the job because Slurm opens the log files before the script begins.
-
-# 9.2 Create the batch script
-
-In the VS Code Explorer, create:
-
-```text
-scripts/first-job.sh
-```
-
-Insert the following content:
+Create `scripts/first-job.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -796,156 +372,49 @@ Insert the following content:
 
 set -euo pipefail
 
-echo "Hello from an RCC compute node."
 echo "User: ${USER}"
 echo "Slurm job ID: ${SLURM_JOB_ID}"
 echo "Compute node: $(hostname)"
-echo "Started: $(date --iso-8601=seconds)"
-
 printf "value\n1\n2\n3\n4\n5\n" > results/numbers.csv
-
-awk '
-    NR > 1 {
-        sum += $1
-        n += 1
-    }
-    END {
-        printf "n=%d\nmean=%.2f\n", n, sum / n
-    }
-' results/numbers.csv > results/summary.txt
-
-sleep 10
-
-echo "Finished: $(date --iso-8601=seconds)"
+awk 'NR > 1 {sum += $1; n += 1} END {printf "n=%d\nmean=%.2f\n", n, sum/n}' \
+    results/numbers.csv > results/summary.txt
 ```
 
-Save the file.
-
-The lines beginning with `#SBATCH` request:
-
-- a job name;
-- a maximum runtime of two minutes;
-- one CPU core;
-- 256 MB of memory; and
-- separate output and error log files.
-
-# 9.3 Submit the job
-
-Make sure the terminal is in the tutorial directory:
-
-```bash
-cd ~/rcc-introduction
-pwd
-```
-
-Submit the script:
+Submit:
 
 ```bash
 sbatch scripts/first-job.sh
 ```
 
-Slurm responds with a job ID similar to:
-
-```text
-Submitted batch job 12345
-```
-
-Write down your job ID.
-
-# 9.4 Monitor the job
-
-Display your queued and running jobs:
+Inspect current work:
 
 ```bash
 squeue -u "$USER"
 ```
 
-Common job states include:
-
-- **`PD`:** Pending: the job is waiting for resources or another condition
-- **`R`:** Running
-- **`CG`:** Completing
-
-A short job may disappear from `squeue` quickly after it finishes. This is normal.
-
-To inspect a completed job, replace `<JOB_ID>`:
+After completion:
 
 ```bash
 sacct -j <JOB_ID> --format=JobID,JobName,State,Elapsed,AllocCPUS,ExitCode
-```
-
-# 9.5 Inspect the result
-
-List the files:
-
-```bash
-ls -lah logs results
-```
-
-Display the statistical result:
-
-```bash
 cat results/summary.txt
 ```
 
-Expected output:
+Expected result:
 
 ```text
 n=5
 mean=3.00
 ```
 
-Display the Slurm output log, replacing `<JOB_ID>`:
-
-```bash
-cat logs/rcc-first-<JOB_ID>.out
-```
-
-The log should identify a compute node. It should not identify the submission host on which VS Code is connected.
-
-Check the error log:
-
-```bash
-cat logs/rcc-first-<JOB_ID>.err
-```
-
-For a successful job, the error file should be empty.
-
-# 9.6 Cancel a job when necessary
-
-To cancel a queued or running job:
-
-```bash
-scancel <JOB_ID>
-```
-
-Cancel jobs that you submitted by mistake or no longer need.
+The Slurm log should identify a compute node, not the shell host.
 
 # 10. Connections, long-running control processes, and tmux
 
-## Why an SSH session can disappear
+A submitted Slurm batch job continues after the laptop disconnects because
+Slurm owns the job.
 
-Your remote shell is reached through a network connection. Closing the laptop, changing networks, a VPN interruption, or a timeout can close that connection. A program started directly in the shell may receive a hang-up signal and stop.
-
-A Slurm batch job is different: after `sbatch` accepts it, Slurm owns the job. The job continues even when VS Code and SSH disconnect. You can reconnect later and inspect it with `squeue` or `sacct`.
-
-## What tmux is
-
-`tmux` is a terminal multiplexer. It creates a shell session on the remote host that can be detached from one SSH connection and reattached from another. It is useful for a long-running **control process**, such as a Snakemake driver that is submitting and monitoring Slurm jobs.
-
-```text
-laptop and SSH connection
-        |
-        v
-tmux session on submission host
-        |
-        v
-workflow driver -> Slurm jobs -> compute nodes
-```
-
-`tmux` does **not** allocate CPU or memory and does not make it acceptable to run analyses on the submission host. It protects the terminal session, not the scientific computation.
-
-Basic commands, for later use:
+`tmux` preserves a remote terminal session and may be useful for a lightweight
+workflow controller or monitoring session:
 
 ```bash
 tmux new -s my-workflow
@@ -953,111 +422,59 @@ tmux ls
 tmux attach -t my-workflow
 ```
 
-Detach by pressing `Ctrl+B`, releasing the keys, and then pressing `D`. Part 2 uses this pattern for Snakemake. `tmux` is not required for the short first job in Part 1.
+`tmux` does not allocate compute resources and does not make heavy analysis on
+the shell host acceptable.
 
 # 11. Troubleshooting
 
-## Use a layered troubleshooting model
-
 Classify the failure before changing configuration:
 
-1. **Local tool layer:** Are `ssh` and VS Code installed?
-2. **Network layer:** Is the network or VPN route available?
-3. **Authentication layer:** Is the correct user key registered and readable?
-4. **Server-identity layer:** Does the fingerprint match?
-5. **Remote-session layer:** Did you reach the correct submission host?
-6. **Storage layer:** Does the path exist and do permissions allow access?
-7. **Scheduler layer:** Did Slurm accept the request, and what state or reason does it report?
-8. **Application layer:** Did the program itself exit successfully and produce valid results?
+1. local tool;
+2. network route;
+3. user authentication/key selection;
+4. server identity;
+5. remote host/role;
+6. storage/path/permissions;
+7. scheduler/allocation;
+8. scientific application.
 
-Avoid deleting configuration or repeatedly retrying until you know which layer failed.
-
-# `Permission denied (publickey)`
-
-Check:
-
-- that the RCC username in `~/.ssh/config` is correct;
-- that `IdentityFile` points to `~/.ssh/id_rcc`;
-- that you sent `id_rcc.pub`, not another public key;
-- that RCC support confirmed activation; and
-- that the private key still exists on the same computer.
-
-Run `ssh -vvv shellhost` and send the diagnostic output to RCC support if the problem remains.
-
-# `Could not resolve hostname`
-
-Check the host names in the SSH configuration. Confirm whether VPN is required. Do not replace the official host names with addresses found in old emails or screenshots.
-
-# `REMOTE HOST IDENTIFICATION HAS CHANGED`
-
-Stop. Do not automatically run `ssh-keygen -R` and do not delete `known_hosts`. Compare the new fingerprint with an official RCC announcement or contact support.
-
-# VS Code repeatedly asks for the key passphrase
-
-First confirm that `ssh shellhost` works in PowerShell or Terminal. On macOS, run:
+Useful bounded diagnostics include:
 
 ```bash
-ssh-add --apple-use-keychain ~/.ssh/id_rcc
-```
-
-On a managed Windows computer, ask local IT or RCC support whether the Windows `ssh-agent` service may be enabled. Do not remove the passphrase merely to suppress repeated prompts.
-
-# VS Code connects, but `sbatch` is not found
-
-You are probably connected to the wrong host. The VS Code remote target for this tutorial must be `shellhost`, which resolves to the Slurm submission host through the `rcc-login` gateway.
-
-# The job remains in `PD`
-
-A pending job is not necessarily an error. Slurm may be waiting for resources. Inspect the reason:
-
-```bash
+ssh -G shellhost
+ssh -vvv shellhost
 squeue -j <JOB_ID> -o "%.18i %.9T %.30R"
 ```
 
-If the job remains pending unexpectedly, send the job ID and the displayed reason to RCC support.
+Remove usernames, local paths, tokens, research identifiers, and unnecessary
+file names before sharing diagnostics. Never send the private key.
 
-# The Slurm log file is missing
-
-Confirm that you submitted the job from `~/rcc-introduction` and that the `logs` directory existed before submission.
-
-# The browser transfer reports a failure
-
-Do not repeatedly restart a large transfer without reviewing the reported cause. Check the destination path, permissions, available storage, and whether the data type is permitted. Send the transfer task identifier to RCC support if available.
+If SSH unexpectedly asks for a passphrase/password, remember that the current
+normal RCC software key was created without a passphrase. Verify key selection
+and configuration rather than adding a passphrase or disabling checks.
 
 # 12. Completion checklist
 
-You have completed Part 1 when all of the following are true:
+You have completed the advanced Part 1 path when:
 
-- [ ] You know which file is your private SSH key and have never shared it.
-- [ ] Your key passphrase is stored in an approved password manager.
-- [ ] `ssh shellhost` works from PowerShell or Terminal.
-- [ ] You verified the RCC host fingerprints.
-- [ ] Visual Studio Code displays `SSH: shellhost`.
-- [ ] You can open a remote terminal and identify the submission host.
-- [ ] You transferred `rcc-transfer-test.txt` into your approved directory.
-- [ ] The local and remote SHA-256 checksums match.
-- [ ] Slurm accepted your batch script.
-- [ ] `results/summary.txt` contains `mean=3.00`.
-- [ ] The job log shows that the script ran on a compute node.
+- [ ] you know which file is the private SSH key and have never shared it;
+- [ ] you can explain that the normal RCC software-backed SSH key is generated without a passphrase;
+- [ ] you use the supported Windows/macOS/browser credential manager for RCC web/account credentials where appropriate;
+- [ ] `ssh shellhost` works through the forwarding gateway;
+- [ ] you verified the RCC host fingerprints;
+- [ ] VS Code can open the shell host if you use the advanced editor path;
+- [ ] you transferred a non-sensitive file into the correct project and matched its checksum;
+- [ ] Slurm accepted your batch script; and
+- [ ] the job log proves the scientific work ran on a compute node.
 
 # 13. What comes next
 
 The RCC onboarding series continues with:
 
-- **Part 2:** reproducible workflows with Miniforge, Bioconda, Snakemake, statistics, and a synthetic DNA example;
+- **Part 2:** reproducible workflows, Conda declarations, Snakemake/Nextflow, statistics, and synthetic sequence examples;
 - **Part 3:** CPU, GPU, memory, storage, I/O, bottleneck diagnosis, and node-local scratch; and
-- **Part 4:** Apptainer containers and containerised Snakemake workflows.
+- **Part 4:** Apptainer containers and reproducible runtime patterns.
 
-# Original Part 2 preview
-
-Part 2 will build on this setup and introduce:
-
-- Miniforge and isolated Conda environments;
-- the Bioconda and conda-forge channels;
-- a reproducible Snakemake project structure;
-- Snakemake execution through Slurm;
-- a small statistical analysis with tables and figures;
-- a minimal DNA sequence-analysis workflow; and
-- resource estimation, logs, provenance, and reproducibility.
-
-Do not install a separate Anaconda distribution or create an unstructured collection of environments in preparation. Follow the RCC Miniforge instructions in Part 2 so that all users start from the same supported configuration.
+Do not pre-install an unrelated software stack merely because another HPC guide
+uses it. Follow the current RCC software/runtime guidance so the project remains
+reviewable and reproducible.
