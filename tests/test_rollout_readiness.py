@@ -23,16 +23,22 @@ class RolloutReadinessTests(unittest.TestCase):
         self.assertNotIn("unresolved production configuration", joined)
         self.assertIn("videos lack recorded human approval", joined)
         self.assertIn("administrator publication checklist", joined)
-        self.assertNotIn("no reviewed production deployment workflow", joined)
+        self.assertNotIn("no reviewed main-only ClusterDocs production deployment workflow", joined)
         self.assertIn("ClusterDocs 3 expert content review", joined)
         self.assertIn("zero-SSH novice browser acceptance", joined)
         self.assertIn("advanced-user acceptance", joined)
+        # The corrected canonical Part 1 source must no longer be the blocker;
+        # generated Part 1 media review remains covered by media/checklist gates.
+        self.assertNotIn("canonical Part 1 source still carries the retired", joined)
         self.assertTrue(warnings)
-        self.assertNotIn("novice acceptance is scheduled after initial rollout", "\n".join(warnings))
+        warning_text = "\n".join(warnings)
+        self.assertIn("production publication is main-only", warning_text)
+        self.assertNotIn("novice acceptance is scheduled after initial rollout", warning_text)
         self.assertIn(
             "all 17 video-backed course pages declare in-player English captions", ready
         )
-        self.assertIn("Gitea-only production deployment workflow is present", ready)
+        self.assertIn("Gitea-only main production deployment workflow is present", ready)
+        self.assertIn("canonical Part 1 source matches the current RCC SSH-key policy", ready)
 
     def test_candidate_is_ready_to_start_fresh_v3_manual_review(self):
         blockers, ready = load_readiness().manual_review_audit()
@@ -41,6 +47,7 @@ class RolloutReadinessTests(unittest.TestCase):
         self.assertIn("expert, novice-browser, and video review guides are present", joined)
         self.assertIn("task-first", joined)
         self.assertIn("data-blind default", joined)
+        self.assertIn("no-passphrase RCC SSH-key policy", joined)
         self.assertIn("review receipts are reset", joined)
 
     def test_caption_normalizer_uses_readable_technical_terms(self):
