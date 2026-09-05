@@ -1,6 +1,6 @@
-site_name: RCC ClusterDocs NG
-site_description: Safe, practical RCC training for biomedical researchers
-site_url: https://ikim-essen.github.io/ClusterDocs/
+site_name: RCC ClusterDocs
+site_description: Governed RCC research computing from data acquisition to reproducible results
+author: RCC
 docs_dir: docs
 theme:
   name: material
@@ -11,19 +11,22 @@ theme:
 nav:
   - Home: index.md
   - Start here:
-      - Expedition Light - first 15 minutes: getting-started/index.md
-      - macOS setup: getting-started/macos.md
-      - Windows 11 setup: getting-started/windows.md
+      - First 15 minutes: getting-started/index.md
+      - What RCC can do: concepts/what-rcc-can-do.md
+      - macOS advanced setup: getting-started/macos.md
+      - Windows 11 advanced setup: getting-started/windows.md
       - VS Code with RCC: getting-started/vscode.md
       - Jump host, shell host, and workers: concepts/jump-shell-compute.md
       - What changed from the old cluster: getting-started/what-changed.md
-  - ClusterDocs NG TL;DR: tldr.md
+  - ClusterDocs TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
-  - RCC Expedition - interactive onboarding: rcc-expedition.md
-  - RCC services:
-      - Which RCC service should I use?: concepts/rcc-services.md
+  - RCC Expedition - guided onboarding: rcc-expedition.md
+  - RCC interfaces and capabilities:
+      - Which RCC interface should I use?: concepts/rcc-services.md
+      - What RCC can do: concepts/what-rcc-can-do.md
       - RCC Files: concepts/rcc-files.md
       - RCC Analysis - notebooks and workflows (not yet released): analysis/rcc-analysis.md
+      - AI and coding agents without exposing project data: concepts/agents-and-mcp.md
       - Project types: concepts/project-types.md
       - RCC Gitea: concepts/rcc-gitea.md
   - Choose a path:

@@ -1,73 +1,101 @@
-# RCC ClusterDocs NG
+# RCC ClusterDocs
 
-Welcome to RCC guidance for medical professionals, biomedical researchers,
-research software developers, and technical project staff.
+RCC is a governed research-computing platform for taking research data from
+acquisition to analysis, reproducible results, collaboration, preservation, and
+where appropriate downstream publication or archive submission.
 
-RCC supports two legitimate access styles:
-
-- **browser-first research**, centered on Files and the planned RCC Analysis
-  Notebook/Workflow experience; and
-- **advanced command-line/developer access**, using SSH, VS Code, and direct
-  Slurm tools.
-
-Having an RCC account does not imply that you must enroll an SSH key. Start with
-[RCC Expedition Light](getting-started/index.md) to choose the appropriate path.
-If you prefer a guided local course, use [RCC Expedition](rcc-expedition.md).
-
-The course is designed so that a new user can progress without needing an
-administrator beside them. Each class has a small practical exercise and a gate
-that checks readiness without exposing credentials or generating significant
-cluster load.
+You do **not** need to become an HPC operator to use RCC. Ordinary researchers
+should be able to work through the browser. SSH, VS Code, Slurm, and the deeper
+technical layers remain available for people who need them.
 
 <section class="expedition-callout" aria-labelledby="expedition-title">
-  <p class="expedition-kicker">Browser-first research or advanced RCC access</p>
-  <h2 id="expedition-title">Start with the interface that matches your work</h2>
-  <p>For ordinary data analysis, the target experience is Files → RCC Analysis Notebook or Workflow → Files. SSH, VS Code, and direct Slurm remain important advanced tools for developers and power users.</p>
+  <p class="expedition-kicker">Start with the research task, not the infrastructure</p>
+  <h2 id="expedition-title">What do you want to do?</h2>
+  <p>Choose project data, analyse it, manage the project, or open the advanced technical path. RCC keeps the same project identity and authorization underneath each interface.</p>
   <div class="expedition-actions">
-    <a class="expedition-primary" href="getting-started/index.md">Choose your starting path →</a>
-    <a href="analysis/rcc-analysis.md">See planned RCC Analysis</a>
-    <a href="rcc-expedition.md">Open RCC Expedition</a>
+    <a class="expedition-primary" href="concepts/rcc-files.md">Work with project files →</a>
+    <a href="analysis/rcc-analysis.md">Analyse data →</a>
+    <a href="concepts/projects-and-capabilities.md">Manage a project →</a>
+    <a href="reference/access-ssh-vscode.md">Advanced SSH / VS Code →</a>
   </div>
-  <p class="expedition-privacy">Datensparsam by design: no learner account, analytics, telemetry, central progress database, or supervisor dashboard.</p>
+  <p class="expedition-privacy">Browser-first by design: having an RCC account does not imply that you need an SSH key.</p>
 </section>
 
-## RCC in plain language
+## The normal research journey
 
-Think of RCC as a set of project workrooms rather than one large shared disk.
-For definitions used throughout the documentation, see the
-[RCC terminology reference](reference/terminology.md).
+For a researcher, the important sequence is simple:
 
-Your primary group records where you belong; it is not how cross-department
-research data is shared. The project is the access and collaboration boundary.
-Start with the [complete plain-language TL;DR](tldr.md) for the important limits
-and links.
+1. **Bring or choose project data.** Use Files, a project share, a managed
+   instrument path, or another approved project ingestion route.
+2. **Analyse the data.** Use an interactive Notebook for exploration or a
+   governed Workflow for repeatable/scalable work when RCC Analysis is enabled.
+3. **Keep durable results with the project.** Results, provenance, code, and
+   relevant metadata stay tied to the project rather than to one laptop or
+   browser session.
+4. **Preserve or publish when appropriate.** Use the project's approved
+   lifecycle, including Coscine preservation when that route is released and
+   domain applications that support downstream archive submission.
 
-The underlying compute model remains Slurm-backed, but users should not all have
-to interact with the scheduler directly. The planned user-facing model is:
+RCC handles the infrastructure mechanics behind those actions. The researcher
+still controls the scientific question, data, method, parameters, and decision
+about what result is fit for use.
 
-```text
-Files -> RCC Analysis
-           |      |
-           |      +-> Workflow: repeat / scale / reproduce
-           +--------> Notebook: explore / visualize / prototype
-        -> Files: durable results
-```
+## What RCC can do
 
-The interactive session machinery previously described as **RCC Workbench** is
-now treated as an implementation/advanced execution layer behind Analysis
-Notebook mode rather than a separate primary research product.
+The new RCC is much more than a remote shell with a web front end. Experienced
+users should start with [What RCC can do](concepts/what-rcc-can-do.md), which
+covers the complete platform and the release status of each capability.
 
-RCC supports statistics, visualization, Python and R data science, machine
-learning, GPU-accelerated AI, and distributed data processing. These techniques
-remain part of a reproducible research workflow: computation runs through
-Slurm, data stays within its project governance, and model evaluation includes
-validation, uncertainty, bias, and scientific limitations.
+Highlights include:
 
-Not sure which surface to use? Read
-[RCC services: where should I go?](concepts/rcc-services.md). It also records
-which newer browser surfaces are documented before release.
+- **instrument-to-project ingestion** for sequencers, microscopes, mass
+  spectrometers, acquisition workstations, and other research devices;
+- **project storage chosen for the workload**, including ordinary shared project
+  storage and S3/object storage where enabled and scientifically appropriate;
+- **Jupyter-first interactive analysis** plus governed repeatable workflows;
+- **Slurm, GPUs, containers, and direct HPC controls** for advanced users;
+- **self-service and delegated project governance** without handing out broad
+  infrastructure-administrator privileges;
+- **AI and coding-agent assistance without exporting protected project data**:
+  agents can explain, design, test on synthetic examples, develop workflows,
+  and interpret bounded diagnostics while RCC executes against real data inside
+  the governed environment;
+- **reproducibility and provenance** across workflows, results, software, and
+  project lifecycle decisions;
+- **Coscine preservation** when the governed RCC-to-Coscine route is released;
+  and
+- **domain applications such as SeqLab**, which demonstrate how RCC can connect
+  acquisition, analysis, review, provenance, and submission to appropriate
+  international archives without making the researcher assemble the underlying
+  infrastructure by hand.
 
-## Choose your path
+A capability being documented does not automatically mean it is active. Pages
+that describe staged or future functionality must say so explicitly.
+
+## One project, many interfaces
+
+Think of an RCC project as the shared research workroom. It connects the approved
+people, data, compute, services, results, and lifecycle for one purpose.
+Switching from Files to Analysis, an agent-assisted workflow, VS Code, or a
+command line does not create a new authority boundary.
+
+Your primary group records your organizational home. It is not the mechanism for
+sharing cross-department research data. Add collaborators to the project instead
+of moving them into another primary group merely to share data.
+
+## AI assistance without giving the agent the dataset
+
+The preferred agent pattern is **data-blind by default**. Give an external or
+general-purpose agent documentation, schemas, synthetic fixtures, public code,
+and carefully bounded diagnostics. Let it help design or debug the workflow.
+RCC then runs the resulting code/workflow against the real project data inside
+the governed boundary.
+
+This separation lets users benefit from strong coding and reasoning assistance
+without making disclosure of protected research data the price of using AI.
+Read [AI and coding agents without exposing project data](concepts/agents-and-mcp.md).
+
+## Choose a deeper path
 
 <section class="path-grid" aria-label="Choose an RCC learning path">
   <article class="path-card analysis-path">
@@ -86,22 +114,15 @@ which newer browser surfaces are documented before release.
   </article>
 </section>
 
-## Shared foundation
+## Learn only as much infrastructure as you need
 
-- Need the complete short version first? Read the
-  [ClusterDocs NG TL;DR](tldr.md).
-- Unsure which RCC surface to use? Start with the
-  [RCC service map](concepts/rcc-services.md).
-- Planning browser-based analysis? Read
-  [RCC Analysis: notebooks and governed workflows](analysis/rcc-analysis.md).
-- Need SSH/VS Code or direct Slurm? Those remain available as advanced/current
-  paths in the [reference](reference/index.md).
-- Use the [course overview](course/index.md) when you want the complete eighteen-class sequence.
-- Working with human biomedical data: complete [Class 13](course/class-13-biomedical-data-privacy.md) before transfer or analysis.
-- Connecting a laboratory instrument or acquisition workstation: see
-  [how the lab network and RCC fit together](resources/how-it-all-works.md).
-- Moving data from an instrument into analysis: complete
-  [Class 16](course/class-16-wet-lab-data-workflows.md).
-- Planning retention, Coscine archiving (not yet released), or defensible cleanup: complete
-  [Class 17](course/class-17-data-lifecycle.md).
-- Questions or feedback: [meet the RCC team and find the best contact route](team.md).
+- New to RCC? Use [Start here: your first 15 minutes](getting-started/index.md).
+- Unsure which interface to use? Read the [RCC service map](concepts/rcc-services.md).
+- Want the complete capability picture? Read [What RCC can do](concepts/what-rcc-can-do.md).
+- Need the technical reference? Open the [day-to-day reference](reference/index.md).
+- Working with human biomedical data? Complete [Class 13](course/class-13-biomedical-data-privacy.md) before transfer or analysis.
+- Connecting an instrument or acquisition workstation? Start with
+  [Choosing an instrument-data transfer path](data/instrument-data-options.md).
+- Planning retention or archival? Use [Class 17](course/class-17-data-lifecycle.md).
+- Prefer a guided local course? Use [RCC Expedition](rcc-expedition.md).
+- Questions or feedback? [Meet the RCC team and find the support route](team.md).

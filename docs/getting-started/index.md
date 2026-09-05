@@ -1,38 +1,41 @@
-# RCC Expedition Light: your first 15 minutes
+# Start here: your first 15 minutes
 
-RCC is moving toward a browser-first experience for researchers who do not need
-the command line. You do **not** need to become an SSH user merely because you
-have an RCC account.
+Start with the research task you need to complete. You do **not** need an SSH key
+or command-line expertise merely because you have an RCC account.
 
-There are therefore two legitimate starting paths.
+## Browser-first research
 
-## Path A — browser-first research
+Use the browser-first path when RCC Home shows the required services as enabled
+for your account and project.
 
-Use this path when the RCC Home page shows the required browser services as
-enabled for your account/project.
+| Step | What you do | What RCC handles |
+|---|---|---|
+| 1 | Sign in and choose the project | identity and project authorization |
+| 2 | Open **Files** and choose/upload approved data | governed project access |
+| 3 | Open **RCC Analysis**: Notebook to explore or Workflow to repeat/scale | Slurm placement, session/workflow execution, resource controls |
+| 4 | Save durable results and open them in Files | project result location and provenance |
 
-The intended normal journey is:
-
-```text
-RCC Home
-   -> Files: upload or choose project data
-   -> RCC Analysis: Notebook for interactive exploration
-        or RCC Analysis: Workflow for repeatable analysis
-   -> Files: inspect/download results
-```
-
-A browser-first account can work without an SSH public key. RCC web
-authentication and project membership remain the authority; the browser service
-submits compute through the governed RCC/Slurm path on your behalf.
+A browser-first account can work without an SSH public key. Browser services use
+RCC web authentication and project membership; compute still runs through the
+governed RCC execution path behind the interface.
 
 > **Current release note:** RCC Analysis Notebook/Workflow is documented before
-> activation. Until the RCC landing page explicitly shows it as available, use
-> Path B for compute and the current Files service where appropriate.
+> activation. Until RCC Home explicitly shows it as available, use the current
+> Files service for data tasks and the advanced/current compute path below.
 
-## Path B — command-line / developer access
+### Notebook or Workflow?
+
+Use **Notebook** for attended exploration, visualization, statistics, prototyping,
+and bounded interactive analysis. Use **Workflow** when work is repeated,
+long-running, many-sample, unattended, provenance-critical, or needs to scale.
+
+Interactive convenience does not make compute free: start modestly, avoid idle
+GPU/CPU reservations, and move repeatable work into a workflow.
+
+## Advanced/current compute path
 
 Use this path when you need SSH, VS Code Remote SSH, direct Slurm commands,
-workflow development, automation, or when browser Analysis has not yet been
+workflow development/automation, or when browser Analysis has not yet been
 activated.
 
 | Computer | Follow this checklist |
@@ -40,30 +43,12 @@ activated.
 | Current macOS | [Set up RCC on a Mac](macos.md) |
 | Windows 11 | [Set up RCC on Windows](windows.md) |
 
-Both checklists use the SSH client already supplied by the operating system.
-Do not install a separate terminal, Linux virtual machine, or SSH program unless
-the checklist shows that the built-in client is missing.
+After terminal SSH works, use [VS Code with RCC](vscode.md) if you need the
+advanced editor, terminal, Git, and remote-file workflow.
 
-After terminal SSH works, follow [Use VS Code with RCC](vscode.md) when you need
-the advanced editor/terminal/Git path.
+### Optional technical model
 
-## What most researchers should remember
-
-1. **Your RCC account is your identity; SSH is optional.** Browser capabilities
-   do not require an SSH key unless the service explicitly says so.
-2. **Files is the browser data entry/exit surface.** Durable project inputs and
-   results belong in the project.
-3. **RCC Analysis Notebook is for exploration.** It is planned as Jupyter in a
-   bounded Slurm allocation without manual tunnels or worker selection.
-4. **RCC Analysis Workflow is for repeatable work.** Long, repeated, unattended,
-   or highly parallel analysis belongs in a governed workflow rather than an
-   oversized notebook session.
-5. **Slurm workers still do the computation.** Browser-first changes how you ask
-   for compute, not where compute runs.
-
-## If you use the advanced SSH path
-
-The command-line connection model remains:
+Advanced users may find the connection model useful:
 
 ```text
 Mac or Windows
@@ -72,13 +57,31 @@ Mac or Windows
   -> Slurm allocation (perform computation)
 ```
 
-You normally type only `ssh {{ ssh_target_alias }}`. The `ProxyJump` line in
-your SSH configuration takes care of the middle step.
+You normally type only `ssh {{ ssh_target_alias }}`. `ProxyJump` handles the
+gateway. The jump host is not a workstation and compute does not belong on the
+shell host.
 
-[Read the jump-host and shell-host explanation](../concepts/jump-shell-compute.md)
-if you need the full command-line mental model.
+Read [jump host, shell host, and workers](../concepts/jump-shell-compute.md) only
+when you need that model.
 
-## Where your work belongs
+## What most researchers should remember
+
+1. **Your account is your identity; SSH is optional.**
+2. **The project is the research boundary.** People, data, compute, services,
+   results, and lifecycle decisions stay connected to it.
+3. **Files is the normal browser entry/exit surface for project data.**
+4. **Notebook is for exploration; Workflow is for repeatable/scalable work.**
+5. **Agents can help without receiving the dataset.** Prefer documentation,
+   schemas, synthetic fixtures, public code, and bounded diagnostics; let RCC
+   execute against real data inside the governed boundary.
+6. **Advanced controls remain available.** SSH, VS Code, Slurm, containers, and
+   direct workflow tooling are there when the research or development task needs
+   them.
+
+## Where data belongs
+
+Browser users normally choose a project rather than type cluster paths. For the
+advanced path, the underlying locations remain important:
 
 | What you have | Where it belongs |
 |---|---|
@@ -87,45 +90,28 @@ if you need the full command-line mental model.
 | Shared research data, code, and durable results | `/projects/<project>/` |
 | Temporary, high-I/O files for one job | Job-local `/local` or `$TMPDIR` |
 
-Browser users do not need to type these paths during normal work; Files and RCC
-Analysis should present authorized projects directly. The paths remain useful
-reference for developers and reproducibility documentation.
-
-Your **primary group** records your organizational home. A **project** is the
-research collaboration: it has the approved members, data, services, purpose,
-and lifecycle. Add collaborators to the project; do not move them into another
-primary group merely to share data.
-
-## Turn exploration into reliable analysis
-
-Do not keep an important analysis only in notebook state or shell history.
-When interactive work becomes repeated, long-running, many-sample, or
-provenance-critical, turn it into an RCC Analysis Workflow (when released) or
-use the current [script-to-workflow guide](../paths/from-shell-scripts.md).
-
-The resource rule is simple: **interactive notebooks should be modest and
-attended; repeatable/scalable work should become workflows.** Requesting more
-CPU, memory, GPU, or time is not a substitute for measuring what the analysis
-actually uses.
+Your primary group records your organizational home. A project is the research
+collaboration. Add collaborators to the project rather than changing primary
+group membership merely to share research data.
 
 ## You are ready when
 
-For the browser-first path:
+For browser-first research:
 
-- you can sign in to RCC without an SSH key;
+- you can sign in without enrolling an SSH key;
 - Files shows the correct project;
-- you understand Notebook versus Workflow mode;
-- you can save durable work back into the project; and
-- you know that large/repeated work should leave the notebook path.
+- you can explain Notebook versus Workflow mode;
+- you know how durable work returns to the project; and
+- you know where to ask for help without exporting protected research data.
 
-For the advanced SSH path:
+For advanced access:
 
-- terminal SSH reaches the configured RCC target;
+- SSH reaches the configured RCC target;
 - VS Code reaches the same target if you use it;
 - you know which project owns the work;
 - a small Slurm test completes; and
 - repeated analysis is recorded as code/workflow rather than remembered commands.
 
-If you prefer guided, offline training, use
-[RCC Expedition](../rcc-expedition.md). Returning users from the original IKIM
-cluster should also read [what changed](what-changed.md).
+For the complete platform picture, read [What RCC can do](../concepts/what-rcc-can-do.md).
+Returning users from the original IKIM cluster should also read
+[what changed](what-changed.md).

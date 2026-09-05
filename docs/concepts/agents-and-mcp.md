@@ -1,68 +1,103 @@
-# RCC-internal coding agents: what they can and cannot do
+# AI and coding agents without exposing project data
 
-An RCC-internal coding agent—an AI tool that writes, tests, and revises code
-inside the controlled RCC environment—can help you turn a research
-question into code, a scheduled calculation, plots, tables, and a report.
+AI assistance is a major RCC capability, but using an agent should not require
+sending the research dataset to the model.
 
-The coding agent is a helper inside the normal RCC rules. It is not a second user
-with hidden administrator access.
+The preferred RCC pattern is **data-blind by default**: an agent helps explain,
+design, write, test, and debug the analysis using documentation, schemas, public
+code, synthetic fixtures, and bounded diagnostics. RCC then executes the
+resulting code or workflow against the real project data inside the governed
+environment.
 
-## A useful request
-
-Give the coding agent four things:
-
-1. the project you are working in;
-2. the input folder or files;
-3. the result you want; and
-4. any limits that matter, such as a deadline or required method.
-
-Example:
+## The default agent workflow
 
 ```text
-Work in project melanoma_score.
-Read the files in incoming/run-17 without changing them.
-Create a reproducible quality-control report in results/run-17.
-Show me the plan before submitting a large job.
+research question + non-sensitive context
+                |
+                v
+agent helps design / write / test workflow
+                |
+                v
+RCC checks identity + project + capability
+                |
+                v
+RCC runs against real project data
+                |
+                v
+permitted result / bounded diagnostic
 ```
 
-Good coding agents ask before making an important change, preserve the commands or
-code they used, and tell you where the results and logs were written.
+The agent does not need the real rows, sequencing reads, microscopy images,
+patient-derived records, or project filenames merely to be useful.
 
-## Work near the data
+Useful context for an agent can include:
 
-For protected data, the safe pattern is to run approved computation inside RCC
-and return only the permitted result. Do not solve the problem by uploading the
-complete dataset to an external model.
+1. the scientific goal;
+2. a public or synthetic example with the same structure;
+3. a schema or data contract that contains no protected records;
+4. the required workflow/software interface;
+5. a sanitized error message or bounded diagnostic; and
+6. limits that matter, such as a required method or reproducibility constraint.
 
-```text
-coding agent describes or prepares the analysis
-                  |
-                  v
-RCC checks your project access
-                  |
-                  v
-analysis runs inside RCC -> permitted result
-```
+## What agents are especially good for
 
-An off-site coding agent remains useful for public code, documentation, and
-synthetic examples. See [Before sharing data with an AI
-coding agent](../data/privacy-and-agents.md).
+Agents can help users and workflow developers with:
 
-## Normal limits still apply
+- understanding RCC documentation and error messages;
+- turning an analysis idea into a script or workflow;
+- creating synthetic tests before touching real data;
+- reviewing Snakemake/Nextflow, Python, R, containers, and resource requests;
+- converting repeated notebook work into a reproducible workflow;
+- improving documentation, tests, and provenance capture;
+- explaining why a job or workflow failed using bounded diagnostics; and
+- preparing a change for human review before a large or consequential run.
 
-The coding agent:
+This lets users benefit from strong coding/reasoning assistance without making
+protected-data disclosure the price of using AI.
 
-- sees only files and services available to your RCC identity;
-- cannot add itself or you to another project;
-- cannot bypass data approvals or storage rules;
-- should use RCC workers for substantial computation; and
-- should show failures rather than hiding them or repeatedly trying unsafe
-  alternatives.
+## The real data stays under RCC authority
 
-## Technical note: MCP and other interfaces
+RCC—not the agent—decides whether the requested action is allowed. The same
+identity, project membership, delegated role, data policy, resource limits, and
+execution controls apply whether the request came through a browser, CLI, API,
+or MCP/agent interface.
 
-MCP is one way for an AI tool to call selected RCC actions. The same actions may
-also be available through a web page, an editor, a command-line tool, or an API.
+An agent cannot:
 
-MCP does not decide project membership, data access, computing limits, or
-approval. RCC makes those decisions regardless of which interface is used.
+- add itself or the user to another project;
+- invent project membership or data approval;
+- bypass resource/scheduler controls;
+- convert natural-language intent into administrator authority;
+- disclose project data merely because it would make debugging easier; or
+- silently retry an unsafe alternative after a governed action is rejected.
+
+## Separately approved RCC-local agent capabilities
+
+Some RCC-local agent capabilities may be explicitly reviewed and authorized to
+work near data that the user is already permitted to use. Those capabilities
+remain constrained by the same project and purpose rules and should expose only
+the minimum data required for the approved task.
+
+This is an **explicit exception**, not the default assumption for coding agents.
+For ordinary workflow development and user assistance, prefer the data-blind
+pattern above.
+
+## Off-site agents
+
+Do not paste, upload, or otherwise disclose real or pseudonymised protected RCC
+project data to an off-site coding agent. Use public code, documentation,
+synthetic examples, and sanitized diagnostics instead.
+
+Read [Before sharing data with a coding agent](../data/privacy-and-agents.md) for
+the biomedical-data rule and practical alternatives.
+
+## MCP and other interfaces
+
+MCP is one interface through which an AI tool can call selected RCC capabilities.
+The same capability may also be exposed through a web page, editor, command-line
+tool, or API.
+
+MCP does not decide project membership, data access, computing limits, approval,
+or release status. RCC makes those decisions regardless of interface, and
+important actions should retain provenance for the requesting principal,
+capability, policy decision, and execution result.
