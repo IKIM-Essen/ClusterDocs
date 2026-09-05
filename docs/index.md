@@ -62,8 +62,8 @@ Highlights include:
   the governed environment;
 - **reproducibility and provenance** across workflows, results, software, and
   project lifecycle decisions;
-- **Coscine preservation** when the governed RCC-to-Coscine route is released;
-  and
+- **Coscine preservation** through the governed RCC-to-Coscine path when
+  released; that transfer is **not yet released** in the current candidate; and
 - **domain applications such as SeqLab**, which demonstrate how RCC can connect
   acquisition, analysis, review, provenance, and submission to appropriate
   international archives without making the researcher assemble the underlying

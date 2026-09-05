@@ -1,7 +1,18 @@
 # Changelog
 
-## Unreleased
+## Unreleased — ClusterDocs 3
 
+- Reframed the front door around research tasks rather than cluster topology:
+  project files, browser analysis, project/account actions, then advanced
+  SSH/VS Code/Slurm when needed.
+- Added a dedicated **What RCC can do** overview so experienced users can see
+  instrument ingestion, project S3/object storage where enabled, DataLad,
+  Notebook/Workflow, Slurm/GPU/HPC, delegated governance, project services,
+  Coscine preservation status, and domain applications such as SeqLab.
+- Reframed AI/coding-agent guidance around a **data-blind by default** pattern:
+  agents can explain, design, test with synthetic fixtures, develop workflows,
+  and interpret bounded diagnostics while RCC executes against real data inside
+  the governed project boundary.
 - Reframed RCC Analysis as the planned user-facing compute product with two
   primary modes: Jupyter-first **Notebook** for interactive exploration and
   **Workflow** for repeatable/scalable governed analysis.
@@ -14,9 +25,12 @@
 - Added notebook-to-workflow resource guidance to discourage idle interactive
   allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
   fan-out, and inefficient shared-storage I/O.
-- Preserved current-release accuracy: until RCC Analysis Notebook is explicitly
-  activated, the existing Slurm + SSH-tunnel Jupyter procedure remains the
-  supported notebook path.
+- Invalidated the August expert receipt for the materially changed v3 product
+  model and made fresh adversarial review, zero-SSH novice-browser acceptance,
+  and separate advanced-user acceptance hard gates before broad exposure.
+- Preserved current-release accuracy: until RCC Analysis and the governed
+  RCC-to-Coscine route are explicitly activated, the existing current paths
+  remain documented and staged capabilities remain marked not yet released.
 
 ## v1.0.1
 

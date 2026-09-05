@@ -1,6 +1,7 @@
 site_name: RCC ClusterDocs
 site_description: Governed RCC research computing from data acquisition to reproducible results
-author: RCC
+site_author: RCC
+site_url: https://ikim-essen.github.io/ClusterDocs/
 docs_dir: docs
 theme:
   name: material
