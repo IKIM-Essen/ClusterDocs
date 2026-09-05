@@ -39,7 +39,7 @@ requires a separate explicit authorization.
 2. Run `meta/NOVICE_REVIEW_GUIDE.md` with zero-SSH naive users against the exact staged candidate; complete the Files -> Analysis -> Files path without facilitator shell intervention.
 3. Run a separate advanced-user acceptance for SSH, VS Code, Slurm, containers, workflow development, GPU use, and lower-level diagnostics.
 4. Complete the institutional administrator checklist: operational endpoints, supported versions, identity/roles, storage/Slurm behavior, privacy/domain approval, accessibility, ownership, monitoring, and rollback.
-5. Reconcile `source/part1.md` with the current no-passphrase SSH-key policy; regenerate and human-review the Part 1 video/audio/captions before media activation. The existing staged audio is not acceptable v3 evidence.
+5. Regenerate the Part 1 audio/video from the now-corrected canonical source and narration, re-time/review captions against the new audio, and complete human media approval before activation. The existing generated Part 1 media predates the current credential policy.
 6. Publish/verify the remaining staged video assets and complete the required human media approval and clean-client browser checks.
 7. Verify the Slurm/service-plane/Kubernetes rationale against the actual RCC deployment and ensure no user-facing interface creates a second scientific scheduler.
 8. Verify all service links and release badges against the actual deployment; documentation of a service must not make an unreleased service appear live.
