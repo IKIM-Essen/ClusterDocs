@@ -8,27 +8,33 @@ This page is intentionally aimed at experienced researchers, facility staff,
 research software engineers, and technical project leads who want to see the
 complete platform.
 
-> **Status rule:** “RCC can support” does not mean every capability is already
-> enabled for every project. Follow the status on the linked page and RCC Home.
-> In particular, RCC Analysis, project vhosts, Ardia integration, and the
-> RCC-to-Coscine transfer path are **not yet released** in the current candidate.
+> **ClusterDocs 3 release rule:** the documentation release is coupled to the
+> integrated browser product. **RCC Home, Files, RCC Analysis, My RCC, and RCC
+> Admin must all be ready before ClusterDocs 3 is published.** RCC Analysis is
+> therefore part of the baseline release, not a post-release promise.
 
-## Current foundation versus integrated target
+## The integrated browser baseline
 
-The platform is not starting from zero while the browser experience is built.
-**Files, account/project self-service, RCC workers/Slurm, the advanced SSH/VS
-Code path, managed Nextflow-to-Slurm, and project Samba shares are ready now**
-subject to normal project/service authorization.
+The release is designed around five surfaces that share one RCC identity and
+project/capability model:
 
-The next integrated layer is the browser compute and lifecycle experience:
-**RCC Analysis Notebook/Workflow, protected project vhosts, Ardia integration,
-and RCC-to-Coscine self-service are not yet released**. ClusterDocs describes
-those capabilities early so their user, security, workflow, and resource
-contracts can be reviewed before activation.
+- **RCC Home** — entry point and service discovery;
+- **Files** — project data selection, upload, browsing, and result retrieval;
+- **RCC Analysis** — Notebook and Workflow execution backed by governed Slurm;
+- **My RCC** — user-facing account/project self-service; and
+- **RCC Admin** — approval and administration actions available only to roles
+  that hold those capabilities.
 
-This distinction matters: the current RCC is already a substantial research-
-computing foundation, while the target state removes more infrastructure
-mechanics from the ordinary research path.
+The current `clusterdocs-3` candidate is not releasable while RCC Analysis is
+still marked `not_yet_released`. Candidate documentation may describe the target
+before activation so the user, security, workflow, and resource contracts can be
+reviewed, but production publication remains fail-closed until all five required
+surfaces are recorded ready and pass end-to-end acceptance.
+
+Other capabilities may remain separately staged after that release boundary—for
+example protected project vhosts, selected vendor integrations such as Ardia,
+and RCC-to-Coscine self-service. Their pages must continue to state their own
+release status.
 
 ## The architecture starts with I/O behavior
 
@@ -87,7 +93,7 @@ user must configure from raw infrastructure components.
 
 ## Explore interactively, then make the work reproducible
 
-RCC Analysis is designed around two adjacent modes:
+RCC Analysis has two adjacent modes:
 
 - **Notebook** — Jupyter-first exploration, visualization, statistics,
   prototyping, and bounded interactive work;
@@ -98,9 +104,9 @@ A successful notebook should be able to graduate into a workflow without making
 the researcher learn a different cluster product. RCC keeps Slurm as the compute
 authority underneath the browser interface.
 
-RCC Analysis is **not yet released**. Until it is activated, current SSH/VS Code,
-Slurm, managed Snakemake/Nextflow, and SSH-tunnel notebook routes remain the
-supported compute path.
+The release candidate remains blocked until both Analysis modes and their
+handoff to/from Files work through RCC Home with the correct project identity,
+and until My RCC/RCC Admin preserve the same authorization model.
 
 ## Keep the advanced HPC capabilities
 
