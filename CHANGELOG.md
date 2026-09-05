@@ -9,6 +9,11 @@
   instrument ingestion, project S3/object storage where enabled, DataLad,
   Notebook/Workflow, Slurm/GPU/HPC, delegated governance, project services,
   Coscine preservation status, and domain applications such as SeqLab.
+- Added an advanced **Why RCC does not run everything on Kubernetes** rationale:
+  Slurm remains the scientific-compute authority, long-lived managed services
+  use the RCC service plane (including Nomad where deployed), and another
+  orchestrator should be introduced only for a concrete supported workload or
+  operational benefit rather than popularity alone.
 - Reframed AI/coding-agent guidance around a **data-blind by default** pattern:
   agents can explain, design, test with synthetic fixtures, develop workflows,
   and interpret bounded diagnostics while RCC executes against real data inside
@@ -21,6 +26,14 @@
   its documentation URL for architecture/reference use.
 - Split onboarding into a browser-first path and an advanced SSH/VS Code path;
   an RCC account no longer implies that the user must enroll an SSH key.
+- Reconciled the RCC credential model: built-in Windows/macOS/browser password
+  managers are recommended for web passwords, passkeys, and appropriate
+  recovery material, while the normal software-backed RCC SSH key is explicitly
+  generated **without a passphrase**; hardware-backed FIDO SSH keys remain
+  preferred where appropriate.
+- Reconciled canonical Part 1 source, active written guidance, narration, and
+  caption text with the no-passphrase SSH-key policy. Existing generated Part 1
+  audio/video must be regenerated and re-reviewed before media activation.
 - Connected Files directly to the planned `Files -> Analysis -> Files` journey.
 - Added notebook-to-workflow resource guidance to discourage idle interactive
   allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
@@ -28,6 +41,11 @@
 - Invalidated the August expert receipt for the materially changed v3 product
   model and made fresh adversarial review, zero-SSH novice-browser acceptance,
   and separate advanced-user acceptance hard gates before broad exposure.
+- Changed the long-term release model so temporary candidate branches may be
+  validated/reviewed, but **production publication accepts `main` only**. An
+  accepted `clusterdocs-3` candidate requires separate explicit authorization
+  before merge into `main`; `clusterdocs-ng` and `clusterdocs-3` are retired
+  only after verified main-based publication and rollback evidence.
 - Preserved current-release accuracy: until RCC Analysis and the governed
   RCC-to-Coscine route are explicitly activated, the existing current paths
   remain documented and staged capabilities remain marked not yet released.
@@ -66,7 +84,7 @@
 
 ## v0.1.2
 
-- Added Classes 7-10 for Python notebooks, R analysis, Shiny applications, and notebook-to-service workflows.
+- Added Classes 7-10 for Python notebooks, R analysis, Shiny development, and notebook-to-service workflows.
 - Imported and adapted Python, R, Jupyter and Shiny examples from RCC user-workflow material.
 - Added synthetic Python and R notebook examples.
 - Added two instructor slide decks covering interactive large-data work and Shiny/Jupyter service patterns.
