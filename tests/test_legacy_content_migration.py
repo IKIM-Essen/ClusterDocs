@@ -77,19 +77,20 @@ class LegacyContentMigrationTests(unittest.TestCase):
     def test_overall_tldr_covers_core_boundaries_and_navigation(self):
         page = (ROOT / "docs/tldr.md").read_text().lower()
         for phrase in [
-            "clusterdocs ng tl;dr",
+            "clusterdocs 3 tl;dr",
             "ten rules that prevent most problems",
             "approved project",
             "job-local storage",
             "biomedical-data boundary",
             "lab network",
             "verified coscine archive",
+            "data-blind by default",
         ]:
             self.assertIn(phrase, page)
         mkdocs = (ROOT / "mkdocs.yml").read_text()
         builder = (ROOT / "tools/build_site.py").read_text()
-        self.assertIn("ClusterDocs NG TL;DR: tldr.md", mkdocs)
-        self.assertIn("'ClusterDocs NG TL;DR','tldr.md'", builder)
+        self.assertIn("ClusterDocs TL;DR: tldr.md", mkdocs)
+        self.assertIn("'ClusterDocs TL;DR','tldr.md'", builder)
 
 
 if __name__ == "__main__":

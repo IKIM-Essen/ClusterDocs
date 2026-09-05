@@ -27,6 +27,14 @@ RCC executes the resulting analysis against real governed project data. Any
 RCC-local agent capability allowed to work near protected data is a separately
 reviewed exception rather than the default assumption.
 
+## Current advanced workflow contract
+
+Managed Nextflow-to-Slurm support is **ready now**. Its controller runs on an RCC
+`shellhost` or allocation-backed **interactive node** while scientific tasks run
+through Slurm. Resume-critical state stays in shared project storage; explicit
+temporary task work can use node-local scratch. This advanced path remains
+available even as the ordinary research front door becomes browser-first.
+
 ## Documentation and training layers
 
 The site includes:

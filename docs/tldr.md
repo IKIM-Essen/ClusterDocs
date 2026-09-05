@@ -1,312 +1,191 @@
-# ClusterDocs NG TL;DR
+# ClusterDocs 3 TL;DR
 
-This page is the shortest useful introduction to RCC. Read it before connecting
-for the first time, or use it to find the right detailed guide.
+This is the short operational model for the future RCC experience. Start with
+your research task. Most researchers should not have to learn cluster topology,
+SSH, or Slurm syntax before they can move data, run an approved analysis, inspect
+results, or manage project membership.
 
-> **Need to connect now?** Use [RCC Expedition Light](getting-started/index.md)
-> and choose the Windows 11 or macOS checklist. For guided offline training,
-> use [RCC Expedition](rcc-expedition.md). Return here for the broader rules
-> and reference links.
+> **Starting now:** use [Start here: your first 15 minutes](getting-started/index.md)
+> for the browser-first path and the current advanced fallback. For guided,
+> self-contained training, use [RCC Expedition](rcc-expedition.md).
 
 ## RCC in one minute
 
 RCC is organised around people and projects:
 
 - your **individual account** is your personal badge and must not be shared;
-- every user has **exactly one primary group**, meaning their home department
-  or organisational affiliation; and
-- a user can join **one or more projects**, which are the shared workrooms where
-  named people from different primary groups can work with the same approved
-  data.
+- every user has **exactly one primary group**, meaning their home department or
+  organisational affiliation; and
+- a user can join **one or more projects**, so **people from different primary
+  groups** can work with the same approved data without changing affiliation.
 
 The primary group says where you belong. The project says which research data,
-services, and collaborators you may work with. Do not change somebody's primary
-group merely to share project data; add their individual account to the project.
+services, compute, collaborators, and lifecycle actions you may use. The project
+is the durable boundary regardless of whether you arrive through Files,
+Analysis, an agent-assisted action, VS Code, SSH, or a domain application.
 
-```text
-person -> individual RCC account -> exactly one primary group (affiliation)
-                              \-> one or more projects (collaboration)
+## The normal research path
 
-Lab-network instrument
-    -> approved Samba share for its project [ready]
-       or future Ardia integration [not yet released]
-    -> RCC project storage -> Slurm analysis -> project results
-    -> optional protected vhost for that project [not yet released]
-    -> reviewed archive set -> Coscine later [not yet released]
-```
+For ordinary browser-first research:
 
-**Samba** is the technology behind a Windows-style network folder. For a
-registered Lab-network instrument or acquisition computer, RCC can approve a
-project-scoped Samba share so completed data arrives in the project rather than
-in one person's home directory. **Ardia integration is not yet released.** Its
-future mass-spectrometry data flow must use a vendor-supported integration or
-export path instead of treating Ardia as an ordinary folder.
+1. sign in and choose the approved project;
+2. use **Files** or a managed ingestion path to bring/select data;
+3. use **RCC Analysis Notebook** for attended exploration or **Workflow** for
+   repeatable/scalable execution when Analysis is released;
+4. keep durable results, code, parameters, and provenance in the project; and
+5. preserve/share/publish through the project-approved lifecycle.
 
-**Project vhosts are not yet released.** When the service is released, a
-project that needs an easier browser interface will be able to request its own
-protected **vhost** (virtual host). The vhost will belong to that project and
-use individual identities plus project membership; it will not be a shared
-account or a way to expose the whole project directory.
+RCC Analysis is **not yet released** in the current candidate, so current
+SSH/VS Code, Slurm, managed Snakemake/Nextflow, and SSH-tunnel notebook paths
+remain the supported compute alternatives until RCC Home activates Analysis.
 
-Computation runs through Slurm. Interactive tools such as Jupyter and Shiny
-also run inside bounded allocations and are reached through protected local
-connections. A selected final dataset may later move to Coscine after project
-review and verification. **RCC-to-Coscine transfer is not yet released**; it
-remains planned and not yet a live self-service transfer.
+## Instruments and project storage
 
-**Managed Nextflow-to-Slurm support is ready now.** The managed service runs
-the Nextflow controller on an RCC shellhost or allocation-backed interactive
-node and sends
-each analysis task to a worker through Slurm. Resume-critical work state will
-stay in shared project storage; node-local storage will be used only for
-explicit temporary task work. Use the pinned `rcc-nextflow` launcher instead
-of installing an unmanaged Nextflow controller on a login host.
+A sequencer, microscope, mass spectrometer, acquisition workstation, or facility
+server should normally feed the project rather than a researcher's laptop or
+home directory.
 
-For most users, **VS Code with Remote - SSH is the suggested everyday route**
-for coding and preparing data analysis. It combines the editor, remote file
-view, Git tools, and terminal in one window. VS Code is the interface; Slurm is
-still where computation runs, and the RCC transfer service is still the route
-for large data movement.
+For approved registered devices, an **approved Samba share for its project** is
+a familiar Windows-style landing path, and **project Samba shares are ready
+now**. A **future Ardia integration** remains **not yet released** and must use
+the vendor-supported integration/export route when activated.
 
-```text
-workstation
-    -> approved RCC SSH or files entry point
-    -> project storage for durable input, code, metadata, and results
-    -> Slurm allocation
-    -> job-local storage for active high-I/O work
-    -> validated results back to the project
-```
+Project storage can include shared POSIX data plus separately enabled S3/object
+storage where object semantics fit the workload. DataLad/git-annex can support
+versioned large-data state where appropriate. High-I/O temporary work belongs in
+**job-local storage** inside the allocation, not in a permanently busy shared
+folder.
 
-Instrument data follows the same project boundary and can eventually become a
-reviewed Coscine archive set:
+## Notebook, Workflow, and advanced HPC
 
-![Laboratory instruments use the protected Lab network and approved services to move data into an RCC project for analysis](assets/lab-network-flow.svg)
+Use **Notebook** for bounded, attended exploration and **Workflow** for work that
+is repeated, long-running, many-sample, unattended, highly parallel, or important
+enough to reproduce exactly.
 
-```text
-instrument -> RCC project -> job-local analysis -> RCC project results
-           -> verified Coscine archive -> recorded RCC disposition
-```
+Advanced users retain direct Slurm, GPU, SSH, VS Code, Conda/Mamba, rootless
+Apptainer, Snakemake, Nextflow, Gitea, and lower-level diagnostics. Those tools
+remain powerful; they are no longer the conceptual entrance exam for ordinary
+research use.
+
+**Managed Nextflow-to-Slurm support is ready now.** The managed controller runs
+on an RCC **shellhost** or allocation-backed **interactive node** and submits the
+scientific tasks through Slurm. Resume-critical state stays in shared project
+storage while explicit temporary task I/O can use node-local scratch.
+
+## AI assistance without exporting the dataset
+
+The preferred coding-agent pattern is **data-blind by default**. Give an
+external/general-purpose agent documentation, schemas, public code, synthetic
+fixtures, and carefully bounded sanitized diagnostics. Let it explain, design,
+test, refactor, or debug the workflow. RCC then checks the user's identity,
+project/capability, and runs the resulting code against real project data inside
+the governed environment.
+
+Natural language, MCP, or an API does not create a second identity or additional
+authority. Separately reviewed RCC-local data-near agent capabilities are
+explicit exceptions, not the default coding-agent assumption.
+
+Read [AI and coding agents without exposing project data](concepts/agents-and-mcp.md).
+
+## Self-governance without giving everyone admin
+
+Users and project leads can manage appropriate account/project actions through
+the role-aware self-service surface. Named project capabilities can be delegated
+without granting general LDAP, storage, Slurm, or root administration.
+
+The interface changes how you ask; it does not change what your identity and
+project role authorize.
+
+## Services, domain applications, and preservation
+
+RCC can support project-scoped databases, Gitea, DataLad, S3/object storage,
+workflow services, and domain applications on the same identity/project/compute
+foundation.
+
+SeqLab is a useful example: sequencing can move from acquisition into project
+storage, analysis, review, provenance/metadata, and onward submission to the
+appropriate international archive when that deployed SeqLab function is enabled.
+The same platform pattern can support microscopy, imaging, mass spectrometry,
+and other domain workflows.
+
+An **optional protected vhost for that project** remains **not yet released** in
+the current candidate. Project vhosts must not be treated as a route to expose an
+entire project filesystem.
+
+Primary RCC storage is not the archive. A reviewed archive set can eventually
+move to a **verified Coscine archive**, but **RCC-to-Coscine transfer is not yet
+released**; it remains **planned and not yet a live self-service transfer**.
+Verification, metadata, checksums, ownership, and disposition remain separate
+from merely copying files.
 
 ## Ten rules that prevent most problems
 
-1. Use only your own RCC account. Keep your one primary group as your
-   affiliation and use approved project membership for collaboration.
-2. Never send a private SSH key, password, token, passkey export, or
-   re-identification key to another person.
-3. Verify the approved RCC endpoint and host identity; do not bypass an SSH
-   warning merely to make a connection work.
-4. Put authoritative research data and durable results in the approved project,
-   not a user's home directory.
-5. Submit computation through Slurm; do not run analysis on login or submission
-   hosts.
-6. Stage high-I/O temporary work to job-local storage and copy validated results
-   back before the job ends.
-7. Request realistic CPU, memory, GPU, and time limits. Start with one small
-   bounded test.
-8. Bind Jupyter, Shiny, and development services to loopback and reach them only
-   through the documented tunnel or governed service path.
-9. Keep direct identifiers and re-identification keys outside RCC. Confirm that
-   project governance permits every biomedical dataset before transfer.
-10. Verify every important transfer or archive before deleting a source.
-
-## First connection
-
-Start with [Class 1: safe access](course/class-01-safe-access.md) and the
-[access, SSH, and VS Code reference](reference/access-ssh-vscode.md).
-
-The basic sequence is:
-
-1. request an individual account and project membership;
-2. create a dedicated SSH key, preferably hardware-backed where supported;
-3. register only the public key;
-4. obtain the current approved RCC configuration through a trusted channel;
-5. inspect the effective configuration;
-6. make one bounded connection test; and
-7. use the approved destination alias `{{ ssh_target_alias }}` through the
-   configured `{{ ssh_gateway_alias }}` gateway.
-
-The access reference includes a visual VS Code walkthrough plus recommended
-search, file-watcher, extension, and Workspace Trust settings. Do not copy a
-server name from a screenshot.
-
-## Where files belong
-
-| Content | Correct place |
-|---|---|
-| Personal configuration and small source files | Home storage |
-| Material shared only within your primary group | Approved primary-group storage |
-| Authoritative project input | Approved project storage |
-| Validated results, code, metadata, and provenance | Approved project storage |
-| Active temporary and random I/O | Job-local storage inside the allocation |
-| Large browser upload or ordinary download | Approved RCC files service when suitable |
-| Retained final archive set | Approved repository or planned Coscine flow |
-
-Home is not a project-data area. A project connects data to its accountable
-owner, approved purpose, membership, retention, legal context, and continuity
-when a team member leaves. Home capacity and filesystem behavior are also not
-intended for large recurring instrument ingestion.
-
-For collaboration across primary groups, request a project whose Unix group
-contains every approved member. A setgid project directory keeps new files
-associated with that project group; it does not authorize disclosure or make
-files group-writable by itself. Use the
-[users, groups, and projects guide](reference/users-groups-projects.md) for the
-identity model and the [data-sharing guide](reference/data-sharing.md) for
-colleagues in your project, other RCC groups, and external recipients.
-
-Read [Class 14: efficient local I/O](course/class-14-efficient-io.md),
-[Class 15: storage architecture](course/class-15-storage-architecture.md), and
-the [storage and transfer reference](reference/storage-transfer.md).
-
-## How to run work
-
-Use Slurm for batch jobs, interactive shells, notebooks, GPU work, and long
-analysis. The normal choices are:
-
-- `srun` or a documented interactive allocation for short attended work;
-- `sbatch` for reproducible or unattended work;
-- `cpu_short` for jobs up to two hours; and
-- a regular compute partition for longer bounded, restartable jobs.
-
-Discover current partitions and resources rather than copying old hardware
-names. Use `squeue` to inspect jobs, `scontrol show job` for reasons and
-allocation details, and `scancel` to stop work you no longer need.
-
-Start with [Class 5: Slurm](course/class-05-slurm.md), then keep the
-[Slurm command reference](reference/slurm.md) nearby. The
-[shared-compute reference](reference/how-shared-compute-works.md) explains owner,
-shared, borrowed, and requeue behavior.
-
-## Reproducible software and workflows
-
-- Put code, configuration, parameters, and small environment definitions in
-  version control.
-- Use Snakemake or another workflow system for repeated dependent steps.
-- Activate Conda environments inside the job rather than relying on a login
-  shell state.
-- Use rootless Apptainer for immutable runtimes when it is the better fit. The
-  container runs with your RCC permissions—not host-root privileges—so it
-  cannot bypass project access or Slurm; it can still change files your user
-  can write, so bind only what the job needs.
-- Keep large caches, environments with many small files, and temporary
-  container writes off inappropriate shared paths.
-
-See [Class 2: workflows](course/class-02-workflows.md),
-[Class 4: Apptainer](course/class-04-containers.md), and the
-[software-workflow reference](reference/software-workflows.md).
-
-## Python, R, notebooks, AI, and Shiny
-
-Use [Class 9](course/class-09-python-notebooks.md) for Python and Jupyter,
-[Class 10](course/class-10-r-analysis.md) for R, and
-[Class 11](course/class-11-shiny.md) for Shiny development.
-
-Notebook and application processes are real workloads:
-
-- start them through Slurm;
-- bind only to `127.0.0.1` during development;
-- use the generated SSH tunnel;
-- keep tokens out of screenshots, chat, notebooks, and Git;
-- move long or expensive steps into batch workflows; and
-- stop the allocation when finished.
-
-For machine learning and AI, begin with a scientific question and a simple
-baseline. Record data splits, preprocessing, versions, parameters, metrics,
-uncertainty, subgroup behavior, and leakage checks. Use a GPU only when the
-framework and measured workload benefit.
-
-## Protected project websites and services
-
-A notebook is not a production service. Use
-[Class 12](course/class-12-notebook-to-service.md) to separate request handling
-from expensive Slurm computation, then complete
-[Class 8](course/class-08-vhosts.md) before requesting a governed protected
-project website. When a project needs a browser interface, request a vhost for
-that project **after the vhost service is released**. The current Class 8
-material is for planning and training, not an operational request. Each future
-vhost will have a named project owner, be authorised by project membership, and
-expose only the approved application or curated data—not every file in project
-storage. A project will not need a vhost unless it has a clear web use case.
-
-Do not expose an ad-hoc listener, notebook, Shiny app, or development server to
-the network. Authentication, authorization, proxy behavior, logs, secrets,
-updates, ownership, and shutdown behavior need review.
+1. Use your own RCC account; use project membership for collaboration.
+2. Never share private keys, passwords, tokens, passkey exports, or
+   re-identification keys.
+3. Keep authoritative data and durable results in the **approved project**.
+4. Keep direct identifiers/re-identification keys outside RCC and follow the
+   project biomedical-data approval.
+5. Use Notebook for bounded exploration and Workflow/batch execution for
+   repeated or scalable work.
+6. Use Slurm for substantial computation; do not turn gateways/submission hosts
+   into compute nodes.
+7. Use job-local storage for active high-I/O temporary work when appropriate and
+   copy validated results back before the allocation ends.
+8. Request measured CPU/RAM/GPU/time rather than treating larger reservations as
+   inherently faster.
+9. Let agents help from non-sensitive context; do not export protected project
+   data merely to get coding assistance.
+10. Verify important transfers and archives before deleting a source.
 
 ## Biomedical-data boundary
 
 Complete [Class 13: biomedical data privacy](course/class-13-biomedical-data-privacy.md)
-before transferring or analysing biomedical data.
+before transferring or analysing biomedical data. Filenames, manifests,
+notebooks, logs, plots, and support requests can reveal sensitive information as
+well as the primary dataset.
 
-Do not place direct identifiers or re-identification keys in RCC. Genomic,
-imaging, and other biomedical research data may be used only when the approved
-project governance covers RCC and the required safeguards. Filenames,
-manifests, notebooks, logs, plots, and support requests can all leak sensitive
-information; inspect them before sharing.
+When uncertain, stop before disclosure/transfer and use the
+[biomedical-data admission guide](security/rcc-biomedical-data-admission.md).
 
-When uncertain, stop before transfer and ask the responsible project and data
-governance contacts. The
-[biomedical-data admission guide](security/rcc-biomedical-data-admission.md)
-contains the short decision checklist.
+## Lab network
 
-## Instruments and the Lab network
-
-Suitable registered instruments and acquisition workstations can use the
-protected **Lab network**. It removes general direct Internet connectivity
-while retaining direct access to explicitly approved server endpoints or
-services. Limited outbound web access through an explicit HTTP proxy can
-support approved needs such as updates without allowing unsolicited inbound
-Internet access.
-
-For an ordinary file-producing instrument, the approved endpoint is commonly a
-project-scoped **Samba share**: a Windows-style network folder that delivers a
-completed run directly to the right RCC project. RCC supplies the exact share
-and credentials; do not guess them or reuse another project's connection.
-**Ardia integration is not yet released.** When released, the managed vendor
-platform will require its supported integration or export route.
-
-The Lab network reduces exposure; it does not make a device trusted. RCC must
-review the owner, software and update needs, vendor support, licensing,
-credentials, server dependencies, data flow, and target project before
-connection.
+Suitable registered instruments can use the protected **Lab network** and
+explicitly approved ingestion/service routes. The Lab network reduces exposure;
+it does not make an instrument trusted or turn an acquisition workstation into a
+compute node.
 
 Read [Class 16: instrument data](course/class-16-wet-lab-data-workflows.md) and
 [how RCC and the Lab network work together](resources/how-it-all-works.md).
 
-## Finish the data lifecycle
+## Advanced connection path
 
-[Class 17](course/class-17-data-lifecycle.md) follows data from instrument
-acquisition through project storage and analysis to a reviewed Coscine archive
-set. The [data-lifecycle TL;DR](data/data-lifecycle-tldr.md) is the two-page
-version.
+When you actually need shell/developer access, use
+[Access, SSH, and VS Code](reference/access-ssh-vscode.md). The approved
+`{{ ssh_gateway_alias }}` gateway is forwarding-only; the normal user target is
+`{{ ssh_target_alias }}`. SSH provides access while Slurm provides compute.
 
-Before archival:
-
-1. classify raw data, inputs, intermediates, results, and records;
-2. select a deliberate frozen archive set;
-3. add useful metadata, provenance, a manifest, and checksums;
-4. confirm governance and the destination resource;
-5. use the supported transfer route when announced;
-6. verify files, bytes, checksums, metadata, and access;
-7. record acceptance; and
-8. decide RCC retention or deletion separately.
+Do not copy hostnames from old screenshots or accept a host-identity warning just
+to make a connection work.
 
 ## When something fails
 
-Do not respond by disabling host verification, opening a network port, sharing
+Do not respond by disabling verification, opening ad-hoc listeners, sharing
 credentials, recursively changing permissions, scanning hosts, or repeatedly
-launching jobs and transfers.
+launching duplicate jobs/transfers.
 
 Use the [troubleshooting guide](reference/troubleshooting.md), capture the
-smallest useful diagnostic, remove secrets and research identifiers, and ask
-through the approved RCC contact route. Include the job ID or support code when
-available—not private keys, passwords, tokens, patient-related filenames, or
-entire unrestricted logs.
+smallest useful diagnostic, remove secrets/research identifiers, and ask through
+the approved support route.
 
 ## Choose the next page
 
-- New to RCC: [complete the eighteen-class course](course/index.md).
-- Analysing data: [follow the data-analysis path](paths/data-analysis.md).
-- Building software or services: [follow the development path](paths/software-development.md).
-- Looking up commands: [open the day-to-day reference](reference/index.md).
-- Connecting now: use the [current RCC connection-name guidance](connecting/stable-endpoints.md).
-- Need a person: [meet the RCC team and find the contact route](team.md).
+- Browser-first start: [first 15 minutes](getting-started/index.md).
+- Complete platform: [What RCC can do](concepts/what-rcc-can-do.md).
+- Data analysis: [data-analysis path](paths/data-analysis.md).
+- Software/workflow development: [development path](paths/software-development.md).
+- Commands and deep technical detail: [day-to-day reference](reference/index.md).
+- Instrument ingestion: [transfer-path decision guide](data/instrument-data-options.md).
+- Lifecycle/preservation: [Class 17](course/class-17-data-lifecycle.md).
+- Guided optional training: [RCC Expedition](rcc-expedition.md).
+- Human support: [RCC team/contact route](team.md).

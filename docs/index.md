@@ -4,9 +4,10 @@ RCC is a governed research-computing platform for taking research data from
 acquisition to analysis, reproducible results, collaboration, preservation, and
 where appropriate downstream publication or archive submission.
 
-You do **not** need to become an HPC operator to use RCC. Ordinary researchers
-should be able to work through the browser. SSH, VS Code, Slurm, and the deeper
-technical layers remain available for people who need them.
+RCC supports both **browser-first research** and **advanced command-line/developer
+access**. You do **not** need to become an HPC operator to use RCC. Ordinary
+researchers should be able to work through the browser; SSH, VS Code, Slurm, and
+the deeper technical layers remain available for people who need them.
 
 <section class="expedition-callout" aria-labelledby="expedition-title">
   <p class="expedition-kicker">Start with the research task, not the infrastructure</p>
