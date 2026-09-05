@@ -1,5 +1,9 @@
 # RCC Onboarding Part 1 - Narration
 
+> **ClusterDocs 3 note:** this narration supersedes the currently staged Part 1
+> audio where credential policy differs. Regenerate and re-review the video
+> before publication; do not activate the older audio as v3 training.
+
 ## Slide 1: Your first day on the RCC cluster
 
 Welcome to Part One of the RCC onboarding curriculum. This lesson is designed for biomedical researchers who may be very experienced in their scientific domain but new to Linux clusters. We will build a mental model before using any commands. You will see what runs on your own computer, what runs on the cluster, why secure shell is used, how Visual Studio Code connects, how data transfer differs from interactive login, and why Slurm controls compute jobs. By the end, you should be able to connect, move a small test file, submit a batch job, and verify where it ran. The examples are intentionally small and contain no sensitive research data.
@@ -14,15 +18,15 @@ A major source of confusion is the local and remote split. Your keyboard, web br
 
 ## Slide 4: 3. Why SSH and why keys?
 
-Secure Shell, usually called S S H, provides an encrypted channel between your computer and the cluster. Encryption protects credentials and commands while they travel across networks. An SSH key pair has a private key and a public key. The private key stays on your own computer. The public key can be registered with RCC. During login, the two sides prove that the correct private key is present without sending that private key to the server. A passphrase protects the private key if the laptop is lost. Store that passphrase in an approved password manager before you finish creating the key. Never email or upload the private key.
+Secure Shell, usually called S S H, provides an encrypted channel between your computer and the cluster. An SSH key pair has a private key and a public key. The private key stays on your own computer; RCC receives only the public key. RCC does not recommend adding a passphrase to the normal software-backed RCC SSH key. Protect the endpoint, keep the private key local, and never share it. Where a compatible hardware-backed FIDO SSH key is appropriate, prefer that. For RCC web passwords, passkeys, and recovery material, use the credential manager provided by Windows or macOS, or another institutionally approved password manager. Web credential storage and SSH-key policy are separate things.
 
 ## Slide 5: 4. Prepare Windows or macOS
 
-On Windows, use a current supported version with the built-in OpenSSH client. PowerShell is the simplest terminal for the first test. On macOS, the Terminal application already includes an SSH client. Install the desktop version of Visual Studio Code and then install the Microsoft Remote - SSH extension. The sequence matters. First prove that the command line connection works. Only then configure VS Code, because the editor uses the same SSH configuration underneath. This makes errors easier to diagnose. Keep your operating system updated and do not install keys or configuration files from untrusted sources.
+On Windows, use a current supported version with the built-in OpenSSH client. PowerShell is the simplest terminal for the first test. On macOS, the Terminal application already includes an SSH client. Install the desktop version of Visual Studio Code and then install the Microsoft Remote - SSH extension when you need the advanced developer path. First prove that the command line connection works. Only then configure VS Code, because the editor uses the same SSH configuration underneath. Keep your operating system updated and do not install keys or configuration files from untrusted sources.
 
 ## Slide 6: 5. The SSH route: gateway, submission host, and ProxyJump
 
-The RCC connection may use a gateway before reaching the submission host. ProxyJump tells SSH to authenticate through the gateway while preserving end-to-end SSH behavior. A small configuration file gives the route a memorable alias such as R C C. The exact hostnames and official host-key fingerprints must come from RCC administrators. Do not accept a changed fingerprint merely because a dialog appears. A changed key can indicate a rebuilt host, a configuration issue, or an attack. Test the route in a normal terminal and record the exact error message if it fails.
+The RCC connection may use a gateway before reaching the submission host. ProxyJump tells SSH to authenticate through the gateway while preserving end-to-end SSH behavior. A small configuration file gives the route a memorable alias. The exact hostnames and official host-key fingerprints must come from RCC administrators. Do not accept a changed fingerprint merely because a dialog appears. A changed key can indicate a rebuilt host, a configuration issue, or an attack. Test the route in a normal terminal and record the exact error message if it fails.
 
 ## Slide 7: 6. VS Code is local software with a remote workspace
 
@@ -46,4 +50,4 @@ A normal SSH connection ends when the laptop sleeps, the network changes, or the
 
 ## Slide 12: 11. First-day completion checklist
 
-You are ready to continue when you can demonstrate each outcome rather than merely following the steps once. You can identify whether a terminal is local or remote. You can explain the difference between your private and public keys. You have verified the official server fingerprint. Command-line SSH works before Visual Studio Code. You can open the correct remote project directory. You can transfer a small non-sensitive file and match its checksum. You can submit a batch script, observe its job identifier, and confirm that it completed on a compute node. Keep the commands and logs; they are useful evidence when asking for support.
+You are ready to continue when you can demonstrate each outcome rather than merely following the steps once. You can identify whether a terminal is local or remote. You can explain the difference between your private and public keys and that the normal RCC software-backed key is generated without a passphrase. You have verified the official server fingerprint. Command-line SSH works before Visual Studio Code. You can open the correct remote project directory. You can transfer a small non-sensitive file and match its checksum. You can submit a batch script, observe its job identifier, and confirm that it completed on a compute node. Keep the commands and logs; they are useful evidence when asking for support.

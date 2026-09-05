@@ -2,21 +2,22 @@
 
 !!! tip "New workstation or first RCC experience?"
     Complete [RCC Expedition Light](../getting-started/index.md) for the
-    required first-use path. Use [RCC Expedition](../rcc-expedition.md) for a
-    self-contained local course covering
-    workstation security/patching, SSH/Linux basics, the research/clinical
-    network boundary, Slurm, storage, data transfer, and reproducible workflows.
+    browser-first first-use path. Use this class when you need the advanced
+    SSH/VS Code route. [RCC Expedition](../rcc-expedition.md) remains a
+    self-contained local course covering workstation security/patching,
+    SSH/Linux basics, the research/clinical network boundary, Slurm, storage,
+    data transfer, and reproducible workflows.
 
     The course is **datensparsam** and does not report learner progress to RCC.
-    This page remains the conventional step-by-step reference tutorial.
+    This page remains the conventional step-by-step SSH reference tutorial.
 
 Before configuring SSH, read the one-page explanation of the
 [jump host, shell host, and Slurm workers](../concepts/jump-shell-compute.md).
 
 <section class="course-video-hero" id="watch-first">
-  <p class="course-video-kicker">Recommended starting point · 8 min video</p>
-  <h2>Watch the class first</h2>
-  <p>Safe access, VS Code, file transfer, and your first Slurm job. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <p class="course-video-kicker">Advanced SSH path · video requires v3 regeneration</p>
+  <h2>Written guidance is authoritative for the v3 candidate</h2>
+  <p>The existing Part 1 video predates the current RCC SSH-key policy and must be regenerated and re-reviewed before release. Use the written page below for the current key, host-verification, VS Code, transfer, and Slurm guidance.</p>
   <video controls preload="metadata" playsinline poster="../../assets/video-posters/part1.png" src="{{ media_base_url }}/RCC_Onboarding_Part_1_Video_Enhanced.mp4?v=a536afc0">
     <track kind="captions" srclang="en" label="English captions" src="../../assets/captions/RCC_Onboarding_Part_1_Captions.vtt" default>
     Your browser does not support embedded video.
@@ -33,8 +34,7 @@ By the end of this class you can:
 - identify a suitable RCC public key without displaying the private key;
 - validate the RCC SSH configuration before connecting;
 - make one controlled login test;
-- install VS Code and the Remote - SSH extension as the recommended interface
-  for most coding and analysis preparation;
+- install VS Code and the Remote - SSH extension for advanced coding and analysis preparation;
 - open a narrowly scoped remote project and configure safe search exclusions;
 - use the browser transfer service without sharing an account.
 
@@ -59,6 +59,12 @@ in different ways:
 - **account recovery or sensitive account actions** may use separate step-up or
   recovery credentials.
 
+For RCC web passwords, passkeys, and appropriate recovery material, use the
+password/passkey manager already provided by the supported Windows or macOS
+environment, or another institutionally approved password manager. Do not turn
+that recommendation into an SSH-key passphrase requirement: the normal RCC
+software-backed SSH key is intentionally created without a passphrase.
+
 A YubiKey can hold more than one kind of credential. A browser/WebAuthn passkey
 and an OpenSSH `*-sk` key are not the same credential merely because they are on
 the same physical key.
@@ -69,20 +75,27 @@ codes, or SSH keys.
 
 ## First-time client setup
 
-Create a dedicated Ed25519 key protected by a strong passphrase.
+Create a dedicated Ed25519 key using the RCC command below. The empty `-N ""` is
+intentional: RCC does **not** recommend a passphrase on the normal software-backed
+SSH key. Protect the endpoint, keep the private key local, and never share it.
 
-If you have a compatible FIDO2 hardware authenticator, prefer `ssh-keygen -t ed25519-sk -f ~/.ssh/id_rcc`. The private material remains on the authenticator and normally requires your physical presence.
+If you have a compatible FIDO2 hardware authenticator, prefer a hardware-backed
+key where appropriate:
+
+```bash
+ssh-keygen -t ed25519-sk -N "" -f ~/.ssh/id_rcc
+```
 
 On macOS or Linux:
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/id_rcc
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_rcc
 ```
 
 On Windows PowerShell:
 
 ```powershell
-ssh-keygen -t ed25519 -f "$HOME\.ssh\id_rcc"
+ssh-keygen -t ed25519 -N "" -f "$HOME\.ssh\id_rcc"
 ```
 
 Register only `id_rcc.pub` through the approved RCC account workflow. The file
@@ -153,11 +166,11 @@ The test uses strict host-key checking, disables password prompts, permits one c
 
 The same readiness script checks whether VS Code and the Microsoft Remote - SSH extension are present. Terminal SSH must work before VS Code is tested.
 
-For most users, this is the normal day-to-day interface after the connection
-test passes. Open the code repository or smallest useful project subdirectory,
-not an entire home, group, or project-storage tree. VS Code does not create a
-Slurm allocation: use its terminal to submit and inspect jobs, not to run a
-sustained analysis directly.
+For users who need the advanced command-line/developer path, VS Code is a useful
+day-to-day interface after the connection test passes. Open the code repository
+or smallest useful project subdirectory, not an entire home, group, or
+project-storage tree. VS Code does not create a Slurm allocation: use its
+terminal to submit and inspect jobs, not to run a sustained analysis directly.
 
 Before searching, exclude data, results, environments, package trees, and
 workflow caches. Review extensions and Workspace Trust because remote
@@ -213,7 +226,8 @@ protocols.
 
 - The local readiness gate reports SSH and configuration as ready.
 - A single live test succeeds.
-- VS Code can open the same configured RCC target.
+- VS Code can open the same configured RCC target if you use the advanced editor path.
 - You can explain where your private SSH key is stored without showing it.
+- You can explain that the normal RCC software-backed SSH key is generated without a passphrase.
 - You can explain why web sign-in credentials, recovery credentials, and SSH
   keys are related to one RCC identity but are not interchangeable.

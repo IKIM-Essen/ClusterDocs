@@ -1,8 +1,9 @@
 # Account access, SSH, and VS Code reference
 
-This guide collects the practical setup details from the earlier ClusterDocs
-site. Complete [Class 1](../course/class-01-safe-access.md) first so that the
-credential and host-verification rules are clear.
+This guide is the advanced command-line/developer access reference. Browser-first
+users do not need an SSH credential merely because they have an RCC account.
+Complete [Class 1](../course/class-01-safe-access.md) when you need SSH so that
+the credential and host-verification rules are clear.
 
 For a new workstation, the shorter
 [macOS](../getting-started/macos.md) and
@@ -11,10 +12,10 @@ configuration with fewer branches. The
 [jump-host and shell-host page](../concepts/jump-shell-compute.md) explains why
 the configuration contains two hosts even though users type one destination.
 
-> **Recommended for most users:** use **VS Code with Remote - SSH** as your
-> everyday interface for writing code, editing configuration, using Git,
-> reading logs, and preparing analyses. Use the RCC transfer service for large
-> data movement, and submit computation through Slurm. Opening a remote VS Code
+> **Recommended for users who need SSH/developer access:** use **VS Code with
+> Remote - SSH** for writing code, editing configuration, using Git, reading
+> logs, and preparing analyses. Use the RCC transfer service for large data
+> movement, and submit computation through Slurm. Opening a remote VS Code
 > window does not create a compute allocation.
 
 ## Request an RCC account
@@ -28,7 +29,7 @@ for the responsible project coordinator and primary approver:
 - institutional email address;
 - project or working group;
 - sponsor or project lead; and
-- the **public** SSH key, never the private key.
+- the **public** SSH key only when SSH access is actually required, never the private key.
 
 Every researcher receives an individual account. Project membership replaces
 shared accounts and shared credentials.
@@ -42,20 +43,24 @@ model.
 
 ## Create an SSH key
 
-Where a compatible FIDO2 authenticator is available, prefer a hardware-backed key. Its private material remains on the authenticator and normally requires user presence:
+Where a compatible FIDO2 authenticator is available, prefer a hardware-backed
+key. Its private material remains on the authenticator and normally requires
+user presence:
 
 ```bash
-ssh-keygen -t ed25519-sk -f ~/.ssh/id_rcc
+ssh-keygen -t ed25519-sk -N "" -f ~/.ssh/id_rcc
 ```
 
-Otherwise, create the dedicated software-backed Ed25519 key described below. Do not copy either type of private credential between computers.
+Otherwise, create the dedicated software-backed Ed25519 key described below. Do
+not copy either type of private credential between computers. RCC does **not**
+recommend adding a passphrase to the normal software-backed RCC key.
 
 ### macOS and Linux
 
-Create a dedicated Ed25519 key and protect it with a strong passphrase:
+Create the dedicated Ed25519 key without a passphrase:
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/id_rcc
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_rcc
 ```
 
 This creates two files:
@@ -63,6 +68,9 @@ This creates two files:
 - `~/.ssh/id_rcc` is the private key. Keep it on your workstation and never
   send or paste it anywhere.
 - `~/.ssh/id_rcc.pub` is the public key. This is the file RCC registers.
+
+Protect the workstation account/device itself. The empty `-N ""` is intentional
+RCC policy, not an omitted tutorial step.
 
 Show the public key when you need to copy it:
 
@@ -77,12 +85,16 @@ Open PowerShell and check it first:
 
 ```powershell
 ssh -V
-ssh-keygen -t ed25519 -f "$HOME\.ssh\id_rcc"
+ssh-keygen -t ed25519 -N "" -f "$HOME\.ssh\id_rcc"
 ```
 
 If `ssh` is unavailable, install the Microsoft OpenSSH Client optional feature
 using the official Windows instructions. The private and public files are
 normally stored under `C:\Users\<username>\.ssh\`.
+
+Use the supported Windows/macOS password/passkey manager for RCC **web**
+passwords, passkeys, and appropriate recovery material. That credential-manager
+recommendation does not change the RCC SSH-key policy.
 
 ## Configure the approved RCC target
 
@@ -140,7 +152,7 @@ records merely to make the warning disappear. Close the client, compare the
 configuration and host identity with the current RCC instructions, and contact
 RCC support if they do not match.
 
-## Use VS Code Remote SSH as the main working interface
+## Use VS Code Remote SSH as the main advanced working interface
 
 1. Install Visual Studio Code and Microsoft's **Remote - SSH** extension.
 2. Confirm terminal SSH works first.
@@ -259,7 +271,7 @@ tools from reading them.
 
 ### Analysis and notebooks
 
-VS Code is still the suggested front end for most Python and R users: edit the
+VS Code remains a useful front end for advanced Python and R users: edit the
 analysis, environment file, batch script, and notebook there. The execution
 rule does not change. Long or data-intensive Python and R programs run through
 Slurm. A Jupyter kernel also runs inside a bounded Slurm allocation and is
