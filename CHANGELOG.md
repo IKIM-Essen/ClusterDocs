@@ -9,11 +9,20 @@
   instrument ingestion, project S3/object storage where enabled, DataLad,
   Notebook/Workflow, Slurm/GPU/HPC, delegated governance, project services,
   Coscine preservation status, and domain applications such as SeqLab.
+- Made **I/O access pattern the primary architecture/performance rationale**:
+  shared bandwidth does not make metadata storms, many-small-file workloads,
+  temporary random I/O, synchronized reads, or editor/indexer traversal free.
+  The Kubernetes/Ceph discussion now starts from workload I/O rather than
+  platform popularity.
 - Added an advanced **Why RCC does not run everything on Kubernetes** rationale:
   Slurm remains the scientific-compute authority, long-lived managed services
   use the RCC service plane (including Nomad where deployed), and another
   orchestrator should be introduced only for a concrete supported workload or
   operational benefit rather than popularity alone.
+- Promoted **RCC-safe VS Code defaults** into the first-use advanced guide,
+  including `search.followSymlinks: false`, `search.useIgnoreFiles: true`, and
+  explicit watcher/search exclusions for data, results, environments, package
+  trees, Snakemake/Nextflow state, and workflow work directories.
 - Reframed AI/coding-agent guidance around a **data-blind by default** pattern:
   agents can explain, design, test with synthetic fixtures, develop workflows,
   and interpret bounded diagnostics while RCC executes against real data inside
@@ -33,7 +42,15 @@
   preferred where appropriate.
 - Reconciled canonical Part 1 source, active written guidance, narration, and
   caption text with the no-passphrase SSH-key policy. Existing generated Part 1
-  audio/video must be regenerated and re-reviewed before media activation.
+  audio/video is deferred to the media wave and must be regenerated/re-reviewed
+  before activation.
+- Added a **two-stage release model**: Stage 1 publishes the reviewed written
+  site with all video links fail-closed; Stage 2 later regenerates, reviews,
+  verifies, and enables media. Video approval is therefore not a Stage-1
+  blocker while player links remain disabled.
+- Added a prepared 3–4 minute **What changed from the old cluster?** returning-
+  user narration for the Stage-2 media wave, centered on browser/project changes,
+  I/O behavior, local scratch, and low-I/O VS Code settings.
 - Connected Files directly to the planned `Files -> Analysis -> Files` journey.
 - Added notebook-to-workflow resource guidance to discourage idle interactive
   allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
@@ -45,7 +62,7 @@
   validated/reviewed, but **production publication accepts `main` only**. An
   accepted `clusterdocs-3` candidate requires separate explicit authorization
   before merge into `main`; `clusterdocs-ng` and `clusterdocs-3` are retired
-  only after verified main-based publication and rollback evidence.
+  only after verified main-based Stage-1 publication and rollback evidence.
 - Preserved current-release accuracy: until RCC Analysis and the governed
   RCC-to-Coscine route are explicitly activated, the existing current paths
   remain documented and staged capabilities remain marked not yet released.
