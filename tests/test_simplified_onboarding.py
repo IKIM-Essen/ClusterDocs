@@ -22,11 +22,11 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn(relative, mkdocs)
             self.assertIn(relative, builder)
 
-        light = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
-        self.assertIn("two legitimate starting paths", light)
-        self.assertIn("Path A — browser-first research", light)
-        self.assertIn("Path B — command-line / developer access", light)
-        self.assertIn("RCC Expedition", light)
+        start = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
+        self.assertIn("Browser-first research", start)
+        self.assertIn("Advanced/current compute path", start)
+        self.assertIn("RCC Expedition", start)
+        self.assertLess(start.index("Browser-first research"), start.index("Advanced/current compute path"))
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
         for relative in ("getting-started/macos.md", "getting-started/windows.md"):
@@ -39,9 +39,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn("ssh -G {{ ssh_target_alias }}", page)
 
     def test_access_model_separates_gateway_control_and_compute(self):
-        page = (DOCS / "concepts/jump-shell-compute.md").read_text(
-            encoding="utf-8"
-        )
+        page = (DOCS / "concepts/jump-shell-compute.md").read_text(encoding="utf-8")
         for phrase in (
             "Jump host | Guarded doorway",
             "Shell host | Your RCC desk",
@@ -64,9 +62,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn(phrase, page)
 
     def test_large_team_layout_keeps_the_namespace_simple(self):
-        page = (DOCS / "reference/users-groups-projects.md").read_text(
-            encoding="utf-8"
-        )
+        page = (DOCS / "reference/users-groups-projects.md").read_text(encoding="utf-8")
         for phrase in (
             "Groups do have benefits—but a different purpose",
             "Organise storage for a large science team",
@@ -78,9 +74,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn(phrase, page)
 
     def test_old_cluster_comparison_has_a_precise_baseline_and_actions(self):
-        page = (DOCS / "getting-started/what-changed.md").read_text(
-            encoding="utf-8"
-        )
+        page = (DOCS / "getting-started/what-changed.md").read_text(encoding="utf-8")
         normalized = " ".join(page.split())
         for phrase in (
             "`8f5b2bd` from 21 July 2026",
@@ -94,9 +88,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             self.assertIn(phrase, normalized)
 
     def test_workflow_conversion_has_safe_repeatable_gates(self):
-        page = (DOCS / "paths/from-shell-scripts.md").read_text(
-            encoding="utf-8"
-        )
+        page = (DOCS / "paths/from-shell-scripts.md").read_text(encoding="utf-8")
         normalized = " ".join(page.split())
         for phrase in (
             "Snakemake is usually the simplest first choice",

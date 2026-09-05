@@ -115,3 +115,5 @@ For advanced access:
 For the complete platform picture, read [What RCC can do](../concepts/what-rcc-can-do.md).
 Returning users from the original IKIM cluster should also read
 [what changed](what-changed.md).
+
+Prefer guided, self-contained training? Use [RCC Expedition](../rcc-expedition.md).

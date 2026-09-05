@@ -16,7 +16,7 @@ def load_readiness():
 
 
 class RolloutReadinessTests(unittest.TestCase):
-    def test_current_candidate_fails_closed_with_known_blockers(self):
+    def test_current_v3_candidate_fails_closed_with_known_blockers(self):
         blockers, warnings, ready = load_readiness().audit()
         joined = "\n".join(blockers)
         self.assertIn("site_status as staging", joined)
@@ -24,23 +24,24 @@ class RolloutReadinessTests(unittest.TestCase):
         self.assertIn("videos lack recorded human approval", joined)
         self.assertIn("administrator publication checklist", joined)
         self.assertNotIn("no reviewed production deployment workflow", joined)
-        self.assertNotIn("expert content review is not recorded", joined)
+        self.assertIn("ClusterDocs 3 expert content review", joined)
+        self.assertIn("zero-SSH novice browser acceptance", joined)
+        self.assertIn("advanced-user acceptance", joined)
         self.assertTrue(warnings)
+        self.assertNotIn("novice acceptance is scheduled after initial rollout", "\n".join(warnings))
         self.assertIn(
-            "novice acceptance is scheduled after initial rollout", "\n".join(warnings)
+            "all 17 video-backed course pages declare in-player English captions", ready
         )
-        self.assertNotIn("post-rollout", joined)
-        self.assertIn("all 17 video-backed course pages declare in-player English captions", ready)
         self.assertIn("Gitea-only production deployment workflow is present", ready)
-        self.assertIn(
-            "all ClusterDocs main/NG branches and pull requests have dispositions", ready
-        )
-        self.assertIn("expert content review is recorded as completed", ready)
 
-    def test_candidate_is_ready_to_start_manual_review(self):
+    def test_candidate_is_ready_to_start_fresh_v3_manual_review(self):
         blockers, ready = load_readiness().manual_review_audit()
         self.assertEqual([], blockers)
-        self.assertIn("expert, novice, and video review guides are present", ready)
+        joined = "\n".join(ready)
+        self.assertIn("expert, novice-browser, and video review guides are present", joined)
+        self.assertIn("task-first", joined)
+        self.assertIn("data-blind default", joined)
+        self.assertIn("review receipts are reset", joined)
 
     def test_caption_normalizer_uses_readable_technical_terms(self):
         path = ROOT / "tools/build_site.py"

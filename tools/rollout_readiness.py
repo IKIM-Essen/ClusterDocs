@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed until ClusterDocs NG has its production decisions and assets."""
+"""Fail closed until ClusterDocs 3 has production decisions and review evidence."""
 
 from __future__ import annotations
 
@@ -48,9 +48,10 @@ def has_deployment_workflow() -> bool:
 
 
 def manual_review_audit() -> tuple[list[str], list[str]]:
-    """Check whether the candidate is coherent enough to start human review."""
+    """Check whether the exact v3 candidate is coherent enough for human review."""
     blockers: list[str] = []
     ready: list[str] = []
+
     required_guides = (
         ROOT / "meta/EXPERT_REVIEW_GUIDE.md",
         ROOT / "meta/NOVICE_REVIEW_GUIDE.md",
@@ -60,10 +61,16 @@ def manual_review_audit() -> tuple[list[str], list[str]]:
     if missing_guides:
         blockers.append("manual-review guides are missing: " + ", ".join(missing_guides))
     else:
-        ready.append("expert, novice, and video review guides are present")
+        ready.append("expert, novice-browser, and video review guides are present")
 
-    public_text = "\n".join(path.read_text(errors="replace") for path in (ROOT / "docs").rglob("*.md"))
-    stale_terms = [term for term in ("RCC Connect", "rollout/index.md", "rollout page") if term in public_text]
+    public_text = "\n".join(
+        path.read_text(errors="replace") for path in (ROOT / "docs").rglob("*.md")
+    )
+    stale_terms = [
+        term
+        for term in ("RCC Connect", "rollout/index.md", "rollout page")
+        if term in public_text
+    ]
     if stale_terms:
         blockers.append("speculative rollout wording remains public: " + ", ".join(stale_terms))
     else:
@@ -79,6 +86,31 @@ def manual_review_audit() -> tuple[list[str], list[str]]:
         blockers.append("canonical Part 4 source lacks the rootless execution update")
     else:
         ready.append("canonical Part 4 explains rootless Apptainer")
+
+    home = (ROOT / "docs/index.md").read_text(errors="replace").lower()
+    if "what do you want to do?" not in home or "what rcc can do" not in home:
+        blockers.append("v3 home page is not task-first and capability-discoverable")
+    else:
+        ready.append("v3 home page is task-first and exposes the advanced capability overview")
+
+    agents = (ROOT / "docs/concepts/agents-and-mcp.md").read_text(errors="replace").lower()
+    if "data-blind by default" not in agents:
+        blockers.append("agent guidance lacks the data-blind default boundary")
+    else:
+        ready.append("agent guidance records the data-blind default boundary")
+
+    review_status = yaml.safe_load((ROOT / "config/review-status.yml").read_text())
+    expert = review_status.get("expert_content_review", {})
+    novice = review_status.get("novice_acceptance", {})
+    if expert.get("status") not in {"required_v3_rereview", "completed"}:
+        blockers.append("v3 expert-review state is missing or ambiguous")
+    if novice.get("status") not in {"required_pre_broad_rollout", "completed"}:
+        blockers.append("v3 novice-browser review state is missing or ambiguous")
+    if novice.get("zero_ssh_required") is not True:
+        blockers.append("v3 novice acceptance is not explicitly zero-SSH")
+    if not blockers:
+        ready.append("v3 review receipts are reset and ready to collect fresh evidence")
+
     return blockers, ready
 
 
@@ -109,8 +141,7 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     ]
     if not_human_reviewed:
         blockers.append(
-            "videos lack recorded human approval for classes: "
-            + ", ".join(not_human_reviewed)
+            "videos lack recorded human approval for classes: " + ", ".join(not_human_reviewed)
         )
 
     course_pages = sorted((ROOT / "docs/course").glob("class-*.md"))
@@ -149,22 +180,31 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     if not (ROOT / "meta/BRANCH_PR_AUDIT.md").is_file():
         blockers.append("ClusterDocs main/NG branch and pull-request audit is missing")
     else:
-        ready.append("all ClusterDocs main/NG branches and pull requests have dispositions")
+        ready.append("ClusterDocs branch and pull-request audit is present")
 
     review_status = yaml.safe_load((ROOT / "config/review-status.yml").read_text())
-    if review_status.get("expert_content_review", {}).get("status") != "completed":
-        blockers.append("expert content review is not recorded as completed")
-    else:
-        ready.append("expert content review is recorded as completed")
+    expert = review_status.get("expert_content_review", {})
     novice = review_status.get("novice_acceptance", {})
-    if novice.get("status") == "scheduled_post_rollout" and not novice.get(
-        "blocks_initial_switchover", True
-    ):
-        warnings.append(
-            "novice acceptance is scheduled after initial rollout and blocks rollout completion"
+    advanced = review_status.get("advanced_acceptance", {})
+
+    if expert.get("status") != "completed":
+        blockers.append("ClusterDocs 3 expert content review is not recorded as completed")
+    else:
+        ready.append("ClusterDocs 3 expert content review is recorded as completed")
+
+    if novice.get("zero_ssh_required") is not True:
+        blockers.append("ClusterDocs 3 novice acceptance is not explicitly zero-SSH")
+    if novice.get("status") != "completed":
+        blockers.append(
+            "zero-SSH novice browser acceptance is not recorded as completed before broad exposure"
         )
-    elif novice.get("status") != "completed":
-        blockers.append("novice acceptance timing is not approved for initial switchover")
+    else:
+        ready.append("zero-SSH novice browser acceptance is recorded as completed")
+
+    if advanced.get("status") != "completed":
+        blockers.append("advanced-user acceptance is not recorded as completed")
+    else:
+        ready.append("advanced-user acceptance is recorded as completed")
 
     review_blockers, review_ready = manual_review_audit()
     blockers.extend(review_blockers)
@@ -173,8 +213,8 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     warnings.extend(
         (
             "external links require a final online link check",
-            "the archived transition announcement needs a new operational review before reuse",
-            "browser, mobile, and screen-reader acceptance remain manual checks",
+            "browser, mobile, keyboard, and screen-reader acceptance remain manual checks",
+            "a controlled pilot is not evidence for broad production acceptance",
         )
     )
     return blockers, warnings, ready
@@ -190,12 +230,13 @@ def main() -> None:
     parser.add_argument(
         "--manual-review",
         action="store_true",
-        help="check whether expert and novice manual review can begin",
+        help="check whether the v3 expert/novice/advanced manual reviews can begin",
     )
     args = parser.parse_args()
+
     if args.manual_review:
         blockers, ready = manual_review_audit()
-        print("ClusterDocs NG manual-review readiness")
+        print("ClusterDocs 3 manual-review readiness")
         for item in ready:
             print(f"READY: {item}")
         for item in blockers:
@@ -205,10 +246,11 @@ def main() -> None:
             if not args.allow_blocked:
                 raise SystemExit(1)
         else:
-            print("RESULT: READY_FOR_EXPERT_AND_NOVICE_REVIEW")
+            print("RESULT: READY_FOR_V3_HUMAN_REVIEW")
         return
+
     blockers, warnings, ready = audit()
-    print("ClusterDocs NG rollout readiness")
+    print("ClusterDocs 3 rollout readiness")
     for item in ready:
         print(f"READY: {item}")
     for item in warnings:

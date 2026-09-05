@@ -11,8 +11,7 @@ complete platform.
 > **Status rule:** “RCC can support” does not mean every capability is already
 > enabled for every project. Follow the status on the linked page and RCC Home.
 > In particular, RCC Analysis, project vhosts, Ardia integration, and the
-> RCC-to-Coscine transfer path are documented before release in the current
-> candidate.
+> RCC-to-Coscine transfer path are **not yet released** in the current candidate.
 
 ## Connect instruments and acquisition systems
 
@@ -20,11 +19,11 @@ RCC can accept data from sequencers, microscopes, mass spectrometers, acquisitio
 workstations, facility servers, and other scientific devices through reviewed
 project ingestion paths.
 
-For current approved projects, project Samba shares provide a familiar managed
-landing path for suitable registered devices. Large recurring or automated
-sources can use server-to-server or dedicated ingestion patterns. Vendor-specific
-integrations are enabled only after their own review; Ardia integration is not
-yet released.
+For current approved projects, **project Samba shares are ready now** and provide
+a familiar managed landing path for suitable registered devices. Large recurring
+or automated sources can use server-to-server or dedicated ingestion patterns.
+Vendor-specific integrations are enabled only after their own review; Ardia
+integration is **not yet released**.
 
 The important property is that instrument data lands in the **project**, not in
 a researcher's laptop or personal home directory.
@@ -37,7 +36,7 @@ A project can use different storage semantics for different needs:
 
 - shared POSIX project storage for ordinary collaborative files and workflow
   inputs/outputs;
-- project S3/object storage where object semantics, scale, or an application
+- **project S3/object storage** where object semantics, scale, or an application
   require it and the capability is enabled;
 - DataLad/git-annex backed state for versioned large-data workflows where
   appropriate;
@@ -61,14 +60,14 @@ A successful notebook should be able to graduate into a workflow without making
 the researcher learn a different cluster product. RCC keeps Slurm as the compute
 authority underneath the browser interface.
 
-RCC Analysis is documented before activation. Until it is released, current
-SSH/VS Code, Slurm, managed Snakemake/Nextflow, and SSH-tunnel notebook routes
-remain the supported compute path.
+RCC Analysis is **not yet released**. Until it is activated, current SSH/VS Code,
+Slurm, managed Snakemake/Nextflow, and SSH-tunnel notebook routes remain the
+supported compute path.
 
 ## Keep the advanced HPC capabilities
 
 Browser-first does not mean “beginner-only.” Advanced users retain direct access
-to Slurm, GPUs, shell tools, VS Code Remote SSH, Conda environments, rootless
+to **Slurm, GPUs**, shell tools, VS Code Remote SSH, Conda environments, rootless
 Apptainer, Snakemake, Nextflow, Gitea, efficient local scratch patterns, and
 lower-level diagnostics.
 
@@ -90,7 +89,8 @@ or in natural language.
 ## Use AI assistance without exporting the dataset
 
 A major RCC design goal is to separate **AI assistance** from **data disclosure**.
-An external or general-purpose coding agent can help with:
+The preferred pattern is **data-blind by default**. An external or general-purpose
+coding agent can help with:
 
 - RCC documentation and explanations;
 - workflow and software design;
@@ -100,11 +100,11 @@ An external or general-purpose coding agent can help with:
 - generic or carefully bounded diagnostics; and
 - code review, refactoring, testing, and reproducibility work.
 
-The preferred pattern is that the agent does **not** receive the real project
-rows, reads, images, patient-derived records, or filenames merely to be useful.
-It proposes code/workflows; RCC validates authorization and executes those
-against the real data inside the governed environment; only permitted results or
-bounded diagnostics leave that execution boundary.
+The agent does **not** need the real project rows, reads, images, patient-derived
+records, or filenames merely to be useful. It proposes code/workflows; RCC
+validates authorization and executes those against the real data inside the
+governed environment; only permitted results or bounded diagnostics leave that
+execution boundary.
 
 Some separately reviewed RCC-local agent capabilities may be authorized to work
 near data. That is an explicit governed capability, not the default assumption
@@ -125,8 +125,9 @@ usage data into billing, punishment, or a scientific entitlement system.
 ## Build project and domain services on top of RCC
 
 RCC can support project-scoped databases, protected web applications, Gitea,
-DataLad, object storage, workflow services, and domain applications. This lets a
-research group or facility build a reproducible service on the same identity,
+DataLad, object storage, workflow services, and domain applications. Project
+vhosts are **not yet released** in the current candidate. These capabilities let
+a research group or facility build a reproducible service on the same identity,
 project, data, and compute foundation rather than creating another isolated
 infrastructure stack.
 
