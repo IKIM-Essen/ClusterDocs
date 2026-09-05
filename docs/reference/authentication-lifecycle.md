@@ -56,6 +56,20 @@ still checks whether your identity may access the requested project or action.
 Signing into one RCC website does not add you to a project or grant administrator
 rights.
 
+### Use the operating system's credential manager
+
+For RCC web passwords, passkeys, and appropriate recovery material, use the
+credential/password-manager facilities already provided by the supported
+Windows or macOS environment, or another institutionally approved password
+manager. On macOS this includes the system Passwords/Keychain facilities; on
+Windows use the supported built-in password/passkey and Windows Hello/browser
+facilities where the RCC sign-in flow offers them.
+
+Do not write RCC passwords, recovery codes, or web credentials into source
+files, notes stored with project data, shell scripts, Git repositories, or chat.
+This recommendation is about **web/account credentials**. It is not a reason to
+add a passphrase to the RCC SSH private key.
+
 ## 3. Sign-in passkeys belong to the RCC sign-in service
 
 A passkey or hardware security key registered for **SSO sign-in** is intended to
@@ -94,8 +108,8 @@ account.
 ## 6. Recovery codes are emergency credentials
 
 Recovery codes are individual, single-use emergency credentials. Store them
-away from the computer/session they protect, preferably in a secure offline
-location appropriate to your work environment.
+away from the computer/session they protect, preferably in an approved password
+manager or another secure location appropriate to your work environment.
 
 Do not place recovery codes in:
 
@@ -122,7 +136,10 @@ one. Browser-first Files and future RCC Analysis users should be able to work
 without SSH credentials.
 
 Only the **public** key is registered with RCC. The private key remains on your
-computer or compatible hardware authenticator.
+computer or compatible hardware authenticator. For the normal software-backed
+RCC key, follow the RCC setup command, which intentionally creates it **without
+a passphrase**. Protect the endpoint itself and do not copy the private key
+between machines.
 
 For a FIDO-backed SSH key, the authenticator protects the SSH private material;
 this is still conceptually different from a browser/WebAuthn passkey even when
@@ -168,11 +185,11 @@ identity-verification and approver/support procedure.
 
 | Need | Credential / surface |
 |---|---|
-| Sign into RCC websites | RCC SSO password/passkey according to current policy |
+| Sign into RCC websites | RCC SSO password/passkey according to current policy; store it with the supported OS/password-manager facilities |
 | Files / future Analysis Notebook / Workflow | web identity + project authorization; **no SSH key required** |
 | Confirm a sensitive account action | step-up factor requested by the account portal |
 | Emergency account recovery | recovery code or approved recovery procedure |
-| SSH / VS Code Remote SSH / public-key SFTP | your registered SSH public key + local private key |
+| SSH / VS Code Remote SSH / public-key SFTP | your registered SSH public key + local private key; normal RCC software key has **no passphrase** |
 | Project access | **not a credential** — project membership / delegated role |
 | Administrator capability | **not a credential** — separately authorized role/capability |
 

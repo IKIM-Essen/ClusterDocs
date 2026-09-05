@@ -4,6 +4,17 @@ This checklist uses Terminal and the OpenSSH client included with current
 macOS. Allow about 15 minutes after your RCC account and approved connection
 settings are available.
 
+## Use the built-in credential manager for RCC web sign-in
+
+For RCC websites, use the password/passkey facilities already provided by
+macOS—such as Passwords/Keychain—or another institutionally approved password
+manager. Let macOS store passkeys when the RCC sign-in flow offers them rather
+than writing passwords, recovery codes, or other web credentials into notes,
+shell files, or project storage.
+
+This is separate from SSH. RCC does **not** recommend adding a passphrase to the
+normal software-backed RCC SSH key.
+
 ## 1. Check the built-in SSH client
 
 Open **Terminal** from Applications → Utilities, then run:
@@ -23,11 +34,16 @@ If you do not already have a dedicated RCC key, run:
 ```bash
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -f ~/.ssh/id_rcc
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_rcc
 ```
 
-Use a strong passphrase. `~/.ssh/id_rcc` is private and stays on this Mac.
-`~/.ssh/id_rcc.pub` is public and is the only key file you register with RCC.
+The empty `-N ""` is intentional: the normal RCC software-backed SSH key is
+created **without a passphrase**. Protect the Mac itself, keep the private key on
+this device, and never share it. Where a compatible hardware-backed FIDO SSH key
+is appropriate, prefer that rather than inventing another memorized secret.
+
+`~/.ssh/id_rcc` is private and stays on this Mac. `~/.ssh/id_rcc.pub` is public
+and is the only key file you register with RCC.
 
 Display the public key when the account form asks for it:
 
@@ -94,11 +110,11 @@ Stop if SSH reports an unexpected host-key change. Do not delete all
 
 ## 5. Add VS Code only after Terminal works
 
-For most users, VS Code with Microsoft's Remote - SSH extension is the easiest
-day-to-day editor. Follow the dedicated
-[VS Code with RCC](vscode.md) section and select `{{ ssh_target_alias }}` as the
-destination. VS Code uses the same configuration and cannot repair an SSH
-connection that fails in Terminal.
+For advanced users who need the command-line/developer path, VS Code with
+Microsoft's Remote - SSH extension is a convenient day-to-day editor. Follow
+the dedicated [VS Code with RCC](vscode.md) section and select
+`{{ ssh_target_alias }}` as the destination. VS Code uses the same configuration
+and cannot repair an SSH connection that fails in Terminal.
 
 Use the shell host to edit code, use Git, submit jobs, and inspect logs. Submit
 computation through Slurm.

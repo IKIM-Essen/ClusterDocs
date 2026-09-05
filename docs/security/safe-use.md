@@ -11,10 +11,11 @@ Security should support research rather than make ordinary work impossible. The 
 
 ## Credentials
 
+- Use the built-in password/passkey manager provided by your supported Windows or macOS environment, or another institutionally approved password manager, for RCC web passwords, passkeys, recovery material, and other suitable secrets.
 - Keep SSH private keys on the device where they were generated.
+- RCC does **not** recommend adding a passphrase to the normal software-backed RCC SSH key; follow the current RCC key-generation command instead of generic SSH tutorials.
 - Prefer a FIDO-backed SSH key where a compatible authenticator is available.
 - Keep SSH agent forwarding disabled and do not copy long-lived private keys between computers.
-- Store passphrases in an approved password manager.
 - Never paste credentials or private data into issue trackers, chat, Git, notebooks or support screenshots.
 - Report a lost device or unexpected session promptly.
 

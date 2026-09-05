@@ -74,6 +74,11 @@ lower-level diagnostics.
 The improvement is that those mechanics are **available when useful rather than
 mandatory before science can begin**.
 
+Advanced infrastructure users may reasonably ask why RCC does not simply put
+all of this onto Kubernetes. The split is deliberate: scientific compute stays
+under Slurm, while long-lived managed services use the RCC service plane. Read
+[Why RCC does not run everything on Kubernetes](why-not-kubernetes-everywhere.md).
+
 ## Let projects govern themselves within bounded authority
 
 RCC projects combine membership, data, compute, services, results, and lifecycle
