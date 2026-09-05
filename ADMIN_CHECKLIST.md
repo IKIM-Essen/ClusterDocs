@@ -93,8 +93,8 @@ operational acceptance gates.
 ## Media
 
 - [x] Keep media publication fail-closed until the separate RCC media endpoint passes its checks.
-- [ ] Reconcile `source/part1.md` with the current **no-SSH-passphrase** policy; the old canonical Part 1 source must not remain authoritative for v3 media.
-- [ ] Regenerate the Part 1 video from the corrected narration/source and re-review its audio/captions before activation; the staged old audio states the retired passphrase policy.
+- [x] Reconcile `source/part1.md`, Class 1, workstation/reference guidance, narration, and caption text with the current **no-SSH-passphrase** policy.
+- [ ] Regenerate the Part 1 video/audio from the corrected source/narration and re-time/re-review its captions before activation; the staged generated media predates the current policy.
 - [ ] Promote the exact approved MP4 set into the staged publication manifest and verify hashes.
 - [ ] Verify trusted HTTPS, `video/mp4`, byte-range support, expected size, and full download for every released video.
 - [ ] Complete human review of every released video and caption against final narration and visuals.
