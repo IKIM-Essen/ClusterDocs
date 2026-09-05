@@ -987,7 +987,6 @@ Typical failure categories:
 - **job pending** - **Likely issue:** resources, priority, account, dependency, or policy; **Correct response:** inspect the pending reason; do not repeatedly cancel and resubmit
 - **many tiny jobs** - **Likely issue:** workflow granularity too fine; **Correct response:** group or batch work according to RCC guidance
 
-
 # 11. Logs and failure handling
 
 ## Failure is information, not a reason to rerun blindly
