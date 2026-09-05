@@ -10,12 +10,33 @@ on `clusterdocs-3`, but production publication is intentionally blocked until an
 accepted candidate is explicitly promoted into `main`. Nothing in this branch
 or README authorizes that merge.
 
+## Integrated release bundle
+
+ClusterDocs 3 will **not** be released before the integrated browser product is
+ready. The minimum release bundle is:
+
+1. **RCC Home**;
+2. **Files**;
+3. **RCC Analysis** — Notebook and Workflow;
+4. **My RCC**; and
+5. **RCC Admin**.
+
+All five surfaces must share the same RCC identity/project/capability model and
+pass the end-to-end acceptance path. RCC Analysis is a hard release dependency,
+not a post-release feature. A working SSH/VS Code/Slurm path does not substitute
+for a missing Analysis browser path.
+
+`config/public.yml` records the bundle and the current surface status.
+`tools/release_bundle_gate.py` fails production until all five surfaces are
+`ready`; the current candidate is intentionally blocked while
+`rcc_analysis: not_yet_released`.
+
 The public product model is **task-first and browser-first** for ordinary
-researchers: choose or bring project data, analyse it in a Notebook or governed
-Workflow when RCC Analysis is enabled, keep durable results with the project,
-and preserve or publish them through the appropriate governed lifecycle.
-SSH, VS Code, Slurm, containers, workflow engines, storage internals, and lower-
-level diagnostics remain first-class advanced tools.
+researchers: RCC Home -> Files -> Analysis Notebook/Workflow -> durable results
+back to Files/project storage, with My RCC for self-service and RCC Admin for
+role-authorized approval/administration. SSH, VS Code, Slurm, containers,
+workflow engines, storage internals, and lower-level diagnostics remain
+first-class advanced tools.
 
 Experienced users should see the full platform: instrument ingestion for
 sequencers, microscopes and other acquisition systems; project POSIX and
@@ -105,15 +126,16 @@ The site includes:
 
 ## Two-stage release
 
-The media pipeline is intentionally **not** on the critical path for the first
-ClusterDocs 3 publication.
+The two stages separate the **product/documentation release** from the **video
+release**. They do not defer RCC Analysis.
 
-### Stage 1 — written site
+### Stage 1 — integrated RCC browser product + written site
 
-After text/product/operational acceptance and explicit promotion into `main`,
-publish the complete written site with `preview_links` disabled. The renderer
-must replace video players with the fail-closed “Video not yet released” state.
-Human approval of the old generated videos does not block Stage 1.
+After the five-surface release bundle, human/product/operational acceptance, and
+explicit promotion into `main`, publish the complete written site with
+`preview_links` disabled. The renderer must replace video players with the
+fail-closed “Video not yet released” state. Human approval of the old generated
+videos does not block Stage 1.
 
 ### Stage 2 — videos
 
@@ -130,14 +152,17 @@ video for returning users. Its prepared narration lives at
 The candidate is not broadly promotable until it has:
 
 1. passed repository/build/link validation;
-2. completed the fresh ClusterDocs 3 adversarial expert review;
-3. completed zero-SSH naive-user browser acceptance before broad exposure;
-4. completed separate advanced-user acceptance including the low-I/O VS Code
+2. passed `tools/release_bundle_gate.py` with RCC Home, Files, RCC Analysis,
+   My RCC, and RCC Admin all recorded ready;
+3. completed the fresh ClusterDocs 3 adversarial expert review;
+4. completed zero-SSH naive-user browser acceptance across the integrated
+   browser path before broad exposure;
+5. completed separate advanced-user acceptance including the low-I/O VS Code
    profile;
-5. completed institutional/privacy/accessibility/operational checks;
-6. kept all video links fail-closed for Stage 1;
-7. selected the final release version; and
-8. received explicit authorization to merge the accepted candidate into `main`.
+6. completed institutional/privacy/accessibility/operational checks;
+7. kept all video links fail-closed for Stage 1;
+8. selected the final release version; and
+9. received explicit authorization to merge the accepted candidate into `main`.
 
 A very small controlled pilot can precede broad acceptance to prove the deployed
 journey works in principle. It does not replace the release gates.
@@ -150,6 +175,7 @@ Check whether human review can begin while working on `clusterdocs-3`:
 python3 tools/validate_repo.py
 python3 tools/build_site.py --output site-review
 python3 tools/rollout_readiness.py --manual-review
+python3 tools/release_bundle_gate.py  # expected to fail until Analysis is ready
 ```
 
 The full production gate is run again **after an explicitly authorized merge on
@@ -157,6 +183,7 @@ the exact resulting `main` commit**:
 
 ```bash
 python3 tools/validate_repo.py
+python3 tools/release_bundle_gate.py
 python3 tools/build_site.py --production --output site-production
 python3 tools/rollout_readiness.py
 ```
@@ -169,10 +196,10 @@ media verification and human approval become hard gates.
 
 Gitea is the manually dispatched production deployment authority. The production
 workflow accepts only `refs/heads/main`, verifies the exact checked-out commit,
-runs the active-stage fail-closed gates, generates `assets/release.json` with
-`source_branch: main`, and publishes the exact generated tree as a normal
-non-forced update to GitHub Pages. GitHub Actions remains a manual validation
-fallback and has no deployment credential.
+runs `tools/release_bundle_gate.py` plus the active-stage fail-closed gates,
+generates `assets/release.json` with `source_branch: main`, and publishes the
+exact generated tree as a normal non-forced update to GitHub Pages. GitHub
+Actions remains a manual validation fallback and has no deployment credential.
 
 After a verified main-based Stage-1 publication, the temporary `clusterdocs-ng`
 and `clusterdocs-3` branches can be retired through the approved repository
