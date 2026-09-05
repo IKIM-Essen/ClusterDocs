@@ -41,6 +41,44 @@ RCC handles the infrastructure mechanics behind those actions. The researcher
 still controls the scientific question, data, method, parameters, and decision
 about what result is fit for use.
 
+## RCC today
+
+The current RCC foundation is already substantial. An external reader should not
+have to infer that from a long list of future capabilities:
+
+- **Files is the current browser data path** for approved project-facing uploads,
+  browsing, and downloads.
+- **Account and project self-service is ready now**, including the current RCC
+  Admin/self-administration and primary-approval path.
+- **RCC workers and Slurm analysis are ready now**; SSH and VS Code remain the
+  current advanced route for direct scientific compute and workflow development.
+- **Managed Nextflow-to-Slurm support is ready now** for reproducible advanced
+  workflows.
+- **Project Samba shares are ready now** for approved registered devices and
+  appropriate instrument/acquisition ingestion.
+
+These are current foundations, not a promise that every project automatically
+receives every service. Project membership, data policy, resource entitlement,
+and service-specific approval still apply.
+
+## Coming next
+
+The integrated browser experience is deliberately documented before every part
+is activated. The important staged capabilities are:
+
+- **RCC Analysis Notebook and Workflow are not yet released** as the ordinary
+  browser compute surface.
+- **RCC-to-Coscine self-service transfer is not yet released**; preservation
+  guidance is available now, but the integrated transfer route remains staged.
+- **Protected project vhosts are not yet released** as a general user service.
+- **Ardia integration is not yet released**; vendor-specific instrument routes
+  remain separately reviewed and activated.
+
+RCC Home and the linked capability pages remain the final user-facing source for
+what is enabled for a particular account and project. The distinction above is
+intended to make the platform's current maturity visible without hiding the
+near-term target state.
+
 ## What RCC can do
 
 The new RCC is much more than a remote shell with a web front end. Experienced
