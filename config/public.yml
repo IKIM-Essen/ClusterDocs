@@ -1,6 +1,9 @@
 site_name: RCC ClusterDocs
 site_status: staging
 site_url: https://ikim-essen.github.io/ClusterDocs/
+rcc_home_url: https://rcc.ikim.uk-essen.de/
+files_service_url: https://files.ikim.uk-essen.de/
+account_service_url: https://rcc-admin.ikim.uk-essen.de/
 support_contact: IKIM Cluster channel on Mattermost
 ssh_gateway_alias: rcc-login
 ssh_target_alias: shellhost

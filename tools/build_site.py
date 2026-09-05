@@ -8,17 +8,19 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
- ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
- ('Start here','macOS setup','getting-started/macos.md'),
- ('Start here','Windows 11 setup','getting-started/windows.md'),
+ ('Start here','First 15 minutes','getting-started/index.md'),
+ ('Start here','macOS advanced setup','getting-started/macos.md'),
+ ('Start here','Windows 11 advanced setup','getting-started/windows.md'),
  ('Start here','VS Code with RCC','getting-started/vscode.md'),
  ('Start here','Jump host, shell host, and workers','concepts/jump-shell-compute.md'),
  ('Start here','What changed from the old cluster','getting-started/what-changed.md'),
- ('Overview','ClusterDocs NG TL;DR','tldr.md'),
+ ('Overview','ClusterDocs TL;DR','tldr.md'),
  ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
- ('RCC services','Which RCC service should I use?','concepts/rcc-services.md'),
+ ('RCC services','Which RCC interface should I use?','concepts/rcc-services.md'),
+ ('RCC services','What RCC can do','concepts/what-rcc-can-do.md'),
  ('RCC services','RCC Files','concepts/rcc-files.md'),
  ('RCC services','RCC Analysis · Notebook and Workflow · planned','analysis/rcc-analysis.md'),
+ ('RCC services','AI and coding agents · data-blind by default','concepts/agents-and-mcp.md'),
  ('RCC services','Project types','concepts/project-types.md'),
  ('RCC services','RCC Gitea','concepts/rcc-gitea.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
@@ -82,7 +84,7 @@ PAGE='''<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <meta name="description" content="Governed RCC research computing from data acquisition to reproducible results">
   <title>{{ title }} · RCC ClusterDocs</title>
   <link rel="stylesheet" href="{{ root }}assets/site.css">
 </head>
@@ -90,13 +92,12 @@ PAGE='''<!doctype html>
 <a class="skip" href="#content">Skip to content</a>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="https://rcc.ikim.uk-essen.de/" aria-label="RCC home">
-      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+    <a class="brand" href="{{ rcc_home_url }}" aria-label="RCC home">
       <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
     </a>
     <div class="topbar-actions">
-      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
-      <a class="topbar-button" href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="Open My RCC (opens in a new tab)">My RCC <span aria-hidden="true">↗</span></a>
+      <span class="service-status">Documentation · {{ status }}</span>
+      <a class="topbar-button" href="{{ account_service_url }}" target="_blank" rel="noopener" aria-label="Open account and project management (opens in a new tab)">Account & projects <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </header>
@@ -105,11 +106,11 @@ PAGE='''<!doctype html>
     <summary>Browse documentation</summary>
     <nav aria-label="Mobile documentation navigation">
       <section><h2>RCC surfaces</h2>
-        <a href="https://rcc.ikim.uk-essen.de/">Home</a>
-        <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener">Files ↗</a>
+        <a href="{{ rcc_home_url }}">Home</a>
+        <a href="{{ files_service_url }}" target="_blank" rel="noopener">Files ↗</a>
         <a href="{{ root }}analysis/rcc-analysis/index.html">RCC Analysis · planned</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
-        <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener">RCC Admin ↗</a>
+        <a href="{{ account_service_url }}" target="_blank" rel="noopener">Account & projects ↗</a>
       </section>
       {% for group,items in nav_groups %}
       {% if items|length == 1 %}
@@ -126,11 +127,11 @@ PAGE='''<!doctype html>
         <section class="sidebar-section">
           <p class="sidebar-kicker">RCC surfaces</p>
           <nav class="global-nav" aria-label="RCC services">
-            <a href="https://rcc.ikim.uk-essen.de/">Home</a>
-            <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="Files (opens in a new tab)">Files <span aria-hidden="true">↗</span></a>
+            <a href="{{ rcc_home_url }}">Home</a>
+            <a href="{{ files_service_url }}" target="_blank" rel="noopener" aria-label="Files (opens in a new tab)">Files <span aria-hidden="true">↗</span></a>
             <a href="{{ root }}analysis/rcc-analysis/index.html">RCC Analysis <span class="nav-status">Planned</span></a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
-            <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="RCC Admin (opens in a new tab)">RCC Admin <span aria-hidden="true">↗</span></a>
+            <a href="{{ account_service_url }}" target="_blank" rel="noopener" aria-label="Account and project management (opens in a new tab)">Account & projects <span aria-hidden="true">↗</span></a>
           </nav>
         </section>
         <section class="sidebar-section documentation-tree">
@@ -140,7 +141,7 @@ PAGE='''<!doctype html>
             {% if items|length == 1 %}
             <a class="nav-single" {% if items[0][1] == current_url %}aria-current="page"{% endif %} href="{{ root }}{{ items[0][1] }}">{{ items[0][0] }}</a>
             {% else %}
-            <details class="nav-section" {% if group == page_group or (is_home and group == 'Paths') %}open{% endif %}>
+            <details class="nav-section" {% if group == page_group or (is_home and group == 'RCC services') %}open{% endif %}>
               <summary>{{ group }}</summary>
               <div>{% for label,url in items %}<a {% if url == current_url %}aria-current="page"{% endif %} href="{{ root }}{{ url }}">{{ label }}</a>{% endfor %}</div>
             </details>
@@ -153,7 +154,7 @@ PAGE='''<!doctype html>
     </aside>
     <main id="content" class="content-card">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
-        <li><a href="https://rcc.ikim.uk-essen.de/">Home</a></li>
+        <li><a href="{{ rcc_home_url }}">Home</a></li>
         {% if is_home %}<li><span aria-current="page">Documentation</span></li>
         {% else %}<li><a href="{{ root }}index.html">Documentation</a></li><li><span aria-current="page">{{ title }}</span></li>{% endif %}
       </ol></nav>
@@ -168,14 +169,14 @@ PAGE='''<!doctype html>
         <figcaption>One research environment for statistics, data science, reproducible AI, distributed computation, visualization, and governed sharing.</figcaption>
       </figure>{% endif %}
     </main>
-    {% if is_home and home_rail %}<aside class="home-rail" aria-label="RCC Expedition onboarding">
+    {% if is_home and home_rail %}<aside class="home-rail" aria-label="RCC quick start">
       {{ home_rail }}
     </aside>{% endif %}
   </div>
 </div>
 <footer>
   <p>RCC · Research Compute Cluster · University Hospital Essen</p>
-  <p><a href="{{ root }}index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+  <p><a href="{{ root }}index.html">Documentation</a> · <a href="{{ account_service_url }}">Account & projects</a> · <a href="{{ files_service_url }}">Files</a></p>
 </footer>
 </body>
 </html>'''
@@ -197,11 +198,11 @@ a:hover { color:var(--cyan-strong); }
 .topbar-inner { width:100%; margin:0; padding:.8rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.25rem; }
 .brand { display:flex; align-items:center; gap:1rem; text-decoration:none; min-width:0; }
 .brand img { width:156px; height:48px; object-fit:contain; object-position:left center; padding:.3rem .45rem; border-radius:8px; background:var(--paper); }
-.brand-copy { border-left:1px solid rgba(255,255,255,.25); padding-left:1rem; line-height:1.05; }
-.brand-copy strong { display:block; font-size:1.15rem; color:var(--paper); letter-spacing:.02em; }
+.brand-copy { padding-left:0; line-height:1.05; }
+.brand-copy strong { display:block; font-size:1.3rem; color:var(--paper); letter-spacing:.02em; }
 .brand-copy span { color:rgba(255,255,255,.72); font-size:.72rem; text-transform:uppercase; letter-spacing:.11em; }
 .topbar-actions { display:flex; align-items:center; gap:.8rem; }
-.service-status { color:rgba(255,255,255,.78); font-size:.82rem; font-weight:700; }
+.service-status { color:rgba(255,255,255,.78); font-size:.82rem; font-weight:700; text-transform:capitalize; }
 .service-status-dot { display:inline-block; width:.55rem; height:.55rem; margin-right:.45rem; border-radius:50%; background:#58d39c; box-shadow:0 0 0 .22rem rgba(88,211,156,.18); }
 .topbar-button { padding:.62rem .85rem; border-radius:11px; background:var(--paper); color:var(--navy); font-size:.9rem; font-weight:700; text-decoration:none; }
 .topbar-button:hover { background:var(--cyan-light); color:var(--navy); }
@@ -322,7 +323,7 @@ footer p { margin:0; }
 @media (max-width:760px) {
   .topbar-inner { align-items:flex-start; flex-direction:column; }
   .brand img { width:125px; }
-  .brand-copy { display:none; }
+  .brand-copy { display:block; }
   .service-status { display:none; }
   .shell { padding:1rem; }
   .sidebar { display:none; }
@@ -489,6 +490,9 @@ def main():
             page_group=group_for_path.get(str(rel),'Documentation'),
             is_home=is_home,
             home_rail=home_rail,
+            rcc_home_url=cfg['rcc_home_url'],
+            files_service_url=cfg['files_service_url'],
+            account_service_url=cfg['account_service_url'],
         ))
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():

@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
+CONFIG = (ROOT / "config/public.yml").read_text(encoding="utf-8")
 
 
 class RCCVisualShellTests(unittest.TestCase):
@@ -13,12 +14,19 @@ class RCCVisualShellTests(unittest.TestCase):
             '>Home',
             '>Files',
             'aria-current="page" href="{{ root }}index.html">Documentation',
-            '>RCC Admin',
-            '>My RCC',
+            'Account & projects',
             'target="_blank" rel="noopener"',
         ):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)
+
+    def test_service_endpoints_are_configured_not_scattered(self):
+        for key in ("rcc_home_url", "files_service_url", "account_service_url"):
+            self.assertIn(f"{key}:", CONFIG)
+            self.assertIn("{{ " + key + " }}", BUILDER)
+        self.assertNotIn("Logo_UME_UKE.svg", BUILDER)
+        self.assertNotIn("Documentation online", BUILDER)
+        self.assertIn("Documentation · {{ status }}", BUILDER)
 
     def test_new_rcc_header_and_service_rail_are_present(self):
         for token in (
@@ -40,13 +48,18 @@ class RCCVisualShellTests(unittest.TestCase):
         self.assertIn('aria-label="Documentation navigation"', BUILDER)
         self.assertIn('aria-label="Mobile documentation navigation"', BUILDER)
 
-    def test_rcc_analysis_is_present_in_global_and_documentation_navigation(self):
-        self.assertEqual(
-            BUILDER.count('{{ root }}analysis/rcc-analysis/index.html'),
-            2,
-        )
+    def test_rcc_analysis_and_v3_capabilities_are_in_canonical_navigation(self):
+        self.assertEqual(BUILDER.count('{{ root }}analysis/rcc-analysis/index.html'), 2)
         self.assertIn(
             "('RCC services','RCC Analysis · Notebook and Workflow · planned','analysis/rcc-analysis.md')",
+            BUILDER,
+        )
+        self.assertIn(
+            "('RCC services','What RCC can do','concepts/what-rcc-can-do.md')",
+            BUILDER,
+        )
+        self.assertIn(
+            "('RCC services','AI and coding agents · data-blind by default','concepts/agents-and-mcp.md')",
             BUILDER,
         )
         self.assertIn(
