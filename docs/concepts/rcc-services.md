@@ -5,39 +5,56 @@ identity, project authorization, and policy follow you between them; choosing a
 different interface does not create another account or another copy of the
 project.
 
-> **Release status matters.** A capability described in ClusterDocs is not
-> automatically live. Staged services must be marked explicitly and RCC Home is
-> the final user-facing source for what is enabled for your account/project.
+> **ClusterDocs 3 release boundary:** the new documentation will not be
+> published before **RCC Home, Files, RCC Analysis, My RCC, and RCC Admin** are
+> ready as one integrated browser experience. RCC Analysis is therefore a core
+> release requirement, not a post-release feature.
 
-## Choose by task
+## The five core browser surfaces
 
-| I want to... | Start with | Status guidance |
+| Surface | User purpose | Release role |
 |---|---|---|
-| upload, browse, or download project data | **Files** | current user path |
-| explore data interactively | **RCC Analysis · Notebook** | documented before activation |
-| run a repeatable/scalable analysis | **RCC Analysis · Workflow** | documented before activation |
-| manage my account or project membership/actions | **My RCC / Admin** | role-aware current surface |
-| ask for explanations or bounded help | **Assistant** | availability depends on project/service |
-| develop directly with shell/editor/scheduler tools | **SSH / VS Code / Slurm** | current advanced path |
-| understand the platform beyond the front door | **What RCC can do** | capability and status overview |
+| **RCC Home** | discover the RCC services enabled for your account/project | required for ClusterDocs 3 release |
+| **Files** | upload, browse, select, and download project data | required for ClusterDocs 3 release |
+| **RCC Analysis** | Notebook exploration and governed Workflow execution | required for ClusterDocs 3 release; currently the blocking surface |
+| **My RCC** | personal account, preferences, memberships, invitations, and self-service actions | required for ClusterDocs 3 release |
+| **RCC Admin** | approvals, delegated administration, and role-authorized administrative actions | required for ClusterDocs 3 release |
 
-Open OnDemand is retired from the current RCC product model. Do not use old OOD
-screenshots or bookmarks as current instructions.
+The user-facing distinction between **My RCC** and **RCC Admin** is authority,
+not necessarily a different backend host. A normal user should see only the
+self-service actions they are allowed to perform; approvers and administrators
+receive additional bounded capabilities.
+
+## The core research path
+
+For ordinary research the intended path is:
+
+```text
+RCC Home
+   -> choose project/service
+   -> Files -> RCC Analysis Notebook/Workflow -> Files/results
+   -> My RCC for personal/project self-service
+   -> RCC Admin only when the user's role authorizes administrative actions
+```
+
+A browser-first account does **not** require an SSH public key. Slurm remains the
+scientific-compute authority underneath RCC Analysis.
 
 ## Files: project data in the browser
 
-Use **Files** to upload inputs, browse authorized project-facing data, and
-download results without opening a shell. Files does not bypass project
-membership, data approval, retention, or sharing policy.
+Use **Files** to upload inputs, browse authorized project-facing data, select
+inputs for analysis, and download results without opening a shell. Files does
+not bypass project membership, data approval, retention, or sharing policy.
 
 Read [RCC Files](rcc-files.md).
 
 ## RCC Analysis: Notebook and Workflow
 
-RCC Analysis is the planned user-facing compute product.
+RCC Analysis is the user-facing compute product required for the ClusterDocs 3
+release.
 
 Use **Notebook** for bounded interactive exploration, Python/R analysis, figures,
-inspection, prototyping, and small-scale debugging. The intended default is
+inspection, prototyping, and small-scale debugging. The default should be
 Jupyter in the browser backed by a bounded Slurm allocation; ordinary users
 should not have to choose workers, create tunnels, expose ports, or know Slurm
 syntax merely to open a notebook.
@@ -52,7 +69,8 @@ Notebook into Workflow mode rather than growing an interactive session without
 bounds.
 
 Read [RCC Analysis: notebooks and governed workflows](../analysis/rcc-analysis.md).
-RCC Analysis is documented before activation and is not yet a live user service.
+The current release candidate remains blocked until this path is ready and its
+integration with Home, Files, My RCC, and RCC Admin has passed acceptance.
 
 ## Assistant and agents: help without a policy bypass
 
@@ -68,14 +86,25 @@ RCC execute the resulting workflow against the real data.
 
 Read [AI and coding agents without exposing project data](agents-and-mcp.md).
 
-## My RCC / Admin: self-governance and delegation
+## My RCC: self-service
 
-Use the account/project surface for account security, membership, invitations,
-approvals, delegated project capabilities, and project-service requests your
-role is authorized to make. Self-service and administrative functions can share
-a platform without implying that every user has administrator authority.
+My RCC is the user's personal/account/project surface. It covers the actions that
+do not require broad infrastructure administration, including account settings,
+project membership context, invitations, notification preferences, and other
+self-service actions enabled for the user's role.
 
-A browser-first account does **not** require an SSH public key.
+The exact set of actions remains capability-checked. Seeing an action in the UI
+does not create authority to perform it.
+
+## RCC Admin: role-aware administration
+
+RCC Admin supports approvers, delegates, and administrators with the additional
+actions their roles permit: approvals, invitations/sponsorship, delegated
+project actions, and other bounded administrative workflows.
+
+RCC Admin must not imply that every authenticated user is an administrator.
+My RCC and RCC Admin may share identity and infrastructure while presenting
+different capability surfaces.
 
 Read [Projects and supported actions](projects-and-capabilities.md) and
 [authentication lifecycle](../reference/authentication-lifecycle.md).
@@ -87,18 +116,15 @@ storage interfaces remain first-class advanced tools. They are important for
 software developers, workflow authors, automation, diagnostics, unusual resource
 requirements, and researchers who want direct control.
 
-They should not be a prerequisite for a user whose task is simply to move data,
-run an approved analysis, inspect results, or manage project membership.
+They are not the ordinary browser entrance path once the integrated release is
+ready.
 
-## Project and developer services
+## Separately staged services
 
-RCC can expose project-scoped supporting services such as Gitea, DataLad-backed
-large-data state, object/S3 storage where enabled, databases, protected project
-services, usage/capacity views, instrument-ingestion paths, and lifecycle
-services. Each remains separately governed and may have a different release
-status.
-
-Read [What RCC can do](what-rcc-can-do.md) for the end-to-end platform view.
+Other RCC capabilities may remain independently staged even when the five-surface
+browser bundle releases. Examples include protected project vhosts, selected
+vendor integrations such as Ardia, and the RCC-to-Coscine self-service transfer
+path. Their pages must continue to carry their own release status.
 
 ## One project, several interfaces
 
@@ -109,10 +135,12 @@ RCC identity
     + project membership / delegated role
     + project type / data and service policy
               |
+              +--> RCC Home
               +--> Files
               +--> Analysis: Notebook / Workflow
+              +--> My RCC
+              +--> RCC Admin (role-gated)
               +--> Assistant / agent capabilities
-              +--> My RCC / Admin
               +--> SSH / VS Code / Slurm
               +--> project services such as Gitea, DataLad, S3
 ```
