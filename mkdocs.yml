@@ -24,6 +24,7 @@ nav:
   - RCC interfaces and capabilities:
       - Which RCC interface should I use?: concepts/rcc-services.md
       - What RCC can do: concepts/what-rcc-can-do.md
+      - Why not Kubernetes/Ceph everywhere? - I/O first: concepts/why-not-kubernetes-everywhere.md
       - RCC Files: concepts/rcc-files.md
       - RCC Analysis - notebooks and workflows (not yet released): analysis/rcc-analysis.md
       - AI and coding agents without exposing project data: concepts/agents-and-mcp.md
