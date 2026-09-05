@@ -1,17 +1,74 @@
 # Why RCC does not run everything on Kubernetes
 
 Experienced infrastructure users often ask why RCC does not simply put every
-service and scientific workload onto Kubernetes. The short answer is: **RCC uses
-the scheduler that owns each problem rather than forcing one orchestration model
-onto every workload.**
+service and scientific workload onto Kubernetes, or put all shared data behind a
+single general-purpose distributed storage platform such as Ceph. The short
+answer is: **RCC is designed around scientific I/O behavior first, then uses the
+scheduler and storage semantics that fit each workload.**
 
-This is not an argument that Kubernetes is bad. Kubernetes is an excellent and
-widely used platform for many service workloads. RCC's design question is
-whether introducing it as the universal execution authority would improve the
-research platform enough to justify another control plane and another scheduling
-translation layer.
+This is not an argument that Kubernetes or Ceph are bad. Both are excellent,
+widely used platforms. The RCC question is whether making either one the
+universal substrate would improve the actual research workload enough to justify
+another control plane, another translation layer, or another shared-I/O path.
 
-## Two workload classes have different needs
+## I/O patterns were the most important design constraint
+
+For RCC, the decisive observation is that scientific workloads do not merely
+consume bytes. They create very different **I/O patterns**:
+
+- a few very large sequential FASTQ/BAM/CRAM/image/model objects;
+- millions of metadata operations across tiny files;
+- Conda/package trees with tens of thousands of files;
+- workflow engines repeatedly checking paths and timestamps;
+- temporary databases and random-access indexes;
+- hundreds of jobs simultaneously reading the same reference data; and
+- temporary intermediate data that does not need to cross the storage network at
+  all.
+
+A platform can advertise enormous aggregate bandwidth and still perform badly
+when the useful work consists of millions of tiny opens, stats, seeks, directory
+walks, locks, or synchronous metadata updates. This is why RCC documentation
+repeatedly emphasizes **streaming versus random I/O, metadata pressure, local
+scratch, caching, and workflow shape**.
+
+This is also why the preferred pattern for I/O-intensive work is:
+
+```text
+durable project input
+      -> Slurm allocation
+      -> stage active working set to node-local scratch
+      -> compute and temporary/random I/O locally
+      -> validate declared outputs
+      -> return durable results to the project
+```
+
+The point is not that shared storage is slow. The point is that no shared
+filesystem can make an adversarial access pattern free.
+
+## Why a different storage platform alone would not solve it
+
+Ceph, object stores, distributed POSIX layers, and other mature storage systems
+have different strengths and operational tradeoffs. RCC can and does use object
+semantics where they fit. Project S3 exists for workloads that genuinely benefit
+from object access.
+
+But changing the storage backend does not remove the workload-level problem:
+
+- 500,000 tiny files still create far more metadata work than one large object;
+- repeated directory scans still create repeated metadata work;
+- a workflow that rewrites temporary files over shared storage still creates
+  unnecessary network traffic;
+- thousands of clients starting identical software environments can still cause
+  synchronized metadata/cache pressure; and
+- random temporary I/O still belongs closer to the process when possible.
+
+The RCC design therefore tries to **shape I/O before scaling infrastructure**.
+Storage technology matters, but access pattern usually matters first.
+
+See [Class 14: efficient I/O](../course/class-14-efficient-io.md) and
+[Class 15: storage architecture](../course/class-15-storage-architecture.md).
+
+## Two workload classes have different scheduling needs
 
 RCC deliberately separates two broad execution classes.
 
@@ -27,7 +84,7 @@ Apptainer provides the container boundary used by scientific jobs without
 requiring a Docker daemon or turning the container runtime into another
 scheduler.
 
-For these workloads the important questions are things such as:
+For these workloads the important questions include:
 
 - how many CPUs, how much RAM, how long, and whether a GPU is required;
 - which jobs are waiting and why;
@@ -37,7 +94,7 @@ For these workloads the important questions are things such as:
 - how the exact computation can be reproduced later.
 
 Wrapping those jobs in a second general-purpose orchestrator would not remove
-Slurm's responsibilities. It would usually add another scheduler that has to be
+Slurm's responsibilities. It would usually add another scheduler that must be
 kept consistent with them.
 
 ### Long-lived services: the RCC service plane
@@ -47,10 +104,10 @@ should stay up for days, weeks, or months have a different lifecycle. They need
 service placement, restart/health behavior, bounded network/service identities,
 and controlled rollout rather than a scientific batch queue.
 
-RCC uses **Nomad for parts of this service plane**. For example, service-side
-control components can live on Nomad while the user computation they request is
-still submitted to Slurm. That preserves one compute authority for scientific
-work instead of allowing a web service to become a second way to acquire cluster
+RCC uses **Nomad for parts of this service plane**. Service-side control
+components can live on Nomad while user computation they request is still
+submitted to Slurm. That preserves one compute authority for scientific work
+instead of allowing a web service to become a second way to acquire cluster
 resources.
 
 ## Why not replace Nomad with Kubernetes just because Kubernetes is popular?
@@ -59,7 +116,9 @@ Popularity is valuable: Kubernetes has a large ecosystem, strong tooling, and a
 large operator community. But replacing a working service scheduler is not free.
 RCC would gain another API surface, certificate/identity system, upgrade path,
 networking model, policy layer, storage integration, monitoring surface, and
-failure mode. If those capabilities solve a concrete RCC problem, that can be a
+failure mode.
+
+If Kubernetes-native capabilities solve a concrete RCC problem, that can be a
 good trade. If they merely duplicate an existing service plane, they increase
 operational complexity without changing what the researcher can accomplish.
 
@@ -77,6 +136,8 @@ RCC tries to avoid split authority.
   project.
 - **Storage systems** own their storage semantics rather than letting a scheduler
   invent a second source of truth.
+- **Workflow and application design** is responsible for avoiding pathological
+  I/O patterns that no backend can cheaply absorb.
 
 A browser, workflow UI, agent, API, or service may request scientific compute,
 but the request still becomes governed Slurm work. A convenient interface does
@@ -97,9 +158,10 @@ requires Kubernetes-native capabilities that materially improve safety,
 operability, or scientific usefulness—for example a mature supported operator or
 service ecosystem that would otherwise have to be reimplemented.
 
-The decision should then compare the real benefit with the cost of adding or
-replacing a control plane. “Kubernetes is the popular platform” is useful input,
-but not sufficient architecture justification by itself.
+The decision should compare the real benefit with the cost of adding or
+replacing a control plane **and** with the I/O behavior of the workload. “It is
+the popular platform” is useful input, but not sufficient architecture
+justification by itself.
 
 ## What users should take away
 
@@ -111,12 +173,13 @@ browser / workflow / agent request
              |
              +--> long-lived RCC service -> service plane
              |
-             +--> scientific computation -> Slurm -> Apptainer/job runtime
+             +--> scientific computation -> Slurm -> local scratch / project storage
 ```
 
 RCC is trying to hide unnecessary infrastructure mechanics from the user while
-keeping the underlying authority boundaries explicit and supportable.
+keeping the underlying authority and I/O boundaries explicit and supportable.
 
 See [What RCC can do](what-rcc-can-do.md),
-[RCC services](rcc-services.md), and
-[How shared compute works](../reference/how-shared-compute-works.md).
+[RCC services](rcc-services.md),
+[How shared compute works](../reference/how-shared-compute-works.md), and the
+[VS Code low-I/O defaults](../getting-started/vscode.md#rcc-safe-vs-code-defaults).
