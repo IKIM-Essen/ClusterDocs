@@ -13,11 +13,13 @@ nav:
   - Home: index.md
   - Start here:
       - First 15 minutes: getting-started/index.md
+      - Migration Assistant: getting-started/migration-assistant.md
       - macOS advanced setup: getting-started/macos.md
       - Windows 11 advanced setup: getting-started/windows.md
       - VS Code with RCC: getting-started/vscode.md
       - Jump host, shell host, and workers: concepts/jump-shell-compute.md
       - What changed from the old cluster: getting-started/what-changed.md
+  - RCC Journey - Light or Playful: rcc-journey.md
   - ClusterDocs TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - guided onboarding: rcc-expedition.md
