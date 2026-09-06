@@ -2,44 +2,97 @@
   <title id="title">From lab instrument to research result</title>
   <desc id="description">Mass spectrometers, DNA sequencers, and microscopes send data through ready Samba project shares into the Research Compute Cluster. Ardia integration is planned but not yet released. Researchers then analyse the data and share approved results.</desc>
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L10,5 L0,10 z" fill="#0a8fb2"/>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L11,6 L1,11 z" fill="#071019"/>
     </marker>
+    <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#071019" opacity=".08"/>
+    </pattern>
+    <pattern id="planned" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="16" fill="#ffd84d" opacity=".42"/>
+    </pattern>
+    <filter id="inkShadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="6" dy="6" stdDeviation="0" flood-color="#071019"/>
+    </filter>
   </defs>
 
-  <rect width="1200" height="420" rx="28" fill="#f7fafb"/>
-  <text x="54" y="58" fill="#062a46" font-family="system-ui,sans-serif" font-size="27" font-weight="700">From instrument to insight</text>
-  <text x="54" y="88" fill="#5b6874" font-family="system-ui,sans-serif" font-size="16">A simple, supported path for laboratory research data</text>
+  <rect width="1200" height="420" rx="24" fill="#f4f0df"/>
+  <rect width="1200" height="420" rx="24" fill="url(#dots)"/>
 
-  <rect x="45" y="132" width="260" height="220" rx="22" fill="#e9f8fb" stroke="#0a8fb2" stroke-width="2"/>
-  <circle cx="92" cy="181" r="24" fill="#0a8fb2" opacity=".16"/>
-  <path d="M75 193h34M81 174h22M86 165h12" fill="none" stroke="#0a8fb2" stroke-width="5" stroke-linecap="round"/>
-  <text x="130" y="181" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Lab devices</text>
-  <text x="75" y="235" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Mass spectrometers</text>
-  <text x="75" y="269" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">DNA sequencers</text>
-  <text x="75" y="303" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Microscopes</text>
-  <text x="75" y="330" fill="#5b6874" font-family="system-ui,sans-serif" font-size="14">and acquisition PCs</text>
+  <g font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" fill="#071019">
+    <g transform="rotate(-0.35 310 51)">
+      <text x="54" y="61" font-size="30" font-weight="900" letter-spacing="1.2">FROM INSTRUMENT TO INSIGHT</text>
+    </g>
+    <rect x="52" y="73" width="377" height="29" rx="2" fill="#ffd84d" stroke="#071019" stroke-width="2" transform="rotate(-0.5 240 88)"/>
+    <text x="64" y="94" font-size="15" font-weight="800">A SUPPORTED PATH FOR LABORATORY RESEARCH DATA</text>
+  </g>
 
-  <path d="M305 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+  <!-- Lab devices -->
+  <g filter="url(#inkShadow)" transform="rotate(-0.3 175 244)">
+    <rect x="45" y="132" width="260" height="220" rx="12" fill="#5de1ef" stroke="#071019" stroke-width="3"/>
+  </g>
+  <g font-family="system-ui, sans-serif" fill="#071019">
+    <rect x="65" y="151" width="46" height="46" rx="4" fill="#f4f0df" stroke="#071019" stroke-width="3"/>
+    <path d="M75 185h26M80 174h16M84 165h8" fill="none" stroke="#071019" stroke-width="4" stroke-linecap="round"/>
+    <text x="128" y="181" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" font-size="21" font-weight="900">LAB DEVICES</text>
+    <text x="75" y="235" font-size="16" font-weight="650">Mass spectrometers</text>
+    <text x="75" y="269" font-size="16" font-weight="650">DNA sequencers</text>
+    <text x="75" y="303" font-size="16" font-weight="650">Microscopes</text>
+    <text x="75" y="330" font-size="14">and acquisition PCs</text>
+  </g>
 
-  <rect x="374" y="160" width="218" height="164" rx="22" fill="#ffffff" stroke="#0a8fb2" stroke-width="2"/>
-  <text x="483" y="207" text-anchor="middle" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Upload data</text>
-  <text x="483" y="248" text-anchor="middle" fill="#0b456e" font-family="system-ui,sans-serif" font-size="18">Samba</text>
-  <text x="483" y="278" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">Ardia: not released</text>
+  <path d="M312 242h49" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="336" y="222" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">MOVE</text>
 
-  <path d="M592 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+  <!-- Upload -->
+  <g filter="url(#inkShadow)" transform="rotate(0.25 483 242)">
+    <rect x="374" y="160" width="218" height="164" rx="10" fill="#f4f0df" stroke="#071019" stroke-width="3"/>
+  </g>
+  <rect x="397" y="144" width="58" height="14" fill="#ffd84d" stroke="#071019" stroke-width="1" transform="rotate(-4 426 151)"/>
+  <g font-family="system-ui, sans-serif" fill="#071019" text-anchor="middle">
+    <text x="483" y="207" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" font-size="21" font-weight="900">UPLOAD DATA</text>
+    <text x="483" y="248" font-size="18" font-weight="800">Samba</text>
+  </g>
+  <g transform="rotate(-1 483 283)">
+    <rect x="408" y="266" width="150" height="31" rx="2" fill="url(#planned)" stroke="#071019" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="483" y="287" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="13" font-weight="900">ARDIA · NOT RELEASED</text>
+  </g>
 
-  <rect x="661" y="160" width="218" height="164" rx="22" fill="#062a46"/>
-  <text x="770" y="203" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif" font-size="19" font-weight="700">Research Compute</text>
-  <text x="770" y="229" text-anchor="middle" fill="#ffffff" font-family="system-ui,sans-serif" font-size="19" font-weight="700">Cluster</text>
-  <text x="770" y="264" text-anchor="middle" fill="#d8f3f8" font-family="system-ui,sans-serif" font-size="16">Stored research data</text>
-  <text x="770" y="291" text-anchor="middle" fill="#d8f3f8" font-family="system-ui,sans-serif" font-size="15">Access by project membership</text>
+  <path d="M599 242h49" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="623" y="222" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">INTO</text>
 
-  <path d="M879 242h56" stroke="#0a8fb2" stroke-width="4" marker-end="url(#arrow)"/>
+  <!-- RCC -->
+  <g filter="url(#inkShadow)" transform="rotate(-0.25 770 242)">
+    <rect x="661" y="160" width="218" height="164" rx="8" fill="#172033" stroke="#071019" stroke-width="3"/>
+    <rect x="678" y="177" width="184" height="23" rx="3" fill="#202b42" stroke="#9ba4b3" stroke-width="1"/>
+    <circle cx="847" cy="188" r="4" fill="#5de1ef" stroke="#071019" stroke-width="1"/>
+    <rect x="678" y="207" width="184" height="17" rx="2" fill="#202b42" stroke="#9ba4b3" stroke-width="1"/>
+  </g>
+  <g font-family="system-ui, sans-serif" text-anchor="middle">
+    <text x="770" y="252" fill="#ffffff" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" font-size="20" font-weight="900">RESEARCH COMPUTE</text>
+    <text x="770" y="276" fill="#ffffff" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" font-size="20" font-weight="900">CLUSTER</text>
+    <text x="770" y="301" fill="#5de1ef" font-size="14" font-weight="700">project-scoped research data</text>
+  </g>
+  <g transform="rotate(1.2 809 145)">
+    <rect x="741" y="132" width="136" height="27" rx="2" fill="#5de1ef" stroke="#071019" stroke-width="2"/>
+    <text x="809" y="151" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">PROJECT MEMBERS ONLY</text>
+  </g>
 
-  <rect x="948" y="160" width="207" height="164" rx="22" fill="#ffffff" stroke="#0a8fb2" stroke-width="2"/>
-  <text x="1052" y="207" text-anchor="middle" fill="#062a46" font-family="system-ui,sans-serif" font-size="20" font-weight="700">Analyze</text>
-  <text x="1052" y="246" text-anchor="middle" fill="#0b456e" font-family="system-ui,sans-serif" font-size="16">Python · R · AI</text>
-  <text x="1052" y="277" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">Share approved</text>
-  <text x="1052" y="299" text-anchor="middle" fill="#5b6874" font-family="system-ui,sans-serif" font-size="15">results</text>
+  <path d="M886 242h49" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="910" y="222" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">WORK</text>
+
+  <!-- Analyse -->
+  <g filter="url(#inkShadow)" transform="rotate(0.3 1052 242)">
+    <rect x="948" y="160" width="207" height="164" rx="10" fill="#f4f0df" stroke="#071019" stroke-width="3"/>
+  </g>
+  <g font-family="system-ui, sans-serif" fill="#071019" text-anchor="middle">
+    <text x="1052" y="207" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif" font-size="21" font-weight="900">ANALYZE</text>
+    <text x="1052" y="246" font-size="16" font-weight="800">Python · R · AI</text>
+  </g>
+  <g transform="rotate(-1.4 1052 285)">
+    <rect x="983" y="265" width="138" height="39" rx="12" fill="#ff746c" stroke="#071019" stroke-width="3"/>
+    <text x="1052" y="289" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="13" font-weight="900">APPROVED RESULTS</text>
+  </g>
+
+  <text x="1148" y="386" text-anchor="end" fill="#071019" opacity=".7" font-family="Arial Narrow, system-ui, sans-serif" font-size="11" font-weight="800">RCC ILLUSTRATED GRAPHICS</text>
 </svg>
