@@ -20,6 +20,7 @@ nav:
   - ClusterDocs NG TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
+  - RCC Journey - explore the cluster: rcc-journey.md
   - RCC services:
       - Which RCC service should I use?: concepts/rcc-services.md
       - RCC Files: concepts/rcc-files.md
