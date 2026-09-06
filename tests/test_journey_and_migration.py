@@ -32,10 +32,14 @@ def test_journey_has_two_modes_and_shared_process_grammar() -> None:
         "without turning every researcher into a systems, workflow, or container engineer",
         "Snakemake or Nextflow",
         "slurm-execution-flow.svg",
+        "No scoring. No leaderboard.",
     ):
         assert phrase in text
-    assert "leaderboard" not in text.lower()
-    assert "score" not in text.lower()
+    # Guard the old competitive prototype rather than rejecting the explicit
+    # statement that Journey has no score/leaderboard.
+    assert "WEEKLY CHALLENGE" not in text
+    assert "0 / 90" not in text
+    assert "register this practice score" not in text.lower()
 
 
 def test_migration_assistant_translates_old_habits_without_destructive_shortcuts() -> None:
