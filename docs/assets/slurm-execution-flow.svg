@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">How an RCC Slurm job is placed</title>
+  <desc id="desc">A researcher requests CPU, memory, time and optionally GPU resources with sbatch or srun. Slurm chooses an eligible partition and worker. The job reads and writes project-scoped data. Users request resources rather than physical node names.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M1 1L11 6 1 11Z" fill="#071019"/>
+    </marker>
+    <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#071019" opacity=".07"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="6" dy="6" stdDeviation="0" flood-color="#071019"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="430" rx="24" fill="#f4f0df"/>
+  <rect width="1200" height="430" rx="24" fill="url(#dots)"/>
+
+  <g fill="#071019" font-family="Arial Narrow, Avenir Next Condensed, system-ui, sans-serif">
+    <text x="48" y="52" font-size="30" font-weight="900" letter-spacing="1.1" transform="rotate(-.2 48 52)">A SLURM JOB: REQUEST → PLACE → RUN</text>
+    <g transform="rotate(-.6 241 79)">
+      <rect x="48" y="64" width="386" height="29" fill="#ffd84d" stroke="#071019" stroke-width="2"/>
+      <text x="60" y="84" font-size="14" font-weight="900">YOU DESCRIBE THE WORK · SLURM CHOOSES WHERE IT RUNS</text>
+    </g>
+  </g>
+
+  <g transform="translate(46 133) rotate(-.3 105 92)" filter="url(#shadow)">
+    <rect width="210" height="184" rx="12" fill="#5de1ef" stroke="#071019" stroke-width="3"/>
+    <text x="105" y="39" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="20" font-weight="900">1 · REQUEST</text>
+    <rect x="27" y="57" width="156" height="64" rx="5" fill="#172033" stroke="#071019" stroke-width="3"/>
+    <text x="105" y="82" text-anchor="middle" fill="#fff" font-family="ui-monospace, monospace" font-size="13">sbatch / srun</text>
+    <text x="105" y="103" text-anchor="middle" fill="#5de1ef" font-family="ui-monospace, monospace" font-size="11">CPU · RAM · TIME · GPU?</text>
+    <text x="105" y="148" text-anchor="middle" fill="#071019" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Request resources</text>
+    <text x="105" y="168" text-anchor="middle" fill="#071019" font-family="system-ui, sans-serif" font-size="12">not a physical node</text>
+  </g>
+
+  <path d="M270 225h70" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="305" y="205" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">SUBMIT</text>
+
+  <g transform="translate(354 133) rotate(.3 108 92)" filter="url(#shadow)">
+    <rect width="216" height="184" rx="10" fill="#ffd84d" stroke="#071019" stroke-width="3"/>
+    <text x="108" y="39" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="20" font-weight="900">2 · SCHEDULE</text>
+    <path d="M42 72h132M42 91h105M42 110h121" stroke="#071019" stroke-width="4" stroke-linecap="round"/>
+    <text x="108" y="145" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="17" font-weight="900">SLURM</text>
+    <text x="108" y="166" text-anchor="middle" fill="#071019" font-family="system-ui, sans-serif" font-size="12">policy + availability + fit</text>
+  </g>
+
+  <path d="M584 225h70" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="619" y="205" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">PLACE</text>
+
+  <g transform="translate(668 118) rotate(-.25 142 107)" filter="url(#shadow)">
+    <rect width="284" height="214" rx="11" fill="#f4f0df" stroke="#071019" stroke-width="3"/>
+    <text x="142" y="38" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="20" font-weight="900">3 · ELIGIBLE COMPUTE</text>
+    <g font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#071019">
+      <rect x="28" y="58" width="228" height="34" rx="4" fill="#5de1ef" stroke="#071019" stroke-width="2"/>
+      <text x="142" y="80" text-anchor="middle">cpu_short · bounded short jobs</text>
+      <rect x="28" y="101" width="228" height="34" rx="4" fill="#f4f0df" stroke="#071019" stroke-width="2"/>
+      <text x="142" y="123" text-anchor="middle">cpu_nodes · regular CPU work</text>
+      <rect x="28" y="144" width="228" height="34" rx="4" fill="#172033" stroke="#071019" stroke-width="2"/>
+      <text x="142" y="166" text-anchor="middle" fill="#fff">gpu_nodes · typed/eligible GPU</text>
+    </g>
+    <text x="142" y="201" text-anchor="middle" fill="#071019" font-family="system-ui, sans-serif" font-size="11">actual availability can change</text>
+  </g>
+
+  <path d="M966 225h58" stroke="#071019" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="995" y="205" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="12" font-weight="900">RUN</text>
+
+  <g transform="translate(1038 143) rotate(.3 61 82)" filter="url(#shadow)">
+    <rect width="122" height="164" rx="9" fill="#172033" stroke="#071019" stroke-width="3"/>
+    <rect x="17" y="19" width="88" height="23" rx="3" fill="#202b42" stroke="#9ba4b3"/>
+    <circle cx="91" cy="30.5" r="4" fill="#5de1ef"/>
+    <rect x="17" y="50" width="88" height="18" rx="2" fill="#202b42" stroke="#9ba4b3"/>
+    <rect x="17" y="76" width="88" height="18" rx="2" fill="#202b42" stroke="#9ba4b3"/>
+    <text x="61" y="124" text-anchor="middle" fill="#fff" font-family="Arial Narrow, system-ui, sans-serif" font-size="17" font-weight="900">JOB</text>
+    <text x="61" y="145" text-anchor="middle" fill="#5de1ef" font-family="system-ui, sans-serif" font-size="11">allocated worker</text>
+  </g>
+
+  <g transform="translate(366 354) rotate(-.45 237 22)">
+    <rect width="474" height="44" rx="13" fill="#5de1ef" stroke="#071019" stroke-width="3"/>
+    <text x="237" y="27" text-anchor="middle" fill="#071019" font-family="Arial Narrow, system-ui, sans-serif" font-size="14" font-weight="900">DURABLE INPUT + RESULTS LIVE IN PROJECT-SCOPED STORAGE</text>
+  </g>
+  <path d="M1099 317c0 33-88 52-247 58" fill="none" stroke="#071019" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <text x="1150" y="408" text-anchor="end" fill="#071019" opacity=".65" font-family="Arial Narrow, system-ui, sans-serif" font-size="10" font-weight="800">RCC ILLUSTRATED GRAPHICS</text>
+</svg>
