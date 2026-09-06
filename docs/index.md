@@ -22,6 +22,23 @@ the deeper technical layers remain available for people who need them.
   <p class="expedition-privacy">Browser-first by design: having an RCC account does not imply that you need an SSH key.</p>
 </section>
 
+<section class="path-grid" aria-label="Explore RCC or migrate existing habits">
+  <article class="path-card analysis-path">
+    <span class="path-number">J</span>
+    <p class="path-label">RCC Journey</p>
+    <h3>Understand why RCC works this way</h3>
+    <p>Choose a concise evidence-backed Light path or a more playful technical-comic route with the longer I/O, GPU, agent, workflow, and machine-room catalogue.</p>
+    <a class="path-action" href="rcc-journey.md">Choose Journey Light or Playful →</a>
+  </article>
+  <article class="path-card development-path">
+    <span class="path-number">M</span>
+    <p class="path-label">Migration Assistant</p>
+    <h3>Bring old-cluster habits forward without starting over</h3>
+    <p>Tell RCC which old habits still describe your setup—SSH-first access, SSHFS browsing, manual scripts, static resource requests, or legacy collaboration—and get the smallest current migration step.</p>
+    <a class="path-action" href="getting-started/migration-assistant.md">Open the migration assistant →</a>
+  </article>
+</section>
+
 ## The normal research journey
 
 For a researcher, the important sequence is simple:
@@ -153,6 +170,11 @@ Read [AI and coding agents without exposing project data](concepts/agents-and-mc
 ## Learn only as much infrastructure as you need
 
 - New to RCC? Use [Start here: your first 15 minutes](getting-started/index.md).
+- Want to understand the RCC trust model without a course? Open
+  [RCC Journey](rcc-journey.md).
+- Returning from the old cluster? Use the
+  [Migration Assistant](getting-started/migration-assistant.md) or the full
+  [old-to-new comparison](getting-started/what-changed.md).
 - Unsure which interface to use? Read the [RCC service map](concepts/rcc-services.md).
 - Want the complete capability picture? Read [What RCC can do](concepts/what-rcc-can-do.md).
 - Need the technical reference? Open the [day-to-day reference](reference/index.md).
