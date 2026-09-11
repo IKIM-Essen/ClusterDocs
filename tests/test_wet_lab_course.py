@@ -39,7 +39,7 @@ class WetLabCourseTests(unittest.TestCase):
         self.assertIn("Class 16 - Wet-lab instrument data", mkdocs)
         self.assertIn("Class 16 · Wet-lab instrument data", builder)
 
-    def test_endpoint_page_uses_stable_jump_and_shell_services(self):
+    def test_endpoint_page_uses_stable_login_and_shellhost_services(self):
         page = (ROOT / "docs/connecting/stable-endpoints.md").read_text()
         self.assertIn("login.ikim.uk-essen.de", page)
         self.assertIn("shellhost.ikim.uk-essen.de", page)
@@ -50,8 +50,8 @@ class WetLabCourseTests(unittest.TestCase):
         )
         self.assertNotIn("HostName login1", page)
         self.assertNotIn("HostName login2", page)
+        self.assertNotIn("HostName is-2", page)
         self.assertNotIn("HostName is2-2", page)
-        self.assertNotIn("HostName is2-5", page)
 
     def test_existing_mount_guides_give_direct_user_instructions(self):
         for name in ["legacy-storage-windows.md", "legacy-storage-macos.md"]:
