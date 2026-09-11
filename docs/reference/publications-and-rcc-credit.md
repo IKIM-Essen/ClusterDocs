@@ -1,16 +1,31 @@
-# Publications and acknowledging RCC
+# Publications, acknowledging, and citing RCC
 
-Research publications are one of the clearest ways to show what RCC enables. If RCC compute, project storage, scientific software, data-transfer services, or operational support materially contributed to your work, please make that contribution visible in the paper.
+Research publications are one of the clearest ways to show what RCC enables. If RCC compute, project storage, scientific software, data-transfer services, or operational support materially contributed to a scholarly publication, RCC requires both acknowledgement and citation of the infrastructure contribution.
 
-## Recommended acknowledgement
+## Publication-credit requirement
+
+For a scholarly publication materially enabled by RCC, authors must do both of the following:
+
+1. **Acknowledge RCC** in the Methods or Acknowledgements section.
+2. **Cite the canonical RCC infrastructure lineage paper** in the bibliography.
+
+This requirement is based on material RCC contribution. Having an RCC account by itself does not mean a paper used RCC.
+
+## Required acknowledgement
 
 Use this wording in the **Methods** or **Acknowledgements** section:
 
 > Computational resources and services were provided by the Research Compute Cluster (RCC) at University Hospital Essen.
 
-Please keep the stable name **Research Compute Cluster (RCC)** in the text. Consistent wording makes RCC-supported publications easier to identify without relying on author names alone.
+Keep the stable name **Research Compute Cluster (RCC)** in the text. Consistent wording makes RCC-supported publications easier to identify without relying on author names alone.
 
-RCC does not currently designate a canonical methods or infrastructure paper for citation. Until one is formally designated, use the acknowledgement above rather than citing an unpublished manuscript.
+## Required infrastructure citation
+
+The current canonical published infrastructure citation is:
+
+> Schmidt, Hendrik F. R.; Schlötterer, Jörg; Bargull, Marcel; Nasca, Enrico; Aydelott, Ryan; Seifert, Christin; Meyer, Folker. **Towards a Trustworthy, Secure and Reliable Enclave for Machine Learning in a Hospital Setting: The Essen Medical Computing Platform (EMCP).** 2021 IEEE Third International Conference on Cognitive Machine Intelligence (CogMI), pp. 116–123. DOI: `10.1109/CogMI52975.2021.00023`.
+
+EMCP is the published architectural precursor to RCC. This paper remains the required RCC infrastructure citation until a dedicated published RCC methods or infrastructure paper is formally designated. Do not substitute an unpublished manuscript as the required bibliographic citation.
 
 ## Current RCC publication archive
 
@@ -35,7 +50,7 @@ If several RCC projects or facilities contributed, add a short note describing t
 
 Publication reporting is intended to form a closed loop:
 
-1. researchers acknowledge RCC;
+1. researchers acknowledge RCC and cite the canonical infrastructure paper;
 2. the DOI/PMID becomes a publication candidate;
 3. the candidate is associated with the relevant RCC project;
 4. the attribution is reviewed;
