@@ -75,32 +75,64 @@ survive job completion, reboot, maintenance, or cleanup.
 ## Pick a transfer method
 
 - Use the **RCC files portal** for ordinary browser-based project transfers.
-- Use `scp`, `sftp`, or `rsync` over the approved SSH route for scripted or
-  resumable transfers.
+- Use `scp`, `sftp`, or `rsync` to a **shell host**, routed through
+  `login.ikim.uk-essen.de` with SSH `ProxyJump`, for scripted or resumable
+  transfers.
 - For a large tree of small files, create one archive before transfer to reduce
   metadata operations, then verify it with a checksum.
 - Use an approved institutional bulk-transfer service when the files portal or
   SSH route is unsuitable.
 
-Example with `rsync`:
+The important endpoint distinction is:
+
+```text
+workstation -> login.ikim.uk-essen.de -> shellhost -> /homes, /groups, /projects
+              forwarding only          transfer endpoint
+```
+
+Do **not** use `login.ikim.uk-essen.de` as the source or destination of a data
+copy. The login tier is the guarded transport boundary; research filesystems are
+available on the shell-host tier.
+
+The explicit `scp` form is:
+
+```bash
+scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 .
+```
+
+For SFTP:
+
+```bash
+sftp -J login.ikim.uk-essen.de shellhost
+```
+
+For `rsync`:
 
 ```bash
 rsync --archive --partial --info=progress2 \
-  ./dataset/ {{ ssh_target_alias }}:/projects/<project>/incoming/dataset/
+  -e 'ssh -J login.ikim.uk-essen.de' \
+  ./dataset/ shellhost:/projects/<project>/incoming/dataset/
 ```
+
+If your approved SSH configuration already gives `shellhost` the setting
+`ProxyJump login.ikim.uk-essen.de`, the shorter forms such as
+`scp file shellhost:/projects/<project>/` are equivalent. The explicit form is
+shown here first so that it remains clear which machine is the jump host and
+which machine actually accesses the data.
 
 Example with an archive and checksum:
 
 ```bash
 tar -czf dataset.tar.gz dataset/
 sha256sum dataset.tar.gz > dataset.tar.gz.sha256
-scp dataset.tar.gz dataset.tar.gz.sha256 \
-  {{ ssh_target_alias }}:/projects/<project>/incoming/
+scp -J login.ikim.uk-essen.de dataset.tar.gz dataset.tar.gz.sha256 \
+  shellhost:/projects/<project>/incoming/
 ```
 
 On RCC, verify before extracting:
 
 ```bash
+ssh -J login.ikim.uk-essen.de shellhost
 cd /projects/<project>/incoming
 sha256sum -c dataset.tar.gz.sha256
 tar -tzf dataset.tar.gz | sed -n '1,20p'
@@ -109,7 +141,12 @@ tar -tzf dataset.tar.gz | sed -n '1,20p'
 Inspect archive paths before extraction. Reject archives containing absolute
 paths or unexpected `..` components.
 
-## Unsupported transfer pattern
+## Unsupported transfer patterns
+
+Do not transfer data directly to `login.ikim.uk-essen.de`, `login1`, or
+`login2`. Ordinary user sessions on those hosts are forwarding-only; they are
+not RCC storage endpoints and should not expose `/homes`, `/groups`, or
+`/projects`.
 
 Do not transfer project data with a raw Netcat listener. It has no built-in
 authentication or encryption, can expose an unintended port, and bypasses the
