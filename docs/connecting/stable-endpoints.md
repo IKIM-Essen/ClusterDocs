@@ -94,10 +94,10 @@ an equivalent shorter form because the `shellhost` entry already carries the
 
 ## Names you may see in a saved configuration
 
-Some saved workstation configurations contain physical login-backend names such
-as `login1`, `login2`, `is-2`, or `is2-2`. Do not create new workstation targets
-for those physical names. Use the stable `login.ikim.uk-essen.de` service as the
-jump path and `shellhost` as the ordinary destination.
+Some saved workstation configurations contain physical login-backend names.
+Do not create new workstation targets for those physical names. Use the stable
+`login.ikim.uk-essen.de` service as the jump path and `shellhost` as the ordinary
+destination.
 
 When reviewing a saved configuration:
 

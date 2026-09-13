@@ -47,7 +47,7 @@ Paste the current configuration supplied through the approved institutional
 channel. Its shape is:
 
 ```sshconfig
-Host {{ ssh_gateway_alias }}
+Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de
     HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
     User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc

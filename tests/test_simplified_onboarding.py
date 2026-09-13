@@ -35,6 +35,9 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             page = (DOCS / relative).read_text(encoding="utf-8")
             normalized = " ".join(page.split())
             self.assertIn("Host {{ ssh_gateway_alias }}", page)
+            self.assertIn(
+                "Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de", page
+            )
             self.assertIn("Host {{ ssh_target_alias }}", page)
             self.assertIn("ProxyJump {{ ssh_gateway_alias }}", page)
             self.assertIn("You do not log into the jump host", normalized)
