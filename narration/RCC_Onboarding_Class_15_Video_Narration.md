@@ -16,6 +16,8 @@ Redis stores information such as: paths and directory entries; ownership and per
 
 MinIO provides the S3-compatible object-storage layer used for durable file contents. Object storage is effective for: large objects; sequential reads and writes; durable replicated or erasure-coded storage; checksummed content; and aggregate access from many clients. The JuiceFS client translates filesystem reads and writes into object operations. Large streaming transfers amortize request overhead. Tiny, scattered reads and writes can generate many requests for relatively little useful data.
 
+The important access boundary is that this S3 layer is the **backend used by JuiceFS**. Normal project users work through the JuiceFS POSIX namespace under `/projects`; they do not automatically receive S3 credentials. Direct S3, where a project has it, is a separately admitted capability with separate S3 authorization. OIDC or STS can issue that S3 identity, but it does not reproduce POSIX ownership and mode semantics.
+
 ## Slide 5: RCC network topology
 
 Storage and backend servers have connectivity of up to 100 Gb/s. Typical compute clients have 10 Gb/s links. The 100 Gb/s server side is aggregate capacity. It does not provide 100 Gb/s to one compute node. Ten clients each attempting to sustain 10 Gb/s can already approach the nominal capacity of one 100 Gb/s backend link. Actual useful throughput is lower because of: protocol overhead; request latency; metadata operations; contention; checksums and encryption; filesystem translation; and application processing. Random and small-file workloads often do not fill a 10 Gb/s link with useful data. They spend their time waiting for network round trips and metadata.
@@ -30,7 +32,7 @@ The JuiceFS client may cache active data in memory and on node-local disk. A cac
 
 ## Slide 8: Slurm placement and cache locality
 
-A parent job that stages data or warms a cache on one node should not submit child jobs that may run elsewhere: Nested submission destroys locality and can create repeated: S3 downloads; Redis metadata traffic; 10 Gb/s client-link use; container transfers; reference-index transfers; and synchronized backend load. Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from an approved submission host. Each compute job should receive a complete unit of work.
+A parent job that stages data or warms a cache on one node should not submit child jobs that may run elsewhere: Nested submission destroys locality and can create repeated: backend object downloads through JuiceFS; Redis metadata traffic; 10 Gb/s client-link use; container transfers; reference-index transfers; and synchronized backend load. Use job arrays, explicit Slurm dependencies, or Snakemake's Slurm executor from an approved submission host. Each compute job should receive a complete unit of work.
 
 ## Slide 9: Diagnosing the slow layer
 

@@ -76,6 +76,25 @@ operations. Large streaming transfers amortize request overhead. Tiny,
 scattered reads and writes can generate many requests for relatively little
 useful data.
 
+## 2a. Access boundary: backend S3 is not user S3
+
+The S3 arrows in the diagrams describe **internal JuiceFS backend traffic**.
+They do not mean that every project or every user receives direct S3 access.
+
+Normal RCC project access is the JuiceFS-backed POSIX namespace under
+`/projects/<project>`. That path uses RCC Unix identity, project group
+membership, file ownership, mode bits, directory permissions and JuiceFS
+filesystem metadata.
+
+Direct S3 is a separate, optional RCC project capability. If a project has it,
+RCC supplies a separately scoped S3 identity/policy and credential or temporary
+session. Project membership or access to `/projects/<project>` does not itself
+grant direct S3 access.
+
+OIDC or STS can be used to issue direct-S3 credentials, but authentication does
+not make S3 evaluate POSIX permissions. Users must never treat the raw object
+namespace backing JuiceFS as an alternate S3 view of the same project files.
+
 ## 3. RCC network topology
 
 Storage and backend servers have connectivity of up to **100 Gb/s**. Typical
@@ -214,7 +233,7 @@ child on worker D downloads again
 
 Nested submission destroys locality and can create repeated:
 
-- S3 downloads;
+- backend object downloads performed by JuiceFS;
 - Redis metadata traffic;
 - 10 Gb/s client-link use;
 - container transfers;
