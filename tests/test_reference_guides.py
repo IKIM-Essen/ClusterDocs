@@ -43,6 +43,21 @@ class ReferenceGuideTests(unittest.TestCase):
         self.assertIn("users from different primary groups can exchange data", text)
         self.assertIn("explicit project membership", text)
 
+    def test_storage_docs_keep_posix_and_direct_s3_distinct(self):
+        reference = (REF / "storage-transfer.md").read_text()
+        course = (ROOT / "docs" / "course" / "class-15-storage-architecture.md").read_text()
+        narration = (ROOT / "narration" / "RCC_Onboarding_Class_15_Video_Narration.md").read_text()
+        for text in (reference, course, narration):
+            self.assertIn("JuiceFS", text)
+            self.assertIn("S3", text)
+        self.assertIn("does **not** get direct S3", reference)
+        self.assertIn("Direct S3 is a separate, optional RCC project capability", course)
+        self.assertIn("do not automatically receive S3 credentials", narration)
+        self.assertIn("OIDC", reference)
+        self.assertIn("OIDC", course)
+        self.assertIn("OIDC", narration)
+        self.assertNotIn("ordinary project access is S3", (reference + course + narration).lower())
+
     def test_courses_link_to_reference_guides(self):
         linked = "\n".join(p.read_text() for p in (ROOT / "docs" / "course").glob("*.md"))
         for name in (
