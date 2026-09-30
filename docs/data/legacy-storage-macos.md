@@ -118,3 +118,6 @@ private keys, passwords, or patient-related filenames in support requests.
 
 Return to [Choosing an instrument-data transfer path](instrument-data-options.md)
 before selecting a current transfer method.
+
+For the planned native SMB service and backup recovery path, see
+[Mac files and encrypted RCC backups](macos-rcc-backup.md). It is not yet released.
