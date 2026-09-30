@@ -23,6 +23,17 @@ The relay will not provide general RCC or Lab-network access. Reviewed policy
 will permit named administrator devices to reach registered PiKVM controllers
 only on the management services required for their approved purpose.
 
+## Two-factor authentication and device identity
+
+RCC Headscale authenticates enrolled machines cryptographically; the Headscale
+protocol endpoint is not a browser login page. An enrolled device therefore
+does **not** by itself authorize a person to view or control an instrument.
+
+After release, user-facing console session/control acquisition will require a
+fresh RCC strong two-factor/LoA2 step-up through the RCC authorization layer.
+Native PiKVM accounts and simple Headscale reachability are not the RCC user
+authorization boundary.
+
 ## Access after release
 
 After RCC announces the service:
@@ -31,8 +42,10 @@ After RCC announces the service:
 2. Install the supported Tailscale-compatible client when instructed.
 3. Complete the one-time enrollment delivered through the approved
    institutional channel.
-4. Open the stable PiKVM name supplied with the approval.
-5. Remove the local enrollment material after the device has joined.
+4. Complete the fresh RCC strong two-factor step-up when requesting the
+   user-facing console session.
+5. Open the stable PiKVM name supplied with the approval.
+6. Remove the local enrollment material after the device has joined.
 
 The Headscale endpoint is a machine-protocol service, not the PiKVM user
 interface. RCC will publish the supported endpoint only when the service is
