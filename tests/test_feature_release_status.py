@@ -24,6 +24,8 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                 "rcc_workers": "ready",
                 "samba_project_shares": "ready",
                 "headscale_pikvm_access": "not_yet_released",
+                "remote_files_mac_access": "not_yet_released",
+                "remote_files_time_machine_backup": "not_yet_released",
                 "nextflow_slurm_support": "ready",
                 "project_vhosts": "not_yet_released",
                 "ardia_integration": "not_yet_released",
@@ -33,7 +35,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         )
 
     def test_every_public_unreleased_feature_mention_is_marked(self):
-        for feature in ("vhost", "ardia", "coscine", "headscale"):
+        for feature in ("vhost", "ardia", "coscine", "headscale", "remote files", "time machine"):
             pages = [
                 page
                 for page in DOCS.rglob("*.md")
