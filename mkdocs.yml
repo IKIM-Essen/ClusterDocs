@@ -27,6 +27,7 @@ nav:
       - RCC Gitea: concepts/rcc-gitea.md
       - RCC Workbench (not yet released): concepts/workbench-interfaces.md
       - RCC Analysis (not yet released): analysis/rcc-analysis.md
+      - macOS Remote Files and Time Machine (not yet released): connecting/remote-files-macos.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
       - Software development: paths/software-development.md
