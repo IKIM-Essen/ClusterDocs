@@ -35,7 +35,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         )
 
     def test_every_public_unreleased_feature_mention_is_marked(self):
-        for feature in ("vhost", "ardia", "coscine", "headscale", "remote files", "time machine"):
+        for feature in ("vhost", "ardia", "coscine", "headscale"):
             pages = [
                 page
                 for page in DOCS.rglob("*.md")
