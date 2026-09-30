@@ -3,8 +3,9 @@
 Choose storage by lifecycle and access pattern, not only by free capacity.
 
 > **Service status:** RCC workers and project Samba shares are **ready now**.
-> RCC-to-Coscine archive transfer is **not yet released**; references to it are
-> lifecycle planning, not an operational transfer command.
+> RCC-to-Coscine archive transfer and macOS Remote Files/Time Machine are
+> **not yet released**; references to them are lifecycle planning, not an
+> operational transfer command.
 
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
 > the files portal, [Class 3](../course/class-03-performance.md) explains local
@@ -28,6 +29,8 @@ storage, see [Users, groups, and projects](users-groups-projects.md).
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
 | Browser upload and download | RCC files portal | Confirm project and destination before transfer |
+| Planned native Mac Home/primary-group access | RCC Remote Files | Not yet released; Groups requires an explicit no-project-data publication review |
+| Planned Mac workstation backup | encrypted RCC Time Machine target | Not yet released; requires FileVault, encrypted backup, recovery-secret custody, and tested restore |
 
 ## Research data belongs to a project, not a home directory
 
@@ -131,3 +134,16 @@ Before transfer, confirm that the project governance covers RCC and follow the
 For submission to repositories such as the European Genome-phenome Archive,
 follow the repository's current official submission and encryption workflow;
 do not reuse historical FTP commands from the old site without validation.
+
+## Planned macOS Remote Files and workstation backup
+
+RCC is preparing a private Headscale/Tailscale-based SMB service for native Mac
+access to Home and a reviewed primary working-group directory, plus encrypted
+network Time Machine. It is **not yet released**.
+
+This does not expose project storage. A group can be published only after
+project-like data has been moved to governed project storage. Before replacing a
+desktop USB backup disk, the user's encrypted RCC Time Machine backup must pass a
+real restore test, including recovery on a replacement or reinstalled Mac.
+
+See [Planned macOS Remote Files and encrypted Time Machine](../connecting/remote-files-macos.md).
