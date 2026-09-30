@@ -30,8 +30,8 @@ Enrollment, credential rotation and recovery enrollment require strong 2FA.
 Scheduled backups reconnect using the enrolled device and a separate Files
 credential stored in Keychain. They cannot prompt for a second factor on every
 scheduled run. This is a persistent device session, not fresh interactive 2FA
-for each backup. RCC's final device-management/admission policy is still a
-release prerequisite.
+for each backup. The first-backup encryption admission workflow is still a
+release prerequisite; RCC does not require management of your Mac.
 
 ## Connect and make the first backup
 
@@ -45,10 +45,18 @@ release prerequisite.
    enable **Encrypt Backups**. Store the encryption password in the approved
    recovery system. It is separate from the Files credential.
 5. Complete the initial backup. RCC storage is already encrypted while it is
-   created. An operator then checks the Mac's encrypted backup bundle against
-   the exact RCC destination. This check has to be repeated: it cannot force an
-   unmanaged Mac to retain the setting. RCC also checks an incremental backup,
-   sleep/wake reconnection, capacity limits and a selected-file restore with you.
+   created, but **your first RCC backup is not yet accepted**. An operator checks
+   that the Mac's backup bundle is encrypted on the exact RCC destination. If
+   encryption was missed, keep your existing work-desktop backup disk and make
+   a new encrypted RCC backup with RCC's help; do not delete a backup yourself.
+   RCC also checks an incremental backup, sleep/wake reconnection, capacity
+   limits and a selected-file restore with you.
+
+RCC will ask you to repeat the short encryption check every 90 days. If the
+reviewed result is missing or older than 90 days, RCC shows the worksite backup
+health as **Unknown** until a new check is reviewed. This does not erase your
+backup or disconnect your Mac. It also does not replace normal monitoring that
+the backup is recent and restorable.
 
 Network encryption, server disk encryption and encrypted Time Machine backups
 are different protections. RCC requires all three. A successful upload or a
