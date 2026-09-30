@@ -16,7 +16,11 @@ RCC account
    |      -> portal passkey or YubiKey, authenticator code, recovery codes
    |
    +--> SSH / SFTP
-          -> SSH public key registered to your RCC account
+   |      -> SSH public key registered to your RCC account
+   |
+   +--> Remote Files device enrollment
+          -> fresh strong authentication / 2FA for enrollment and security changes
+          -> enrolled device identity + separate SMB credential for unattended reconnects
 ```
 
 Never share any of these credentials with another person. Project access is
@@ -124,7 +128,19 @@ example, one device might hold:
 The physical device is the same; the credentials and relying parties are not.
 Do not delete one entry merely because another entry on the same hardware works.
 
-## 9. Sign-out and session expiry are normal security boundaries
+## 9. Remote Files uses 2FA for enrollment, not every background backup
+
+When RCC Remote Files is released, enrolling/replacing a Mac and rotating or
+revoking its Remote Files credential requires fresh strong authentication /
+2FA. A scheduled Time Machine backup or ordinary Finder reconnect does not open
+an interactive second-factor prompt; it uses the already enrolled device
+identity plus the separate SMB credential stored in the Mac Keychain.
+
+This is deliberate: unattended backup cannot work if every SMB reconnect
+requires a human-present second factor. Lost-device containment therefore
+depends on prompt revocation of both the device enrollment and its SMB access.
+
+## 10. Sign-out and session expiry are normal security boundaries
 
 Web sessions expire and sensitive actions may require a fresh step-up even when
 you are still generally signed into RCC. A Workbench reconnect may similarly
