@@ -84,6 +84,10 @@ which newer surfaces are documented before release.
 - Preparing approved remote-console access: read the
   [RCC Headscale and PiKVM guide](connecting/pikvm-headscale.md). This service
   is **not yet released**.
+- Planning Mac access to RCC Home/approved Groups or replacing a desktop USB
+  backup with encrypted RCC Time Machine: read the
+  [macOS Remote Files and Time Machine guide](connecting/remote-files-macos.md).
+  This service is **not yet released**.
 - Moving data from an instrument into analysis: complete
   [Class 16](course/class-16-wet-lab-data-workflows.md).
 - Planning retention, Coscine archiving, or defensible cleanup: complete
