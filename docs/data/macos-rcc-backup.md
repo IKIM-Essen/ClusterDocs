@@ -52,11 +52,9 @@ release prerequisite; RCC does not require management of your Mac.
    RCC also checks an incremental backup, sleep/wake reconnection, capacity
    limits and a selected-file restore with you.
 
-RCC will ask you to repeat the short encryption check every 90 days. If the
-reviewed result is missing or older than 90 days, RCC shows the worksite backup
-health as **Unknown** until a new check is reviewed. This does not erase your
-backup or disconnect your Mac. It also does not replace normal monitoring that
-the backup is recent and restorable.
+RCC checks client encryption once, after the first worksite backup. It does not
+ask you to repeat that encryption check. RCC still monitors whether backups are
+recent and whether recovery works; those are separate checks.
 
 Network encryption, server disk encryption and encrypted Time Machine backups
 are different protections. RCC requires all three. A successful upload or a
