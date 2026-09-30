@@ -42,6 +42,7 @@ NAV=[
  ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
  ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),
  ('Data lifecycle','Existing macOS SSHFS setup','data/legacy-storage-macos.md'),
+ ('Data lifecycle','Mac files and encrypted backups (not yet released)','data/macos-rcc-backup.md'),
  ('Data lifecycle','Planned RCC to Coscine archive flow','data/rcc-project-to-coscine.md'),
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
