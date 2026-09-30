@@ -10,6 +10,12 @@ approved primary working group's folder, and a separate encrypted Time Machine
 backup destination. Project datasets and results stay in governed project storage.
 A mounted Home or Groups folder is not itself a backup of your Mac.
 
+The RCC Admin page will show three distinct Finder destinations on the issued
+server: **My home folder** (`/Home`), **My working group** (`/Groups`) and
+**Mac backup** (`/TimeMachine`). Working-group access requires approval;
+Mac backup remains marked pending until its own acceptance. Use the full address
+shown by RCC Admin rather than adding these paths to a guessed server name.
+
 ## Before joining the pilot
 
 RCC supplies the accepted server address and enrollment instructions. Do not use
