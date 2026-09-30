@@ -8,6 +8,9 @@
 > [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and use
 > the RCC connection settings you were given. This page is only for people who
 > already have an SSHFS setup on their Mac and need to identify or replace it.
+>
+> RCC is also preparing [Remote Files and encrypted Time Machine for macOS](remote-files-macos.md).
+> Do not migrate an existing backup until that service is released for your account.
 
 This type of setup used macFUSE, SSHFS, a jump-host SSH configuration, a local
 mount directory, and optionally ConnectMeNow.
