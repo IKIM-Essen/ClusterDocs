@@ -57,6 +57,7 @@ nav:
       - Choosing a transfer path: data/instrument-data-options.md
       - Managed DataLad: data/datalad-managed-service.md
       - Existing Windows SSHFS setup: data/legacy-storage-windows.md
+      - RCC Remote Files & encrypted Time Machine on macOS (not yet released): data/remote-files-macos.md
       - Existing macOS SSHFS setup: data/legacy-storage-macos.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
