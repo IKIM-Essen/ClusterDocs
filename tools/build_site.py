@@ -65,6 +65,7 @@ NAV=[
  ('Resources','Who we are','team.md'),
  ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),
  ('Resources','PiKVM through RCC Headscale · Not yet released','connecting/pikvm-headscale.md'),
+ ('Resources','macOS Remote Files and Time Machine · Not yet released','connecting/remote-files-macos.md'),
 ]
 PAGE='''<!doctype html>
 <html lang="en">
