@@ -1,7 +1,7 @@
 # RCC Analysis: from data to a reproducible run
 
 > **Service status:** RCC Analysis is **not yet released to users**. This page
-> documents the planned RCC 23 user workflow so researchers can understand the
+> documents the planned user workflow so researchers can understand the
 > product before activation. Current RCC workers and Slurm remain the supported
 > execution path; use the existing Snakemake, Nextflow, notebook, and Slurm
 > guidance until RCC Analysis is explicitly announced as available.

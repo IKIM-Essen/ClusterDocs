@@ -54,7 +54,7 @@ class SlurmResourcePolicyTests(unittest.TestCase):
     def test_opportunistic_policy_is_automatic_bounded_and_staged(self):
         text = (ROOT / "docs/reference/opportunistic-capacity.md").read_text(encoding="utf-8")
         for phrase in (
-            "controller-first canary",
+            "not yet active",
             "at most two hours",
             "No special RCC partition",
             "`--no-requeue`",

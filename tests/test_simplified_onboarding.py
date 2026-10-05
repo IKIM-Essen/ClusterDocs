@@ -86,7 +86,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             "Use `ssh {{ ssh_target_alias }}`",
             "Keep `ForwardAgent no`",
             "Slurm is the normal execution path",
-            "Managed Nextflow-to-Slurm is ready now",
+            "Managed Nextflow-to-Slurm is **validating**",
             "Migration checklist for an existing user",
         ):
             self.assertIn(phrase, normalized)

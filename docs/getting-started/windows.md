@@ -42,12 +42,13 @@ Open the SSH configuration:
 notepad "$HOME\.ssh\config"
 ```
 
-Paste the current configuration supplied through the approved institutional
-channel. Its shape is:
+Paste this configuration and replace `YOUR_RCC_USERNAME` with your RCC
+username. `login.ikim.uk-essen.de` is the RCC jump host; it only forwards your
+connection to the shell host:
 
 ```sshconfig
 Host {{ ssh_gateway_alias }}
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+    HostName login.ikim.uk-essen.de
     User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes

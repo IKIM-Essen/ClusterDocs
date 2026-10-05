@@ -93,9 +93,11 @@ version and profile before updating a production workflow.
 
 ## Nextflow and nf-core
 
-> **Service status — ready now:** RCC provides a pinned `rcc-nextflow` launcher
-> and institutional Slurm configuration on shellhosts and allocation-backed
-> interactive nodes. The classroom runner fails closed when `rcc-nextflow`,
+> **Service status — validating:** RCC is deploying a pinned `rcc-nextflow`
+> launcher and institutional Slurm configuration on its shellhosts. The launcher
+> is present on some shellhosts, but end-to-end acceptance (Slurm, shared work
+> directory, scratch, Apptainer, and `-resume`) is not yet complete; treat runs
+> as a pilot. The classroom runner fails closed when `rcc-nextflow`,
 > `apptainer`, or `sbatch` is unavailable. Do not
 > download an unpinned launcher or start a Nextflow controller on a login
 > gateway as a workaround.

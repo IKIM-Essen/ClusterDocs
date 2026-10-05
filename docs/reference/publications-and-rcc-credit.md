@@ -14,7 +14,7 @@ RCC does not currently designate a canonical methods or infrastructure paper for
 
 ## Current RCC publication archive
 
-The RCC website carries the current reviewed list under [Publications](https://rcc.ikim.uk-essen.de/#rcc-publications).
+The RCC website will carry the current reviewed list under [Publications](https://rcc.ikim.uk-essen.de/#rcc-publications); the public RCC website is **not yet released**, so the link may not resolve until RCC announces it.
 
 The initial historical seed contains **32 Folker Meyer scholarly outputs from 2020 through 2026**. The seed uses the exact Folker Meyer scholarly identity for discovery and was explicitly approved as a bounded historical import. Thirty entries are published; two very recent August 2026 Frontiers papers already have DOI records but are labelled **accepted** until final publication. Correction notices stay attached to the parent paper rather than being counted as additional publications.
 
