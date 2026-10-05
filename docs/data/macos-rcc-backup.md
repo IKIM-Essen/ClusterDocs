@@ -10,7 +10,7 @@ approved primary working group's folder, and a separate encrypted Time Machine
 backup destination. Project datasets and results stay in governed project storage.
 A mounted Home or Groups folder is not itself a backup of your Mac.
 
-The RCC Admin page will show three distinct Finder destinations on the issued
+When released, the RCC Admin page will show three distinct Finder destinations on the issued
 server: **My home folder** (`/Home`), **My working group** (`/Groups`) and
 **Mac backup** (`/TimeMachine`). Working-group access requires approval;
 Mac backup remains marked pending until its own acceptance. Use the full address
@@ -45,8 +45,11 @@ release prerequisite; RCC does not require management of your Mac.
    enable **Encrypt Backups**. Store the encryption password in the approved
    recovery system. It is separate from the Files credential.
 5. Complete the initial backup. RCC storage is already encrypted while it is
-   created, but **your first RCC backup is not yet accepted**. An operator checks
-   that the Mac's backup bundle is encrypted on the exact RCC destination. If
+   created, but **your first RCC backup is not yet accepted**. After the first
+   backup, run the `rcc-macos-time-machine-encryption-check` command RCC
+   provides against the mounted backup destination and send its result file to
+   RCC. An operator compares it with RCC's own observation that the Mac's backup
+   bundle is encrypted on the exact RCC destination. If
    encryption was missed, keep your existing work-desktop backup disk and make
    a new encrypted RCC backup with RCC's help; do not delete a backup yourself.
    RCC also checks an incremental backup, sleep/wake reconnection, capacity

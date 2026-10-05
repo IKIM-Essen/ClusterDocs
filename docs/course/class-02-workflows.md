@@ -59,7 +59,7 @@ snakemake --dry-run --printshellcmds
 Then continue with [Class 6: Snakemake on RCC](class-06-snakemake.md). If a
 reviewed project uses Nextflow or nf-core, read [Class 7](class-07-nextflow.md)
 for the managed controller, Slurm, shared-work, scratch, Apptainer, and
-`-resume` boundary. **Managed Nextflow support is ready now.**
+`-resume` boundary. **Managed Nextflow support is validating** (pilot; acceptance not yet complete).
 
 ## Software environments inside jobs
 
