@@ -3,6 +3,12 @@
 This guide complements Classes 2 and 4 with the command-level material from the
 earlier ClusterDocs site.
 
+If your starting point is a shell script, terminal history, or a document of
+commands, begin with
+[From shell commands to a repeatable workflow](../paths/from-shell-scripts.md).
+It provides a conversion checklist and a clear Snakemake-versus-Nextflow
+decision.
+
 ## Conda and Mamba environments
 
 RCC does not use Environment Modules or Lmod. Commands such as `module load`
@@ -87,10 +93,12 @@ version and profile before updating a production workflow.
 
 ## Nextflow and nf-core
 
-> **Service status — not yet released:** RCC is preparing a pinned
-> `rcc-nextflow` launcher and institutional Slurm configuration, but the
-> submit-host role is not active for users yet. The classroom runner fails
-> closed when `rcc-nextflow`, `apptainer`, or `sbatch` is unavailable. Do not
+> **Service status — validating:** RCC is deploying a pinned `rcc-nextflow`
+> launcher and institutional Slurm configuration on its shellhosts. The launcher
+> is present on some shellhosts, but end-to-end acceptance (Slurm, shared work
+> directory, scratch, Apptainer, and `-resume`) is not yet complete; treat runs
+> as a pilot. The classroom runner fails closed when `rcc-nextflow`,
+> `apptainer`, or `sbatch` is unavailable. Do not
 > download an unpinned launcher or start a Nextflow controller on a login
 > gateway as a workaround.
 
@@ -117,7 +125,7 @@ Keep these distinctions clear:
 - cap `executor.queueSize` during learning and set justified CPU, memory, time,
   and partition limits for production runs.
 
-When released, the RCC execution boundary will be:
+The RCC execution boundary is:
 
 - start the pinned Nextflow controller through `rcc-nextflow` on the approved
   submission host, never on `login1` or `login2`;

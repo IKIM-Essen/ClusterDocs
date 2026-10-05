@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy"
+ content="default-src 'self'; connect-src 'none'; img-src 'self' data:;
+ object-src 'none'; frame-src 'none'; style-src 'unsafe-inline';
+ script-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Start RCC Expedition</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f1efe8;color:#20231f}
+body{margin:0}.bar{background:#173e34;color:#fff;padding:.8rem 1.2rem}
+main{max-width:940px;margin:auto;padding:2.7rem 1.2rem 5rem}
+h1{font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-spacing:-.05em}
+.lead{font-size:1.17rem;max-width:760px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:#fffefa;border:1px solid #d5d0c5;border-radius:18px;padding:1.25rem;margin:1rem 0}
+.privacy{border-left:5px solid #285a49}.warning{border-left:5px solid #7c3535}
+.start{display:inline-block;background:#285a49;color:#fff;border-radius:10px;padding:.85rem 1.1rem;font-weight:700;text-decoration:none}
+.start:hover{background:#173e34}.step{display:grid;grid-template-columns:34px 1fr;gap:.65rem;margin:.8rem 0}
+.n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#285a49;color:white;font-weight:700}
+code{background:#eae6de;padding:.1rem .3rem;border-radius:5px}.term{background:#222522;color:#faf7ee;padding:.8rem;border-radius:10px;font-family:ui-monospace,monospace}
+details{margin:1.4rem 0}summary{font-size:1.15rem;font-weight:700;cursor:pointer}small{color:#686d66}@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bar"><strong>RCC Expedition · local only · no external monitoring</strong></div>
+<main>
+<p>RCC onboarding</p>
+<h1>Open the course.<br>Learn RCC by using it.</h1>
+<p class="lead">The course runs directly from this extracted folder. No installation, administrator access, learner account, or network connection is required.</p>
+
+<div class="card privacy">
+<h2>Start now — no installation</h2>
+<p><a class="start" href="payload/course/index.html">Open the course now →</a></p>
+<p>Your progress remains in this browser on this computer. Keep the extracted folder until you are finished.</p>
+</div>
+
+<div class="card warning">
+<h2>Research workstation ≠ clinical endpoint</h2>
+<p>Do not use hospital/clinical VPN or unmanaged clinical-network access as an RCC connectivity shortcut. Use an appropriately managed hospital endpoint for hospital-only clinical resources.</p>
+</div>
+
+<details>
+<summary>Optional: add a Desktop shortcut and readiness helpers</summary>
+<div class="grid">
+<div class="card">
+<h3>macOS</h3>
+<div class="step"><div class="n">1</div><div>Open <strong>Terminal</strong>.</div></div>
+<div class="step"><div class="n">2</div><div>Type <code>bash </code> including the space.</div></div>
+<div class="step"><div class="n">3</div><div>Open <strong>payload → mac → tools</strong> and drag <strong>INSTALL RCC EXPEDITION.sh</strong> into Terminal.</div></div>
+<div class="step"><div class="n">4</div><div>Press Return and follow the confirmation.</div></div>
+<p class="term">bash [drag INSTALL RCC EXPEDITION.sh here]</p>
+<small>Do not disable Gatekeeper.</small>
+</div>
+
+<div class="card">
+<h3>Windows 11</h3>
+<div class="step"><div class="n">1</div><div>Open <strong>Windows Terminal</strong> or <strong>Command Prompt</strong>.</div></div>
+<div class="step"><div class="n">2</div><div>Type <code>cmd /c </code> including the space.</div></div>
+<div class="step"><div class="n">3</div><div>Open <strong>payload → windows → tools</strong> and drag <strong>INSTALL RCC EXPEDITION.cmd</strong> into the terminal.</div></div>
+<div class="step"><div class="n">4</div><div>Press Enter and follow the confirmation.</div></div>
+<p class="term">cmd /c [drag INSTALL RCC EXPEDITION.cmd here]</p>
+<small>Do not disable SmartScreen, Windows Security, or antivirus.</small>
+</div>
+</div>
+</details>
+
+<div class="card">
+<h2>Still running Windows 10?</h2>
+<p>Do not use it as a new RCC research workstation. Windows 10 reached end of normal free security support in October 2025. Upgrade to a supported Windows 11 system before continuing.</p>
+</div>
+</main>
+</body>
+</html>

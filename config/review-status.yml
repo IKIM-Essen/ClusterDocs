@@ -1,0 +1,9 @@
+expert_content_review:
+  status: completed
+  recorded_at: 2026-08-09
+  evidence: project-owner confirmation
+
+novice_acceptance:
+  status: scheduled_post_rollout
+  blocks_initial_switchover: false
+  blocks_rollout_completion: true

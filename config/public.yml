@@ -1,21 +1,28 @@
 site_name: RCC ClusterDocs NG
 site_status: staging
-site_url: https://docs.ikim.uk-essen.de/
+site_url: https://ikim-essen.github.io/ClusterDocs/
 support_contact: IKIM Cluster channel on Mattermost
-ssh_alias: rcc-login
-transfer_service_name: RCC web transfer
+ssh_gateway_alias: rcc-login
+ssh_target_alias: shellhost
+transfer_service_name: RCC Files (not yet released)
 transfer_service_url: https://files.ikim.uk-essen.de/
 media_base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding
+lab_remote_access_name: RCC Headscale
 feature_status:
-  rcc_admin: ready
-  rcc_admin_self_administration: ready
-  rcc_admin_primary_approval: ready
+  rcc_admin: not_yet_released
+  rcc_admin_self_administration: not_yet_released
+  rcc_admin_primary_approval: not_yet_released
+  rcc_files: not_yet_released
   rcc_workers: ready
-  samba_project_shares: ready
-  nextflow_slurm_support: not_yet_released
+  ssh_shellhost_transfer: ready
+  samba_project_shares: in_service_on_request
+  headscale_pikvm_access: not_yet_released
+  nextflow_slurm_support: validating
+  opportunistic_and_group_capacity: not_yet_released
   project_vhosts: not_yet_released
   ardia_integration: not_yet_released
   rcc_to_coscine_transfer: not_yet_released
 public_hostnames:
+  - login.ikim.uk-essen.de
+  - shellhost.ikim.uk-essen.de
   - rcc-login
-  - docs.ikim.uk-essen.de

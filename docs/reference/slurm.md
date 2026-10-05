@@ -11,6 +11,11 @@ computation runs as a Slurm job.
 > reclaimable compute entitlement while restartable work may use idle capacity.
 > See [How shared compute works](how-shared-compute-works.md).
 
+> **Short CPU jobs:** When this staged policy is activated (it is **not active
+> yet**), a CPU-only job with an
+> explicit limit of two hours or less may use accepted spare capacity
+> automatically. See [Opportunistic capacity](opportunistic-capacity.md).
+
 ## Discover the scheduler
 
 ```bash
@@ -154,16 +159,18 @@ interactive node around an unattended long runner.
 
 ## GPU jobs
 
-Use the currently documented GPU partition and resource syntax. A typical job
-requests one GPU explicitly:
+Batch GPU jobs use the `gpu_nodes` partition. The standard RCC GPUs are
+currently NVIDIA RTX A6000 (48 GB). A typical job requests one GPU explicitly:
 
 ```bash
-#SBATCH --partition=<approved-gpu-partition>
-#SBATCH --gres=gpu:1
+#SBATCH --partition=gpu_nodes
+#SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=01:00:00
 ```
+
+Use `--gpus-per-node=rtx_a6000:1` only when the exact model matters.
 
 Inside the job:
 

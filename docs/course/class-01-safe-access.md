@@ -1,5 +1,18 @@
 # Class 1: safe access to RCC
 
+!!! tip "New workstation or first RCC experience?"
+    Complete [RCC Expedition Light](../getting-started/index.md) for the
+    required first-use path. Use [RCC Expedition](../rcc-expedition.md) for a
+    self-contained local course covering
+    workstation security/patching, SSH/Linux basics, the research/clinical
+    network boundary, Slurm, storage, data transfer, and reproducible workflows.
+
+    The course is **datensparsam** and does not report learner progress to RCC.
+    This page remains the conventional step-by-step reference tutorial.
+
+Before configuring SSH, read the one-page explanation of the
+[jump host, shell host, and Slurm workers](../concepts/jump-shell-compute.md).
+
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 8 min video</p>
   <h2>Watch the class first</h2>
@@ -15,6 +28,7 @@
 By the end of this class you can:
 
 - explain the difference between your SSH private key and the server host key;
+- explain why an RCC browser passkey and an SSH key are different credentials;
 - verify that an SSH client is installed;
 - identify a suitable RCC public key without displaying the private key;
 - validate the RCC SSH configuration before connecting;
@@ -22,7 +36,7 @@ By the end of this class you can:
 - install VS Code and the Remote - SSH extension as the recommended interface
   for most coding and analysis preparation;
 - open a narrowly scoped remote project and configure safe search exclusions;
-- use the browser transfer service without sharing an account.
+- transfer a file with `scp` or `sftp` to the shell host without sharing an account.
 
 ## Security model in plain language
 
@@ -33,6 +47,25 @@ instructions. A changed identity is not fixed by disabling checking; stop and
 confirm it through an independent institutional channel.
 
 Do not email private keys, copy a colleague's key, register one key for several human accounts, or share a browser session. When a colleague needs access, add their own account to the project.
+
+### Browser sign-in and SSH are separate credentials
+
+Your RCC username is one human identity, but RCC can authenticate that identity
+in different ways:
+
+- **web services** use the RCC sign-in/SSO flow and may use a password, passkey,
+  or another enrolled factor;
+- **SSH and VS Code Remote SSH** use your registered SSH public key;
+- **account recovery or sensitive account actions** may use separate step-up or
+  recovery credentials.
+
+A YubiKey can hold more than one kind of credential. A browser/WebAuthn passkey
+and an OpenSSH `*-sk` key are not the same credential merely because they are on
+the same physical key.
+
+Read [How RCC authentication fits together](../reference/authentication-lifecycle.md)
+before adding, replacing, or deleting passkeys, YubiKey credentials, recovery
+codes, or SSH keys.
 
 ## First-time client setup
 
@@ -57,21 +90,36 @@ without `.pub` is the private key and stays on your computer.
 
 Use the current SSH configuration supplied through an approved RCC channel.
 Do not reconstruct it from an old screenshot or a colleague's saved settings.
-Its safe shape is:
+Its safe shape includes both the gateway and the destination:
 
 ```sshconfig
-Host {{ ssh_alias }}
-  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+Host {{ ssh_gateway_alias }}
+  HostName login.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
   ForwardAgent no
+
+Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??
+  HostName %h.ikim.uk-essen.de
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ProxyJump {{ ssh_gateway_alias }}
+  ForwardAgent no
 ```
+
+Use `{{ ssh_target_alias }}` for normal login. The additional node patterns
+support a node assigned by an active Slurm interactive allocation; they do not
+permit work outside Slurm. The `{{ ssh_gateway_alias }}` account is
+forwarding-only and will not provide an interactive shell. Do not test it with
+`ssh {{ ssh_gateway_alias }}`; `ProxyJump` uses it automatically when you
+connect to the destination.
 
 Inspect the effective configuration without connecting:
 
 ```bash
-ssh -G {{ ssh_alias }}
+ssh -G {{ ssh_target_alias }}
 ```
 
 ## Gate 1A: local readiness
@@ -119,9 +167,14 @@ contains copyable settings and the restored ClusterDocs performance advice.
 
 ## Web data transfer
 
-Inside the hospital network, use your individual RCC username and normal sign-in flow. External access may require an additional factor. Do not solve access problems by using a shared project account.
+Inside the hospital network, use your individual RCC username and normal RCC
+sign-in flow. External access may require an additional factor. Do not solve
+access problems by using a shared project account.
 
-The transfer portal exposes project data, not arbitrary server filesystems. Confirm the selected project and destination before uploading.
+Transfer files with `scp`, `sftp`, or `rsync` to the shell host; the jump host
+only forwards the connection. The browser-based RCC Files portal is **not yet
+released**. Confirm the project and destination before uploading. Read
+[Storage and transfer](../reference/storage-transfer.md) for the commands.
 
 > **Reference companion:** Use [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
 > for account-request details, diagnostics, Remote SSH, and light SSHFS mounts.
@@ -149,9 +202,18 @@ and contact RCC support if they do not match.
 No. Each human account should have individually attributable credentials. Project access is granted through membership, not credential sharing.
 </details>
 
+<details><summary>Is my RCC browser passkey the same as my SSH key?</summary>
+
+No. They can live on the same physical authenticator, but WebAuthn/passkey
+credentials and OpenSSH keys are separate credentials used by different
+protocols.
+</details>
+
 ## Completion gate
 
 - The local readiness gate reports SSH and configuration as ready.
 - A single live test succeeds.
 - VS Code can open the same configured RCC target.
-- You can explain where your private key is stored without showing it.
+- You can explain where your private SSH key is stored without showing it.
+- You can explain why web sign-in credentials, recovery credentials, and SSH
+  keys are related to one RCC identity but are not interchangeable.

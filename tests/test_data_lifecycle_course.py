@@ -73,9 +73,9 @@ class DataLifecycleCourseTests(unittest.TestCase):
         self.assertNotIn("  - Instrument data:", mkdocs)
         self.assertNotIn("('Instrument data',", builder)
 
-    def test_coursectl_accepts_class_seventeen(self):
+    def test_coursectl_accepts_class_eighteen(self):
         coursectl = (ROOT / "tools/coursectl.py").read_text()
-        self.assertIn("choices=range(1,18)", coursectl)
+        self.assertIn("choices=range(1,19)", coursectl)
 
 
 if __name__ == "__main__":

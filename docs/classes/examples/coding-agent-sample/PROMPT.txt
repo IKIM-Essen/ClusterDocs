@@ -1,0 +1,14 @@
+The attached files are entirely synthetic. Write a small, reproducible analysis
+for a real CSV with the same columns.
+
+Requirements:
+- accept --input and --output command-line arguments;
+- never contact a network service;
+- never modify the input file;
+- validate required columns and explain errors without printing row data;
+- save the analysis code, a summary CSV, one plot, and a short run log;
+- list required Python packages with versions;
+- do not hard-code values from the synthetic rows;
+- include a command that tests the code on example.csv.
+
+Explain the plan first. Then provide the files and exact test command.

@@ -9,4 +9,10 @@ class ReadinessTests(unittest.TestCase):
  def test_scripts_do_not_print_private_key(self):
   for p in (ROOT/'exercises/readiness').iterdir():
    if p.is_file(): self.assertNotRegex(p.read_text(),r'\bcat\s+["\']?\$?KEY\b')
+ def test_default_target_is_shellhost_not_gateway(self):
+  for p in [ROOT/'exercises/readiness/rcc-readiness.sh', ROOT/'exercises/readiness/Test-RccReadiness.ps1']:
+   t=p.read_text()
+   self.assertIn('shellhost',t)
+   self.assertNotIn(':-rcc-login',t)
+   self.assertNotIn('else { "rcc-login" }',t)
 if __name__=='__main__': unittest.main()

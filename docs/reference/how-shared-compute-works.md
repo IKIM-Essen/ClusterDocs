@@ -4,6 +4,10 @@ Most users do not need to choose a special resource-sharing option. Submit work
 to the normal CPU, GPU, short, or interactive partition described in the
 [Slurm reference](slurm.md), and Slurm will find suitable capacity.
 
+> **Status:** owner partitions, `group_borrow`, and opportunistic placement are
+> staged and **not yet enabled** on RCC. Today all users submit to the normal
+> shared partitions.
+
 Some compute resources were contributed by individual research groups. RCC
 protects those groups' access while allowing other researchers to use spare
 capacity for suitable restartable work.
@@ -21,6 +25,12 @@ capacity for suitable restartable work.
   otherwise idle interactive capacity for restartable batch work without
   allowing that work to delay a real interactive request.
 
+Short CPU-only jobs with an explicit time limit of at most two hours may also
+be placed automatically on accepted spare interactive or GPU capacity. Users
+never select the hidden partitions or protected QOS names. See
+[Opportunistic capacity](opportunistic-capacity.md) for the rollout status and
+restart-safe job pattern.
+
 Borrowed work can be stopped and returned to the queue when the owner needs the
 capacity. It starts again from the beginning unless the application has a
 working checkpoint. Do not use borrowed capacity for work that cannot tolerate
@@ -31,8 +41,8 @@ that interruption.
 | What are you doing? | Use | What to expect |
 |---|---|---|
 | Normal CPU or GPU analysis | Shared CPU or GPU partition | Normal queue priority and fair-share |
-| Work for a group that contributed hardware | Owner path supplied for the account | Priority on that group's contributed capacity |
-| Short, restartable batch work | `group_borrow`, when shown for the account | The job may be requeued |
+| Work for a group that contributed hardware | Owner path supplied for the account (not yet enabled) | Priority on that group's contributed capacity |
+| Short, restartable batch work | `group_borrow` (not yet enabled) | The job may be requeued |
 | Shell, notebook, or debugging session | `interactive` | Stay present and release it when finished |
 
 If you are unsure, use the normal shared partition. Choose borrowed capacity
@@ -134,13 +144,17 @@ salloc \
   --time=02:00:00
 ```
 
-Where the `interactive_backfill` partition is advertised, idle interactive
-nodes may run short batch work there. A real interactive request can requeue
-that backfill work. This improves utilization while preserving responsive
-interactive access.
+Where opportunistic interactive capacity is active, selected interactive nodes
+may run short batch work with reduced advertised CPU and RAM and low contention
+weight. The two-hour bound and retained headroom protect interactive use; this
+path itself is non-preemptive.
 
-Interactive-backfill jobs have the same basic requirements as borrowed jobs:
-they are batch-only, explicitly time-limited, requeue-enabled, and restartable.
+This replaces the older user-visible `interactive_backfill` selection pattern:
+eligible jobs are routed automatically and users do not name the hidden path.
+
+These jobs are batch-only and explicitly time-limited. They should still be
+restart-safe because the same submission may also be eligible for reclaimable
+GPU capacity unless the user explicitly disables requeue.
 
 ### What requeue means
 

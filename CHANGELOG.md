@@ -1,5 +1,49 @@
 # Changelog
 
+## v1.0.2 — deployment-state sync (5 October 2026)
+
+Reconciled ClusterDocs with the RCC deployment state recorded in RCC `main`
+`c000a582` (18.3.2) and the Essen site overlay on 5 October 2026.
+
+- Named the live public jump host `login.ikim.uk-essen.de` in every SSH
+  configuration example instead of a placeholder, and stopped telling users
+  that the current `login` and `shellhost` names are stale.
+- Marked RCC Admin / My RCC, RCC Files, the RCC home page, and the help
+  assistant **not yet released**: the internal browser pilot was withdrawn on
+  3 October 2026. Account and membership requests go to RCC support, and
+  transfers use `scp`, `sftp`, or `rsync` to the shell host.
+- Removed the site-shell links to the withdrawn Home, Files, and RCC Admin
+  endpoints.
+- Downgraded managed Nextflow-to-Slurm from ready to **validating**: the pinned
+  launcher is deployed on some shell hosts, but end-to-end acceptance is
+  pending.
+- Narrowed Samba wording to existing instrument shares that are in service,
+  with new shares set up by RCC on request.
+- Marked opportunistic capacity, owner partitions, and `group_borrow` as staged
+  and not yet enabled; corrected GPU request syntax to `gpu_nodes` with
+  `--gpus-per-node` and the `rtx_a6000` type; noted that `ai_top_atom` and
+  `interactive_gpu` currently have no schedulable capacity.
+- Replaced the unsupported personal-quota claim with shared-capacity wording.
+
+## v1.0.1
+
+- Made RCC Expedition Light the required first-use route and added direct,
+  installation-light setup pages for macOS and Windows 11.
+- Added a dedicated VS Code Remote SSH guide with safe workspace defaults.
+- Explained the jump-host, shell-host, and Slurm-worker roles as one access
+  model.
+- Clarified users, primary groups, collaboration projects, and storage layout
+  for larger science teams.
+- Added a guided path for converting shell command collections into tested,
+  restartable Snakemake or Nextflow workflows with pinned Conda-derived
+  Apptainer images.
+- Added an old-to-new cluster migration table based on the public documentation
+  at commit `8f5b2bd` from 21 July 2026.
+- Published the immutable RCC Expedition USB v1.0.1 archive while preserving
+  the v1.0.0 asset and checksum.
+- Reconciled the course and canonical source with the ready-now managed
+  Nextflow-to-Slurm support contract.
+
 ## v0.1.3
 
 - Added Class 11 on European and German biomedical-data protection.

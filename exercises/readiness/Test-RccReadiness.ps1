@@ -1,6 +1,6 @@
 param([switch]$Live)
 $ErrorActionPreference = "Stop"
-$Alias = if ($env:RCC_SSH_ALIAS) { $env:RCC_SSH_ALIAS } else { "rcc-login" }
+$Alias = if ($env:RCC_SSH_ALIAS) { $env:RCC_SSH_ALIAS } else { "shellhost" }
 $Key = if ($env:RCC_SSH_KEY) { $env:RCC_SSH_KEY } else { Join-Path $HOME ".ssh\id_ed25519_rcc" }
 $Failed = $false
 function Pass($m){ Write-Host "PASS  $m" }

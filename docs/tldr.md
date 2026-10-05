@@ -3,6 +3,11 @@
 This page is the shortest useful introduction to RCC. Read it before connecting
 for the first time, or use it to find the right detailed guide.
 
+> **Need to connect now?** Use [RCC Expedition Light](getting-started/index.md)
+> and choose the Windows 11 or macOS checklist. For guided offline training,
+> use [RCC Expedition](rcc-expedition.md). Return here for the broader rules
+> and reference links.
+
 ## RCC in one minute
 
 RCC is organised around people and projects:
@@ -18,27 +23,12 @@ The primary group says where you belong. The project says which research data,
 services, and collaborators you may work with. Do not change somebody's primary
 group merely to share project data; add their individual account to the project.
 
-### What is available now?
-
-| Capability | Status |
-|---|---|
-| RCC Admin, including self-administration and primary approval | **Ready now** |
-| RCC workers and Slurm jobs | **Ready now** |
-| Project Samba shares for approved Lab-network instruments | **Ready now** |
-| Managed Nextflow-to-Slurm support | **Not yet released** |
-| Project vhosts | **Not yet released** |
-| Ardia integration with RCC | **Not yet released** |
-| RCC-to-Coscine archive transfer | **Not yet released** |
-
-The unreleased entries are included so teams can plan safely. They are not
-instructions to start using those services.
-
 ```text
 person -> individual RCC account -> exactly one primary group (affiliation)
                               \-> one or more projects (collaboration)
 
 Lab-network instrument
-    -> approved Samba share for its project [ready]
+    -> approved Samba share for its project [in service; set up on request]
        or future Ardia integration [not yet released]
     -> RCC project storage -> Slurm analysis -> project results
     -> optional protected vhost for that project [not yet released]
@@ -64,20 +54,20 @@ connections. A selected final dataset may later move to Coscine after project
 review and verification. **RCC-to-Coscine transfer is not yet released**; it
 remains planned and not yet a live self-service transfer.
 
-**Managed Nextflow-to-Slurm support is not yet released.** The planned service
-will run the Nextflow controller only on an RCC interactive node (a
-`shellhost`) and send
+**Managed Nextflow-to-Slurm support is validating.** The pinned `rcc-nextflow`
+launcher is being deployed on the shell hosts, but end-to-end acceptance (Slurm submission, shared work directory, node-local scratch, Apptainer, and `-resume`) is not yet complete. The managed service runs
+the Nextflow controller on an RCC shellhost or allocation-backed interactive
+node and sends
 each analysis task to a worker through Slurm. Resume-critical work state will
 stay in shared project storage; node-local storage will be used only for
-explicit temporary task work. Until RCC announces the `rcc-nextflow` launcher,
-use the ready managed Snakemake path or ask support instead of installing an
-unmanaged Nextflow controller on a login host.
+explicit temporary task work. Use the pinned `rcc-nextflow` launcher instead
+of installing an unmanaged Nextflow controller on a login host.
 
 For most users, **VS Code with Remote - SSH is the suggested everyday route**
 for coding and preparing data analysis. It combines the editor, remote file
 view, Git tools, and terminal in one window. VS Code is the interface; Slurm is
-still where computation runs, and the RCC transfer service is still the route
-for large data movement.
+still where computation runs, and `scp`, `sftp`, or `rsync` to the shell host
+is the route for data movement.
 
 ```text
 workstation
@@ -133,7 +123,8 @@ The basic sequence is:
 4. obtain the current approved RCC configuration through a trusted channel;
 5. inspect the effective configuration;
 6. make one bounded connection test; and
-7. use the approved alias `{{ ssh_alias }}` in current instructions.
+7. use the approved destination alias `{{ ssh_target_alias }}` through the
+   configured `{{ ssh_gateway_alias }}` gateway.
 
 The access reference includes a visual VS Code walkthrough plus recommended
 search, file-watcher, extension, and Workspace Trust settings. Do not copy a
@@ -148,7 +139,7 @@ server name from a screenshot.
 | Authoritative project input | Approved project storage |
 | Validated results, code, metadata, and provenance | Approved project storage |
 | Active temporary and random I/O | Job-local storage inside the allocation |
-| Large browser upload or ordinary download | Approved RCC files service when suitable |
+| Upload or download | `scp`, `sftp`, or `rsync` to the shell host (the RCC Files browser portal is not yet released) |
 | Retained final archive set | Approved repository or planned Coscine flow |
 
 Home is not a project-data area. A project connects data to its accountable
@@ -314,7 +305,7 @@ entire unrestricted logs.
 
 ## Choose the next page
 
-- New to RCC: [complete the seventeen-class course](course/index.md).
+- New to RCC: [complete the eighteen-class course](course/index.md).
 - Analysing data: [follow the data-analysis path](paths/data-analysis.md).
 - Building software or services: [follow the development path](paths/software-development.md).
 - Looking up commands: [open the day-to-day reference](reference/index.md).

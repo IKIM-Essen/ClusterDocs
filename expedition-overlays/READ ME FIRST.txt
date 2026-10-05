@@ -1,0 +1,59 @@
+RCC EXPEDITION — START HERE
+===========================
+
+This local course is for new RCC users on current macOS or Windows 11.
+
+FASTEST START — NO INSTALLATION
+-------------------------------
+1. Extract the downloaded ZIP completely.
+2. Double-click:
+
+       START HERE.html
+
+3. Choose "Open the course now".
+
+The course runs from the extracted folder. You may optionally add its Desktop
+shortcut and readiness helpers later. You do not need Python, Homebrew, Git,
+VS Code, a university account, eduroam, or RCC access to begin.
+
+DATENSPARSAM — NO EXTERNAL MONITORING
+-------------------------------------
+RCC Expedition is self-contained and local.
+
+There is:
+  - no learner server;
+  - no analytics;
+  - no telemetry;
+  - no central progress database;
+  - no supervisor dashboard.
+
+The course does not upload progress, workstation status, answers, files,
+credentials, recovery keys, or SSH private keys.
+
+Course progress stays in the browser on this computer. Local status tools
+write only coarse PASS/WARN/FAIL/UNKNOWN results.
+
+External websites are contacted only when you click a clearly marked external
+reference. RCC is contacted only when you deliberately run an SSH/RCC
+exercise.
+
+SECURITY BOUNDARY
+-----------------
+A privately maintained or research workstation used for RCC must not be
+turned into a clinical hospital endpoint.
+
+Do not use hospital/clinical VPN as a route from this workstation into the
+clinical network. Do not connect an unmanaged research laptop or desktop to
+clinical/internal networks merely because they are physically available.
+
+For hospital-only clinical resources, use an appropriately managed hospital
+endpoint.
+
+For ordinary Internet connectivity, use eduroam when eligible and available.
+Where locally provided, Stiftungsnetz may be used as a temporary/semi-official
+Internet bootstrap route. This course makes no undocumented claim about its
+isolation.
+
+Mutable RCC facts belong in the current ClusterDocs site:
+https://ikim-essen.github.io/ClusterDocs/
+

@@ -58,17 +58,17 @@ class LabNetworkGuideTests(unittest.TestCase):
         for phrase in (
             "raspberry pi and pikvm",
             "no public port forwarding",
-            "tailscale",
-            "institution-owned tailnet",
-            "do not use tailscale funnel",
-            "personal/non-commercial use",
-            "no direct incoming",
+            "headscale replaces the hosted tailscale control plane",
+            "tailscale-compatible client",
+            "not yet released",
+            "already encrypted traffic",
         ):
             self.assertIn(phrase, text)
 
     def test_publication_lint_allows_pikvm_only_in_this_guide(self):
         lint = (ROOT / "tools" / "publication_lint.py").read_text()
-        self.assertIn("PUBLIC_HARDWARE_GUIDES={'docs/resources/how-it-all-works.md'}", lint)
+        self.assertIn("docs/resources/how-it-all-works.md", lint)
+        self.assertIn("docs/connecting/pikvm-headscale.md", lint)
         self.assertIn("hardware control-plane detail", lint)
 
 

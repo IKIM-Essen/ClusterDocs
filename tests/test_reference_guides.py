@@ -9,6 +9,7 @@ class ReferenceGuideTests(unittest.TestCase):
     def test_expected_reference_guides_exist(self):
         expected = {
             "index.md",
+            "terminology.md",
             "users-groups-projects.md",
             "account-starter-setups.md",
             "access-ssh-vscode.md",
@@ -17,9 +18,13 @@ class ReferenceGuideTests(unittest.TestCase):
             "software-workflows.md",
             "slurm.md",
             "how-shared-compute-works.md",
+            "opportunistic-capacity.md",
             "troubleshooting.md",
             "resources.md",
             "ai-data-science.md",
+            "authentication-lifecycle.md",
+            "publications-and-rcc-credit.md",
+            "usage-accounting.md",
         }
         self.assertEqual(expected, {p.name for p in REF.glob("*.md")})
 
@@ -37,6 +42,25 @@ class ReferenceGuideTests(unittest.TestCase):
         self.assertIn("external user's primary group is `collab`", text)
         self.assertIn("users from different primary groups can exchange data", text)
         self.assertIn("explicit project membership", text)
+
+    def test_storage_docs_keep_posix_and_direct_s3_distinct(self):
+        reference = (REF / "storage-transfer.md").read_text()
+        course = (ROOT / "docs" / "course" / "class-15-storage-architecture.md").read_text()
+        narration = (ROOT / "narration" / "RCC_Onboarding_Class_15_Video_Narration.md").read_text()
+        for text in (reference, course, narration):
+            self.assertIn("JuiceFS", text)
+            self.assertIn("S3", text)
+        self.assertIn("does **not** get direct S3", reference)
+        self.assertIn("Direct S3 is a separate, optional RCC project capability", course)
+        self.assertIn("do not automatically receive S3 credentials", narration)
+        self.assertIn("OIDC", reference)
+        self.assertIn("OIDC", course)
+        self.assertIn("OIDC", narration)
+        self.assertNotIn("ordinary project access is S3", (reference + course + narration).lower())
+        for text in (reference, course, narration):
+            self.assertIn("not yet released", " ".join(text.lower().split()))
+            self.assertNotIn("OIDC or STS can be used", text)
+            self.assertNotIn("OIDC/STS may be the mechanism", text)
 
     def test_courses_link_to_reference_guides(self):
         linked = "\n".join(p.read_text() for p in (ROOT / "docs" / "course").glob("*.md"))

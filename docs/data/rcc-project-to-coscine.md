@@ -8,6 +8,11 @@ Use this flow when a project is considering Coscine for a stable archive set.
 The RCC team must confirm when the supported transfer mechanism, eligibility
 rules, and operational ownership are available.
 
+A project with managed DataLad may optionally bind the proposed archive set to
+an immutable DataLad dataset revision before the archive handoff. DataLad does
+not itself authorize or perform Coscine publication. See
+[Managed DataLad on RCC](datalad-managed-service.md).
+
 ## Intended flow
 
 ```text
@@ -15,6 +20,7 @@ instrument or facility produces authoritative data
   -> approved RCC project receives and verifies the data
   -> job-local workspace supports active analysis
   -> validated results return to the RCC project
+  -> optional DataLad dataset state is frozen/recorded when the project uses it
   -> RCC project owner proposes a frozen archive set
   -> governance and destination eligibility reviewed
   -> files frozen; metadata, manifest, and checksums prepared
@@ -66,6 +72,11 @@ No decision should be inferred from technical connectivity alone.
 Create a read-only or otherwise controlled candidate set. Record a manifest,
 checksums, file count, total bytes, formats, provenance, software dependencies,
 ownership, access class, and retention basis.
+
+If the project uses DataLad, record the exact dataset identity/revision that
+corresponds to the candidate archive set. That revision is provenance evidence;
+it does not replace the archive manifest, governance decision, or destination
+verification.
 
 Exclude caches, job-local scratch, failed-run output, secrets, and undocumented
 duplicates. Preserve enough code, parameters, environment information, and

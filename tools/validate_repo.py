@@ -3,6 +3,7 @@ from pathlib import Path
 import subprocess, sys, yaml
 ROOT=Path(__file__).resolve().parents[1]
 checks=[
+ [sys.executable,str(ROOT/'tools/validate_expedition_release.py')],
  [sys.executable,str(ROOT/'tools/publication_lint.py')],
  [sys.executable,'-m','unittest','discover','-s',str(ROOT/'tests'),'-v'],
  [sys.executable,'-m','unittest','discover','-s',str(ROOT/'exercises/vhost/protected-app'),'-v'],

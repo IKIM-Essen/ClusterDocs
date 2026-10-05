@@ -3,7 +3,7 @@ set -euo pipefail
 
 LIVE=0
 [[ "${1:-}" == "--live" ]] && LIVE=1
-ALIAS="${RCC_SSH_ALIAS:-rcc-login}"
+ALIAS="${RCC_SSH_ALIAS:-shellhost}"
 KEY="${RCC_SSH_KEY:-$HOME/.ssh/id_ed25519_rcc}"
 FAIL=0
 

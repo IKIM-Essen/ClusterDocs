@@ -4,18 +4,28 @@ This guide collects the practical setup details from the earlier ClusterDocs
 site. Complete [Class 1](../course/class-01-safe-access.md) first so that the
 credential and host-verification rules are clear.
 
+For a new workstation, the shorter
+[macOS](../getting-started/macos.md) and
+[Windows 11](../getting-started/windows.md) checklists reach the same safe
+configuration with fewer branches. The
+[jump-host and shell-host page](../concepts/jump-shell-compute.md) explains why
+the configuration contains two hosts even though users type one destination.
+
 > **Recommended for most users:** use **VS Code with Remote - SSH** as your
 > everyday interface for writing code, editing configuration, using Git,
-> reading logs, and preparing analyses. Use the RCC transfer service for large
-> data movement, and submit computation through Slurm. Opening a remote VS Code
+> reading logs, and preparing analyses. Use `scp`, `sftp`, or `rsync` to the
+> shell host for data movement, and submit computation through Slurm. Opening a remote VS Code
 > window does not create a compute allocation.
 
 ## Request an RCC account
 
-**RCC Admin is ready now**, including self-administration and the
-primary-approver workflow. Use RCC Admin for the account or membership request.
-If your project uses a coordinated onboarding process, prepare the following
-for the responsible project coordinator and primary approver:
+**The RCC Admin self-service portal is not yet released.** Its browser
+enrollment and self-administration are being re-established in a restricted
+pilot; do not use old RCC Admin bookmarks. Until RCC announces the portal,
+accounts and project memberships are created on request: contact the team in
+the **IKIM Cluster channel on Mattermost** or through your project coordinator,
+and prepare the following for the responsible project coordinator and primary
+approver:
 
 - first and last name;
 - institutional email address;
@@ -80,17 +90,33 @@ normally stored under `C:\Users\<username>\.ssh\`.
 ## Configure the approved RCC target
 
 Use the current host block supplied through a trusted institutional channel.
-The public alias used in this course is `{{ ssh_alias }}`. A safe client block
-has this shape:
+`{{ ssh_gateway_alias }}` is the forwarding gateway and
+`{{ ssh_target_alias }}` is the normal user destination. A safe client
+configuration has this shape:
 
 ```sshconfig
-Host {{ ssh_alias }}
-  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+Host {{ ssh_gateway_alias }}
+  HostName login.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
   ForwardAgent no
+
+Host {{ ssh_target_alias }} c? c?? c??? d?? g?-? g?-??
+  HostName %h.ikim.uk-essen.de
+  User YOUR_RCC_USERNAME
+  IdentityFile ~/.ssh/id_rcc
+  IdentitiesOnly yes
+  ProxyJump {{ ssh_gateway_alias }}
+  ForwardAgent no
 ```
+
+Use `{{ ssh_target_alias }}` for normal login and VS Code. The node patterns
+are for a node assigned by an active Slurm interactive allocation, not for
+selecting arbitrary compute capacity. The `{{ ssh_gateway_alias }}` account is
+forwarding-only and will not provide an interactive shell. Do not use
+`ssh {{ ssh_gateway_alias }}` as a login test or try to start a second SSH
+connection there; `ProxyJump` uses it automatically.
 
 Do not copy an old hostname from a colleague, disable host-key checking or
 enable agent forwarding merely to make a connection work. Verify the published
@@ -99,14 +125,14 @@ RCC host identity through an independent institutional channel.
 Inspect the effective configuration without connecting:
 
 ```bash
-ssh -G {{ ssh_alias }}
+ssh -G {{ ssh_target_alias }}
 ```
 
 Then use the bounded readiness test from Class 1. For manual diagnostics, one
 verbose connection attempt is usually enough:
 
 ```bash
-ssh -v {{ ssh_alias }}
+ssh -v {{ ssh_target_alias }}
 ```
 
 Remove key material, usernames, local paths, and tokens before sharing a debug
@@ -255,8 +281,8 @@ not depend on a laptop connection remaining open.
 
 ## Mount a small remote folder
 
-Prefer the RCC files portal for browser-based access to approved project
-folders. SSHFS is appropriate only for light interactive use such as editing a
+Use `scp`, `sftp`, or `rsync` to the shell host for transfers; the browser
+RCC Files portal is not yet released. SSHFS is appropriate only for light interactive use such as editing a
 small document. It is not a bulk-transfer or analysis filesystem.
 
 After installing a maintained SSHFS implementation for your operating system,
@@ -264,7 +290,7 @@ create an empty mount point and use the configured RCC alias:
 
 ```bash
 mkdir -p "$HOME/rcc-project"
-sshfs {{ ssh_alias }}:/projects/<project> "$HOME/rcc-project" \
+sshfs {{ ssh_target_alias }}:/projects/<project> "$HOME/rcc-project" \
   -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
 ```
 

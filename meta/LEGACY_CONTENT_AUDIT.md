@@ -22,11 +22,11 @@ current path.
 
 | Legacy document | ClusterDocs NG destination | Disposition |
 |---|---|---|
-| `docs/index.md` | `docs/index.md`, `docs/tldr.md`, `docs/team.md` | Welcome, scope, team context, and optimized cluster image preserved |
+| `docs/index.md` | `docs/index.md`, `docs/getting-started/index.md`, `docs/getting-started/what-changed.md`, `docs/tldr.md`, `docs/team.md` | Welcome, first-use route, migration orientation, team context, and optimized cluster image preserved |
 | `docs/access.md` | `docs/course/class-01-safe-access.md`, `docs/reference/access-ssh-vscode.md` | Key creation and account request updated; private-key and host-verification rules strengthened |
 | `docs/getting-started.md` | Classes 1, 3, and 5; access and resource references | Access, storage, software, hardware-discovery, and remote-work outcomes retained in the staged course |
 | `docs/ssh-setup.md` | Class 1 and access reference | Current alias and host-identity migration replace fixed hosts |
-| `docs/vs-code-setup.md` | Class 1 and access reference | Text updated; all three screenshots retained with historical labels |
+| `docs/vs-code-setup.md` | `docs/getting-started/vscode.md`, Class 1, and access reference | A dedicated current setup path replaces the legacy entry point; all three screenshots remain in the deeper reference with historical labels |
 | `docs/first-steps.md` | Course overview; Classes 1, 3, and 5 | First-login, compute discovery, and storage choices expanded into gates |
 | `docs/resources.md` | `docs/reference/resources.md` | Static inventory replaced with live scheduler and software discovery |
 | `docs/computing.md` | Classes 3, 12, and 13 | Local-versus-remote filesystem guidance expanded and measured |

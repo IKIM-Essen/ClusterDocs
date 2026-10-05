@@ -1,5 +1,9 @@
 # Expert review guide
 
+Status: completed for the current content candidate on 9 August 2026, recorded
+from the project owner's confirmation in `config/review-status.yml`. This does
+not imply that individual videos have received human media approval.
+
 ## Purpose
 
 Confirm that ClusterDocs NG is technically correct, operationally supportable,

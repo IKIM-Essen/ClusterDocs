@@ -1,11 +1,14 @@
-# Seventeen-class RCC learning path
+# Eighteen-class RCC learning path
 
 The classes are sequential for new users, but experienced users can take the readiness gates and skip material they already know.
 
-> **Availability note:** RCC Admin, RCC workers/Slurm, and project Samba shares
-> are **ready now**. Managed Nextflow-to-Slurm support, project vhosts, Ardia
+> **Availability note:** RCC workers/Slurm, Snakemake, and SSH access are
+> **ready now**. Existing instrument Samba shares are **in service** and new
+> shares are set up on request. Managed Nextflow-to-Slurm support is
+> **validating**. The RCC Admin and RCC Files browser services are **not yet
+> released**. Project vhosts, Ardia
 > integration, and RCC-to-Coscine transfer are **not yet released**. The
-> Class 7 (Nextflow), Class 8 (project vhosts), Class 17 (RCC-to-Coscine), and
+> Class 8 (project vhosts), Class 17 (RCC-to-Coscine), and
 > the Ardia parts of Class 16 are preparation for those future services.
 
 ## Prefer to learn by video?
@@ -21,7 +24,7 @@ and detailed reference.
   <a class="video-course-card" href="class-04-containers.md#watch-first"><img src="../assets/video-posters/part4.png" alt="Class 4 video title: Containers with Apptainer"><span><strong>Class 4 · Containers</strong><small>10 min video</small></span></a>
   <a class="video-course-card" href="class-05-slurm.md#watch-first"><img src="../assets/video-posters/class5.png" alt="Class 5 video title: Slurm acceptance patterns"><span><strong>Class 5 · Slurm</strong><small>3 min video</small></span></a>
   <a class="video-course-card" href="class-06-snakemake.md#watch-first"><img src="../assets/video-posters/class6.png" alt="Class 6 video title: Snakemake on RCC"><span><strong>Class 6 · Snakemake</strong><small>6 min video</small></span></a>
-  <a class="video-course-card" href="class-07-nextflow.md#watch-first"><img src="../assets/video-posters/class7.png" alt="Class 7 video title: Nextflow on RCC"><span><strong>Class 7 · Nextflow</strong><small>7 min video · not yet released</small></span></a>
+  <a class="video-course-card" href="class-07-nextflow.md#watch-first"><img src="../assets/video-posters/class7.png" alt="Class 7 video title: Nextflow on RCC"><span><strong>Class 7 · Nextflow</strong><small>7 min video</small></span></a>
   <a class="video-course-card" href="class-08-vhosts.md#watch-first"><img src="../assets/video-posters/class8.png" alt="Class 8 video title: Protected project websites"><span><strong>Class 8 · Websites</strong><small>3 min video</small></span></a>
   <a class="video-course-card" href="class-09-python-notebooks.md#watch-first"><img src="../assets/video-posters/class9.png" alt="Class 9 video title: Python notebooks for large datasets"><span><strong>Class 9 · Python</strong><small>4 min video</small></span></a>
   <a class="video-course-card" href="class-10-r-analysis.md#watch-first"><img src="../assets/video-posters/class10.png" alt="Class 10 video title: R notebooks and large-data analysis"><span><strong>Class 10 · R</strong><small>2 min video</small></span></a>
@@ -53,6 +56,7 @@ and detailed reference.
 | 15 | Trace RCC metadata, object-storage, network, and cache behavior | 45-60 min | Storage-path diagnosis and measurement plan |
 | 16 | Move wet-lab instrument data into an approved RCC workflow | 60-90 min | Verified synthetic handoff plan with ownership and retention |
 | 17 | Plan movement from project storage to Coscine (transfer not yet released) | 60-75 min | Synthetic instrument-to-Coscine lifecycle plan with verified acceptance criteria |
+| 18 | Use an off-site coding agent without sharing real research data | 45-60 min | Invented task bundle, reviewed code, synthetic test, and bounded RCC run plan |
 
 ## Course rules
 

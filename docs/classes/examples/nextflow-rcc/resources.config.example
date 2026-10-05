@@ -1,0 +1,17 @@
+/*
+ * RCC user resource override example.
+ *
+ * Keep this file about scientific task resources only.
+ * Do NOT set executor, queue, clusterOptions, queueSize, submitRateLimit,
+ * workDir, apptainer.enabled, or apptainer.cacheDir here. RCC owns those.
+ *
+ * Tune only after a representative pilot and replace the example selector with
+ * a real process name or nf-core resource label from the pipeline you run.
+ */
+process {
+    withName: 'PROCESS_NAME_FROM_THE_LOG' {
+        cpus = 8
+        memory = 32.GB
+        time = 6.h
+    }
+}
