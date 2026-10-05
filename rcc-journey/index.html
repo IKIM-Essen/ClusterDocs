@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
-  <title>RCC Expedition Light: your first 15 minutes · RCC ClusterDocs</title>
+  <title>RCC Journey · RCC ClusterDocs</title>
   <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body class="">
@@ -38,11 +38,11 @@
       
       
       
-      <section><h2>Start here</h2><a aria-current="page" href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
+      <section><h2>Start here</h2><a  href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
       
       
       
-      <section><h2>Overview</h2><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a><a  href="../rcc-journey/index.html">RCC Journey · explore the cluster (not yet released)</a></section>
+      <section><h2>Overview</h2><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a><a aria-current="page" href="../rcc-journey/index.html">RCC Journey · explore the cluster (not yet released)</a></section>
       
       
       
@@ -92,16 +92,16 @@
             
             
             
-            <details class="nav-section" open>
+            <details class="nav-section" >
               <summary>Start here</summary>
-              <div><a aria-current="page" href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
+              <div><a  href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
             </details>
             
             
             
-            <details class="nav-section" >
+            <details class="nav-section" open>
               <summary>Overview</summary>
-              <div><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a><a  href="../rcc-journey/index.html">RCC Journey · explore the cluster (not yet released)</a></div>
+              <div><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a><a aria-current="page" href="../rcc-journey/index.html">RCC Journey · explore the cluster (not yet released)</a></div>
             </details>
             
             
@@ -154,120 +154,50 @@
     </aside>
     <main id="content" class="content-card">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
-        <li><a href="../index.html">Documentation</a></li><li><span aria-current="page">RCC Expedition Light: your first 15 minutes</span></li>
+        <li><a href="../index.html">Documentation</a></li><li><span aria-current="page">RCC Journey</span></li>
       </ol></nav>
-      <p class="eyebrow">Start here · RCC ClusterDocs</p>
+      <p class="eyebrow">Overview · RCC ClusterDocs</p>
       
-      <h1 id="rcc-expedition-light-your-first-15-minutes">RCC Expedition Light: your first 15 minutes</h1>
-<p>This is the shortest route from a new computer to a safe RCC shell. You do not
-need to understand the cluster before you begin.</p>
-<p>Expedition Light is the required first-use path for new users. It deliberately
-stops after safe access, the basic host and storage model, VS Code, and a small
-Slurm check. The full RCC Expedition is optional deeper training and introduces
-containers, Snakemake, and Nextflow later.</p>
-<h2 id="choose-your-computer">Choose your computer</h2>
-<table>
-<thead>
-<tr>
-  <th>Computer</th>
-  <th>Follow this checklist</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>Current macOS</td>
-  <td><a href="macos/index.html">Set up RCC on a Mac</a></td>
-</tr>
-<tr>
-  <td>Windows 11</td>
-  <td><a href="windows/index.html">Set up RCC on Windows</a></td>
-</tr>
-</tbody>
-</table>
-<p>Both checklists use the SSH client already supplied by the operating system.
-Do not install a separate terminal, Linux virtual machine, or SSH program
-unless the checklist shows that the built-in client is missing.</p>
-<p>After terminal SSH works, follow <a href="vscode/index.html">Use VS Code with RCC</a> for the
-recommended day-to-day editor, terminal, Git, and remote-file interface.</p>
-<p>If you prefer guided, offline training, use
-<a href="../rcc-expedition/index.html">RCC Expedition</a>. You can open the course directly after
-extracting it; installing its optional Desktop shortcut is not required.</p>
-<p>Already used the original IKIM cluster? Read
-<a href="what-changed/index.html">what changed from the old ClusterDocs</a> before reusing a saved
-SSH configuration, storage habit, or submission script.</p>
-<h2 id="the-four-things-to-remember">The four things to remember</h2>
-<ol>
-<li><strong>Your computer starts the connection.</strong> Your private SSH key stays there.</li>
-<li><strong>The jump host is the guarded doorway.</strong> SSH crosses it automatically; it
-is not a computer where you work.</li>
-<li><strong>The shell host is your RCC desk.</strong> You edit small files, use Git, prepare
-jobs, and start workflow controllers there.</li>
-<li><strong>Slurm workers do the computation.</strong> Submit analysis rather than running it
-in the shell-host terminal.</li>
-</ol>
-<p>The normal connection therefore looks like this:</p>
-<pre><code class="language-text">Mac or Windows
-  -&gt; jump host (automatic forwarding; no working shell)
-  -&gt; shell host (prepare and control work)
-  -&gt; Slurm allocation (perform computation)
-</code></pre>
-<p>You normally type only <code>ssh shellhost</code>. The <code>ProxyJump</code> line in
-your SSH configuration takes care of the middle step.</p>
-<p><a href="../concepts/jump-shell-compute/index.html">Read the jump-host and shell-host explanation</a>
-if you want the full mental model.</p>
-<h2 id="where-your-work-belongs">Where your work belongs</h2>
-<table>
-<thead>
-<tr>
-  <th>What you have</th>
-  <th>Where it belongs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>Personal settings and small private files</td>
-  <td><code>/homes/&lt;user&gt;/</code></td>
-</tr>
-<tr>
-  <td>Material only for your organizational group</td>
-  <td><code>/groups/&lt;primary-group&gt;/</code></td>
-</tr>
-<tr>
-  <td>Shared research data, code, and durable results</td>
-  <td><code>/projects/&lt;project&gt;/</code></td>
-</tr>
-<tr>
-  <td>Temporary, high-I/O files for one job</td>
-  <td>Job-local <code>/local</code> or <code>$TMPDIR</code></td>
-</tr>
-</tbody>
-</table>
-<p>Your <strong>primary group</strong> records your organizational home. A <strong>project</strong> is the
-research collaboration: it has the approved members, data, services, purpose,
-and lifecycle. Add collaborators to the project; do not move them into another
-primary group merely to share data.</p>
-<p>For a large team, use the
-<a href="../reference/users-groups-projects/index.html#organise-storage-for-a-large-science-team">large-team project layout</a>
-rather than inventing another top-level storage path.</p>
-<h2 id="turn-a-successful-command-into-a-reliable-analysis">Turn a successful command into a reliable analysis</h2>
-<p>Do not keep an important analysis only in shell history. Start with the
-<a href="../paths/from-shell-scripts/index.html">script-to-workflow guide</a>. It shows how to:</p>
+      <h1 id="rcc-journey">RCC Journey</h1>
+<blockquote>
+<p><strong>Service status — not yet released:</strong> RCC Journey is a playful,
+browser-based way to explore the hardware behind RCC. The site is still being
+built; this page describes it in advance. It is optional, not required
+onboarding, and it does not replace ClusterDocs.</p>
+</blockquote>
+<p>RCC Journey connects the physical data centre to the concepts users encounter
+when they submit jobs, store data, or use accelerators.</p>
+<p>The experience is designed around the real RCC room and rack layout, with
+curated photographs, an interactive rack map, short explanations, and guided
+stories such as <strong>Follow my Slurm job</strong>.</p>
+<h2 id="what-you-will-be-able-to-explore">What you will be able to explore</h2>
 <ul>
-<li>record inputs, outputs, parameters, software, and resources;</li>
-<li>choose Snakemake or Nextflow;</li>
-<li>turn a Conda environment declaration into a pinned Apptainer runtime;</li>
-<li>run every scientific task through Slurm; and</li>
-<li>test with synthetic or non-sensitive data before scaling.</li>
+<li>the server-room layout and racks;</li>
+<li>real rack photographs and selected equipment hotspots;</li>
+<li>CPU, GPU, storage, networking, and service-machine roles;</li>
+<li>a playful end-to-end path showing where a Slurm job goes;</li>
+<li>optional deeper technical explanations linked back into ClusterDocs; and</li>
+<li>a short data-centre film when the media set is ready.</li>
 </ul>
-<h2 id="you-are-ready-when">You are ready when</h2>
+<h2 id="public-safe-by-design">Public-safe by design</h2>
+<p>RCC Journey is a separate static web application. It receives only a curated,
+public-safe export of the private infrastructure map.</p>
+<p>Operational data such as management addresses, out-of-band hardware-management
+details, network hardware identifiers, sensitive cabling notes, and credentials
+are not part of the Journey data model.</p>
+<p>ClusterDocs remains the source of truth for mutable RCC technical facts. RCC
+Journey is the exploratory layer: use it to understand <em>what the cluster is</em>,
+then follow the links back here when you need instructions or current policy.</p>
+<h2 id="relationship-to-rcc-expedition">Relationship to RCC Expedition</h2>
 <ul>
-<li>terminal SSH reaches the configured RCC target;</li>
-<li>VS Code reaches the same target and opens a narrow project directory;</li>
-<li>you can explain why the jump host does not give you a shell;</li>
-<li>you know which project owns the work;</li>
-<li>a small Slurm test completes; and</li>
-<li>repeated analysis is recorded as code rather than remembered commands.</li>
+<li><strong>RCC Expedition</strong> teaches you how to use RCC safely.</li>
+<li><strong>RCC Journey</strong> lets you explore what the RCC physically is and how the major
+components fit together.</li>
 </ul>
+<p>Journey is deliberately optional: there is no requirement to complete it
+before using RCC.</p>
+<p>The standalone RCC Journey site is currently being built and will be linked
+from this page when the first public-safe release is ready.</p>
 
       
     </main>
