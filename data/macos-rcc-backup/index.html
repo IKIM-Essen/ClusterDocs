@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
-  <title>Before sharing data with a coding agent · RCC ClusterDocs</title>
+  <title>Mac files and encrypted RCC backups · RCC ClusterDocs</title>
   <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="">
@@ -54,7 +54,7 @@
       
       
       
-      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/macos-rcc-backup/index.html">Mac files and encrypted backups (not yet released)</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a aria-current="page" href="../../data/macos-rcc-backup/index.html">Mac files and encrypted backups (not yet released)</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
       
       
       
@@ -120,9 +120,9 @@
             
             
             
-            <details class="nav-section" >
+            <details class="nav-section" open>
               <summary>Data lifecycle</summary>
-              <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/macos-rcc-backup/index.html">Mac files and encrypted backups (not yet released)</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+              <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a aria-current="page" href="../../data/macos-rcc-backup/index.html">Mac files and encrypted backups (not yet released)</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
             </details>
             
             
@@ -154,57 +154,111 @@
     </aside>
     <main id="content" class="content-card">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
-        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">Before sharing data with a coding agent</span></li>
+        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">Mac files and encrypted RCC backups</span></li>
       </ol></nav>
-      <p class="eyebrow">Documentation · RCC ClusterDocs</p>
+      <p class="eyebrow">Data lifecycle · RCC ClusterDocs</p>
       
-      <h1 id="before-sharing-data-with-a-coding-agent">Before sharing data with a coding agent</h1>
-<p>Some RCC projects contain patient-derived or otherwise protected research data.
-Removing names and phone numbers does not automatically make such data safe to
-upload elsewhere.</p>
-<h2 id="off-site-coding-agents-must-not-receive-rcc-research-data">Off-site coding agents must not receive RCC research data</h2>
-<p>Do not paste, upload, or otherwise make real or pseudonymised RCC project data
-available to an off-site coding agent. This is the RCC user rule for protected
-biomedical data, not a preference or a warning that users may override.</p>
-<p>Health and genetic data are special categories under <a href="https://eur-lex.europa.eu/eli/reg/2016/679/art_9/oj">Article 9
-GDPR</a>. German research law
-does not give an individual user blanket permission to disclose them to a new
-service. A service account, licence, or “approved” label is not the required
-legal basis or processor arrangement. Any exceptional off-site processing must
-be explicitly established and authorized by the responsible institution for
-that exact service and purpose.</p>
-<p>You can usually ask for help without sending the data. Describe the file type,
-columns, error message, or intended analysis using a small synthetic example.</p>
-<p>Shuffling rows, hashing an identifier, or replacing names is not enough. If
-information can still be linked to a person using other information, it remains
-personal data. Use values that are fully invented rather than transformed from
-real people. The European Data Protection Board explains this distinction in
-its <a href="https://www.edpb.europa.eu/topics/ai-and-technology/anonymisation-pseudonymisation_en">guidance on pseudonymisation</a>.</p>
-<h2 id="when-a-coding-agent-can-work-with-the-data">When a coding agent can work with the data</h2>
-<p>An approved RCC or locally operated coding agent can work near project data that
-you are already allowed to use. The data remains subject to the same project,
-purpose, access, and retention rules.</p>
-<p>The preferred pattern is:</p>
-<pre><code class="language-text">you describe the result
-        |
-approved RCC computation runs near the data
-        |
-you receive the permitted plots, tables, code, and report
-</code></pre>
-<h2 id="when-an-off-site-coding-agent-is-useful">When an off-site coding agent is useful</h2>
-<p>Off-site coding agents are useful for:</p>
-<ul>
-<li>public code and documentation;</li>
-<li>synthetic or teaching data;</li>
-<li>generic error messages with sensitive details removed; and</li>
-<li>other material explicitly approved for external processing.</li>
-</ul>
-<p>If you are uncertain, do not attach the dataset. Use <strong>Make coding example</strong> for an
-off-site coding agent or <strong>Use inside RCC</strong> for the real data. These should be the
-normal choices; users should not need to complete a form for an ordinary
-synthetic tabular fixture. Ask support only when neither route fits the task.</p>
-<p>For a practical walkthrough, use <a href="../../course/class-18-coding-agents/index.html">Class 18: coding agents without sharing real
-data</a>.</p>
+      <h1 id="mac-files-and-encrypted-rcc-backups">Mac files and encrypted RCC backups</h1>
+<blockquote>
+<p><strong>Service status: not yet released.</strong> RCC Remote Files and network Time Machine
+are being prepared. Keep the existing backup disk at your work desktop until
+RCC accepts the encrypted work backup. Keep the separate backup disk at home
+for full Mac replacement. This page does not announce a live endpoint.</p>
+</blockquote>
+<p>RCC Remote Files is intended to give your Mac access to your Home folder, your
+approved primary working group's folder, and a separate encrypted Time Machine
+backup destination. Project datasets and results stay in governed project storage.
+A mounted Home or Groups folder is not itself a backup of your Mac.</p>
+<p>When released, the RCC Admin page will show three distinct Finder destinations on the issued
+server: <strong>My home folder</strong> (<code>/Home</code>), <strong>My working group</strong> (<code>/Groups</code>) and
+<strong>Mac backup</strong> (<code>/TimeMachine</code>). Working-group access requires approval;
+Mac backup remains marked pending until its own acceptance. Use the full address
+shown by RCC Admin rather than adding these paths to a guessed server name.</p>
+<h2 id="before-joining-the-pilot">Before joining the pilot</h2>
+<p>RCC supplies the accepted server address and enrollment instructions. Do not use
+an address copied from an example or expose SMB port 445 to the Internet.
+You need an RCC account with strong two-factor authentication, FileVault enabled,
+and a way to recover the RCC Time Machine encryption password without the work
+Mac. Confirm that the separate home backup disk is also encrypted,
+and keep it and its password in their normal secure home location. Never put either password in a support ticket, Git repository,
+screenshot or test report.</p>
+<p>Enrollment, credential rotation and recovery enrollment require strong 2FA.
+Scheduled backups reconnect using the enrolled device and a separate Files
+credential stored in Keychain. They cannot prompt for a second factor on every
+scheduled run. This is a persistent device session, not fresh interactive 2FA
+for each backup. The first-backup encryption admission workflow is still a
+release prerequisite; RCC does not require management of your Mac.</p>
+<h2 id="connect-and-make-the-first-backup">Connect and make the first backup</h2>
+<ol>
+<li>Follow the RCC Admin Remote Files enrollment instructions using strong 2FA.</li>
+<li>Connect the approved Tailscale client to the RCC Headscale service. Follow the
+issued configuration; do not enable subnet routes or inbound services.</li>
+<li>In Finder, choose <strong>Go → Connect to Server</strong>. Use the exact Home or Groups
+SMB address issued by RCC and the separate Files credential, not your RCC
+account password. An unapproved group is intentionally unavailable.</li>
+<li>Add the issued TimeMachine destination in macOS Time Machine settings and
+enable <strong>Encrypt Backups</strong>. Store the encryption password in the approved
+recovery system. It is separate from the Files credential.</li>
+<li>Complete the initial backup. RCC storage is already encrypted while it is
+created, but <strong>your first RCC backup is not yet accepted</strong>. After the first
+backup, run the <code>rcc-macos-time-machine-encryption-check</code> command RCC
+provides against the mounted backup destination and send its result file to
+RCC. An operator compares it with RCC's own observation that the Mac's backup
+bundle is encrypted on the exact RCC destination. If
+encryption was missed, keep your existing work-desktop backup disk and make
+a new encrypted RCC backup with RCC's help; do not delete a backup yourself.
+RCC also checks an incremental backup, sleep/wake reconnection, capacity
+limits and a selected-file restore with you.</li>
+</ol>
+<p>RCC checks client encryption once, after the first worksite backup. It does not
+ask you to repeat that encryption check. RCC still monitors whether backups are
+recent and whether recovery works; those are separate checks.</p>
+<p>Network encryption, server disk encryption and encrypted Time Machine backups
+are different protections. RCC requires all three. A successful upload or a
+checked checkbox alone does not establish that the recovery test passed.</p>
+<h2 id="restore-a-file">Restore a file</h2>
+<p>Connect to the RCC overlay and your backup destination, open Time Machine,
+choose the date and file, and restore it. Open the restored file to check it.
+For an important recovery, preserve the current file separately first.
+Report a failed or stale backup to RCC; do not delete the backup bundle to
+&quot;repair&quot; it.</p>
+<h2 id="recover-after-a-lost-replaced-or-erased-mac">Recover after a lost, replaced or erased Mac</h2>
+<ol>
+<li>Contact RCC and revoke the old Mac's Remote Files access if it is lost or
+untrusted.</li>
+<li>Use the <strong>separate backup disk kept at home</strong> as the source for full Mac
+replacement. On the replacement Mac, use Migration Assistant and select
+<strong>From a Mac, Time Machine or startup disk</strong>. You need that disk's own
+encryption password. Do not depend on the RCC overlay being available during
+macOS Recovery or initial Setup Assistant.</li>
+<li>Open representative restored files and applications. Confirm FileVault is on.</li>
+<li>Sign in to RCC Admin using strong 2FA and enroll the replacement Mac. Rejoin
+the RCC overlay and use the newly issued Files credential for Home and any
+approved Groups share. The old Mac must remain revoked.</li>
+<li>If you need an older work file from the RCC backup, connect to the RCC
+TimeMachine share and use its <strong>separate</strong> encryption password. Keep the
+previous Mac's RCC backup bundle until RCC approves its retention/disposal.</li>
+<li>Start a new encrypted RCC backup from the replacement Mac. RCC verifies its
+encryption, a later incremental backup and a small file restore.</li>
+</ol>
+<p>Apple documents <a href="https://support.apple.com/102551">restoring a Mac with Migration Assistant</a>.
+The encrypted home disk remains the full-machine recovery path. Losing the RCC backup
+password can make that additional copy unusable; RCC cannot bypass its encryption.
+Keep the RCC password available away from the work Mac.</p>
+<h2 id="working-group-folders">Working-group folders</h2>
+<p>Only your reviewed primary working group is exposed. Before publication, the
+group lead and RCC must identify project datasets, intermediate files, research
+results and controlled data, and arrange their reviewed migration to the correct
+project. Group documents and small common resources may remain when their access
+boundary is appropriate. Do not move or delete other people's data yourself.
+New project data must not accumulate in the shared group folder after approval.</p>
+<h2 id="when-can-the-desktop-backup-disk-be-retired">When can the desktop backup disk be retired?</h2>
+<p>Only after RCC confirms the service is released and your initial/incremental
+worksite backups, encrypted-bundle checks, selected-file restore, home-disk
+recovery route and replacement-Mac re-enrollment have passed. RCC must also
+accept server recovery, monitoring, capacity and lost-device revocation. Keep
+the home backup disk as the independent full-Mac recovery source. Until the
+worksite service is accepted, retain the existing disk at the work desktop.</p>
 
       
     </main>
