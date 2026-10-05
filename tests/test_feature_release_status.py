@@ -26,6 +26,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                 "ssh_shellhost_transfer": "ready",
                 "samba_project_shares": "in_service_on_request",
                 "headscale_pikvm_access": "not_yet_released",
+                "remote_files_macos_backup": "not_yet_released",
                 "nextflow_slurm_support": "validating",
                 "opportunistic_and_group_capacity": "not_yet_released",
                 "project_vhosts": "not_yet_released",
