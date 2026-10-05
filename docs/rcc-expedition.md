@@ -140,7 +140,7 @@ The release contains platform-specific and common missions for:
 12. governed data and transfer boundaries;
 13. explicit software environments;
 14. Apptainer;
-15. Snakemake and managed Nextflow, both ready now;
+15. Snakemake (ready now) and managed Nextflow (validating);
 16. optional VS Code and Jupyter; and
 17. an end-to-end synthetic RCC experiment.
 

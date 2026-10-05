@@ -36,7 +36,7 @@ By the end of this class you can:
 - install VS Code and the Remote - SSH extension as the recommended interface
   for most coding and analysis preparation;
 - open a narrowly scoped remote project and configure safe search exclusions;
-- use the browser transfer service without sharing an account.
+- transfer a file with `scp` or `sftp` to the shell host without sharing an account.
 
 ## Security model in plain language
 
@@ -94,7 +94,7 @@ Its safe shape includes both the gateway and the destination:
 
 ```sshconfig
 Host {{ ssh_gateway_alias }}
-  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+  HostName login.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
@@ -171,10 +171,10 @@ Inside the hospital network, use your individual RCC username and normal RCC
 sign-in flow. External access may require an additional factor. Do not solve
 access problems by using a shared project account.
 
-The Files service exposes project-facing data, not arbitrary server filesystems.
-Confirm the selected project and destination before uploading. Read
-[RCC Files](../concepts/rcc-files.md) for the browser/SFTP distinction and
-project-data boundary.
+Transfer files with `scp`, `sftp`, or `rsync` to the shell host; the jump host
+only forwards the connection. The browser-based RCC Files portal is **not yet
+released**. Confirm the project and destination before uploading. Read
+[Storage and transfer](../reference/storage-transfer.md) for the commands.
 
 > **Reference companion:** Use [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md)
 > for account-request details, diagnostics, Remote SSH, and light SSHFS mounts.

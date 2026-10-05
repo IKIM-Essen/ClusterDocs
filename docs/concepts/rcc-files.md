@@ -1,5 +1,12 @@
 # RCC Files: browse and transfer project data
 
+> **Service status — not yet released:** the RCC Files browser and SFTP portal
+> is not currently available. Its earlier internal pilot was withdrawn in
+> October 2026, and RCC will announce the released service. Until then, use
+> `scp`, `sftp`, or `rsync` to the shell host as described in
+> [Storage and transfer](../reference/storage-transfer.md). This page describes
+> the intended service boundary.
+
 RCC Files is the project-facing browser and transfer surface. Use it when the
 main task is to move, upload, download, or inspect approved project files without
 opening an interactive compute session.

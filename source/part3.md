@@ -56,8 +56,9 @@ By the end of Part 3, you should be able to:
   Request only the CPUs and memory the job needs; inspect current node capacity
   with `sinfo` rather than copying a historic core or memory maximum.
 - **GPU queues:** request scheduled GPUs with `--partition=gpu_nodes` and
-  `--gres=gpu:1` (or a reviewed typed GRES such as `gpu:a6000:1`). Use
-  `interactive_gpu` only for an explicitly schedulable interactive GPU worker.
+  `--gpus-per-node=1` (or the typed form `--gpus-per-node=rtx_a6000:1` when the
+  exact model matters). `interactive_gpu` currently has no schedulable
+  capacity.
   A GPU must still be requested even when a node physically contains one.
 - **Memory:** RCC has no universal “high-memory” partition contract. Slurm
   schedules the requested `--mem` or `--mem-per-cpu` against live node capacity;

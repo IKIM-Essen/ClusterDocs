@@ -1,7 +1,8 @@
 # RCC Nextflow class example
 
-> **Service status — ready now:** run this bounded example through the managed
-> `rcc-nextflow` launcher on a shellhost or allocation-backed interactive node.
+> **Service status — validating:** run this bounded example only through the
+> managed `rcc-nextflow` launcher on a shellhost where it is installed. The
+> launcher's end-to-end acceptance is not yet complete.
 
 On an RCC shellhost or allocation-backed interactive node, not on an SSH
 gateway or a compute worker:

@@ -13,16 +13,19 @@ the configuration contains two hosts even though users type one destination.
 
 > **Recommended for most users:** use **VS Code with Remote - SSH** as your
 > everyday interface for writing code, editing configuration, using Git,
-> reading logs, and preparing analyses. Use the RCC transfer service for large
-> data movement, and submit computation through Slurm. Opening a remote VS Code
+> reading logs, and preparing analyses. Use `scp`, `sftp`, or `rsync` to the
+> shell host for data movement, and submit computation through Slurm. Opening a remote VS Code
 > window does not create a compute allocation.
 
 ## Request an RCC account
 
-**RCC Admin is ready now**, including self-administration and the
-primary-approver workflow. Use RCC Admin for the account or membership request.
-If your project uses a coordinated onboarding process, prepare the following
-for the responsible project coordinator and primary approver:
+**The RCC Admin self-service portal is not yet released.** Its browser
+enrollment and self-administration are being re-established in a restricted
+pilot; do not use old RCC Admin bookmarks. Until RCC announces the portal,
+accounts and project memberships are created on request: contact the team in
+the **IKIM Cluster channel on Mattermost** or through your project coordinator,
+and prepare the following for the responsible project coordinator and primary
+approver:
 
 - first and last name;
 - institutional email address;
@@ -93,7 +96,7 @@ configuration has this shape:
 
 ```sshconfig
 Host {{ ssh_gateway_alias }}
-  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+  HostName login.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
@@ -278,8 +281,8 @@ not depend on a laptop connection remaining open.
 
 ## Mount a small remote folder
 
-Prefer the RCC files portal for browser-based access to approved project
-folders. SSHFS is appropriate only for light interactive use such as editing a
+Use `scp`, `sftp`, or `rsync` to the shell host for transfers; the browser
+RCC Files portal is not yet released. SSHFS is appropriate only for light interactive use such as editing a
 small document. It is not a bulk-transfer or analysis filesystem.
 
 After installing a maintained SSHFS implementation for your operating system,

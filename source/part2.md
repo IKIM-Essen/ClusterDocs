@@ -91,9 +91,10 @@ A workflow can execute successfully and still be scientifically invalid. Snakema
 - **Outbound access:** HTTP(S) package, pipeline, test-data, and image downloads
   use the managed proxy `http://proxy.ikim.uk-essen.de:3128`. Never embed
   credentials or tokens in workflow files.
-- **Nextflow and nf-core — ready now:** RCC provides a pinned `rcc-nextflow`
-  launcher and institutional Slurm configuration. The controller runs only on
-  an RCC interactive node (a `shellhost`); compute workers execute
+- **Nextflow and nf-core — validating:** RCC is deploying a pinned
+  `rcc-nextflow` launcher and institutional Slurm configuration; end-to-end
+  acceptance is not yet complete. The controller runs only on
+  an RCC shellhost; compute workers execute
   generated tasks through Slurm without their own Java or Nextflow install.
 - **Nextflow work and containers:** resume-critical `NXF_WORK`, required
   container images, and retained output
@@ -1118,8 +1119,9 @@ A technically successful workflow can use the wrong samples, reference, model, o
 
 # Optional follow-up: a bounded nf-core/Nextflow run
 
-> **Ready now:** use only the pinned `rcc-nextflow` launcher and institutional
-> configuration on an RCC shellhost or documented interactive allocation.
+> **Validating:** use only the pinned `rcc-nextflow` launcher and institutional
+> configuration on an RCC shellhost where it is installed; end-to-end
+> acceptance is not yet complete.
 
 nf-core publishes community-maintained analysis pipelines implemented in
 Nextflow. This is a complementary model rather than a replacement for the
@@ -1139,7 +1141,7 @@ The copyable class materials under `docs/classes/examples/nf-core/` contain:
   project, input, reference, result, and run placeholders must all be reviewed
   before use.
 
-Run the demo only from an RCC interactive node (a `shellhost`), within an
+Run the demo only from an RCC shellhost, within an
 approved shared project path, and while RCC's outbound proxy path is available.
 The launch directory, Nextflow work directory, required Apptainer images, and
 durable outputs must be shared between the shellhost and Slurm
