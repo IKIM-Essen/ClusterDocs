@@ -47,4 +47,3 @@ A normal SSH connection ends when the laptop sleeps, the network changes, or the
 ## Slide 12: 11. First-day completion checklist
 
 You are ready to continue when you can demonstrate each outcome rather than merely following the steps once. You can identify whether a terminal is local or remote. You can explain the difference between your private and public keys. You have verified the official server fingerprint. Command-line SSH works before Visual Studio Code. You can open the correct remote project directory. You can transfer a small non-sensitive file and match its checksum. You can submit a batch script, observe its job identifier, and confirm that it completed on a compute node. Keep the commands and logs; they are useful evidence when asking for support.
-
