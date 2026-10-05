@@ -65,9 +65,9 @@ extension/package mutation is not part of the accepted release path.
 
 ## Canonical Analysis route
 
-The planned researcher-facing management origin is
-`analysis.ikim.uk-essen.de`. Workflow remains at the Analysis root and Notebook
-management is namespaced below `/notebook/`.
+RCC will announce the researcher-facing Analysis address when the service is
+released. Workflow remains at the Analysis root and Notebook management is
+namespaced below `/notebook/`.
 
 That does **not** mean the staged URL is live today. Publication remains an
 explicit deployment gate. The Notebook management router is intentionally

@@ -13,7 +13,8 @@ class VSCodeGuidanceTests(unittest.TestCase):
 
         self.assertIn("browser-first research", overview)
         self.assertIn("advanced command-line/developer access", overview)
-        self.assertIn("ssh is optional", start)
+        self.assertIn("ssh is how you use rcc today", start)
+        self.assertNotIn("ssh is optional", start)
         self.assertIn("vs code with remote - ssh", development)
         for phrase in ["slurm", "search", "file watching"]:
             self.assertIn(phrase, development)
@@ -29,7 +30,7 @@ class VSCodeGuidanceTests(unittest.TestCase):
             "workspace trust",
             "remote extension can execute code",
             "does not create a compute allocation",
-            "rcc transfer service",
+            "`rsync` to the",
             "host-identity warning",
         ]:
             self.assertIn(phrase, page)

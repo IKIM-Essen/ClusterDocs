@@ -2,12 +2,15 @@
 
 Choose storage by lifecycle and access pattern, not only by free capacity.
 
-> **Service status:** RCC workers and project Samba shares are **ready now**.
+> **Service status:** RCC workers and SSH transfer (`scp`, `sftp`, `rsync`) to
+> the shell host are **ready now**. Existing instrument Samba shares are
+> **in service**; RCC sets up each new share for an approved project and
+> registered device on request. The RCC Files browser portal is **not yet released**.
 > RCC-to-Coscine archive transfer is **not yet released**; references to it are
 > lifecycle planning, not an operational transfer command.
 
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
-> the files portal, [Class 3](../course/class-03-performance.md) explains local
+> safe access and transfer, [Class 3](../course/class-03-performance.md) explains local
 > staging, and [Class 13](../course/class-13-biomedical-data-privacy.md) covers
 > the biomedical-data admission decision.
 
@@ -27,7 +30,7 @@ storage, see [Users, groups, and projects](users-groups-projects.md).
 | Material shared only within a user's primary group | approved group storage | Not a substitute for a cross-group project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
-| Browser upload and download | RCC files portal | Confirm project and destination before transfer |
+| Browser upload and download | RCC Files (**not yet released**) | Until it is released, use `scp`, `sftp`, or `rsync` to the shell host |
 
 ## Research data belongs to a project, not a home directory
 
@@ -38,8 +41,8 @@ retention, and archival decisions. A personal account cannot substitute for
 that project context, particularly when a user changes role or leaves.
 
 Home storage is also the wrong performance boundary for large or recurring
-ingestion. Large datasets and many-small-file trees can consume personal quota
-and create filesystem metadata load. Put durable data in the project, stage
+ingestion. Large datasets and many-small-file trees exhaust shared home
+capacity and create filesystem metadata load. Put durable data in the project, stage
 active high-I/O computation to job-local storage, and copy validated results
 back to the project.
 
@@ -74,33 +77,67 @@ survive job completion, reboot, maintenance, or cleanup.
 
 ## Pick a transfer method
 
-- Use the **RCC files portal** for ordinary browser-based project transfers.
-- Use `scp`, `sftp`, or `rsync` over the approved SSH route for scripted or
-  resumable transfers.
+- Use `scp`, `sftp`, or `rsync` to a **shell host** (`{{ ssh_target_alias }}`),
+  routed through `login.ikim.uk-essen.de` with SSH `ProxyJump`. The jump host
+  only forwards the connection; it is never the transfer endpoint and stores no
+  files.
+- The browser-based **RCC Files** portal is **not yet released**. Do not use
+  old Files bookmarks until RCC announces the service.
 - For a large tree of small files, create one archive before transfer to reduce
   metadata operations, then verify it with a checksum.
-- Use an approved institutional bulk-transfer service when the files portal or
-  SSH route is unsuitable.
+- Use an approved institutional bulk-transfer service when the SSH route is
+  unsuitable.
 
-Example with `rsync`:
+The important endpoint distinction is:
+
+```text
+workstation -> login.ikim.uk-essen.de -> shellhost -> /homes, /groups, /projects
+              forwarding only          transfer endpoint
+```
+
+Do **not** use `login.ikim.uk-essen.de` as the source or destination of a data
+copy. The login tier is the guarded transport boundary; research filesystems are
+available on the shell-host tier.
+
+The explicit `scp` form is:
+
+```bash
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .
+```
+
+For SFTP:
+
+```bash
+sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+```
+
+For `rsync`:
 
 ```bash
 rsync --archive --partial --info=progress2 \
-  ./dataset/ {{ ssh_target_alias }}:/projects/<project>/incoming/dataset/
+  -e 'ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de' \
+  ./dataset/ YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/projects/<project>/incoming/dataset/
 ```
+
+If your approved SSH configuration already gives `shellhost` the setting
+`ProxyJump login.ikim.uk-essen.de`, the shorter forms such as
+`scp file {{ ssh_target_alias }}:/projects/<project>/` are equivalent. The explicit form is
+shown here first so that it remains clear which machine is the jump host and
+which machine actually accesses the data.
 
 Example with an archive and checksum:
 
 ```bash
 tar -czf dataset.tar.gz dataset/
 sha256sum dataset.tar.gz > dataset.tar.gz.sha256
-scp dataset.tar.gz dataset.tar.gz.sha256 \
-  {{ ssh_target_alias }}:/projects/<project>/incoming/
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de dataset.tar.gz dataset.tar.gz.sha256 \
+  YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/projects/<project>/incoming/
 ```
 
 On RCC, verify before extracting:
 
 ```bash
+ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
 cd /projects/<project>/incoming
 sha256sum -c dataset.tar.gz.sha256
 tar -tzf dataset.tar.gz | sed -n '1,20p'
@@ -109,7 +146,12 @@ tar -tzf dataset.tar.gz | sed -n '1,20p'
 Inspect archive paths before extraction. Reject archives containing absolute
 paths or unexpected `..` components.
 
-## Unsupported transfer pattern
+## Unsupported transfer patterns
+
+Do not transfer data directly to `login.ikim.uk-essen.de`, `login1`, or
+`login2`. Ordinary user sessions on those hosts are forwarding-only; they are
+not RCC storage endpoints and should not expose `/homes`, `/groups`, or
+`/projects`.
 
 Do not transfer project data with a raw Netcat listener. It has no built-in
 authentication or encryption, can expose an unintended port, and bypasses the
@@ -120,9 +162,21 @@ not retained.
 
 Object storage does not behave like a POSIX filesystem. Applications must use
 an object client or API, and data commonly needs staging to job-local storage.
-Use it only when the project has an approved endpoint, credentials, retention
-policy, and documented client configuration. Never place access keys in shell
-history, notebooks, Git, or shared configuration files.
+
+Normal RCC project storage remains the JuiceFS-backed POSIX namespace under
+`/projects/<project>`. A project does **not** get direct S3 merely because it
+exists or because its files are ultimately stored on an S3-compatible backend.
+Direct S3 is **not yet released** for users. When it is, a project will get it
+only as an additional capability that RCC explicitly grants, with its own
+endpoint, authorization policy and credential or temporary session.
+
+A future OIDC/STS flow may issue a short-lived S3 session, but that
+does not cause S3 to enforce the POSIX ownership/mode/directory semantics of the
+JuiceFS namespace. Do not use the raw object namespace beneath JuiceFS as an
+alternate route around the filesystem permission model.
+
+Never place access keys in shell history, notebooks, Git, or shared
+configuration files.
 
 ## Controlled and archival data
 

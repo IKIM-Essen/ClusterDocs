@@ -30,7 +30,7 @@ When released, a normal notebook user should not need to:
 - copy a Jupyter token; or
 - expose a notebook port.
 
-Until RCC Analysis Notebook is explicitly enabled on the RCC landing page, the
+Until RCC announces that RCC Analysis Notebook is released, the
 manual Slurm + SSH-tunnel procedure below remains the supported current path.
 After browser notebooks are released, the manual route remains useful as an
 advanced/fallback technique rather than the default onboarding experience.
@@ -55,7 +55,7 @@ Class 5 Slurm gate. You need a working SSH client, a valid RCC account, and the
 ability to submit one small Slurm job.
 
 For the **future browser-first path**, the goal is different: an authorized RCC
-account/project and browser authentication are sufficient. SSH is optional.
+account/project and browser authentication will be sufficient, and SSH will be optional.
 
 ## The RCC notebook rule
 

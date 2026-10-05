@@ -1,39 +1,21 @@
 # RCC Expedition Light: your first 15 minutes
 
-RCC is moving toward a browser-first experience for researchers who do not need
-the command line. You do **not** need to become an SSH user merely because you
-have an RCC account.
+This is the shortest route from a new computer to a safe RCC shell. You do not
+need to understand the cluster before you begin.
 
-There are therefore two legitimate starting paths.
+Expedition Light is the required first-use path for new users. It deliberately
+stops after safe access, the basic host and storage model, VS Code, and a small
+Slurm check. The full RCC Expedition is optional deeper training and introduces
+containers, Snakemake, and Nextflow later.
 
-## Path A — browser-first research
+RCC is also preparing a browser-first experience for researchers who do not need
+the command line. There are therefore two starting paths; today only Path A is
+available.
 
-Use this path when the RCC Home page shows the required browser services as
-enabled for your account/project.
+## Path A — command-line access (current)
 
-The intended normal journey is:
-
-```text
-RCC Home
-   -> Files: upload or choose project data
-   -> RCC Analysis: Notebook for interactive exploration
-        or RCC Analysis: Workflow for repeatable analysis
-   -> Files: inspect/download results
-```
-
-A browser-first account can work without an SSH public key. RCC web
-authentication and project membership remain the authority; the browser service
-submits compute through the governed RCC/Slurm path on your behalf.
-
-> **Current release note:** RCC Analysis Notebook/Workflow is documented before
-> activation. Until the RCC landing page explicitly shows it as available, use
-> Path B for compute and the current Files service where appropriate.
-
-## Path B — command-line / developer access
-
-Use this path when you need SSH, VS Code Remote SSH, direct Slurm commands,
-workflow development, automation, or when browser Analysis has not yet been
-activated.
+Use this path now. It gives you SSH, VS Code Remote SSH, direct Slurm commands,
+workflow development, and automation.
 
 | Computer | Follow this checklist |
 |---|---|
@@ -44,15 +26,36 @@ Both checklists use the SSH client already supplied by the operating system.
 Do not install a separate terminal, Linux virtual machine, or SSH program unless
 the checklist shows that the built-in client is missing.
 
-After terminal SSH works, follow [Use VS Code with RCC](vscode.md) when you need
-the advanced editor/terminal/Git path.
+After terminal SSH works, follow [Use VS Code with RCC](vscode.md) for the
+recommended day-to-day editor, terminal, Git, and remote-file interface.
+
+## Path B — browser-first research (not yet released)
+
+> **Service status — not yet released:** RCC Home, Files, and RCC Analysis
+> Notebook/Workflow are not yet available. Use Path A until RCC announces them.
+
+The intended journey is:
+
+```text
+RCC Home
+   -> Files: upload or choose project data
+   -> RCC Analysis: Notebook for interactive exploration
+        or RCC Analysis: Workflow for repeatable analysis
+   -> Files: inspect/download results
+```
+
+Once released, a browser-only account will be able to work without an SSH
+public key. RCC web authentication and project membership remain the authority;
+the browser service submits compute through the governed RCC/Slurm path on your
+behalf.
 
 ## What most researchers should remember
 
-1. **Your RCC account is your identity; SSH is optional.** Browser capabilities
-   do not require an SSH key unless the service explicitly says so.
-2. **Files is the browser data entry/exit surface.** Durable project inputs and
-   results belong in the project.
+1. **Your RCC account is your identity.** SSH is how you use RCC today; once
+   the browser services are released, browser-only work will not require an
+   SSH key.
+2. **Files will be the browser data entry/exit surface** (not yet released).
+   Durable project inputs and results belong in the project.
 3. **RCC Analysis Notebook is for exploration.** It is planned as Jupyter in a
    bounded Slurm allocation without manual tunnels or worker selection.
 4. **RCC Analysis Workflow is for repeatable work.** Long, repeated, unattended,
@@ -61,9 +64,9 @@ the advanced editor/terminal/Git path.
 5. **Slurm workers still do the computation.** Browser-first changes how you ask
    for compute, not where compute runs.
 
-## If you use the advanced SSH path
+## The command-line connection model
 
-The command-line connection model remains:
+The command-line connection model is:
 
 ```text
 Mac or Windows
@@ -87,8 +90,8 @@ if you need the full command-line mental model.
 | Shared research data, code, and durable results | `/projects/<project>/` |
 | Temporary, high-I/O files for one job | Job-local `/local` or `$TMPDIR` |
 
-Browser users do not need to type these paths during normal work; Files and RCC
-Analysis should present authorized projects directly. The paths remain useful
+Once released, Files and RCC Analysis should present authorized projects
+directly, so browser users will not need to type these paths. The paths remain useful
 reference for developers and reproducibility documentation.
 
 Your **primary group** records your organizational home. A **project** is the
@@ -109,16 +112,6 @@ CPU, memory, GPU, or time is not a substitute for measuring what the analysis
 actually uses.
 
 ## You are ready when
-
-For the browser-first path:
-
-- you can sign in to RCC without an SSH key;
-- Files shows the correct project;
-- you understand Notebook versus Workflow mode;
-- you can save durable work back into the project; and
-- you know that large/repeated work should leave the notebook path.
-
-For the advanced SSH path:
 
 - terminal SSH reaches the configured RCC target;
 - VS Code reaches the same target if you use it;

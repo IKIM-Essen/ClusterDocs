@@ -144,15 +144,11 @@ Existing runs are never silently replaced. Notebook-created durable work should
 also be saved in project storage rather than treated as durable merely because a
 browser session is still open.
 
-## Canonical staged browser route
+## Planned browser route
 
-The planned researcher-facing Analysis origin is:
-
-```text
-https://analysis.ikim.uk-essen.de/
-```
-
-Workflow occupies the Analysis root. Notebook management is namespaced below
+RCC will announce the researcher-facing Analysis address when the service is
+released; the final public origin is still being settled. Within Analysis,
+Workflow occupies the Analysis root and Notebook management is namespaced below
 `/notebook/`. This route is **staged source configuration, not a claim of live
 availability**.
 

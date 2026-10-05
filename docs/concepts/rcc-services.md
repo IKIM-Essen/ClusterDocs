@@ -4,29 +4,33 @@ RCC is one research-computing environment with several user-facing surfaces. The
 same RCC identity and project authorization follow you between them; choosing a
 surface does not create a second account or a second copy of your project.
 
-> **Release status matters.** RCC Analysis and its browser notebook mode are
-> documented before user activation. A service described in ClusterDocs is not
-> automatically released. Follow the status note on the service page and the
-> current RCC landing page.
+> **Release status matters (October 2026).** Today the supported routes are
+> SSH through the jump host to the shell host, VS Code Remote SSH, Slurm on RCC
+> workers, and this documentation site. The RCC browser services below — Home,
+> Files, Admin / My RCC, the Assistant, and RCC Analysis (Notebook and
+> Workflow) — are **not yet released**; their earlier internal pilot was
+> withdrawn and RCC is re-establishing them in a staged rollout. A service
+> described in ClusterDocs is not automatically released. Follow the status
+> note on each service page.
 
 ## The short version
 
 | Service | Use it when you want to... | Current documentation status |
 |---|---|---|
-| **Home** | find RCC services and account entry points | current RCC surface |
-| **Files** | upload, browse, or download approved project data | current user path |
+| **SSH / VS Code** | work in a shell or editor and submit Slurm jobs | **ready now** |
+| **Documentation** | learn RCC and look up procedures | **ready now** (this site) |
+| **Home** | find RCC services and account entry points | **not yet released** |
+| **Files** | upload, browse, or download approved project data in a browser | **not yet released**; use `scp`, `sftp`, or `rsync` to the shell host |
 | **RCC Analysis** | explore data in a notebook or run a repeatable governed workflow | **not yet released** |
-| **Documentation** | learn RCC and look up procedures | current user path |
-| **Assistant** | ask for explanations or bounded RCC help | availability depends on the current RCC service/project |
-| **Admin / My RCC** | manage your account, project membership, and authorized project actions | current RCC surface |
-| **SSH / VS Code** | use an advanced command-line or development path | current advanced path |
+| **Assistant** | ask for explanations or bounded RCC help | **not yet released** |
+| **Admin / My RCC** | manage your account, project membership, and authorized project actions | **not yet released**; RCC support handles requests |
 
 Open OnDemand is retired from the current RCC product model. Do not use old OOD
 screenshots or bookmarks as current connection instructions.
 
 ## Files: the browser data entry and exit point
 
-Use **Files** when the task is primarily about project data:
+When released, use **Files** when the task is primarily about project data:
 
 - upload an input file;
 - inspect project-facing folders;
@@ -86,9 +90,10 @@ place a notebook or advanced development environment on Slurm and attach the
 browser safely.
 
 For most researchers the visible action should be **Open notebook**, not “start
-a Workbench session” or “open a web shell”. A shell or VS Code-style browser IDE
-may remain an advanced interface for developers, but it should not dominate the
-normal data-analysis path.
+a Workbench session” or “open a web shell”. A browser shell may remain an
+advanced interface for developers, but it should not dominate the normal
+data-analysis path. RCC does not plan a browser-based VS Code IDE; use local
+VS Code with Remote - SSH.
 
 Read [Workbench execution layer](workbench-interfaces.md) only when you need the
 advanced architecture and session-boundary explanation.
@@ -112,7 +117,7 @@ it used.
 
 ## Assistant: explain and help, not bypass policy
 
-The RCC Assistant may explain documentation, help interpret failures, or support
+The RCC Assistant is **not yet released**. When enabled, it may explain documentation, help interpret failures, or support
 bounded actions when those capabilities are enabled. It does not gain a second
 identity, project access, or scheduler authority simply because the request is
 made in natural language.
@@ -122,10 +127,15 @@ and [coding agents and your data](how-rcc-works.md).
 
 ## Admin / My RCC: identity and project governance
 
-Use the account/project surface for actions such as account security, project
-membership, and project-service requests that your role is authorized to make.
-A browser-first RCC account does **not** require an SSH public key. SSH is an
-optional credential for users who need the command-line path.
+Admin / My RCC is **not yet released**; until it is, RCC support handles
+account and membership requests. When released, use the account/project surface
+for actions such as account security, project membership, and project-service
+requests that your role is authorized to make. Finding an action in the
+interface does not mean every user may execute it.
+
+Once the browser services are released, a browser-only RCC account will not need
+an SSH public key. Until then, SSH through the jump host is the supported way to
+use RCC, so register an SSH public key with your account.
 
 Read [Projects and supported actions](projects-and-capabilities.md) and
 [How RCC authentication fits together](../reference/authentication-lifecycle.md).
@@ -156,6 +166,25 @@ approximate operational evidence, not billing or an entitlement system.
 
 Read [RCC Usage reporting](../reference/usage-accounting.md).
 
+## Two concepts follow you across every surface
+
+### Your authentication method is not your authorization
+
+RCC may use SSO/passkeys for web sign-in and SSH public keys for command-line
+access. Those credentials prove who you are; they do not independently grant
+project or administrator rights.
+
+Read [How RCC authentication fits together](../reference/authentication-lifecycle.md).
+
+### Project type changes the data-movement model
+
+Current projects use the Regular project model. RCC also defines a future
+Controlled Data Project type in which protected data cannot simply leave through
+ordinary user transfer paths and results require a governed release boundary.
+Controlled Data project runtime admission is not yet released.
+
+Read [Regular and Controlled Data projects](project-types.md).
+
 ## One project, several interfaces
 
 Changing interface does not change authorization:
@@ -169,7 +198,7 @@ RCC identity
               +--> RCC Analysis
               |       +--> Notebook
               |       +--> Workflow
-              +--> SSH / VS Code (optional advanced capability)
+              +--> SSH / VS Code (current supported path)
               +--> Assistant
               +--> Admin
               +--> Gitea / DataLad when separately entitled

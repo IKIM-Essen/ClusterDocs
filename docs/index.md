@@ -3,16 +3,16 @@
 Welcome to RCC guidance for medical professionals, biomedical researchers,
 research software developers, and technical project staff.
 
-RCC supports two legitimate access styles:
+RCC is designed for two access styles:
 
-- **browser-first research**, centered on Files and the planned RCC Analysis
-  Notebook/Workflow experience; and
 - **advanced command-line/developer access**, using SSH, VS Code, and direct
-  Slurm tools.
+  Slurm tools — this is **how you use RCC today**; and
+- **browser-first research**, centered on Files and the planned RCC Analysis
+  Notebook/Workflow experience — **not yet released**.
 
-Having an RCC account does not imply that you must enroll an SSH key. Start with
-[RCC Expedition Light](getting-started/index.md) to choose the appropriate path.
-If you prefer a guided local course, use [RCC Expedition](rcc-expedition.md).
+Start with [RCC Expedition Light](getting-started/index.md), the required
+first-use path, to set up SSH access on Windows 11 or macOS. If you prefer a
+guided local course, use [RCC Expedition](rcc-expedition.md).
 
 The course is designed so that a new user can progress without needing an
 administrator beside them. Each class has a small practical exercise and a gate
@@ -20,11 +20,11 @@ that checks readiness without exposing credentials or generating significant
 cluster load.
 
 <section class="expedition-callout" aria-labelledby="expedition-title">
-  <p class="expedition-kicker">Browser-first research or advanced RCC access</p>
-  <h2 id="expedition-title">Start with the interface that matches your work</h2>
-  <p>For ordinary data analysis, the target experience is Files → RCC Analysis Notebook or Workflow → Files. SSH, VS Code, and direct Slurm remain important advanced tools for developers and power users.</p>
+  <p class="expedition-kicker">Start here</p>
+  <h2 id="expedition-title">Set up safe RCC access in 15 minutes</h2>
+  <p>Today you use RCC through SSH, VS Code, and Slurm. A browser-first experience (Files → RCC Analysis Notebook or Workflow → Files) is planned but not yet released.</p>
   <div class="expedition-actions">
-    <a class="expedition-primary" href="getting-started/index.md">Choose your starting path →</a>
+    <a class="expedition-primary" href="getting-started/index.md">Start Expedition Light →</a>
     <a href="analysis/rcc-analysis.md">See planned RCC Analysis</a>
     <a href="rcc-expedition.md">Open RCC Expedition</a>
   </div>
@@ -43,7 +43,8 @@ Start with the [complete plain-language TL;DR](tldr.md) for the important limits
 and links.
 
 The underlying compute model remains Slurm-backed, but users should not all have
-to interact with the scheduler directly. The planned user-facing model is:
+to interact with the scheduler directly. The planned (not yet released)
+user-facing model is:
 
 ```text
 Files -> RCC Analysis

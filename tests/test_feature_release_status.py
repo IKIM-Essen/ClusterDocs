@@ -18,13 +18,17 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         config = yaml.safe_load((ROOT / "config/public.yml").read_text())
         self.assertEqual(
             {
-                "rcc_admin": "ready",
-                "rcc_admin_self_administration": "ready",
-                "rcc_admin_primary_approval": "ready",
+                "rcc_admin": "not_yet_released",
+                "rcc_admin_self_administration": "not_yet_released",
+                "rcc_admin_primary_approval": "not_yet_released",
+                "rcc_files": "not_yet_released",
                 "rcc_workers": "ready",
-                "samba_project_shares": "ready",
+                "ssh_shellhost_transfer": "ready",
+                "samba_project_shares": "in_service_on_request",
                 "headscale_pikvm_access": "not_yet_released",
-                "nextflow_slurm_support": "ready",
+                "remote_files_macos_backup": "not_yet_released",
+                "nextflow_slurm_support": "validating",
+                "opportunistic_and_group_capacity": "not_yet_released",
                 "project_vhosts": "not_yet_released",
                 "ardia_integration": "not_yet_released",
                 "rcc_to_coscine_transfer": "not_yet_released",
@@ -50,7 +54,7 @@ class FeatureReleaseStatusTests(unittest.TestCase):
                     f"{page.relative_to(ROOT)} mentions {feature} without its release status",
                 )
 
-    def test_every_public_nextflow_page_marks_it_ready(self):
+    def test_every_public_nextflow_page_marks_it_validating(self):
         pages = (
             DOCS / "tldr.md",
             DOCS / "course/class-07-nextflow.md",
@@ -59,12 +63,12 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         )
         for page in pages:
             self.assertIn(
-                "ready now",
+                "validating",
                 normalized(page),
-                f"{page.relative_to(ROOT)} mentions Nextflow without its ready status",
+                f"{page.relative_to(ROOT)} mentions Nextflow without its validating status",
             )
 
-    def test_every_public_samba_page_marks_it_ready(self):
+    def test_every_public_samba_page_marks_it_in_service_on_request(self):
         pages = [
             page
             for page in DOCS.rglob("*.md")
@@ -72,18 +76,40 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         ]
         self.assertTrue(pages)
         for page in pages:
+            text = normalized(page)
             self.assertIn(
-                "ready now",
-                normalized(page),
-                f"{page.relative_to(ROOT)} mentions Samba without its ready status",
+                "in service",
+                text,
+                f"{page.relative_to(ROOT)} mentions Samba without its in-service status",
             )
+            self.assertNotIn("samba shares are **ready now**", text)
 
-    def test_rcc_admin_and_workers_are_not_described_as_pending(self):
+    def test_rcc_admin_is_unreleased_and_workers_are_ready(self):
         access = normalized(DOCS / "reference/access-ssh-vscode.md")
         analysis = normalized(DOCS / "paths/data-analysis.md")
-        self.assertIn("**rcc admin is ready now**", access)
+        self.assertIn("**the rcc admin self-service portal is not yet released.**", access)
+        self.assertNotIn("rcc admin is ready now", access)
         self.assertIn("rcc workers and slurm analysis are **ready now**", analysis)
-        self.assertNotIn("rcc admin request flow when it is available", access)
+
+    def test_withdrawn_browser_services_are_not_presented_as_ready(self):
+        for page in DOCS.rglob("*.md"):
+            text = normalized(page)
+            with self.subTest(page=str(page.relative_to(ROOT))):
+                self.assertNotIn("rcc admin is ready now", text)
+                self.assertNotIn("| current user path |", text)
+                self.assertNotIn("use the **rcc files portal**", text)
+
+    def test_ssh_configuration_names_the_public_jump_host(self):
+        for page in DOCS.rglob("*.md"):
+            self.assertNotIn(
+                "VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION",
+                page.read_text(encoding="utf-8"),
+                str(page.relative_to(ROOT)),
+            )
+        self.assertIn(
+            "HostName login.ikim.uk-essen.de",
+            (DOCS / "getting-started/macos.md").read_text(encoding="utf-8"),
+        )
 
     def test_overview_pages_do_not_duplicate_the_service_availability_table(self):
         for page in (DOCS / "index.md", DOCS / "tldr.md"):

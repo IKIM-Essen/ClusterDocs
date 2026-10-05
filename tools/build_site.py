@@ -16,6 +16,7 @@ NAV=[
  ('Start here','What changed from the old cluster','getting-started/what-changed.md'),
  ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
+ ('Overview','RCC Journey · explore the cluster (not yet released)','rcc-journey.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Paths','Convert shell scripts into workflows','paths/from-shell-scripts.md'),
@@ -42,6 +43,7 @@ NAV=[
  ('Data lifecycle','Choosing a transfer path','data/instrument-data-options.md'),
  ('Data lifecycle','Existing Windows SSHFS setup','data/legacy-storage-windows.md'),
  ('Data lifecycle','Existing macOS SSHFS setup','data/legacy-storage-macos.md'),
+ ('Data lifecycle','Mac files and encrypted backups (not yet released)','data/macos-rcc-backup.md'),
  ('Data lifecycle','Planned RCC to Coscine archive flow','data/rcc-project-to-coscine.md'),
  ('Examples','Interactive workflows','examples/interactive-workflows.md'),
  ('Examples','Python, R, Shiny and Jupyter','examples/python-r-shiny-jupyter-reference.md'),
@@ -80,13 +82,13 @@ PAGE='''<!doctype html>
 <a class="skip" href="#content">Skip to content</a>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="https://rcc.ikim.uk-essen.de/" aria-label="RCC home">
+    <a class="brand" href="{{ root }}index.html" aria-label="RCC documentation home">
       <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
       <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
     </a>
     <div class="topbar-actions">
       <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
-      <a class="topbar-button" href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="Open My RCC (opens in a new tab)">My RCC <span aria-hidden="true">↗</span></a>
+      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
     </div>
   </div>
 </header>
@@ -95,10 +97,10 @@ PAGE='''<!doctype html>
     <summary>Browse documentation</summary>
     <nav aria-label="Mobile documentation navigation">
       <section><h2>RCC surfaces</h2>
-        <a href="https://rcc.ikim.uk-essen.de/">Home</a>
-        <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener">Files ↗</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
-        <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener">RCC Admin ↗</a>
+        <span class="nav-pending">Home <small>not yet released</small></span>
+        <span class="nav-pending">Files <small>not yet released</small></span>
+        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
       </section>
       {% for group,items in nav_groups %}
       {% if items|length == 1 %}
@@ -115,10 +117,10 @@ PAGE='''<!doctype html>
         <section class="sidebar-section">
           <p class="sidebar-kicker">RCC surfaces</p>
           <nav class="global-nav" aria-label="RCC services">
-            <a href="https://rcc.ikim.uk-essen.de/">Home</a>
-            <a href="https://files.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="Files (opens in a new tab)">Files <span aria-hidden="true">↗</span></a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
-            <a href="https://rcc-admin.ikim.uk-essen.de/" target="_blank" rel="noopener" aria-label="RCC Admin (opens in a new tab)">RCC Admin <span aria-hidden="true">↗</span></a>
+            <span class="nav-pending">Home <small>not yet released</small></span>
+            <span class="nav-pending">Files <small>not yet released</small></span>
+            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
           </nav>
         </section>
         <section class="sidebar-section documentation-tree">
@@ -141,7 +143,6 @@ PAGE='''<!doctype html>
     </aside>
     <main id="content" class="content-card">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
-        <li><a href="https://rcc.ikim.uk-essen.de/">Home</a></li>
         {% if is_home %}<li><span aria-current="page">Documentation</span></li>
         {% else %}<li><a href="{{ root }}index.html">Documentation</a></li><li><span aria-current="page">{{ title }}</span></li>{% endif %}
       </ol></nav>
@@ -163,7 +164,7 @@ PAGE='''<!doctype html>
 </div>
 <footer>
   <p>RCC · Research Compute Cluster · University Hospital Essen</p>
-  <p><a href="{{ root }}index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+  <p><a href="{{ root }}index.html">Documentation</a> · <a href="{{ root }}support/guardians-and-ai-assistant/index.html">Support</a> · <a href="{{ root }}reference/storage-transfer/index.html">File transfer</a></p>
 </footer>
 </body>
 </html>'''
@@ -193,6 +194,10 @@ a:hover { color:var(--cyan-strong); }
 .service-status-dot { display:inline-block; width:.55rem; height:.55rem; margin-right:.45rem; border-radius:50%; background:#58d39c; box-shadow:0 0 0 .22rem rgba(88,211,156,.18); }
 .topbar-button { padding:.62rem .85rem; border-radius:11px; background:var(--paper); color:var(--navy); font-size:.9rem; font-weight:700; text-decoration:none; }
 .topbar-button:hover { background:var(--cyan-light); color:var(--navy); }
+.topbar-pending { padding:.5rem .75rem; border:1px solid rgba(255,255,255,.3); border-radius:11px; color:rgba(255,255,255,.78); font-size:.82rem; }
+.nav-pending { display:flex; align-items:center; justify-content:space-between; gap:.65rem; padding:.58rem .68rem; color:rgba(255,255,255,.55); font-size:.84rem; line-height:1.25; }
+.nav-pending small { font-size:.68rem; letter-spacing:.04em; }
+.mobile-nav .nav-pending { color:inherit; opacity:.7; }
 .shell { max-width:1760px; margin:0 auto; padding:0 1.5rem 4rem 0; }
 .docs-layout { display:grid; grid-template-columns:minmax(230px,270px) minmax(0,1000px); gap:1.8rem; align-items:start; justify-content:center; }
 .home .docs-layout { grid-template-columns:minmax(230px,270px) minmax(0,780px) minmax(280px,340px); }

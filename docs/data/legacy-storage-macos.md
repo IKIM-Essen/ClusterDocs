@@ -1,7 +1,7 @@
 # macOS: recognize an existing SSHFS setup
 
-> **Service status:** project Samba shares are **ready now**. Ardia integration
-> is **not yet released**. This historical SSHFS page is not a setup guide for
+> **Service status:** existing instrument Samba shares are **in service**; RCC
+> sets up each new share on request. Ardia integration is **not yet released**. This historical SSHFS page is not a setup guide for
 > either service.
 
 > **Setting up access now? Skip this page.** Follow
@@ -12,9 +12,10 @@
 This type of setup used macFUSE, SSHFS, a jump-host SSH configuration, a local
 mount directory, and optionally ConnectMeNow.
 
-If you see `login.ikim.uk-essen.de` or `shellhost` in a saved configuration, do
-not copy those values into a new setup. Ask RCC for the connection settings to
-use now.
+The host names `login.ikim.uk-essen.de` and `shellhost` are still current, but
+do not copy the rest of an old setup: replace the `ikim` alias, the `id_ikim`
+key, and the SSHFS mount with the current
+[macOS configuration](../getting-started/macos.md).
 
 ## SSH settings you may find on an existing Mac
 
@@ -118,3 +119,6 @@ private keys, passwords, or patient-related filenames in support requests.
 
 Return to [Choosing an instrument-data transfer path](instrument-data-options.md)
 before selecting a current transfer method.
+
+For the planned native SMB service and backup recovery path, see
+[Mac files and encrypted RCC backups](macos-rcc-backup.md). It is not yet released.

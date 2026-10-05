@@ -8,7 +8,7 @@ DOCS = ROOT / "docs"
 
 def normalized(relative: str) -> tuple[str, str]:
     page = (DOCS / relative).read_text(encoding="utf-8")
-    return page, " ".join(page.split())
+    return page, " ".join(page.replace("**", "").split())
 
 
 class AnalysisBrowserFirstContractTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class AnalysisBrowserFirstContractTests(unittest.TestCase):
         page, flat = normalized("analysis/rcc-analysis.md")
         self.assertIn("not yet released to users", page.lower())
         self.assertIn("staged source configuration, not a claim of live availability", flat)
-        self.assertIn("https://analysis.ikim.uk-essen.de/", page)
+        self.assertNotIn("analysis.ikim.uk-essen.de", page)
         self.assertIn("`/notebook/`", page)
 
     def test_notebook_is_jupyter_only_and_terminal_is_same_boundary(self):

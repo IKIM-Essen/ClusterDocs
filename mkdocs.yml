@@ -20,6 +20,7 @@ nav:
   - ClusterDocs NG TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
+  - RCC Journey - explore the cluster (not yet released): rcc-journey.md
   - RCC services:
       - Which RCC service should I use?: concepts/rcc-services.md
       - RCC Files: concepts/rcc-files.md
@@ -57,6 +58,7 @@ nav:
       - Managed DataLad: data/datalad-managed-service.md
       - Existing Windows SSHFS setup: data/legacy-storage-windows.md
       - Existing macOS SSHFS setup: data/legacy-storage-macos.md
+      - Mac files and encrypted backups (not yet released): data/macos-rcc-backup.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md

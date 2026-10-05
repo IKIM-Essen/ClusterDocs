@@ -1,7 +1,14 @@
 # RCC Files: browser data entry and result retrieval
 
-RCC Files is the project-facing browser and transfer surface. For many
-researchers it should be the first and last stop of an RCC analysis:
+> **Service status — not yet released:** the RCC Files browser and SFTP portal
+> is not currently available. Its earlier internal pilot was withdrawn in
+> October 2026, and RCC will announce the released service. Until then, use
+> `scp`, `sftp`, or `rsync` to the shell host as described in
+> [Storage and transfer](../reference/storage-transfer.md). This page describes
+> the intended service boundary.
+
+RCC Files is the project-facing browser and transfer surface. Once released, it
+is intended to be the first and last stop of a browser-based RCC analysis:
 
 ```text
 Files: upload / choose data
@@ -25,9 +32,9 @@ For very large, automated, or specialized transfers, also read
 The browser Files service uses the RCC sign-in boundary. Do not look for a
 shared “project account” or separate Files password.
 
-A browser-first RCC user does **not** need an SSH public key merely to use Files
-or future browser Analysis capabilities. SSH keys remain optional credentials
-for command-line/SFTP paths.
+Once Files is released, a browser-first RCC user will not need an SSH public key
+merely to use Files or browser Analysis capabilities; SSH keys will remain the
+credential for command-line/SFTP paths. Until then, SSH is the supported route.
 
 Web sign-in does not change project permissions. Files derives its project view
 from current RCC entitlement data and the admitted Files policy.
