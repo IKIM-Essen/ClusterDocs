@@ -8,7 +8,14 @@ stops after safe access, the basic host and storage model, VS Code, and a small
 Slurm check. The full RCC Expedition is optional deeper training and introduces
 containers, Snakemake, and Nextflow later.
 
-## Choose your computer
+RCC is also preparing a browser-first experience for researchers who do not need
+the command line. There are therefore two starting paths; today only Path A is
+available.
+
+## Path A — command-line access (current)
+
+Use this path now. It gives you SSH, VS Code Remote SSH, direct Slurm commands,
+workflow development, and automation.
 
 | Computer | Follow this checklist |
 |---|---|
@@ -16,31 +23,50 @@ containers, Snakemake, and Nextflow later.
 | Windows 11 | [Set up RCC on Windows](windows.md) |
 
 Both checklists use the SSH client already supplied by the operating system.
-Do not install a separate terminal, Linux virtual machine, or SSH program
-unless the checklist shows that the built-in client is missing.
+Do not install a separate terminal, Linux virtual machine, or SSH program unless
+the checklist shows that the built-in client is missing.
 
 After terminal SSH works, follow [Use VS Code with RCC](vscode.md) for the
 recommended day-to-day editor, terminal, Git, and remote-file interface.
 
-If you prefer guided, offline training, use
-[RCC Expedition](../rcc-expedition.md). You can open the course directly after
-extracting it; installing its optional Desktop shortcut is not required.
+## Path B — browser-first research (not yet released)
 
-Already used the original IKIM cluster? Read
-[what changed from the old ClusterDocs](what-changed.md) before reusing a saved
-SSH configuration, storage habit, or submission script.
+> **Service status — not yet released:** RCC Home, Files, and RCC Analysis
+> Notebook/Workflow are not yet available. Use Path A until RCC announces them.
 
-## The four things to remember
+The intended journey is:
 
-1. **Your computer starts the connection.** Your private SSH key stays there.
-2. **The jump host is the guarded doorway.** SSH crosses it automatically; it
-   is not a computer where you work.
-3. **The shell host is your RCC desk.** You edit small files, use Git, prepare
-   jobs, and start workflow controllers there.
-4. **Slurm workers do the computation.** Submit analysis rather than running it
-   in the shell-host terminal.
+```text
+RCC Home
+   -> Files: upload or choose project data
+   -> RCC Analysis: Notebook for interactive exploration
+        or RCC Analysis: Workflow for repeatable analysis
+   -> Files: inspect/download results
+```
 
-The normal connection therefore looks like this:
+Once released, a browser-only account will be able to work without an SSH
+public key. RCC web authentication and project membership remain the authority;
+the browser service submits compute through the governed RCC/Slurm path on your
+behalf.
+
+## What most researchers should remember
+
+1. **Your RCC account is your identity.** SSH is how you use RCC today; once
+   the browser services are released, browser-only work will not require an
+   SSH key.
+2. **Files will be the browser data entry/exit surface** (not yet released).
+   Durable project inputs and results belong in the project.
+3. **RCC Analysis Notebook is for exploration.** It is planned as Jupyter in a
+   bounded Slurm allocation without manual tunnels or worker selection.
+4. **RCC Analysis Workflow is for repeatable work.** Long, repeated, unattended,
+   or highly parallel analysis belongs in a governed workflow rather than an
+   oversized notebook session.
+5. **Slurm workers still do the computation.** Browser-first changes how you ask
+   for compute, not where compute runs.
+
+## The command-line connection model
+
+The command-line connection model is:
 
 ```text
 Mac or Windows
@@ -53,7 +79,7 @@ You normally type only `ssh {{ ssh_target_alias }}`. The `ProxyJump` line in
 your SSH configuration takes care of the middle step.
 
 [Read the jump-host and shell-host explanation](../concepts/jump-shell-compute.md)
-if you want the full mental model.
+if you need the full command-line mental model.
 
 ## Where your work belongs
 
@@ -64,31 +90,35 @@ if you want the full mental model.
 | Shared research data, code, and durable results | `/projects/<project>/` |
 | Temporary, high-I/O files for one job | Job-local `/local` or `$TMPDIR` |
 
+Once released, Files and RCC Analysis should present authorized projects
+directly, so browser users will not need to type these paths. The paths remain useful
+reference for developers and reproducibility documentation.
+
 Your **primary group** records your organizational home. A **project** is the
 research collaboration: it has the approved members, data, services, purpose,
 and lifecycle. Add collaborators to the project; do not move them into another
 primary group merely to share data.
 
-For a large team, use the
-[large-team project layout](../reference/users-groups-projects.md#organise-storage-for-a-large-science-team)
-rather than inventing another top-level storage path.
+## Turn exploration into reliable analysis
 
-## Turn a successful command into a reliable analysis
+Do not keep an important analysis only in notebook state or shell history.
+When interactive work becomes repeated, long-running, many-sample, or
+provenance-critical, turn it into an RCC Analysis Workflow (when released) or
+use the current [script-to-workflow guide](../paths/from-shell-scripts.md).
 
-Do not keep an important analysis only in shell history. Start with the
-[script-to-workflow guide](../paths/from-shell-scripts.md). It shows how to:
-
-- record inputs, outputs, parameters, software, and resources;
-- choose Snakemake or Nextflow;
-- turn a Conda environment declaration into a pinned Apptainer runtime;
-- run every scientific task through Slurm; and
-- test with synthetic or non-sensitive data before scaling.
+The resource rule is simple: **interactive notebooks should be modest and
+attended; repeatable/scalable work should become workflows.** Requesting more
+CPU, memory, GPU, or time is not a substitute for measuring what the analysis
+actually uses.
 
 ## You are ready when
 
 - terminal SSH reaches the configured RCC target;
-- VS Code reaches the same target and opens a narrow project directory;
-- you can explain why the jump host does not give you a shell;
+- VS Code reaches the same target if you use it;
 - you know which project owns the work;
 - a small Slurm test completes; and
-- repeated analysis is recorded as code rather than remembered commands.
+- repeated analysis is recorded as code/workflow rather than remembered commands.
+
+If you prefer guided, offline training, use
+[RCC Expedition](../rcc-expedition.md). Returning users from the original IKIM
+cluster should also read [what changed](what-changed.md).

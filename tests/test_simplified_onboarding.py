@@ -25,6 +25,12 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         light = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
         self.assertIn("Expedition Light is the required first-use path", light)
         self.assertIn("full RCC Expedition is optional deeper training", light)
+        self.assertIn("Path A — command-line access (current)", light)
+        self.assertIn("Path B — browser-first research (not yet released)", light)
+        self.assertLess(
+            light.index("Path A — command-line access (current)"),
+            light.index("Path B — browser-first research (not yet released)"),
+        )
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
         canonical_copy = (
