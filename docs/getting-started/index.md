@@ -3,6 +3,12 @@
 This is the shortest route from a new computer to a safe RCC shell. You do not
 need to understand the cluster before you begin.
 
+Need an account first? Self-service enrollment is **not yet released**; until
+it is, RCC support creates accounts on request (see
+[Request an RCC account](../reference/access-ssh-vscode.md#request-an-rcc-account)).
+The planned flow is described in
+[Request and activate an RCC account](account-enrollment.md).
+
 Expedition Light is the required first-use path for new users. It deliberately
 stops after safe access, the basic host and storage model, VS Code, and a small
 Slurm check. The full RCC Expedition is optional deeper training and introduces
