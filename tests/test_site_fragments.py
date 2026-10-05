@@ -11,6 +11,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteFragmentTests(unittest.TestCase):
+    def test_docs_do_not_use_mkdocs_admonitions(self):
+        # The custom site builder does not render MkDocs admonitions; "!!!"
+        # blocks publish as raw text. Use a blockquote note instead.
+        for page in (ROOT / "docs").rglob("*.md"):
+            for number, line in enumerate(page.read_text(encoding="utf-8").splitlines(), 1):
+                with self.subTest(page=str(page.relative_to(ROOT)), line=number):
+                    self.assertFalse(line.lstrip().startswith(("!!! ", "??? ")))
+
     def test_heading_ids_are_stable_and_unique(self):
         rendered = add_heading_ids(
             '<h2>Customize VS Code without creating performance problems</h2>'
