@@ -31,8 +31,8 @@ class LoginServiceContinuityTests(unittest.TestCase):
         self.assertNotIn("HostName is2-2", self.page)
 
     def test_gateway_and_destination_are_separate(self):
-        self.assertIn("Host login.ikim.uk-essen.de", self.page)
-        self.assertIn("Host shellhost", self.page)
+        self.assertIn("Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de", self.page)
+        self.assertIn("Host {{ ssh_target_alias }}", self.page)
         self.assertIn("HostName shellhost.ikim.uk-essen.de", self.page)
         self.assertIn("forwarding-only", self.page)
         self.assertRegex(self.page, r"will not provide an\s+interactive shell")
@@ -41,18 +41,24 @@ class LoginServiceContinuityTests(unittest.TestCase):
             self.assertIn(mount, self.page)
 
     def test_transfer_examples_target_shellhost_through_login(self):
-        canonical = "scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 ."
+        canonical = "scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 ."
         self.assertIn(canonical, self.page)
         self.assertIn(canonical, self.concept)
         self.assertIn(canonical, self.transfer)
-        self.assertIn("sftp -J login.ikim.uk-essen.de shellhost", self.page)
-        self.assertIn("sftp -J login.ikim.uk-essen.de shellhost", self.transfer)
-        self.assertIn("-e 'ssh -J login.ikim.uk-essen.de'", self.transfer)
-        self.assertIn("shellhost:/projects/<project>/incoming/dataset/", self.transfer)
+        self.assertIn("sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de", self.page)
+        self.assertIn("sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de", self.transfer)
+        self.assertIn("-e 'ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de'", self.transfer)
+        self.assertIn("YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/projects/<project>/incoming/dataset/", self.transfer)
         self.assertIn("Do **not** use `login.ikim.uk-essen.de` as the source or destination", self.transfer)
         self.assertNotIn("login.ikim.uk-essen.de:/projects", self.transfer)
         self.assertNotIn("login.ikim.uk-essen.de:/groups", self.transfer)
         self.assertNotIn("login.ikim.uk-essen.de:/homes", self.transfer)
+
+    def test_explicit_commands_name_user_and_fqdn(self):
+        for text in (self.page, self.concept, self.transfer):
+            self.assertNotIn("blubb", text)
+            self.assertNotIn("-J login.ikim.uk-essen.de shellhost", text)
+            self.assertNotIn("use the **rcc files portal**", text.lower())
 
     def test_concept_keeps_compute_and_transfer_roles_distinct(self):
         self.assertIn("Jump host | Guarded doorway", self.concept)

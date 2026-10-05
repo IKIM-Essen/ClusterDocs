@@ -28,8 +28,8 @@ class SimplifiedOnboardingTests(unittest.TestCase):
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
         canonical_copy = (
-            "scp -J login.ikim.uk-essen.de "
-            "shellhost:/groups/blubb/demo.test1 ."
+            "scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de "
+            "YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 ."
         )
         for relative in ("getting-started/macos.md", "getting-started/windows.md"):
             page = (DOCS / relative).read_text(encoding="utf-8")
@@ -99,7 +99,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             "Use `ssh {{ ssh_target_alias }}`",
             "Keep `ForwardAgent no`",
             "Slurm is the normal execution path",
-            "Managed Nextflow-to-Slurm is ready now",
+            "Managed Nextflow-to-Slurm is **validating**",
             "Migration checklist for an existing user",
         ):
             self.assertIn(phrase, normalized)

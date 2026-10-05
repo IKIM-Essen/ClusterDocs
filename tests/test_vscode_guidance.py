@@ -31,7 +31,7 @@ class VSCodeGuidanceTests(unittest.TestCase):
             "workspace trust",
             "remote extension can execute code",
             "does not create a compute allocation",
-            "rcc transfer service",
+            "`rsync` to the",
             "host-identity warning",
         ]:
             self.assertIn(phrase, page)

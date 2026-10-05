@@ -12,16 +12,18 @@ have to be the same system.
 | Shell host | Your RCC desk and SSH file endpoint | Edit small files, use Git, transfer authorized files, submit jobs, inspect logs, and control workflows. |
 | Compute worker | Scheduled laboratory bench | Run analysis inside a Slurm allocation. |
 
-Your SSH configuration normally joins the first two steps. You can run:
+Your SSH configuration normally joins the first two steps. With the
+configuration from the [macOS](../getting-started/macos.md) or
+[Windows](../getting-started/windows.md) guide, you run:
 
 ```bash
-ssh -J login.ikim.uk-essen.de shellhost
+ssh {{ ssh_target_alias }}
 ```
 
-or configure `ProxyJump login.ikim.uk-essen.de` for `shellhost` and use simply:
+Without an SSH configuration, the same path is explicit:
 
 ```bash
-ssh shellhost
+ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
 ```
 
 In both cases your terminal opens on the shell host. You do not open a terminal
@@ -49,7 +51,7 @@ Those filesystems are reached on the downstream shell host.
 For example, copying a file from group storage uses:
 
 ```bash
-scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 .
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .
 ```
 
 The source is `shellhost:/groups/...`; `login.ikim.uk-essen.de` only supplies
@@ -58,7 +60,7 @@ the SSH transport path.
 Test the configured destination, not the gateway:
 
 ```bash
-ssh -J login.ikim.uk-essen.de shellhost
+ssh {{ ssh_target_alias }}
 ```
 
 Do not use physical backend names such as `login1` or `login2`. Operations can

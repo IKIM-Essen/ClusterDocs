@@ -24,19 +24,21 @@ SSH command.
 
 ## Setup to use now
 
-A minimal OpenSSH configuration is:
+`login.ikim.uk-essen.de` is the stable public RCC jump host and
+`shellhost.ikim.uk-essen.de` is the stable shell host. A minimal OpenSSH
+configuration is:
 
 ```sshconfig
-Host login.ikim.uk-essen.de
+Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de
     HostName login.ikim.uk-essen.de
-    User <RCC-USERNAME>
+    User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
     ForwardAgent no
 
-Host shellhost
+Host {{ ssh_target_alias }}
     HostName shellhost.ikim.uk-essen.de
-    User <RCC-USERNAME>
+    User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
     ProxyJump login.ikim.uk-essen.de
@@ -44,14 +46,14 @@ Host shellhost
 
 Host c? c?? c??? d?? g?-? g?-??
     HostName %h.ikim.uk-essen.de
-    User <RCC-USERNAME>
+    User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
     ProxyJump login.ikim.uk-essen.de
     ForwardAgent no
 ```
 
-Connect from the workstation with `ssh shellhost`. The login account is
+Connect from the workstation with `ssh {{ ssh_target_alias }}`. The login account is
 forwarding-only for ordinary users and will not provide an interactive shell;
 `ssh login.ikim.uk-essen.de` is therefore not a valid ordinary-user login test.
 `ProxyJump` uses the gateway automatically while the user's terminal opens on
@@ -62,7 +64,7 @@ running work outside Slurm.
 Without an SSH config, the same path is explicit:
 
 ```bash
-ssh -J login.ikim.uk-essen.de shellhost
+ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
 ```
 
 See [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md) and
@@ -79,32 +81,34 @@ not `login.ikim.uk-essen.de`.
 Canonical explicit example:
 
 ```bash
-scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 .
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .
 ```
 
 SFTP uses:
 
 ```bash
-sftp -J login.ikim.uk-essen.de shellhost
+sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
 ```
 
-With the SSH configuration above, `scp shellhost:/groups/blubb/demo.test1 .` is
+With the SSH configuration above, `scp {{ ssh_target_alias }}:/groups/<group>/demo.test1 .` is
 an equivalent shorter form because the `shellhost` entry already carries the
 `ProxyJump` setting.
 
 ## Names you may see in a saved configuration
 
-Some saved workstation configurations contain physical login-backend names.
-Do not create new workstation targets for those physical names. Use the stable
-`login.ikim.uk-essen.de` service as the jump path and `shellhost` as the ordinary
-destination.
+`login.ikim.uk-essen.de` and `shellhost.ikim.uk-essen.de` are the current,
+stable names. Older saved configurations may also contain a physical
+login-backend or old compute-node name, an `id_ikim` key, an `ikim` alias, or
+an SSHFS tunnel on local port `6666`; do not reuse those for a new setup. The
+approved `{{ ssh_target_alias }}` destination remains the normal user target.
+Test the current configuration, and only then remove a superseded entry.
 
 When reviewing a saved configuration:
 
 1. identify which entries belong to RCC;
 2. obtain the current RCC configuration through a trusted channel;
 3. verify the published host identity independently;
-4. test `ssh shellhost` or the explicit `ssh -J login.ikim.uk-essen.de shellhost` path; and
+4. test `ssh shellhost` or the explicit `ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de` path; and
 5. remove or archive superseded physical-backend entries only after the stable route works.
 
 Do not disable host-key checking, delete unrelated `known_hosts` entries, or
@@ -130,13 +134,16 @@ accept a replacement key merely to bypass the warning.
 
 ## Transfer guidance
 
-> **Service status:** project Samba shares are **ready now** for approved
-> projects and registered devices.
+> **Service status:** SSH transfer (`scp`, `sftp`, `rsync`) to the shell host
+> through the jump host is **ready now**. Existing instrument Samba shares are
+> **in service**; RCC sets up each new share for an approved project and
+> registered device on request. The RCC Files browser portal is **not yet
+> released**.
 
-For SSH-based transfer, use the shellhost endpoint through the login jump
+For SSH-based transfer, use the shell host endpoint through the login jump
 service as shown above. An approved SSH route does not make SSHFS the preferred
-bulk-transfer method. Large instrument datasets should use the RCC files portal,
-approved shellhost SFTP/SCP/rsync route, server-to-server transfer, Samba, or
-facility-managed automated ingestion as appropriate. Use SSHFS only for light
-access to small files and only with a supported client configuration that
-preserves the same jump-host/shell-host separation.
+bulk-transfer method. Large instrument datasets should use SFTP or `rsync` to
+the shell host, server-to-server transfer, Samba, or facility-managed automated
+ingestion as appropriate. Use SSHFS only for light access to small files and
+only with a supported client configuration that preserves the same
+jump-host/shell-host separation.

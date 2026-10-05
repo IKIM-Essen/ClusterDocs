@@ -1,7 +1,8 @@
 # Class 16: from instrument to analysis for wet-lab teams
 
-> **Service status:** project Samba shares are **ready now** for approved
-> projects and registered devices. Ardia-to-RCC integration and RCC-to-Coscine
+> **Service status:** existing instrument Samba shares are **in service**; RCC
+> sets up each new share for an approved project and registered device on
+> request. Ardia-to-RCC integration and RCC-to-Coscine
 > transfer are **not yet released**; references to them describe the intended
 > future workflows.
 

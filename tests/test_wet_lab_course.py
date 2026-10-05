@@ -45,7 +45,7 @@ class WetLabCourseTests(unittest.TestCase):
         self.assertIn("shellhost.ikim.uk-essen.de", page)
         self.assertIn("ProxyJump login.ikim.uk-essen.de", page)
         self.assertIn(
-            "scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 .",
+            "scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .",
             page,
         )
         self.assertNotIn("HostName login1", page)

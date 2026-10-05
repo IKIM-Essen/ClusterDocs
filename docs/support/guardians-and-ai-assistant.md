@@ -3,9 +3,19 @@
 RCC uses automation to reduce repetitive support and operations work while
 keeping consequential actions bounded.
 
+## Getting help today
+
+Contact the RCC team in the **IKIM Cluster channel on Mattermost**. Do not post
+credentials, private keys, restricted sample information, or other sensitive
+project data there.
+
 ## Coding agent
 
-The RCC coding agent can explain RCC concepts, find documentation, interpret
+> **Service status — not yet released:** the RCC help assistant and coding
+> agent are not yet available to users. This section describes the intended
+> service.
+
+When released, the RCC coding agent is intended to explain RCC concepts, find documentation, interpret
 common Slurm states/errors, diagnose supported environment/container problems,
 explain transfer/storage guidance, prepare project requests, and escalate with
 useful evidence.

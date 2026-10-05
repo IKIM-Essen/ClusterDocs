@@ -43,12 +43,13 @@ Open the SSH configuration in the simple terminal editor:
 nano ~/.ssh/config
 ```
 
-Paste the current configuration supplied through the approved institutional
-channel. Its shape is:
+Paste this configuration and replace `YOUR_RCC_USERNAME` with your RCC
+username. `login.ikim.uk-essen.de` is the RCC jump host; it only forwards your
+connection to the shell host:
 
 ```sshconfig
 Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+    HostName login.ikim.uk-essen.de
     User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
@@ -82,7 +83,7 @@ shell and SSH file-transfer endpoint. The login tier is not a `/homes`,
 To see that distinction without relying on aliases, a file copy looks like:
 
 ```bash
-scp -J login.ikim.uk-essen.de shellhost:/groups/blubb/demo.test1 .
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .
 ```
 
 Here `login.ikim.uk-essen.de` supplies only the jump path; `shellhost:` is the
