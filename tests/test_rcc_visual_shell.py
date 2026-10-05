@@ -10,15 +10,23 @@ class RCCVisualShellTests(unittest.TestCase):
     def test_global_shell_matches_the_rcc_surface_contract(self):
         for token in (
             'aria-label="RCC services"',
-            '>Home',
-            '>Files',
+            '>Home <small>not yet released</small>',
+            '>Files <small>not yet released</small>',
             'aria-current="page" href="{{ root }}index.html">Documentation',
-            '>RCC Admin',
-            '>My RCC',
-            'target="_blank" rel="noopener"',
+            '>RCC Admin <small>not yet released</small>',
+            'My RCC · not yet released',
         ):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)
+
+    def test_shell_does_not_link_withdrawn_browser_services(self):
+        for host in (
+            "https://rcc.ikim.uk-essen.de/",
+            "https://files.ikim.uk-essen.de/",
+            "https://rcc-admin.ikim.uk-essen.de/",
+        ):
+            with self.subTest(host=host):
+                self.assertNotIn(host, BUILDER)
 
     def test_new_rcc_header_and_service_rail_are_present(self):
         for token in (

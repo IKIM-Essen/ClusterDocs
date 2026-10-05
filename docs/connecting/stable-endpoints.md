@@ -18,13 +18,14 @@ key or copying an old configuration from a colleague.
 
 ## Setup to use now
 
-Use only values supplied by the approved RCC configuration. The gateway block
+`login.ikim.uk-essen.de` is the stable public RCC jump host and
+`shellhost.ikim.uk-essen.de` is the stable shell host. The gateway block
 alone is not a complete user connection: the destination block must route the
 shellhost and allocation-backed interactive nodes through the gateway.
 
 ```sshconfig
 Host {{ ssh_gateway_alias }}
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+    HostName login.ikim.uk-essen.de
     User <RCC-USERNAME>
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
@@ -53,11 +54,12 @@ existing workstation configuration.
 
 ## Names you may see in a saved configuration
 
-Some saved workstation configurations contain `login.ikim.uk-essen.de` or a
-physical login-backend name. Do not reuse those names for a new gateway
-connection. The approved `{{ ssh_target_alias }}` destination remains the
-normal user target. Get the current RCC connection settings, test them, and
-only then remove a superseded gateway entry.
+`login.ikim.uk-essen.de` and `shellhost.ikim.uk-essen.de` are the current,
+stable names. Older saved configurations may also contain a physical
+login-backend or old compute-node name, an `id_ikim` key, an `ikim` alias, or
+an SSHFS tunnel on local port `6666`; do not reuse those for a new setup. The
+approved `{{ ssh_target_alias }}` destination remains the normal user target.
+Test the current configuration, and only then remove a superseded entry.
 
 When reviewing a saved configuration:
 
@@ -91,10 +93,13 @@ accept a replacement key merely to bypass the warning.
 
 ## Transfer guidance
 
-> **Service status:** project Samba shares are **ready now** for approved
-> projects and registered devices.
+> **Service status:** SSH transfer (`scp`, `sftp`, `rsync`) to the shell host
+> through the jump host is **ready now**. Existing instrument Samba shares are
+> **in service**; RCC sets up each new share for an approved project and
+> registered device on request. The RCC Files browser portal is **not yet
+> released**.
 
 An approved SSH alias does not make SSHFS the preferred bulk-transfer method.
-Large instrument datasets should use the RCC files portal, approved SFTP,
+Large instrument datasets should use SFTP or `rsync` to the shell host,
 server-to-server transfer, Samba or facility-managed automated ingestion as
 appropriate. Use SSHFS only for light access to small files.

@@ -2,12 +2,15 @@
 
 Choose storage by lifecycle and access pattern, not only by free capacity.
 
-> **Service status:** RCC workers and project Samba shares are **ready now**.
+> **Service status:** RCC workers and SSH transfer (`scp`, `sftp`, `rsync`) to
+> the shell host are **ready now**. Existing instrument Samba shares are
+> **in service**; RCC sets up each new share for an approved project and
+> registered device on request. The RCC Files browser portal is **not yet released**.
 > RCC-to-Coscine archive transfer is **not yet released**; references to it are
 > lifecycle planning, not an operational transfer command.
 
 > **Related learning:** [Class 1](../course/class-01-safe-access.md) introduces
-> the files portal, [Class 3](../course/class-03-performance.md) explains local
+> safe access and transfer, [Class 3](../course/class-03-performance.md) explains local
 > staging, and [Class 13](../course/class-13-biomedical-data-privacy.md) covers
 > the biomedical-data admission decision.
 
@@ -27,7 +30,7 @@ storage, see [Users, groups, and projects](users-groups-projects.md).
 | Material shared only within a user's primary group | approved group storage | Not a substitute for a cross-group project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
-| Browser upload and download | RCC files portal | Confirm project and destination before transfer |
+| Browser upload and download | RCC Files (**not yet released**) | Until it is released, use `scp`, `sftp`, or `rsync` to the shell host |
 
 ## Research data belongs to a project, not a home directory
 
@@ -38,8 +41,8 @@ retention, and archival decisions. A personal account cannot substitute for
 that project context, particularly when a user changes role or leaves.
 
 Home storage is also the wrong performance boundary for large or recurring
-ingestion. Large datasets and many-small-file trees can consume personal quota
-and create filesystem metadata load. Put durable data in the project, stage
+ingestion. Large datasets and many-small-file trees exhaust shared home
+capacity and create filesystem metadata load. Put durable data in the project, stage
 active high-I/O computation to job-local storage, and copy validated results
 back to the project.
 
@@ -74,13 +77,15 @@ survive job completion, reboot, maintenance, or cleanup.
 
 ## Pick a transfer method
 
-- Use the **RCC files portal** for ordinary browser-based project transfers.
-- Use `scp`, `sftp`, or `rsync` over the approved SSH route for scripted or
-  resumable transfers.
+- Use `scp`, `sftp`, or `rsync` to `{{ ssh_target_alias }}` over the approved
+  SSH route. The jump host only forwards the connection; it is never the
+  transfer endpoint and stores no files.
+- The browser-based **RCC Files** portal is **not yet released**. Do not use
+  old Files bookmarks until RCC announces the service.
 - For a large tree of small files, create one archive before transfer to reduce
   metadata operations, then verify it with a checksum.
-- Use an approved institutional bulk-transfer service when the files portal or
-  SSH route is unsuitable.
+- Use an approved institutional bulk-transfer service when the SSH route is
+  unsuitable.
 
 Example with `rsync`:
 
