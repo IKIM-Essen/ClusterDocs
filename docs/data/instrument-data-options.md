@@ -4,8 +4,9 @@ Use this decision guide with
 [Class 16: wet-lab instrument data](../course/class-16-wet-lab-data-workflows.md)
 and the current [storage and transfer reference](../reference/storage-transfer.md).
 
-> **Service status:** project Samba shares are **ready now** for approved
-> projects and registered devices. Ardia integration and RCC-to-Coscine
+> **Service status:** existing instrument Samba shares are **in service**; RCC
+> sets up each new share for an approved project and registered device on
+> request (not self-service). Ardia integration and RCC-to-Coscine
 > transfer are **not yet released**.
 
 ## Start with six questions

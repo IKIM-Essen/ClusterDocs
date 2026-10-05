@@ -4,6 +4,10 @@ Most users do not need to choose a special resource-sharing option. Submit work
 to the normal CPU, GPU, short, or interactive partition described in the
 [Slurm reference](slurm.md), and Slurm will find suitable capacity.
 
+> **Status:** owner partitions, `group_borrow`, and opportunistic placement are
+> staged and **not yet enabled** on RCC. Today all users submit to the normal
+> shared partitions.
+
 Some compute resources were contributed by individual research groups. RCC
 protects those groups' access while allowing other researchers to use spare
 capacity for suitable restartable work.
@@ -37,8 +41,8 @@ that interruption.
 | What are you doing? | Use | What to expect |
 |---|---|---|
 | Normal CPU or GPU analysis | Shared CPU or GPU partition | Normal queue priority and fair-share |
-| Work for a group that contributed hardware | Owner path supplied for the account | Priority on that group's contributed capacity |
-| Short, restartable batch work | `group_borrow`, when shown for the account | The job may be requeued |
+| Work for a group that contributed hardware | Owner path supplied for the account (not yet enabled) | Priority on that group's contributed capacity |
+| Short, restartable batch work | `group_borrow` (not yet enabled) | The job may be requeued |
 | Shell, notebook, or debugging session | `interactive` | Stay present and release it when finished |
 
 If you are unsure, use the normal shared partition. Choose borrowed capacity

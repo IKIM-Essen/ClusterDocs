@@ -1,8 +1,9 @@
 # Class 7: Nextflow on RCC
 
-> **Service status — ready now:** RCC provides the pinned `rcc-nextflow`
-> launcher and institutional Slurm configuration on its shellhosts and
-> allocation-backed interactive nodes. Ordinary workers execute the submitted
+> **Service status — validating:** RCC is deploying the pinned `rcc-nextflow`
+> launcher and institutional Slurm configuration on its shellhosts. End-to-end
+> acceptance (Slurm, shared work directory, scratch, Apptainer, and `-resume`)
+> is not yet complete; treat runs as a pilot. Ordinary workers execute the submitted
 > tasks and do not host workflow controllers.
 
 <section class="course-video-hero" id="watch-first">
@@ -310,7 +311,8 @@ label 'rcc_gpu_blackwell'
 ```
 
 Request the special ARM64/GB10 platform only when the workflow supports that
-architecture and platform policy:
+architecture and platform policy (the `ai_top_atom` queue currently has no
+schedulable nodes):
 
 ```groovy
 label 'rcc_ai_top_atom'
@@ -480,7 +482,7 @@ support request.
 
 After the service is released and before a large run, confirm:
 
-- one active Nextflow controller is running on an interactive node (`shellhost`)
+- one active Nextflow controller is running on an RCC shellhost
   inside `tmux`;
 - `rcc-nextflow` supplies Slurm and Apptainer policy;
 - no copied site-level `slurm.config` overrides RCC infrastructure;
@@ -498,7 +500,7 @@ After the service is released and before a large run, confirm:
 
 Before release, you have completed the preparation gate when you can explain:
 
-1. why the controller runs on an interactive node (`shellhost`), never an SSH
+1. why the controller runs on an RCC shellhost, never an SSH
    gateway or worker allocation;
 2. why every scientific task goes through Slurm;
 3. why `NXF_WORK` stays on persistent shared project storage;
