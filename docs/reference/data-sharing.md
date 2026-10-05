@@ -4,15 +4,17 @@ Start by deciding **who should receive the data** and **why they are allowed to
 receive it**. The right mechanism differs for members of your project, another
 RCC group, and someone outside RCC.
 
-> **Service status:** RCC Admin and project-membership self-service are an
-> **invite-only pilot**. Project vhosts and RCC-to-Coscine transfer are **not
-> yet released**; do not select either as a current sharing route.
+> **Service status:** projects and project membership are **ready now**; RCC
+> support creates them on request. The RCC Admin self-service portal and the
+> RCC Files browser portal are **not yet released**.
+> Project vhosts and RCC-to-Coscine transfer are **not yet released**; do not
+> select either as a current sharing route.
 
 | Audience | Recommended route | Avoid |
 |---|---|---|
 | Members of the same project | Project directory controlled by the project's Unix group | Copies in several personal home directories |
 | RCC users outside the current group | Request a project or project membership that creates one shared group for all approved members | Making files readable or writable by every RCC user |
-| External collaborators or the public | Approved files portal or an appropriate repository, depending on purpose and data class. Project vhosts and RCC-to-Coscine transfer are not yet released. | Opening a server port, emailing restricted data, or publishing a project directory |
+| External collaborators or the public | An approved institutional transfer service or an appropriate repository, depending on purpose and data class. RCC Files, project vhosts, and RCC-to-Coscine transfer are not yet released. | Opening a server port, emailing restricted data, or publishing a project directory |
 
 Before sharing biomedical or otherwise controlled data, confirm that the
 project governance, consent or other legal basis, and recipient authorization
@@ -20,11 +22,11 @@ cover the disclosure. Technical access does not by itself authorize sharing.
 
 ## The recommended model: a project with a shared Unix group
 
-During the pilot, use the approved RCC Admin invitation or the established
-support route to request a project that identifies the responsible owner,
-purpose, approved members, storage location, and a **shared Unix group**. RCC
-adds each named member to that group. Members can then work in the supplied
-project path, normally under:
+Ask RCC support (IKIM Cluster channel on Mattermost), with your primary
+approver, to create a project that identifies the responsible owner, purpose, approved
+members, storage location, and a **shared Unix group**. RCC adds each named
+member to that group. Members can then work in the supplied project path,
+normally under:
 
 ```text
 /projects/<project>/
@@ -171,7 +173,7 @@ remove the temporary handoff copy according to the agreed retention rule.
 Filesystem permissions stop at the RCC boundary. Use a service designed for
 the intended recipient and data class:
 
-- use the approved RCC files portal or institutional transfer service for a
+- use an approved institutional transfer service for a
   named external recipient when that capability and disclosure are approved;
 - plan a governed project website or application for future curated,
   authenticated access, but do not use it until project vhosts are released;

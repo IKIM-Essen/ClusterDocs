@@ -15,16 +15,16 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
     def test_enrollment_contract_is_explicit(self):
         page = normalized(DOCS / "getting-started/account-enrollment.md")
         for statement in (
-            "invite-only pilot",
+            "service status — not yet released",
+            "withdrawn on 3 october 2026",
             "signed link is valid for seven days",
             "do not choose an rcc username, upload an ssh key, or request a project",
             "does not email activation secrets",
             "project membership is requested separately after activation",
-            "stacked directly on #1672",
-            "https://github.com/ikim-essen/rcc/pull/1672",
-            "https://github.com/ikim-essen/rcc/pull/1674",
         ):
             self.assertIn(statement, page)
+        self.assertNotIn("invite-only pilot", page)
+        self.assertNotIn("github.com/ikim-essen/rcc/pull/", page)
 
     def test_enrollment_is_in_both_navigation_systems(self):
         mkdocs = normalized(ROOT / "mkdocs.yml")
@@ -33,7 +33,7 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
         self.assertIn(path, mkdocs)
         self.assertIn(path, custom_site)
 
-    def test_rcc_admin_ready_claims_are_pilot_scoped(self):
+    def test_rcc_admin_ready_claims_are_marked_unreleased(self):
         for page in DOCS.rglob("*.md"):
             paragraphs = page.read_text(encoding="utf-8").lower().split("\n\n")
             for paragraph in paragraphs:
@@ -41,16 +41,17 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
                     paragraph = " ".join(paragraph.split()).replace("> ", "")
                     paragraph = paragraph.replace("**", "")
                     self.assertIn(
-                        "invite-only pilot",
+                        "not yet released",
                         paragraph,
-                        f"{page.relative_to(ROOT)} mixes RCC Admin with a ready-now claim without marking the pilot",
+                        f"{page.relative_to(ROOT)} mixes RCC Admin with a ready-now claim without marking it unreleased",
                     )
 
-    def test_access_page_does_not_front_load_ssh_or_project_setup(self):
+    def test_access_page_routes_current_requests_to_support(self):
         page = normalized(DOCS / "reference/access-ssh-vscode.md")
-        self.assertIn("invite-only pilot", page)
-        self.assertIn("does not ask you to choose a project or upload an ssh key", page)
-        self.assertIn("after approval and activation", page)
+        self.assertIn("the rcc admin self-service portal is not yet released", page)
+        self.assertIn("ikim cluster channel on mattermost", page)
+        self.assertIn("getting-started/account-enrollment.md", page)
+        self.assertNotIn("invite-only pilot", page)
 
 
 if __name__ == "__main__":

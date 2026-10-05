@@ -11,8 +11,8 @@ It is **not**:
 - an automatic punishment/quota engine; or
 - proof that a particular user caused a storage or scheduler incident.
 
-> **Availability:** the Usage view depends on the current RCC Admin deployment
-> and collector activation. If the page is absent, do not infer usage from old
+> **Availability:** the Usage view is part of RCC Admin, which is **not yet
+> released**; it also depends on collector activation. If the page is absent, do not infer usage from old
 > screenshots or construct an unofficial replacement scan across project
 > storage.
 

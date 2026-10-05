@@ -28,7 +28,7 @@ person -> individual RCC account -> exactly one primary group (affiliation)
                               \-> one or more projects (collaboration)
 
 Lab-network instrument
-    -> approved Samba share for its project [ready]
+    -> approved Samba share for its project [in service; set up on request]
        or future Ardia integration [not yet released]
     -> RCC project storage -> Slurm analysis -> project results
     -> optional protected vhost for that project [not yet released]
@@ -54,7 +54,8 @@ connections. A selected final dataset may later move to Coscine after project
 review and verification. **RCC-to-Coscine transfer is not yet released**; it
 remains planned and not yet a live self-service transfer.
 
-**Managed Nextflow-to-Slurm support is ready now.** The managed service runs
+**Managed Nextflow-to-Slurm support is validating.** The pinned `rcc-nextflow`
+launcher is being deployed on the shell hosts, but end-to-end acceptance (Slurm submission, shared work directory, node-local scratch, Apptainer, and `-resume`) is not yet complete. The managed service runs
 the Nextflow controller on an RCC shellhost or allocation-backed interactive
 node and sends
 each analysis task to a worker through Slurm. Resume-critical work state will
@@ -65,8 +66,8 @@ of installing an unmanaged Nextflow controller on a login host.
 For most users, **VS Code with Remote - SSH is the suggested everyday route**
 for coding and preparing data analysis. It combines the editor, remote file
 view, Git tools, and terminal in one window. VS Code is the interface; Slurm is
-still where computation runs, and the RCC transfer service is still the route
-for large data movement.
+still where computation runs, and `scp`, `sftp`, or `rsync` to the shell host
+is the route for data movement.
 
 ```text
 workstation
@@ -138,7 +139,7 @@ server name from a screenshot.
 | Authoritative project input | Approved project storage |
 | Validated results, code, metadata, and provenance | Approved project storage |
 | Active temporary and random I/O | Job-local storage inside the allocation |
-| Large browser upload or ordinary download | Approved RCC files service when suitable |
+| Upload or download | `scp`, `sftp`, or `rsync` to the shell host (the RCC Files browser portal is not yet released) |
 | Retained final archive set | Approved repository or planned Coscine flow |
 
 Home is not a project-data area. A project connects data to its accountable

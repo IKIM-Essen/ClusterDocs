@@ -1,10 +1,13 @@
 # Request and activate an RCC account
 
-> **Current availability:** enrollment is an **invite-only pilot**, not general
-> public signup. RCC Admin and My RCC must complete the deployment gates tracked
-> in [RCC PR #1672](https://github.com/IKIM-Essen/rcc/pull/1672) and
-> [PR #1674](https://github.com/IKIM-Essen/rcc/pull/1674), which is stacked
-> directly on #1672, before the pilot expands.
+> **Service status — not yet released:** self-service enrollment through
+> RCC Admin and My RCC is not currently available. The earlier internal pilot
+> was withdrawn on 3 October 2026 and RCC is re-establishing it in a restricted
+> rollout. Until RCC announces enrollment, accounts are created on request:
+> contact the team in the **IKIM Cluster channel on Mattermost** or through your
+> project coordinator, as described in
+> [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md#request-an-rcc-account).
+> This page describes the planned enrollment flow.
 
 ## Before you begin
 
@@ -80,7 +83,7 @@ connection configuration are available.
 
 ## If something goes wrong
 
-Stop and contact the named RCC pilot support route when:
+Stop and contact RCC support when:
 
 - the invitation shows the wrong sponsor or primary group;
 - the form says enrollment is closed or the invitation is invalid;

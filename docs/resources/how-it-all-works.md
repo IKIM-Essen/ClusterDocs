@@ -4,8 +4,9 @@ Research data often begins on an instrument rather than on the cluster. The
 **Lab network** provides a controlled way to connect suitable devices and move
 their output into storage in the **Research Compute Cluster (RCC)**.
 
-> **Service status:** project Samba shares are **ready now** for approved
-> projects and registered devices. Ardia-to-RCC integration is **not yet
+> **Service status:** existing instrument Samba shares are **in service**; RCC
+> sets up each new share for an approved project and registered device on
+> request. Ardia-to-RCC integration is **not yet
 > released**. RCC-to-Coscine transfer is also **not yet released**.
 
 ![Laboratory instruments upload data through ready Samba shares or a future Ardia integration into the Research Compute Cluster, where researchers analyse and share approved results](../assets/lab-network-flow.svg)

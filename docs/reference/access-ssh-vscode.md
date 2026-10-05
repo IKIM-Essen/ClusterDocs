@@ -13,24 +13,38 @@ the configuration contains two hosts even though users type one destination.
 
 > **Recommended for most users:** use **VS Code with Remote - SSH** as your
 > everyday interface for writing code, editing configuration, using Git,
-> reading logs, and preparing analyses. Use the RCC transfer service for large
-> data movement, and submit computation through Slurm. Opening a remote VS Code
+> reading logs, and preparing analyses. Use `scp`, `sftp`, or `rsync` to the
+> shell host for data movement, and submit computation through Slurm. Opening a remote VS Code
 > window does not create a compute allocation.
 
 ## Request an RCC account
 
-RCC Admin enrollment is currently an **invite-only pilot**, not general public
-signup. Start with [Request and activate an RCC account](../getting-started/account-enrollment.md)
-and use only the signed link supplied by your primary-group approver.
+**The RCC Admin self-service portal is not yet released.** Its browser
+enrollment and self-administration are being re-established in a restricted
+pilot; do not use old RCC Admin bookmarks. Until RCC announces the portal,
+accounts and project memberships are created on request: contact the team in
+the **IKIM Cluster channel on Mattermost** or through your project coordinator,
+and prepare the following for the responsible project coordinator and primary
+approver:
 
-The enrollment request collects identity and contact information. It does not
-ask you to choose a project or upload an SSH key. After approval and activation,
-add an optional SSH public key in My RCC if you need terminal or VS Code access.
+- first and last name;
+- institutional email address;
+- project or working group;
+- sponsor or project lead; and
+- the **public** SSH key, never the private key.
 
-Every researcher receives an individual account. Every user also has exactly
-one organizational primary group; external users use `collab`. Project
-memberships are separate and replace shared accounts or credentials. See
-[Users, groups, and projects](users-groups-projects.md) for the complete model.
+The planned self-service flow, once released, is described in
+[Request and activate an RCC account](../getting-started/account-enrollment.md).
+
+Every researcher receives an individual account. Project membership replaces
+shared accounts and shared credentials.
+
+Every user also has exactly one primary group. Internal users are assigned to
+their organizational group; external users are assigned to `collab`. The
+primary group records affiliation, while explicit project memberships grant
+access to the shared spaces where users from different groups exchange data.
+See [Users, groups, and projects](users-groups-projects.md) for the complete
+model.
 
 ## Create an SSH key
 
@@ -85,7 +99,7 @@ configuration has this shape:
 
 ```sshconfig
 Host {{ ssh_gateway_alias }}
-  HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+  HostName login.ikim.uk-essen.de
   User YOUR_RCC_USERNAME
   IdentityFile ~/.ssh/id_rcc
   IdentitiesOnly yes
@@ -270,8 +284,8 @@ not depend on a laptop connection remaining open.
 
 ## Mount a small remote folder
 
-Prefer the RCC files portal for browser-based access to approved project
-folders. SSHFS is appropriate only for light interactive use such as editing a
+Use `scp`, `sftp`, or `rsync` to the shell host for transfers; the browser
+RCC Files portal is not yet released. SSHFS is appropriate only for light interactive use such as editing a
 small document. It is not a bulk-transfer or analysis filesystem.
 
 After installing a maintained SSHFS implementation for your operating system,

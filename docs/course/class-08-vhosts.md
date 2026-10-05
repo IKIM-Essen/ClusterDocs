@@ -1,8 +1,8 @@
 # Class 8: protected project websites
 
 > **Service status — not yet released:** project vhost hosting and its request
-> workflow are planning material in this class. RCC Admin is ready, but it does
-> not yet provision project vhosts for users.
+> workflow are planning material in this class. The RCC Admin portal that
+> would carry the request is also not yet released.
 
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 3 min video</p>
