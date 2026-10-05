@@ -33,6 +33,9 @@ approver:
 - sponsor or project lead; and
 - the **public** SSH key, never the private key.
 
+The planned self-service flow, once released, is described in
+[Request and activate an RCC account](../getting-started/account-enrollment.md).
+
 Every researcher receives an individual account. Project membership replaces
 shared accounts and shared credentials.
 
