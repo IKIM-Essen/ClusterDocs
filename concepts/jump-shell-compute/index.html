@@ -179,8 +179,8 @@ have to be the same system.</p>
 </tr>
 <tr>
   <td>Shell host</td>
-  <td>Your RCC desk</td>
-  <td>Edit small files, use Git, submit jobs, inspect logs, and control workflows.</td>
+  <td>Your RCC desk and SSH file endpoint</td>
+  <td>Edit small files, use Git, transfer authorized files, submit jobs, inspect logs, and control workflows.</td>
 </tr>
 <tr>
   <td>Compute worker</td>
@@ -189,15 +189,19 @@ have to be the same system.</p>
 </tr>
 </tbody>
 </table>
-<p>Your SSH configuration joins the first two steps. You normally run:</p>
+<p>Your SSH configuration normally joins the first two steps. With the
+configuration from the <a href="../../getting-started/macos/index.html">macOS</a> or
+<a href="../../getting-started/windows/index.html">Windows</a> guide, you run:</p>
 <pre><code class="language-bash">ssh shellhost
 </code></pre>
-<p>SSH reads <code>ProxyJump rcc-login</code>, crosses the gateway, and opens
-your terminal on the destination shell host. You do not need to open one
-terminal on the jump host and then SSH again.</p>
+<p>Without an SSH configuration, the same path is explicit:</p>
+<pre><code class="language-bash">ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+</code></pre>
+<p>In both cases your terminal opens on the shell host. You do not open a terminal
+on the jump host and then SSH again.</p>
 <pre><code class="language-text">workstation
-  -&gt; jump host: verify and forward
-  -&gt; shell host: prepare and supervise
+  -&gt; login.ikim.uk-essen.de: verify and forward
+  -&gt; shellhost: shell and authorized filesystem access
   -&gt; Slurm: allocate a worker
   -&gt; worker: calculate
 </code></pre>
@@ -206,16 +210,26 @@ terminal on the jump host and then SSH again.</p>
 the exposed surface and prevents the public entry point from becoming a place
 where data, tools, or long-lived processes accumulate. A refused interactive
 shell on the gateway is therefore expected behavior, not an account failure.</p>
+<p>The same rule applies to file transfer: the jump host is <strong>not</strong> the SFTP, SCP,
+or rsync endpoint and should not expose <code>/homes</code>, <code>/groups</code>, or <code>/projects</code>.
+Those filesystems are reached on the downstream shell host.</p>
+<p>For example, copying a file from group storage uses:</p>
+<pre><code class="language-bash">scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/&lt;group&gt;/demo.test1 .
+</code></pre>
+<p>The source is <code>shellhost:/groups/...</code>; <code>login.ikim.uk-essen.de</code> only supplies
+the SSH transport path.</p>
 <p>Test the configured destination, not the gateway:</p>
 <pre><code class="language-bash">ssh shellhost
 </code></pre>
 <p>Do not use physical backend names such as <code>login1</code> or <code>login2</code>. Operations can
-replace backends while the approved service aliases remain stable.</p>
+replace backends while the approved service alias <code>login.ikim.uk-essen.de</code>
+remains stable.</p>
 <h2 id="what-belongs-on-the-shell-host">What belongs on the shell host</h2>
 <p>Appropriate shell-host work is light control-plane activity:</p>
 <ul>
 <li>editing a script or workflow definition;</li>
 <li>using Git and inspecting small text logs;</li>
+<li>transferring authorized files with <code>scp</code>, <code>sftp</code>, or <code>rsync</code>;</li>
 <li>running a Snakemake dry run;</li>
 <li>starting the managed Snakemake or <code>rcc-nextflow</code> controller;</li>
 <li>using <code>sbatch</code>, <code>squeue</code>, <code>sacct</code>, and <code>scancel</code>; and</li>
@@ -262,9 +276,12 @@ the allocation ends.</p>
 </table>
 <h2 id="a-common-misconception">A common misconception</h2>
 <p>“I connected through the login service, so my command is running on a compute
-node” is incorrect. SSH provides access; Slurm provides compute. Unless a
-documented interactive allocation moved your shell to an assigned worker,
-submit the program with the supported Slurm or workflow command.</p>
+node” is incorrect. SSH provides access; Slurm provides compute. Likewise,
+“the login service is in my SCP command, so my files live there” is incorrect:
+with <code>-J</code>, the login service is only the jump path and the <code>shellhost:</code> operand is
+the actual remote endpoint.</p>
+<p>Unless a documented interactive allocation moved your shell to an assigned
+worker, submit the program with the supported Slurm or workflow command.</p>
 <p>Continue with <a href="../../course/class-01-safe-access/index.html">Class 1</a> for setup or
 <a href="../../course/class-05-slurm/index.html">Class 5</a> for job submission.</p>
 

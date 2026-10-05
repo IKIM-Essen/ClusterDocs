@@ -186,7 +186,7 @@ ssh-keygen -t ed25519 -f &quot;$HOME\.ssh\id_rcc&quot;
 <p>Paste this configuration and replace <code>YOUR_RCC_USERNAME</code> with your RCC
 username. <code>login.ikim.uk-essen.de</code> is the RCC jump host; it only forwards your
 connection to the shell host:</p>
-<pre><code class="language-sshconfig">Host rcc-login
+<pre><code class="language-sshconfig">Host rcc-login login.ikim.uk-essen.de
     HostName login.ikim.uk-essen.de
     User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
@@ -205,6 +205,17 @@ Host shellhost c? c?? c??? d?? g?-? g?-??
 the file as <code>config</code>, without a <code>.txt</code> suffix. The first block describes the
 jump host. The second describes the shell host you actually use. You do not
 log into the jump host; <code>ProxyJump</code> forwards the connection automatically.</p>
+<p>The stable service model is <code>login.ikim.uk-essen.de</code> as the forwarding-only
+public doorway and <code>shellhost</code> (<code>shellhost.ikim.uk-essen.de</code>) as the ordinary
+shell and SSH file-transfer endpoint. The login tier is not a <code>/homes</code>,
+<code>/groups</code>, or <code>/projects</code> endpoint.</p>
+<p>To see that distinction without relying on aliases, PowerShell can run the same
+OpenSSH copy command:</p>
+<pre><code class="language-powershell">scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/&lt;group&gt;/demo.test1 .
+</code></pre>
+<p>Here <code>login.ikim.uk-essen.de</code> supplies only the jump path; <code>shellhost:</code> is the
+remote data endpoint. SFTP and rsync use the same separation when supported by
+the installed client.</p>
 <h2 id="4-check-then-connect-once">4. Check, then connect once</h2>
 <p>Inspect the effective settings without connecting:</p>
 <pre><code class="language-powershell">ssh -G shellhost
@@ -221,8 +232,8 @@ day-to-day editor. Follow the dedicated
 <a href="../vscode/index.html">VS Code with RCC</a> section and select <code>shellhost</code> as the
 destination. VS Code uses the same configuration and cannot repair an SSH
 connection that fails in PowerShell.</p>
-<p>Use the shell host to edit code, use Git, submit jobs, and inspect logs. Submit
-computation through Slurm.</p>
+<p>Use the shell host to edit code, use Git, submit jobs, inspect logs, and access
+authorized shared files. Submit computation through Slurm.</p>
 <h2 id="if-you-want-the-guided-course">If you want the guided course</h2>
 <p>Download and extract <a href="../../rcc-expedition/index.html">RCC Expedition</a>, then open
 <code>START HERE.html</code>. Choose <strong>Open the course now</strong>; installing a Desktop

@@ -160,49 +160,79 @@
       
       <h1 id="which-rcc-connection-name-should-i-use">Which RCC connection name should I use?</h1>
 <blockquote>
-<p>Use the current RCC connection settings supplied through a trusted
-institutional channel. <code>rcc-login</code> is the forwarding gateway;
-<code>shellhost</code> is the normal workstation target. Do not copy a
-server address from an old screenshot or a colleague's saved configuration.</p>
+<p>Use <code>login.ikim.uk-essen.de</code> as the public SSH jump service and <code>shellhost</code>
+(<code>shellhost.ikim.uk-essen.de</code>) as the normal interactive and command-line
+file-transfer destination. Do not copy a physical backend address from an old
+screenshot or a colleague's saved configuration.</p>
 </blockquote>
-<h2 id="why-the-name-stays-the-same">Why the name stays the same</h2>
-<p>RCC aims to give users stable service aliases even when the physical or virtual
-systems behind them change. Operations may replace backends, storage gateways,
-jump hosts, or proxies while preserving an approved user-facing alias.</p>
-<p>Stable service names must never be replaced in user documentation with physical
-infrastructure hostnames. Verify the approved RCC host identity through the
-current institutional connection instructions rather than accepting a changed
-key or copying an old configuration from a colleague.</p>
+<h2 id="why-the-names-stay-stable">Why the names stay stable</h2>
+<p>RCC gives users stable service names even when the physical systems behind them
+change. Operations may replace a <code>login1</code> or <code>login2</code> backend while preserving
+<code>login.ikim.uk-essen.de</code>, and may replace shell-host machines behind the
+approved shell-host service without changing the user workflow.</p>
+<p>The names also describe different jobs:</p>
+<ul>
+<li><code>login.ikim.uk-essen.de</code> is the public, forwarding-only SSH doorway;</li>
+<li><code>shellhost</code> is where an ordinary user shell opens and where command-line file
+transfers terminate;</li>
+<li>Slurm workers run the scientific computation.</li>
+</ul>
+<p>Do not turn the jump host into a data endpoint merely because it appears in an
+SSH command.</p>
 <h2 id="setup-to-use-now">Setup to use now</h2>
 <p><code>login.ikim.uk-essen.de</code> is the stable public RCC jump host and
-<code>shellhost.ikim.uk-essen.de</code> is the stable shell host. The gateway block
-alone is not a complete user connection: the destination block must route the
-shellhost and allocation-backed interactive nodes through the gateway.</p>
-<pre><code class="language-sshconfig">Host rcc-login
+<code>shellhost.ikim.uk-essen.de</code> is the stable shell host. A minimal OpenSSH
+configuration is:</p>
+<pre><code class="language-sshconfig">Host rcc-login login.ikim.uk-essen.de
     HostName login.ikim.uk-essen.de
-    User &lt;RCC-USERNAME&gt;
+    User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
     ForwardAgent no
 
-Host shellhost c? c?? c??? d?? g?-? g?-??
-    HostName %h.ikim.uk-essen.de
-    User &lt;RCC-USERNAME&gt;
+Host shellhost
+    HostName shellhost.ikim.uk-essen.de
+    User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
-    ProxyJump rcc-login
+    ProxyJump login.ikim.uk-essen.de
+    ForwardAgent no
+
+Host c? c?? c??? d?? g?-? g?-??
+    HostName %h.ikim.uk-essen.de
+    User YOUR_RCC_USERNAME
+    IdentityFile ~/.ssh/id_rcc
+    IdentitiesOnly yes
+    ProxyJump login.ikim.uk-essen.de
     ForwardAgent no
 </code></pre>
-<p>Connect from the workstation with <code>ssh shellhost</code>. The
-<code>rcc-login</code> account is forwarding-only and will not provide an
-interactive shell; <code>ssh rcc-login</code> is not a valid login test.
+<p>Connect from the workstation with <code>ssh shellhost</code>. The login account is
+forwarding-only for ordinary users and will not provide an interactive shell;
+<code>ssh login.ikim.uk-essen.de</code> is therefore not a valid ordinary-user login test.
 <code>ProxyJump</code> uses the gateway automatically while the user's terminal opens on
 the destination. The node patterns support a node assigned by an active Slurm
 interactive allocation; they do not authorize choosing a compute node or
 running work outside Slurm.</p>
+<p>Without an SSH config, the same path is explicit:</p>
+<pre><code class="language-bash">ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+</code></pre>
 <p>See <a href="../../reference/access-ssh-vscode/index.html">Account access, SSH, and VS Code</a> and
 the current institutional RCC connection instructions before changing an
 existing workstation configuration.</p>
+<h2 id="file-transfer-uses-the-same-route-not-the-same-endpoint">File transfer uses the same route, not the same endpoint</h2>
+<p>The jump service does not contain the RCC research filesystem namespace.
+<code>/homes</code>, <code>/groups</code>, and <code>/projects</code> are accessed on the downstream shell-host
+tier. Therefore the remote operand of <code>scp</code>, <code>sftp</code>, or <code>rsync</code> is <code>shellhost</code>,
+not <code>login.ikim.uk-essen.de</code>.</p>
+<p>Canonical explicit example:</p>
+<pre><code class="language-bash">scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/&lt;group&gt;/demo.test1 .
+</code></pre>
+<p>SFTP uses:</p>
+<pre><code class="language-bash">sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+</code></pre>
+<p>With the SSH configuration above, <code>scp shellhost:/groups/&lt;group&gt;/demo.test1 .</code> is
+an equivalent shorter form because the <code>shellhost</code> entry already carries the
+<code>ProxyJump</code> setting.</p>
 <h2 id="names-you-may-see-in-a-saved-configuration">Names you may see in a saved configuration</h2>
 <p><code>login.ikim.uk-essen.de</code> and <code>shellhost.ikim.uk-essen.de</code> are the current,
 stable names. Older saved configurations may also contain a physical
@@ -215,17 +245,16 @@ Test the current configuration, and only then remove a superseded entry.</p>
 <li>identify which entries belong to RCC;</li>
 <li>obtain the current RCC configuration through a trusted channel;</li>
 <li>verify the published host identity independently;</li>
-<li>test the approved alias with one bounded connection attempt; and</li>
-<li>remove or archive superseded entries only after the replacement works.</li>
+<li>test <code>ssh shellhost</code> or the explicit <code>ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de</code> path; and</li>
+<li>remove or archive superseded physical-backend entries only after the stable route works.</li>
 </ol>
 <p>Do not disable host-key checking, delete unrelated <code>known_hosts</code> entries, or
 replace a service alias with a physical node name.</p>
 <h2 id="during-a-backend-maintenance-window">During a backend maintenance window</h2>
-<p>RCC may move an approved connection alias between equivalent backends. An
-existing SSH or VS Code session can disconnect during that change. Reconnect
-with the same approved alias; do not create separate workstation targets for
-physical backend names. A diagnostic <code>hostname</code> value is not a connection name
-for users.</p>
+<p>RCC may move an approved service alias between equivalent backends. An existing
+SSH or VS Code session can disconnect during that change. Reconnect with the
+same approved aliases; do not create separate workstation targets for physical
+backend names. A diagnostic <code>hostname</code> value is not a connection name for users.</p>
 <p>A timeout and a changed-host-key warning require different responses:</p>
 <ol>
 <li>For a timeout, confirm the hospital network or VPN is available, then retry
@@ -244,10 +273,13 @@ through the jump host is <strong>ready now</strong>. Existing instrument Samba s
 registered device on request. The RCC Files browser portal is <strong>not yet
 released</strong>.</p>
 </blockquote>
-<p>An approved SSH alias does not make SSHFS the preferred bulk-transfer method.
-Large instrument datasets should use SFTP or <code>rsync</code> to the shell host,
-server-to-server transfer, Samba or facility-managed automated ingestion as
-appropriate. Use SSHFS only for light access to small files.</p>
+<p>For SSH-based transfer, use the shell host endpoint through the login jump
+service as shown above. An approved SSH route does not make SSHFS the preferred
+bulk-transfer method. Large instrument datasets should use SFTP or <code>rsync</code> to
+the shell host, server-to-server transfer, Samba, or facility-managed automated
+ingestion as appropriate. Use SSHFS only for light access to small files and
+only with a supported client configuration that preserves the same
+jump-host/shell-host separation.</p>
 
       
     </main>

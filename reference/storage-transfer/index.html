@@ -258,9 +258,10 @@ cp --archive &quot;$scratch/output/result.tsv&quot; &quot;$SLURM_SUBMIT_DIR/resu
 survive job completion, reboot, maintenance, or cleanup.</p>
 <h2 id="pick-a-transfer-method">Pick a transfer method</h2>
 <ul>
-<li>Use <code>scp</code>, <code>sftp</code>, or <code>rsync</code> to <code>shellhost</code> over the approved
-SSH route. The jump host only forwards the connection; it is never the
-transfer endpoint and stores no files.</li>
+<li>Use <code>scp</code>, <code>sftp</code>, or <code>rsync</code> to a <strong>shell host</strong> (<code>shellhost</code>),
+routed through <code>login.ikim.uk-essen.de</code> with SSH <code>ProxyJump</code>. The jump host
+only forwards the connection; it is never the transfer endpoint and stores no
+files.</li>
 <li>The browser-based <strong>RCC Files</strong> portal is <strong>not yet released</strong>. Do not use
 old Files bookmarks until RCC announces the service.</li>
 <li>For a large tree of small files, create one archive before transfer to reduce
@@ -268,34 +269,67 @@ metadata operations, then verify it with a checksum.</li>
 <li>Use an approved institutional bulk-transfer service when the SSH route is
 unsuitable.</li>
 </ul>
-<p>Example with <code>rsync</code>:</p>
-<pre><code class="language-bash">rsync --archive --partial --info=progress2 \
-  ./dataset/ shellhost:/projects/&lt;project&gt;/incoming/dataset/
+<p>The important endpoint distinction is:</p>
+<pre><code class="language-text">workstation -&gt; login.ikim.uk-essen.de -&gt; shellhost -&gt; /homes, /groups, /projects
+              forwarding only          transfer endpoint
 </code></pre>
+<p>Do <strong>not</strong> use <code>login.ikim.uk-essen.de</code> as the source or destination of a data
+copy. The login tier is the guarded transport boundary; research filesystems are
+available on the shell-host tier.</p>
+<p>The explicit <code>scp</code> form is:</p>
+<pre><code class="language-bash">scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/&lt;group&gt;/demo.test1 .
+</code></pre>
+<p>For SFTP:</p>
+<pre><code class="language-bash">sftp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+</code></pre>
+<p>For <code>rsync</code>:</p>
+<pre><code class="language-bash">rsync --archive --partial --info=progress2 \
+  -e 'ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de' \
+  ./dataset/ YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/projects/&lt;project&gt;/incoming/dataset/
+</code></pre>
+<p>If your approved SSH configuration already gives <code>shellhost</code> the setting
+<code>ProxyJump login.ikim.uk-essen.de</code>, the shorter forms such as
+<code>scp file shellhost:/projects/&lt;project&gt;/</code> are equivalent. The explicit form is
+shown here first so that it remains clear which machine is the jump host and
+which machine actually accesses the data.</p>
 <p>Example with an archive and checksum:</p>
 <pre><code class="language-bash">tar -czf dataset.tar.gz dataset/
 sha256sum dataset.tar.gz &gt; dataset.tar.gz.sha256
-scp dataset.tar.gz dataset.tar.gz.sha256 \
-  shellhost:/projects/&lt;project&gt;/incoming/
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de dataset.tar.gz dataset.tar.gz.sha256 \
+  YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/projects/&lt;project&gt;/incoming/
 </code></pre>
 <p>On RCC, verify before extracting:</p>
-<pre><code class="language-bash">cd /projects/&lt;project&gt;/incoming
+<pre><code class="language-bash">ssh -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de
+cd /projects/&lt;project&gt;/incoming
 sha256sum -c dataset.tar.gz.sha256
 tar -tzf dataset.tar.gz | sed -n '1,20p'
 </code></pre>
 <p>Inspect archive paths before extraction. Reject archives containing absolute
 paths or unexpected <code>..</code> components.</p>
-<h2 id="unsupported-transfer-pattern">Unsupported transfer pattern</h2>
+<h2 id="unsupported-transfer-patterns">Unsupported transfer patterns</h2>
+<p>Do not transfer data directly to <code>login.ikim.uk-essen.de</code>, <code>login1</code>, or
+<code>login2</code>. Ordinary user sessions on those hosts are forwarding-only; they are
+not RCC storage endpoints and should not expose <code>/homes</code>, <code>/groups</code>, or
+<code>/projects</code>.</p>
 <p>Do not transfer project data with a raw Netcat listener. It has no built-in
 authentication or encryption, can expose an unintended port, and bypasses the
 reviewed RCC entry points. The old ClusterDocs Netcat recipe is intentionally
 not retained.</p>
 <h2 id="object-storage">Object storage</h2>
 <p>Object storage does not behave like a POSIX filesystem. Applications must use
-an object client or API, and data commonly needs staging to job-local storage.
-Use it only when the project has an approved endpoint, credentials, retention
-policy, and documented client configuration. Never place access keys in shell
-history, notebooks, Git, or shared configuration files.</p>
+an object client or API, and data commonly needs staging to job-local storage.</p>
+<p>Normal RCC project storage remains the JuiceFS-backed POSIX namespace under
+<code>/projects/&lt;project&gt;</code>. A project does <strong>not</strong> get direct S3 merely because it
+exists or because its files are ultimately stored on an S3-compatible backend.
+Direct S3 is <strong>not yet released</strong> for users. When it is, a project will get it
+only as an additional capability that RCC explicitly grants, with its own
+endpoint, authorization policy and credential or temporary session.</p>
+<p>A future OIDC/STS flow may issue a short-lived S3 session, but that
+does not cause S3 to enforce the POSIX ownership/mode/directory semantics of the
+JuiceFS namespace. Do not use the raw object namespace beneath JuiceFS as an
+alternate route around the filesystem permission model.</p>
+<p>Never place access keys in shell history, notebooks, Git, or shared
+configuration files.</p>
 <h2 id="controlled-and-archival-data">Controlled and archival data</h2>
 <p>Before transfer, confirm that the project governance covers RCC and follow the
 <a href="../../security/rcc-biomedical-data-admission/index.html">biomedical-data admission guide</a>.
