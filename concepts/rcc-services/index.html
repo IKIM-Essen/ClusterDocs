@@ -166,10 +166,11 @@ surface does not create a second account or a second copy of your project.</p>
 <p><strong>Release status matters (October 2026).</strong> Today the supported routes are
 SSH through the jump host to the shell host, VS Code Remote SSH, Slurm on RCC
 workers, and this documentation site. The RCC browser services below — Home,
-Files, Admin / My RCC, the Assistant, Workbench, and RCC Analysis — are
-<strong>not yet released</strong>; their earlier internal pilot was withdrawn and RCC is
-re-establishing them in a staged rollout. A service described in ClusterDocs
-is not automatically released. Follow the status note on each service page.</p>
+Files, Admin / My RCC, the Assistant, and RCC Analysis (Notebook and
+Workflow) — are <strong>not yet released</strong>; their earlier internal pilot was
+withdrawn and RCC is re-establishing them in a staged rollout. A service
+described in ClusterDocs is not automatically released. Follow the status
+note on each service page.</p>
 </blockquote>
 <h2 id="the-short-version">The short version</h2>
 <table>
@@ -198,12 +199,12 @@ is not automatically released. Follow the status note on each service page.</p>
 </tr>
 <tr>
   <td><strong>Files</strong></td>
-  <td>browse or transfer approved project data in a browser</td>
+  <td>upload, browse, or download approved project data in a browser</td>
   <td><strong>not yet released</strong>; use <code>scp</code>, <code>sftp</code>, or <code>rsync</code> to the shell host</td>
 </tr>
 <tr>
-  <td><strong>Workbench</strong></td>
-  <td>get an interactive shell, notebook, or development session</td>
+  <td><strong>RCC Analysis</strong></td>
+  <td>explore data in a notebook or run a repeatable governed workflow</td>
   <td><strong>not yet released</strong></td>
 </tr>
 <tr>
@@ -216,47 +217,75 @@ is not automatically released. Follow the status note on each service page.</p>
   <td>manage your account, project membership, and authorized project actions</td>
   <td><strong>not yet released</strong>; RCC support handles requests</td>
 </tr>
-<tr>
-  <td><strong>RCC Analysis</strong></td>
-  <td>run a repeatable governed scientific workflow</td>
-  <td><strong>not yet released</strong></td>
-</tr>
 </tbody>
 </table>
 <p>Open OnDemand is retired from the current RCC product model. Do not use old OOD
 screenshots or bookmarks as current connection instructions.</p>
-<h2 id="files-move-and-inspect-project-data">Files: move and inspect project data</h2>
-<p>When released, use <strong>Files</strong> when the task is primarily about data movement or
-browsing:</p>
+<h2 id="files-the-browser-data-entry-and-exit-point">Files: the browser data entry and exit point</h2>
+<p>When released, use <strong>Files</strong> when the task is primarily about project data:</p>
 <ul>
-<li>upload or download an approved project file;</li>
-<li>inspect the project-facing file tree exposed by the service;</li>
-<li>perform a bounded transfer without opening a shell.</li>
+<li>upload an input file;</li>
+<li>inspect project-facing folders;</li>
+<li>download a result; or</li>
+<li>move a bounded amount of data without opening a shell.</li>
 </ul>
+<p>The intended browser-first journey is:</p>
+<pre><code class="language-text">Files -&gt; RCC Analysis -&gt; Files
+          |       |
+          |       +-&gt; Workflows: repeatable/scalable analysis
+          +----------&gt; Notebooks: interactive exploration
+</code></pre>
 <p>Files is not a general server filesystem browser and it does not replace project
 membership or data-release approval. Read
-<a href="../rcc-files/index.html">RCC Files: browse and transfer project data</a> before choosing the
-browser/SFTP route for a new workflow.</p>
-<h2 id="workbench-interactive-work">Workbench: interactive work</h2>
-<p>Use <strong>Workbench</strong> when you need an interactive environment to explore, edit,
-develop, or debug. The intended interfaces include shells, notebooks, and
-VS Code-style development sessions, while substantial computation still runs on
-RCC workers through Slurm.</p>
-<p>A Workbench session does not grant extra project access. It runs under your RCC
-identity and project authorization.</p>
-<p>Read <a href="../workbench-interfaces/index.html">RCC Workbench</a> for the complete Workbench model
-and current release status.</p>
-<h2 id="rcc-analysis-repeatable-scientific-execution">RCC Analysis: repeatable scientific execution</h2>
-<p>Use <strong>RCC Analysis</strong> when the task is already a defined scientific workflow with
-known inputs, parameters, outputs, and provenance requirements. RCC Analysis
-compiles the scientific request into a deployment-appropriate execution plan and
-runs it through Slurm using Nextflow or Snakemake where appropriate.</p>
+<a href="../rcc-files/index.html">RCC Files: browse and transfer project data</a>.</p>
+<h2 id="rcc-analysis-one-product-two-ways-to-compute">RCC Analysis: one product, two ways to compute</h2>
+<p>RCC Analysis is the planned user-facing compute product. It has two primary modes.</p>
+<h3 id="notebooks">Notebooks</h3>
+<p>Use <strong>Notebooks</strong> for interactive exploration, figures, Python/R analysis,
+inspection of intermediate results, and bounded development. The planned default
+is a browser Jupyter environment backed by a Slurm allocation. The user should
+not have to create an SSH tunnel, choose a worker, expose a port, or know Slurm
+syntax merely to open a notebook.</p>
+<h3 id="workflows">Workflows</h3>
+<p>Use <strong>Workflows</strong> when the analysis should be repeatable, scalable, governed, or
+run without keeping an interactive browser session open. RCC chooses the
+operational execution plan and runs reviewed Nextflow/Snakemake tasks through
+Slurm where appropriate.</p>
 <p>A useful rule is:</p>
-<pre><code class="language-text">explore / develop / debug   -&gt; Workbench
-repeat / govern / reproduce -&gt; RCC Analysis
+<pre><code class="language-text">explore / inspect / prototype -&gt; Analysis: Notebook
+repeat / scale / reproduce    -&gt; Analysis: Workflow
 </code></pre>
-<p>Read <a href="../../analysis/rcc-analysis/index.html">RCC Analysis: from data to a reproducible run</a>.
+<p>Moving from a notebook to a workflow should feel like changing mode inside one
+analysis product, not switching to a different cluster product.</p>
+<p>Read <a href="../../analysis/rcc-analysis/index.html">RCC Analysis: notebooks and governed workflows</a>.
 RCC Analysis is documented before activation and is not yet a live user service.</p>
+<h2 id="what-happened-to-rcc-workbench">What happened to “RCC Workbench”?</h2>
+<p><strong>Workbench remains an internal/advanced execution term, not a primary user
+product.</strong> It is the session-broker and interactive-compute machinery that can
+place a notebook or advanced development environment on Slurm and attach the
+browser safely.</p>
+<p>For most researchers the visible action should be <strong>Open notebook</strong>, not “start
+a Workbench session” or “open a web shell”. A browser shell may remain an
+advanced interface for developers, but it should not dominate the normal
+data-analysis path. RCC does not plan a browser-based VS Code IDE; use local
+VS Code with Remote - SSH.</p>
+<p>Read <a href="../workbench-interfaces/index.html">Workbench execution layer</a> only when you need the
+advanced architecture and session-boundary explanation.</p>
+<h2 id="resource-use-is-part-of-the-product">Resource use is part of the product</h2>
+<p>A browser interface must not make inefficient computation easier to ignore.
+RCC Analysis should steer work toward the right mode:</p>
+<ul>
+<li>keep interactive notebook allocations modest and reclaim idle sessions;</li>
+<li>do not reserve GPUs merely because they are available;</li>
+<li>move long or repeated work out of a notebook and into a workflow;</li>
+<li>avoid oversized CPU/RAM requests unsupported by measurement;</li>
+<li>batch tiny tasks when scheduler overhead dominates; and</li>
+<li>use job-local scratch when repeated shared-storage I/O would be wasteful.</li>
+</ul>
+<p>RCC may use privacy-minimized accounting evidence to recommend a better resource
+profile. Scientific data, commands, filenames, and notebook contents are not
+required to decide that a job requested far more CPU, RAM, GPU, or idle time than
+it used.</p>
 <h2 id="assistant-explain-and-help-not-bypass-policy">Assistant: explain and help, not bypass policy</h2>
 <p>The RCC Assistant is <strong>not yet released</strong>. When enabled, it may explain documentation, help interpret failures, or support
 bounded actions when those capabilities are enabled. It does not gain a second
@@ -268,20 +297,19 @@ and <a href="../how-rcc-works/index.html">coding agents and your data</a>.</p>
 <p>Admin / My RCC is <strong>not yet released</strong>; until it is, RCC support handles
 account and membership requests. When released, use the account/project surface
 for actions such as account security, project membership, and project-service
-requests that your role is authorized to make.
-Finding an action in the interface does not mean every user may execute it.</p>
-<p>Read <a href="../projects-and-capabilities/index.html">Projects and supported actions</a> for the
-plain-language capability model.</p>
+requests that your role is authorized to make. Finding an action in the
+interface does not mean every user may execute it.</p>
+<p>Once the browser services are released, a browser-only RCC account will not need
+an SSH public key. Until then, SSH through the jump host is the supported way to
+use RCC, so register an SSH public key with your account.</p>
+<p>Read <a href="../projects-and-capabilities/index.html">Projects and supported actions</a> and
+<a href="../../reference/authentication-lifecycle/index.html">How RCC authentication fits together</a>.</p>
 <h2 id="supporting-project-developer-services">Supporting project/developer services</h2>
-<p>Some RCC services are important but are not primary destinations for every
-researcher.</p>
 <h3 id="gitea-source-code-and-software-artifacts">Gitea: source code and software artifacts</h3>
 <p>Use RCC Gitea for code, workflow source, documentation, tests, and reviewed
 software artifacts. Repository permissions remain separate from project data
 membership, and secrets/research datasets do not belong in Git history.</p>
-<p>Read <a href="../rcc-gitea/index.html">RCC Gitea: source control inside RCC</a>. The newer general
-RCC-authenticated Gitea access plane remains rollout-gated; depend on the
-currently approved repository path until RCC announces the new surface.</p>
+<p>Read <a href="../rcc-gitea/index.html">RCC Gitea: source control inside RCC</a>.</p>
 <h3 id="managed-datalad-versioned-large-dataset-state">Managed DataLad: versioned large-dataset state</h3>
 <p>When enabled for a project, DataLad can bind dataset history/identity to an
 RCC-managed storage provider without putting large content into ordinary Git.
@@ -305,16 +333,16 @@ ordinary user transfer paths and results require a governed release boundary.
 Controlled Data project runtime admission is not yet released.</p>
 <p>Read <a href="../project-types/index.html">Regular and Controlled Data projects</a>.</p>
 <h2 id="one-project-several-interfaces">One project, several interfaces</h2>
-<p>Moving between Files, Workbench, Analysis, the Assistant, SSH, and Admin should
-not change the fundamental authorization model:</p>
+<p>Changing interface does not change authorization:</p>
 <pre><code class="language-text">RCC identity
     + project membership / delegated role
     + project type / data and service policy
               |
               +--&gt; Files
-              +--&gt; Workbench
-              +--&gt; Analysis
-              +--&gt; SSH / VS Code
+              +--&gt; RCC Analysis
+              |       +--&gt; Notebook
+              |       +--&gt; Workflow
+              +--&gt; SSH / VS Code (current supported path)
               +--&gt; Assistant
               +--&gt; Admin
               +--&gt; Gitea / DataLad when separately entitled

@@ -164,10 +164,21 @@
       </figure>
       <h1 id="rcc-clusterdocs-ng">RCC ClusterDocs NG</h1>
 <p>Welcome to RCC guidance for medical professionals, biomedical researchers,
-research software developers, and technical project staff. If you want to
-connect now, use <a href="getting-started/index.html">RCC Expedition Light</a>. If you
-prefer a guided local course, use <a href="rcc-expedition/index.html">RCC Expedition</a>.</p>
-<p>The course is designed so that a new user can progress without needing an administrator beside them. Each class has a small practical exercise and a gate that checks readiness without exposing credentials or generating significant cluster load.</p>
+research software developers, and technical project staff.</p>
+<p>RCC is designed for two access styles:</p>
+<ul>
+<li><strong>advanced command-line/developer access</strong>, using SSH, VS Code, and direct
+Slurm tools — this is <strong>how you use RCC today</strong>; and</li>
+<li><strong>browser-first research</strong>, centered on Files and the planned RCC Analysis
+Notebook/Workflow experience — <strong>not yet released</strong>.</li>
+</ul>
+<p>Start with <a href="getting-started/index.html">RCC Expedition Light</a>, the required
+first-use path, to set up SSH access on Windows 11 or macOS. If you prefer a
+guided local course, use <a href="rcc-expedition/index.html">RCC Expedition</a>.</p>
+<p>The course is designed so that a new user can progress without needing an
+administrator beside them. Each class has a small practical exercise and a gate
+that checks readiness without exposing credentials or generating significant
+cluster load.</p>
 
 
 <h2 id="rcc-in-plain-language">RCC in plain language</h2>
@@ -178,35 +189,40 @@ For definitions used throughout the documentation, see the
 research data is shared. The project is the access and collaboration boundary.
 Start with the <a href="tldr/index.html">complete plain-language TL;DR</a> for the important limits
 and links.</p>
-<p>The network path is just as simple: the jump host is a guarded doorway, the
-shell host is the desk where you prepare work, and Slurm workers perform the
-calculation. <a href="concepts/jump-shell-compute/index.html">See the three roles on one page</a>.</p>
-<p>Returning users can use the
-<a href="getting-started/what-changed/index.html">old-cluster migration table</a> to see which
-access, storage, Slurm, Conda, and workflow habits changed.</p>
+<p>The underlying compute model remains Slurm-backed, but users should not all have
+to interact with the scheduler directly. The planned (not yet released)
+user-facing model is:</p>
+<pre><code class="language-text">Files -&gt; RCC Analysis
+           |      |
+           |      +-&gt; Workflow: repeat / scale / reproduce
+           +--------&gt; Notebook: explore / visualize / prototype
+        -&gt; Files: durable results
+</code></pre>
+<p>The interactive session machinery previously described as <strong>RCC Workbench</strong> is
+now treated as an implementation/advanced execution layer behind Analysis
+Notebook mode rather than a separate primary research product.</p>
 <p>RCC supports statistics, visualization, Python and R data science, machine
 learning, GPU-accelerated AI, and distributed data processing. These techniques
 remain part of a reproducible research workflow: computation runs through
 Slurm, data stays within its project governance, and model evaluation includes
 validation, uncertainty, bias, and scientific limitations.</p>
-<p>Not sure whether you need Files, an interactive session, RCC Analysis, the
-Assistant, or account/project management? Read
+<p>Not sure which surface to use? Read
 <a href="concepts/rcc-services/index.html">RCC services: where should I go?</a>. It also records
-which newer surfaces are documented before release.</p>
+which newer browser surfaces are documented before release.</p>
 <h2 id="choose-your-path">Choose your path</h2>
 <section class="path-grid" aria-label="Choose an RCC learning path">
   <article class="path-card analysis-path">
     <span class="path-number">01</span>
     <p class="path-label">Data analysis</p>
     <h3 id="move-from-research-data-to-a-reproducible-result">Move from research data to a reproducible result</h3>
-    <p>Learn Python, R, notebooks, statistics, AI and machine learning, efficient I/O, GPUs, validation, and governed result sharing.</p>
+    <p>Use notebooks for bounded exploration and governed workflows for repeated or scalable analysis; learn Python, R, statistics, AI, efficient I/O, GPUs, validation, and result sharing.</p>
     <a class="path-action" href="paths/data-analysis/index.html">Follow the data analysis path →</a>
   </article>
   <article class="path-card development-path">
     <span class="path-number">02</span>
     <p class="path-label">Software development</p>
     <h3 id="build-reviewable-workflows-and-protected-services">Build reviewable workflows and protected services</h3>
-    <p>Learn Git, Snakemake, Slurm, Conda, Apptainer, Python and R applications, Shiny, APIs, and governed deployment.</p>
+    <p>Use advanced SSH/VS Code tools when needed; learn Git, Snakemake, Slurm, Conda, Apptainer, Python/R applications, Shiny, APIs, and governed deployment.</p>
     <a class="path-action" href="paths/software-development/index.html">Follow the software development path →</a>
   </article>
 </section>
@@ -217,19 +233,17 @@ which newer surfaces are documented before release.</p>
 <a href="tldr/index.html">ClusterDocs NG TL;DR</a>.</li>
 <li>Unsure which RCC surface to use? Start with the
 <a href="concepts/rcc-services/index.html">RCC service map</a>.</li>
-<li>Everyone begins with <a href="course/class-01-safe-access/index.html">Class 1: safe access</a>.</li>
+<li>Planning browser-based analysis? Read
+<a href="analysis/rcc-analysis/index.html">RCC Analysis: notebooks and governed workflows</a>.</li>
+<li>Need SSH/VS Code or direct Slurm? Those remain available as advanced/current
+paths in the <a href="reference/index.html">reference</a>.</li>
 <li>Use the <a href="course/index.html">course overview</a> when you want the complete eighteen-class sequence.</li>
-<li>Connecting now: use the <a href="connecting/stable-endpoints/index.html">current RCC connection-name guidance</a>.</li>
 <li>Working with human biomedical data: complete <a href="course/class-13-biomedical-data-privacy/index.html">Class 13</a> before transfer or analysis.</li>
-<li>Looking up a command after training: use the <a href="reference/index.html">day-to-day reference</a>.</li>
 <li>Connecting a laboratory instrument or acquisition workstation: see
 <a href="resources/how-it-all-works/index.html">how the lab network and RCC fit together</a>.</li>
-<li>Preparing approved remote-console access: read the
-<a href="connecting/pikvm-headscale/index.html">RCC Headscale and PiKVM guide</a>. This service
-is <strong>not yet released</strong>.</li>
 <li>Moving data from an instrument into analysis: complete
 <a href="course/class-16-wet-lab-data-workflows/index.html">Class 16</a>.</li>
-<li>Planning retention, Coscine archiving, or defensible cleanup: complete
+<li>Planning retention, Coscine archiving (not yet released), or defensible cleanup: complete
 <a href="course/class-17-data-lifecycle/index.html">Class 17</a>.</li>
 <li>Questions or feedback: <a href="team/index.html">meet the RCC team and find the best contact route</a>.</li>
 </ul>
@@ -241,13 +255,13 @@ is <strong>not yet released</strong>.</li>
     </main>
     <aside class="home-rail" aria-label="RCC Expedition onboarding">
       <section class="expedition-callout" aria-labelledby="expedition-title">
-  <p class="expedition-kicker">Two clear starting routes · Windows 11 and macOS</p>
-  <h2 id="expedition-title">Connect quickly or learn step by step</h2>
-  <p>Use the short checklist when you need a working connection. Use the self-contained local Expedition for guided workstation security, SSH, Linux, Slurm, storage, data transfer, and workflow training.</p>
+  <p class="expedition-kicker">Start here</p>
+  <h2 id="expedition-title">Set up safe RCC access in 15 minutes</h2>
+  <p>Today you use RCC through SSH, VS Code, and Slurm. A browser-first experience (Files → RCC Analysis Notebook or Workflow → Files) is planned but not yet released.</p>
   <div class="expedition-actions">
     <a class="expedition-primary" href="getting-started/index.html">Start Expedition Light →</a>
+    <a href="analysis/rcc-analysis/index.html">See planned RCC Analysis</a>
     <a href="rcc-expedition/index.html">Open RCC Expedition</a>
-    <a href="assets/downloads/RCC-Expedition-USB-v1.0.1.zip">Download v1.0.1 for offline use</a>
   </div>
   <p class="expedition-privacy">Datensparsam by design: no learner account, analytics, telemetry, central progress database, or supervisor dashboard.</p>
 </section>

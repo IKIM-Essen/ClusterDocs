@@ -160,18 +160,21 @@
       
       <h1 id="how-rcc-authentication-fits-together">How RCC authentication fits together</h1>
 <p>RCC uses one human identity across several access methods. The credentials are
-not interchangeable, and seeing one credential in one screen does not mean it
-is the credential used everywhere.</p>
+not interchangeable, and <strong>an RCC account does not imply that every user needs
+an SSH credential</strong>.</p>
 <p>The useful mental model is:</p>
 <pre><code class="language-text">RCC account
    |
    +--&gt; web sign-in / SSO
    |      -&gt; password and/or sign-in passkey
+   |      -&gt; Files
+   |      -&gt; My RCC
+   |      -&gt; RCC Analysis Notebook/Workflow when released
    |
    +--&gt; account step-up / recovery
    |      -&gt; portal passkey or YubiKey, authenticator code, recovery codes
    |
-   +--&gt; SSH / SFTP
+   +--&gt; optional SSH / SFTP capability
           -&gt; SSH public key registered to your RCC account
 </code></pre>
 <p>Never share any of these credentials with another person. Project access is
@@ -182,12 +185,18 @@ credentials required by the current enrollment flow. Follow the activation
 instructions supplied by RCC rather than an old screenshot or a colleague's
 saved procedure.</p>
 <p>After activation, the same human identity is used by RCC web services, project
-membership, Slurm attribution, Files, and SSH even though those surfaces may use
-different authentication mechanisms.</p>
+membership, Slurm attribution, Files, and optional SSH even though those
+surfaces may use different authentication mechanisms.</p>
+<p>A browser-first user may stop here: if their work is fully supported through
+Files and RCC Analysis, there is no reason to create an SSH key merely because
+the account exists.</p>
 <h2 id="2-web-sign-in-is-shared-across-rcc-services">2. Web sign-in is shared across RCC services</h2>
 <p>RCC web services use a common sign-in boundary where possible. A successful web
 sign-in can establish your authenticated RCC identity for services such as
 Files, account/project management, and other released RCC applications.</p>
+<p>When RCC Analysis is released, Notebook and Workflow modes use this browser
+identity plus server-side project authorization. They do not require a browser
+user to possess a Slurm signing key or SSH private key.</p>
 <p>This is <strong>single sign-on</strong>, not shared authorization. After sign-in, each service
 still checks whether your identity may access the requested project or action.</p>
 <p>Signing into one RCC website does not add you to a project or grant administrator
@@ -233,13 +242,19 @@ future recovery.</p>
 <h2 id="7-ssh-keys-are-a-separate-access-mechanism">7. SSH keys are a separate access mechanism</h2>
 <p>SSH does not normally reuse your browser passkey. It uses an SSH public/private
 key pair registered to your RCC account.</p>
+<p><strong>Today SSH is the way to use RCC</strong>, because the browser services (Files, RCC
+Analysis, My RCC) are not yet released, so register an SSH public key with your
+account. Once the browser services are released, a key will be needed only for
+the command-line path, VS Code Remote SSH, direct Slurm use, SFTP/public-key
+automation, or another capability that explicitly requires SSH; browser-only
+Files and RCC Analysis users will then be able to work without SSH credentials.</p>
 <p>Only the <strong>public</strong> key is registered with RCC. The private key remains on your
 computer or compatible hardware authenticator.</p>
 <p>For a FIDO-backed SSH key, the authenticator protects the SSH private material;
 this is still conceptually different from a browser/WebAuthn passkey even when
 the same physical YubiKey is involved.</p>
 <p>Follow <a href="../../course/class-01-safe-access/index.html">Class 1: safe access</a> and
-<a href="../access-ssh-vscode/index.html">Access, SSH, and VS Code</a> for current connection setup.</p>
+<a href="../access-ssh-vscode/index.html">Access, SSH, and VS Code</a> when you actually need SSH.</p>
 <h2 id="8-one-physical-security-key-can-contain-different-credentials">8. One physical security key can contain different credentials</h2>
 <p>A YubiKey or similar authenticator can participate in several protocols. For
 example, one device might hold:</p>
@@ -252,9 +267,9 @@ example, one device might hold:</p>
 Do not delete one entry merely because another entry on the same hardware works.</p>
 <h2 id="9-sign-out-and-session-expiry-are-normal-security-boundaries">9. Sign-out and session expiry are normal security boundaries</h2>
 <p>Web sessions expire and sensitive actions may require a fresh step-up even when
-you are still generally signed into RCC. A Workbench reconnect may similarly
-require fresh browser authentication while the underlying Slurm session still
-exists.</p>
+you are still generally signed into RCC. An RCC Analysis Notebook reconnect may
+similarly require fresh browser authentication while the underlying Slurm-backed
+interactive session still exists.</p>
 <p>This separation prevents an old browser tab from becoming indefinite authority.</p>
 <h2 id="if-you-lose-a-credential">If you lose a credential</h2>
 <p>Use the documented RCC recovery route. Do not solve the problem by:</p>
@@ -280,6 +295,10 @@ identity-verification and approver/support procedure.</p>
   <td>RCC SSO password/passkey according to current policy</td>
 </tr>
 <tr>
+  <td>Files / future Analysis Notebook / Workflow</td>
+  <td>web identity + project authorization; <strong>no SSH key required</strong></td>
+</tr>
+<tr>
   <td>Confirm a sensitive account action</td>
   <td>step-up factor requested by the account portal</td>
 </tr>
@@ -288,7 +307,7 @@ identity-verification and approver/support procedure.</p>
   <td>recovery code or approved recovery procedure</td>
 </tr>
 <tr>
-  <td>SSH / VS Code Remote SSH</td>
+  <td>SSH / VS Code Remote SSH / public-key SFTP</td>
   <td>your registered SSH public key + local private key</td>
 </tr>
 <tr>

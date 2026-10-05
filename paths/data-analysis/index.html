@@ -164,11 +164,21 @@ analyses, train or evaluate models, create figures, or build a reproducible
 result pipeline.</p>
 <blockquote>
 <p><strong>Service status:</strong> RCC workers and Slurm analysis are <strong>ready now</strong>. RCC
-Analysis, project vhosts, and RCC-to-Coscine transfer are <strong>not yet released</strong>;
-the linked documentation prepares those future workflow, publication, and
-archive steps.</p>
+Analysis Notebook/Workflow is <strong>not yet released</strong>. Until it is activated,
+use the current Jupyter/SSH, Snakemake, Nextflow, and direct Slurm guidance.</p>
 </blockquote>
-<h2 id="1-build-the-shared-foundation">1. Build the shared foundation</h2>
+<h2 id="the-target-user-journey">The target user journey</h2>
+<p>RCC data analysis is converging on one browser product with two compute modes:</p>
+<pre><code class="language-text">Files -&gt; RCC Analysis
+           |      |
+           |      +-&gt; Workflow: repeat / scale / reproduce
+           +--------&gt; Notebook: explore / visualize / prototype
+        -&gt; Files: results
+</code></pre>
+<p>A browser-first researcher should not need an SSH key, worker hostname, Slurm
+partition, Jupyter token, or SSH tunnel merely to perform ordinary interactive
+analysis once Notebook mode is released.</p>
+<h2 id="1-build-the-scientific-foundation">1. Build the scientific foundation</h2>
 <table>
 <thead>
 <tr>
@@ -179,29 +189,19 @@ archive steps.</p>
 </thead>
 <tbody>
 <tr>
-  <td><a href="../../course/class-01-safe-access/index.html">Class 1</a></td>
-  <td>Safe SSH, VS Code, and file access</td>
-  <td>Establish an attributable, verified connection</td>
-</tr>
-<tr>
   <td><a href="../../course/class-03-performance/index.html">Class 3</a></td>
   <td>CPU, RAM, GPU, and efficient I/O</td>
   <td>Avoid slow or disruptive analysis patterns</td>
 </tr>
 <tr>
-  <td><a href="../../course/class-05-slurm/index.html">Class 5</a></td>
-  <td>Slurm jobs and resource requests</td>
-  <td>Run computation on managed workers</td>
+  <td><a href="../../course/class-09-python-notebooks/index.html">Class 9</a></td>
+  <td>Python/Jupyter analysis</td>
+  <td>Explore and prototype safely</td>
 </tr>
 <tr>
-  <td><a href="../../course/class-06-snakemake/index.html">Class 6</a></td>
-  <td>Ready-now managed Snakemake</td>
-  <td>Submit reproducible rule jobs through Slurm</td>
-</tr>
-<tr>
-  <td><a href="../../course/class-07-nextflow/index.html">Class 7</a></td>
-  <td>Ready-now managed Nextflow and nf-core</td>
-  <td>Run reviewed pipelines through Slurm and Apptainer</td>
+  <td><a href="../../course/class-10-r-analysis/index.html">Class 10</a></td>
+  <td>R analysis</td>
+  <td>Build statistical and reporting workflows</td>
 </tr>
 <tr>
   <td><a href="../../course/class-13-biomedical-data-privacy/index.html">Class 13</a></td>
@@ -216,62 +216,85 @@ archive steps.</p>
 <tr>
   <td><a href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16</a></td>
   <td>Wet-lab instrument handoff</td>
-  <td>Preserve authoritative acquisition data and verify transfer before analysis</td>
+  <td>Preserve authoritative acquisition data and verify transfer</td>
 </tr>
 <tr>
   <td><a href="../../course/class-17-data-lifecycle/index.html">Class 17</a></td>
-  <td>Instrument-to-Coscine data lifecycle</td>
-  <td>Keep data in governed projects, stage analysis correctly, and archive an approved set</td>
+  <td>Research data lifecycle</td>
+  <td>Keep data, results, archive, and disposition governed</td>
 </tr>
 </tbody>
 </table>
-<h2 id="2-choose-your-analysis-environment">2. Choose your analysis environment</h2>
-<p>Read the optional <a href="../../reference/account-starter-setups/index.html">account setup patterns</a>
-if you want guidance for a reviewable Conda data-science environment, an
-inexpensive prompt, or a bounded Shiny setup.</p>
+<p>SSH/VS Code and direct Slurm remain important advanced skills, but they are not
+intended to be prerequisites for every future browser-first researcher.</p>
+<h2 id="2-choose-notebook-or-workflow">2. Choose Notebook or Workflow</h2>
+<h3 id="notebook-explore-and-understand">Notebook — explore and understand</h3>
+<p>Choose a notebook when you need to inspect data, calculate summaries, create
+figures, test code, or understand an intermediate result interactively.</p>
+<p>Use <a href="../../course/class-09-python-notebooks/index.html">Class 9: Python notebooks</a> for Python,
+pandas, Polars, DuckDB, Arrow, numerical analysis, visualization, machine
+learning, and AI exploration. Use <a href="../../course/class-10-r-analysis/index.html">Class 10: R analysis</a>
+for statistical workflows and reproducible R environments.</p>
+<p>The planned RCC Analysis Notebook experience is Jupyter-first and Slurm-backed.
+The interactive allocation should be modest, attended, and automatically
+reclaimed when idle.</p>
+<h3 id="workflow-repeat-and-scale">Workflow — repeat and scale</h3>
+<p>Choose a workflow when the analysis becomes repeated, many-sample, long-running,
+unattended, provenance-critical, or resource-intensive.</p>
+<p>Use <a href="../../course/class-06-snakemake/index.html">Class 6</a> for the current managed Snakemake
+path and <a href="../../course/class-07-nextflow/index.html">Class 7</a> for managed Nextflow/nf-core.
+These execution engines remain underneath the future RCC Analysis Workflow mode.</p>
+<p>Read <a href="../../analysis/rcc-analysis/index.html">RCC Analysis: notebooks and governed workflows</a>
+for the planned product model.</p>
+<h2 id="3-use-resources-responsibly">3. Use resources responsibly</h2>
+<p>The browser should simplify RCC, not hide bad computing patterns. Before scaling,
+measure what the analysis actually needs.</p>
+<p>Avoid:</p>
 <ul>
-<li><a href="../../course/class-09-python-notebooks/index.html">Class 9: Python notebooks</a> for pandas,
-Polars, DuckDB, Arrow, numerical analysis, visualization, machine learning,
-and AI exploration.</li>
-<li><a href="../../course/class-10-r-analysis/index.html">Class 10: R analysis</a> for statistical
-workflows, larger tables, reporting, and reproducible R environments.</li>
-<li><a href="../../reference/ai-data-science/index.html">AI and data science</a> for technique selection,
-validation, training, inference, GPUs, and distributed processing.</li>
+<li>choosing a GPU because it sounds faster;</li>
+<li>reserving many CPUs for single-threaded code;</li>
+<li>requesting far more memory than observed peak use;</li>
+<li>leaving interactive notebook allocations idle;</li>
+<li>repeating the same manual notebook analysis across many samples;</li>
+<li>producing thousands of tiny scheduler jobs; and</li>
+<li>rereading large shared files repeatedly when batching or local scratch is
+appropriate.</li>
 </ul>
-<p>For the planned product model, read
-<a href="../../analysis/rcc-analysis/index.html">RCC Analysis: from data to a reproducible run</a>.
-It explains when to use RCC Analysis instead of an interactive Workbench,
-how RCC chooses an efficient execution plan, how exact reproduction differs
-from adaptation, and what provenance a governed run retains. RCC Analysis is
-not yet a live user service.</p>
-<h2 id="3-make-the-analysis-reproducible">3. Make the analysis reproducible</h2>
-<p>Use <a href="../../course/class-02-workflows/index.html">Class 2</a> to organise the project, then
-<a href="../../course/class-06-snakemake/index.html">Class 6</a> for the ready managed workflow path.
-Use <a href="../../course/class-07-nextflow/index.html">Class 7</a> when a reviewed community
-workflow uses Nextflow or nf-core.
-Use <a href="../../course/class-04-containers/index.html">Class 4</a> when an immutable runtime is
-more appropriate than an environment containing many small files.</p>
-<p>If the analysis currently exists as shell history, scripts, or a document of
-commands, follow the
-<a href="../from-shell-scripts/index.html">script-to-workflow conversion guide</a>
-before scaling it.</p>
-<p>Keep durable inputs and final outputs in approved project storage. Stage
-high-I/O intermediates into job-local scratch and retain code, environments,
-parameters, checksums, logs, benchmarks, and Slurm job IDs.</p>
-<p>Use <a href="../../course/class-15-storage-architecture/index.html">Class 15</a> when you need to
-diagnose metadata, object-storage, network, or cache behavior in more detail.</p>
-<h2 id="4-share-an-approved-result">4. Share an approved result</h2>
+<p>A useful progression is:</p>
+<pre><code class="language-text">small notebook experiment
+    -&gt; measure CPU / memory / GPU / I/O behavior
+    -&gt; choose realistic resources
+    -&gt; move repeated/scalable work to a workflow
+</code></pre>
+<p>For resource selection and I/O, use <a href="../../course/class-03-performance/index.html">Class 3</a>,
+<a href="../../course/class-14-efficient-io/index.html">Class 14</a>, and
+<a href="../../reference/ai-data-science/index.html">AI and data science</a>.</p>
+<h2 id="4-make-the-analysis-reproducible">4. Make the analysis reproducible</h2>
+<p>Use <a href="../../course/class-02-workflows/index.html">Class 2</a> to organise the project and
+<a href="../../course/class-04-containers/index.html">Class 4</a> when an immutable runtime is more
+appropriate than a mutable environment.</p>
+<p>If the analysis currently exists as notebook state, shell history, scripts, or a
+document of commands, follow the
+<a href="../from-shell-scripts/index.html">script-to-workflow conversion guide</a> before scaling it.</p>
+<p>Keep durable inputs and final outputs in approved project storage. Stage high-I/O
+intermediates into job-local scratch and retain code, environments, parameters,
+checksums, logs, benchmarks, and run/job identifiers needed for reproduction.</p>
+<h2 id="5-share-an-approved-result">5. Share an approved result</h2>
 <ul>
-<li>Use <a href="../../course/class-11-shiny/index.html">Class 11</a> for a bounded Shiny development
-workflow.</li>
+<li>Use <a href="../../course/class-11-shiny/index.html">Class 11</a> for bounded Shiny development.</li>
 <li>Use <a href="../../course/class-12-notebook-to-service/index.html">Class 12</a> when converting a
 notebook, model, or analysis into a governed service.</li>
 <li>Use <a href="../../course/class-08-vhosts/index.html">Class 8</a> to plan a protected project
 website. Project vhosts are not yet released.</li>
 </ul>
-<p>An analysis result, model, or AI prediction remains a research output unless
-the applicable clinical validation and governance processes explicitly approve
+<p>An analysis result, model, or AI prediction remains a research output unless the
+applicable clinical validation and governance processes explicitly approve
 another use.</p>
+<h2 id="current-versus-planned-access">Current versus planned access</h2>
+<p>Until RCC Analysis Notebook is activated, the current Class 9 procedure still
+uses a Slurm Jupyter job and SSH tunnel. When the browser notebook path is
+released, that manual tunnel procedure becomes an advanced/fallback method, not
+the default onboarding experience.</p>
 
       
     </main>

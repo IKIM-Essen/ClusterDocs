@@ -165,7 +165,12 @@ need to understand the cluster before you begin.</p>
 stops after safe access, the basic host and storage model, VS Code, and a small
 Slurm check. The full RCC Expedition is optional deeper training and introduces
 containers, Snakemake, and Nextflow later.</p>
-<h2 id="choose-your-computer">Choose your computer</h2>
+<p>RCC is also preparing a browser-first experience for researchers who do not need
+the command line. There are therefore two starting paths; today only Path A is
+available.</p>
+<h2 id="path-a-command-line-access-current">Path A — command-line access (current)</h2>
+<p>Use this path now. It gives you SSH, VS Code Remote SSH, direct Slurm commands,
+workflow development, and automation.</p>
 <table>
 <thead>
 <tr>
@@ -185,27 +190,43 @@ containers, Snakemake, and Nextflow later.</p>
 </tbody>
 </table>
 <p>Both checklists use the SSH client already supplied by the operating system.
-Do not install a separate terminal, Linux virtual machine, or SSH program
-unless the checklist shows that the built-in client is missing.</p>
+Do not install a separate terminal, Linux virtual machine, or SSH program unless
+the checklist shows that the built-in client is missing.</p>
 <p>After terminal SSH works, follow <a href="vscode/index.html">Use VS Code with RCC</a> for the
 recommended day-to-day editor, terminal, Git, and remote-file interface.</p>
-<p>If you prefer guided, offline training, use
-<a href="../rcc-expedition/index.html">RCC Expedition</a>. You can open the course directly after
-extracting it; installing its optional Desktop shortcut is not required.</p>
-<p>Already used the original IKIM cluster? Read
-<a href="what-changed/index.html">what changed from the old ClusterDocs</a> before reusing a saved
-SSH configuration, storage habit, or submission script.</p>
-<h2 id="the-four-things-to-remember">The four things to remember</h2>
+<h2 id="path-b-browser-first-research-not-yet-released">Path B — browser-first research (not yet released)</h2>
+<blockquote>
+<p><strong>Service status — not yet released:</strong> RCC Home, Files, and RCC Analysis
+Notebook/Workflow are not yet available. Use Path A until RCC announces them.</p>
+</blockquote>
+<p>The intended journey is:</p>
+<pre><code class="language-text">RCC Home
+   -&gt; Files: upload or choose project data
+   -&gt; RCC Analysis: Notebook for interactive exploration
+        or RCC Analysis: Workflow for repeatable analysis
+   -&gt; Files: inspect/download results
+</code></pre>
+<p>Once released, a browser-only account will be able to work without an SSH
+public key. RCC web authentication and project membership remain the authority;
+the browser service submits compute through the governed RCC/Slurm path on your
+behalf.</p>
+<h2 id="what-most-researchers-should-remember">What most researchers should remember</h2>
 <ol>
-<li><strong>Your computer starts the connection.</strong> Your private SSH key stays there.</li>
-<li><strong>The jump host is the guarded doorway.</strong> SSH crosses it automatically; it
-is not a computer where you work.</li>
-<li><strong>The shell host is your RCC desk.</strong> You edit small files, use Git, prepare
-jobs, and start workflow controllers there.</li>
-<li><strong>Slurm workers do the computation.</strong> Submit analysis rather than running it
-in the shell-host terminal.</li>
+<li><strong>Your RCC account is your identity.</strong> SSH is how you use RCC today; once
+the browser services are released, browser-only work will not require an
+SSH key.</li>
+<li><strong>Files will be the browser data entry/exit surface</strong> (not yet released).
+Durable project inputs and results belong in the project.</li>
+<li><strong>RCC Analysis Notebook is for exploration.</strong> It is planned as Jupyter in a
+bounded Slurm allocation without manual tunnels or worker selection.</li>
+<li><strong>RCC Analysis Workflow is for repeatable work.</strong> Long, repeated, unattended,
+or highly parallel analysis belongs in a governed workflow rather than an
+oversized notebook session.</li>
+<li><strong>Slurm workers still do the computation.</strong> Browser-first changes how you ask
+for compute, not where compute runs.</li>
 </ol>
-<p>The normal connection therefore looks like this:</p>
+<h2 id="the-command-line-connection-model">The command-line connection model</h2>
+<p>The command-line connection model is:</p>
 <pre><code class="language-text">Mac or Windows
   -&gt; jump host (automatic forwarding; no working shell)
   -&gt; shell host (prepare and control work)
@@ -214,7 +235,7 @@ in the shell-host terminal.</li>
 <p>You normally type only <code>ssh shellhost</code>. The <code>ProxyJump</code> line in
 your SSH configuration takes care of the middle step.</p>
 <p><a href="../concepts/jump-shell-compute/index.html">Read the jump-host and shell-host explanation</a>
-if you want the full mental model.</p>
+if you need the full command-line mental model.</p>
 <h2 id="where-your-work-belongs">Where your work belongs</h2>
 <table>
 <thead>
@@ -242,32 +263,33 @@ if you want the full mental model.</p>
 </tr>
 </tbody>
 </table>
+<p>Once released, Files and RCC Analysis should present authorized projects
+directly, so browser users will not need to type these paths. The paths remain useful
+reference for developers and reproducibility documentation.</p>
 <p>Your <strong>primary group</strong> records your organizational home. A <strong>project</strong> is the
 research collaboration: it has the approved members, data, services, purpose,
 and lifecycle. Add collaborators to the project; do not move them into another
 primary group merely to share data.</p>
-<p>For a large team, use the
-<a href="../reference/users-groups-projects/index.html#organise-storage-for-a-large-science-team">large-team project layout</a>
-rather than inventing another top-level storage path.</p>
-<h2 id="turn-a-successful-command-into-a-reliable-analysis">Turn a successful command into a reliable analysis</h2>
-<p>Do not keep an important analysis only in shell history. Start with the
-<a href="../paths/from-shell-scripts/index.html">script-to-workflow guide</a>. It shows how to:</p>
-<ul>
-<li>record inputs, outputs, parameters, software, and resources;</li>
-<li>choose Snakemake or Nextflow;</li>
-<li>turn a Conda environment declaration into a pinned Apptainer runtime;</li>
-<li>run every scientific task through Slurm; and</li>
-<li>test with synthetic or non-sensitive data before scaling.</li>
-</ul>
+<h2 id="turn-exploration-into-reliable-analysis">Turn exploration into reliable analysis</h2>
+<p>Do not keep an important analysis only in notebook state or shell history.
+When interactive work becomes repeated, long-running, many-sample, or
+provenance-critical, turn it into an RCC Analysis Workflow (when released) or
+use the current <a href="../paths/from-shell-scripts/index.html">script-to-workflow guide</a>.</p>
+<p>The resource rule is simple: <strong>interactive notebooks should be modest and
+attended; repeatable/scalable work should become workflows.</strong> Requesting more
+CPU, memory, GPU, or time is not a substitute for measuring what the analysis
+actually uses.</p>
 <h2 id="you-are-ready-when">You are ready when</h2>
 <ul>
 <li>terminal SSH reaches the configured RCC target;</li>
-<li>VS Code reaches the same target and opens a narrow project directory;</li>
-<li>you can explain why the jump host does not give you a shell;</li>
+<li>VS Code reaches the same target if you use it;</li>
 <li>you know which project owns the work;</li>
 <li>a small Slurm test completes; and</li>
-<li>repeated analysis is recorded as code rather than remembered commands.</li>
+<li>repeated analysis is recorded as code/workflow rather than remembered commands.</li>
 </ul>
+<p>If you prefer guided, offline training, use
+<a href="../rcc-expedition/index.html">RCC Expedition</a>. Returning users from the original IKIM
+cluster should also read <a href="what-changed/index.html">what changed</a>.</p>
 
       
     </main>

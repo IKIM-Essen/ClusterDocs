@@ -162,61 +162,94 @@
 <section class="course-video-hero" id="watch-first">
   <p class="course-video-kicker">Recommended starting point · 4 min video</p>
   <h2 id="watch-the-class-first">Watch the class first</h2>
-  <p>Safe Jupyter access, large-data patterns, Python tools, reproducibility, and responsible AI exploration. Watch the complete lesson, then use the written page below for copyable commands, exercises, and reference details.</p>
+  <p>Safe Jupyter access, large-data patterns, Python tools, reproducibility, and responsible AI exploration. The video shows the current SSH-tunnel workflow; the written guidance below also records the planned RCC Analysis Notebook path.</p>
   <div class="course-video-pending" role="status">
     <strong>Video not yet released</strong>
     <p>The videos are waiting for publication on the RCC documentation website. This preview deliberately does not link to a local copy or another host. The complete written lesson is available below.</p>
   </div>
 </section>
 
-<p>This class teaches a safe pattern for interactive Python analysis on RCC. A notebook is useful for inspection, statistics, and figures. It is <strong>not</strong> the place to run an overnight computation or keep many gigabytes in memory without limits.</p>
-<p>Use VS Code with Remote - SSH as the suggested front end for editing Python,
-notebooks, environment files, and Slurm scripts. A notebook kernel is separate
-from the editor: it still runs inside a bounded Slurm allocation.</p>
+<p>This class teaches safe interactive Python analysis on RCC. A notebook is useful
+for inspection, statistics, figures, and prototyping. It is <strong>not</strong> the place to
+hide an overnight production workflow, reserve resources indefinitely, or repeat
+the same manual analysis across a large cohort.</p>
+<h2 id="product-transition-jupyter-becomes-the-primary-browser-interface">Product transition: Jupyter becomes the primary browser interface</h2>
+<p>RCC is moving toward <strong>RCC Analysis -&gt; Notebook</strong> as the normal interactive
+analysis experience. That planned path starts Jupyter inside a bounded Slurm
+allocation and brokers the browser connection for you.</p>
+<p>When released, a normal notebook user should not need to:</p>
+<ul>
+<li>enroll an SSH key;</li>
+<li>select a worker hostname;</li>
+<li>submit <code>sbatch</code> manually;</li>
+<li>create an SSH tunnel;</li>
+<li>copy a Jupyter token; or</li>
+<li>expose a notebook port.</li>
+</ul>
+<p>Until RCC announces that RCC Analysis Notebook is released, the
+manual Slurm + SSH-tunnel procedure below remains the supported current path.
+After browser notebooks are released, the manual route remains useful as an
+advanced/fallback technique rather than the default onboarding experience.</p>
 <h2 id="learning-goals">Learning goals</h2>
 <p>After this class, you can:</p>
 <ul>
-<li>start JupyterLab only inside a Slurm allocation;</li>
-<li>tunnel the notebook to your workstation without exposing it to the network;</li>
-<li>inspect a large dataset by sampling and summarising instead of loading everything blindly;</li>
+<li>explain why a Jupyter kernel is a real scheduled workload;</li>
+<li>use the current Slurm/tunnel notebook path safely;</li>
+<li>understand the planned browser-first RCC Analysis Notebook path;</li>
+<li>inspect a large dataset by sampling and summarising instead of loading
+everything blindly;</li>
 <li>choose between pandas, Polars, DuckDB, Arrow, NumPy, SciPy, and Matplotlib;</li>
-<li>distinguish descriptive analysis, statistical modeling, machine-learning training, validation, and inference;</li>
-<li>measure memory and runtime;</li>
-<li>move expensive work from a notebook into a Slurm batch script.</li>
+<li>measure memory/runtime and use GPUs only when measurement supports them; and</li>
+<li>move repeated or expensive work from a notebook into a governed workflow.</li>
 </ul>
 <h2 id="before-you-start">Before you start</h2>
-<p>Complete the Class 1 SSH gate and the Class 5 Slurm gate. You need a working SSH client, a valid RCC account, and the ability to submit one small Slurm job.</p>
+<p>For the <strong>current manual notebook path</strong>, complete the Class 1 SSH gate and the
+Class 5 Slurm gate. You need a working SSH client, a valid RCC account, and the
+ability to submit one small Slurm job.</p>
+<p>For the <strong>future browser-first path</strong>, the goal is different: an authorized RCC
+account/project and browser authentication will be sufficient, and SSH will be optional.</p>
 <h2 id="the-rcc-notebook-rule">The RCC notebook rule</h2>
-<p>A notebook kernel is a normal process. It consumes CPU, memory, local scratch space, and sometimes a GPU. Therefore, on RCC it must run under Slurm:</p>
+<p>A notebook kernel is a normal process. It consumes CPU, memory, local scratch,
+and sometimes a GPU. Therefore substantial notebook computation must run in a
+bounded Slurm allocation whether RCC creates that allocation for you or you
+submit it manually.</p>
+<h3 id="current-manual-path">Current manual path</h3>
 <pre><code class="language-bash">cp -a examples/interactive-workflows/jupyter my-jupyter-session
 cd my-jupyter-session
 sbatch jupyter.sbatch
 </code></pre>
-<p>Read the job output file. It shows the worker, the selected loopback port, and the tunnel command. Open only the local address shown by the tunnel. Do not bind a notebook to a public interface and do not disable the token.</p>
-<p>The connection sequence is always:</p>
+<p>Read the job output file. It shows the worker, selected loopback port, and tunnel
+command. Open only the local address shown by the tunnel. Do not bind a notebook
+to a public interface and do not disable the token.</p>
+<p>The current connection sequence is:</p>
 <ol>
 <li>submit the Jupyter job;</li>
-<li>wait for the job to report its worker, loopback port, token, and tunnel;</li>
+<li>wait for the job to report worker, loopback port, token, and tunnel;</li>
 <li>run that tunnel command on your workstation;</li>
-<li>open the local <code>127.0.0.1</code> address;</li>
+<li>open the local <code>127.0.0.1</code> address; and</li>
 <li>stop the Slurm job with <code>scancel &lt;jobid&gt;</code> when finished.</li>
 </ol>
-<h3 id="what-the-local-notebook-view-looks-like">What the local notebook view looks like</h3>
+<h3 id="planned-rcc-analysis-notebook-path">Planned RCC Analysis Notebook path</h3>
+<pre><code class="language-text">Files: choose/upload project data
+        -&gt; RCC Analysis: Notebook
+        -&gt; choose project + modest notebook profile
+        -&gt; Open notebook
+        -&gt; save durable work in the project
+        -&gt; stop notebook / automatic idle reclamation
+</code></pre>
+<p>The Slurm allocation still exists, but RCC owns the scheduler and browser-attach
+details.</p>
+<h2 id="what-the-current-local-notebook-view-looks-like">What the current local notebook view looks like</h2>
 <p>These screenshots come from the earlier ClusterDocs Jupyter walkthrough. They
-show the classic Notebook interface rather than the current JupyterLab example,
-but they preserve two useful visual checks: the browser address is local
-<code>127.0.0.1</code>, and code executes in the remote allocated environment.</p>
+show the classic Notebook interface rather than the future RCC Analysis browser
+shell, but they preserve useful visual checks for the current manual route: the
+browser address is local <code>127.0.0.1</code>, and code executes in the remote allocated
+environment.</p>
 <p><img src="../../assets/jupyter-home.png" alt="Historical classic Jupyter file view reached through a local 127.0.0.1 tunnel" /></p>
 <p><img src="../../assets/jupyter-notebook.png" alt="Historical Jupyter notebook showing remote-host and Python-environment checks" /></p>
-<p>The second screenshot contains a former worker hostname, home path, Python
-version, and example username. Do not reuse those values. Use the worker, port,
-token, project path, and tunnel printed by your current bounded Slurm job. Never
-publish the token or include it in a support screenshot.</p>
-<blockquote>
-<p><strong>Reference companions:</strong> <a href="../../reference/access-ssh-vscode/index.html">Account access, SSH, and VS Code</a>
-contains connection diagnostics. <a href="../../reference/slurm/index.html">Slurm commands</a>
-explains how to inspect and stop the notebook allocation.</p>
-</blockquote>
+<p>Do not reuse those values: former worker hostnames, home paths, usernames, ports,
+or tokens from screenshots. Never publish a notebook token or include it in a
+support screenshot.</p>
 <h2 id="large-data-pattern">Large-data pattern</h2>
 <p>Use this sequence before writing a full analysis:</p>
 <ol>
@@ -224,11 +257,14 @@ explains how to inspect and stop the notebook allocation.</p>
 <li>Inspect the file size and format.</li>
 <li>Load a small sample or a small set of columns.</li>
 <li>Summarise groups before plotting.</li>
-<li>Check memory use.</li>
+<li>Check memory and runtime.</li>
 <li>Save a small reproducible notebook.</li>
-<li>Move full-scale work into a Slurm script.</li>
+<li>Decide whether the full-scale work belongs in RCC Analysis Workflow / a
+current Slurm workflow instead of the notebook.</li>
 </ol>
-<p>For tabular data, prefer columnar or chunked access. CSV is portable, but slow for repeated analysis. Parquet, Arrow, DuckDB, or an indexed database table are usually better for repeated interactive work.</p>
+<p>For tabular data, prefer columnar or chunked access. CSV is portable, but slow
+for repeated analysis. Parquet, Arrow, DuckDB, or an indexed database table are
+usually better for repeated interactive work.</p>
 <h2 id="copyable-example">Copyable example</h2>
 <p>The course includes:</p>
 <ul>
@@ -239,10 +275,8 @@ explains how to inspect and stop the notebook allocation.</p>
 </ul>
 <p>The notebooks use synthetic data so that you can practice safely. Their
 RiboSnake-inspired section builds a Bray--Curtis PCoA and a ranked waterfall
-plot in both Python and R. Run the cells to render the figures; committed
-notebook outputs stay empty so that results or restricted data cannot be
-published accidentally. The batch script shows the same idea as a scheduled
-Slurm job.</p>
+plot in both Python and R. Committed notebook outputs stay empty so that results
+or restricted data cannot be published accidentally.</p>
 <h2 id="python-tool-choices">Python tool choices</h2>
 <table>
 <thead>
@@ -288,61 +322,71 @@ Slurm job.</p>
 <h2 id="ai-and-data-science-techniques">AI and data science techniques</h2>
 <p>Use notebooks to inspect data, establish baselines, compare techniques, and
 explain results. Move full training, large hyperparameter searches, embedding
-generation, and production inference into bounded batch workflows.</p>
+generation, repeated inference, and production analyses into bounded workflows.</p>
 <p>A reviewable machine-learning workflow includes:</p>
 <ul>
 <li>data-quality and missingness checks;</li>
-<li>a subject-safe or time-safe split into training, validation, and test data;</li>
+<li>a subject-safe or time-safe train/validation/test split;</li>
 <li>preprocessing and feature engineering inside the versioned pipeline;</li>
-<li>a simple statistical or machine-learning baseline;</li>
+<li>a simple baseline;</li>
 <li>an evaluation measure chosen before tuning;</li>
 <li>calibration, uncertainty, subgroup behavior, and leakage checks;</li>
 <li>fixed seeds where deterministic behavior is possible; and</li>
 <li>versioned code, environment, parameters, metrics, and model artifacts.</li>
 </ul>
-<p>Tree models and regularized regression are often strong tabular baselines.
-Neural networks and transformers are appropriate when the data type, sample
-size, and research question justify their complexity. Unsupervised techniques
-such as clustering, dimensionality reduction, and representation learning need
-stability checks and scientific interpretation; visual separation alone is not
-validation.</p>
-<p>Use GPUs only when measurement shows that the framework and workload benefit.
-For larger-than-memory tables, try column selection, Parquet, Arrow, DuckDB,
-Polars, and chunked processing before introducing distributed computation.
-Spark-style processing is useful only when its parallelism outweighs network,
-serialization, scheduling, and operational overhead.</p>
-<blockquote>
-<p><strong>Reference companion:</strong> <a href="../../reference/ai-data-science/index.html">AI and data science on RCC</a>
-covers technique selection, model development, training versus inference,
-distributed processing, reproducibility, and responsible-use boundaries.</p>
-</blockquote>
+<p>Use GPUs only when the framework and measured workload benefit. A GPU is not a
+“make notebook faster” switch. For larger-than-memory tables, try column
+selection, Parquet, Arrow, DuckDB, Polars, and chunked processing before
+introducing distributed computation.</p>
+<h2 id="resource-patterns-rcc-should-discourage">Resource patterns RCC should discourage</h2>
+<p>Interactive notebooks are especially prone to accidental over-requesting. Avoid:</p>
+<ul>
+<li>many CPUs for mostly single-threaded code;</li>
+<li>large memory allocations “just in case”;</li>
+<li>GPU allocations with negligible GPU use;</li>
+<li>keeping a notebook allocation open while away from the browser;</li>
+<li>repeating the same notebook manually across samples; and</li>
+<li>using an interactive notebook to orchestrate thousands of tiny tasks.</li>
+</ul>
+<p>The preferred progression is:</p>
+<pre><code class="language-text">Notebook -&gt; measure -&gt; right-size -&gt; Workflow when repeated/scalable
+</code></pre>
+<p>RCC may recommend resource changes from aggregate scheduler/accounting evidence
+without inspecting notebook content, filenames, commands, or research data.</p>
 <h2 id="good-security-and-reproducibility-habits">Good security and reproducibility habits</h2>
 <ul>
 <li>Do not paste patient identifiers, tokens, private keys, or passwords into notebooks.</li>
 <li>Do not commit notebook outputs containing restricted data.</li>
 <li>Keep notebooks small enough that another person can review the reasoning.</li>
-<li>Put package versions in <code>environment.yml</code>.</li>
+<li>Put package versions in <code>environment.yml</code> or another reviewed environment definition.</li>
 <li>Use project membership rather than sharing another user account.</li>
-<li>Shut down the Slurm job when you are finished.</li>
+<li>Save durable outputs in project storage.</li>
+<li>Stop the current manual Slurm notebook job when finished; future browser
+notebooks should also be subject to idle reclamation.</li>
 </ul>
 <h2 id="completion-gate">Completion gate</h2>
 <p>Run the local structure check before using the example on RCC:</p>
 <pre><code class="language-bash">python3 exercises/interactive/validate-interactive-examples.py
 </code></pre>
-<p>Then start one Jupyter job and confirm three things:</p>
+<p>For the current manual route, start one Jupyter job and confirm:</p>
 <ol>
-<li>The job output says the notebook binds to <code>127.0.0.1</code>.</li>
-<li>You can connect through the SSH tunnel.</li>
-<li>You can stop the job with <code>scancel</code>.</li>
+<li>the notebook binds to <code>127.0.0.1</code>;</li>
+<li>you can connect through the SSH tunnel; and</li>
+<li>you can stop the job with <code>scancel</code>.</li>
 </ol>
 <p>Do not run more than one notebook job for this class.</p>
+<p>When RCC Analysis Notebook is released, the acceptance gate changes: a user with
+no SSH key enrolled must be able to open a project notebook from the browser,
+produce a small durable result, stop/reconnect safely, and retrieve the result in
+Files without facilitator shell intervention.</p>
 <h2 id="self-check-questions">Self-check questions</h2>
 <ol>
-<li>Why is a notebook kernel a Slurm workload?</li>
+<li>Why is a notebook kernel a Slurm workload even when the browser hides Slurm?</li>
 <li>Why is a sampled plot safer than loading every row at once?</li>
-<li>What should move from a notebook into a batch script?</li>
-<li>Why should notebook ports bind only to loopback?</li>
-<li>Which files should not be committed to a repository?</li>
+<li>What should move from a notebook into a workflow?</li>
+<li>Why should notebook listeners never become uncontrolled public services?</li>
+<li>When is a GPU notebook justified?</li>
+<li>Which notebook data must never be committed or pasted into support channels?</li>
 </ol>
 
       

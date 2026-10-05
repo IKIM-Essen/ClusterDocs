@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
-  <title>RCC Files: browse and transfer project data · RCC ClusterDocs</title>
+  <title>RCC Files: browser data entry and result retrieval · RCC ClusterDocs</title>
   <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="">
@@ -154,11 +154,11 @@
     </aside>
     <main id="content" class="content-card">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
-        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">RCC Files: browse and transfer project data</span></li>
+        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">RCC Files: browser data entry and result retrieval</span></li>
       </ol></nav>
       <p class="eyebrow">Documentation · RCC ClusterDocs</p>
       
-      <h1 id="rcc-files-browse-and-transfer-project-data">RCC Files: browse and transfer project data</h1>
+      <h1 id="rcc-files-browser-data-entry-and-result-retrieval">RCC Files: browser data entry and result retrieval</h1>
 <blockquote>
 <p><strong>Service status — not yet released:</strong> the RCC Files browser and SFTP portal
 is not currently available. Its earlier internal pilot was withdrawn in
@@ -167,60 +167,75 @@ October 2026, and RCC will announce the released service. Until then, use
 <a href="../../reference/storage-transfer/index.html">Storage and transfer</a>. This page describes
 the intended service boundary.</p>
 </blockquote>
-<p>RCC Files is the project-facing browser and transfer surface. Use it when the
-main task is to move, upload, download, or inspect approved project files without
-opening an interactive compute session.</p>
+<p>RCC Files is the project-facing browser and transfer surface. Once released, it
+is intended to be the first and last stop of a browser-based RCC analysis:</p>
+<pre><code class="language-text">Files: upload / choose data
+    -&gt; RCC Analysis: Notebook or Workflow
+    -&gt; Files: inspect / download results
+</code></pre>
 <p>Files is deliberately narrower than “the server filesystem.” It exposes the
 project-facing data RCC has admitted to the service; it is not a browser for
 arbitrary paths on login, storage, or worker hosts.</p>
 <h2 id="when-to-use-files">When to use Files</h2>
-<p>Use Files for tasks such as:</p>
-<ul>
-<li>uploading an approved input into the correct project;</li>
-<li>downloading an approved result;</li>
-<li>browsing the project-facing file tree;</li>
-<li>creating a bounded handoff through the approved project surface; or</li>
-<li>using the supported SFTP/public-key route when a command-line transfer is more
-appropriate than a browser upload.</li>
-</ul>
-<p>For very large, automated, or specialized transfers, check
-<a href="../../reference/storage-transfer/index.html">Storage and transfer</a> before choosing a tool.</p>
+<p>Use Files for ordinary project upload/download, browsing project data, choosing
+inputs for RCC Analysis, retrieving results, and bounded approved handoffs.
+For very large, automated, or specialized transfers, also read
+<a href="../../reference/storage-transfer/index.html">Storage and transfer</a>.</p>
 <h2 id="sign-in-with-your-rcc-identity">Sign in with your RCC identity</h2>
 <p>The browser Files service uses the RCC sign-in boundary. Do not look for a
-separate shared “project account” or a native Files password.</p>
-<p>Use your individual RCC identity. Depending on the active authentication policy,
-the sign-in flow may use your RCC password, passkey, or another enrolled factor.
-A web sign-in does not change the project's filesystem permissions: the Files
-service still resolves what your RCC account is allowed to see.</p>
-<p>For the credential model, read
-<a href="../../reference/authentication-lifecycle/index.html">How RCC authentication fits together</a>.</p>
-<h2 id="files-is-project-scoped">Files is project-scoped</h2>
-<p>Before transferring data, verify both:</p>
-<ol>
-<li>the <strong>project</strong> you intend to work with; and</li>
-<li>the <strong>destination path</strong> inside that project's admitted Files view.</li>
-</ol>
-<p>If a project is missing, do not work around the problem by using another user's
-account, loosening Unix permissions, or copying the data into an unrelated
-project. Fix the project membership or service entitlement instead.</p>
-<p>The usual durable research location remains conceptually:</p>
-<pre><code class="language-text">/projects/&lt;project&gt;/
-</code></pre>
-<p>The Files surface may expose only the portion of that project admitted for
-transfer. Its absence from Files does not imply that all server paths should be
-made visible.</p>
+shared “project account” or separate Files password.</p>
+<p>Once Files is released, a browser-first RCC user will not need an SSH public key
+merely to use Files or browser Analysis capabilities; SSH keys will remain the
+credential for command-line/SFTP paths. Until then, SSH is the supported route.</p>
+<p>Web sign-in does not change project permissions. Files derives its project view
+from current RCC entitlement data and the admitted Files policy.</p>
+<h2 id="which-projects-should-appear">Which projects should appear?</h2>
+<p>For the ordinary Files service, a user should see <strong>all current Files-enabled
+Regular projects in which that RCC account is a member</strong>, not only a primary
+project or primary group.</p>
+<p>The primary project may be used as a convenient landing directory, but it must
+not hide the user's other eligible projects.</p>
+<p>A project is intentionally absent from ordinary Files when, for example:</p>
+<ul>
+<li>it is not an RCC project object;</li>
+<li>Files publication is not enabled for it;</li>
+<li>the user is not currently a member;</li>
+<li>its admitted <code>/projects/&lt;project&gt;</code> directory does not exist; or</li>
+<li>it is a Controlled Data project that requires a different governed surface.</li>
+</ul>
+<p>If an expected Regular project is missing, do not work around the problem by
+using another user's account, loosening Unix permissions, or copying data into
+an unrelated project. Fix the project membership/publication problem instead.</p>
+<p>The durable location remains conceptually <code>/projects/&lt;project&gt;/</code>, but normal
+browser users should not have to type that cluster path. Files and RCC Analysis
+should present authorized projects directly.</p>
+<h2 id="browser-transfer-performance">Browser transfer performance</h2>
+<p>The Files architecture is intended to avoid unnecessary copy hops, but good
+throughput is a <strong>runtime acceptance property</strong>, not something documentation can
+promise from source design alone.</p>
+<p>Before broad browser-first rollout RCC should benchmark the deployed path with:</p>
+<ul>
+<li>a multi-GiB browser upload and checksum verification;</li>
+<li>a multi-GiB browser download and checksum verification;</li>
+<li>a representative many-small-file workload;</li>
+<li>at least two concurrent pilot users;</li>
+<li>sustained throughput, retries/errors, and relevant gateway/Files service
+resource use; and</li>
+<li>a same-user/same-project comparison against an accepted native transfer route
+such as SFTP.</li>
+</ul>
+<p>A substantial unexplained browser penalty is an RCC defect to investigate. The
+normal response should not be “use SSH instead.”</p>
 <h2 id="browser-files-versus-sftp">Browser Files versus SFTP</h2>
-<p>The browser and SFTP routes solve different interaction problems but should map
-to the same project authorization model.</p>
-<h3 id="browser">Browser</h3>
-<p>Use the browser when you want an interactive upload/download experience and do
-not need scripting.</p>
-<h3 id="sftp-public-key">SFTP / public key</h3>
-<p>Use the approved SFTP/public-key route when a command-line or automated transfer
-is more appropriate. Follow the current RCC connection instructions and use your
-own SSH key; do not create shared credentials for a project.</p>
-<p>An SFTP login is still a transfer session, not a general interactive shell.</p>
-<h2 id="files-versus-ssh-workbench-and-analysis">Files versus SSH, Workbench, and Analysis</h2>
+<h3 id="browser-preferred-for-ordinary-interactive-use">Browser — preferred for ordinary interactive use</h3>
+<p>Use the browser for ordinary upload/download and for the zero-SSH
+<code>Files -&gt; Analysis -&gt; Files</code> journey.</p>
+<h3 id="sftp-public-key-advanced-or-automated-transfer">SFTP / public key — advanced or automated transfer</h3>
+<p>Use the approved SFTP/public-key route when scripting or automation is genuinely
+more appropriate. This route needs a suitable public key and remains separate
+from the browser-first identity path. An SFTP login is a transfer session, not a
+general interactive shell.</p>
+<h2 id="which-rcc-surface-should-i-use-next">Which RCC surface should I use next?</h2>
 <table>
 <thead>
 <tr>
@@ -234,51 +249,58 @@ own SSH key; do not create shared credentials for a project.</p>
   <td><strong>Files</strong></td>
 </tr>
 <tr>
-  <td>Edit code or work interactively</td>
-  <td><strong>SSH / VS Code now; Workbench when released</strong></td>
+  <td>Explore data interactively</td>
+  <td><strong>RCC Analysis -&gt; Notebook when released</strong></td>
 </tr>
 <tr>
-  <td>Run substantial compute</td>
-  <td><strong>Slurm</strong></td>
+  <td>Run a repeatable/scalable analysis</td>
+  <td><strong>RCC Analysis -&gt; Workflow when released</strong></td>
 </tr>
 <tr>
-  <td>Run a repeatable governed workflow</td>
-  <td><strong>RCC Analysis when released</strong></td>
+  <td>Advanced development / command-line work</td>
+  <td><strong>SSH / local VS Code</strong></td>
+</tr>
+<tr>
+  <td>Direct scheduler work</td>
+  <td><strong>Slurm</strong>, for users who need the advanced path</td>
 </tr>
 <tr>
   <td>Publish/archive data</td>
-  <td>Use the separately approved publication/archive route</td>
+  <td>Separately approved publication/archive route</td>
 </tr>
 </tbody>
 </table>
-<p>Moving data is not the same thing as computing on it, and neither action implies
-permission to release it outside the project.</p>
+<p>The former “RCC Workbench” concept is now the underlying interactive session
+machinery behind Analysis Notebook mode, not a separate primary step in the
+normal researcher journey.</p>
+<h2 id="from-files-into-analysis">From Files into Analysis</h2>
+<p>Future browser integration may carry selected project/data context from Files
+into RCC Analysis. Such a deep link is navigation only: Analysis must re-check
+current project and workflow authorization server-side.</p>
+<p>For a user with exactly one eligible Analysis project, the product should use it
+implicitly rather than require the user to type or select the only possible
+project. With multiple projects, the user chooses from a server-generated list.
+Navigation never grants new authority.</p>
+<p>Results should return to the same project and be reachable again from Files.
+RCC Analysis should not create a disconnected private result store.</p>
 <h2 id="external-access-does-not-mean-public-access">External access does not mean public access</h2>
 <p>A Files service reachable from outside a local network still requires an
 approved RCC identity and project authorization. It is not a public file share.
-Additional authentication may be required for an external session.</p>
-<p>Do not interpret “I can reach the Files page” as authorization to disclose
+Do not interpret “I can reach the Files page” as authorization to disclose
 biomedical or confidential data to another person.</p>
 <h2 id="controlled-data-projects">Controlled Data projects</h2>
 <p>RCC defines a future <strong>Controlled Data Project</strong> type with a stronger
-anti-exfiltration and governed-release boundary. The ordinary Files service is
-not that boundary.</p>
+anti-exfiltration and governed-release boundary. The ordinary Files service and
+ordinary Analysis Notebook session are not that boundary.</p>
 <p>Controlled Data project creation/runtime admission is currently <strong>not released</strong>.
 Until it is explicitly activated, follow the current Regular-project and
-biomedical-data guidance rather than assuming Files can carry protected-data
-release semantics.</p>
+biomedical-data guidance rather than assuming browser convenience changes the
+data-release rules.</p>
 <p>Read <a href="../project-types/index.html">Regular and Controlled Data projects</a> for the distinction.</p>
 <h2 id="before-every-transfer">Before every transfer</h2>
-<p>Check:</p>
-<ul>
-<li>correct RCC identity;</li>
-<li>correct project;</li>
-<li>correct destination/source;</li>
-<li>whether the project's governance allows the transfer;</li>
-<li>whether the recipient is authorized; and</li>
-<li>whether the transfer route is released for this data class.</li>
-</ul>
-<p>For sharing decisions, read <a href="../../reference/data-sharing/index.html">How to share data safely</a>.</p>
+<p>Check the correct RCC identity, project, source/destination, governance,
+recipient authorization, data class, and released transfer route. For sharing
+decisions, read <a href="../../reference/data-sharing/index.html">How to share data safely</a>.</p>
 
       
     </main>
