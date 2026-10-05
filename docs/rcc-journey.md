@@ -1,8 +1,9 @@
 # RCC Journey
 
-!!! info "Optional: explore the physical RCC"
-    RCC Journey is a playful, browser-based way to explore the hardware behind
-    RCC. It is not required onboarding, and it does not replace ClusterDocs.
+> **Service status — not yet released:** RCC Journey is a playful,
+> browser-based way to explore the hardware behind RCC. The site is still being
+> built; this page describes it in advance. It is optional, not required
+> onboarding, and it does not replace ClusterDocs.
 
 RCC Journey connects the physical data centre to the concepts users encounter
 when they submit jobs, store data, or use accelerators.
@@ -25,9 +26,9 @@ stories such as **Follow my Slurm job**.
 RCC Journey is a separate static web application. It receives only a curated,
 public-safe export of the private infrastructure map.
 
-Operational data such as management addresses, BMC details, MAC addresses,
-management switch identities, sensitive cabling notes, and credentials are not
-part of the Journey data model.
+Operational data such as management addresses, out-of-band hardware-management
+details, network hardware identifiers, sensitive cabling notes, and credentials
+are not part of the Journey data model.
 
 ClusterDocs remains the source of truth for mutable RCC technical facts. RCC
 Journey is the exploratory layer: use it to understand *what the cluster is*,

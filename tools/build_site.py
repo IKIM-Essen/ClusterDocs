@@ -16,6 +16,7 @@ NAV=[
  ('Start here','What changed from the old cluster','getting-started/what-changed.md'),
  ('Overview','ClusterDocs NG TL;DR','tldr.md'),
  ('Overview','Coding agents and your data','concepts/how-rcc-works.md'),
+ ('Overview','RCC Journey · explore the cluster (not yet released)','rcc-journey.md'),
  ('Paths','Data analysis','paths/data-analysis.md'),
  ('Paths','Software development','paths/software-development.md'),
  ('Paths','Convert shell scripts into workflows','paths/from-shell-scripts.md'),
