@@ -1,14 +1,15 @@
 # RCC Expedition
 
-!!! tip "Recommended onboarding for new RCC users"
-    RCC Expedition is a self-contained interactive course for **Windows 11**
-    and **current macOS**. It starts with workstation security and continues
-    through SSH, Linux, Slurm, storage, data boundaries, and reproducible RCC
-    workflows.
-
-    Complete the required
-    [RCC Expedition Light](getting-started/index.md) first. Continue here for
-    optional deeper training after the first connection works.
+> **Recommended onboarding for new RCC users**
+>
+> RCC Expedition is a self-contained interactive course for **Windows 11**
+> and **current macOS**. It starts with workstation security and continues
+> through SSH, Linux, Slurm, storage, data boundaries, and reproducible RCC
+> workflows.
+>
+> Complete the required
+> [RCC Expedition Light](getting-started/index.md) first. Continue here for
+> optional deeper training after the first connection works.
 
 [**Download RCC Expedition v1.0.1**](assets/downloads/RCC-Expedition-USB-v1.0.1.zip)
 
