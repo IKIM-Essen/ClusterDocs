@@ -59,6 +59,7 @@ nav:
       - Managed DataLad: data/datalad-managed-service.md
       - Existing Windows SSHFS setup: data/legacy-storage-windows.md
       - Existing macOS SSHFS setup: data/legacy-storage-macos.md
+      - Mac files and encrypted backups (not yet released): data/macos-rcc-backup.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md

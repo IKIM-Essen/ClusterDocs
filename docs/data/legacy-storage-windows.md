@@ -1,7 +1,7 @@
 # Windows: recognize an existing SSHFS setup
 
-> **Service status:** project Samba shares are **ready now**. Ardia integration
-> is **not yet released**. This historical SSHFS page is not a setup guide for
+> **Service status:** existing instrument Samba shares are **in service**; RCC
+> sets up each new share on request. Ardia integration is **not yet released**. This historical SSHFS page is not a setup guide for
 > either service.
 
 > **Setting up access now? Skip this page.** Follow
@@ -13,9 +13,10 @@
 This type of setup used WinFsp, SSHFS-Win, SSHFS-Win Manager, an SSH tunnel,
 and optionally Windows Task Scheduler.
 
-If you see `login.ikim.uk-essen.de`, `shellhost`, or local port `6666` in a
-saved configuration, do not copy those values into a new setup. Ask RCC for
-the connection settings to use now.
+The host names `login.ikim.uk-essen.de` and `shellhost` are still current, but
+do not copy the rest of an old setup: replace the `ikim` alias, the `id_ikim`
+key, and the SSHFS tunnel on local port `6666` with the current
+[Windows configuration](../getting-started/windows.md).
 
 ## SSH settings you may find on an existing computer
 

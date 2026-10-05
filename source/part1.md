@@ -92,7 +92,6 @@ instructions because they can differ by location. For help, use the **IKIM
 Cluster channel on Mattermost** without posting credentials, private keys, or
 sensitive project data.
 
-
 Your project coordinator must also give you:
 
 - your RCC username;
@@ -385,12 +384,11 @@ notepad "$HOME\.ssh\config"
 ```
 
 Insert the host blocks supplied in the current institutional RCC instructions.
-They have the following safe shape; replace the gateway host value as well as
-the username:
+They have the following shape; replace the username:
 
 ```sshconfig
 Host rcc-login
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+    HostName login.ikim.uk-essen.de
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
@@ -427,12 +425,11 @@ open -e ~/.ssh/config
 ```
 
 Insert the host blocks supplied in the current institutional RCC instructions.
-They have the following safe shape; replace the gateway host value as well as
-the username:
+They have the following shape; replace the username:
 
 ```sshconfig
 Host rcc-login
-    HostName VALUE_FROM_THE_APPROVED_RCC_CONFIGURATION
+    HostName login.ikim.uk-essen.de
     User <RCC_USERNAME>
     IdentityFile ~/.ssh/id_rcc
     IdentitiesOnly yes
@@ -605,6 +602,10 @@ Appropriate commands on the submission host include:
 Do not directly run scientific analyses, large data-processing commands, compression jobs, or long-running programs in this terminal. Submit them to Slurm.
 
 # 8. Transfer a test file with the RCC web transfer service
+
+> **Service status (October 2026):** the RCC web transfer service (RCC Files) is
+> **not yet released**. Until RCC announces it, transfer the test file with
+> `scp` or `sftp` to the shell host and verify it with the same checksum steps.
 
 ## Why data transfer is a separate workflow
 
@@ -866,7 +867,6 @@ Common job states include:
 - **`PD`:** Pending: the job is waiting for resources or another condition
 - **`R`:** Running
 - **`CG`:** Completing
-
 
 A short job may disappear from `squeue` quickly after it finishes. This is normal.
 

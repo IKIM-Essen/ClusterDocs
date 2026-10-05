@@ -22,7 +22,8 @@ class NextflowDocsTests(unittest.TestCase):
         self.assertIn("Do not run Nextflow on `login.ikim.uk-essen.de`", text)
         self.assertNotIn("approved submission host", text)
         self.assertIn("tmux", text)
-        self.assertIn("service status — ready now", text.lower())
+        self.assertIn("service status — validating", text.lower())
+        self.assertNotIn("service status — ready now", text.lower())
         self.assertIn("one active Nextflow controller", text)
         self.assertNotIn("once released", text.lower())
         self.assertNotIn("after release", text.lower())
@@ -37,8 +38,8 @@ class NextflowDocsTests(unittest.TestCase):
         for path in paths:
             with self.subTest(path=path):
                 text = " ".join(path.read_text(encoding="utf-8").lower().split())
-                self.assertIn("interactive node", text)
                 self.assertIn("shellhost", text)
+                self.assertNotIn("interactive node (a `shellhost`)", text)
 
     def test_work_state_and_scratch_are_distinct(self):
         text = DOC.read_text(encoding="utf-8")
