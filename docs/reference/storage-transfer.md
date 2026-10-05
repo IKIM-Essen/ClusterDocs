@@ -129,11 +129,11 @@ an object client or API, and data commonly needs staging to job-local storage.
 Normal RCC project storage remains the JuiceFS-backed POSIX namespace under
 `/projects/<project>`. A project does **not** get direct S3 merely because it
 exists or because its files are ultimately stored on an S3-compatible backend.
-Use direct S3 only when RCC explicitly grants that project an additional S3
-capability with its own endpoint, authorization policy and credential or
-temporary session.
+Direct S3 is **not yet released** for users. When it is, a project will get it
+only as an additional capability that RCC explicitly grants, with its own
+endpoint, authorization policy and credential or temporary session.
 
-OIDC/STS may be the mechanism that issues a short-lived S3 session, but that
+A future OIDC/STS flow may issue a short-lived S3 session, but that
 does not cause S3 to enforce the POSIX ownership/mode/directory semantics of the
 JuiceFS namespace. Do not use the raw object namespace beneath JuiceFS as an
 alternate route around the filesystem permission model.

@@ -16,7 +16,7 @@ Redis stores information such as: paths and directory entries; ownership and per
 
 MinIO provides the S3-compatible object-storage layer used for durable file contents. Object storage is effective for: large objects; sequential reads and writes; durable replicated or erasure-coded storage; checksummed content; and aggregate access from many clients. The JuiceFS client translates filesystem reads and writes into object operations. Large streaming transfers amortize request overhead. Tiny, scattered reads and writes can generate many requests for relatively little useful data.
 
-The important access boundary is that this S3 layer is the **backend used by JuiceFS**. Normal project users work through the JuiceFS POSIX namespace under `/projects`; they do not automatically receive S3 credentials. Direct S3, where a project has it, is a separately admitted capability with separate S3 authorization. OIDC or STS can issue that S3 identity, but it does not reproduce POSIX ownership and mode semantics.
+The important access boundary is that this S3 layer is the **backend used by JuiceFS**. Normal project users work through the JuiceFS POSIX namespace under `/projects`; they do not automatically receive S3 credentials. Direct S3 is not yet released for users; when RCC grants it to a project, it will be a separately admitted capability with separate S3 authorization. A future OIDC or STS flow may issue that S3 identity, but it does not reproduce POSIX ownership and mode semantics.
 
 ## Slide 5: RCC network topology
 

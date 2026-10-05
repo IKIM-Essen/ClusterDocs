@@ -57,6 +57,10 @@ class ReferenceGuideTests(unittest.TestCase):
         self.assertIn("OIDC", course)
         self.assertIn("OIDC", narration)
         self.assertNotIn("ordinary project access is S3", (reference + course + narration).lower())
+        for text in (reference, course, narration):
+            self.assertIn("not yet released", " ".join(text.lower().split()))
+            self.assertNotIn("OIDC or STS can be used", text)
+            self.assertNotIn("OIDC/STS may be the mechanism", text)
 
     def test_courses_link_to_reference_guides(self):
         linked = "\n".join(p.read_text() for p in (ROOT / "docs" / "course").glob("*.md"))

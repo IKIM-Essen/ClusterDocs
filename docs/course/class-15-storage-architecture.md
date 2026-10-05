@@ -86,12 +86,13 @@ Normal RCC project access is the JuiceFS-backed POSIX namespace under
 membership, file ownership, mode bits, directory permissions and JuiceFS
 filesystem metadata.
 
-Direct S3 is a separate, optional RCC project capability. If a project has it,
-RCC supplies a separately scoped S3 identity/policy and credential or temporary
-session. Project membership or access to `/projects/<project>` does not itself
-grant direct S3 access.
+Direct S3 is a separate, optional RCC project capability. It is **not yet
+released** for users. When RCC grants it to a project, RCC will supply a
+separately scoped S3 identity/policy and credential or temporary session.
+Project membership or access to `/projects/<project>` does not itself grant
+direct S3 access.
 
-OIDC or STS can be used to issue direct-S3 credentials, but authentication does
+A future OIDC/STS flow may issue direct-S3 credentials, but authentication does
 not make S3 evaluate POSIX permissions. Users must never treat the raw object
 namespace backing JuiceFS as an alternate S3 view of the same project files.
 
