@@ -125,9 +125,21 @@ not retained.
 
 Object storage does not behave like a POSIX filesystem. Applications must use
 an object client or API, and data commonly needs staging to job-local storage.
-Use it only when the project has an approved endpoint, credentials, retention
-policy, and documented client configuration. Never place access keys in shell
-history, notebooks, Git, or shared configuration files.
+
+Normal RCC project storage remains the JuiceFS-backed POSIX namespace under
+`/projects/<project>`. A project does **not** get direct S3 merely because it
+exists or because its files are ultimately stored on an S3-compatible backend.
+Direct S3 is **not yet released** for users. When it is, a project will get it
+only as an additional capability that RCC explicitly grants, with its own
+endpoint, authorization policy and credential or temporary session.
+
+A future OIDC/STS flow may issue a short-lived S3 session, but that
+does not cause S3 to enforce the POSIX ownership/mode/directory semantics of the
+JuiceFS namespace. Do not use the raw object namespace beneath JuiceFS as an
+alternate route around the filesystem permission model.
+
+Never place access keys in shell history, notebooks, Git, or shared
+configuration files.
 
 ## Controlled and archival data
 
