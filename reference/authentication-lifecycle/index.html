@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>How RCC authentication fits together · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC documentation home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
+      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+    </div>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      <section><h2>RCC surfaces</h2>
+        <a aria-current="page" href="../../index.html">Documentation</a>
+        <span class="nav-pending">Home <small>not yet released</small></span>
+        <span class="nav-pending">Files <small>not yet released</small></span>
+        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+      </section>
+      
+      
+      <section class="nav-group-single"><a  href="../../index.html">Home</a></section>
+      
+      
+      
+      <section><h2>Start here</h2><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
+      
+      
+      
+      <section><h2>Overview</h2><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <section class="sidebar-section">
+          <p class="sidebar-kicker">RCC surfaces</p>
+          <nav class="global-nav" aria-label="RCC services">
+            <a class="current" aria-current="page" href="../../index.html">Documentation</a>
+            <span class="nav-pending">Home <small>not yet released</small></span>
+            <span class="nav-pending">Files <small>not yet released</small></span>
+            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+          </nav>
+        </section>
+        <section class="sidebar-section documentation-tree">
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">staging</span></div></div>
+          <nav aria-label="Documentation navigation">
+            
+            
+            <a class="nav-single"  href="../../index.html">Home</a>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Start here</summary>
+              <div><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Overview</summary>
+              <div><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Paths</summary>
+              <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Course</summary>
+              <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Data lifecycle</summary>
+              <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Examples</summary>
+              <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Reference</summary>
+              <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Resources</summary>
+              <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+            </details>
+            
+            
+          </nav>
+        </section>
+        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">How RCC authentication fits together</span></li>
+      </ol></nav>
+      <p class="eyebrow">Documentation · RCC ClusterDocs</p>
+      
+      <h1 id="how-rcc-authentication-fits-together">How RCC authentication fits together</h1>
+<p>RCC uses one human identity across several access methods. The credentials are
+not interchangeable, and seeing one credential in one screen does not mean it
+is the credential used everywhere.</p>
+<p>The useful mental model is:</p>
+<pre><code class="language-text">RCC account
+   |
+   +--&gt; web sign-in / SSO
+   |      -&gt; password and/or sign-in passkey
+   |
+   +--&gt; account step-up / recovery
+   |      -&gt; portal passkey or YubiKey, authenticator code, recovery codes
+   |
+   +--&gt; SSH / SFTP
+          -&gt; SSH public key registered to your RCC account
+</code></pre>
+<p>Never share any of these credentials with another person. Project access is
+managed by membership, not by sharing an account.</p>
+<h2 id="1-account-activation-creates-the-human-rcc-identity">1. Account activation creates the human RCC identity</h2>
+<p>The account-activation process establishes your RCC username and the initial
+credentials required by the current enrollment flow. Follow the activation
+instructions supplied by RCC rather than an old screenshot or a colleague's
+saved procedure.</p>
+<p>After activation, the same human identity is used by RCC web services, project
+membership, Slurm attribution, Files, and SSH even though those surfaces may use
+different authentication mechanisms.</p>
+<h2 id="2-web-sign-in-is-shared-across-rcc-services">2. Web sign-in is shared across RCC services</h2>
+<p>RCC web services use a common sign-in boundary where possible. A successful web
+sign-in can establish your authenticated RCC identity for services such as
+Files, account/project management, and other released RCC applications.</p>
+<p>This is <strong>single sign-on</strong>, not shared authorization. After sign-in, each service
+still checks whether your identity may access the requested project or action.</p>
+<p>Signing into one RCC website does not add you to a project or grant administrator
+rights.</p>
+<h2 id="3-sign-in-passkeys-belong-to-the-rcc-sign-in-service">3. Sign-in passkeys belong to the RCC sign-in service</h2>
+<p>A passkey or hardware security key registered for <strong>SSO sign-in</strong> is intended to
+sign you into RCC web services through the common sign-in portal.</p>
+<p>Manage these credentials at the RCC sign-in portal's credential/settings page
+when that option is available.</p>
+<p>A sign-in passkey can therefore be present even if another RCC page says that no
+<strong>portal passkey</strong> is registered. The two credentials may belong to different
+relying-party stores and serve different purposes.</p>
+<h2 id="4-portal-passkeys-yubikeys-are-for-sensitive-account-actions">4. Portal passkeys / YubiKeys are for sensitive account actions</h2>
+<p>RCC account management may also keep a separate portal-local passkey or YubiKey
+for step-up confirmation and recovery-related actions.</p>
+<p>This credential is not necessarily the same WebAuthn credential used for SSO.
+The account security page should label the two stores separately rather than
+showing every credential as one generic “passkey.”</p>
+<p>If you see both sections, read the labels before adding or deleting anything.
+Removing a portal-local step-up credential should not be confused with removing
+your SSO sign-in passkey, and vice versa.</p>
+<h2 id="5-authenticator-codes-are-a-second-factor">5. Authenticator codes are a second factor</h2>
+<p>RCC may use an authenticator application code as an enrolled second factor.
+Treat the seed/QR setup as secret. Do not photograph or distribute it to another
+person.</p>
+<p>If the current account-security page offers replacement, follow the guarded
+replacement procedure rather than enrolling a second person's device on your
+account.</p>
+<h2 id="6-recovery-codes-are-emergency-credentials">6. Recovery codes are emergency credentials</h2>
+<p>Recovery codes are individual, single-use emergency credentials. Store them
+away from the computer/session they protect, preferably in a secure offline
+location appropriate to your work environment.</p>
+<p>Do not place recovery codes in:</p>
+<ul>
+<li>a project repository;</li>
+<li>a shared lab wiki;</li>
+<li>a shell-history command;</li>
+<li>a public or project-readable file; or</li>
+<li>a prompt to an external AI/coding service.</li>
+</ul>
+<p>When a recovery code is used, it should no longer be considered available for a
+future recovery.</p>
+<h2 id="7-ssh-keys-are-a-separate-access-mechanism">7. SSH keys are a separate access mechanism</h2>
+<p>SSH does not normally reuse your browser passkey. It uses an SSH public/private
+key pair registered to your RCC account.</p>
+<p>Only the <strong>public</strong> key is registered with RCC. The private key remains on your
+computer or compatible hardware authenticator.</p>
+<p>For a FIDO-backed SSH key, the authenticator protects the SSH private material;
+this is still conceptually different from a browser/WebAuthn passkey even when
+the same physical YubiKey is involved.</p>
+<p>Follow <a href="../../course/class-01-safe-access/index.html">Class 1: safe access</a> and
+<a href="../access-ssh-vscode/index.html">Access, SSH, and VS Code</a> for current connection setup.</p>
+<h2 id="8-one-physical-security-key-can-contain-different-credentials">8. One physical security key can contain different credentials</h2>
+<p>A YubiKey or similar authenticator can participate in several protocols. For
+example, one device might hold:</p>
+<ul>
+<li>a WebAuthn credential for RCC SSO;</li>
+<li>a different WebAuthn credential for portal step-up/recovery; and</li>
+<li>an OpenSSH <code>*-sk</code> key used for SSH.</li>
+</ul>
+<p>The physical device is the same; the credentials and relying parties are not.
+Do not delete one entry merely because another entry on the same hardware works.</p>
+<h2 id="9-sign-out-and-session-expiry-are-normal-security-boundaries">9. Sign-out and session expiry are normal security boundaries</h2>
+<p>Web sessions expire and sensitive actions may require a fresh step-up even when
+you are still generally signed into RCC. A Workbench reconnect may similarly
+require fresh browser authentication while the underlying Slurm session still
+exists.</p>
+<p>This separation prevents an old browser tab from becoming indefinite authority.</p>
+<h2 id="if-you-lose-a-credential">If you lose a credential</h2>
+<p>Use the documented RCC recovery route. Do not solve the problem by:</p>
+<ul>
+<li>borrowing another person's account;</li>
+<li>registering a shared lab credential;</li>
+<li>sending a private key or recovery code to support by ordinary email; or</li>
+<li>disabling host/authentication checks.</li>
+</ul>
+<p>If the normal self-recovery methods are unavailable, follow the current
+identity-verification and approver/support procedure.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+  <th>Need</th>
+  <th>Credential / surface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Sign into RCC websites</td>
+  <td>RCC SSO password/passkey according to current policy</td>
+</tr>
+<tr>
+  <td>Confirm a sensitive account action</td>
+  <td>step-up factor requested by the account portal</td>
+</tr>
+<tr>
+  <td>Emergency account recovery</td>
+  <td>recovery code or approved recovery procedure</td>
+</tr>
+<tr>
+  <td>SSH / VS Code Remote SSH</td>
+  <td>your registered SSH public key + local private key</td>
+</tr>
+<tr>
+  <td>Project access</td>
+  <td><strong>not a credential</strong> — project membership / delegated role</td>
+</tr>
+<tr>
+  <td>Administrator capability</td>
+  <td><strong>not a credential</strong> — separately authorized role/capability</td>
+</tr>
+</tbody>
+</table>
+<p>Authentication proves who you are. Authorization still decides what that
+identity may do.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="../../support/guardians-and-ai-assistant/index.html">Support</a> · <a href="../../reference/storage-transfer/index.html">File transfer</a></p>
+</footer>
+</body>
+</html>

@@ -12,29 +12,41 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html" aria-label="RCC ClusterDocs home">
+    <a class="brand" href="../index.html" aria-label="RCC documentation home">
       <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
-      <span class="brand-copy"><strong>ClusterDocs</strong><span>Research Compute Cluster</span></span>
+      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
     </a>
-    <nav class="service-nav" aria-label="RCC services">
-      <a href="https://rcc.ikim.uk-essen.de/">About RCC</a>
-      <a class="active" href="../index.html" aria-current="page">Documentation</a>
-      <a href="https://files.ikim.uk-essen.de/">File transfer</a>
-      <a class="admin-link" href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a>
-    </nav>
+    <div class="topbar-actions">
+      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
+      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+    </div>
   </div>
 </header>
 <div class="shell">
   <details class="mobile-nav">
     <summary>Browse documentation</summary>
     <nav aria-label="Mobile documentation navigation">
+      <section><h2>RCC surfaces</h2>
+        <a aria-current="page" href="../index.html">Documentation</a>
+        <span class="nav-pending">Home <small>not yet released</small></span>
+        <span class="nav-pending">Files <small>not yet released</small></span>
+        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+      </section>
       
       
-      <section><h2>Overview</h2><a  href="../index.html">Home</a><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      <section class="nav-group-single"><a  href="../index.html">Home</a></section>
       
       
       
-      <section><h2>Paths</h2><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a></section>
+      <section><h2>Start here</h2><a  href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
+      
+      
+      
+      <section><h2>Overview</h2><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a><a  href="../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></section>
       
       
       
@@ -62,62 +74,88 @@
   <div class="docs-layout">
     <aside class="sidebar">
       <div class="sidebar-card">
-        <div class="sidebar-heading"><span class="status-dot"></span><div><strong>RCC learning path</strong><span class="stage-badge">staging</span></div></div>
-        <nav aria-label="Documentation navigation">
-          
-          
-          <details class="nav-section" >
-            <summary>Overview</summary>
-            <div><a  href="../index.html">Home</a><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Paths</summary>
-            <div><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Course</summary>
-            <div><a  href="../course/index.html">Course overview</a><a  href="../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Data lifecycle</summary>
-            <div><a  href="../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Examples</summary>
-            <div><a  href="../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Reference</summary>
-            <div><a  href="../reference/index.html">Reference overview</a><a  href="../reference/terminology/index.html">RCC terminology</a><a  href="../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../reference/data-sharing/index.html">Sharing data</a><a  href="../reference/software-workflows/index.html">Software workflows</a><a  href="../reference/slurm/index.html">Slurm commands</a><a  href="../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../reference/resources/index.html">Resources and discovery</a><a  href="../reference/ai-data-science/index.html">AI and data science</a><a  href="../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../security/safe-use/index.html">Safe everyday practice</a><a  href="../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
-          </details>
-          
-          
-          
-          <details class="nav-section" >
-            <summary>Resources</summary>
-            <div><a  href="../team/index.html">Who we are</a><a  href="../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
-          </details>
-          
-          
-        </nav>
+        <section class="sidebar-section">
+          <p class="sidebar-kicker">RCC surfaces</p>
+          <nav class="global-nav" aria-label="RCC services">
+            <a class="current" aria-current="page" href="../index.html">Documentation</a>
+            <span class="nav-pending">Home <small>not yet released</small></span>
+            <span class="nav-pending">Files <small>not yet released</small></span>
+            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+          </nav>
+        </section>
+        <section class="sidebar-section documentation-tree">
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">staging</span></div></div>
+          <nav aria-label="Documentation navigation">
+            
+            
+            <a class="nav-single"  href="../index.html">Home</a>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Start here</summary>
+              <div><a  href="../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../getting-started/macos/index.html">macOS setup</a><a  href="../getting-started/windows/index.html">Windows 11 setup</a><a  href="../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Overview</summary>
+              <div><a  href="../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Paths</summary>
+              <div><a  href="../paths/data-analysis/index.html">Data analysis</a><a  href="../paths/software-development/index.html">Software development</a><a  href="../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Course</summary>
+              <div><a  href="../course/index.html">Course overview</a><a  href="../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Data lifecycle</summary>
+              <div><a  href="../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Examples</summary>
+              <div><a  href="../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Reference</summary>
+              <div><a  href="../reference/index.html">Reference overview</a><a  href="../reference/terminology/index.html">RCC terminology</a><a  href="../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../reference/data-sharing/index.html">Sharing data</a><a  href="../reference/software-workflows/index.html">Software workflows</a><a  href="../reference/slurm/index.html">Slurm commands</a><a  href="../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../reference/resources/index.html">Resources and discovery</a><a  href="../reference/ai-data-science/index.html">AI and data science</a><a  href="../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../security/safe-use/index.html">Safe everyday practice</a><a  href="../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Resources</summary>
+              <div><a  href="../team/index.html">Who we are</a><a  href="../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+            </details>
+            
+            
+          </nav>
+        </section>
+        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
       </div>
     </aside>
     <main id="content" class="content-card">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li><a href="../index.html">Documentation</a></li><li><span aria-current="page">RCC Expedition</span></li>
+      </ol></nav>
       <p class="eyebrow">Documentation · RCC ClusterDocs</p>
       
       <h1 id="rcc-expedition">RCC Expedition</h1>
@@ -126,11 +164,27 @@ RCC Expedition is a self-contained interactive course for <strong>Windows 11</st
 and <strong>current macOS</strong>. It starts with workstation security and continues
 through SSH, Linux, Slurm, storage, data boundaries, and reproducible RCC
 workflows.</p>
-<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.0.zip"><strong>Download RCC Expedition v1.0.0</strong></a></p>
+<pre><code>Complete the required
+[RCC Expedition Light](getting-started/index.md) first. Continue here for
+optional deeper training after the first connection works.</code></pre>
+<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.1.zip"><strong>Download RCC Expedition v1.0.1</strong></a></p>
 <p>SHA-256:</p>
-<pre><code class="language-text">680cc16b4d226de59e4dd7c6e0468ac3e9137b3bb7d438b94ad0c93152aa18c7
+<pre><code class="language-text">0cc1b6ad446db85d276dd7634f1fddca1c6029c3838191d404870a9912278780
 </code></pre>
-<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.0.sha256">Checksum file</a></p>
+<p><a href="../assets/downloads/RCC-Expedition-USB-v1.0.1.sha256">Checksum file</a></p>
+<h2 id="start-without-installing-anything">Start without installing anything</h2>
+<ol>
+<li>Download the ZIP.</li>
+<li>Extract the whole ZIP to a normal local folder.</li>
+<li>Open <code>START HERE.html</code>.</li>
+<li>Choose <strong>Open the course now</strong>.</li>
+</ol>
+<p>The course runs from that folder in the browser. Keep the extracted folder
+until you finish. No administrator access, command line, Python, package
+manager, or network connection is required to start.</p>
+<p>The optional installer only adds a Desktop launcher and local readiness
+helpers. You can add it later from <code>START HERE.html</code>; it is not required to
+read or complete the course.</p>
 <h2 id="privacy-datensparsam-by-design">Privacy: datensparsam by design</h2>
 <p>RCC Expedition runs locally on the user's computer.</p>
 <p>It has:</p>
@@ -220,7 +274,7 @@ documentation makes no undocumented claim about its network isolation.</p>
 <li>governed data and transfer boundaries;</li>
 <li>explicit software environments;</li>
 <li>Apptainer;</li>
-<li>Snakemake and managed Nextflow, both ready now;</li>
+<li>Snakemake (ready now) and managed Nextflow (validating);</li>
 <li>optional VS Code and Jupyter; and</li>
 <li>an end-to-end synthetic RCC experiment.</li>
 </ol>
@@ -233,16 +287,11 @@ calculations run on RCC workers; results return to the project. The coding agent
 does not gain extra access. Never give RCC research data to an off-site coding
 agent; use fully synthetic data instead.</p>
 <p>Start with <a href="../concepts/how-rcc-works/index.html">coding agents and your data</a>.</p>
-<h2 id="install">Install</h2>
-<ol>
-<li>Download the ZIP.</li>
-<li>Verify the SHA-256 checksum where practical.</li>
-<li>Extract it to a local directory, or copy the extracted contents to a trusted
-USB key.</li>
-<li>Open <code>START HERE.html</code>.</li>
-<li>Follow the <strong>Windows 11</strong> or <strong>macOS</strong> path.</li>
-<li>Continue in the local course.</li>
-</ol>
+<h2 id="optional-integrity-check">Optional integrity check</h2>
+<p>The Desktop-helper installer verifies every packaged file before copying it.
+You can also compare the downloaded ZIP with the SHA-256 value shown above.
+Do not bypass Gatekeeper, SmartScreen, Windows Security, or antivirus to start
+the course.</p>
 <h2 id="relationship-to-clusterdocs">Relationship to ClusterDocs</h2>
 <p><strong>ClusterDocs remains the source of truth for mutable RCC technical facts.</strong></p>
 <p>RCC Expedition links back to ClusterDocs for current:</p>
@@ -264,7 +313,7 @@ USB key.</li>
 </div>
 <footer>
   <p>RCC · Research Compute Cluster · University Hospital Essen</p>
-  <p><a href="../index.html">Documentation</a> · <a href="https://rcc-admin.ikim.uk-essen.de/">RCC Admin</a> · <a href="https://files.ikim.uk-essen.de/">File transfer</a></p>
+  <p><a href="../index.html">Documentation</a> · <a href="../support/guardians-and-ai-assistant/index.html">Support</a> · <a href="../reference/storage-transfer/index.html">File transfer</a></p>
 </footer>
 </body>
 </html>

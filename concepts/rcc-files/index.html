@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>RCC Files: browse and transfer project data · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC documentation home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
+      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+    </div>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      <section><h2>RCC surfaces</h2>
+        <a aria-current="page" href="../../index.html">Documentation</a>
+        <span class="nav-pending">Home <small>not yet released</small></span>
+        <span class="nav-pending">Files <small>not yet released</small></span>
+        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+      </section>
+      
+      
+      <section class="nav-group-single"><a  href="../../index.html">Home</a></section>
+      
+      
+      
+      <section><h2>Start here</h2><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
+      
+      
+      
+      <section><h2>Overview</h2><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <section class="sidebar-section">
+          <p class="sidebar-kicker">RCC surfaces</p>
+          <nav class="global-nav" aria-label="RCC services">
+            <a class="current" aria-current="page" href="../../index.html">Documentation</a>
+            <span class="nav-pending">Home <small>not yet released</small></span>
+            <span class="nav-pending">Files <small>not yet released</small></span>
+            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+          </nav>
+        </section>
+        <section class="sidebar-section documentation-tree">
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">staging</span></div></div>
+          <nav aria-label="Documentation navigation">
+            
+            
+            <a class="nav-single"  href="../../index.html">Home</a>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Start here</summary>
+              <div><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Overview</summary>
+              <div><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Paths</summary>
+              <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Course</summary>
+              <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Data lifecycle</summary>
+              <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Examples</summary>
+              <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Reference</summary>
+              <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Resources</summary>
+              <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+            </details>
+            
+            
+          </nav>
+        </section>
+        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">RCC Files: browse and transfer project data</span></li>
+      </ol></nav>
+      <p class="eyebrow">Documentation · RCC ClusterDocs</p>
+      
+      <h1 id="rcc-files-browse-and-transfer-project-data">RCC Files: browse and transfer project data</h1>
+<blockquote>
+<p><strong>Service status — not yet released:</strong> the RCC Files browser and SFTP portal
+is not currently available. Its earlier internal pilot was withdrawn in
+October 2026, and RCC will announce the released service. Until then, use
+<code>scp</code>, <code>sftp</code>, or <code>rsync</code> to the shell host as described in
+<a href="../../reference/storage-transfer/index.html">Storage and transfer</a>. This page describes
+the intended service boundary.</p>
+</blockquote>
+<p>RCC Files is the project-facing browser and transfer surface. Use it when the
+main task is to move, upload, download, or inspect approved project files without
+opening an interactive compute session.</p>
+<p>Files is deliberately narrower than “the server filesystem.” It exposes the
+project-facing data RCC has admitted to the service; it is not a browser for
+arbitrary paths on login, storage, or worker hosts.</p>
+<h2 id="when-to-use-files">When to use Files</h2>
+<p>Use Files for tasks such as:</p>
+<ul>
+<li>uploading an approved input into the correct project;</li>
+<li>downloading an approved result;</li>
+<li>browsing the project-facing file tree;</li>
+<li>creating a bounded handoff through the approved project surface; or</li>
+<li>using the supported SFTP/public-key route when a command-line transfer is more
+appropriate than a browser upload.</li>
+</ul>
+<p>For very large, automated, or specialized transfers, check
+<a href="../../reference/storage-transfer/index.html">Storage and transfer</a> before choosing a tool.</p>
+<h2 id="sign-in-with-your-rcc-identity">Sign in with your RCC identity</h2>
+<p>The browser Files service uses the RCC sign-in boundary. Do not look for a
+separate shared “project account” or a native Files password.</p>
+<p>Use your individual RCC identity. Depending on the active authentication policy,
+the sign-in flow may use your RCC password, passkey, or another enrolled factor.
+A web sign-in does not change the project's filesystem permissions: the Files
+service still resolves what your RCC account is allowed to see.</p>
+<p>For the credential model, read
+<a href="../../reference/authentication-lifecycle/index.html">How RCC authentication fits together</a>.</p>
+<h2 id="files-is-project-scoped">Files is project-scoped</h2>
+<p>Before transferring data, verify both:</p>
+<ol>
+<li>the <strong>project</strong> you intend to work with; and</li>
+<li>the <strong>destination path</strong> inside that project's admitted Files view.</li>
+</ol>
+<p>If a project is missing, do not work around the problem by using another user's
+account, loosening Unix permissions, or copying the data into an unrelated
+project. Fix the project membership or service entitlement instead.</p>
+<p>The usual durable research location remains conceptually:</p>
+<pre><code class="language-text">/projects/&lt;project&gt;/
+</code></pre>
+<p>The Files surface may expose only the portion of that project admitted for
+transfer. Its absence from Files does not imply that all server paths should be
+made visible.</p>
+<h2 id="browser-files-versus-sftp">Browser Files versus SFTP</h2>
+<p>The browser and SFTP routes solve different interaction problems but should map
+to the same project authorization model.</p>
+<h3 id="browser">Browser</h3>
+<p>Use the browser when you want an interactive upload/download experience and do
+not need scripting.</p>
+<h3 id="sftp-public-key">SFTP / public key</h3>
+<p>Use the approved SFTP/public-key route when a command-line or automated transfer
+is more appropriate. Follow the current RCC connection instructions and use your
+own SSH key; do not create shared credentials for a project.</p>
+<p>An SFTP login is still a transfer session, not a general interactive shell.</p>
+<h2 id="files-versus-ssh-workbench-and-analysis">Files versus SSH, Workbench, and Analysis</h2>
+<table>
+<thead>
+<tr>
+  <th>Goal</th>
+  <th>Better RCC surface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Upload/download or browse project files</td>
+  <td><strong>Files</strong></td>
+</tr>
+<tr>
+  <td>Edit code or work interactively</td>
+  <td><strong>SSH / VS Code now; Workbench when released</strong></td>
+</tr>
+<tr>
+  <td>Run substantial compute</td>
+  <td><strong>Slurm</strong></td>
+</tr>
+<tr>
+  <td>Run a repeatable governed workflow</td>
+  <td><strong>RCC Analysis when released</strong></td>
+</tr>
+<tr>
+  <td>Publish/archive data</td>
+  <td>Use the separately approved publication/archive route</td>
+</tr>
+</tbody>
+</table>
+<p>Moving data is not the same thing as computing on it, and neither action implies
+permission to release it outside the project.</p>
+<h2 id="external-access-does-not-mean-public-access">External access does not mean public access</h2>
+<p>A Files service reachable from outside a local network still requires an
+approved RCC identity and project authorization. It is not a public file share.
+Additional authentication may be required for an external session.</p>
+<p>Do not interpret “I can reach the Files page” as authorization to disclose
+biomedical or confidential data to another person.</p>
+<h2 id="controlled-data-projects">Controlled Data projects</h2>
+<p>RCC defines a future <strong>Controlled Data Project</strong> type with a stronger
+anti-exfiltration and governed-release boundary. The ordinary Files service is
+not that boundary.</p>
+<p>Controlled Data project creation/runtime admission is currently <strong>not released</strong>.
+Until it is explicitly activated, follow the current Regular-project and
+biomedical-data guidance rather than assuming Files can carry protected-data
+release semantics.</p>
+<p>Read <a href="../project-types/index.html">Regular and Controlled Data projects</a> for the distinction.</p>
+<h2 id="before-every-transfer">Before every transfer</h2>
+<p>Check:</p>
+<ul>
+<li>correct RCC identity;</li>
+<li>correct project;</li>
+<li>correct destination/source;</li>
+<li>whether the project's governance allows the transfer;</li>
+<li>whether the recipient is authorized; and</li>
+<li>whether the transfer route is released for this data class.</li>
+</ul>
+<p>For sharing decisions, read <a href="../../reference/data-sharing/index.html">How to share data safely</a>.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="../../support/guardians-and-ai-assistant/index.html">Support</a> · <a href="../../reference/storage-transfer/index.html">File transfer</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Safe, practical RCC training for biomedical researchers">
+  <title>RCC Analysis: from data to a reproducible run · RCC ClusterDocs</title>
+  <link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../index.html" aria-label="RCC documentation home">
+      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
+      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+    </div>
+  </div>
+</header>
+<div class="shell">
+  <details class="mobile-nav">
+    <summary>Browse documentation</summary>
+    <nav aria-label="Mobile documentation navigation">
+      <section><h2>RCC surfaces</h2>
+        <a aria-current="page" href="../../index.html">Documentation</a>
+        <span class="nav-pending">Home <small>not yet released</small></span>
+        <span class="nav-pending">Files <small>not yet released</small></span>
+        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+      </section>
+      
+      
+      <section class="nav-group-single"><a  href="../../index.html">Home</a></section>
+      
+      
+      
+      <section><h2>Start here</h2><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></section>
+      
+      
+      
+      <section><h2>Overview</h2><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></section>
+      
+      
+      
+      <section><h2>Paths</h2><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></section>
+      
+      
+      
+      <section><h2>Course</h2><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></section>
+      
+      
+      
+      <section><h2>Data lifecycle</h2><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></section>
+      
+      
+      
+      <section><h2>Examples</h2><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></section>
+      
+      
+      
+      <section><h2>Reference</h2><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></section>
+      
+      
+      
+      <section><h2>Resources</h2><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></section>
+      
+      
+    </nav>
+  </details>
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <section class="sidebar-section">
+          <p class="sidebar-kicker">RCC surfaces</p>
+          <nav class="global-nav" aria-label="RCC services">
+            <a class="current" aria-current="page" href="../../index.html">Documentation</a>
+            <span class="nav-pending">Home <small>not yet released</small></span>
+            <span class="nav-pending">Files <small>not yet released</small></span>
+            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+          </nav>
+        </section>
+        <section class="sidebar-section documentation-tree">
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">staging</span></div></div>
+          <nav aria-label="Documentation navigation">
+            
+            
+            <a class="nav-single"  href="../../index.html">Home</a>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Start here</summary>
+              <div><a  href="../../getting-started/index.html">Expedition Light · first 15 minutes</a><a  href="../../getting-started/macos/index.html">macOS setup</a><a  href="../../getting-started/windows/index.html">Windows 11 setup</a><a  href="../../getting-started/vscode/index.html">VS Code with RCC</a><a  href="../../concepts/jump-shell-compute/index.html">Jump host, shell host, and workers</a><a  href="../../getting-started/what-changed/index.html">What changed from the old cluster</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Overview</summary>
+              <div><a  href="../../tldr/index.html">ClusterDocs NG TL;DR</a><a  href="../../concepts/how-rcc-works/index.html">Coding agents and your data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Paths</summary>
+              <div><a  href="../../paths/data-analysis/index.html">Data analysis</a><a  href="../../paths/software-development/index.html">Software development</a><a  href="../../paths/from-shell-scripts/index.html">Convert shell scripts into workflows</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Course</summary>
+              <div><a  href="../../course/index.html">Course overview</a><a  href="../../course/class-01-safe-access/index.html">Class 1 · Safe access</a><a  href="../../course/class-02-workflows/index.html">Class 2 · Workflows</a><a  href="../../course/class-03-performance/index.html">Class 3 · Performance</a><a  href="../../course/class-04-containers/index.html">Class 4 · Containers</a><a  href="../../course/class-05-slurm/index.html">Class 5 · Slurm</a><a  href="../../course/class-06-snakemake/index.html">Class 6 · Snakemake</a><a  href="../../course/class-07-nextflow/index.html">Class 7 · Nextflow</a><a  href="../../course/class-08-vhosts/index.html">Class 8 · Project websites</a><a  href="../../course/class-09-python-notebooks/index.html">Class 9 · Python notebooks</a><a  href="../../course/class-10-r-analysis/index.html">Class 10 · R analysis</a><a  href="../../course/class-11-shiny/index.html">Class 11 · Shiny apps</a><a  href="../../course/class-12-notebook-to-service/index.html">Class 12 · Notebook to service</a><a  href="../../course/class-13-biomedical-data-privacy/index.html">Class 13 · Data privacy</a><a  href="../../course/class-14-efficient-io/index.html">Class 14 · Efficient local I/O</a><a  href="../../course/class-15-storage-architecture/index.html">Class 15 · Storage architecture</a><a  href="../../course/class-16-wet-lab-data-workflows/index.html">Class 16 · Wet-lab instrument data</a><a  href="../../course/class-17-data-lifecycle/index.html">Class 17 · Research data lifecycle</a><a  href="../../course/class-18-coding-agents/index.html">Class 18 · Coding agents without sharing real data</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Data lifecycle</summary>
+              <div><a  href="../../data/data-lifecycle-tldr/index.html">TL;DR · Instrument to Coscine</a><a  href="../../data/instrument-data-options/index.html">Choosing a transfer path</a><a  href="../../data/legacy-storage-windows/index.html">Existing Windows SSHFS setup</a><a  href="../../data/legacy-storage-macos/index.html">Existing macOS SSHFS setup</a><a  href="../../data/rcc-project-to-coscine/index.html">Planned RCC to Coscine archive flow</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Examples</summary>
+              <div><a  href="../../examples/interactive-workflows/index.html">Interactive workflows</a><a  href="../../examples/python-r-shiny-jupyter-reference/index.html">Python, R, Shiny and Jupyter</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Reference</summary>
+              <div><a  href="../../reference/index.html">Reference overview</a><a  href="../../reference/terminology/index.html">RCC terminology</a><a  href="../../reference/users-groups-projects/index.html">Users, groups, and projects</a><a  href="../../reference/account-starter-setups/index.html">Account starter setups</a><a  href="../../reference/access-ssh-vscode/index.html">Access, SSH, and VS Code</a><a  href="../../reference/storage-transfer/index.html">Storage and transfer</a><a  href="../../reference/data-sharing/index.html">Sharing data</a><a  href="../../reference/software-workflows/index.html">Software workflows</a><a  href="../../reference/slurm/index.html">Slurm commands</a><a  href="../../reference/how-shared-compute-works/index.html">How shared compute works</a><a  href="../../reference/opportunistic-capacity/index.html">Opportunistic capacity</a><a  href="../../reference/troubleshooting/index.html">Troubleshooting</a><a  href="../../reference/resources/index.html">Resources and discovery</a><a  href="../../reference/ai-data-science/index.html">AI and data science</a><a  href="../../connecting/stable-endpoints/index.html">RCC connection name</a><a  href="../../security/safe-use/index.html">Safe everyday practice</a><a  href="../../security/rcc-biomedical-data-admission/index.html">Biomedical data admission</a></div>
+            </details>
+            
+            
+            
+            <details class="nav-section" >
+              <summary>Resources</summary>
+              <div><a  href="../../team/index.html">Who we are</a><a  href="../../resources/how-it-all-works/index.html">Lab network properties and remote access</a><a  href="../../connecting/pikvm-headscale/index.html">PiKVM through RCC Headscale · Not yet released</a></div>
+            </details>
+            
+            
+          </nav>
+        </section>
+        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
+      </div>
+    </aside>
+    <main id="content" class="content-card">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li><a href="../../index.html">Documentation</a></li><li><span aria-current="page">RCC Analysis: from data to a reproducible run</span></li>
+      </ol></nav>
+      <p class="eyebrow">Documentation · RCC ClusterDocs</p>
+      
+      <h1 id="rcc-analysis-from-data-to-a-reproducible-run">RCC Analysis: from data to a reproducible run</h1>
+<blockquote>
+<p><strong>Service status:</strong> RCC Analysis is <strong>not yet released to users</strong>. This page
+documents the planned user workflow so researchers can understand the
+product before activation. Current RCC workers and Slurm remain the supported
+execution path; use the existing Snakemake, Nextflow, notebook, and Slurm
+guidance until RCC Analysis is explicitly announced as available.</p>
+</blockquote>
+<p>RCC Analysis is the user-facing layer for running governed scientific workflows
+without having to design the Slurm execution plan by hand.</p>
+<p>The researcher chooses the <strong>data, scientific workflow, and scientific
+parameters</strong>. RCC then proposes a deployment-appropriate execution plan for the
+hardware that is actually available, submits the work through Slurm, and records
+what was run so the result can be reproduced.</p>
+<p>In short:</p>
+<pre><code class="language-text">project data
+    -&gt; choose a workflow
+    -&gt; choose parameters
+    -&gt; review hardware fit and execution plan
+    -&gt; run through Slurm
+    -&gt; inspect typed results
+    -&gt; retain provenance / rerun / archive
+</code></pre>
+<p>RCC Analysis does not replace Slurm, Nextflow, Snakemake, project storage, or
+RCC Workbench. It coordinates those components behind one governed analysis
+workflow.</p>
+<h2 id="rcc-analysis-or-rcc-workbench">RCC Analysis or RCC Workbench?</h2>
+<p>Use <strong>RCC Workbench</strong> when your main goal is interactive work: a shell, notebook,
+VS Code session, exploratory analysis, or development and debugging.</p>
+<p>Use <strong>RCC Analysis</strong> when your main goal is to run a repeatable scientific
+analysis with a defined workflow, inputs, parameters, outputs, and provenance.</p>
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>RCC Workbench</th>
+  <th>RCC Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Main question</td>
+  <td>“Give me an interactive environment.”</td>
+  <td>“Run this analysis.”</td>
+</tr>
+<tr>
+  <td>Best for</td>
+  <td>Exploration, development, debugging</td>
+  <td>Repeatable production analysis</td>
+</tr>
+<tr>
+  <td>You choose</td>
+  <td>Interactive environment and what you do inside it</td>
+  <td>Data, workflow, scientific parameters</td>
+</tr>
+<tr>
+  <td>RCC chooses</td>
+  <td>Secure session placement</td>
+  <td>Operational execution and task placement</td>
+</tr>
+<tr>
+  <td>Typical result</td>
+  <td>Files you create interactively</td>
+  <td>Governed run, typed outputs, provenance</td>
+</tr>
+</tbody>
+</table>
+<p>A common pattern is to <strong>develop in Workbench and run routinely in Analysis</strong>.</p>
+<h2 id="the-rcc-analysis-workflow">The RCC Analysis workflow</h2>
+<h3 id="1-start-from-a-project-and-its-data">1. Start from a project and its data</h3>
+<p>An Analysis run belongs to an RCC project. You select the input data objects the
+workflow should consume. Examples include a microscopy acquisition, an image
+set, paired FASTQ reads, a metagenome read set, a BAM file, or another supported
+data type.</p>
+<p>RCC uses the project boundary for authorization and for durable results. The
+normal result location is conceptually:</p>
+<pre><code class="language-text">/projects/&lt;project&gt;/rcc-analysis/&lt;run-id&gt;/
+</code></pre>
+<p>An existing run is never silently replaced.</p>
+<h3 id="2-choose-a-scientific-workflow">2. Choose a scientific workflow</h3>
+<p>RCC Analysis presents compatible workflows for the selected data. A workflow is
+not just a directory containing scripts: it has an exact version, an immutable
+source snapshot, declared inputs and outputs, parameters, citations, and an
+ownership scope.</p>
+<p>Workflows may belong to:</p>
+<ul>
+<li>an individual user;</li>
+<li>a group;</li>
+<li>a project;</li>
+<li>a facility; or</li>
+<li>RCC itself.</li>
+</ul>
+<p>A workflow may also carry review or operational information such as
+<strong>unreviewed</strong>, <strong>approved</strong>, <strong>supported</strong>, or <strong>preferred</strong>. These labels help
+with discovery and operations; they do not grant project access and they do not
+claim that a scientific result is correct.</p>
+<h3 id="3-choose-scientific-parameters">3. Choose scientific parameters</h3>
+<p>You provide the parameters that affect the scientific analysis: for example a
+reference database, threshold, model, sample grouping, or workflow option.</p>
+<p>You do <strong>not</strong> normally choose raw Slurm partitions, nodes, QOS, reservations,
+or arbitrary Nextflow/Snakemake scheduler arguments in the Analysis interface.
+Those are operational details owned by RCC.</p>
+<p>This distinction is deliberate: the scientific intent belongs to the
+researcher; machine placement belongs to the compute platform.</p>
+<h3 id="4-choose-between-exact-reproduction-and-adaptation">4. Choose between exact reproduction and adaptation</h3>
+<p>Imported or externally developed workflows can be used in two important modes.</p>
+<h4 id="exact-reproduction">Exact reproduction</h4>
+<p>Choose this when a paper, reviewer, benchmark, or validation exercise requires a
+specific implementation or configuration.</p>
+<p>RCC keeps the required source/version fixed and does not silently substitute a
+different scientific workflow. It may still use safe operational mechanisms such
+as RCC-managed Slurm submission or local scratch when those do not change the
+scientific computation.</p>
+<h4 id="adapt-for-rcc">Adapt for RCC</h4>
+<p>Choose this when the scientific goal matters more than preserving one cluster-
+specific implementation.</p>
+<p>RCC may recommend a more efficient operational plan or identify a better-suited
+reviewed workflow. You remain responsible for choosing whether to use the
+imported workflow or an alternative.</p>
+<h3 id="5-review-hardware-fit-and-task-efficiency">5. Review hardware fit and task efficiency</h3>
+<p>Before a run is submission-ready, RCC checks the workflow against the current
+RCC deployment rather than assuming that resource requests copied from another
+cluster are appropriate.</p>
+<p>The review can detect patterns such as:</p>
+<ul>
+<li>thousands of very short scheduler jobs;</li>
+<li>repeated large reads from shared project storage;</li>
+<li>excessive workflow-controller or scheduler overhead;</li>
+<li>poor CPU or memory utilisation;</li>
+<li>GPU allocations with little measured GPU use;</li>
+<li>locality-sensitive work with no local-scratch strategy; or</li>
+<li>a GPU workflow that unnecessarily runs the workflow controller on a GPU.</li>
+</ul>
+<p>When enough recent measurements exist, RCC can use observed utilisation to
+right-size CPU, memory, scratch, or concurrency recommendations. A resource
+reservation is not treated as proof that the resource was useful.</p>
+<p>The user-facing decision should be understandable rather than scheduler-centric:</p>
+<pre><code class="language-text">RCC recommends a more efficient plan
+
+[ Use RCC recommendation ]
+
+[ Keep the requested configuration ]
+  reason required
+</code></pre>
+<p>Keeping an inefficient configuration remains possible when there is a genuine
+scientific or reproduction reason; that decision becomes part of the run
+provenance.</p>
+<h3 id="6-review-the-exact-run-before-submission">6. Review the exact run before submission</h3>
+<p>Before starting the analysis, the review page should make the important facts
+visible:</p>
+<ul>
+<li>project and selected inputs;</li>
+<li>exact workflow name, version, and source identity;</li>
+<li>scientific parameters;</li>
+<li>expected outputs;</li>
+<li>exact-reproduction requirements, if any;</li>
+<li>RCC hardware-fit findings;</li>
+<li>the proposed controller and task execution classes; and</li>
+<li>any explicit exception you chose to retain.</li>
+</ul>
+<p>RCC then seals this run plan. A later authorization change must not be hidden by
+an older plan: current project/workflow authority is checked again at activation
+time.</p>
+<h3 id="7-rcc-runs-the-workflow-through-slurm">7. RCC runs the workflow through Slurm</h3>
+<p>Slurm remains the sole scheduler and accounting authority.</p>
+<p>RCC Analysis separates the lightweight workflow controller from the scientific
+child tasks. For example, a GPU workflow can use a normal CPU allocation for the
+Nextflow or Snakemake controller while only the actual GPU tasks consume GPU
+nodes.</p>
+<p>Conceptually:</p>
+<pre><code class="language-text">RCC Analysis
+    -&gt; controller job
+       -&gt; Nextflow or Snakemake
+          -&gt; child Slurm jobs
+             -&gt; CPU / GPU / locality class selected by RCC
+</code></pre>
+<p>The browser does not receive a Slurm signing key and RCC Analysis does not own a
+separate scheduler authority. Submission uses the shared RCC per-user Slurm
+submission boundary.</p>
+<h3 id="8-follow-the-run">8. Follow the run</h3>
+<p>The run view should focus on scientific progress and actionable failures rather
+than requiring the researcher to reconstruct state from several systems.</p>
+<p>Useful status includes:</p>
+<ul>
+<li>planned / waiting / running / completed / failed;</li>
+<li>workflow-controller state;</li>
+<li>task progress;</li>
+<li>links to useful logs;</li>
+<li>clear explanation of an authorization, placement, or input problem; and</li>
+<li>whether a submission outcome is uncertain and needs reconciliation.</li>
+</ul>
+<p>RCC must not automatically submit a second copy merely because a scheduler reply
+was uncertain. Recovery first determines whether the original job exists.</p>
+<h3 id="9-inspect-results-and-provenance">9. Inspect results and provenance</h3>
+<p>A successful run produces its declared result objects beneath the project run
+root. Depending on the workflow these might include tables, reports, images,
+segmentations, alignments, variant calls, or other governed outputs.</p>
+<p>The run can also retain an RO-Crate research object containing the information
+needed to understand and reproduce the result, including:</p>
+<ul>
+<li>exact workflow identity and immutable source snapshot;</li>
+<li>selected inputs and outputs;</li>
+<li>scientific parameters;</li>
+<li>citations or reproduction requirements;</li>
+<li>RCC operational adaptations;</li>
+<li>hardware/efficiency evidence used for the plan; and</li>
+<li>an explicit record when an inefficient requested configuration was retained.</li>
+</ul>
+<p>This provenance stays with the project result. Optional DataLad binding can
+associate the result with an immutable dataset state, and the normal RCC/Coscine
+project archive path remains the custody mechanism when an approved result set
+is archived.</p>
+<h2 id="importing-a-workflow">Importing a workflow</h2>
+<p>RCC Analysis is intended to support reviewed Nextflow and Snakemake workflows as
+well as workflows imported from public HTTPS Git repositories, public HTTPS
+URLs, or bounded pasted source.</p>
+<p>Import is inspection, not execution. RCC examines the source in a data-less
+sandbox and does not mount project research data merely to determine whether a
+workflow can be represented safely.</p>
+<p>An imported workflow starts as <strong>unreviewed</strong>. It cannot award itself RCC
+approval, support, or preferred status.</p>
+<p>Cluster-specific scheduler directives are also checked. A workflow that embeds
+unmanaged queue/account placement may require adaptation before RCC can safely
+compile an execution plan.</p>
+<h2 id="what-preferred-means">What “preferred” means</h2>
+<p>A <strong>preferred</strong> workflow is stronger than a casual recommendation. It refers to
+an exact workflow revision with evidence that it fits a particular RCC
+deployment and has a good hardware-efficiency review.</p>
+<p>That judgement is deployment-specific. A workflow that is preferred on one RCC
+installation is not automatically preferred on another installation with
+different hardware or measured behaviour.</p>
+<p>Preferred status is operational guidance; it is not scientific validation and
+it does not itself grant scheduler priority.</p>
+<h2 id="what-rcc-analysis-changes-for-the-system">What RCC Analysis changes for the system</h2>
+<p>For researchers, Analysis hides unnecessary scheduler detail. For RCC, it adds a
+controlled compilation layer between scientific intent and Slurm.</p>
+<p>Instead of accepting every workflow decomposition exactly as presented, RCC can
+reason about:</p>
+<pre><code class="language-text">scientific workflow
+    -&gt; task behaviour
+    -&gt; measured utilisation
+    -&gt; available hardware
+    -&gt; efficient execution plan
+    -&gt; Slurm
+</code></pre>
+<p>This gives RCC a common place to enforce scheduler portability, avoid pathological
+small-job fan-out, improve CPU/GPU utilisation, use local scratch appropriately,
+and retain evidence about why a particular execution plan was chosen.</p>
+<p>The important authority boundaries remain unchanged:</p>
+<ul>
+<li>Slurm schedules and accounts for compute;</li>
+<li>project membership governs project access;</li>
+<li>Nextflow and Snakemake remain workflow engines;</li>
+<li>Workbench remains the interactive environment;</li>
+<li>the Assistant may explain recommendations but does not invent measurements or
+gain scheduler authority; and</li>
+<li>Coscine/DataLad integration remains part of the governed data lifecycle rather
+than a new credential path inside Analysis.</li>
+</ul>
+<h2 id="what-to-use-before-rcc-analysis-is-released">What to use before RCC Analysis is released</h2>
+<p>Until RCC Analysis is explicitly activated for users:</p>
+<ol>
+<li>use <a href="../../course/class-05-slurm/index.html">Class 5</a> for Slurm execution;</li>
+<li>use <a href="../../course/class-06-snakemake/index.html">Class 6</a> for the current managed
+Snakemake path;</li>
+<li>use <a href="../../course/class-07-nextflow/index.html">Class 7</a> for Nextflow guidance and
+release status;</li>
+<li>use <a href="../../course/class-09-python-notebooks/index.html">Python notebooks</a> or
+<a href="../../course/class-10-r-analysis/index.html">R analysis</a> for interactive exploration;</li>
+<li>use <a href="../../course/class-14-efficient-io/index.html">Class 14</a> for efficient local I/O;
+and</li>
+<li>retain code, parameters, environments, checksums, logs, and Slurm job IDs so
+today's runs remain reproducible.</li>
+</ol>
+<p>When RCC Analysis is released, ClusterDocs will replace this status notice with
+the live entry point and the exact user acceptance workflow.</p>
+
+      
+    </main>
+    
+  </div>
+</div>
+<footer>
+  <p>RCC · Research Compute Cluster · University Hospital Essen</p>
+  <p><a href="../../index.html">Documentation</a> · <a href="../../support/guardians-and-ai-assistant/index.html">Support</a> · <a href="../../reference/storage-transfer/index.html">File transfer</a></p>
+</footer>
+</body>
+</html>
