@@ -3,7 +3,8 @@
 This is the short version for anyone who creates, transfers, analyses, or
 archives research data on RCC.
 
-> **Service status:** project Samba ingestion and RCC workers are **ready now**.
+> **Service status:** RCC workers are **ready now**. Existing instrument Samba
+> shares are **in service**; RCC sets up each new share on request.
 > Ardia integration, project vhosts, and RCC-to-Coscine transfer are **not yet
 > released**. This page marks their intended place in the lifecycle; it does
 > not activate them.

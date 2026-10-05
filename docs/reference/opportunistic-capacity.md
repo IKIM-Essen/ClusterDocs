@@ -1,8 +1,9 @@
 # Opportunistic RCC capacity for short CPU jobs
 
-> **Availability:** This scheduling policy is being introduced through a
-> controller-first canary. It applies only when RCC reports the capability as
-> active; users must not select hidden partitions or protected QOS names.
+> **Availability — not yet active:** this scheduling policy is staged and
+> disabled on the RCC scheduler. Until RCC announces activation, short CPU jobs
+> run only on the normal partitions. Users must not select hidden partitions or
+> protected QOS names.
 
 RCC can use otherwise-idle hardware for short CPU work without changing the
 normal submission workflow.

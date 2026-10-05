@@ -67,9 +67,9 @@ operational checks in `ADMIN_CHECKLIST.md`; those checks verify the vhost,
 DNS/TLS, hosted media, browser behavior, and live service endpoints rather than
 asking readers to fill documentation placeholders.
 
-Managed Nextflow-to-Slurm support is documented as **ready now**. The
-supported contract uses a pinned `rcc-nextflow` launcher on an RCC interactive
-node (a `shellhost`), Slurm for every scientific task, shared persistent work state for
+Managed Nextflow-to-Slurm support is documented as **validating**: the
+launcher is being deployed and end-to-end acceptance is not yet complete. The
+intended contract uses a pinned `rcc-nextflow` launcher on an RCC shellhost, Slurm for every scientific task, shared persistent work state for
 `-resume`, explicit node-local task scratch, and Apptainer on workers.
 
 Run `python3 tools/rollout_readiness.py --manual-review` to verify that expert

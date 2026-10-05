@@ -4,29 +4,34 @@ RCC is one research-computing environment with several user-facing surfaces. The
 same RCC identity and project authorization follow you between them; choosing a
 surface does not create a second account or a second copy of your project.
 
-> **Release status matters.** Some services below are available now, while
-> Workbench and RCC Analysis are documented before user activation. A service
-> described in ClusterDocs is not automatically released. Follow the status note
-> on the service page and the current RCC landing page.
+> **Release status matters (October 2026).** Today the supported routes are
+> SSH through the jump host to the shell host, VS Code Remote SSH, Slurm on RCC
+> workers, and this documentation site. The RCC browser services below — Home,
+> Files, Admin / My RCC, the Assistant, Workbench, and RCC Analysis — are
+> **not yet released**; their earlier internal pilot was withdrawn and RCC is
+> re-establishing them in a staged rollout. A service described in ClusterDocs
+> is not automatically released. Follow the status note on each service page.
 
 ## The short version
 
 | Service | Use it when you want to... | Current documentation status |
 |---|---|---|
-| **Home** | find RCC services and account entry points | current RCC surface |
-| **Files** | browse or transfer approved project data | current user path |
-| **Documentation** | learn RCC and look up procedures | current user path |
+| **SSH / VS Code** | work in a shell or editor and submit Slurm jobs | **ready now** |
+| **Documentation** | learn RCC and look up procedures | **ready now** (this site) |
+| **Home** | find RCC services and account entry points | **not yet released** |
+| **Files** | browse or transfer approved project data in a browser | **not yet released**; use `scp`, `sftp`, or `rsync` to the shell host |
 | **Workbench** | get an interactive shell, notebook, or development session | **not yet released** |
-| **Assistant** | ask for explanations or bounded RCC help | availability depends on the current RCC service/project |
-| **Admin / My RCC** | manage your account, project membership, and authorized project actions | current RCC surface |
-| **RCC Analysis** | run a repeatable governed scientific workflow | **not yet released; RCC 23 product** |
+| **Assistant** | ask for explanations or bounded RCC help | **not yet released** |
+| **Admin / My RCC** | manage your account, project membership, and authorized project actions | **not yet released**; RCC support handles requests |
+| **RCC Analysis** | run a repeatable governed scientific workflow | **not yet released** |
 
 Open OnDemand is retired from the current RCC product model. Do not use old OOD
 screenshots or bookmarks as current connection instructions.
 
 ## Files: move and inspect project data
 
-Use **Files** when the task is primarily about data movement or browsing:
+When released, use **Files** when the task is primarily about data movement or
+browsing:
 
 - upload or download an approved project file;
 - inspect the project-facing file tree exposed by the service;
@@ -69,7 +74,7 @@ RCC Analysis is documented before activation and is not yet a live user service.
 
 ## Assistant: explain and help, not bypass policy
 
-The RCC Assistant may explain documentation, help interpret failures, or support
+The RCC Assistant is **not yet released**. When enabled, it may explain documentation, help interpret failures, or support
 bounded actions when those capabilities are enabled. It does not gain a second
 identity, project access, or scheduler authority simply because the request is
 made in natural language.
@@ -79,8 +84,10 @@ and [coding agents and your data](how-rcc-works.md).
 
 ## Admin / My RCC: identity and project governance
 
-Use the account/project surface for actions such as account security, project
-membership, and project-service requests that your role is authorized to make.
+Admin / My RCC is **not yet released**; until it is, RCC support handles
+account and membership requests. When released, use the account/project surface
+for actions such as account security, project membership, and project-service
+requests that your role is authorized to make.
 Finding an action in the interface does not mean every user may execute it.
 
 Read [Projects and supported actions](projects-and-capabilities.md) for the

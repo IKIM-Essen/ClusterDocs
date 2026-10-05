@@ -112,14 +112,14 @@ sinfo -h -N -p gpu_nodes -o '%G|%f' | sort -u
 You may see labels such as:
 
 ```text
-gpu:rtx_a6000:1|gpu,gpu_arch_ampere,gpu_model_rtx_a6000
+gpu:rtx_a6000:6|gpu,gpu_arch_ampere,gpu_model_rtx_a6000
 ```
 
 The exact list can change as hardware is accepted. Copy the type exactly as
 published by Slurm and ClusterDocs; do not guess a marketing abbreviation.
 
-RCC currently also has an `ai_top_atom` platform queue with typed GPU `gb10`
-and feature `gpu_arch_blackwell`. That queue exists because the ARM64
+RCC also defines an `ai_top_atom` platform queue with typed GPU `gb10`
+and feature `gpu_arch_blackwell`; it currently has no schedulable nodes. That queue exists because the ARM64
 Grace-Blackwell platform uses a different exclusive-user policy. It is a
 policy exception, not the pattern for future Blackwell GPU servers.
 
