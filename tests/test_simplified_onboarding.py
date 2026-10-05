@@ -27,14 +27,27 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         self.assertIn("full RCC Expedition is optional deeper training", light)
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
+        canonical_copy = (
+            "scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de "
+            "YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 ."
+        )
         for relative in ("getting-started/macos.md", "getting-started/windows.md"):
             page = (DOCS / relative).read_text(encoding="utf-8")
             normalized = " ".join(page.split())
             self.assertIn("Host {{ ssh_gateway_alias }}", page)
+            self.assertIn(
+                "Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de", page
+            )
             self.assertIn("Host {{ ssh_target_alias }}", page)
             self.assertIn("ProxyJump {{ ssh_gateway_alias }}", page)
             self.assertIn("You do not log into the jump host", normalized)
             self.assertIn("ssh -G {{ ssh_target_alias }}", page)
+            self.assertIn("login.ikim.uk-essen.de", page)
+            self.assertIn("shellhost.ikim.uk-essen.de", page)
+            self.assertIn(canonical_copy, page)
+            self.assertIn("forwarding-only", page)
+            self.assertIn("The login tier is not a `/homes`,", page)
+            self.assertIn("`/groups`, or `/projects` endpoint", page)
 
     def test_access_model_separates_gateway_control_and_compute(self):
         page = (DOCS / "concepts/jump-shell-compute.md").read_text(
@@ -42,7 +55,7 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         )
         for phrase in (
             "Jump host | Guarded doorway",
-            "Shell host | Your RCC desk",
+            "Shell host | Your RCC desk and SSH file endpoint",
             "Compute worker | Scheduled laboratory bench",
             "The shell host is not a free compute node",
             "SSH provides access; Slurm provides compute",

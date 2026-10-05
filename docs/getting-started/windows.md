@@ -47,7 +47,7 @@ username. `login.ikim.uk-essen.de` is the RCC jump host; it only forwards your
 connection to the shell host:
 
 ```sshconfig
-Host {{ ssh_gateway_alias }}
+Host {{ ssh_gateway_alias }} login.ikim.uk-essen.de
     HostName login.ikim.uk-essen.de
     User YOUR_RCC_USERNAME
     IdentityFile ~/.ssh/id_rcc
@@ -67,6 +67,22 @@ Replace only the values identified by the approved RCC instructions and save
 the file as `config`, without a `.txt` suffix. The first block describes the
 jump host. The second describes the shell host you actually use. You do not
 log into the jump host; `ProxyJump` forwards the connection automatically.
+
+The stable service model is `login.ikim.uk-essen.de` as the forwarding-only
+public doorway and `shellhost` (`shellhost.ikim.uk-essen.de`) as the ordinary
+shell and SSH file-transfer endpoint. The login tier is not a `/homes`,
+`/groups`, or `/projects` endpoint.
+
+To see that distinction without relying on aliases, PowerShell can run the same
+OpenSSH copy command:
+
+```powershell
+scp -J YOUR_RCC_USERNAME@login.ikim.uk-essen.de YOUR_RCC_USERNAME@shellhost.ikim.uk-essen.de:/groups/<group>/demo.test1 .
+```
+
+Here `login.ikim.uk-essen.de` supplies only the jump path; `shellhost:` is the
+remote data endpoint. SFTP and rsync use the same separation when supported by
+the installed client.
 
 ## 4. Check, then connect once
 
@@ -94,8 +110,8 @@ day-to-day editor. Follow the dedicated
 destination. VS Code uses the same configuration and cannot repair an SSH
 connection that fails in PowerShell.
 
-Use the shell host to edit code, use Git, submit jobs, and inspect logs. Submit
-computation through Slurm.
+Use the shell host to edit code, use Git, submit jobs, inspect logs, and access
+authorized shared files. Submit computation through Slurm.
 
 ## If you want the guided course
 
