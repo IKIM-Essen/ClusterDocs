@@ -24,7 +24,7 @@ nav:
   - RCC Journey - explore the cluster (not yet released): rcc-journey.md
   - RCC services:
       - Which RCC service should I use?: concepts/rcc-services.md
-      - RCC Files: concepts/rcc-files.md
+      - RCC Files (not yet released): concepts/rcc-files.md
       - RCC Analysis - notebooks and workflows (not yet released): analysis/rcc-analysis.md
       - Project types: concepts/project-types.md
       - RCC Gitea: concepts/rcc-gitea.md
@@ -48,6 +48,7 @@ nav:
       - Class 12 - Notebook to service: course/class-12-notebook-to-service.md
       - Class 13 - Biomedical data privacy: course/class-13-biomedical-data-privacy.md
       - Interactive examples: examples/interactive-workflows.md
+      - Python, R, Shiny and Jupyter: examples/python-r-shiny-jupyter-reference.md
       - Class 14 - Efficient local I/O: course/class-14-efficient-io.md
       - Class 15 - RCC storage architecture: course/class-15-storage-architecture.md
       - Class 16 - Wet-lab instrument data: course/class-16-wet-lab-data-workflows.md
@@ -71,7 +72,7 @@ nav:
       - Workbench execution layer (advanced, not yet released): concepts/workbench-interfaces.md
       - Storage and transfer: reference/storage-transfer.md
       - Sharing data: reference/data-sharing.md
-      - RCC Usage reporting: reference/usage-accounting.md
+      - RCC Usage reporting (not yet released): reference/usage-accounting.md
       - Conda, Snakemake, and Apptainer: reference/software-workflows.md
       - Slurm commands: reference/slurm.md
       - How shared compute works: reference/how-shared-compute-works.md
