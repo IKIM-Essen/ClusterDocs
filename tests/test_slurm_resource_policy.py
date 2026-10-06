@@ -23,6 +23,17 @@ class SlurmResourcePolicyTests(unittest.TestCase):
         ):
             self.assertIn(phrase, self.text)
 
+    def test_contributed_pools_are_distinct_from_group_borrow(self):
+        text = " ".join(self.text.split())
+        self.assertIn("### Contributed pools", self.text)
+        self.assertIn("explicit time limit of at most two hours", text)
+        self.assertIn("**not preempted**", text)
+        self.assertIn("allows up to four hours, and can be requeued", text)
+        self.assertLess(
+            self.text.index("### Borrowed capacity"),
+            self.text.index("### Contributed pools"),
+        )
+
     def test_plain_language_summary_precedes_technical_details(self):
         self.assertIn("Most users do not need to choose", self.text)
         self.assertIn("If you are unsure, use the normal shared partition", self.text)
