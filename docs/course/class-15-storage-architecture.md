@@ -10,6 +10,10 @@
   </video>
 </section>
 
+> **Video note:** this video was recorded before section 2a, *Access boundary:
+> backend S3 is not user S3*, was added. Where they differ, the written page is
+> authoritative until the video is re-rendered.
+
 This optional class explains the RCC data path:
 
 ```text

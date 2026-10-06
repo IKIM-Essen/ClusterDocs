@@ -20,6 +20,8 @@ nav:
       - What changed from the old cluster: getting-started/what-changed.md
   - ClusterDocs NG TL;DR: tldr.md
   - Coding agents and your data: concepts/how-rcc-works.md
+  - RCC-internal coding agents: concepts/agents-and-mcp.md
+  - Before sharing data with a coding agent: data/privacy-and-agents.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
   - RCC Journey - explore the cluster (not yet released): rcc-journey.md
   - RCC services:
@@ -27,6 +29,8 @@ nav:
       - RCC Files (not yet released): concepts/rcc-files.md
       - RCC Analysis - notebooks and workflows (not yet released): analysis/rcc-analysis.md
       - Project types: concepts/project-types.md
+      - Projects and supported actions: concepts/projects-and-capabilities.md
+      - Delegated governance and project proxies: concepts/delegated-governance.md
       - RCC Gitea: concepts/rcc-gitea.md
   - Choose a path:
       - Data analysis: paths/data-analysis.md
@@ -56,11 +60,13 @@ nav:
       - Class 18 - Coding agents without sharing real data: course/class-18-coding-agents.md
   - Data lifecycle:
       - TL;DR - Instrument to Coscine: data/data-lifecycle-tldr.md
+      - The RCC data lifecycle: data/data-lifecycle.md
       - Choosing a transfer path: data/instrument-data-options.md
       - Managed DataLad: data/datalad-managed-service.md
       - Existing Windows SSHFS setup: data/legacy-storage-windows.md
       - Existing macOS SSHFS setup: data/legacy-storage-macos.md
       - Mac files and encrypted backups (not yet released): data/macos-rcc-backup.md
+      - Research Objects, RO-Crate, and FAIR data: data/research-objects-fair.md
       - Planned RCC to Coscine archive flow: data/rcc-project-to-coscine.md
   - Reference:
       - Reference overview: reference/index.md
@@ -86,5 +92,7 @@ nav:
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
   - Resources:
       - Who we are: team.md
+      - Getting help and RCC Guardians: support/guardians-and-ai-assistant.md
       - Lab network properties and remote access: resources/how-it-all-works.md
       - PiKVM through RCC Headscale (not yet released): connecting/pikvm-headscale.md
+      - Maintaining RCC Expedition releases: maintainers/rcc-expedition-release.md

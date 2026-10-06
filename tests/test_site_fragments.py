@@ -31,6 +31,17 @@ class SiteFragmentTests(unittest.TestCase):
         self.assertEqual(len(site_paths), len(set(site_paths)), "duplicate site menu entry")
         self.assertEqual(sorted(set(mkdocs_paths)), sorted(set(site_paths)))
 
+    def test_every_docs_page_is_in_the_site_menu(self):
+        # Files under classes/examples/ are downloadable example material
+        # linked from their classes, not standalone menu pages.
+        site_paths = {path for _, _, path in NAV}
+        for page in sorted((ROOT / "docs").rglob("*.md")):
+            relative = page.relative_to(ROOT / "docs").as_posix()
+            if relative.startswith("classes/examples/"):
+                continue
+            with self.subTest(page=relative):
+                self.assertIn(relative, site_paths)
+
     def test_docs_do_not_use_mkdocs_admonitions(self):
         # The custom site builder does not render MkDocs admonitions; "!!!"
         # blocks publish as raw text. Use a blockquote note instead.

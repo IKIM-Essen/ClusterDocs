@@ -102,6 +102,17 @@ def audit() -> tuple[list[str], list[str], list[str]]:
     else:
         ready.append("media manifest covers all 17 classes")
 
+    stale_renders = [
+        str(item.get("class"))
+        for item in assets
+        if item.get("review_status") == "rerender_required_narration_changed"
+    ]
+    if stale_renders:
+        blockers.append(
+            "videos must be re-rendered from their current narration for classes: "
+            + ", ".join(stale_renders)
+        )
+
     not_human_reviewed = [
         str(item.get("class"))
         for item in assets
