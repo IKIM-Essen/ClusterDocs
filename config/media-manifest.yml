@@ -166,7 +166,11 @@ assets:
     sha256: 211336855d8a16098da13b97988a97490c1ebdba7705613cacfb1ad970e6ad05
     captions: RCC_Onboarding_Class_15_Captions.srt
     narration: RCC_Onboarding_Class_15_Video_Narration.md
-    review_status: rendered_and_automated_qa_complete
+    review_status: rerender_required_narration_changed
+    rerender_reason: >-
+      The narration gained the backend-S3 versus direct-project-S3 access
+      boundary (#88, 5 October 2026) after this MP4 was rendered. Re-render on
+      macOS before media release; see meta/VIDEO_REVIEW_GUIDE.md.
   - class: 16
     video: RCC_Onboarding_Class_16_Video_Enhanced.mp4
     audio_channels: 2

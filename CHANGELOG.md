@@ -60,6 +60,14 @@ Reconciled ClusterDocs with the RCC deployment state recorded in RCC `main`
 - Listed every `mkdocs.yml` page in the published site menu (RCC services,
   Managed DataLad, authentication, Workbench, Usage, and publication pages) and
   added a test that keeps the two menus identical; set `VERSION` to 1.0.2.
+- Added the remaining standalone pages (coding agents, project actions and
+  delegated governance, data lifecycle, FAIR research objects, help and
+  Guardians, Expedition maintenance) to both menus, with a test that every
+  docs page outside `classes/examples/` is in the site menu.
+- Flagged the Class 15 video for re-rendering: its narration gained the
+  backend-S3 versus direct-project-S3 boundary after rendering. The readiness
+  gate now blocks media release until it is re-rendered on macOS, and the
+  class page notes that the written text is authoritative.
 
 ## v1.0.1
 

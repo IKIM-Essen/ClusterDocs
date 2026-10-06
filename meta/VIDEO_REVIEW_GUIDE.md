@@ -35,3 +35,33 @@ After approval, set that class's `review_status` in
 `config/media-manifest.yml` to `human_review_approved`, including the reviewer
 and date in the review commit or pull request. Do not mark a class approved to
 silence the readiness gate.
+
+## Re-render a video after its narration changes
+
+A class whose narration changed after rendering carries
+`review_status: rerender_required_narration_changed` in
+`config/media-manifest.yml`, and `tools/rollout_readiness.py` reports it as a
+blocker. Class 15 is currently in this state (backend-S3 versus
+direct-project-S3 boundary, #88).
+
+The course videos use the macOS Daniel voice, so re-render on a Mac with
+`say`, `ffmpeg`, `ffprobe`, and `rsvg-convert` installed:
+
+```bash
+python3 build/build_course_videos.py 15
+```
+
+This rewrites the MP4 under `videos-enhanced/`, the class captions under
+`captions/`, and the class entry in `meta/course-video-build-report.json`.
+Then:
+
+1. copy the new MP4 into the reviewed `new-videos/` set;
+2. update that class's `size_bytes`, `duration_seconds` and `sha256` in
+   `config/media-manifest.yml`, plus the staged-set totals and
+   `sha256s_file_sha256`;
+3. update the `?v=` cache key in the class page's `<video>` source to the first
+   eight hex digits of the new SHA-256, and remove the page's "Video note";
+4. run `python tools/media_gate.py --local-dir new-videos`; it must report
+   `PASS (17 videos)`;
+5. set `review_status` back to `rendered_and_automated_qa_complete`, remove
+   `rerender_reason`, and complete the human review above before approval.
