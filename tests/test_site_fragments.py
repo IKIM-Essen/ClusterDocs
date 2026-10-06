@@ -4,13 +4,33 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.build_site import add_heading_ids
+import yaml
+
+from tools.build_site import NAV, add_heading_ids
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _mkdocs_nav_paths(items):
+    paths = []
+    for item in items:
+        if isinstance(item, str):
+            paths.append(item)
+            continue
+        for value in item.values():
+            paths.extend(_mkdocs_nav_paths(value) if isinstance(value, list) else [value])
+    return paths
+
+
 class SiteFragmentTests(unittest.TestCase):
+    def test_site_menu_and_mkdocs_nav_list_the_same_pages(self):
+        mkdocs = yaml.safe_load((ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+        mkdocs_paths = _mkdocs_nav_paths(mkdocs["nav"])
+        site_paths = [path for _, _, path in NAV]
+        self.assertEqual(len(site_paths), len(set(site_paths)), "duplicate site menu entry")
+        self.assertEqual(sorted(set(mkdocs_paths)), sorted(set(site_paths)))
+
     def test_docs_do_not_use_mkdocs_admonitions(self):
         # The custom site builder does not render MkDocs admonitions; "!!!"
         # blocks publish as raw text. Use a blockquote note instead.

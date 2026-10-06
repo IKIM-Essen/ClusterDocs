@@ -1,26 +1,6 @@
 # Changelog
 
-## Unreleased
-
-- Reframed RCC Analysis as the planned user-facing compute product with two
-  primary modes: Jupyter-first **Notebook** for interactive exploration and
-  **Workflow** for repeatable/scalable governed analysis.
-- Demoted “RCC Workbench” from a peer user product to the advanced/internal
-  interactive execution layer behind Analysis Notebook mode while preserving
-  its documentation URL for architecture/reference use.
-- Documented a planned browser-first path (not yet released) beside the current
-  SSH/VS Code path, which remains the required Expedition Light route today;
-  once the browser services are released, an RCC account will no longer imply
-  an SSH key.
-- Connected Files directly to the planned `Files -> Analysis -> Files` journey.
-- Added notebook-to-workflow resource guidance to discourage idle interactive
-  allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
-  fan-out, and inefficient shared-storage I/O.
-- Preserved current-release accuracy: until RCC Analysis Notebook is explicitly
-  activated, the existing Slurm + SSH-tunnel Jupyter procedure remains the
-  supported notebook path.
-
-## v1.0.2 — deployment-state sync (5 October 2026)
+## v1.0.2 — deployment-state sync (5–6 October 2026)
 
 Reconciled ClusterDocs with the RCC deployment state recorded in RCC `main`
 `c000a582` (18.3.2) and the Essen site overlay on 5 October 2026.
@@ -44,6 +24,42 @@ Reconciled ClusterDocs with the RCC deployment state recorded in RCC `main`
   `--gpus-per-node` and the `rtx_a6000` type; noted that `ai_top_atom` and
   `interactive_gpu` currently have no schedulable capacity.
 - Replaced the unsupported personal-quota claim with shared-capacity wording.
+
+### Integrated pending documentation PRs
+
+- Clarified shell-host transfers through the login bastion with complete
+  `-J user@login… user@shellhost…` examples (#87).
+- Distinguished the JuiceFS backend S3 layer from direct project S3, which is
+  not yet released (#88).
+- Added the planned encrypted Mac work-backup and home-disk recovery guide, not
+  yet released (#89).
+- Required the EMCP infrastructure citation for RCC-enabled publications (#86).
+- Added the RCC Journey page, not yet released (#85).
+- Documented the planned RCC Admin enrollment flow, not yet released (#82).
+- Made markdown validation reproducible with `.markdownlint.yml` (#83).
+- Rendered the Expedition and Class 1 onboarding notes as blockquotes instead of
+  unsupported MkDocs admonitions (#91).
+- Analysis and Workbench convergence (#84):
+  - Reframed RCC Analysis as the planned user-facing compute product with two
+    primary modes: Jupyter-first **Notebook** for interactive exploration and
+    **Workflow** for repeatable/scalable governed analysis.
+  - Demoted “RCC Workbench” from a peer user product to the advanced/internal
+    interactive execution layer behind Analysis Notebook mode while preserving
+    its documentation URL for architecture/reference use.
+  - Documented a planned browser-first path (not yet released) beside the current
+    SSH/VS Code path, which remains the required Expedition Light route today;
+    once the browser services are released, an RCC account will no longer imply
+    an SSH key.
+  - Connected Files directly to the planned `Files -> Analysis -> Files` journey.
+  - Added notebook-to-workflow resource guidance to discourage idle interactive
+    allocations, CPU/RAM/GPU over-requesting, repeated manual analyses, tiny-job
+    fan-out, and inefficient shared-storage I/O.
+  - Preserved current-release accuracy: until RCC Analysis Notebook is explicitly
+    activated, the existing Slurm + SSH-tunnel Jupyter procedure remains the
+    supported notebook path.
+- Listed every `mkdocs.yml` page in the published site menu (RCC services,
+  Managed DataLad, authentication, Workbench, Usage, and publication pages) and
+  added a test that keeps the two menus identical; set `VERSION` to 1.0.2.
 
 ## v1.0.1
 
