@@ -4,9 +4,9 @@ Most users do not need to choose a special resource-sharing option. Submit work
 to the normal CPU, GPU, short, or interactive partition described in the
 [Slurm reference](slurm.md), and Slurm will find suitable capacity.
 
-> **Status:** owner partitions, `group_borrow`, and opportunistic placement are
-> staged and **not yet enabled** on RCC. Today all users submit to the normal
-> shared partitions.
+> **Status:** owner partitions, `group_borrow`, contributed pools, and
+> opportunistic placement are staged and **not yet enabled** on RCC. Today all
+> users submit to the normal shared partitions.
 
 Some compute resources were contributed by individual research groups. RCC
 protects those groups' access while allowing other researchers to use spare
@@ -43,6 +43,7 @@ that interruption.
 | Normal CPU or GPU analysis | Shared CPU or GPU partition | Normal queue priority and fair-share |
 | Work for a group that contributed hardware | Owner path supplied for the account (not yet enabled) | Priority on that group's contributed capacity |
 | Short, restartable batch work | `group_borrow` (not yet enabled) | The job may be requeued |
+| Any job with an explicit limit of two hours or less | Nothing extra; Slurm may place it on an idle contributed pool (not yet enabled) | Runs to completion; not preempted |
 | Shell, notebook, or debugging session | `interactive` | Stay present and release it when finished |
 
 If you are unsure, use the normal shared partition. Choose borrowed capacity
@@ -124,9 +125,28 @@ sbatch \
   analysis.sbatch
 ```
 
-Borrowed jobs must be batch jobs, must have an explicit time limit, and must be
-safe to restart. They can be requeued before completion when an owner job needs
+Borrowed jobs must be batch jobs, must have an explicit time limit of at most
+four hours, and must be safe to restart. They can be requeued before completion when an owner job needs
 the same capacity.
+
+### Contributed pools
+
+Contributed pools are a second, separately staged way to share group-funded
+hardware. Nobody selects a partition, account, or QOS for them: Slurm routes
+eligible jobs automatically, and it rejects a request that names one of the
+generated pool partitions.
+
+- Members of the contributing group get higher priority on that pool, through
+  the same primary-group fair-share that applies everywhere else.
+- Other users' jobs may run on idle pool capacity only when they set an
+  explicit time limit of at most two hours, for example `--time=01:30:00`.
+- Work placed on a contributed pool is **not preempted**: once it starts, it
+  runs to completion even if the owning group submits work afterwards. The
+  owner's advantage is priority for the next free resources, not reclaiming
+  running jobs.
+
+This differs from `group_borrow` above, which you select yourself, allows up to
+four hours, and can be requeued when the owner needs the nodes back.
 
 ### Interactive use
 
