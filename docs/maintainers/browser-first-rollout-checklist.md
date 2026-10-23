@@ -30,3 +30,48 @@ Borrow behavior and architecture principles, not trademarked design assets or co
 ## Staging policy
 
 No push to the deployed site, no `main` merge, no GitHub Pages publication and no unapproved invitation emails. Edit documentation here until rollout admission. Existing ClusterDocs `main` remains source of truth for what is **currently available**.
+
+
+## Full researcher-experience scope (not only onboarding)
+
+This rollout depends on the **complete RCC user experience**, recorded in
+`IKIM-Essen/rcc/docs/plans/rcc-complete-researcher-experience-2026-10-23.md`
+(draft PR #4061). Do not cut over merely because invitation/Files pages were
+written. The same project-centered vocabulary, left sidebar and recovery help
+must span Admin/My RCC, Files, Analysis (Workflow and Notebook), Jobs/results,
+the contextual GB10 Assistant and advanced access.
+
+Preserve the existing rich content: Expedition Light, optional offline RCC
+Expedition, 18-class course, data-analysis path, Nextflow/Snakemake lessons,
+RCC service map, biomedical-data privacy and old-cluster migration guide.
+**Rewrite navigation and task entry points, not the substantive scientific
+courses.**
+
+The new **Bring your workflow** guide must be grounded in an accepted importer,
+authorization-scoped dedup/index, human-readable source diff, measured paired
+benchmarks and output equivalence checks. Any 95%-similarity indicator remains
+review-only; it is not a statement of scientific equality. Show Original,
+Optimized profile and Compare results. Never present example performance
+numbers as production measurements.
+
+The Assistant's ClusterDocs answers must cite a concrete version, tell users
+when a service is still unavailable, and must not reveal documents or workflow
+records beyond their current authorization. The Assistant never becomes a
+second authorization or scheduling system.
+
+### Required site content inventory before cutover
+
+| User question | Reuse first | Remaining release-specific enhancement |
+|---|---|---|
+| How do I accept my invitation? | account enrollment and authentication reference | Existing-account claim, passkey, recovery and no-SSH onboarding |
+| Where do I start? | Expedition Light and service map | Browser-first entry and first-success exercise |
+| Where are my files? | Files concepts and storage transfer reference | Accepted UI screenshots, permissions, upload failures |
+| Notebook or Workflow? | RCC Analysis + data-analysis path | Task-based examples and actual UI destinations |
+| Can you improve my pipeline? | Snakemake/Nextflow classes, resource/I/O lessons | Bring-workflow comparison guide and scientific validation |
+| What is taking so long? | Slurm, I/O and performance lessons | Jobs/results UI help with runtime observation |
+| Can RCC Assistant help? | Guardian/Assistant and ClusterDocs content | Contextual entry points, evidence links, limitations |
+| How do I work in a shell? | Existing SSH/VS Code and Expedition | Keep advanced path discoverable without making it mandatory |
+
+Before release, run the exact end-to-end QA contract from RCC draft PR #4059
+and verify the novice-user pilot can independently repeat the Computing Club
+example. Site publication remains separately approved.
