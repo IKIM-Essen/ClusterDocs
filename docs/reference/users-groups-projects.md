@@ -105,6 +105,18 @@ An archive *working area* is not automatically a frozen or retained scientific a
 
 RCC introduces the revised group/project experience **one primary group at a time**. Your group's leads review who belongs, who should have staff/student/guest area access, which old groups are really projects, and which people need another organizational home. Until that review is completed and the relevant features are accepted, your existing Unix groups and ordinary access remain in place; there is no cluster-wide forced conversion.
 
+### For group leads: what the onboarding meeting decides
+
+RCC will bring an up-to-date membership overview and review it with you. We will ask five practical questions:
+
+1. **Who belongs here?** Confirm current people and identify accounts that have moved, left, are guests, or belong to another primary group.
+2. **Who can see which working area?** Classify staff, students and guests, and name anyone who additionally needs archive or another restricted area.
+3. **Which older groups are actually research projects?** Keep their existing members and data access while reviewing who will lead each project and where its project data should live.
+4. **Which access must be restricted?** Confirm that a guest cannot read staff files, and that future shared files inherit the correct Unix group automatically.
+5. **Which new RCC features should the group use?** Agree a phased rollout rather than changing every person's work routine at once.
+
+The meeting records decisions; RCC staff apply changes only after checking their effects. You need not understand LDAP group entries, numeric Unix GIDs, or `chmod` to take part.
+
 If the membership list is wrong, ask the group lead or RCC support to correct it using the reviewed membership editor. **Do not change another user's account or move data yourself as a substitute for the review.** A saved review decision does not necessarily mean LDAP membership or directory access has changed yet.
 
 For further detail on directory permissions and sharing, see [How to share data safely](data-sharing.md).
