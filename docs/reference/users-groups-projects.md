@@ -58,6 +58,57 @@ Likewise, membership in `collab` does not allow an external user to see other
 external users' projects or data. Access to project storage and services comes
 from explicit project membership.
 
+## Smaller shared areas within your primary group
+
+Some RCC groups have separate working areas for **staff**, **students**, **guests**, or people who maintain an **archive**. Your group lead and RCC support decide which of these are needed. They are not separate organizations or research projects.
+
+A typical example (using the DS group as an illustration, **not a claim about your group's current setup**) is:
+
+```text
+/groups/ds/                    common entry point for DS members
+  ds-staff/                    DS staff working area
+  ds-students/                 DS student working area
+  ds-guests/                   DS guest working area
+  ds-archive/                  archive maintenance area
+```
+
+The name of your actual area may differ, especially for groups that have older folder names. You will only see or enter the folders your membership permits. Ask your group lead or RCC support for your group's current approved paths.
+
+**Your account still has just one Unix primary group.** For example, the person in the DS group retains primary group `ds`. RCC can also grant that person supplementary Unix groups such as `ds-students`, or a separate research project's group. Staff supervising students may have both `ds-staff` and `ds-students` access. Archive membership is an additional permission, not a fourth kind of person.
+
+Your primary group is not a grant to see everything belonging to that organization. A restricted student, staff, or guest area has its *own* Unix group and directory permissions. When you leave a group or a project, RCC updates membership under the appropriate approved workflow.
+
+### Why files normally stay shareable without you changing permissions
+
+RCC configures group-owned working directories with the Unix **setgid** bit. It makes a newly created file inherit the *folder's* Unix group, even when the creator has several groups. Alongside RCC's ordinary collaborative `umask 0002`, this normally means new files can be edited by the intended group without everyone learning `chmod` and `chgrp`.
+
+You can inspect your current login and a shared folder without changing anything:
+
+```bash
+id
+groups
+ls -ld /groups/<your-group>
+ls -ld /groups/<your-group>/<your-approved-area>
+```
+
+An example listing might include `drwxrws---`. The **s** indicates the directory inherits its Unix group for newly created entries. Only the approved group can normally enter it. Setgid does **not** repair old file permissions, override other access controls, or make an archive read-only.
+
+**Do not run `chmod -R`, `chmod 777`, or change an entire group directory's ownership to fix “Permission denied.”** A missing membership, an old login session, the wrong working folder, or a path that is deliberately restricted is much more likely. Reconnect once after an approved membership change; if it still fails, send RCC support the exact path and the output of `id` and `ls -ld` (do not send restricted file contents).
+
+### Group working area or project?
+
+Use your subgroup's working area for ongoing **organizational** tasks and material shared within that specific cohort. Use a **project** when work has a defined scientific purpose, team, datasets, results, responsibility or lifecycle, even if everyone currently belongs to the same primary group. The project has its own membership and lives under `/projects/<project>/`.
+
+An archive *working area* is not automatically a frozen or retained scientific archive. Ask the project lead for the approved retention and archival process.
+
+### Your group's rollout
+
+RCC introduces the revised group/project experience **one primary group at a time**. Your group's leads review who belongs, who should have staff/student/guest area access, which old groups are really projects, and which people need another organizational home. Until that review is completed and the relevant features are accepted, your existing Unix groups and ordinary access remain in place; there is no cluster-wide forced conversion.
+
+If the membership list is wrong, ask the group lead or RCC support to correct it using the reviewed membership editor. **Do not change another user's account or move data yourself as a substitute for the review.** A saved review decision does not necessarily mean LDAP membership or directory access has changed yet.
+
+For further detail on directory permissions and sharing, see [How to share data safely](data-sharing.md).
+
 ## Use a project for cross-group data exchange
 
 Projects are the normal collaboration boundary when data must move between
