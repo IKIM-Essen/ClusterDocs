@@ -69,6 +69,10 @@ whose membership includes the approved people from both groups. For more
 complex exceptions, ask RCC whether a reviewed access-control list is
 appropriate.
 
+If your primary group has protected staff, student, guest or archive working
+areas, supplementary Unix groups also control which of those directories you
+can access. See [Users, groups, and projects](users-groups-projects.md#smaller-shared-areas-within-your-primary-group).
+
 ## What setgid means on a shared directory
 
 The set-group-ID bit, or **setgid**, has a useful meaning on a directory: new
