@@ -32,5 +32,5 @@ The graphic describes what researchers will do: find and upload files in their a
 
 - Source supplied by fm on **2026-10-26** in the RCC working discussion.
 - The original, unmodified PNG is retained in the user's **RCC / User-facing-assets** Library collection as `rcc-files-analysis-notebook-result.png`.
-- This repository includes a losslessly readable visually faithful PNG optimized to a 16-shade palette for documentation web delivery. The original is retained for archival reuse and derivative verification.
+- This repository includes a four-tone optimized PNG reproduction (same 1860 × 214 layout, reduced color gradation for smaller web delivery) with Git blob `df46d6022e9fb97be679232ebf97be621b5578f9`. The **unaltered user-provided original** remains in the Library (SHA-256 `9d6abb9acc1f13eeab2cd43510de4c93d36cb0267fc0eb6dbedd8a71e2811a83`). Reuse the original when exact pixels or higher gradation is required.
 - RCC onboarding/docs owner: ClusterDocs. Source status and change/release approval remain owned by RCC; this docs-only asset is not an authorization to deploy Files, Workbench or Admin.
