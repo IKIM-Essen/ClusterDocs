@@ -17,6 +17,42 @@ or secure remote sessions.
 We should guide people without guessing how experienced they are, testing
 their expertise or requiring them to learn every layer first.
 
+## Your research is the hard part. RCC should take care of the rest.
+
+When a complicated setup eventually works, researchers naturally reuse it.
+That does not mean it is reliable or efficient. You may have learned to copy
+data between machines, start an overnight command in a terminal, rebuild
+software by hand, or retry a job when the connection disappears. Each method
+can produce a result while leaving you with fragile setup, unnecessary
+waiting, lost work or hard-to-reproduce findings.
+
+**RCC's intended service is to take on those operational tasks.** You should
+be able to choose the project and describe the scientific work you want to
+perform, then review a clear execution plan. RCC should arrange the approved
+compute resources through Slurm, prepare a reproducible environment, put
+temporary and durable data in the right places, keep a job record, and help
+recover from interruptions.
+
+This must **not** hide scientific choices from you: you control your code,
+methods, parameters, data and interpretation. You should be able to see the
+technical plan when needed, choose another supported interface, and reproduce
+what ran. RCC should hide routine plumbing, not essential provenance.
+
+### The difference we want
+
+| Today someone may... | The planned RCC experience should... |
+| --- | --- |
+| Pick a machine because a colleague says it works | Select approved compute resources through Slurm |
+| Keep a long computation alive in SSH | Submit a persistent, bounded batch job with its own status and logs |
+| Repeatedly guess how much RAM to request | Offer a safe starting profile and improve advice from actual usage |
+| Copy files between machines to get software running | Use approved project storage, job scratch and portable environments |
+| Run hundreds of commands manually | Offer job arrays or a reproducible workflow without changing the science |
+| Restart a job because the connection timed out | Check whether the previous submission succeeded before suggesting another |
+| Reinstall a working set of packages on every machine | Use an accepted, pinned software environment and controlled staging |
+
+**These are design goals, not released RCC functionality.** An approved site
+must demonstrate each managed path before ClusterDocs links to it as available.
+
 ## Choose the interface you prefer
 
 **Start in your browser** when you want the fewest installation steps: choose
