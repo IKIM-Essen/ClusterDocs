@@ -80,6 +80,25 @@ R and plots, extensions, disconnect/reconnect and complete process-tree
 cleanup after Slurm cancellation. The source-only helper returning positive
 checks is not a substitute for observing the actual Positron backend.
 
+## Additional source hardening (not a release)
+
+The macOS and Windows pilot launchers contained duplicated, malformed
+tail sections. They were repaired in the Essen draft, and regression
+tests now check launcher structure, macOS shell syntax and the
+non-optimized verification of job/preflight JSON. Native Windows parsing,
+OpenSSH authentication and actual Positron execution still require
+separate evidence.
+
+The RCC worker preflight now binds an accepted exact-version worker record
+to the **actual root-owned acceptance receipt bytes**. That receipt must
+attest synthetic R console, plot, Slurm cgroup placement, reconnect and
+cancel cleanup. A placeholder accepted flag or receipt hash by itself is
+insufficient; operator-reviewed live evidence remains mandatory.
+
+Release still requires a signed/verifiable site trust registry, a
+version-locked worker backend distribution method and a supervised
+end-to-end Mac/Windows R pilot. No public availability is implied.
+
 There is **no automatic production rollout** from these source waves. Do not
 publish a download or replace a stable SSH configuration based on an
 unverified host-key registry.
