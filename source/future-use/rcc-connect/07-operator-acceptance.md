@@ -44,24 +44,26 @@
 
 - [ ] Test one synthetic two-node CPU batch with correct placement of
   `--nodes`, `--ntasks-per-node`, `--cpus-per-task`, per-node `--mem` and
-  walltime; inspect resulting allocation and per-rank logs.
-- [ ] Test an independently built MPI executable; confirm the accepted
-  MPI plugin with `srun --mpi=list` rather than assuming `pmix`.
+  walltime; inspect resulting allocation and per-task logs.
+- [ ] Test a bounded independent-task workload across two nodes using only
+  `sbatch` and `srun`. Confirm process exit status, task placement,
+  logs, cancellation and cgroup cleanup. Do not mistake task scheduling for
+  inter-process communication supplied by Slurm.
 - [ ] For multi-node GPU jobs, qualify GPU counts per node, fabric,
-  NCCL/distributed runtime, affinity, container compatibility and failure
+  application runtime, affinity, container compatibility and failure
   cleanup before exposing a user profile.
 - [ ] Verify project authorization, QOS limits, worker eligibility, scheduler
   queueing, cancellation, job-array alternative and real job accounting.
 - [ ] Verify request identity and durable receipt prevent automatic duplicate
   submission after ambiguous `sbatch`/transport outcome. Test malicious
   spec fields, traversal, policy ownership and mismatched resource ceilings.
-- [ ] Keep interactive VS Code/Positron backend **single-node**; all distributed
+- [ ] Keep interactive VS Code/Positron backend **single-node**; all multi-node task
   processes must run as Slurm batch steps, never from the shellhost or direct
   user-controlled SSH between compute nodes.
 - [ ] Allow browser, VS Code, Positron and terminal users to choose the same
   accepted multi-node submission contract without an expert/beginner gate.
 - [ ] Do not enable the example site policy or publish the multi-node option
-  until the corresponding host/Slurm/MPI/GPU and documentation gates pass.
+  until the corresponding host/Slurm/GPU and documentation gates pass.
 
 ## VS Code allocation-backed server acceptance
 
