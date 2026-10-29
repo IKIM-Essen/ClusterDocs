@@ -56,6 +56,10 @@ next to **Use VS Code**, **Use Positron**, and **Use SSH / terminal** as equally
 accessible choices. Do not put the shell behind an "I am an expert" prompt,
 require a certification, or call someone a beginner based on their editor.
 
+Provide a clearly named **Switch interface** action in the user menu and
+session overview. There must be no self-declared beginner/expert status
+prerequisite for any interface.
+
 Remember an explicit user preference per device/account, where authorized,
 but never infer proficiency from it. Offer a reversible **simplified / detailed
 view of controls** within any interface instead of a beginner/expert account
