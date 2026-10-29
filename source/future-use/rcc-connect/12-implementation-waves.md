@@ -19,7 +19,7 @@ A shellhost serves as a client/SSH gateway, never an unscheduled compute host.
 | 1 — Slurm contract | Project-bound session start; job ownership and exact project verification; machine-readable running worker resolution; no blind retries | Draft RCC source; offline verification only; live Slurm acceptance missing |
 | 2 — desktop client | macOS/Windows installer/launcher source, strict SSH effective settings, safe local rollback, session list/attach/stop; shared contract with the server | Offline macOS mock tests pass; native Windows and verified SSH host registry missing |
 | 3 — VS Code | Connect laptop editor to allocation-backed VS Code Server; account for remote extensions, Python, shells, Jupyter and subprocesses in job cgroup | Server binary/bootstrap and live PAM/Slurm acceptance missing |
-| 4 — Positron | Native OpenSSH through approved RCC gateway; backend and R process on allocated worker; plotting and package behavior | Worker Ubuntu compatibility, authentication and backend acceptance missing |
+| 4 — Positron | Native OpenSSH, project-bound Slurm worker preflight, root-owned exact-version/OS/R qualification, offline backend archive verification and selected-PID cgroup evidence | Code staged in RCC and Essen draft PRs; actual Ubuntu worker, desktop version, R/plot session, host-key registry, full process cleanup and native OS tests unaccepted |
 | 5 — release | Signed downloads, trusted site overlay/host-key publication, native OS matrix, real scientist pilots and translated/accessible user docs | No user-facing release authorized |
 
 Documentation may be drafted before rollout; guides must preserve the status
@@ -64,3 +64,22 @@ See [operator acceptance](07-operator-acceptance.md),
 [VS Code](03-vscode-python.md),
 [Positron](04-positron-r.md),
 and [the ClusterDocs site/core split](09-core-site-migration-plan.md).
+
+## Positron source qualification wave (29 October)
+
+The portable RCC PR contains a default-off worker preflight and tests, a
+qualification schema that matches exact OS/architecture, desktop/backend
+version and R interpreter, and a read-only selected-PID Slurm cgroup canary.
+The Essen PR contains site-default-denied qualification examples, an offline
+archive verifier, macOS/Windows launch checks and a native PowerShell parser
+harness. They do not sign/serve the backend or prove a running R session.
+
+On the first real accepted Slurm worker, independently test the matching
+Positron desktop/backend release, native noninteractive OpenSSH, project data,
+R and plots, extensions, disconnect/reconnect and complete process-tree
+cleanup after Slurm cancellation. The source-only helper returning positive
+checks is not a substitute for observing the actual Positron backend.
+
+There is **no automatic production rollout** from these source waves. Do not
+publish a download or replace a stable SSH configuration based on an
+unverified host-key registry.
