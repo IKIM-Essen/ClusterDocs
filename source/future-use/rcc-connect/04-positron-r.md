@@ -43,6 +43,14 @@ platform-specific integration before it can be presented as a one-click
 installer. The accepted worker/backend and signed site host-key registry are
 not available as general RCC services.
 
+## Five-minute practice exercise
+
+Try the [five-number Positron R exercise](13-first-session-smoke-test.md)
+when the pilot backend is approved. Use the remote R console to run one
+synthetic script; you should get mean **6.0**, an R plot and a saved PNG.
+Then reconnect to the same Slurm job and stop it explicitly. It uses
+base R only and never needs real research data.
+
 ## What RCC checks before allowing the pilot
 
 The worker's read-only preflight refuses a mismatched job or project,
