@@ -30,7 +30,7 @@ permissions or execution limits. See
 This principle belongs in site-neutral `clusterdocs`; the eventual Essen
 overlay supplies accepted availability and local login instructions only.
 
-**Editorial conventions:** Explain user outcomes before technical terms. Distinguish
+**Multi-node batch jobs:** [Run one analysis across multiple Slurm nodes](10-multinode-batch.md) — portable future-use guide. Interactive IDEs stay single-node; multi-node CPU/MPI/distributed GPU work requires reviewed batch resources. Not published or enabled.\n\n**Editorial conventions:** Explain user outcomes before technical terms. Distinguish
 "planned", "staged", and "available" explicitly. Use project names, not
 canonical physical nodes, in screenshots and examples. Provide equivalent
 macOS and Windows commands. Link to authoritative RCC documentation for host
