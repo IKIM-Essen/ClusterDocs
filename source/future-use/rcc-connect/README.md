@@ -16,6 +16,20 @@
 8. [Operator readiness, rollout and editorial checklist](07-operator-acceptance.md) — internal.
 9. [Plan the portable ClusterDocs core and Essen site split](09-core-site-migration-plan.md) — internal.
 
+## User-facing principle: recommend, never gate
+
+The planned entry screen recommends **work in your browser** for a low-friction
+start but presents **VS Code**, **Positron** and **SSH / terminal** as
+equally legitimate choices. Users decide by task and preference, not by an
+assigned "beginner" or "expert" level. Someone comfortable with Bash may still
+need Slurm/storage guidance; someone experienced with HPC may still prefer
+the browser. A simple/detailed presentation option must never change
+permissions or execution limits. See
+[Choose how to work](01-choose-your-environment.md).
+
+This principle belongs in site-neutral `clusterdocs`; the eventual Essen
+overlay supplies accepted availability and local login instructions only.
+
 **Editorial conventions:** Explain user outcomes before technical terms. Distinguish
 "planned", "staged", and "available" explicitly. Use project names, not
 canonical physical nodes, in screenshots and examples. Provide equivalent
