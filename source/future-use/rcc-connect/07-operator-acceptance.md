@@ -65,6 +65,26 @@
 - [ ] Do not enable the example site policy or publish the multi-node option
   until the corresponding host/Slurm/GPU and documentation gates pass.
 
+## Complexity absorbed by RCC: outcome-level acceptance
+
+- [ ] For each pilot scenario, verify the researcher can complete the task
+  **without independently selecting a host, repairing SSH configuration,
+  maintaining a background terminal or hand-assembling Slurm flags**.
+- [ ] Verify RCC's supported path actually preserves code, project context,
+  scientific parameters, output location, environment provenance, logs and
+  failure state, not merely a friendlier submit button.
+- [ ] Compare the supported workflow to the old working workaround: setup
+  steps, interruptions, required technical decisions and safe recovery.
+  Measure with synthetic or consented pilot tasks; make no unsupported
+  time/efficiency claims.
+- [ ] A solution that produces a result but bypasses Slurm, duplicates a
+  job, copies sensitive data to an unapproved location or discards logs
+  **does not pass**, even if the user reports that it worked.
+- [ ] For unsupported tasks, show a real, documented escalation or
+  deliberate expert CLI path; never present an imaginary managed capability.
+- [ ] Allow advanced users to inspect exact Slurm configuration and
+  environment provenance without requiring everyone to understand it.
+
 ## Low-friction guidance acceptance
 
 - [ ] Present one task-oriented recommended path, but keep browser, VS Code,
