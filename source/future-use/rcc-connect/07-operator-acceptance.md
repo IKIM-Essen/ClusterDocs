@@ -26,6 +26,47 @@
 - [ ] Publish a clear warning that Workbench and desktop deployment have independent acceptance gates. Do not link staged features as if live.
 - [ ] Retain opt-in pilot boundaries; do not include prototype changes on the Admin go-live train.
 
+## VS Code allocation-backed server acceptance
+
+- [ ] Start a session on an accepted worker, connect the local VS Code
+  Remote-SSH client, and observe the worker-side VS Code Server, remote
+  extension hosts, terminals, Python, Jupyter and language-server processes.
+- [ ] Prove by cgroup inspection (not only SSH success) that every process
+  belongs to the user's **actual Slurm job**. Deny connections before the
+  job is running and after it ends, including attempts to use stale aliases.
+- [ ] Verify a completed, cancelled and timed-out Slurm job terminates all
+  associated server and child processes, including detached subprocesses and
+  any lingering user service. No unscheduled compute may survive on workers.
+- [ ] Prove strict host-key verification on the selected worker before
+  non-interactive editor connection; changing or missing key must fail closed.
+- [ ] Verify a matching VS Code Server build is delivered under reviewed
+  worker network/egress policy, without broad downloads or unbounded
+  metadata-heavy installation on shared project storage.
+- [ ] Test idle session, disconnect, reconnect, failover, server restart,
+  storage scratch cleanup and one explicit stop; never silently resubmit
+  following ambiguous client transport failure.
+- [ ] Test VS Code workspace `rg`, file watching and extension behavior with
+  a small synthetic source tree and with bounded shared-storage telemetry.
+  No production filesystem-wide scan is an acceptable test.
+
+## Documentation core/site separation acceptance
+
+- [ ] Classify all existing ClusterDocs pages and assets as generic, Essen,
+  mixed or historical; document where the final content will live.
+- [ ] Establish a distinct site-neutral `clusterdocs` source with **fresh,
+  sanitized history**, a site-marker leakage test, link checks and a build
+  that fails on unfilled site values.
+- [ ] Pin generic source by exact revision in the Essen overlay; review
+  rendered output, content license, accessibility, screenshots and media.
+- [ ] Preserve the current site's production URL and deep links during the
+  future `clusterdocs-site-essen` rename. Check Github Pages path, redirect
+  decisions and existing media paths before any cutover.
+- [ ] Confirm that generic docs make no promise of local live availability
+  and contain no Essen hostnames, institutional policies or local trust facts.
+- [ ] Keep all of this material out of published navigation until both
+  source and site acceptance are complete. See
+  [migration plan](09-core-site-migration-plan.md).
+
 ## Known prototype limitations
 
 This prototype uses local configuration files and SSH command output; it is not
