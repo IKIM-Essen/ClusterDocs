@@ -40,6 +40,29 @@
 - [ ] Publish a clear warning that Workbench and desktop deployment have independent acceptance gates. Do not link staged features as if live.
 - [ ] Retain opt-in pilot boundaries; do not include prototype changes on the Admin go-live train.
 
+## Multi-node Slurm batch acceptance
+
+- [ ] Test one synthetic two-node CPU batch with correct placement of
+  `--nodes`, `--ntasks-per-node`, `--cpus-per-task`, per-node `--mem` and
+  walltime; inspect resulting allocation and per-rank logs.
+- [ ] Test an independently built MPI executable; confirm the accepted
+  MPI plugin with `srun --mpi=list` rather than assuming `pmix`.
+- [ ] For multi-node GPU jobs, qualify GPU counts per node, fabric,
+  NCCL/distributed runtime, affinity, container compatibility and failure
+  cleanup before exposing a user profile.
+- [ ] Verify project authorization, QOS limits, worker eligibility, scheduler
+  queueing, cancellation, job-array alternative and real job accounting.
+- [ ] Verify request identity and durable receipt prevent automatic duplicate
+  submission after ambiguous `sbatch`/transport outcome. Test malicious
+  spec fields, traversal, policy ownership and mismatched resource ceilings.
+- [ ] Keep interactive VS Code/Positron backend **single-node**; all distributed
+  processes must run as Slurm batch steps, never from the shellhost or direct
+  user-controlled SSH between compute nodes.
+- [ ] Allow browser, VS Code, Positron and terminal users to choose the same
+  accepted multi-node submission contract without an expert/beginner gate.
+- [ ] Do not enable the example site policy or publish the multi-node option
+  until the corresponding host/Slurm/MPI/GPU and documentation gates pass.
+
 ## VS Code allocation-backed server acceptance
 
 - [ ] Start a session on an accepted worker, connect the local VS Code
