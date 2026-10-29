@@ -106,6 +106,35 @@
 - [ ] Confirm that all recommendation output is advisory; project access,
   resource admission, SSH trust and Slurm remain authoritative.
 
+## Positron Remote SSH and R runtime qualification
+
+- [ ] Select and pin an exact Positron desktop and matching remote backend
+  build. Verify a trusted archive digest and acquisition chain. Archive
+  inspection is not permission to install or publish a backend.
+- [ ] On the **real** approved Slurm worker OS and architecture, verify the
+  reviewed backend starts without broad Internet egress and uses a
+  project-authorized, reproducible R interpreter/environment.
+- [ ] Confirm the worker-side `rcc-positron-preflight` refuses missing,
+  unowned, world-writable, stale, unaccepted or version-mismatched
+  qualification records. The production record must be operator-owned.
+- [ ] Verify both macOS and Windows use native noninteractive OpenSSH,
+  matching desktop version, the accepted worker's signed host-key registry
+  and a single project-bound Slurm allocation. No automatic trust enrollment.
+- [ ] Start a real synthetic R session with plotting/package loading,
+  capture backend and R process IDs, then check exact Slurm cgroup/UID
+  membership. Validate other extension and terminal processes separately.
+- [ ] After cancel/timeout, prove **the entire** Positron backend and
+  descendant process tree terminates; a selected-PID canary alone does
+  not establish complete cleanup.
+- [ ] Test a changed desktop version, corrupt backend archive, unavailable
+  mirror, failed SSH, stale job alias and network interruption. Never
+  silently fetch a different backend or submit another allocation.
+- [ ] Run the PowerShell parser harness on an actual supported Windows
+  machine and the macOS installer in a disposable local profile. Offline
+  syntax and mock tests cannot substitute for these native trials.
+- [ ] Keep published capability flags off until an operator and R scientist
+  independently accept the complete session and rollback evidence.
+
 ## VS Code allocation-backed server acceptance
 
 - [ ] Start a session on an accepted worker, connect the local VS Code
