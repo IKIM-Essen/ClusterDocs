@@ -35,6 +35,19 @@ and somebody comfortable with Bash may prefer VS Code or need help with
 Slurm. Facility with one part of the shell is not evidence of familiarity
 with scheduler allocation, shared-storage I/O, secure access or reproducibility.
 
+## Single-node development or multi-node batch?
+
+The interface is not the execution topology. Workbench, VS Code and Positron
+use a **single-node** Slurm development allocation for live interactive
+consoles and debugging. A genuinely distributed program can instead request
+**multiple Slurm compute nodes** for an unattended batch run, from any
+authorized interface—including the shell. Slurm still chooses the hosts.
+
+For many independent samples, consider a Slurm job array or workflow first.
+For genuine MPI or distributed GPU software, choose a site-accepted multi-node
+batch profile. See [Multi-node batch jobs](10-multinode-batch.md).
+This is a workload choice, not an expert status.
+
 ## All choices share the same protections
 
 - One project and its approved permissions are authoritative, regardless
