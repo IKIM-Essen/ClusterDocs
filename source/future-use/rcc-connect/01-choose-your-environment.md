@@ -44,8 +44,9 @@ consoles and debugging. A genuinely distributed program can instead request
 authorized interface—including the shell. Slurm still chooses the hosts.
 
 For many independent samples, consider a Slurm job array or workflow first.
-For genuine MPI or distributed GPU software, choose a site-accepted multi-node
-batch profile. See [Multi-node batch jobs](10-multinode-batch.md).
+For applications that need several Slurm-allocated workers, choose a
+site-accepted multi-node batch profile. Slurm starts the specified tasks;
+it does not turn an ordinary single-process script into distributed software. See [Multi-node batch jobs](10-multinode-batch.md).
 This is a workload choice, not an expert status.
 
 ## All choices share the same protections
