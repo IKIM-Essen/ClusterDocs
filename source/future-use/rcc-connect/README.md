@@ -17,6 +17,7 @@
 9. [Plan the portable ClusterDocs core and Essen site split](09-core-site-migration-plan.md) — internal.
 10. [Make the good computing path easier](11-make-good-paths-easy.md) — future user guidance.
 11. [Implementation waves and acceptance](12-implementation-waves.md) — internal readiness status.
+12. [Try a first VS Code or Positron session](13-first-session-smoke-test.md) — synthetic pilot exercise.
 
 ## User-facing principle: recommend, never gate
 
