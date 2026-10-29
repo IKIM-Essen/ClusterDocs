@@ -20,7 +20,21 @@
 ## Experience and documentation gates
 
 - [ ] Pilot separately with at least one R/Positron and one Python/VS Code user on each desktop OS.
-- [ ] Include beginner and expert workflows; show transparent job queueing, project permissions, and estimated resource use without invented availability.
+- [ ] Pilot task-based pathways: browser-first recommendation, VS Code,
+  Positron and direct SSH/CLI. Every authorized interface must be selectable
+  without a "beginner/expert" label, self-rating or shell-proficiency test.
+- [ ] Make "Switch interface" discoverable and reversible; do not hide the
+  terminal behind an advanced-user gate. Any saved interface preference must
+  be explicitly chosen, changeable and separate from authorization.
+- [ ] Offer simple/detailed controls inside every interface, without changing
+  Slurm limits, permissions or data visibility. Test with scientists who
+  know Bash but not Slurm and scientists who prefer web despite strong HPC
+  experience; avoid stereotypes.
+- [ ] Show transparent job queueing, project permissions, and estimated
+  resource use without invented availability. On failed scheduling, suggest
+  alternatives but never silently run compute on a shellhost.
+- [ ] Verify a user can prepare in one interface and inspect/reattach to the
+  same authorized allocation where supported, without duplicate submissions.
 - [ ] Provide German and English editions, accessibility review, ClusterDocs navigation, synthetic screenshots and clear support ownership.
 - [ ] Add an authenticated myRCC download page with enrollment/status and user-specific parameters; never embed private SSH material in downloads.
 - [ ] Publish a clear warning that Workbench and desktop deployment have independent acceptance gates. Do not link staged features as if live.
