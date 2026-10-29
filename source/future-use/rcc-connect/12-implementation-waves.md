@@ -89,6 +89,12 @@ non-optimized verification of job/preflight JSON. Native Windows parsing,
 OpenSSH authentication and actual Positron execution still require
 separate evidence.
 
+The desktop launcher now checks whether Positron is installed and can report
+an accepted version **before** submitting a new Slurm job. An absent
+desktop executable therefore does not consume an interactive allocation.
+The later worker-side Positron and Slurm checks are still required, and
+closing the desktop must not silently cancel a job.
+
 The RCC worker preflight now binds an accepted exact-version worker record
 to the **actual root-owned acceptance receipt bytes**. That receipt must
 attest synthetic R console, plot, Slurm cgroup placement, reconnect and
