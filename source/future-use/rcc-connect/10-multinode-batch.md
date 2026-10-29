@@ -2,18 +2,19 @@
 
 > **Source-only proposal, not available as an RCC Connect release.**
 > Batch execution requires separate site acceptance. This is a portable
-> educational explanation; actual partitions, MPI versions and allowed
+> educational explanation; actual partitions and allowed
 > node/GPU classes come from the site's published, verified capabilities.
 
 ## Why might I need more than one node?
 
 A node is a compute machine, not a CPU core. A job can use many CPUs on
 **one** node, or it can request **several** nodes. A multi-node program must
-actually coordinate parallel processes across nodes. Increasing the number of
+be designed to handle parallel processes across nodes; Slurm itself
+only allocates resources and launches the configured tasks. Increasing the number of
 nodes does not automatically make an ordinary R or Python script faster.
 
 A conventional single-node analysis is often the best first choice. Consider
-multi-node only for software that supports MPI ranks, distributed workers,
+multi-node only for software that supports distributed workers,
 multi-node data processing or distributed training, after measuring one-node
 performance.
 
@@ -21,7 +22,7 @@ performance.
 | --- | --- |
 | Explore a dataset, debug Python, plot in R | Single-node Slurm development allocation (Workbench, VS Code or Positron) |
 | Train a model on one accepted GPU | Slurm single-node GPU allocation or batch job |
-| Run an MPI simulation or distributed CPU program | Multi-node Slurm **batch** job |
+| Run an independent-task or distributed CPU batch workload | Multi-node Slurm **batch** job |
 | Run distributed GPU training | Multi-node Slurm **batch**, only after specific GPU/fabric/runtime acceptance |
 | Run many unrelated samples | Often a Slurm job array or workflow manager, not a single multi-node job |
 
@@ -30,15 +31,15 @@ performance.
 A multi-node batch submission must describe:
 
 - **Nodes:** how many whole machines the scheduler should allocate.
-- **Tasks per node:** the number of independent ranks/processes per machine.
-- **CPUs per task:** CPU threads reserved for each rank/process.
+- **Tasks per node:** the number of independent tasks/processes per machine.
+- **CPUs per task:** CPU threads reserved for each task/process.
 - **Memory per node:** the entire memory budget for each machine (not per rank).
 - **GPUs per node:** only for an accepted GPU batch class.
 - **Walltime:** the maximum duration; jobs may queue until all requested
   resources can be allocated simultaneously.
-- **MPI integration:** request a site-accepted plugin only when the program
-  and its MPI build require it. Do not assume PMIx support without a live
-  `srun --mpi=list` acceptance test.
+- **Task execution:** Slurm's `srun` starts application processes across
+  allocated nodes. The application must already be suitable for multi-node
+  execution. Slurm does not automatically make a program distributed.
 
 For example, two nodes × four tasks per node × two CPUs per task represent
 **eight parallel tasks and sixteen requested CPUs across two nodes**.
@@ -84,24 +85,28 @@ name/comment before attempting any new submission.
 Positron's backend, terminals and R/Python kernels remain attached to the
 Slurm worker hosting that development allocation. A multi-node batch job is
 different: it uses resources on several Slurm workers, independently of the
-laptop session. Running MPI from a shellhost or creating SSH connections to
+laptop session. Starting distributed computation on a shellhost or creating SSH connections to
 individual compute hosts is not an alternative.
 
 **No expertise gate.** Everyone may choose how to submit supported jobs; the
 site's actual resource permissions and scheduler quotas still apply. The
-interface can recommend single-node, job arrays, MPI or a workflow based on the
+interface can recommend single-node, job arrays, multi-node batch or a workflow based on the
 task and resource requirements without classifying the user as a beginner or
 expert. autoSRE can advise on sizing from job accounting, but cannot grant
 unapproved nodes or bypass Slurm.
 
 ## Acceptance before publication
 
-A synthetic two-node rank-placement test, per-node memory/cgroup checks, PMIx
-plugin and MPI binary qualification, distributed GPU/fabric qualification if
-offered, project authorization, job receipt/recovery and batch queue limits
-must pass. The first pilot should cover an ordinary independent-process
-job and a genuine MPI program separately. Do not claim that a multi-node
-request is faster until the application has been profiled.
+A synthetic two-node Slurm task-placement test, per-node memory/cgroup
+checks, project authorization, receipt/recovery, cancellation and batch queue
+limits must pass. Distributed GPU/fabric qualification is a separate optional
+gate if those applications are offered. The first pilot should use a bounded
+independent-task job, prove placement and cleanup, and avoid claiming speedup
+from adding nodes without measurements.
+
+**Scope:** Slurm owns resource allocation and process launching; applications
+own their processing and any inter-task coordination. There is no alternate
+launch-mode setting in the RCC job schema.
 
 See [Slurm and data](05-slurm-and-data.md),
 [Choose your interface](01-choose-your-environment.md), and
