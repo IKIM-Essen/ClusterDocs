@@ -12,8 +12,9 @@ Cancel attended development allocations with `rcc-open stop JOBID` when finished
 
 A multi-node job is a Slurm **batch** allocation with several compute workers,
 not a VS Code or Positron remote session spread across hosts. Specify nodes,
-tasks per node, CPUs per task, per-node memory and maximum runtime, and use
-MPI/PMIx only when accepted by the site. See
+tasks per node, CPUs per task, per-node memory and maximum runtime. Slurm
+allocates nodes and starts tasks; the program must provide any coordination
+needed among tasks. See
 [Multi-node batch workflows](10-multinode-batch.md). For independent files or
 samples, prefer a job array or workflow when appropriate. The UI choice does
 not restrict whether a person may request authorized multi-node resources.
