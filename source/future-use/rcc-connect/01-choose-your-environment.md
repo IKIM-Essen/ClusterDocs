@@ -49,6 +49,19 @@ site-accepted multi-node batch profile. Slurm starts the specified tasks;
 it does not turn an ordinary single-process script into distributed software. See [Multi-node batch jobs](10-multinode-batch.md).
 This is a workload choice, not an expert status.
 
+## We should make the better path easier, not blame the user
+
+A familiar command is often the least mentally expensive option even when it
+creates avoidable resource usage or frustration. RCC should provide contextual,
+reversible suggestions: a Slurm job instead of sustained shellhost computing,
+a bounded source search instead of a shared-storage-wide `rg`, a job array
+for independent samples, or safe reconnection instead of another submission.
+Every suggestion needs a concrete next action and an explanation, not just a
+warning.
+
+See [why RCC recommends low-effort, supported paths](11-make-good-paths-easy.md).
+This is a design goal, not yet an enabled feature.
+
 ## All choices share the same protections
 
 - One project and its approved permissions are authoritative, regardless
