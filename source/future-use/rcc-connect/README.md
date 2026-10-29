@@ -14,6 +14,7 @@
 6. [Troubleshooting and recovering sessions](06-troubleshooting.md).
 7. [Deutsche Kurzanleitung](08-kurzanleitung-de.md).
 8. [Operator readiness, rollout and editorial checklist](07-operator-acceptance.md) — internal.
+9. [Plan the portable ClusterDocs core and Essen site split](09-core-site-migration-plan.md) — internal.
 
 **Editorial conventions:** Explain user outcomes before technical terms. Distinguish
 "planned", "staged", and "available" explicitly. Use project names, not
@@ -25,3 +26,16 @@ fingerprints and account/2FA/device enrollment; never paste live secrets.
 verification decision, `rcc-open doctor`, Positron Remote SSH selection, VS Code
 Remote-SSH selection, Slurm job status, and recovering an existing allocation.
 Screenshots must use synthetic users and projects only.
+## Repository boundary (future work)
+
+The current `IKIM-Essen/ClusterDocs` is the **Essen-specific publication
+source** and is not being renamed or republished by this draft PR. Portable
+RCC explanations and source-neutral VS Code/Positron-on-Slurm guidance should
+be extracted into a new `clusterdocs` repository with sanitized history;
+site URLs, hostnames, institutional rules, host-key identities and operational
+readiness should remain in a future `clusterdocs-site-essen` overlay.
+
+See the [migration and publication plan](09-core-site-migration-plan.md).
+The companion RCC draft PR #4263 records the portable core contract. New
+pages remain intentionally excluded from the public navigation and site build
+until the migration and user pilot have both passed acceptance.
