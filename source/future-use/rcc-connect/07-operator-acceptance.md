@@ -135,6 +135,24 @@
 - [ ] Keep published capability flags off until an operator and R scientist
   independently accept the complete session and rollback evidence.
 
+## Scientist first-session exercise acceptance
+
+- [ ] Stage the exact-reviewed two synthetic scripts from RCC
+  examples/ide-smoke in one authorized project exercise directory.
+- [ ] VS Code: user runs Python inside the allocated worker, observes
+  synthetic mean 6.0 and a durable CSV; no Python packages need installing.
+- [ ] Positron: user sources base R inside the allocated worker, observes
+  mean 6.0 and a PNG plot; no R packages need installing.
+- [ ] Both paths report the actual Slurm job ID, reconnect to the **same**
+  allocation and project, and release the allocation explicitly.
+- [ ] Verify server-side backend/extension/interpreter child cgroups and
+  full cleanup independently; the exercise result alone is not proof.
+- [ ] Test failure messages when no allocation, unknown SSH host key, wrong
+  project, missing R or Python, expired job or unsupported Positron version.
+- [ ] Record completion and friction using only synthetic data, never
+  credentials or private research inputs. See
+  [user walkthrough](13-first-session-smoke-test.md).
+
 ## VS Code allocation-backed server acceptance
 
 - [ ] Start a session on an accepted worker, connect the local VS Code
