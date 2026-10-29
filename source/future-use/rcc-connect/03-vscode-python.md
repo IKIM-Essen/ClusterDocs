@@ -53,6 +53,13 @@ This requires an observed operator canary; editor preferences cannot enforce it.
    allocation with `rcc-open stop JOBID`. Merely closing VS Code does not
    guarantee a Slurm job has been cancelled.
 
+## Five-minute practice exercise
+
+For the approved pilot, try the [five-number VS Code exercise](13-first-session-smoke-test.md).
+The operator stages a tiny Python script in your project; you open it in the
+remote editor, run it, see mean **6.0**, inspect a generated CSV, reconnect
+to the same Slurm job and explicitly stop. No extra packages or research data.
+
 ## Recover without creating a duplicate job
 
 If the editor disconnects, do not automatically submit again. Inspect:
