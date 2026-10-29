@@ -65,6 +65,27 @@
 - [ ] Do not enable the example site policy or publish the multi-node option
   until the corresponding host/Slurm/GPU and documentation gates pass.
 
+## Low-friction guidance acceptance
+
+- [ ] Present one task-oriented recommended path, but keep browser, VS Code,
+  Positron and SSH visible and selectable. Never classify overall expertise
+  from familiarity with one programming language or shell command.
+- [ ] Test that proposed alternatives (Slurm handoff, scoped file search,
+  job array, multi-node batch, safe reattach) require fewer manual decisions
+  than common unsafe workarounds. Do not invent measured efficiency gains.
+- [ ] Every intervention explains its reason in neutral language, previews
+  the intended action and has a permitted opt-out or alternative.
+- [ ] On a refused or queued job, show why, preserve input/state, and offer
+  another allowed next step. No automatic duplicate submission or fallback
+  to shellhost computation.
+- [ ] User research includes domain experts unfamiliar with Slurm/storage,
+  and scheduler experts who prefer a browser. Collect synthetic task
+  completion evidence without private research inputs.
+- [ ] Test one R path, one Python path, many independent samples, a
+  storage-intensive search and a disconnected remote IDE.
+- [ ] Confirm that all recommendation output is advisory; project access,
+  resource admission, SSH trust and Slurm remain authoritative.
+
 ## VS Code allocation-backed server acceptance
 
 - [ ] Start a session on an accepted worker, connect the local VS Code
