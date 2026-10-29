@@ -15,6 +15,7 @@
 7. [Deutsche Kurzanleitung](08-kurzanleitung-de.md).
 8. [Operator readiness, rollout and editorial checklist](07-operator-acceptance.md) — internal.
 9. [Plan the portable ClusterDocs core and Essen site split](09-core-site-migration-plan.md) — internal.
+10. [Make the good computing path easier](11-make-good-paths-easy.md) — future user guidance.
 
 ## User-facing principle: recommend, never gate
 
