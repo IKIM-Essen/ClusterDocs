@@ -95,11 +95,11 @@ NAV=[
  ('Resources','Maintaining RCC Expedition releases','maintainers/rcc-expedition-release.md'),
 ]
 PAGE='''<!doctype html>
-<html lang="en">
+<html lang="en"{% if color_scheme == 'system' %} data-rcc-color-scheme="system"{% endif %}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="{{ 'light dark' if color_scheme == 'system' else 'light' }}">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
   <title>{{ title }} · RCC ClusterDocs</title>
   <link rel="stylesheet" href="{{ root }}assets/site.css">
@@ -396,6 +396,29 @@ footer p { margin:0; }
 .content-card { border-color:var(--home-edge); border-radius:8px; box-shadow:none; }
 .page-contribute { margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--home-edge); color:var(--muted); font-size:.86rem; }
 @media (max-width:760px) { .topbar-inner { padding:12px 15px; } .brand-logo { max-width:155px; } }
+/* Dark scheme: only in builds with --color-scheme system, which follow the
+   browser's light/dark setting like every other RCC page. The light look
+   above stays exactly as it is. */
+@media (prefers-color-scheme: dark) {
+  :root[data-rcc-color-scheme="system"] { color-scheme:dark; --navy:#8fb4ec; --navy-2:#b3cdf4; --cyan:#8c9eff; --cyan-strong:#a8b8ff; --cyan-light:#1d2c42; --green:#81c995; --red:#f28b82; --amber:#e8c15a; --ink:#e6e8eb; --muted:#a9b1bb; --line:#30353c; --paper:#1a1d21; --background:#1a1d21; --home-edge:#2b3036; --shadow:0 16px 38px rgba(0,0,0,.5); --shadow-sm:0 9px 24px rgba(0,0,0,.4); }
+  :root[data-rcc-color-scheme="system"] body { background:var(--background); }
+  :root[data-rcc-color-scheme="system"] .skip { color:var(--paper); }
+  :root[data-rcc-color-scheme="system"] .brand-logo { padding:4px 8px; border-radius:4px; background:#fff; }
+  :root[data-rcc-color-scheme="system"] .topbar .brand-copy span { border-left-color:#3a4048; }
+  :root[data-rcc-color-scheme="system"] .sidebar nav a { color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] .sidebar nav a:hover,:root[data-rcc-color-scheme="system"] .sidebar .nav-section summary:hover { background:#23272d; }
+  :root[data-rcc-color-scheme="system"] .breadcrumbs li + li::before { color:var(--muted); }
+  :root[data-rcc-color-scheme="system"] .course-video-hero,:root[data-rcc-color-scheme="system"] .expedition-callout { background:linear-gradient(145deg,#17304f 0,#1d3a5f 72%,#0f4a5a 100%); }
+  :root[data-rcc-color-scheme="system"] .expedition-actions .expedition-primary { color:#17477e; }
+  :root[data-rcc-color-scheme="system"] .expedition-actions .expedition-primary:hover { color:#17477e; }
+  :root[data-rcc-color-scheme="system"] .content-card .video-course-card,:root[data-rcc-color-scheme="system"] .people-figure,:root[data-rcc-color-scheme="system"] .research-figure,:root[data-rcc-color-scheme="system"] .mobile-nav { border-color:var(--line); background:var(--paper); }
+  :root[data-rcc-color-scheme="system"] .path-card { border-color:var(--line); background:linear-gradient(150deg,var(--paper) 0,#20242a 100%); }
+  :root[data-rcc-color-scheme="system"] code { background:#23272d; color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] pre { border-color:var(--line); background:#1f2328; }
+  :root[data-rcc-color-scheme="system"] pre code { color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] th,:root[data-rcc-color-scheme="system"] tr:hover td,:root[data-rcc-color-scheme="system"] details { background:#20242a; }
+  :root[data-rcc-color-scheme="system"] footer { border-top-color:var(--line); }
+}
 '''
 
 def substitute(text,cfg):
@@ -471,7 +494,11 @@ def normalize_caption_text(text):
     return text
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); a=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true')
+    # The RCC site switch rcc_web_color_scheme (operator decision 2026-11-02):
+    # "system" lets pages follow the browser's light or dark setting. Build with
+    # the same value the RCC site uses, so docs change together with it.
+    ap.add_argument('--color-scheme',choices=('light','system'),default='light'); a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
     media=yaml.safe_load((ROOT/'config/media-manifest.yml').read_text())['publication']
     if a.production:
@@ -537,6 +564,7 @@ def main():
             page_group=group_for_path.get(str(rel),'Documentation'),
             is_home=is_home,
             home_rail=home_rail,
+            color_scheme=a.color_scheme,
         ))
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():

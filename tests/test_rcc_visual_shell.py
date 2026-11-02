@@ -23,6 +23,27 @@ class RCCVisualShellTests(unittest.TestCase):
                 self.assertIn(token, BUILDER)
         self.assertNotIn("not yet released</small>", BUILDER)
 
+    def test_dark_scheme_follows_the_rcc_site_switch(self):
+        # Operator decision 2026-11-02: one dark scheme, off by default, that
+        # follows the browser only in builds made with --color-scheme system.
+        self.assertIn("ap.add_argument('--color-scheme',choices=('light','system'),default='light')", BUILDER)
+        self.assertIn("{% if color_scheme == 'system' %} data-rcc-color-scheme=\"system\"{% endif %}", BUILDER)
+        self.assertIn("content=\"{{ 'light dark' if color_scheme == 'system' else 'light' }}\"", BUILDER)
+        quotes = "'" * 3
+        start = BUILDER.index("CSS=" + quotes) + len("CSS=" + quotes)
+        css = BUILDER[start:BUILDER.index(quotes, start)]
+        dark = css[css.index("@media (prefers-color-scheme: dark)"):]
+        selectors = [
+            selector
+            for line in dark.splitlines()[1:]
+            if "{" in line
+            for selector in line.split("{", 1)[0].split(",")
+        ]
+        self.assertGreater(len(selectors), 20)
+        for selector in selectors:
+            with self.subTest(selector=selector.strip()[:60]):
+                self.assertIn(':root[data-rcc-color-scheme="system"]', selector)
+
     def test_shell_serves_its_logo_from_the_rcc_origin(self):
         # The RCC /docs/ content policy only admits same-origin images.
         self.assertIn('src="/assets/Logo_UME_UKE.svg"', BUILDER)
