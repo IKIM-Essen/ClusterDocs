@@ -23,6 +23,13 @@ nav:
   - RCC-internal coding agents: concepts/agents-and-mcp.md
   - Before sharing data with a coding agent: data/privacy-and-agents.md
   - RCC Expedition - interactive onboarding: rcc-expedition.md
+  - About RCC:
+      - What RCC is: about/index.md
+      - Architecture: about/architecture.md
+      - For biomedical research: about/biomedical-research.md
+      - Institutional value: about/institutional-value.md
+      - Citing RCC: about/citing-rcc.md
+      - Developer resources: about/developer-resources.md
   - RCC Journey - explore the cluster (not yet released): rcc-journey.md
   - RCC services:
       - Which RCC service should I use?: concepts/rcc-services.md
