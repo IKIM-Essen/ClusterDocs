@@ -273,8 +273,8 @@ not depend on a laptop connection remaining open.
 
 ## Mount a small remote folder
 
-Use `scp`, `sftp`, or `rsync` to the shell host for transfers; the browser
-RCC Files portal is not yet released. SSHFS is appropriate only for light interactive use such as editing a
+Use RCC Files in the browser, or `scp`, `sftp`, or `rsync` to the shell host,
+for transfers. SSHFS is appropriate only for light interactive use such as editing a
 small document. It is not a bulk-transfer or analysis filesystem.
 
 After installing a maintained SSHFS implementation for your operating system,

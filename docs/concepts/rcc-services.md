@@ -19,11 +19,11 @@ surface does not create a second account or a second copy of your project.
 |---|---|---|
 | **SSH / VS Code** | work in a shell or editor and submit Slurm jobs | **ready now** |
 | **Documentation** | learn RCC and look up procedures | **ready now** (this site) |
-| **Home** | find RCC services and account entry points | **not yet released** |
-| **Files** | upload, browse, or download approved project data in a browser | **not yet released**; use `scp`, `sftp`, or `rsync` to the shell host |
-| **RCC Analysis** | explore data in a notebook or run a repeatable governed workflow | **not yet released** |
-| **Assistant** | ask for explanations or bounded RCC help | **not yet released** |
-| **Admin / My RCC** | manage your account, project membership, and authorized project actions | **not yet released**; RCC support handles requests |
+| **Home** | find RCC services and account entry points | available |
+| **Files** | upload, browse, or download approved project data in a browser | available; `scp`, `sftp`, or `rsync` to the shell host also work |
+| **RCC Analysis** | explore data in a notebook or run a repeatable governed workflow | available |
+| **Assistant** | ask for explanations or bounded RCC help | available |
+| **My RCC** | manage your account, project membership, and authorized project actions | available |
 
 Open OnDemand is retired from the current RCC product model. Do not use old OOD
 screenshots or bookmarks as current connection instructions.
@@ -117,7 +117,7 @@ it used.
 
 ## Assistant: explain and help, not bypass policy
 
-The RCC Assistant is **not yet released**. When enabled, it may explain documentation, help interpret failures, or support
+The RCC Assistant explains documentation, helps interpret failures, and can support
 bounded actions when those capabilities are enabled. It does not gain a second
 identity, project access, or scheduler authority simply because the request is
 made in natural language.
@@ -127,15 +127,12 @@ and [coding agents and your data](how-rcc-works.md).
 
 ## Admin / My RCC: identity and project governance
 
-Admin / My RCC is **not yet released**; until it is, RCC support handles
-account and membership requests. When released, use the account/project surface
-for actions such as account security, project membership, and project-service
+Use My RCC for actions such as account security, project membership, and project-service
 requests that your role is authorized to make. Finding an action in the
 interface does not mean every user may execute it.
 
-Once the browser services are released, a browser-only RCC account will not need
-an SSH public key. Until then, SSH through the jump host is the supported way to
-use RCC, so register an SSH public key with your account.
+A browser-only RCC account does not need an SSH public key. For command-line
+work through the jump host, add your SSH public key in My RCC.
 
 Read [Projects and supported actions](projects-and-capabilities.md) and
 [How RCC authentication fits together](../reference/authentication-lifecycle.md).

@@ -113,12 +113,10 @@ future recovery.
 SSH does not normally reuse your browser passkey. It uses an SSH public/private
 key pair registered to your RCC account.
 
-**Today SSH is the way to use RCC**, because the browser services (Files, RCC
-Analysis, My RCC) are not yet released, so register an SSH public key with your
-account. Once the browser services are released, a key will be needed only for
-the command-line path, VS Code Remote SSH, direct Slurm use, SFTP/public-key
-automation, or another capability that explicitly requires SSH; browser-only
-Files and RCC Analysis users will then be able to work without SSH credentials.
+An SSH key is needed only for the command-line path, VS Code Remote SSH, direct
+Slurm use, SFTP/public-key automation, or another capability that explicitly
+requires SSH; browser-only Files and RCC Analysis users work without SSH
+credentials. Add your public key in My RCC.
 
 Only the **public** key is registered with RCC. The private key remains on your
 computer or compatible hardware authenticator.

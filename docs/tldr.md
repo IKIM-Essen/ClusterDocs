@@ -139,7 +139,7 @@ server name from a screenshot.
 | Authoritative project input | Approved project storage |
 | Validated results, code, metadata, and provenance | Approved project storage |
 | Active temporary and random I/O | Job-local storage inside the allocation |
-| Upload or download | `scp`, `sftp`, or `rsync` to the shell host (the RCC Files browser portal is not yet released) |
+| Upload or download | RCC Files in the browser, or `scp`, `sftp`, or `rsync` to the shell host |
 | Retained final archive set | Approved repository or planned Coscine flow |
 
 Home is not a project-data area. A project connects data to its accountable

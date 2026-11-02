@@ -5,10 +5,10 @@ research software developers, and technical project staff.
 
 RCC is designed for two access styles:
 
+- **browser-first research**, centered on Files and RCC Analysis
+  (Notebook or Workflow) — the normal way to start; and
 - **advanced command-line/developer access**, using SSH, VS Code, and direct
-  Slurm tools — this is **how you use RCC today**; and
-- **browser-first research**, centered on Files and the planned RCC Analysis
-  Notebook/Workflow experience — **not yet released**.
+  Slurm tools.
 
 Start with [RCC Expedition Light](getting-started/index.md), the required
 first-use path, to set up SSH access on Windows 11 or macOS. If you prefer a
@@ -22,7 +22,7 @@ cluster load.
 <section class="expedition-callout" aria-labelledby="expedition-title">
   <p class="expedition-kicker">Start here</p>
   <h2 id="expedition-title">Set up safe RCC access in 15 minutes</h2>
-  <p>Today you use RCC through SSH, VS Code, and Slurm. A browser-first experience (Files → RCC Analysis Notebook or Workflow → Files) is planned but not yet released.</p>
+  <p>Work in the browser (Files → RCC Analysis Notebook or Workflow → Files), or use SSH, VS Code, and Slurm for command-line work.</p>
   <div class="expedition-actions">
     <a class="expedition-primary" href="getting-started/index.md">Start Expedition Light →</a>
     <a href="analysis/rcc-analysis.md">See planned RCC Analysis</a>

@@ -5,7 +5,7 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 > **Service status:** RCC workers and SSH transfer (`scp`, `sftp`, `rsync`) to
 > the shell host are **ready now**. Existing instrument Samba shares are
 > **in service**; RCC sets up each new share for an approved project and
-> registered device on request. The RCC Files browser portal is **not yet released**.
+> registered device on request. The RCC Files browser portal is available.
 > RCC-to-Coscine archive transfer is **not yet released**; references to it are
 > lifecycle planning, not an operational transfer command.
 
@@ -44,7 +44,7 @@ Do not delete or relocate shared data without checking access and ownership.
 | Small organizational material shared within a primary group | `/groups/<primary-group>/` | Not bulk data, at-scale compute storage or a substitute for a research project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
-| Browser upload and download | RCC Files (**not yet released**) | Until it is released, use `scp`, `sftp`, or `rsync` to the shell host |
+| Browser upload and download | RCC Files | `scp`, `sftp`, or `rsync` to the shell host also work |
 
 ## Research data belongs to a project, not a home directory
 
@@ -95,8 +95,8 @@ survive job completion, reboot, maintenance, or cleanup.
   routed through `login.ikim.uk-essen.de` with SSH `ProxyJump`. The jump host
   only forwards the connection; it is never the transfer endpoint and stores no
   files.
-- The browser-based **RCC Files** portal is **not yet released**. Do not use
-  old Files bookmarks until RCC announces the service.
+- The browser-based **RCC Files** portal is at
+  <https://files.ikim.uk-essen.de/>.
 - For a large tree of small files, create one archive before transfer to reduce
   metadata operations, then verify it with a checksum.
 - Use an approved institutional bulk-transfer service when the SSH route is
