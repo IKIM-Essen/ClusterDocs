@@ -21,13 +21,27 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 For the distinction between primary-group storage and cross-group project
 storage, see [Users, groups, and projects](users-groups-projects.md).
 
+## The rule for large and scalable research data
+
+**Do not put large-volume research datasets or data intended for computation at
+scale in `/homes` or `/groups`.** Both locations are for smaller personal or
+organizational files, not a bulk research-data or compute workspace. Use
+`/projects/<project>/` for project-owned input datasets, research code and
+durable results, **even when every researcher belongs to the same primary
+group**. During high-I/O computation, stage working files to job-local scratch
+and return the results you need to the project before the job ends.
+
+If your existing research data is under `/homes` or `/groups`, ask your
+project lead or RCC support for a controlled move into the correct project.
+Do not delete or relocate shared data without checking access and ownership.
+
 ## Storage decision table
 
 | Purpose | Location or service | Rule |
 |---|---|---|
-| Personal configuration and small source files | home storage | Not a shared project-data area |
-| Durable project input and final results | approved project storage | Shared among approved project members, including members from different primary groups |
-| Material shared only within a user's primary group | approved group storage | Not a substitute for a cross-group project |
+| Personal configuration and small source files | `/homes/<user>/` | No bulk data or at-scale compute inputs/outputs |
+| Large research datasets, shared research code, scalable workloads and durable results | `/projects/<project>/` | Approved project ownership and membership; stage high-I/O working data to scratch |
+| Small organizational material shared within a primary group | `/groups/<primary-group>/` | Not bulk data, at-scale compute storage or a substitute for a research project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
 | Browser upload and download | RCC Files (**not yet released**) | Until it is released, use `scp`, `sftp`, or `rsync` to the shell host |

@@ -94,6 +94,19 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         ):
             self.assertIn(phrase, page)
 
+    def test_large_data_stays_in_projects_not_homes_or_groups(self):
+        start = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
+        reference = (DOCS / "reference/storage-transfer.md").read_text(encoding="utf-8")
+        groups = (DOCS / "reference/users-groups-projects.md").read_text(encoding="utf-8")
+        for page in (start, reference, groups):
+            normalized = " ".join(page.split())
+            for path in ("/homes", "/groups", "/projects"):
+                self.assertIn(path, normalized)
+            self.assertIn("large-volume", normalized)
+            self.assertIn("at scale", normalized)
+        self.assertIn("job-local scratch", reference)
+        self.assertIn("Do not delete or relocate shared data", reference)
+
     def test_old_cluster_comparison_has_a_precise_baseline_and_actions(self):
         page = (DOCS / "getting-started/what-changed.md").read_text(
             encoding="utf-8"

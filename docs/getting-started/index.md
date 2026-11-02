@@ -92,9 +92,15 @@ if you need the full command-line mental model.
 | What you have | Where it belongs |
 |---|---|
 | Personal settings and small private files | `/homes/<user>/` |
-| Material only for your organizational group | `/groups/<primary-group>/` |
-| Shared research data, code, and durable results | `/projects/<project>/` |
+| Small organizational files shared within your primary group | `/groups/<primary-group>/` |
+| Large research datasets, shared research code, scalable analysis inputs and durable results | `/projects/<project>/` |
 | Temporary, high-I/O files for one job | Job-local `/local` or `$TMPDIR` |
+
+**Do not put large-volume data or data intended for computation at scale in
+`/homes` or `/groups`.** Even for research involving only one primary group,
+use an approved `/projects/<project>/` directory. Job-local files are temporary:
+return important results to the project. See the
+[storage and transfer guide](../reference/storage-transfer.md).
 
 Once released, Files and RCC Analysis should present authorized projects
 directly, so browser users will not need to type these paths. The paths remain useful
