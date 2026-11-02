@@ -40,6 +40,7 @@ class RCCVisualShellTests(unittest.TestCase):
             "--navy:#17477e",
             'class="global-nav"',
             "IKIM Cluster channel on Mattermost",
+            'src:url("/InterVariable.woff2")',
         ):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)

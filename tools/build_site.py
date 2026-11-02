@@ -381,7 +381,8 @@ footer p { margin:0; }
 .topbar .brand-copy span { padding-left:.7rem; border-left:1px solid #d0d5da; color:var(--ink); font-size:.72rem; line-height:1.16; letter-spacing:0; text-transform:none; }
 .topbar-actions { gap:1.3rem; }
 .brand-logo { display:block; width:224px; max-width:224px; height:auto; max-height:48px; object-fit:contain; }
-.topbar-button { border:1px solid var(--home-edge); background:var(--paper); color:var(--navy); }
+@font-face { font-family:"Inter"; font-style:normal; font-weight:100 900; font-display:swap; src:url("/InterVariable.woff2") format("woff2"); }
+.topbar-button { padding:.45rem .7rem; border:1px solid var(--home-edge); border-radius:4px; background:var(--paper); color:var(--navy); font-size:.85rem; }
 .sidebar-card { background:var(--paper); color:var(--ink); border-right:1px solid var(--home-edge); }
 .sidebar-kicker,.sidebar .nav-section summary { color:var(--muted); }
 .sidebar .nav-section[open] summary,.sidebar-heading strong { color:var(--ink); }
