@@ -11,6 +11,8 @@ theme:
 nav:
   - Home: index.md
   - Start here:
+      - New browser-first RCC invitation (rollout draft): getting-started/existing-user-invitation.md
+      - Files to results (rollout draft): paths/browser-files-to-results.md
       - Request and activate an RCC account (not yet released): getting-started/account-enrollment.md
       - Expedition Light - first 15 minutes: getting-started/index.md
       - macOS setup: getting-started/macos.md
@@ -90,6 +92,8 @@ nav:
       - RCC connection name: connecting/stable-endpoints.md
       - Safe everyday practice: security/safe-use.md
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
+  - Maintainers:
+      - Browser-first staged cutover checklist: maintainers/browser-first-rollout-checklist.md
   - Resources:
       - Who we are: team.md
       - Getting help and RCC Guardians: support/guardians-and-ai-assistant.md
