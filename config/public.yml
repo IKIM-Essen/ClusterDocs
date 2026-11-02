@@ -4,15 +4,15 @@ site_url: https://ikim-essen.github.io/ClusterDocs/
 support_contact: IKIM Cluster channel on Mattermost
 ssh_gateway_alias: rcc-login
 ssh_target_alias: shellhost
-transfer_service_name: RCC Files (not yet released)
+transfer_service_name: RCC Files
 transfer_service_url: https://files.ikim.uk-essen.de/
 media_base_url: https://docs.ikim.uk-essen.de/media/rcc-onboarding
 lab_remote_access_name: RCC Headscale
 feature_status:
-  rcc_admin: not_yet_released
-  rcc_admin_self_administration: not_yet_released
-  rcc_admin_primary_approval: not_yet_released
-  rcc_files: not_yet_released
+  rcc_admin: ready
+  rcc_admin_self_administration: ready
+  rcc_admin_primary_approval: ready
+  rcc_files: ready
   rcc_workers: ready
   ssh_shellhost_transfer: ready
   samba_project_shares: in_service_on_request

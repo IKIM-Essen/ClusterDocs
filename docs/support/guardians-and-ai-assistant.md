@@ -11,11 +11,12 @@ project data there.
 
 ## Coding agent
 
-> **Service status — not yet released:** the RCC help assistant and coding
-> agent are not yet available to users. This section describes the intended
-> service.
+> **Service status — available:** the RCC help assistant is open at
+> <https://assistant.ikim.uk-essen.de/>. It answers from RCC documentation and
+> never sees your project data unless you paste it; do not paste patient
+> information.
 
-When released, the RCC coding agent is intended to explain RCC concepts, find documentation, interpret
+The RCC coding agent is designed to explain RCC concepts, find documentation, interpret
 common Slurm states/errors, diagnose supported environment/container problems,
 explain transfer/storage guidance, prepare project requests, and escalate with
 useful evidence.

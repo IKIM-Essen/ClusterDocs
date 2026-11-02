@@ -14,17 +14,22 @@ def normalized(path):
 class RccAdminEnrollmentDocsTests(unittest.TestCase):
     def test_enrollment_contract_is_explicit(self):
         page = normalized(DOCS / "getting-started/account-enrollment.md")
+        # The released flow (operator decisions 2026-11-02): email first, then
+        # the group choice, a passkey from the emailed link, never a password.
         for statement in (
-            "service status — not yet released",
-            "withdrawn on 3 october 2026",
-            "signed link is valid for seven days",
+            "you never need a password",
+            "confirm your email address for rcc",
+            "my group is not listed",
             "do not choose an rcc username, upload an ssh key, or request a project",
-            "does not email activation secrets",
+            "the link works once and expires after 24 hours",
             "project membership is requested separately after activation",
+            "ikim cluster channel on mattermost",
         ):
             self.assertIn(statement, page)
         self.assertNotIn("invite-only pilot", page)
         self.assertNotIn("github.com/ikim-essen/rcc/pull/", page)
+        self.assertNotIn("set your initial rcc password", page)
+        self.assertNotIn("not yet released", page)
 
     def test_enrollment_is_in_both_navigation_systems(self):
         mkdocs = normalized(ROOT / "mkdocs.yml")
@@ -48,7 +53,7 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
 
     def test_access_page_routes_current_requests_to_support(self):
         page = normalized(DOCS / "reference/access-ssh-vscode.md")
-        self.assertIn("the rcc admin self-service portal is not yet released", page)
+        self.assertIn("request an account on the rcc home page", page)
         self.assertIn("ikim cluster channel on mattermost", page)
         self.assertIn("getting-started/account-enrollment.md", page)
         self.assertNotIn("invite-only pilot", page)
