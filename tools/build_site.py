@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
- ('Start here','Request and activate an RCC account (not yet released)','getting-started/account-enrollment.md'),
+ ('Start here','Request and activate an RCC account','getting-started/account-enrollment.md'),
  ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
  ('Start here','macOS setup','getting-started/macos.md'),
  ('Start here','Windows 11 setup','getting-started/windows.md'),
@@ -28,8 +28,8 @@ NAV=[
  ('About RCC','Citing RCC','about/citing-rcc.md'),
  ('About RCC','Developer resources','about/developer-resources.md'),
  ('RCC services','Which RCC service should I use?','concepts/rcc-services.md'),
- ('RCC services','RCC Files (not yet released)','concepts/rcc-files.md'),
- ('RCC services','RCC Analysis · notebooks and workflows (not yet released)','analysis/rcc-analysis.md'),
+ ('RCC services','RCC Files','concepts/rcc-files.md'),
+ ('RCC services','RCC Analysis · notebooks and workflows','analysis/rcc-analysis.md'),
  ('RCC services','Project types','concepts/project-types.md'),
  ('RCC services','Projects and supported actions','concepts/projects-and-capabilities.md'),
  ('RCC services','Delegated governance and project proxies','concepts/delegated-governance.md'),
@@ -73,7 +73,7 @@ NAV=[
  ('Reference','Authentication lifecycle','reference/authentication-lifecycle.md'),
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
- ('Reference','Workbench execution layer (advanced, not yet released)','concepts/workbench-interfaces.md'),
+ ('Reference','Workbench execution layer (advanced)','concepts/workbench-interfaces.md'),
  ('Reference','Storage and transfer','reference/storage-transfer.md'),
  ('Reference','Sharing data','reference/data-sharing.md'),
  ('Reference','RCC Usage reporting (not yet released)','reference/usage-accounting.md'),
@@ -109,12 +109,11 @@ PAGE='''<!doctype html>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="{{ root }}index.html" aria-label="RCC documentation home">
-      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
-      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
+      <span class="brand-copy"><strong>RCC</strong><span>Research<br>Compute Cluster</span></span>
     </a>
     <div class="topbar-actions">
-      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
-      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+      <img class="brand-logo" src="/assets/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <a class="topbar-button" href="/account/">My RCC</a>
     </div>
   </div>
 </header>
@@ -123,10 +122,11 @@ PAGE='''<!doctype html>
     <summary>Browse documentation</summary>
     <nav aria-label="Mobile documentation navigation">
       <section><h2>RCC surfaces</h2>
+        <a href="/">Home</a>
+        <a href="https://files.ikim.uk-essen.de/">Files</a>
+        <a href="/analysis/">Analysis</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
-        <span class="nav-pending">Home <small>not yet released</small></span>
-        <span class="nav-pending">Files <small>not yet released</small></span>
-        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+        <a href="/account/">My RCC</a>
       </section>
       {% for group,items in nav_groups %}
       {% if items|length == 1 %}
@@ -143,10 +143,11 @@ PAGE='''<!doctype html>
         <section class="sidebar-section">
           <p class="sidebar-kicker">RCC surfaces</p>
           <nav class="global-nav" aria-label="RCC services">
+            <a href="/">Home</a>
+            <a href="https://files.ikim.uk-essen.de/">Files</a>
+            <a href="/analysis/">Analysis</a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
-            <span class="nav-pending">Home <small>not yet released</small></span>
-            <span class="nav-pending">Files <small>not yet released</small></span>
-            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+            <a href="/account/">My RCC</a>
           </nav>
         </section>
         <section class="sidebar-section documentation-tree">
@@ -164,7 +165,7 @@ PAGE='''<!doctype html>
             {% endfor %}
           </nav>
         </section>
-        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
+        <div class="sidebar-note"><strong>Need help?</strong><span>Ask in the IKIM Cluster channel on Mattermost, or ask your RCC approver.</span></div>
       </div>
     </aside>
     <main id="content" class="content-card">
@@ -178,6 +179,7 @@ PAGE='''<!doctype html>
         <figcaption>RCC is built by scientists for other scientists. <a href="team/index.html">Meet the team.</a></figcaption>
       </figure>{% endif %}
       {{ content }}
+      <p class="page-contribute"><a href="https://github.com/IKIM-Essen/ClusterDocs/edit/main/docs/{{ source_path }}">Edit this page on GitHub</a> · <a href="https://github.com/IKIM-Essen/ClusterDocs/issues/new?title={{ ('Docs: ' ~ title) | urlencode }}&amp;body={{ ('Page: docs/' ~ source_path) | urlencode }}">Report a problem with this page</a></p>
       {% if is_home %}<figure class="research-figure">
         <img src="assets/biomedical-data-analysis-tools.webp" alt="A genome connected to Python, R, GPUs, Shiny, Jupyter notebooks, and biomedical data-science tools">
         <figcaption>One research environment for statistics, data science, reproducible AI, distributed computation, visualization, and governed sharing.</figcaption>
@@ -367,7 +369,33 @@ footer p { margin:0; }
   .shell { max-width:none; padding:0; }
   .docs-layout { display:block; }
   .content-card { border:0; box-shadow:none; padding:0; }
-}'''
+}
+/* The RCC Home look (operator decision 2026-11-02): documentation served at
+   rcc.ikim.uk-essen.de/docs/ continues the RCC Home, sign-in and My RCC. */
+:root { --navy:#17477e; --navy-2:#24528d; --cyan:#41689c; --cyan-strong:#315a97; --cyan-light:#eaf1fb; --background:#fff; --home-edge:#dfe3e8; }
+.topbar { background:var(--paper); color:var(--ink); border-bottom:1px solid var(--home-edge); box-shadow:none; }
+.topbar-inner { min-height:76px; padding:14px 30px; }
+.topbar .brand { color:var(--ink); text-decoration:none; }
+.topbar .brand-copy { display:flex; align-items:center; gap:.65rem; padding-left:0; border-left:0; }
+.topbar .brand-copy strong { color:var(--navy); font-size:2rem; line-height:1; }
+.topbar .brand-copy span { padding-left:.7rem; border-left:1px solid #d0d5da; color:var(--ink); font-size:.72rem; line-height:1.16; letter-spacing:0; text-transform:none; }
+.topbar-actions { gap:1.3rem; }
+.brand-logo { display:block; width:224px; max-width:224px; height:auto; max-height:48px; object-fit:contain; }
+.topbar-button { border:1px solid var(--home-edge); background:var(--paper); color:var(--navy); }
+.sidebar-card { background:var(--paper); color:var(--ink); border-right:1px solid var(--home-edge); }
+.sidebar-kicker,.sidebar .nav-section summary { color:var(--muted); }
+.sidebar .nav-section[open] summary,.sidebar-heading strong { color:var(--ink); }
+.sidebar-heading { border-bottom-color:var(--home-edge); }
+.stage-badge { background:var(--cyan-light); color:var(--cyan-strong); }
+.sidebar nav a { color:#344054; }
+.sidebar nav a:hover,.sidebar .nav-section summary:hover { background:#f1f5f9; color:var(--navy); }
+.sidebar nav a[aria-current="page"] { background:var(--cyan-light); color:var(--navy-2); box-shadow:none; }
+.sidebar-note { border-color:var(--home-edge); background:var(--paper); }
+.sidebar-note span { color:var(--muted); }
+.content-card { border-color:var(--home-edge); border-radius:8px; box-shadow:none; }
+.page-contribute { margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--home-edge); color:var(--muted); font-size:.86rem; }
+@media (max-width:760px) { .topbar-inner { padding:12px 15px; } .brand-logo { max-width:155px; } }
+'''
 
 def substitute(text,cfg):
     for k,v in cfg.items():
@@ -504,6 +532,7 @@ def main():
             root=relroot(target.relative_to(out)),
             status=cfg['site_status'],
             current_url=current_url,
+            source_path=str(rel),
             page_group=group_for_path.get(str(rel),'Documentation'),
             is_home=is_home,
             home_rail=home_rail,

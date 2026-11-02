@@ -8,35 +8,38 @@ BUILDER = (ROOT / "tools/build_site.py").read_text(encoding="utf-8")
 
 class RCCVisualShellTests(unittest.TestCase):
     def test_global_shell_matches_the_rcc_surface_contract(self):
+        # Released on the RCC origin at /docs/ (operator decisions 2026-11-02):
+        # the shell links the live RCC surfaces and continues the RCC Home look.
         for token in (
             'aria-label="RCC services"',
-            '>Home <small>not yet released</small>',
-            '>Files <small>not yet released</small>',
+            '<a href="/">Home</a>',
+            '<a href="https://files.ikim.uk-essen.de/">Files</a>',
+            '<a href="/analysis/">Analysis</a>',
             'aria-current="page" href="{{ root }}index.html">Documentation',
-            '>RCC Admin <small>not yet released</small>',
-            'My RCC · not yet released',
+            '<a href="/account/">My RCC</a>',
+            '<a class="topbar-button" href="/account/">My RCC</a>',
         ):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)
+        self.assertNotIn("not yet released</small>", BUILDER)
 
-    def test_shell_does_not_link_withdrawn_browser_services(self):
-        for host in (
-            "https://rcc.ikim.uk-essen.de/",
-            "https://files.ikim.uk-essen.de/",
-            "https://rcc-admin.ikim.uk-essen.de/",
-        ):
-            with self.subTest(host=host):
-                self.assertNotIn(host, BUILDER)
+    def test_shell_serves_its_logo_from_the_rcc_origin(self):
+        # The RCC /docs/ content policy only admits same-origin images.
+        self.assertIn('src="/assets/Logo_UME_UKE.svg"', BUILDER)
+        self.assertNotIn("https://www.uk-essen.de/wp-content/", BUILDER)
+
+    def test_every_page_invites_contributions_on_github(self):
+        self.assertIn("https://github.com/IKIM-Essen/ClusterDocs/edit/main/docs/{{ source_path }}", BUILDER)
+        self.assertIn("https://github.com/IKIM-Essen/ClusterDocs/issues/new?title=", BUILDER)
+        self.assertIn("source_path=str(rel)", BUILDER)
 
     def test_new_rcc_header_and_service_rail_are_present(self):
         for token in (
-            ".topbar { background:var(--navy)",
-            ".sidebar-card { min-height:100%;",
-            "background:linear-gradient(180deg,var(--navy)",
+            ".topbar { background:var(--paper)",
+            ".sidebar-card { background:var(--paper)",
+            "--navy:#17477e",
             'class="global-nav"',
-            "#1262b0",
-            "#3ab0ff",
-            "Compute · Data · Projects",
+            "IKIM Cluster channel on Mattermost",
         ):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)
