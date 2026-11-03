@@ -5,9 +5,9 @@ keeping consequential actions bounded.
 
 ## Getting help today
 
-Contact the RCC team in the **IKIM Cluster channel on Mattermost**. Do not post
+Ask your **RCC approver**, who brings in the RCC team when needed. Do not send
 credentials, private keys, restricted sample information, or other sensitive
-project data there.
+project data in a message.
 
 ## Coding agent
 

@@ -23,7 +23,7 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
             "do not choose an rcc username, upload an ssh key, or request a project",
             "the link works once and expires after 24 hours",
             "project membership is requested separately after activation",
-            "ikim cluster channel on mattermost",
+            "ask your rcc approver.",
         ):
             self.assertIn(statement, page)
         self.assertNotIn("invite-only pilot", page)
@@ -54,7 +54,9 @@ class RccAdminEnrollmentDocsTests(unittest.TestCase):
     def test_access_page_routes_current_requests_to_support(self):
         page = normalized(DOCS / "reference/access-ssh-vscode.md")
         self.assertIn("request an account on the rcc home page", page)
-        self.assertIn("ikim cluster channel on mattermost", page)
+        # Operator decision 2026-11-03: no page names a support channel.
+        self.assertIn("questions go to your rcc approver", page)
+        self.assertNotIn("mattermost", page)
         self.assertIn("getting-started/account-enrollment.md", page)
         self.assertNotIn("invite-only pilot", page)
 

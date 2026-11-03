@@ -22,8 +22,7 @@ cover the disclosure. Technical access does not by itself authorize sharing.
 
 ## The recommended model: a project with a shared Unix group
 
-Ask RCC support (IKIM Cluster channel on Mattermost), with your primary
-approver, to create a project that identifies the responsible owner, purpose, approved
+Ask your primary approver to request a project from the RCC team that identifies the responsible owner, purpose, approved
 members, storage location, and a **shared Unix group**. RCC adds each named
 member to that group. Members can then work in the supplied project path,
 normally under:

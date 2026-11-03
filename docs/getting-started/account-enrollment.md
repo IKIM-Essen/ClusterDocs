@@ -67,5 +67,5 @@ same account. Your files, projects and other access stay as they are.
 
 ## Help
 
-Ask in the **IKIM Cluster channel on Mattermost**, or ask your RCC approver.
+Ask your **RCC approver**.
 Never post a password, a sign-in link, a private SSH key or patient information.

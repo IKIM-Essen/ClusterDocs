@@ -164,7 +164,7 @@ uploads.
 
 ## Plan the connection before plugging in
 
-Contact the team in the **Mattermost IKIM Cluster channel** with:
+Ask your **RCC approver** to bring in the RCC team, with:
 
 - the device type, owner, and physical location;
 - its network interface identifier;

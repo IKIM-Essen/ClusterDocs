@@ -23,7 +23,7 @@ Request an account on the RCC home page with your institutional email; the
 steps are in [Request and activate an RCC account](../getting-started/account-enrollment.md).
 You sign in with a passkey and never need a password. For command-line work,
 add your **public** SSH key in **My RCC** after activation, never the private
-key. Questions go to the **IKIM Cluster channel on Mattermost**.
+key. Questions go to your **RCC approver**.
 
 Every researcher receives an individual account. Project membership replaces
 shared accounts and shared credentials.

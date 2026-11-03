@@ -60,7 +60,7 @@ class RCCVisualShellTests(unittest.TestCase):
             ".sidebar-card { background:var(--paper)",
             "--navy:#17477e",
             'class="global-nav"',
-            "IKIM Cluster channel on Mattermost",
+            "Ask your RCC approver. Lost your passkey?",
             'src:url("/InterVariable.woff2")',
         ):
             with self.subTest(token=token):

@@ -165,7 +165,7 @@ PAGE='''<!doctype html>
             {% endfor %}
           </nav>
         </section>
-        <div class="sidebar-note"><strong>Need help?</strong><span>Ask in the IKIM Cluster channel on Mattermost, or ask your RCC approver.</span></div>
+        <div class="sidebar-note"><strong>Need help?</strong><span>Ask your RCC approver. Lost your passkey? Your approver can send you a new sign-in link.</span></div>
       </div>
     </aside>
     <main id="content" class="content-card">
