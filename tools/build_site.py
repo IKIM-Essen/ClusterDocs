@@ -101,7 +101,7 @@ PAGE='''<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="{{ 'light dark' if color_scheme == 'system' else 'light' }}">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
-  <title>{{ title }} · RCC ClusterDocs</title>
+  <title>{% if title == brand %}{{ brand }}{% else %}{{ title }} · {{ brand }}{% endif %}</title>
   <link rel="stylesheet" href="{{ root }}assets/site.css">
 </head>
 <body class="{% if is_home %}home{% endif %}">
@@ -151,7 +151,7 @@ PAGE='''<!doctype html>
           </nav>
         </section>
         <section class="sidebar-section documentation-tree">
-          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">{{ status }}</span></div></div>
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>{{ sidebar_name }}</strong>{% if show_status_badge %}<span class="stage-badge">{{ status }}</span>{% endif %}</div></div>
           <nav aria-label="Documentation navigation">
             {% for group,items in nav_groups %}
             {% if items|length == 1 %}
@@ -173,7 +173,7 @@ PAGE='''<!doctype html>
         {% if is_home %}<li><span aria-current="page">Documentation</span></li>
         {% else %}<li><a href="{{ root }}index.html">Documentation</a></li><li><span aria-current="page">{{ title }}</span></li>{% endif %}
       </ol></nav>
-      <p class="eyebrow">{{ page_group }} · RCC ClusterDocs</p>
+      <p class="eyebrow">{{ page_group }} · {{ brand }}</p>
       {% if is_home %}<figure class="people-figure">
         <img src="assets/cluster-barnraiser.webp" alt="RCC team members installing and checking equipment inside the cluster racks">
         <figcaption>RCC is built by scientists for other scientists. <a href="team/index.html">Meet the team.</a></figcaption>
@@ -437,8 +437,18 @@ def gate_unreleased_videos(text,publication):
   </div>'''
     return re.sub(r'<video\b[^>]*>.*?</video>',notice,text,flags=re.S)
 
-def title_of(text):
-    m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else 'RCC ClusterDocs'
+def title_of(text,brand='RCC ClusterDocs'):
+    m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else brand
+
+# Product names the GitHub Pages build uses in page text and navigation labels.
+# A build with --site-name (the RCC origin build at /docs/) shows that name
+# instead; longest first so "RCC ClusterDocs NG" does not become "RCC <name>".
+LEGACY_PRODUCT_NAMES=('RCC ClusterDocs NG','ClusterDocs NG')
+
+def rebrand(text,site_name):
+    if not site_name: return text
+    for legacy in LEGACY_PRODUCT_NAMES: text=text.replace(legacy,site_name)
+    return text
 
 def add_heading_ids(content):
     """Give rendered Markdown headings stable, unique fragment targets."""
@@ -498,8 +508,17 @@ def main():
     # The RCC site switch rcc_web_color_scheme (operator decision 2026-11-02):
     # "system" lets pages follow the browser's light or dark setting. Build with
     # the same value the RCC site uses, so docs change together with it.
-    ap.add_argument('--color-scheme',choices=('light','system'),default='light'); a=ap.parse_args()
+    ap.add_argument('--color-scheme',choices=('light','system'),default='light')
+    # The RCC origin build (rcc.ikim.uk-essen.de/docs/, operator direction
+    # 2026-11-05) is branded "RCC Documentation" and shows no release-state
+    # badge. Without these options the build is unchanged (GitHub Pages).
+    ap.add_argument('--site-name',default='',help='Brand for page titles, eyebrow and sidebar; replaces the ClusterDocs NG product name in page text and navigation labels')
+    ap.add_argument('--no-status-badge',action='store_true',help='Omit the site_status badge from the sidebar')
+    a=ap.parse_args()
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
+    if a.site_name: cfg['site_name']=a.site_name
+    brand=a.site_name or 'RCC ClusterDocs'
+    sidebar_name=a.site_name or 'ClusterDocs'
     media=yaml.safe_load((ROOT/'config/media-manifest.yml').read_text())['publication']
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
@@ -521,11 +540,11 @@ def main():
     for group,label,path in NAV:
         if not nav_groups or nav_groups[-1][0] != group:
             nav_groups.append((group,[]))
-        nav_groups[-1][1].append((label,out_url(path)))
+        nav_groups[-1][1].append((rebrand(label,a.site_name),out_url(path)))
     group_for_path={path:group for group,_,path in NAV}
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
-        text=substitute(src.read_text(),cfg)
+        text=rebrand(substitute(src.read_text(),cfg),a.site_name)
         text=gate_unreleased_videos(text,media)
         content=add_heading_ids(md(text))
         def rewrite_local(match):
@@ -554,7 +573,10 @@ def main():
                 content=content[:rail_match.start()]+content[rail_match.end():]
         current_url=out_url(str(rel))
         target.write_text(Template(PAGE).render(
-            title=title_of(text),
+            title=title_of(text,brand),
+            brand=brand,
+            sidebar_name=sidebar_name,
+            show_status_badge=not a.no_status_badge,
             content=content,
             nav_groups=nav_groups,
             root=relroot(target.relative_to(out)),

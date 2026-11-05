@@ -95,6 +95,14 @@ python -m http.server 8765 --bind 127.0.0.1 --directory site-preview
 
 Then open <http://127.0.0.1:8765/>.
 
+The build served on the RCC origin at `https://rcc.ikim.uk-essen.de/docs/` is
+branded "RCC Documentation" and has no release-state badge:
+
+```bash
+python tools/build_site.py --output site-rcc --color-scheme light \
+  --site-name "RCC Documentation" --no-status-badge
+```
+
 ## Repository integration
 
 `meta/PULL_REQUEST_PLAN.md` recommends an umbrella issue and four reviewable documentation pull requests. Markdown should remain the authoritative repository content. Large MP4 files should normally be hosted as approved institutional media or release assets rather than added to ordinary Git history.
