@@ -38,7 +38,7 @@ class CIRoutingTests(unittest.TestCase):
         self.assertIn("--branch gh-pages", workflow)
         self.assertIn("push origin HEAD:gh-pages", workflow)
         self.assertIn("touch site-production/.nojekyll", workflow)
-        self.assertIn("test ! -e site-production/CNAME", workflow)
+        self.assertIn('test "$(cat site-production/CNAME)" = "docs.ikim.uk-essen.de"', workflow)
         self.assertIn("StrictHostKeyChecking=yes", workflow)
         self.assertNotIn("push --force", workflow)
         self.assertNotIn("uses:", workflow)
