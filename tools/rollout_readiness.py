@@ -38,7 +38,7 @@ def has_deployment_workflow() -> bool:
         "--branch gh-pages",
         "push origin HEAD:gh-pages",
         "touch site-production/.nojekyll",
-        "test ! -e site-production/CNAME",
+        'test "$(cat site-production/CNAME)" = "docs.ikim.uk-essen.de"',
         "StrictHostKeyChecking=yes",
     )
     forbidden = ("pull_request:", "\n  push:", "schedule:", "uses:")

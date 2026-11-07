@@ -116,7 +116,8 @@ Follow `meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md`. The workflow accepts only the
 `clusterdocs-ng` branch, checks out the exact event SHA through the RCC runner
 helper, runs every production gate, creates a normal child commit of the
 current `gh-pages` head, pushes without force, and verifies the published
-commit. It deliberately emits `.nojekyll` and refuses a `CNAME` file.
+commit. It emits `.nojekyll` and a `CNAME` file containing exactly
+`docs.ikim.uk-essen.de`, the Pages custom domain.
 
 After GitHub Pages serves the new commit, re-run the online media gate and
 Firefox playback acceptance, then perform the novice acceptance tasks
@@ -124,10 +125,10 @@ immediately against the live site. Novice acceptance does not block the initial
 switch, but it blocks declaring rollout complete; a blocking safety or
 task-completion finding requires rollback or a corrected release.
 
-A future `docs.ikim.uk-essen.de` CNAME remains a separate decision. Do not add
-DNS or a Pages `CNAME` file during this content rollout. That review must also
-resolve where `/media/rcc-onboarding/` will live, because the current media
-plan uses the same hostname on the RCC web service.
+Since 2026-11-07 `docs.ikim.uk-essen.de` is the GitHub Pages custom domain,
+and the RCC web service no longer serves that hostname. The media plan above,
+which used the same hostname on the RCC web service, therefore needs a new
+media location before `preview_links` may be enabled.
 
 ## Rollback
 

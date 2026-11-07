@@ -39,7 +39,9 @@ jobs:
           /opt/rcc-ci/venv/bin/python tools/check_site_links.py site-production
           printf '{"source_commit":"%s"}\n' "$GITHUB_SHA" > site-production/assets/release.json
           touch site-production/.nojekyll
-          test ! -e site-production/CNAME
+          # GitHub Pages keeps its custom domain only while gh-pages carries this file.
+          printf 'docs.ikim.uk-essen.de\n' > site-production/CNAME
+          test "$(cat site-production/CNAME)" = "docs.ikim.uk-essen.de"
 
       - name: Publish the exact tree to the existing GitHub Pages branch
         env:
