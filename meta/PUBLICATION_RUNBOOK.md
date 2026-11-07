@@ -113,7 +113,7 @@ Before the first dispatch, provision these repository secrets in Gitea only:
   line.
 
 Follow `meta/GITEA_GITHUB_PAGES_DEPLOYMENT.md`. The workflow accepts only the
-`clusterdocs-ng` branch, checks out the exact event SHA through the RCC runner
+`docs-site` branch, checks out the exact event SHA through the RCC runner
 helper, runs every production gate, creates a normal child commit of the
 current `gh-pages` head, pushes without force, and verifies the published
 commit. It emits `.nojekyll` and a `CNAME` file containing exactly
