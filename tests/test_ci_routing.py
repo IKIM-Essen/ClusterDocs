@@ -30,7 +30,7 @@ class CIRoutingTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("runs-on: rcc-ci", workflow)
         self.assertIn("/opt/rcc-ci/bin/gitea-ci-checkout", workflow)
-        self.assertIn('test "$GITHUB_REF" = "refs/heads/clusterdocs-ng"', workflow)
+        self.assertIn('test "$GITHUB_REF" = "refs/heads/docs-site"', workflow)
         self.assertIn('test "$(git rev-parse HEAD)" = "$GITHUB_SHA"', workflow)
         self.assertIn("tools/rollout_readiness.py", workflow)
         self.assertIn("tools/build_site.py --production", workflow)

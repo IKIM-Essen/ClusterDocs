@@ -25,7 +25,7 @@ jobs:
       - name: Require the protected production branch and immutable toolchain
         run: |
           set -eu
-          test "$GITHUB_REF" = "refs/heads/clusterdocs-ng"
+          test "$GITHUB_REF" = "refs/heads/docs-site"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test -z "$(git status --porcelain)"
           /opt/rcc-ci/venv/bin/python tools/check_ci_environment.py

@@ -9,9 +9,13 @@ publishes `gh-pages` without that file. DNS (`docs` CNAME
 `ikim-essen.github.io.` plus the organization's Pages verification TXT record)
 is kept in the RCC public zone.
 
-The manually dispatched Gitea workflow builds the exact `clusterdocs-ng`
-commit and publishes the generated tree to the existing `gh-pages` branch of
+The manually dispatched Gitea workflow builds the exact `docs-site` commit
+and publishes the generated tree to the existing `gh-pages` branch of
 `IKIM-Essen/ClusterDocs`. GitHub Actions is manual validation only.
+
+`docs-site` is the production branch (operator decision 2026-11-07). It was
+cut from `main` at the current plan; `clusterdocs-ng` is kept unchanged as the
+previous production line and is no longer deployed.
 
 Gitea must hold two repository secrets:
 
