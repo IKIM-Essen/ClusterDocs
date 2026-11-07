@@ -5,7 +5,7 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 > **Service status:** RCC workers and SSH transfer (`scp`, `sftp`, `rsync`) to
 > the shell host are **ready now**. Existing instrument Samba shares are
 > **in service**; RCC sets up each new share for an approved project and
-> registered device on request. The RCC Files browser portal is **not yet released**.
+> registered device on request. The RCC Files browser portal is available.
 > RCC-to-Coscine archive transfer is **not yet released**; references to it are
 > lifecycle planning, not an operational transfer command.
 
@@ -21,16 +21,30 @@ Choose storage by lifecycle and access pattern, not only by free capacity.
 For the distinction between primary-group storage and cross-group project
 storage, see [Users, groups, and projects](users-groups-projects.md).
 
+## The rule for large and scalable research data
+
+**Do not put large-volume research datasets or data intended for computation at
+scale in `/homes` or `/groups`.** Both locations are for smaller personal or
+organizational files, not a bulk research-data or compute workspace. Use
+`/projects/<project>/` for project-owned input datasets, research code and
+durable results, **even when every researcher belongs to the same primary
+group**. During high-I/O computation, stage working files to job-local scratch
+and return the results you need to the project before the job ends.
+
+If your existing research data is under `/homes` or `/groups`, ask your
+project lead or RCC support for a controlled move into the correct project.
+Do not delete or relocate shared data without checking access and ownership.
+
 ## Storage decision table
 
 | Purpose | Location or service | Rule |
 |---|---|---|
-| Personal configuration and small source files | home storage | Not a shared project-data area |
-| Durable project input and final results | approved project storage | Shared among approved project members, including members from different primary groups |
-| Material shared only within a user's primary group | approved group storage | Not a substitute for a cross-group project |
+| Personal configuration and small source files | `/homes/<user>/` | No bulk data or at-scale compute inputs/outputs |
+| Large research datasets, shared research code, scalable workloads and durable results | `/projects/<project>/` | Approved project ownership and membership; stage high-I/O working data to scratch |
+| Small organizational material shared within a primary group | `/groups/<primary-group>/` | Not bulk data, at-scale compute storage or a substitute for a research project |
 | High-I/O intermediates during a job | job-local scratch | Not backed up; copy required results back |
 | Reusable software environment | approved local Conda path or immutable container | Do not run metadata-heavy environments from shared storage |
-| Browser upload and download | RCC Files (**not yet released**) | Until it is released, use `scp`, `sftp`, or `rsync` to the shell host |
+| Browser upload and download | RCC Files | `scp`, `sftp`, or `rsync` to the shell host also work |
 
 ## Research data belongs to a project, not a home directory
 
@@ -81,8 +95,8 @@ survive job completion, reboot, maintenance, or cleanup.
   routed through `login.ikim.uk-essen.de` with SSH `ProxyJump`. The jump host
   only forwards the connection; it is never the transfer endpoint and stores no
   files.
-- The browser-based **RCC Files** portal is **not yet released**. Do not use
-  old Files bookmarks until RCC announces the service.
+- The browser-based **RCC Files** portal is at
+  <https://files.ikim.uk-essen.de/>.
 - For a large tree of small files, create one archive before transfer to reduce
   metadata operations, then verify it with a checksum.
 - Use an approved institutional bulk-transfer service when the SSH route is

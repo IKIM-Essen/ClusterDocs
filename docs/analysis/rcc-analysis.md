@@ -1,11 +1,11 @@
 # RCC Analysis: notebooks and governed workflows
 
-> **Service status:** RCC Analysis is **not yet released to users**. This page
-> documents the staged browser-first product model. Current RCC workers, Slurm,
-> managed Snakemake/Nextflow, SSH-tunneled notebooks, and local VS Code remain
-> the supported paths until RCC Analysis is explicitly announced as available.
+> **Service status — available:** RCC Analysis is open at
+> <https://rcc.ikim.uk-essen.de/analysis/>. RCC workers, Slurm, managed
+> Snakemake/Nextflow, SSH-tunneled notebooks, and local VS Code remain
+> available for advanced work.
 
-RCC Analysis is the planned **user-facing compute product** for researchers who
+RCC Analysis is the **user-facing compute product** for researchers who
 should not need to become HPC operators merely to use RCC.
 
 It combines two related ways of working:
@@ -146,11 +146,9 @@ browser session is still open.
 
 ## Planned browser route
 
-RCC will announce the researcher-facing Analysis address when the service is
-released; the final public origin is still being settled. Within Analysis,
-Workflow occupies the Analysis root and Notebook management is namespaced below
-`/notebook/`. This route is **staged source configuration, not a claim of live
-availability**.
+RCC Analysis lives at `https://rcc.ikim.uk-essen.de/analysis/`. Within
+Analysis, Workflow occupies the Analysis root and Notebook management is
+namespaced below `/notebook/`.
 
 The Analysis-to-Notebook management hop uses a separate mTLS identity and may be
 revoked independently. Jupyter workspace/session traffic remains on its separate

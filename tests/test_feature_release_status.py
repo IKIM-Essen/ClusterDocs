@@ -18,10 +18,11 @@ class FeatureReleaseStatusTests(unittest.TestCase):
         config = yaml.safe_load((ROOT / "config/public.yml").read_text())
         self.assertEqual(
             {
-                "rcc_admin": "not_yet_released",
-                "rcc_admin_self_administration": "not_yet_released",
-                "rcc_admin_primary_approval": "not_yet_released",
-                "rcc_files": "not_yet_released",
+                # Released with the RCC /docs/ move (operator, 2026-11-02).
+                "rcc_admin": "ready",
+                "rcc_admin_self_administration": "ready",
+                "rcc_admin_primary_approval": "ready",
+                "rcc_files": "ready",
                 "rcc_workers": "ready",
                 "ssh_shellhost_transfer": "ready",
                 "samba_project_shares": "in_service_on_request",
@@ -84,10 +85,10 @@ class FeatureReleaseStatusTests(unittest.TestCase):
             )
             self.assertNotIn("samba shares are **ready now**", text)
 
-    def test_rcc_admin_is_unreleased_and_workers_are_ready(self):
+    def test_account_requests_are_released_and_workers_are_ready(self):
         access = normalized(DOCS / "reference/access-ssh-vscode.md")
         analysis = normalized(DOCS / "paths/data-analysis.md")
-        self.assertIn("**the rcc admin self-service portal is not yet released.**", access)
+        self.assertIn("request an account on the rcc home page", access)
         self.assertNotIn("rcc admin is ready now", access)
         self.assertIn("rcc workers and slurm analysis are **ready now**", analysis)
 

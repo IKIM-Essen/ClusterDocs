@@ -3,10 +3,8 @@
 This is the shortest route from a new computer to a safe RCC shell. You do not
 need to understand the cluster before you begin.
 
-Need an account first? Self-service enrollment is **not yet released**; until
-it is, RCC support creates accounts on request (see
-[Request an RCC account](../reference/access-ssh-vscode.md#request-an-rcc-account)).
-The planned flow is described in
+Need an account first? Request one on the RCC home page with your
+institutional email; the steps are in
 [Request and activate an RCC account](account-enrollment.md).
 
 Expedition Light is the required first-use path for new users. It deliberately
@@ -15,10 +13,9 @@ Slurm check. The full RCC Expedition is optional deeper training and introduces
 containers, Snakemake, and Nextflow later.
 
 RCC is also preparing a browser-first experience for researchers who do not need
-the command line. There are therefore two starting paths; today only Path A is
-available.
+the command line. There are therefore two starting paths.
 
-## Path A — command-line access (current)
+## Path A — command-line access
 
 Use this path now. It gives you SSH, VS Code Remote SSH, direct Slurm commands,
 workflow development, and automation.
@@ -35,10 +32,7 @@ the checklist shows that the built-in client is missing.
 After terminal SSH works, follow [Use VS Code with RCC](vscode.md) for the
 recommended day-to-day editor, terminal, Git, and remote-file interface.
 
-## Path B — browser-first research (not yet released)
-
-> **Service status — not yet released:** RCC Home, Files, and RCC Analysis
-> Notebook/Workflow are not yet available. Use Path A until RCC announces them.
+## Path B — browser-first research
 
 The intended journey is:
 
@@ -50,19 +44,17 @@ RCC Home
    -> Files: inspect/download results
 ```
 
-Once released, a browser-only account will be able to work without an SSH
-public key. RCC web authentication and project membership remain the authority;
+A browser-only account works without an SSH public key. RCC web authentication and project membership remain the authority;
 the browser service submits compute through the governed RCC/Slurm path on your
 behalf.
 
 ## What most researchers should remember
 
-1. **Your RCC account is your identity.** SSH is how you use RCC today; once
-   the browser services are released, browser-only work will not require an
-   SSH key.
-2. **Files will be the browser data entry/exit surface** (not yet released).
+1. **Your RCC account is your identity.** Browser-only work does not need an
+   SSH key; SSH stays available for command-line work.
+2. **Files is the browser data entry and exit.**
    Durable project inputs and results belong in the project.
-3. **RCC Analysis Notebook is for exploration.** It is planned as Jupyter in a
+3. **RCC Analysis Notebook is for exploration.** It runs Jupyter in a
    bounded Slurm allocation without manual tunnels or worker selection.
 4. **RCC Analysis Workflow is for repeatable work.** Long, repeated, unattended,
    or highly parallel analysis belongs in a governed workflow rather than an
@@ -92,12 +84,18 @@ if you need the full command-line mental model.
 | What you have | Where it belongs |
 |---|---|
 | Personal settings and small private files | `/homes/<user>/` |
-| Material only for your organizational group | `/groups/<primary-group>/` |
-| Shared research data, code, and durable results | `/projects/<project>/` |
+| Small organizational files shared within your primary group | `/groups/<primary-group>/` |
+| Large research datasets, shared research code, scalable analysis inputs and durable results | `/projects/<project>/` |
 | Temporary, high-I/O files for one job | Job-local `/local` or `$TMPDIR` |
 
-Once released, Files and RCC Analysis should present authorized projects
-directly, so browser users will not need to type these paths. The paths remain useful
+**Do not put large-volume data or data intended for computation at scale in
+`/homes` or `/groups`.** Even for research involving only one primary group,
+use an approved `/projects/<project>/` directory. Job-local files are temporary:
+return important results to the project. See the
+[storage and transfer guide](../reference/storage-transfer.md).
+
+Files and RCC Analysis present your authorized projects directly, so browser
+users do not need to type these paths. The paths remain useful
 reference for developers and reproducibility documentation.
 
 Your **primary group** records your organizational home. A **project** is the

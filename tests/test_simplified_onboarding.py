@@ -25,11 +25,12 @@ class SimplifiedOnboardingTests(unittest.TestCase):
         light = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
         self.assertIn("Expedition Light is the required first-use path", light)
         self.assertIn("full RCC Expedition is optional deeper training", light)
-        self.assertIn("Path A — command-line access (current)", light)
-        self.assertIn("Path B — browser-first research (not yet released)", light)
+        self.assertIn("Path A — command-line access", light)
+        self.assertIn("Path B — browser-first research", light)
+        self.assertNotIn("not yet released", light)
         self.assertLess(
-            light.index("Path A — command-line access (current)"),
-            light.index("Path B — browser-first research (not yet released)"),
+            light.index("Path A — command-line access"),
+            light.index("Path B — browser-first research"),
         )
 
     def test_platform_guides_preserve_the_two_host_boundary(self):
@@ -93,6 +94,19 @@ class SimplifiedOnboardingTests(unittest.TestCase):
             "project-internal convention",
         ):
             self.assertIn(phrase, page)
+
+    def test_large_data_stays_in_projects_not_homes_or_groups(self):
+        start = (DOCS / "getting-started/index.md").read_text(encoding="utf-8")
+        reference = (DOCS / "reference/storage-transfer.md").read_text(encoding="utf-8")
+        groups = (DOCS / "reference/users-groups-projects.md").read_text(encoding="utf-8")
+        for page in (start, reference, groups):
+            normalized = " ".join(page.split())
+            for path in ("/homes", "/groups", "/projects"):
+                self.assertIn(path, normalized)
+            self.assertIn("large-volume", normalized)
+            self.assertIn("at scale", normalized)
+        self.assertIn("job-local scratch", reference)
+        self.assertIn("Do not delete or relocate shared data", reference)
 
     def test_old_cluster_comparison_has_a_precise_baseline_and_actions(self):
         page = (DOCS / "getting-started/what-changed.md").read_text(

@@ -19,22 +19,11 @@ the configuration contains two hosts even though users type one destination.
 
 ## Request an RCC account
 
-**The RCC Admin self-service portal is not yet released.** Its browser
-enrollment and self-administration are being re-established in a restricted
-pilot; do not use old RCC Admin bookmarks. Until RCC announces the portal,
-accounts and project memberships are created on request: contact the team in
-the **IKIM Cluster channel on Mattermost** or through your project coordinator,
-and prepare the following for the responsible project coordinator and primary
-approver:
-
-- first and last name;
-- institutional email address;
-- project or working group;
-- sponsor or project lead; and
-- the **public** SSH key, never the private key.
-
-The planned self-service flow, once released, is described in
-[Request and activate an RCC account](../getting-started/account-enrollment.md).
+Request an account on the RCC home page with your institutional email; the
+steps are in [Request and activate an RCC account](../getting-started/account-enrollment.md).
+You sign in with a passkey and never need a password. For command-line work,
+add your **public** SSH key in **My RCC** after activation, never the private
+key. Questions go to your **RCC approver**.
 
 Every researcher receives an individual account. Project membership replaces
 shared accounts and shared credentials.
@@ -284,8 +273,8 @@ not depend on a laptop connection remaining open.
 
 ## Mount a small remote folder
 
-Use `scp`, `sftp`, or `rsync` to the shell host for transfers; the browser
-RCC Files portal is not yet released. SSHFS is appropriate only for light interactive use such as editing a
+Use RCC Files in the browser, or `scp`, `sftp`, or `rsync` to the shell host,
+for transfers. SSHFS is appropriate only for light interactive use such as editing a
 small document. It is not a bulk-transfer or analysis filesystem.
 
 After installing a maintained SSHFS implementation for your operating system,

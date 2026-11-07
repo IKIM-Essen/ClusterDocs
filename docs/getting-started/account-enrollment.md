@@ -1,97 +1,71 @@
 # Request and activate an RCC account
 
-> **Service status — not yet released:** self-service enrollment through
-> RCC Admin and My RCC is not currently available. The earlier internal pilot
-> was withdrawn on 3 October 2026 and RCC is re-establishing it in a restricted
-> rollout. Until RCC announces enrollment, accounts are created on request:
-> contact the team in the **IKIM Cluster channel on Mattermost** or through your
-> project coordinator, as described in
-> [Account access, SSH, and VS Code](../reference/access-ssh-vscode.md#request-an-rcc-account).
-> This page describes the planned enrollment flow.
+Every RCC account belongs to one person. You need your institutional email
+address. You never need a password: you sign in with a passkey on your
+computer or phone.
 
-## Before you begin
+## Request an account
 
-Ask the approver for your organizational **primary group** for a personal RCC
-enrollment link. The signed link is valid for seven days and fixes both the
-primary group and sponsor. Do not edit or forward it. If either value is wrong,
-ask the sender for a new link.
+1. Open the [RCC home page](https://rcc.ikim.uk-essen.de/) and choose
+   **Request an account**.
+2. Enter your institutional email address. RCC sends you a mail called
+   **Confirm your email address for RCC**.
+3. Open the link in that mail. Name your clinic or institute, then choose your
+   working group from the list. This is your **primary group**: where you
+   belong, not a research project.
+4. If your group is not listed, choose **My group is not listed** and give its
+   short name, its full name and its lead. An RCC administrator either sets up
+   the group or points you to an existing one. Either way you get an email with
+   a link to continue.
+5. Fill in the short request form: your name, your clinic or institute (already
+   filled in), a contact reference and what you will use RCC for.
 
-Your primary group records where you belong. It is not a research project and
-does not grant access to project data. Project membership is requested
-separately after activation.
+You do not choose an RCC username, upload an SSH key, or request a project in
+this form. RCC proposes your username, and each person has exactly one account.
 
-The short request asks for:
+An RCC approver for your group reviews the request. Do not submit a second
+request while one is open.
 
-- your first and last name;
-- institutional email address;
-- organization or department;
-- telephone or internal contact reference; and
-- a short description of your intended RCC use.
+**Invited by an approver?** The mail **You are invited to RCC** contains your
+personal link. It takes you straight to the request form. Do not forward it.
 
-You do **not** choose an RCC username, upload an SSH key, or request a project
-in this form. RCC proposes a collision-checked username. Each person receives
-one account; shared accounts and shared human credentials are not supported.
+## Set up your sign-in
 
-## Submit the request
+When your request is approved, you receive the mail **Set up your RCC
+sign-in**.
 
-1. Open the signed link supplied by the approver.
-2. Confirm that the displayed primary group and sponsor are correct.
-3. Enter the requested identity and contact information.
-4. Submit once and retain the displayed request reference.
+1. Open the link on the computer or phone you want to use for RCC.
+2. Register a passkey there, for example Touch ID, Face ID or Windows Hello.
 
-The request enters the authenticated RCC Admin queue. It is not approval and
-does not create an LDAP account, project membership, home directory, or
-credential.
+The link works once and expires after 24 hours. If it no longer works, ask your
+RCC approver for a new one. RCC never asks you for a password.
 
-Do not submit a second request. If the request has not been acknowledged within
-two working days, contact the support route named on the receipt and include the
-reference. Never include a password, activation code, recovery code, private SSH
-key, or patient information.
+**Got a printed activation slip at a workshop?** Choose **Activate with a slip**
+on the RCC home page and enter the username and code printed on it.
 
-## Approval and activation
+## Your first steps
 
-The approver checks your identity, institutional email, affiliation, primary
-group, sponsor, and intended use outside the form. Approval creates the RCC
-identity in exactly one primary group and produces a single-use activation
-slip.
+Open **My RCC** after you sign in. Until your project is ready, these are the
+useful first steps:
 
-The activation slip is handed to you through the approved direct channel. RCC
-does not email activation secrets.
+- **Add a passkey for another computer or phone**, so that losing one device
+  does not lock you out.
+- **Set up your second factor** for use outside the hospital network: a YubiKey
+  or an authenticator app on your phone. RCC asks for it once a month on each
+  computer or phone, and always on a new device.
+- **Add your SSH key** if you work on the command line. Browser-only work does
+  not need one.
 
-Use the slip at the RCC activation page to:
+Project membership is requested separately after activation. Ask your group
+lead or the project manager to add you to a project; do not change your primary
+group just to share data.
 
-1. set your initial RCC password;
-2. enroll the required authenticator;
-3. save the recovery codes; and
-4. complete the first login.
+## Lost your passkey or using a new device
 
-If the slip expires, ask the same approver for a replacement. Do not ask anyone
-to send a replacement code through ordinary email or chat.
+Your RCC approver checks who you are and sends you a new sign-in link for the
+same account. Your files, projects and other access stay as they are.
 
-## After activation
+## Help
 
-Use **My RCC** for personal security settings, recovery factors, notification
-preferences, and optional SSH public keys. Only add an SSH key if you need
-terminal, VS Code, or command-line transfer access.
-
-Project access remains a separate governed decision. Ask the project owner or
-primary-group approver for membership in the appropriate project; do not change
-your primary group merely to share research data.
-
-Continue with [Expedition Light](index.md) when your account and approved RCC
-connection configuration are available.
-
-## If something goes wrong
-
-Stop and contact RCC support when:
-
-- the invitation shows the wrong sponsor or primary group;
-- the form says enrollment is closed or the invitation is invalid;
-- you may already have an RCC identity;
-- approval or activation leaves you unsure what to do next;
-- first login or authenticator enrollment fails; or
-- an SSH host-identity warning appears.
-
-A failed or delayed email never changes the authoritative state. RCC Admin is
-the source of truth for the request and account; notification email is advisory
-only.
+Ask your **RCC approver**.
+Never post a password, a sign-in link, a private SSH key or patient information.

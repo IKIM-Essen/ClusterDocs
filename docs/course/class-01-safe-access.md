@@ -54,8 +54,9 @@ Do not email private keys, copy a colleague's key, register one key for several 
 Your RCC username is one human identity, but RCC can authenticate that identity
 in different ways:
 
-- **web services** use the RCC sign-in/SSO flow and may use a password, passkey,
-  or another enrolled factor;
+- **web services** use the RCC sign-in with your passkey; outside the hospital
+  network RCC also asks for your second factor (a YubiKey or an authenticator
+  app), once a month on each device;
 - **SSH and VS Code Remote SSH** use your registered SSH public key;
 - **account recovery or sensitive account actions** may use separate step-up or
   recovery credentials.

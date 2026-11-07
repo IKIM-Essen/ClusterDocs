@@ -88,7 +88,7 @@ Use this for documentation, instructions, schedules and other reviewed read-only
 Use this for dashboards, database searches and curated downloads.
 
 - Every user has an individual RCC identity.
-- Hospital access uses a low-friction sign-in such as username/password or passkey.
+- Hospital access uses the normal RCC passkey sign-in.
 - External access requires the stronger central authentication policy.
 - The application receives only narrowly scoped, usually read-only data access.
 
@@ -120,7 +120,7 @@ project application
     ↓ narrowly scoped database or curated file collection
 ```
 
-Inside the hospital network, an active project application can use the low-friction RCC username/password or passkey flow. Outside the hospital, the gateway requires stronger authentication. Informational static sites may be available without login inside the hospital, but active applications always require an individual identity.
+Inside the hospital network, an active project application uses the normal RCC passkey sign-in. Outside the hospital, the gateway also asks for the second factor (a YubiKey or an authenticator app), once a month on each device. Informational static sites may be available without login inside the hospital, but active applications always require an individual identity.
 
 The backend application is not directly reachable by ordinary users. This is important: the trusted identity information is meaningful only when it arrives through the RCC gateway.
 

@@ -12,10 +12,12 @@ def normalized(relative: str) -> tuple[str, str]:
 
 
 class AnalysisBrowserFirstContractTests(unittest.TestCase):
-    def test_analysis_remains_staged_not_claimed_live(self):
+    def test_analysis_is_released_on_the_rcc_origin(self):
+        # Released with the RCC /docs/ move (operator, 2026-11-02).
         page, flat = normalized("analysis/rcc-analysis.md")
-        self.assertIn("not yet released to users", page.lower())
-        self.assertIn("staged source configuration, not a claim of live availability", flat)
+        self.assertIn("Service status — available", flat)
+        self.assertIn("https://rcc.ikim.uk-essen.de/analysis/", page)
+        self.assertNotIn("not yet released", page.lower())
         self.assertNotIn("analysis.ikim.uk-essen.de", page)
         self.assertIn("`/notebook/`", page)
 
