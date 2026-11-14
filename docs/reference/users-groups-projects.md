@@ -97,7 +97,9 @@ An example listing might include `drwxrws---`. The **s** indicates the directory
 
 ### Group working area or project?
 
-Use your subgroup's working area for ongoing **organizational** tasks and material shared within that specific cohort. Use a **project** when work has a defined scientific purpose, team, datasets, results, responsibility or lifecycle, even if everyone currently belongs to the same primary group. The project has its own membership and lives under `/projects/<project>/`.
+Use your subgroup's working area for ongoing **small organizational** tasks and material shared within that specific cohort. **Do not use `/groups` or `/homes` for large-volume research data or data to be computed on at scale.** Use a **project** when work has a defined scientific purpose, team, datasets, results, responsibility or lifecycle, even if everyone currently belongs to the same primary group. The project has its own membership and lives under `/projects/<project>/`. For high-I/O analysis, use temporary job-local scratch and keep durable inputs and outputs in the project.
+
+See [Storage and transfer](storage-transfer.md) before moving existing datasets or choosing a large-data workflow.
 
 An archive *working area* is not automatically a frozen or retained scientific archive. Ask the project lead for the approved retention and archival process.
 
