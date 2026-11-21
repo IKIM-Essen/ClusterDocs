@@ -20,29 +20,33 @@ sollten dort nicht ausgeführt werden.
 
 ## Einrichtung des Laptops
 
-Nach Freigabe durch RCC: Laden Sie das Installationspaket ausschließlich aus
-einer offiziellen, geprüften RCC-Quelle herunter. Sie benötigen Ihren RCC-
-Benutzernamen, einen registrierten SSH-Schlüssel, einen berechtigten Projekt-
-zugang und gegebenenfalls die Gerätefreigabe/2FA.
+Nach Ihrer Freigabe für den Pilotbetrieb erhalten Sie das plattformsignierte
+Installationspaket über den authentifizierten RCC-Kanal. Ein ZIP-Archiv zur
+Quellcodeprüfung bleibt bei der Prüfstelle. Sie benötigen Ihren RCC-Benutzernamen,
+einen registrierten SSH-Schlüssel, Projektzugang und gegebenenfalls die
+Gerätefreigabe oder Zwei-Faktor-Authentisierung.
 
-**macOS** (Terminal im entpackten Installationsordner):
+Befolgen Sie vor der Installation die RCC-Anleitung für die unabhängig
+signierte SSH-Hostschlüsselliste. Sie muss unter `.ssh/rcc/known_hosts` in Ihrem
+Benutzerverzeichnis liegen und zur signierten Freigabe passen. Folgen Sie
+dann der Anleitung des freigegebenen Installationspakets.
+
+**macOS** (Terminal nach der Installation):
 
 ```sh
-bash ./Install-macOS.command IHR_BENUTZERNAME
 ~/.local/bin/rcc-open doctor
 ```
 
-**Windows** (PowerShell):
+**Windows** (PowerShell nach der Installation):
 
 ```powershell
-powershell.exe -NoProfile -File .\Install-Windows.ps1 -RccUser IHR_BENUTZERNAME
 powershell.exe -NoProfile -File "$HOME\.rcc\bin\rcc-open.ps1" doctor
 ```
 
-`doctor` prüft lediglich die **lokale SSH-Konfiguration**. Vor der ersten
-Verbindung müssen die SSH-Hostschlüssel anhand einer unabhängigen, offiziellen
-RCC-Information überprüft werden. Unbekannte Hostschlüssel niemals ungeprüft
-bestätigen oder die Prüfung deaktivieren.
+`doctor` prüft die **lokale SSH-Konfiguration**. Verwenden Sie die
+installierten SSH-Aliasse mit der strikten Schlüsselprüfung. Meldet SSH
+einen fehlenden oder geänderten Schlüssel, brechen Sie ab und wenden Sie sich
+an den RCC-Support.
 
 ## Eine R- oder Python-Sitzung starten
 

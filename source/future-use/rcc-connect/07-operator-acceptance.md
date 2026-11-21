@@ -7,7 +7,7 @@
 - [ ] Fix installer release provenance: signed, versioned packages; checksums served from official authenticated RCC infrastructure; establish installer update/revocation path.
 - [ ] Verify the four shellhosts are accepted as client-only, reachable via the real jump service, with working `rcc-dev-session`, correct DNS and preserved host identity.
 - [ ] Prove `pam_slurm_adopt` fails closed without a job and binds the IDE server, terminal, R/Python consoles and children to **the user's actual** Slurm job cgroup.
-- [ ] Publish the authoritative SSH host-key fingerprint registry with appropriate independent signing/verification, covering jump, shellhost and selected workers. No TOFU under a non-interactive Positron session.
+- [ ] Publish the independently signed SSH host-key registry covering the jump host, shellhost and eligible workers. Verify that the installer and launcher enforce the signed release's registry digest and that strict SSH checks succeed for the actual worker selected by Slurm.
 - [ ] Test passkey/SSH-agent, keyboard-interactive 2FA, certificate and device-onboarding flows on both OSes. Positron native OpenSSH must not depend on prompts.
 - [ ] Qualify the Ubuntu worker release, editor-server binaries, extension downloads/install paths and network policy. VS Code and Positron server components must be obtainable without broad worker egress.
 - [ ] Native Windows 10/11 and macOS supported-version regression suite: first install, upgrade, return to known-good, denied write, symlink/reparse, non-ASCII profile paths, OneDrive home, ACLs, shell conventions, available/missing OpenSSH.
@@ -39,6 +39,19 @@
 - [ ] Add an authenticated myRCC download page with enrollment/status and user-specific parameters; never embed private SSH material in downloads.
 - [ ] Publish a clear warning that Workbench and desktop deployment have independent acceptance gates. Do not link staged features as if live.
 - [ ] Retain opt-in pilot boundaries; do not include prototype changes on the Admin go-live train.
+
+## Verify the source-review ZIP
+
+Follow the [RCC source-review procedure](https://github.com/IKIM-Essen/rcc/blob/835d2612731fd384ea591e504c0110f1aae25596/docs/operations/rcc-connect-release-qualification.md#offline-reviewer-command)
+on the reviewed core revision. Obtain the trusted public key and its SHA-256
+fingerprint through independent authenticated channels. Supply the expected
+site ID, core revision and client platform to the offline inspector. It checks
+the archive signature, file set, script digests and registry digest without
+extracting or running the bundle.
+
+Record a pass as signed-source verification. Platform signing, the site
+release decision and the native workstation and Slurm pilot each have their
+own acceptance checks.
 
 ## Multi-node Slurm batch acceptance
 
@@ -204,7 +217,7 @@ mock SSH only; Windows has no native runtime evidence. A user can still launch
 arbitrary shell commands manually; editor configuration does not enforce
 filesystem-access policy or resource quotas.
 
-Backlog: signed host-key registry, progress/status UX, project picker, verified
+Backlog: site registry publication and rotation, progress/status UX, project picker, verified
 binary distribution, uninstall/upgrade, session record file and safe recovery,
 Windows test harness, resource-policy integration, and localized onboarding.
 ## Additional v2.2 acceptance checks

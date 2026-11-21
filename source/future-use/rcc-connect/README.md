@@ -55,6 +55,9 @@ site URLs, hostnames, institutional rules, host-key identities and operational
 readiness should remain in a future `clusterdocs-site-essen` overlay.
 
 See the [migration and publication plan](09-core-site-migration-plan.md).
-The companion RCC draft PR #4263 records the portable core contract. New
-pages remain intentionally excluded from the public navigation and site build
-until the migration and user pilot have both passed acceptance.
+[RCC #4263](https://github.com/IKIM-Essen/rcc/pull/4263) delivered the portable
+project-binding source. The [offline review procedure](07-operator-acceptance.md#verify-the-source-review-zip)
+covers exact signed-source verification. The site supplies the trusted registry
+and any platform-signed installer after its own release checks. These pages
+remain outside public navigation and both site builds until the migration
+and user pilot pass acceptance.

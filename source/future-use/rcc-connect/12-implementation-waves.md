@@ -1,8 +1,7 @@
 # RCC Connect implementation waves and acceptance (staged)
 
-> **Source-only pilot.** This page records implementation state as of
-> 29 October 2026. It does not activate desktop remote execution or create
-> a supported public download.
+> **Source-only pilot.** The original implementation waves are from
+> 29 October 2026. The table reflects the later Core source delivery.
 
 ## Goal
 
@@ -16,8 +15,8 @@ A shellhost serves as a client/SSH gateway, never an unscheduled compute host.
 
 | Wave | Source objective | Current gate |
 | --- | --- | --- |
-| 1 — Slurm contract | Project-bound session start; job ownership and exact project verification; machine-readable running worker resolution; no blind retries | Draft RCC source; offline verification only; live Slurm acceptance missing |
-| 2 — desktop client | macOS/Windows installer/launcher source, strict SSH effective settings, safe local rollback, session list/attach/stop; shared contract with the server | Offline macOS mock tests pass; native Windows and verified SSH host registry missing |
+| 1 — Slurm contract | Project-bound session start; job ownership and exact project verification; machine-readable running worker resolution; no blind retries | Project binding is on RCC Core main; live Slurm acceptance remains open |
+| 2 — desktop client | macOS/Windows installer/launcher source, strict SSH effective settings, safe local rollback, session list/attach/stop; shared contract with the server | Core has registry digest verification; site registry and native OS acceptance remain open |
 | 3 — VS Code | Connect laptop editor to allocation-backed VS Code Server; account for remote extensions, Python, shells, Jupyter and subprocesses in job cgroup | Server binary/bootstrap and live PAM/Slurm acceptance missing |
 | 4 — Positron | Native OpenSSH, project-bound Slurm worker preflight, root-owned exact-version/OS/R qualification, offline backend archive verification and selected-PID cgroup evidence | Code staged in RCC and Essen draft PRs; actual Ubuntu worker, desktop version, R/plot session, host-key registry, full process cleanup and native OS tests unaccepted |
 | 5 — release | Signed downloads, trusted site overlay/host-key publication, native OS matrix, real scientist pilots and translated/accessible user docs | No user-facing release authorized |
