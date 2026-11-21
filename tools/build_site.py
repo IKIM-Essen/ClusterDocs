@@ -8,6 +8,8 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
+ ('Start here','New browser-first RCC invitation (rollout draft)','getting-started/existing-user-invitation.md'),
+ ('Start here','Files to results (rollout draft)','paths/browser-files-to-results.md'),
  ('Start here','Request and activate an RCC account','getting-started/account-enrollment.md'),
  ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
  ('Start here','macOS setup','getting-started/macos.md'),
@@ -88,6 +90,8 @@ NAV=[
  ('Reference','Safe everyday practice','security/safe-use.md'),
  ('Reference','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Reference','Publications and acknowledging RCC','reference/publications-and-rcc-credit.md'),
+ ('Maintainers','Browser-first staged cutover checklist','maintainers/browser-first-rollout-checklist.md'),
+ ('Maintainers','Documentation origin and contribution','maintainers/rcc-origin-and-github-contribution.md'),
  ('Resources','Who we are','team.md'),
  ('Resources','Getting help and RCC Guardians','support/guardians-and-ai-assistant.md'),
  ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),

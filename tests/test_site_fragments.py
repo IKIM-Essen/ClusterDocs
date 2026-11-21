@@ -79,5 +79,35 @@ class SiteFragmentTests(unittest.TestCase):
         self.assertIn('missing fragment', result.stderr)
 
 
+    def test_rcc_mount_checks_docs_and_keeps_shared_routes_exact(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            (site / 'page.html').write_text('<h1 id="present">Title</h1>')
+            index = site / 'index.html'
+            shared_links = '<a href="/">Home</a><a href="/account/">My RCC</a><a href="/analysis/">Analysis</a>'
+            shared_links += '<img src="/assets/Logo_UME_UKE.svg" alt="Hospital logo">'
+            link = '<a href="/docs/page.html#present">Documentation</a>'
+            index.write_text(shared_links + link)
+            checker = [sys.executable, str(ROOT / 'tools/check_site_links.py'), str(site)]
+            standalone = subprocess.run(checker, capture_output=True, text=True)
+            self.assertNotEqual(standalone.returncode, 0)
+            self.assertIn('path escapes site: /account/', standalone.stderr)
+
+            mount = checker + ['--rcc-docs-mount']
+            valid = subprocess.run(mount, capture_output=True, text=True)
+            self.assertEqual(valid.returncode, 0, valid.stderr)
+            for href, error in (
+                ('/outside/', 'path escapes site'),
+                ('/docs/../account/', 'path escapes site'),
+                ('/docs/absent.html', 'missing /docs/absent.html'),
+                ('/docs/page.html#absent', 'missing fragment'),
+            ):
+                with self.subTest(href=href):
+                    index.write_text(shared_links + f'<a href="{href}">Invalid</a>')
+                    invalid = subprocess.run(mount, capture_output=True, text=True)
+                    self.assertNotEqual(invalid.returncode, 0)
+                    self.assertIn(error, invalid.stderr)
+
+
 if __name__ == '__main__':
     unittest.main()

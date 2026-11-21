@@ -231,8 +231,9 @@ identity, inputs/outputs, scientific parameters, citations, RCC adaptations,
 hardware/efficiency evidence, and explicit retained-inefficiency decisions.
 
 RCC Analysis does not create a private result store disconnected from project
-data. Files remains the normal browser entry/exit surface, while governed
-Coscine/DataLad paths remain part of the wider data lifecycle.
+data. Files remains the normal browser entry and exit surface. DataLad and
+Coscine belong to the wider data lifecycle. The integrated RCC-to-Coscine
+transfer is not yet released.
 
 ## Files project visibility and transfer acceptance
 

@@ -48,7 +48,8 @@ W
 
 ### Managed web services
 
-Use the additional profile for a static site, protected application, or application-local database.
+Use the additional profile to prepare a static site, protected application, or application-local database.
+Project vhosts are not yet released.
 
 [Open the service guide](https://rcc.ikim.uk-essen.de/developers/project-vhost-dbhost-integration.md)
 

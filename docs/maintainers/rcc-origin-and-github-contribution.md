@@ -31,6 +31,11 @@ The links must not imply that GitHub is the production documentation origin or R
 
 The current production-origin declarations still point to GitHub Pages and remain unchanged until the RCC `/docs/` route is live and accepted. Migration is a release transaction, not a textual substitution.
 
+For the local RCC-origin rehearsal, run the link checker with
+`--rcc-docs-mount`. It checks the generated pages and anchors below
+`/docs/`. Home, My RCC, Analysis and the shared hospital logo need
+separate checks on the assembled RCC origin.
+
 Before changing `site_url` and production-origin validators, prove:
 
 - `https://rcc.ikim.uk-essen.de/docs/` serves the exact accepted ClusterDocs build;

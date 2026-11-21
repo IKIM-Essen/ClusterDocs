@@ -101,6 +101,7 @@ nav:
       - Biomedical data admission: security/rcc-biomedical-data-admission.md
   - Maintainers:
       - Browser-first staged cutover checklist: maintainers/browser-first-rollout-checklist.md
+      - Documentation origin and contribution: maintainers/rcc-origin-and-github-contribution.md
   - Resources:
       - Who we are: team.md
       - Getting help and RCC Guardians: support/guardians-and-ai-assistant.md

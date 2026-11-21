@@ -1,37 +1,80 @@
 #!/usr/bin/env python3
+import argparse
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse, unquote
 import sys
-ROOT=Path(sys.argv[1] if len(sys.argv)>1 else 'site').resolve()
-class P(HTMLParser):
- def __init__(self): super().__init__(); self.refs=[]; self.ids=[]
- def handle_starttag(self,tag,attrs):
-  d=dict(attrs)
-  if d.get('id'): self.ids.append(d['id'])
-  for k in ('href','src'):
-   if k in d: self.refs.append(d[k])
-errors=[]
-pages={}
-for page in ROOT.rglob('*.html'):
- p=P(); p.feed(page.read_text(errors='replace')); pages[page.resolve()]=p
- duplicates=sorted({value for value in p.ids if p.ids.count(value)>1})
- if duplicates: errors.append(f'{page.relative_to(ROOT)}: duplicate ids: {", ".join(duplicates)}')
-for page,p in pages.items():
- for ref in p.refs:
-  u=urlparse(ref)
-  if u.scheme or u.netloc or ref.startswith('mailto:'): continue
-  path=unquote(u.path)
-  target=(page.parent/path).resolve() if path else page
-  try: target.relative_to(ROOT)
-  except ValueError: errors.append(f'{page.relative_to(ROOT)}: path escapes site: {ref}'); continue
-  if target.is_dir(): target=(target/'index.html').resolve()
-  if not target.exists(): errors.append(f'{page.relative_to(ROOT)}: missing {ref}'); continue
-  if u.fragment and target.suffix == '.html':
-   target_page=pages.get(target)
-   fragment=unquote(u.fragment)
-   if target_page is None or fragment not in target_page.ids:
-    errors.append(f'{page.relative_to(ROOT)}: missing fragment {ref}')
-if errors:
- print('\n'.join(errors),file=sys.stderr); raise SystemExit(1)
-print('site links: PASS')
+from urllib.parse import unquote, urlparse
+
+
+RCC_ORIGIN_LINKS = frozenset({"/", "/account/", "/analysis/", "/assets/Logo_UME_UKE.svg"})
+RCC_DOCS_PREFIX = "/docs/"
+
+
+class Page(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.refs = []
+        self.ids = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if attributes.get("id"):
+            self.ids.append(attributes["id"])
+        for name in ("href", "src"):
+            if attributes.get(name):
+                self.refs.append(attributes[name])
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Check generated local links and fragments.")
+    parser.add_argument("site", nargs="?", default="site", type=Path)
+    parser.add_argument(
+        "--rcc-docs-mount", action="store_true",
+        help="Resolve /docs/ against this build. Leave the four shared RCC origin links to deployment checks.",
+    )
+    args = parser.parse_args()
+    root = args.site.resolve()
+
+    errors = []
+    pages = {}
+    for path in root.rglob("*.html"):
+        page = Page()
+        page.feed(path.read_text(errors="replace"))
+        pages[path.resolve()] = page
+        duplicates = sorted({value for value in page.ids if page.ids.count(value) > 1})
+        if duplicates:
+            errors.append(f"{path.relative_to(root)}: duplicate ids: {', '.join(duplicates)}")
+
+    for path, page in pages.items():
+        for ref in page.refs:
+            url = urlparse(ref)
+            if url.scheme or url.netloc:
+                continue
+            if args.rcc_docs_mount and ref in RCC_ORIGIN_LINKS:
+                continue
+            relative_path = unquote(url.path)
+            if args.rcc_docs_mount and relative_path.startswith(RCC_DOCS_PREFIX):
+                target = (root / relative_path.removeprefix(RCC_DOCS_PREFIX)).resolve()
+            else:
+                target = (path.parent / relative_path).resolve() if relative_path else path
+            if target.is_dir():
+                target = (target / "index.html").resolve()
+            source = path.relative_to(root)
+            if not target.is_relative_to(root):
+                errors.append(f"{source}: path escapes site: {ref}")
+            elif not target.exists():
+                errors.append(f"{source}: missing {ref}")
+            elif url.fragment and target.suffix == ".html":
+                target_page = pages.get(target)
+                if target_page is None or unquote(url.fragment) not in target_page.ids:
+                    errors.append(f"{source}: missing fragment {ref}")
+
+    if errors:
+        print("\n".join(errors), file=sys.stderr)
+        return 1
+    print("site links: PASS")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
