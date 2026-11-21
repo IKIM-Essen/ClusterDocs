@@ -1,9 +1,10 @@
 # Files → Analysis → Notebook → Result
 
-> **Asset for future RCC documentation and user-facing feature announcements.**
+> **Held asset for future RCC documentation and user-facing feature announcements.**
+> Keep this directory outside the public documentation build until the release review approves publication.
 > This diagram describes the intended researcher experience. It is **not** a claim that the integrated browser workflow is already available.
 
-![Four-step RCC researcher journey: Files, Analysis, Notebook, Result, connected by arrows.](../assets/rcc-files-analysis-notebook-result.png)
+![Four-step RCC researcher journey: Files, Analysis, Notebook, Result, connected by arrows.](rcc-files-analysis-notebook-result.png)
 
 ## Where to use it
 
@@ -21,7 +22,7 @@ The graphic describes what researchers will do: find and upload files in their a
 
 ## Release and user-experience rules
 
-- Do **not** say “available now,” “live,” or imply a successfully completed browser journey until Files/is-3, Workbench/Analysis and the no-SSH researcher acceptance are evidenced and released individually.
+- Do **not** say “available now,” “live,” or imply a successfully completed browser journey until Files and Workbench/Analysis have each been accepted and released, and researchers have verified the end-to-end journey without SSH.
 - The routine flow must not require an SSH key, Slurm commands, partitions, hostnames, manual path entry or repeated MFA prompts.
 - Files exposes only approved project data; a single project's membership is not the limit of a user's authorized projects. A one-project account should land directly in that project.
 - For accessibility provide alternative text: **EN:** “Files → Analysis → Notebook → Result: four stages from project data to a saved output.” **DE:** „Files → Analysis → Notebook → Ergebnis: vier Schritte von Projektdaten zum gespeicherten Ergebnis.“
