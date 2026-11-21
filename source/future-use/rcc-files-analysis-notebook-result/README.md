@@ -1,9 +1,10 @@
 # Files → Analysis → Notebook → Result
 
-> **Asset for future RCC documentation and user-facing feature announcements.**
+> **Held asset for future RCC documentation and user-facing feature announcements.**
+> Keep this directory outside the public documentation build until the release review approves publication.
 > This diagram describes the intended researcher experience. It is **not** a claim that the integrated browser workflow is already available.
 
-![Four-step RCC researcher journey: Files, Analysis, Notebook, Result, connected by arrows.](../assets/rcc-files-analysis-notebook-result.png)
+![Four-step RCC researcher journey: Files, Analysis, Notebook, Result, connected by arrows.](rcc-files-analysis-notebook-result.png)
 
 ## Where to use it
 
