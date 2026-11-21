@@ -14,7 +14,6 @@ class RCCVisualShellTests(unittest.TestCase):
             'aria-label="RCC services"',
             '<a href="/">Home</a>',
             '<a href="https://files.ikim.uk-essen.de/">Files</a>',
-            '<a href="/analysis/">Analysis</a>',
             'aria-current="page" href="{{ root }}index.html">Documentation',
             '<a href="/account/">My RCC</a>',
             '<a class="topbar-button" href="/account/">My RCC</a>',
@@ -22,6 +21,7 @@ class RCCVisualShellTests(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, BUILDER)
         self.assertNotIn("not yet released</small>", BUILDER)
+        self.assertNotIn('href="/analysis/"', BUILDER)
 
     def test_dark_scheme_follows_the_rcc_site_switch(self):
         # Operator decision 2026-11-02: one dark scheme, off by default, that

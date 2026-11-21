@@ -4,10 +4,9 @@ Use this path when your main goal is to explore research data, run statistical
 analyses, train or evaluate models, create figures, or build a reproducible
 result pipeline.
 
-> **Service status:** RCC workers and Slurm analysis are **ready now**. RCC
-> Analysis Notebook/Workflow is available at
-> <https://rcc.ikim.uk-essen.de/analysis/>; Jupyter/SSH, Snakemake, Nextflow,
-> and direct Slurm stay available for advanced work.
+> **Service status.** RCC workers and Slurm analysis are **ready now**. The
+> browser-based RCC Analysis is not yet released. Use Jupyter over SSH,
+> Snakemake, Nextflow, or direct Slurm for advanced work.
 
 ## The target user journey
 

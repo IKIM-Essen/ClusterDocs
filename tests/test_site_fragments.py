@@ -84,7 +84,7 @@ class SiteFragmentTests(unittest.TestCase):
             site = Path(directory)
             (site / 'page.html').write_text('<h1 id="present">Title</h1>')
             index = site / 'index.html'
-            shared_links = '<a href="/">Home</a><a href="/account/">My RCC</a><a href="/analysis/">Analysis</a>'
+            shared_links = '<a href="/">Home</a><a href="/account/">My RCC</a>'
             shared_links += '<img src="/assets/Logo_UME_UKE.svg" alt="Hospital logo">'
             link = '<a href="/docs/page.html#present">Documentation</a>'
             index.write_text(shared_links + link)
@@ -98,6 +98,7 @@ class SiteFragmentTests(unittest.TestCase):
             self.assertEqual(valid.returncode, 0, valid.stderr)
             for href, error in (
                 ('/outside/', 'path escapes site'),
+                ('/analysis/', 'path escapes site'),
                 ('/docs/../account/', 'path escapes site'),
                 ('/docs/absent.html', 'missing /docs/absent.html'),
                 ('/docs/page.html#absent', 'missing fragment'),

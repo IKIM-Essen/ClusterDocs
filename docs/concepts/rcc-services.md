@@ -21,7 +21,7 @@ surface does not create a second account or a second copy of your project.
 | **Documentation** | learn RCC and look up procedures | **ready now** (this site) |
 | **Home** | find RCC services and account entry points | available |
 | **Files** | upload, browse, or download approved project data in a browser | available; `scp`, `sftp`, or `rsync` to the shell host also work |
-| **RCC Analysis** | explore data in a notebook or run a repeatable governed workflow | available |
+| **RCC Analysis** | explore data in a notebook or run a repeatable governed workflow | not yet released |
 | **Assistant** | ask for explanations or bounded RCC help | available |
 | **My RCC** | manage your account, project membership, and authorized project actions | available |
 

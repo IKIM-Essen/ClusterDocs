@@ -12,16 +12,25 @@ def normalized(relative: str) -> tuple[str, str]:
 
 
 class AnalysisBrowserFirstContractTests(unittest.TestCase):
-    def test_draft_analysis_status_names_its_rcc_origin(self):
+    def test_draft_analysis_status_describes_the_planned_route(self):
         # The release candidate's Analysis status is separate from Coscine.
         page, flat = normalized("analysis/rcc-analysis.md")
         _, status, _ = page.split("\n\n", 2)
-        self.assertIn("Service status — available", status)
-        self.assertIn("https://rcc.ikim.uk-essen.de/analysis/", status)
-        self.assertNotIn("not yet released", status.lower())
+        self.assertIn("Service status — not yet released", status)
+        self.assertNotIn("https://rcc.ikim.uk-essen.de/analysis/", status)
+        self.assertIn("`https://rcc.ikim.uk-essen.de/analysis/`", page)
         self.assertIn("RCC-to-Coscine transfer is not yet released", flat)
         self.assertNotIn("analysis.ikim.uk-essen.de", page)
         self.assertIn("`/notebook/`", page)
+
+    def test_data_analysis_keeps_available_compute_distinct_from_the_browser_pilot(self):
+        _, path = normalized("paths/data-analysis.md")
+        _, services = normalized("concepts/rcc-services.md")
+        self.assertIn("RCC workers and Slurm analysis are ready now", path)
+        self.assertIn("browser-based RCC Analysis is not yet released", path)
+        self.assertNotIn("https://rcc.ikim.uk-essen.de/analysis/", path)
+        self.assertIn("| RCC Analysis | explore data in a notebook or run a repeatable governed workflow | not yet released |",
+                      services)
 
     def test_notebook_is_jupyter_only_and_terminal_is_same_boundary(self):
         page, flat = normalized("concepts/workbench-interfaces.md")

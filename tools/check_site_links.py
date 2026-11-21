@@ -6,7 +6,7 @@ import sys
 from urllib.parse import unquote, urlparse
 
 
-RCC_ORIGIN_LINKS = frozenset({"/", "/account/", "/analysis/", "/assets/Logo_UME_UKE.svg"})
+RCC_ORIGIN_LINKS = frozenset({"/", "/account/", "/assets/Logo_UME_UKE.svg"})
 RCC_DOCS_PREFIX = "/docs/"
 
 
@@ -30,7 +30,7 @@ def main():
     parser.add_argument("site", nargs="?", default="site", type=Path)
     parser.add_argument(
         "--rcc-docs-mount", action="store_true",
-        help="Resolve /docs/ against this build. Leave the four shared RCC origin links to deployment checks.",
+        help="Resolve /docs/ against this build. Leave the shared RCC origin links to deployment checks.",
     )
     args = parser.parse_args()
     root = args.site.resolve()

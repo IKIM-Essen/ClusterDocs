@@ -1,9 +1,8 @@
 # RCC Analysis: notebooks and governed workflows
 
-> **Service status — available:** RCC Analysis is open at
-> <https://rcc.ikim.uk-essen.de/analysis/>. RCC workers, Slurm, managed
-> Snakemake/Nextflow, SSH-tunneled notebooks, and local VS Code remain
-> available for advanced work.
+> **Service status — not yet released.** The browser-based Notebook and Workflow
+> interface is in pilot preparation. RCC workers, Slurm, managed
+> Snakemake/Nextflow, SSH-tunneled notebooks, and local VS Code remain available.
 
 RCC Analysis is the **user-facing compute product** for researchers who
 should not need to become HPC operators merely to use RCC.
@@ -146,7 +145,7 @@ browser session is still open.
 
 ## Planned browser route
 
-RCC Analysis lives at `https://rcc.ikim.uk-essen.de/analysis/`. Within
+The planned public route is `https://rcc.ikim.uk-essen.de/analysis/`. Within
 Analysis, Workflow occupies the Analysis root and Notebook management is
 namespaced below `/notebook/`.
 

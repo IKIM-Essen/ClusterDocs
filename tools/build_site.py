@@ -128,7 +128,6 @@ PAGE='''<!doctype html>
       <section><h2>RCC surfaces</h2>
         <a href="/">Home</a>
         <a href="https://files.ikim.uk-essen.de/">Files</a>
-        <a href="/analysis/">Analysis</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
         <a href="/account/">My RCC</a>
       </section>
@@ -149,7 +148,6 @@ PAGE='''<!doctype html>
           <nav class="global-nav" aria-label="RCC services">
             <a href="/">Home</a>
             <a href="https://files.ikim.uk-essen.de/">Files</a>
-            <a href="/analysis/">Analysis</a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
             <a href="/account/">My RCC</a>
           </nav>
