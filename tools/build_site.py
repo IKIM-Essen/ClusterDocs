@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, html, os, re, shutil
+import argparse, html, os, re, shutil, tempfile
 from pathlib import Path
 import yaml, mistune
 from jinja2 import Template
@@ -497,12 +497,54 @@ def normalize_caption_text(text):
         text=re.sub(pattern,replacement,text)
     return text
 
+def apply_overlay(overlay, nav):
+    """Merge a deployment's extra pages into a copy of docs/ and into the nav.
+
+    A deployment (for example an RCC site repository) may add pages about its
+    own installation. An overlay only adds: it never replaces a ClusterDocs
+    page, every overlay page is listed in its nav.yml, and each entry is placed
+    directly after an existing page of the same navigation group."""
+    overlay=Path(overlay).resolve()
+    spec=yaml.safe_load((overlay/'nav.yml').read_text()) or {}
+    if not isinstance(spec,dict) or set(spec)!={'pages'} or not isinstance(spec['pages'],list):
+        raise SystemExit('overlay nav.yml must contain exactly one pages list')
+    listed=[]
+    for page in spec['pages']:
+        if not isinstance(page,dict) or set(page)!={'group','label','path','after'}:
+            raise SystemExit('each overlay page needs exactly group, label, path and after')
+        listed.append(page['path'])
+    present=sorted(p.relative_to(overlay).as_posix() for p in overlay.rglob('*.md'))
+    if sorted(listed)!=present:
+        raise SystemExit('overlay markdown files and nav.yml pages must match exactly')
+    merged=Path(tempfile.mkdtemp(prefix='clusterdocs-overlay-'))/'docs'
+    shutil.copytree(DOCS,merged)
+    nav=list(nav)
+    for page in spec['pages']:
+        rel=Path(page['path'])
+        if rel.is_absolute() or '..' in rel.parts or rel.suffix!='.md':
+            raise SystemExit(f"overlay page path invalid: {page['path']}")
+        if (merged/rel).exists():
+            raise SystemExit(f'overlay must not replace ClusterDocs page {rel.as_posix()}')
+        anchors=[i for i,(group,_,path) in enumerate(nav) if path==page['after']]
+        if len(anchors)!=1 or nav[anchors[0]][0]!=page['group']:
+            raise SystemExit(f"overlay page {rel.as_posix()} must follow one existing page of group {page['group']!r}")
+        (merged/rel).parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(overlay/rel,merged/rel)
+        nav.insert(anchors[0]+1,(page['group'],page['label'],rel.as_posix()))
+    return merged,nav
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true')
     # The RCC site switch rcc_web_color_scheme (operator decision 2026-11-02):
     # "system" lets pages follow the browser's light or dark setting. Build with
     # the same value the RCC site uses, so docs change together with it.
-    ap.add_argument('--color-scheme',choices=('light','system'),default='light'); a=ap.parse_args()
+    ap.add_argument('--color-scheme',choices=('light','system'),default='light')
+    # A deployment-owned directory of extra pages and their nav.yml entries
+    # (see apply_overlay). Without it the build is unchanged.
+    ap.add_argument('--overlay'); a=ap.parse_args()
+    global DOCS
+    nav=NAV
+    if a.overlay: DOCS,nav=apply_overlay(a.overlay,NAV)
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
     media=yaml.safe_load((ROOT/'config/media-manifest.yml').read_text())['publication']
     if a.production:
@@ -522,11 +564,11 @@ def main():
         if poster.exists(): shutil.copy2(poster,poster_out/f'class{class_number}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])
     nav_groups=[]
-    for group,label,path in NAV:
+    for group,label,path in nav:
         if not nav_groups or nav_groups[-1][0] != group:
             nav_groups.append((group,[]))
         nav_groups[-1][1].append((label,out_url(path)))
-    group_for_path={path:group for group,_,path in NAV}
+    group_for_path={path:group for group,_,path in nav}
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
         text=substitute(src.read_text(),cfg)
