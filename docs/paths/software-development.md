@@ -5,7 +5,7 @@ workflow automation, containers, protected applications, Shiny interfaces, or
 model-backed services.
 
 > **Service status:** RCC workers and Slurm workflows are **ready now**. The
-> RCC Admin self-service portal is **not yet released**. The newer general RCC-authenticated Gitea access plane, Workbench, and
+> account self-service in My RCC is available. The newer general RCC-authenticated Gitea access plane and
 > project-vhost hosting are rollout-gated/not yet released as general user
 > surfaces; the linked pages document their stable product boundary without
 > claiming activation.

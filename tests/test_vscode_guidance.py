@@ -13,7 +13,8 @@ class VSCodeGuidanceTests(unittest.TestCase):
 
         self.assertIn("browser-first research", overview)
         self.assertIn("advanced command-line/developer access", overview)
-        self.assertIn("ssh is how you use rcc today", start)
+        # Released browser-first (operator, 2026-11-02): SSH is the advanced path.
+        self.assertIn("browser-only work does not need an", start)
         self.assertNotIn("ssh is optional", start)
         self.assertIn("vs code with remote - ssh", development)
         for phrase in ["slurm", "search", "file watching"]:

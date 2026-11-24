@@ -1,14 +1,12 @@
 # RCC Files: browser data entry and result retrieval
 
-> **Service status — not yet released:** the RCC Files browser and SFTP portal
-> is not currently available. Its earlier internal pilot was withdrawn in
-> October 2026, and RCC will announce the released service. Until then, use
-> `scp`, `sftp`, or `rsync` to the shell host as described in
-> [Storage and transfer](../reference/storage-transfer.md). This page describes
-> the intended service boundary.
+> **Service status — available:** RCC Files is open at
+> <https://files.ikim.uk-essen.de/>. Command-line transfer with `scp`, `sftp`,
+> or `rsync` to the shell host keeps working, as described in
+> [Storage and transfer](../reference/storage-transfer.md).
 
-RCC Files is the project-facing browser and transfer surface. Once released, it
-is intended to be the first and last stop of a browser-based RCC analysis:
+RCC Files is the project-facing browser and transfer surface. It is the first
+and last stop of a browser-based RCC analysis:
 
 ```text
 Files: upload / choose data

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, html, os, re, shutil
+import argparse, html, os, re, shutil, tempfile
 from pathlib import Path
 import yaml, mistune
 from jinja2 import Template
@@ -8,7 +8,9 @@ ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/'docs'
 NAV=[
  ('Overview','Home','index.md'),
- ('Start here','Request and activate an RCC account (not yet released)','getting-started/account-enrollment.md'),
+ ('Start here','New browser-first RCC invitation (rollout draft)','getting-started/existing-user-invitation.md'),
+ ('Start here','Files to results (rollout draft)','paths/browser-files-to-results.md'),
+ ('Start here','Request and activate an RCC account','getting-started/account-enrollment.md'),
  ('Start here','Expedition Light · first 15 minutes','getting-started/index.md'),
  ('Start here','macOS setup','getting-started/macos.md'),
  ('Start here','Windows 11 setup','getting-started/windows.md'),
@@ -21,9 +23,15 @@ NAV=[
  ('Overview','Before sharing data with a coding agent','data/privacy-and-agents.md'),
  ('Overview','RCC Expedition · interactive onboarding','rcc-expedition.md'),
  ('Overview','RCC Journey · explore the cluster (not yet released)','rcc-journey.md'),
+ ('About RCC','What RCC is','about/index.md'),
+ ('About RCC','Architecture','about/architecture.md'),
+ ('About RCC','For biomedical research','about/biomedical-research.md'),
+ ('About RCC','Institutional value','about/institutional-value.md'),
+ ('About RCC','Citing RCC','about/citing-rcc.md'),
+ ('About RCC','Developer resources','about/developer-resources.md'),
  ('RCC services','Which RCC service should I use?','concepts/rcc-services.md'),
- ('RCC services','RCC Files (not yet released)','concepts/rcc-files.md'),
- ('RCC services','RCC Analysis · notebooks and workflows (not yet released)','analysis/rcc-analysis.md'),
+ ('RCC services','RCC Files','concepts/rcc-files.md'),
+ ('RCC services','RCC Analysis · notebooks and workflows','analysis/rcc-analysis.md'),
  ('RCC services','Project types','concepts/project-types.md'),
  ('RCC services','Projects and supported actions','concepts/projects-and-capabilities.md'),
  ('RCC services','Delegated governance and project proxies','concepts/delegated-governance.md'),
@@ -67,7 +75,7 @@ NAV=[
  ('Reference','Authentication lifecycle','reference/authentication-lifecycle.md'),
  ('Reference','Account starter setups','reference/account-starter-setups.md'),
  ('Reference','Access, SSH, and VS Code','reference/access-ssh-vscode.md'),
- ('Reference','Workbench execution layer (advanced, not yet released)','concepts/workbench-interfaces.md'),
+ ('Reference','Workbench execution layer (advanced)','concepts/workbench-interfaces.md'),
  ('Reference','Storage and transfer','reference/storage-transfer.md'),
  ('Reference','Sharing data','reference/data-sharing.md'),
  ('Reference','RCC Usage reporting (not yet released)','reference/usage-accounting.md'),
@@ -82,6 +90,8 @@ NAV=[
  ('Reference','Safe everyday practice','security/safe-use.md'),
  ('Reference','Biomedical data admission','security/rcc-biomedical-data-admission.md'),
  ('Reference','Publications and acknowledging RCC','reference/publications-and-rcc-credit.md'),
+ ('Maintainers','Browser-first staged cutover checklist','maintainers/browser-first-rollout-checklist.md'),
+ ('Maintainers','Documentation origin and contribution','maintainers/rcc-origin-and-github-contribution.md'),
  ('Resources','Who we are','team.md'),
  ('Resources','Getting help and RCC Guardians','support/guardians-and-ai-assistant.md'),
  ('Resources','Lab network properties and remote access','resources/how-it-all-works.md'),
@@ -89,13 +99,13 @@ NAV=[
  ('Resources','Maintaining RCC Expedition releases','maintainers/rcc-expedition-release.md'),
 ]
 PAGE='''<!doctype html>
-<html lang="en">
+<html lang="en"{% if color_scheme == 'system' %} data-rcc-color-scheme="system"{% endif %}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="{{ 'light dark' if color_scheme == 'system' else 'light' }}">
   <meta name="description" content="Safe, practical RCC training for biomedical researchers">
-  <title>{{ title }} · RCC ClusterDocs</title>
+  <title>{% if title == brand %}{{ brand }}{% else %}{{ title }} · {{ brand }}{% endif %}</title>
   <link rel="stylesheet" href="{{ root }}assets/site.css">
 </head>
 <body class="{% if is_home %}home{% endif %}">
@@ -103,12 +113,11 @@ PAGE='''<!doctype html>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="{{ root }}index.html" aria-label="RCC documentation home">
-      <img src="https://www.uk-essen.de/wp-content/uploads/2021/10/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
-      <span class="brand-copy"><strong>RCC</strong><span>Research Compute Cluster</span></span>
+      <span class="brand-copy"><strong>RCC</strong><span>Research<br>Compute Cluster</span></span>
     </a>
     <div class="topbar-actions">
-      <span class="service-status"><span class="service-status-dot"></span>Documentation online</span>
-      <span class="topbar-pending" title="RCC browser services are not yet released; use SSH">My RCC · not yet released</span>
+      <img class="brand-logo" src="/assets/Logo_UME_UKE.svg" alt="Universitätsklinikum Essen">
+      <a class="topbar-button" href="/account/">My RCC</a>
     </div>
   </div>
 </header>
@@ -117,10 +126,11 @@ PAGE='''<!doctype html>
     <summary>Browse documentation</summary>
     <nav aria-label="Mobile documentation navigation">
       <section><h2>RCC surfaces</h2>
+        <a href="/">Home</a>
+        <a href="https://files.ikim.uk-essen.de/">Files</a>
+        <a href="/analysis/">Analysis</a>
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
-        <span class="nav-pending">Home <small>not yet released</small></span>
-        <span class="nav-pending">Files <small>not yet released</small></span>
-        <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+        <a href="/account/">My RCC</a>
       </section>
       {% for group,items in nav_groups %}
       {% if items|length == 1 %}
@@ -137,14 +147,15 @@ PAGE='''<!doctype html>
         <section class="sidebar-section">
           <p class="sidebar-kicker">RCC surfaces</p>
           <nav class="global-nav" aria-label="RCC services">
+            <a href="/">Home</a>
+            <a href="https://files.ikim.uk-essen.de/">Files</a>
+            <a href="/analysis/">Analysis</a>
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
-            <span class="nav-pending">Home <small>not yet released</small></span>
-            <span class="nav-pending">Files <small>not yet released</small></span>
-            <span class="nav-pending">RCC Admin <small>not yet released</small></span>
+            <a href="/account/">My RCC</a>
           </nav>
         </section>
         <section class="sidebar-section documentation-tree">
-          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>ClusterDocs</strong><span class="stage-badge">{{ status }}</span></div></div>
+          <div class="sidebar-heading"><span class="status-dot"></span><div><strong>{{ sidebar_name }}</strong>{% if show_status_badge %}<span class="stage-badge">{{ status }}</span>{% endif %}</div></div>
           <nav aria-label="Documentation navigation">
             {% for group,items in nav_groups %}
             {% if items|length == 1 %}
@@ -158,7 +169,7 @@ PAGE='''<!doctype html>
             {% endfor %}
           </nav>
         </section>
-        <div class="sidebar-note"><strong>Compute · Data · Projects</strong><span>Practical guidance for working safely and reproducibly on RCC.</span></div>
+        <div class="sidebar-note"><strong>Need help?</strong><span>Ask your RCC approver. Lost your passkey? Your approver can send you a new sign-in link.</span></div>
       </div>
     </aside>
     <main id="content" class="content-card">
@@ -166,12 +177,13 @@ PAGE='''<!doctype html>
         {% if is_home %}<li><span aria-current="page">Documentation</span></li>
         {% else %}<li><a href="{{ root }}index.html">Documentation</a></li><li><span aria-current="page">{{ title }}</span></li>{% endif %}
       </ol></nav>
-      <p class="eyebrow">{{ page_group }} · RCC ClusterDocs</p>
+      <p class="eyebrow">{{ page_group }} · {{ brand }}</p>
       {% if is_home %}<figure class="people-figure">
         <img src="assets/cluster-barnraiser.webp" alt="RCC team members installing and checking equipment inside the cluster racks">
         <figcaption>RCC is built by scientists for other scientists. <a href="team/index.html">Meet the team.</a></figcaption>
       </figure>{% endif %}
       {{ content }}
+      <p class="page-contribute"><a href="https://github.com/IKIM-Essen/ClusterDocs/edit/main/docs/{{ source_path }}">Edit this page on GitHub</a> · <a href="https://github.com/IKIM-Essen/ClusterDocs/issues/new?title={{ ('Docs: ' ~ title) | urlencode }}&amp;body={{ ('Page: docs/' ~ source_path) | urlencode }}">Report a problem with this page</a></p>
       {% if is_home %}<figure class="research-figure">
         <img src="assets/biomedical-data-analysis-tools.webp" alt="A genome connected to Python, R, GPUs, Shiny, Jupyter notebooks, and biomedical data-science tools">
         <figcaption>One research environment for statistics, data science, reproducible AI, distributed computation, visualization, and governed sharing.</figcaption>
@@ -361,7 +373,57 @@ footer p { margin:0; }
   .shell { max-width:none; padding:0; }
   .docs-layout { display:block; }
   .content-card { border:0; box-shadow:none; padding:0; }
-}'''
+}
+/* The RCC Home look (operator decision 2026-11-02): documentation served at
+   rcc.ikim.uk-essen.de/docs/ continues the RCC Home, sign-in and My RCC. */
+:root { --navy:#17477e; --navy-2:#24528d; --cyan:#41689c; --cyan-strong:#315a97; --cyan-light:#eaf1fb; --background:#fff; --home-edge:#dfe3e8; }
+.topbar { background:var(--paper); color:var(--ink); border-bottom:1px solid var(--home-edge); box-shadow:none; }
+.topbar-inner { min-height:76px; padding:14px 30px; }
+.topbar .brand { color:var(--ink); text-decoration:none; }
+.topbar .brand-copy { display:flex; align-items:center; gap:.65rem; padding-left:0; border-left:0; }
+.topbar .brand-copy strong { color:var(--navy); font-size:2rem; line-height:1; }
+.topbar .brand-copy span { padding-left:.7rem; border-left:1px solid #d0d5da; color:var(--ink); font-size:.72rem; line-height:1.16; letter-spacing:0; text-transform:none; }
+.topbar-actions { gap:1.3rem; }
+.brand-logo { display:block; width:224px; max-width:224px; height:auto; max-height:48px; object-fit:contain; }
+@font-face { font-family:"Inter"; font-style:normal; font-weight:100 900; font-display:swap; src:url("/InterVariable.woff2") format("woff2"); }
+.topbar-button { padding:.45rem .7rem; border:1px solid var(--home-edge); border-radius:4px; background:var(--paper); color:var(--navy); font-size:.85rem; }
+.sidebar-card { background:var(--paper); color:var(--ink); border-right:1px solid var(--home-edge); }
+.sidebar-kicker,.sidebar .nav-section summary { color:var(--muted); }
+.sidebar .nav-section[open] summary,.sidebar-heading strong { color:var(--ink); }
+.sidebar-heading { border-bottom-color:var(--home-edge); }
+.stage-badge { background:var(--cyan-light); color:var(--cyan-strong); }
+.sidebar nav a { color:#344054; }
+.sidebar nav a:hover,.sidebar .nav-section summary:hover { background:#f1f5f9; color:var(--navy); }
+.sidebar nav a[aria-current="page"] { background:var(--cyan-light); color:var(--navy-2); box-shadow:none; }
+.sidebar-note { border-color:var(--home-edge); background:var(--paper); }
+.sidebar-note span { color:var(--muted); }
+.content-card { border-color:var(--home-edge); border-radius:8px; box-shadow:none; }
+.page-contribute { margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--home-edge); color:var(--muted); font-size:.86rem; }
+@media (max-width:760px) { .topbar-inner { padding:12px 15px; } .brand-logo { max-width:155px; } }
+/* Dark scheme: only in builds with --color-scheme system, which follow the
+   browser's light/dark setting like every other RCC page. The light look
+   above stays exactly as it is. */
+@media (prefers-color-scheme: dark) {
+  :root[data-rcc-color-scheme="system"] { color-scheme:dark; --navy:#8fb4ec; --navy-2:#b3cdf4; --cyan:#8c9eff; --cyan-strong:#a8b8ff; --cyan-light:#1d2c42; --green:#81c995; --red:#f28b82; --amber:#e8c15a; --ink:#e6e8eb; --muted:#a9b1bb; --line:#30353c; --paper:#1a1d21; --background:#1a1d21; --home-edge:#2b3036; --shadow:0 16px 38px rgba(0,0,0,.5); --shadow-sm:0 9px 24px rgba(0,0,0,.4); }
+  :root[data-rcc-color-scheme="system"] body { background:var(--background); }
+  :root[data-rcc-color-scheme="system"] .skip { color:var(--paper); }
+  :root[data-rcc-color-scheme="system"] .brand-logo { padding:4px 8px; border-radius:4px; background:#fff; }
+  :root[data-rcc-color-scheme="system"] .topbar .brand-copy span { border-left-color:#3a4048; }
+  :root[data-rcc-color-scheme="system"] .sidebar nav a { color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] .sidebar nav a:hover,:root[data-rcc-color-scheme="system"] .sidebar .nav-section summary:hover { background:#23272d; }
+  :root[data-rcc-color-scheme="system"] .breadcrumbs li + li::before { color:var(--muted); }
+  :root[data-rcc-color-scheme="system"] .course-video-hero,:root[data-rcc-color-scheme="system"] .expedition-callout { background:linear-gradient(145deg,#17304f 0,#1d3a5f 72%,#0f4a5a 100%); }
+  :root[data-rcc-color-scheme="system"] .expedition-actions .expedition-primary { color:#17477e; }
+  :root[data-rcc-color-scheme="system"] .expedition-actions .expedition-primary:hover { color:#17477e; }
+  :root[data-rcc-color-scheme="system"] .content-card .video-course-card,:root[data-rcc-color-scheme="system"] .people-figure,:root[data-rcc-color-scheme="system"] .research-figure,:root[data-rcc-color-scheme="system"] .mobile-nav { border-color:var(--line); background:var(--paper); }
+  :root[data-rcc-color-scheme="system"] .path-card { border-color:var(--line); background:linear-gradient(150deg,var(--paper) 0,#20242a 100%); }
+  :root[data-rcc-color-scheme="system"] code { background:#23272d; color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] pre { border-color:var(--line); background:#1f2328; }
+  :root[data-rcc-color-scheme="system"] pre code { color:var(--ink); }
+  :root[data-rcc-color-scheme="system"] th,:root[data-rcc-color-scheme="system"] tr:hover td,:root[data-rcc-color-scheme="system"] details { background:#20242a; }
+  :root[data-rcc-color-scheme="system"] footer { border-top-color:var(--line); }
+}
+'''
 
 def substitute(text,cfg):
     for k,v in cfg.items():
@@ -379,8 +441,18 @@ def gate_unreleased_videos(text,publication):
   </div>'''
     return re.sub(r'<video\b[^>]*>.*?</video>',notice,text,flags=re.S)
 
-def title_of(text):
-    m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else 'RCC ClusterDocs'
+def title_of(text,brand='RCC ClusterDocs'):
+    m=re.search(r'^#\s+(.+)$',text,re.M); return m.group(1) if m else brand
+
+# Product names the GitHub Pages build uses in page text and navigation labels.
+# A build with --site-name (the RCC origin build at /docs/) shows that name
+# instead; longest first so "RCC ClusterDocs NG" does not become "RCC <name>".
+LEGACY_PRODUCT_NAMES=('RCC ClusterDocs NG','ClusterDocs NG')
+
+def rebrand(text,site_name):
+    if not site_name: return text
+    for legacy in LEGACY_PRODUCT_NAMES: text=text.replace(legacy,site_name)
+    return text
 
 def add_heading_ids(content):
     """Give rendered Markdown headings stable, unique fragment targets."""
@@ -435,9 +507,63 @@ def normalize_caption_text(text):
         text=re.sub(pattern,replacement,text)
     return text
 
+def apply_overlay(overlay, nav):
+    """Merge a deployment's extra pages into a copy of docs/ and into the nav.
+
+    A deployment (for example an RCC site repository) may add pages about its
+    own installation. An overlay only adds: it never replaces a ClusterDocs
+    page, every overlay page is listed in its nav.yml, and each entry is placed
+    directly after an existing page of the same navigation group."""
+    overlay=Path(overlay).resolve()
+    spec=yaml.safe_load((overlay/'nav.yml').read_text()) or {}
+    if not isinstance(spec,dict) or set(spec)!={'pages'} or not isinstance(spec['pages'],list):
+        raise SystemExit('overlay nav.yml must contain exactly one pages list')
+    listed=[]
+    for page in spec['pages']:
+        if not isinstance(page,dict) or set(page)!={'group','label','path','after'}:
+            raise SystemExit('each overlay page needs exactly group, label, path and after')
+        listed.append(page['path'])
+    present=sorted(p.relative_to(overlay).as_posix() for p in overlay.rglob('*.md'))
+    if sorted(listed)!=present:
+        raise SystemExit('overlay markdown files and nav.yml pages must match exactly')
+    merged=Path(tempfile.mkdtemp(prefix='clusterdocs-overlay-'))/'docs'
+    shutil.copytree(DOCS,merged)
+    nav=list(nav)
+    for page in spec['pages']:
+        rel=Path(page['path'])
+        if rel.is_absolute() or '..' in rel.parts or rel.suffix!='.md':
+            raise SystemExit(f"overlay page path invalid: {page['path']}")
+        if (merged/rel).exists():
+            raise SystemExit(f'overlay must not replace ClusterDocs page {rel.as_posix()}')
+        anchors=[i for i,(group,_,path) in enumerate(nav) if path==page['after']]
+        if len(anchors)!=1 or nav[anchors[0]][0]!=page['group']:
+            raise SystemExit(f"overlay page {rel.as_posix()} must follow one existing page of group {page['group']!r}")
+        (merged/rel).parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(overlay/rel,merged/rel)
+        nav.insert(anchors[0]+1,(page['group'],page['label'],rel.as_posix()))
+    return merged,nav
+
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true'); a=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--output',default='site'); ap.add_argument('--production',action='store_true')
+    # The RCC site switch rcc_web_color_scheme (operator decision 2026-11-02):
+    # "system" lets pages follow the browser's light or dark setting. Build with
+    # the same value the RCC site uses, so docs change together with it.
+    ap.add_argument('--color-scheme',choices=('light','system'),default='light')
+    # The RCC origin build (rcc.ikim.uk-essen.de/docs/, operator direction
+    # 2026-11-05) is branded "RCC Documentation" and shows no release-state
+    # badge. Without these options the build is unchanged (GitHub Pages).
+    ap.add_argument('--site-name',default='',help='Brand for page titles, eyebrow and sidebar; replaces the ClusterDocs NG product name in page text and navigation labels')
+    ap.add_argument('--no-status-badge',action='store_true',help='Omit the site_status badge from the sidebar')
+    # A deployment-owned directory of extra pages and their nav.yml entries
+    # (see apply_overlay). Without it the build is unchanged.
+    ap.add_argument('--overlay'); a=ap.parse_args()
+    global DOCS
+    nav=NAV
+    if a.overlay: DOCS,nav=apply_overlay(a.overlay,NAV)
     cfg=yaml.safe_load((ROOT/'config/public.yml').read_text())
+    if a.site_name: cfg['site_name']=a.site_name
+    brand=a.site_name or 'RCC ClusterDocs'
+    sidebar_name=a.site_name or 'ClusterDocs'
     media=yaml.safe_load((ROOT/'config/media-manifest.yml').read_text())['publication']
     if a.production:
         bad=[k for k,v in cfg.items() if isinstance(v,str) and ('TO_BE_' in v or '.invalid' in v or 'STAGING-' in v or 'CLUSTERDOCS-' in v or 'TRANSFER-' in v)]
@@ -456,14 +582,14 @@ def main():
         if poster.exists(): shutil.copy2(poster,poster_out/f'class{class_number}.png')
     md=mistune.create_markdown(escape=False, plugins=['table','strikethrough','task_lists'])
     nav_groups=[]
-    for group,label,path in NAV:
+    for group,label,path in nav:
         if not nav_groups or nav_groups[-1][0] != group:
             nav_groups.append((group,[]))
-        nav_groups[-1][1].append((label,out_url(path)))
-    group_for_path={path:group for group,_,path in NAV}
+        nav_groups[-1][1].append((rebrand(label,a.site_name),out_url(path)))
+    group_for_path={path:group for group,_,path in nav}
     for src in sorted(DOCS.rglob('*.md')):
         rel=src.relative_to(DOCS); target=out/out_url(str(rel)); target.parent.mkdir(parents=True,exist_ok=True)
-        text=substitute(src.read_text(),cfg)
+        text=rebrand(substitute(src.read_text(),cfg),a.site_name)
         text=gate_unreleased_videos(text,media)
         content=add_heading_ids(md(text))
         def rewrite_local(match):
@@ -492,15 +618,20 @@ def main():
                 content=content[:rail_match.start()]+content[rail_match.end():]
         current_url=out_url(str(rel))
         target.write_text(Template(PAGE).render(
-            title=title_of(text),
+            title=title_of(text,brand),
+            brand=brand,
+            sidebar_name=sidebar_name,
+            show_status_badge=not a.no_status_badge,
             content=content,
             nav_groups=nav_groups,
             root=relroot(target.relative_to(out)),
             status=cfg['site_status'],
             current_url=current_url,
+            source_path=str(rel),
             page_group=group_for_path.get(str(rel),'Documentation'),
             is_home=is_home,
             home_rail=home_rail,
+            color_scheme=a.color_scheme,
         ))
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():

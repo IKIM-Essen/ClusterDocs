@@ -12,10 +12,14 @@ def normalized(relative: str) -> tuple[str, str]:
 
 
 class AnalysisBrowserFirstContractTests(unittest.TestCase):
-    def test_analysis_remains_staged_not_claimed_live(self):
+    def test_draft_analysis_status_names_its_rcc_origin(self):
+        # The release candidate's Analysis status is separate from Coscine.
         page, flat = normalized("analysis/rcc-analysis.md")
-        self.assertIn("not yet released to users", page.lower())
-        self.assertIn("staged source configuration, not a claim of live availability", flat)
+        _, status, _ = page.split("\n\n", 2)
+        self.assertIn("Service status — available", status)
+        self.assertIn("https://rcc.ikim.uk-essen.de/analysis/", status)
+        self.assertNotIn("not yet released", status.lower())
+        self.assertIn("RCC-to-Coscine transfer is not yet released", flat)
         self.assertNotIn("analysis.ikim.uk-essen.de", page)
         self.assertIn("`/notebook/`", page)
 

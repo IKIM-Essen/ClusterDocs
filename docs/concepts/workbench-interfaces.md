@@ -1,8 +1,8 @@
 # Workbench execution layer behind RCC Analysis
 
-> **Service status:** the browser Notebook path is **not yet released to users**.
-> This page documents the staged execution/security model. For the planned
-> user-facing product, start with
+> **Service status — available:** the browser Notebook path is part of RCC
+> Analysis. This page documents the execution and security model behind it. For
+> daily use, start with
 > [RCC Analysis: notebooks and governed workflows](../analysis/rcc-analysis.md).
 
 “RCC Workbench” remains an internal engineering term, not a separate primary
