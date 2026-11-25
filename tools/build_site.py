@@ -128,7 +128,7 @@ PAGE='''<!doctype html>
       <section><h2>RCC surfaces</h2>
         <a href="/">Home</a>
         <a href="https://files.ikim.uk-essen.de/">Files</a>
-        <a href="/analysis/">Analysis</a>
+        {% if analysis_live %}<a href="/analysis/">Analysis</a>{% else %}<span class="nav-pending">Analysis <small>In preparation</small></span>{% endif %}
         <a aria-current="page" href="{{ root }}index.html">Documentation</a>
         <a href="/account/">My RCC</a>
       </section>
@@ -149,7 +149,7 @@ PAGE='''<!doctype html>
           <nav class="global-nav" aria-label="RCC services">
             <a href="/">Home</a>
             <a href="https://files.ikim.uk-essen.de/">Files</a>
-            <a href="/analysis/">Analysis</a>
+            {% if analysis_live %}<a href="/analysis/">Analysis</a>{% else %}<span class="nav-pending">Analysis <small>In preparation</small></span>{% endif %}
             <a class="current" aria-current="page" href="{{ root }}index.html">Documentation</a>
             <a href="/account/">My RCC</a>
           </nav>
@@ -197,6 +197,7 @@ PAGE='''<!doctype html>
 <footer>
   <p>RCC · Research Compute Cluster · University Hospital Essen</p>
   <p><a href="{{ root }}index.html">Documentation</a> · <a href="{{ root }}support/guardians-and-ai-assistant/index.html">Support</a> · <a href="{{ root }}reference/storage-transfer/index.html">File transfer</a></p>
+  {% if legal_links %}<p class="legal-links">{% for label,url in legal_links %}{% if not loop.first %} · {% endif %}<a href="{{ url|e }}">{{ label|e }}</a>{% endfor %}</p>{% endif %}
 </footer>
 </body>
 </html>'''
@@ -556,7 +557,21 @@ def main():
     ap.add_argument('--no-status-badge',action='store_true',help='Omit the site_status badge from the sidebar')
     # A deployment-owned directory of extra pages and their nav.yml entries
     # (see apply_overlay). Without it the build is unchanged.
+    # The RCC origin links Analysis only once it is live (operator review
+    # 2026-11-25: /analysis/ answered 404 from every docs page). Without the
+    # option the menus show it as in preparation, like RCC Home.
+    ap.add_argument('--analysis-live',action='store_true',help='Link the RCC Analysis surface at /analysis/ in the docs menus')
+    # Deployment-owned legal and privacy pages for the footer, as LABEL=https-URL
+    # (repeatable). Without the option no legal row is rendered.
+    ap.add_argument('--legal-link',action='append',default=[],metavar='LABEL=URL',help='Footer legal link; repeatable; https only')
     ap.add_argument('--overlay'); a=ap.parse_args()
+    legal_links=[]
+    for item in a.legal_link:
+        label,sep,url=item.partition('=')
+        label=label.strip(); url=url.strip()
+        if not sep or not label or not re.fullmatch(r'https://[^\s<>"]+',url):
+            raise SystemExit(f'--legal-link needs LABEL=https://URL, got {item!r}')
+        legal_links.append((label,url))
     global DOCS
     nav=NAV
     if a.overlay: DOCS,nav=apply_overlay(a.overlay,NAV)
@@ -632,6 +647,8 @@ def main():
             is_home=is_home,
             home_rail=home_rail,
             color_scheme=a.color_scheme,
+            analysis_live=a.analysis_live,
+            legal_links=legal_links,
         ))
     class_examples=DOCS/'classes/examples'
     if class_examples.exists():

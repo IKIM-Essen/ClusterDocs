@@ -23,6 +23,19 @@ class RCCVisualShellTests(unittest.TestCase):
                 self.assertIn(token, BUILDER)
         self.assertNotIn("not yet released</small>", BUILDER)
 
+    def test_analysis_is_linked_only_when_live_and_legal_links_are_https(self):
+        # Operator review 2026-11-25: /analysis/ answered 404 from every docs
+        # page. Both menus show it as in preparation unless --analysis-live.
+        pending = ('{% if analysis_live %}<a href="/analysis/">Analysis</a>{% else %}'
+                   '<span class="nav-pending">Analysis <small>In preparation</small></span>{% endif %}')
+        self.assertEqual(BUILDER.count(pending), 2)
+        self.assertEqual(BUILDER.count('href="/analysis/"'), 2)
+        self.assertIn("ap.add_argument('--analysis-live',action='store_true'", BUILDER)
+        # Footer legal links come from the deployment, https only, escaped.
+        self.assertIn("ap.add_argument('--legal-link',action='append',default=[]", BUILDER)
+        self.assertIn("re.fullmatch(r'https://[^\\s<>\"]+',url)", BUILDER)
+        self.assertIn('<a href="{{ url|e }}">{{ label|e }}</a>', BUILDER)
+
     def test_dark_scheme_follows_the_rcc_site_switch(self):
         # Operator decision 2026-11-02: one dark scheme, off by default, that
         # follows the browser only in builds made with --color-scheme system.
